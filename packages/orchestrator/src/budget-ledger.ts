@@ -1,6 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import type { SQLInputValue } from 'node:sqlite';
-import { createHash } from 'node:crypto';
+import { createHash,randomUUID } from 'node:crypto';
 import { closeSync, openSync, lstatSync, mkdirSync, chmodSync, constants } from 'node:fs';
 import { dirname, isAbsolute, parse, join } from 'node:path';
 import { z } from 'zod';
@@ -18,7 +18,7 @@ const microdollars = z.union([z.bigint(), z.number().int().nonnegative().refine(
 const ReserveSchema = z.strictObject({ id: identifier, episodeId: identifier, stage: z.enum(STAGES),
   amountMicros: microdollars.refine(value => value > 0n, 'A positive bounded reservation is required.'), fingerprint: digest });
 const ReconcileSchema = z.strictObject({ id: identifier, actualCostMicros: microdollars.nullable(),
-  complete: z.boolean(), evidenceDigest: digest }).refine(value => !value.complete || value.actualCostMicros !== null, 'Complete billing requires a measured cost, including explicit zero.');
+  complete: z.boolean(), evidenceDigest: digest, expectedEvidenceDigest:digest.nullable().optional(),expectedAccountingReceiptDigest:digest.optional() }).refine(value => !value.complete || value.actualCostMicros !== null, 'Complete billing requires a measured cost, including explicit zero.');
 
 export class BudgetLedgerError extends Error {
   readonly code: string;
@@ -128,7 +128,11 @@ export class BudgetLedger {
         evidence_digest TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS budget_events (
         sequence INTEGER PRIMARY KEY AUTOINCREMENT, timestamp TEXT NOT NULL, kind TEXT NOT NULL,
-        reservation_id TEXT, approval_revision INTEGER NOT NULL, payload TEXT NOT NULL);`);
+        reservation_id TEXT, approval_revision INTEGER NOT NULL, payload TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_accounting_journal (
+        id INTEGER PRIMARY KEY CHECK(id=1), journal_digest TEXT NOT NULL, ledger_id TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_accounting_receipts (
+        reservation_id TEXT PRIMARY KEY,revision INTEGER NOT NULL,receipt_digest TEXT NOT NULL,previous_digest TEXT);`);
       this.#transaction(() => {
         const existing = this.#row('SELECT * FROM budget_meta WHERE id=1');
         if (!existing) {
@@ -266,6 +270,8 @@ export class BudgetLedger {
     const reconciliation = ReconcileSchema.parse(value);
     return this.#transaction(() => {
       const row = this.#reservation(reconciliation.id), previous = row.actual_micros as bigint|null;
+      if(reconciliation.expectedAccountingReceiptDigest!==undefined&&this.#row('SELECT receipt_digest FROM budget_accounting_receipts WHERE reservation_id=?',reconciliation.id)?.receipt_digest!==reconciliation.expectedAccountingReceiptDigest)fail('accounting_history_conflict','Receipt history advanced; an older receipt cannot change accounting.');
+      if(reconciliation.expectedEvidenceDigest!==undefined&&row.evidence_digest!==reconciliation.expectedEvidenceDigest)fail('reconciliation_conflict','Accounting evidence changed; reload before explicit reconciliation.');
       if (previous!==null && (reconciliation.actualCostMicros===null || reconciliation.actualCostMicros<previous)) fail('charge_regression','Measured cumulative costs cannot be erased or reduced; credits require a separate reviewed process.');
       if (row.actual_micros===reconciliation.actualCostMicros && row.reconciliation_complete===(reconciliation.complete?1n:0n) && row.evidence_digest===reconciliation.evidenceDigest) return this.#view(row);
       const overrun = reconciliation.actualCostMicros!==null && reconciliation.actualCostMicros>(row.amount_micros as bigint);
@@ -306,6 +312,36 @@ export class BudgetLedger {
   }
 
   get(id: string): ReservationView { return this.#view(this.#reservation(id)); }
+  /** One receipt journal per durable ledger; a replacement must not reset cumulative CPU/history. */
+  bindAccountingJournal(journalDigest:string,expectedLedgerId?:string):string{
+    digest.parse(journalDigest);if(expectedLedgerId!==undefined)z.uuid().parse(expectedLedgerId);
+    return this.#transaction(()=>{
+      const existing=this.#row('SELECT * FROM budget_accounting_journal WHERE id=1');
+      if(existing){
+        if(existing.journal_digest!==journalDigest||expectedLedgerId!==undefined&&existing.ledger_id!==expectedLedgerId)fail('accounting_journal_mismatch','Accounting journal/ledger identity mismatch; restore the matched durable state.');
+        return String(existing.ledger_id);
+      }
+      if(expectedLedgerId!==undefined)fail('accounting_journal_mismatch','The accounting journal belongs to a different ledger.');
+      const ledgerId=randomUUID();this.#db.prepare('INSERT INTO budget_accounting_journal VALUES(1,?,?)').run(journalDigest,ledgerId);
+      this.#event('accounting_journal_bound',null,{journalDigest,ledgerId});return ledgerId;
+    });
+  }
+  /** Anchor an already durable prepared receipt before any accounting change.
+   * This blocks an older copy of the same journal from silently omitting accepted history. */
+  anchorAccountingReceipt(value:unknown):void{
+    const request=z.strictObject({journalDigest:digest,reservationId:identifier,revision:z.number().int().positive().safe(),receiptDigest:digest,previousReceiptDigest:digest.nullable()}).parse(value);
+    this.#transaction(()=>{
+      const journal=this.#row('SELECT * FROM budget_accounting_journal WHERE id=1');
+      if(!journal||journal.journal_digest!==request.journalDigest)fail('accounting_journal_mismatch','Receipt history requires the bound accounting journal.');
+      this.#reservation(request.reservationId);
+      const current=this.#row('SELECT * FROM budget_accounting_receipts WHERE reservation_id=?',request.reservationId);
+      if(current&&Number(current.revision)===request.revision&&current.receipt_digest===request.receiptDigest&&current.previous_digest===request.previousReceiptDigest)return;
+      if(request.revision!==(current?Number(current.revision):0)+1||request.previousReceiptDigest!==(current?.receipt_digest??null))fail('accounting_history_conflict','Receipt history is missing or stale; restore the matched durable journal.');
+      this.#db.prepare('INSERT INTO budget_accounting_receipts VALUES(?,?,?,?) ON CONFLICT(reservation_id) DO UPDATE SET revision=excluded.revision,receipt_digest=excluded.receipt_digest,previous_digest=excluded.previous_digest')
+        .run(request.reservationId,request.revision,request.receiptDigest,request.previousReceiptDigest);
+      this.#event('accounting_receipt_prepared',request.reservationId,{revision:request.revision,receiptDigest:request.receiptDigest,previousReceiptDigest:request.previousReceiptDigest});
+    });
+  }
   snapshot(): BudgetSnapshot {
     return this.#transaction(() => {
       const meta = this.#meta(), accounting = this.#accounting(), reasons = this.#reasons(meta,accounting);

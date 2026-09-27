@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-trusted-accounting-review",
+  "recordedAt": "2026-09-27T10:07:54.863Z",
+  "status": "passed-bounded-synthetic-controls",
+  "baseCommit": "c28d44adb80bdd6ce7933f96e6c1445d38edf41e",
+  "sourceDigests": {
+    "packages/orchestrator/src/accounting-receipts.ts": "sha256:d7f2f6453a953cd981ed2b7f7cddce272d25483567910d3a6a2b49ad0265a173",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:0da1adfc69cdbe9e8922fd73654d795c114328f16813ea4916981a96eab7cfa0",
+    "tests/accounting-receipts-independent.test.ts": "sha256:05d45576c4e5e75de4146c80e83f533c58afd3fe0587760f9a65bdbe8ff6ac9c",
+    "tests/accounting-receipts.test.ts": "sha256:57dc009bcbf48b4ab917b6abae4daf7b9a8800c6d889cc90d504c1f3b35f6bb1",
+    "tests/budget-ledger.test.ts": "sha256:3bbcca65e8d5a7511e4d9d69701e492cb63d4cc2a2c442c412754beeda16b8c4"
+  },
+  "reviewerRole": "Separate trusted evaluator agent; not the importer author. Production accounting source was reviewed read-only.",
+  "scope": [
+    "reservation/source/plan/operation/cleanup consistency",
+    "unknown billing and CPU holds",
+    "cumulative USD and CPU monotonicity",
+    "cross-ledger and importer-journal identity",
+    "stale copied journals and revision history",
+    "expired prepared recovery and concurrent writer fencing",
+    "duplicate and process-restart semantics"
+  ],
+  "validation": [
+    {
+      "performer": "independent-reviewer",
+      "command": "node --test tests/accounting-receipts-independent.test.ts",
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "performer": "independent-reviewer",
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "performer": "importer-author",
+      "independentlyInspectedLog": true,
+      "command": "node --test tests/accounting-receipts.test.ts tests/accounting-receipts-independent.test.ts tests/budget-ledger.test.ts",
+      "exitCode": 0,
+      "passed": 58,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "log": "research/verification/runtime-followup/accounting-receipts-test.log",
+      "logDigest": "sha256:2fd990aff5554fd55a66d8ea4b573affc5ba24b27bc2bc083cf7479bca27928a"
+    }
+  ],
+  "historicalFindings": [
+    {
+      "id": "AR01",
+      "status": "resolved",
+      "problem": "An expired prepared receipt that had not reached the ledger could neither retry nor permit its next reviewed revision.",
+      "initialEvidence": "Independently reproduced with temporary synthetic prepared-state injection: retry rejected expired, next revision rejected previous-prepared, and 1000000 microdollars remained held.",
+      "correction": "Explicit reviewed expiry recovery anchors the receipt, writes a CAS recovery tombstone without releasing the hold, then rejects the old prepared entry. A new reviewed contiguous revision can reconcile.",
+      "finalEvidence": "Independent expiry/fencing control passes; author child-process controls cover crashes after anchor and recovery tombstone."
+    },
+    {
+      "id": "AR02",
+      "status": "resolved",
+      "problem": "An already-applied duplicate returned before checking immutable reservation binding.",
+      "initialEvidence": "Read-only source finding; no initial financial mutation or spending bypass claimed.",
+      "correction": "Immutable ledger binding is validated before duplicate return. Journal and ledger identities are paired durably. Historical duplicates preserve current higher totals.",
+      "finalEvidence": "Independent cross-ledger control and combined historical-duplicate control pass."
+    },
+    {
+      "id": "AR03",
+      "status": "resolved",
+      "problem": "A replacement importer journal lacked prior revision and cumulative CPU history.",
+      "initialEvidence": "Read-only source finding: history existed only in the caller-selected importer database.",
+      "correction": "Each durable ledger binds one journal identity, and each journal binds its ledger identity.",
+      "finalEvidence": "Independent fresh-journal and different-ledger controls reject before changing money."
+    },
+    {
+      "id": "AR04",
+      "status": "resolved",
+      "problem": "An old copy of the same logical journal could retain its UUID while omitting newer revision/CPU history.",
+      "initialEvidence": "Read-only design finding acknowledged by the author; not a demonstrated USD-cap bypass.",
+      "correction": "Each prepared receipt is anchored in the ledger before reconciliation. Missing, conflicting or skipped anchored revisions fail closed.",
+      "finalEvidence": "Independent stale-copy control retains the newer ledger state; author controls cover copies before the first receipt and after an earlier revision."
+    },
+    {
+      "id": "AR05",
+      "status": "resolved",
+      "problem": "Expired recovery could reread newer ledger evidence after a CAS race and attempt to replace a newer applied receipt with an old tombstone.",
+      "initialEvidence": "Read-only interleaving finding. The author added the revision guard before the independent interleaving first executed; no pre-fix runtime reproduction is claimed.",
+      "correction": "Receipt reconciliation and recovery check expectedAccountingReceiptDigest inside the same ledger transaction as evidence CAS and money changes.",
+      "finalEvidence": "Independent controlled interleaving applies the old receipt and a newer revision during recovery. Old recovery receives accounting_history_conflict; the newer evidence digest, 200000-microdollar charge, zero hold, and both applied journal rows remain intact."
+    }
+  ],
+  "remainingConcreteFindingsWithinReviewedControls": [],
+  "independentFilesAdded": [
+    "tests/accounting-receipts-independent.test.ts",
+    "research/verification/runtime-followup/accounting-independent-review.json"
+  ],
+  "proofBoundary": {
+    "syntheticMetadataOnly": true,
+    "externalCalls": 0,
+    "paidSpendUsd": 0,
+    "candidateExecutions": 0,
+    "sealedInputsReadOrIncluded": false,
+    "actualBillingReceiptsImported": 0,
+    "limitations": [
+      "Receipt consistency is not provider authenticity. Accepted digests and expected bindings must come from independent trusted evidence ingestion; authenticityVerified remains false.",
+      "Real operation inventory, remote cleanup and measured billing remain unverified by these tests.",
+      "Low-level ledger reconciliation remains a trusted interface; it does not itself impose all receipt CPU/history policy.",
+      "Privileged rollback or coordinated editing of both databases is outside these consistency controls; matched SQLite-consistent backups are required.",
+      "Process-exit and controlled interleaving tests are bounded durability evidence, not exhaustive crash or hardware-failure proof.",
+      "This review made no changes to provider, repair, executor, fixture or evaluator-oracle logic."
+    ]
+  }
+}
