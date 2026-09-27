@@ -1,0 +1,24 @@
+(node:1561667) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ inspection verifies one explicit published bundle and creates no SQLite sidecars or output (88.317261ms)
+✔ exclusive export writes exact original JSON bytes with private mode and never overwrites (69.144357ms)
+✔ exported-byte verification needs no original journal but requires the approved current public fixture (65.470729ms)
+✔ wrong config digest, run ID and bundle digest refuse without export or database changes (39.718177ms)
+✔ journal publication, terminal state and exact run document must all agree (110.803182ms)
+✔ changed curated source, policy, full legacy fixture metadata and unknown fixture pin all reject (205.581315ms)
+✔ tampered bundle/artifact and invalid byte encoding cannot export (52.746874ms)
+✔ missing journal is never created and unknown schemas are never migrated (66.552396ms)
+✔ active WAL data is refused without a checkpoint or implicit sidecar changes (64.163388ms)
+✔ output and configuration collisions with every database sidecar preserve original inputs (213.840095ms)
+✔ symlink and hardlink aliases are refused for config, evidence, output and public fixture tree (57.468835ms)
+✔ bounded evidence/database reads and public tree size stop before output (114.332875ms)
+✔ private CLI status is compact and neither config credentials nor private event details escape (312.454062ms)
+✔ private evidence reader rejects permissive file modes and request mutations cannot switch selected bundle (69.655834ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1808.453517

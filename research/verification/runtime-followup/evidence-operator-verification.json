@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "private-product-evidence-operator-author-verification",
+  "createdAt": "2026-09-27T12:09:14.985058+00:00",
+  "baseCommit": "259882c753a9a9bc6ff9f435ca44394aee4c34c4",
+  "artifacts": {
+    "scripts/evidence-operator.ts": "sha256:b1fe700597eda2e06a7e0eca5f771e20ad46f0600bb6eab9d6c40c788b776196",
+    "tests/evidence-operator.test.ts": "sha256:19ebaae3e1e74441d17a37a4462dce239a646d39c45e94ea27b1eeb73ece62c8",
+    "research/verification/runtime-followup/evidence-operator-tests.log": "sha256:e1dc9639378dd4780b66d7851c5784ac1041842448d454571016daaa153e17fd",
+    "research/verification/runtime-followup/evidence-operator-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890"
+  },
+  "executed": [
+    {
+      "command": "node --test tests/evidence-operator.test.ts",
+      "exitCode": 0,
+      "passed": 14,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/evidence-operator-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/evidence-operator-typecheck.log"
+    }
+  ],
+  "interface": {
+    "cli": "node scripts/evidence-operator.ts inspect|export CONFIG CONFIG_DIGEST",
+    "configSchema": "PrivateEvidenceConfigSchema; exact schema-ordered privateEvidenceConfigDigest(config)",
+    "standaloneVerifier": "verifyCuratedProductEvidence({projectRoot,bytes,runId,bundleDigest,fixture:{taskId,fixtureDigest,sourceDigest,policyDigest}}): Promise<ProductEvidence>",
+    "privateByteReader": "readPrivateEvidenceBytes(filename,{projectRoot,maximumBytes?}): Buffer"
+  },
+  "controls": [
+    "Exact independently pinned config, run UUID, published bundle digest and journal document equality.",
+    "Current public development/calibration fixture identity, full parsed fixture digest and version-correct source/policy; final fixtures refused.",
+    "Immutable read-only SQLite URI, existing strict table, bounded row/database, no creation or migrations; active WAL and rollback journal refused before and after reading.",
+    "Bounded private regular files and public fixture trees, no symlink/hardlink aliases, input/output/database sidecar collisions refused.",
+    "Exclusive private output preserves exact verified original bytes, fsyncs file and parent and refuses overwrite.",
+    "Standalone byte verification needs no original journal; missing/changed current public fixture fails closed.",
+    "CLI emits controlled compact metadata without config paths, credentials, event messages, bundle contents or stacks."
+  ],
+  "independentReview": "Requested; neutral independent review pending. Tests above are author controls only.",
+  "developmentCorrections": [
+    "Initial TypeScript narrowing errors from arrow-form stop helper were corrected to a declared never-returning function before successful typecheck.",
+    "Manual temporary SQLite probes showed ordinary readOnly creates WAL/SHM sidecars and immutable mode ignores active WAL; implementation therefore requires a quiescent journal and never checkpoints it."
+  ],
+  "limits": [
+    "All tests use invented public fixtures, inert source strings and synthetic ProductEvidence built without candidate execution. No actual corpus read.",
+    "No provider, model, runner or coordinator initialization; no keys resolved or paid calls.",
+    "Current public fixture files must remain available even when verifying an exported bundle on another machine. Original journal is needed only for initial inspect/export.",
+    "The existing writer must finish and close/checkpoint its own journal before export; this operator refuses active WAL and never repairs permissions or migrates state.",
+    "Same-UID hostile file replacement and coordinated tampering are outside file-hygiene guarantees. Digests prove integrity and binding, not authenticity or past source execution.",
+    "An I/O failure may leave a private partial output; it is never reported as successful and never silently overwritten or removed.",
+    "Root owns Makefile wiring, replay and product documentation; none changed in this task."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0
+}
