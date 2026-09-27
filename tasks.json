@@ -1,0 +1,374 @@
+{
+  "schema_version": "1.0",
+  "project": "PatchProof",
+  "prd_version": "0.1",
+  "as_of": "2026-09-25",
+  "default_new_spend_authorized_usd": 0,
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "Verify rules, rights, eligibility and available resources",
+      "owner_role": "coordinator",
+      "status": "planned",
+      "depends_on": [],
+      "estimated_engineering_hours": [
+        2,
+        4
+      ],
+      "deliverables": [
+        "research/constraints.md",
+        "research/sources.json",
+        "runtime-lock.json",
+        "budget.json"
+      ],
+      "acceptance_tests": [
+        "All hard constraints have an official source or explicit blocker.",
+        "No unapproved budget is recorded as authorized.",
+        "AI development assistance, publishing rights and prize-specific remote fulfillment reviewed by owner."
+      ],
+      "requires_owner_action": true,
+      "gate": "G0"
+    },
+    {
+      "id": "T02",
+      "title": "Freeze schemas, repository layout and test harness",
+      "owner_role": "coordinator",
+      "status": "planned",
+      "depends_on": [
+        "T01"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        4
+      ],
+      "deliverables": [
+        "packages/contracts/",
+        "workspace configuration",
+        "mock provider",
+        "decisions.md"
+      ],
+      "acceptance_tests": [
+        "Schema rejects unknown task IDs and invalid budgets.",
+        "Mock status is propagated through API/UI/export.",
+        "Typed interfaces build and contract tests pass."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T03",
+      "title": "Author independently reviewed fixture suite and split",
+      "owner_role": "evaluation engineer",
+      "status": "planned",
+      "depends_on": [
+        "T02"
+      ],
+      "estimated_engineering_hours": [
+        6,
+        8
+      ],
+      "deliverables": [
+        "fixtures/development/",
+        "fixtures/calibration/",
+        "separate sealed evaluator checkout",
+        "split-manifest.json"
+      ],
+      "acceptance_tests": [
+        "60 validated tasks across 12 repos; 20/10/30 repo-disjoint split.",
+        "Gold patch passes and faulty starting version fails intended oracle.",
+        "No final tests/gold patches are accessible from repair workspace."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T04",
+      "title": "Implement and smoke-test sponsor adapters",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T02"
+      ],
+      "estimated_engineering_hours": [
+        4,
+        6
+      ],
+      "deliverables": [
+        "model adapter",
+        "sandbox adapter",
+        "runtime-lock.json",
+        "integration traces"
+      ],
+      "acceptance_tests": [
+        "Two real authorized cases record actual model and operation IDs.",
+        "Cancellation propagates and billing records reconcile.",
+        "No credentials present in candidate workspace.",
+        "Unavailable controls cause explicit blocked status."
+      ],
+      "requires_owner_action": true,
+      "gate": "G1"
+    },
+    {
+      "id": "T05",
+      "title": "Implement matched-model baseline",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T03",
+        "T04"
+      ],
+      "estimated_engineering_hours": [
+        2,
+        4
+      ],
+      "deliverables": [
+        "baseline runner",
+        "baseline config",
+        "episode ledger"
+      ],
+      "acceptance_tests": [
+        "Same task statement, requirements, model and aggregate limits as proposed system.",
+        "Failed episodes and retries retained.",
+        "Pinned dependency/source notices present."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T06",
+      "title": "Implement protected acceptance checks and clean evaluation",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T04"
+      ],
+      "estimated_engineering_hours": [
+        4,
+        5
+      ],
+      "deliverables": [
+        "acceptance runner",
+        "policy enforcement",
+        "negative-test suite"
+      ],
+      "acceptance_tests": [
+        "Protected-path changes rejected.",
+        "Fresh workspace independently reproduces test verdict.",
+        "Test errors and unverified requirements never become pass."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T07",
+      "title": "Add bounded candidate branches and selection",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T05",
+        "T06"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        5
+      ],
+      "deliverables": [
+        "branch policy",
+        "run state machine",
+        "selection logs"
+      ],
+      "acceptance_tests": [
+        "At most three branches share one fixed total budget.",
+        "No final-test feedback reaches selection.",
+        "Checks-only ablation disables branching without other changes."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T08",
+      "title": "Add evidence journal, export and replay",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T06"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        4
+      ],
+      "deliverables": [
+        "evidence manifest",
+        "export bundle",
+        "replay verifier"
+      ],
+      "acceptance_tests": [
+        "Every declared check maps to requirement and log digest.",
+        "Tampered manifest/diff/log fails replay validation.",
+        "Measured and estimated costs distinguishable."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T09",
+      "title": "Run pilot and issue continuation decision",
+      "owner_role": "evaluation engineer",
+      "status": "planned",
+      "depends_on": [
+        "T03",
+        "T05",
+        "T07",
+        "T08"
+      ],
+      "estimated_engineering_hours": [
+        2,
+        3
+      ],
+      "deliverables": [
+        "pilot report",
+        "raw episode ledgers",
+        "go-no-go.md"
+      ],
+      "acceptance_tests": [
+        "72 planned pilot episodes accounted for.",
+        "Task-level comparison and failed-run handling correct.",
+        "G2 threshold met or written simplify/stop decision issued."
+      ],
+      "requires_owner_action": false,
+      "gate": "G2"
+    },
+    {
+      "id": "T10",
+      "title": "Build task, comparison and evidence UI",
+      "owner_role": "product engineer",
+      "status": "planned",
+      "depends_on": [
+        "T02",
+        "T09"
+      ],
+      "estimated_engineering_hours": [
+        5,
+        8
+      ],
+      "deliverables": [
+        "apps/web/",
+        "accessible UI states",
+        "API integration"
+      ],
+      "acceptance_tests": [
+        "Task selection to evidence export works without coaching.",
+        "Live, replay and mock states visibly distinct.",
+        "No arbitrary code/URL input or accidental write action."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T11",
+      "title": "Run sealed evaluation, ablations and review exercises",
+      "owner_role": "evaluation engineer",
+      "status": "planned",
+      "depends_on": [
+        "T09",
+        "T10"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        5
+      ],
+      "deliverables": [
+        "frozen protocol",
+        "final report",
+        "raw logs",
+        "analysis script"
+      ],
+      "acceptance_tests": [
+        "30 tasks \u00d7 3 variants \u00d7 3 repetitions accounted for.",
+        "Repo-clustered paired analysis; identical budgets and task information.",
+        "No unsupported superiority claim when uncertainty or ablation contradicts it."
+      ],
+      "requires_owner_action": false,
+      "gate": "G3"
+    },
+    {
+      "id": "T12",
+      "title": "Test complete workflow and bounded public-demo operation",
+      "owner_role": "runtime engineer",
+      "status": "planned",
+      "depends_on": [
+        "T08",
+        "T10"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        4
+      ],
+      "deliverables": [
+        "end-to-end tests",
+        "operations runbook",
+        "cost projection"
+      ],
+      "acceptance_tests": [
+        "Timeout, denial, replay, cancellation and restart tests pass.",
+        "Demo cannot reach private network or expose keys.",
+        "Availability/operating budget through required judging date planned."
+      ],
+      "requires_owner_action": false,
+      "gate": null
+    },
+    {
+      "id": "T13",
+      "title": "Prepare real demo and submission assets",
+      "owner_role": "product engineer",
+      "status": "planned",
+      "depends_on": [
+        "T11",
+        "T12"
+      ],
+      "estimated_engineering_hours": [
+        3,
+        5
+      ],
+      "deliverables": [
+        "demo storyboard and recording",
+        "setup README",
+        "platform feedback",
+        "submission draft"
+      ],
+      "acceptance_tests": [
+        "Demo under 170 seconds target, no fictitious results.",
+        "Claims trace to actual reports and evidence.",
+        "Working product and clean source match the shown version."
+      ],
+      "requires_owner_action": false,
+      "gate": "G4"
+    },
+    {
+      "id": "T14",
+      "title": "Independent release audit and owner handoff",
+      "owner_role": "coordinator",
+      "status": "planned",
+      "depends_on": [
+        "T01",
+        "T13"
+      ],
+      "estimated_engineering_hours": [
+        2,
+        3
+      ],
+      "deliverables": [
+        "release audit",
+        "unresolved issues",
+        "owner checklist"
+      ],
+      "acceptance_tests": [
+        "Fresh environment reproduces selected runs.",
+        "Final rules rechecked, licenses audited and secrets absent.",
+        "Owner controls publication/entry; automation did not enroll or submit."
+      ],
+      "requires_owner_action": true,
+      "gate": null
+    }
+  ]
+}

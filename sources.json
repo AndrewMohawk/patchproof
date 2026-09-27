@@ -1,0 +1,103 @@
+{
+  "as_of": "2026-09-25",
+  "timezone": "America/Los_Angeles",
+  "method": "Public primary-source desk research; no benchmarks or authenticated API tests",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Nebius \u00d7 NVIDIA event overview",
+      "url": "https://nebiusglobalaihackathon.devpost.com/",
+      "use_and_limitations": "Official event: current deadline, prizes, track, required product and submission assets."
+    },
+    {
+      "id": "S02",
+      "title": "Nebius \u00d7 NVIDIA official rules",
+      "url": "https://nebiusglobalaihackathon.devpost.com/rules",
+      "use_and_limitations": "Official rules: eligibility, permitted reuse, scoring, delivery, availability through judging. Recheck before entry."
+    },
+    {
+      "id": "S03",
+      "title": "Current event project gallery",
+      "url": "https://nebiusglobalaihackathon.devpost.com/project-gallery",
+      "use_and_limitations": "Gallery explicitly unpublished when inspected; actual entrant projects could not be compared."
+    },
+    {
+      "id": "S04",
+      "title": "mini-SWE-agent repository",
+      "url": "https://github.com/SWE-agent/mini-swe-agent",
+      "use_and_limitations": "Minimal coding-agent baseline, v2 notice, pluggable environments, MIT license indication. Not executed in this research."
+    },
+    {
+      "id": "S05",
+      "title": "OpenHands Software Agent SDK",
+      "url": "https://github.com/OpenHands/software-agent-sdk",
+      "use_and_limitations": "Adjacent coding-agent infrastructure with Python, TypeScript and REST interfaces and ephemeral workspaces."
+    },
+    {
+      "id": "S06",
+      "title": "OpenHands SDK license",
+      "url": "https://github.com/OpenHands/software-agent-sdk/blob/main/LICENSE",
+      "use_and_limitations": "MIT license for this SDK specifically; not a blanket licensing statement about every OpenHands product."
+    },
+    {
+      "id": "S07",
+      "title": "Aider linting/testing documentation",
+      "url": "https://aider.chat/docs/usage/lint-test.html",
+      "use_and_limitations": "Existing automatic lint/test/fix behavior; establishes that running tests is not novel."
+    },
+    {
+      "id": "S08",
+      "title": "SWE-Gate paper, September 3, 2026",
+      "url": "https://arxiv.org/html/2609.04167v1",
+      "use_and_limitations": "Primary research on functional versus review-constraint correctness. Authors\u2019 results, not reproduced here."
+    },
+    {
+      "id": "S09",
+      "title": "SWE-Gate replication repository",
+      "url": "https://github.com/DeepSoftwareAnalytics/SWE-Gate",
+      "use_and_limitations": "Released evaluation assets; redistribution license not established in this review. Do not vendor until checked."
+    },
+    {
+      "id": "S10",
+      "title": "Nebius Token Factory quickstart",
+      "url": "https://docs.tokenfactory.nebius.com/quickstart",
+      "use_and_limitations": "Documented inference base URL and authentication. Account access/model availability not tested."
+    },
+    {
+      "id": "S11",
+      "title": "Nebius Sandboxes overview",
+      "url": "https://docs.tokenfactory.nebius.com/sandboxes/overview",
+      "use_and_limitations": "Beta sandbox service, branching/checkpoints, OCI images, metrics, async operations. Provider claims, not independent isolation testing."
+    },
+    {
+      "id": "S12",
+      "title": "Nebius Sandboxes for SWE agents",
+      "url": "https://docs.tokenfactory.nebius.com/sandboxes/swe-agents",
+      "use_and_limitations": "Documented Contree integration and available research environment catalog."
+    },
+    {
+      "id": "S13",
+      "title": "ARC Prize 2026 official overview",
+      "url": "https://arcprize.org/competitions/2026",
+      "use_and_limitations": "Current tracks and offline evaluation restriction. Full Kaggle leaderboard/rules not retrieved here."
+    },
+    {
+      "id": "S14",
+      "title": "ARC-AGI-3 world-model ablation study",
+      "url": "https://arxiv.org/abs/2607.15439",
+      "use_and_limitations": "Public-set results do not establish private-set performance; useful caution about benchmark transfer."
+    },
+    {
+      "id": "S15",
+      "title": "ARC-AGI-3 graph-exploration paper",
+      "url": "https://arxiv.org/abs/2512.24156",
+      "use_and_limitations": "Potential lightweight baseline; preview results are not directly comparable to the 2026 final."
+    },
+    {
+      "id": "S16",
+      "title": "Nebius public serverless endpoint documentation",
+      "url": "https://docs.tokenfactory.nebius.com/public-serverless",
+      "use_and_limitations": "Public endpoints have no fixed processing-region guarantee. Use only publishable fixture data."
+    }
+  ]
+}
