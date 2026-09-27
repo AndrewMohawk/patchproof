@@ -1,0 +1,5 @@
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+tests/local-check-timing.test.ts(83,3): error TS2322: Type '1' is not assignable to type '60'.

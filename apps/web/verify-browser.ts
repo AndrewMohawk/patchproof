@@ -72,10 +72,12 @@ try {
   else await page.getByRole('button', { name: 'Compare all three', exact: true }).click();
   await page.locator('#compare-view').waitFor({ state: 'visible' });
   caption('All three policies share the same allowance. Progress comes from recorded coordinator events and container checks.');
+  // Observe cleanup/publication after the fixed 120-second execution deadline;
+  // this wait does not grant any additional execution time.
   await page.waitForFunction(() => document.querySelectorAll('.variant-card a').length === 3 &&
     !(document.querySelector('#compare-run') as HTMLButtonElement).disabled &&
     document.querySelectorAll('.variant-card .outcome').length === 3 &&
-    !document.querySelector('.variant-card .busy-indicator'), undefined, { timeout: 120000 });
+    !document.querySelector('.variant-card .busy-indicator'), undefined, { timeout: 150000 });
   const runIds = await page.locator('.variant-card a').evaluateAll(links => links.map(link => (link as HTMLAnchorElement).hash.split('/')[1]!));
   if (resumeRunIds.length) assert.deepEqual([...runIds].sort(), [...resumeRunIds].sort(), 'Resume observes the exact previously launched runs.');
   const comparisonRuns = await Promise.all(runIds.map(async id => {

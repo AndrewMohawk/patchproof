@@ -1,0 +1,50 @@
+{
+  "causeObserved": "Shared30-second repeated-batch deadline expired during original-source checks; all three runs finished near30seconds with0candidates. Underlying per-operation latency cause not established.",
+  "runtimeChanged": false,
+  "runs": [
+    {
+      "id": "87737ac6-b7d1-4106-9346-87f015602867",
+      "variant": "patchproof",
+      "status": "infrastructure_error",
+      "elapsedMs": 30655,
+      "candidates": 0,
+      "recordedOperations": 15,
+      "observedLifecycleRecords": 15,
+      "allObservedCleanupConfirmed": true,
+      "minimumOperationMs": 1360,
+      "medianOperationMs": 1689,
+      "maximumOperationMs": 3321,
+      "checksWithNoStartedOperation": 3
+    },
+    {
+      "id": "f50da9ef-052f-4f02-af08-5f713edb9f05",
+      "variant": "checks_only",
+      "status": "infrastructure_error",
+      "elapsedMs": 30695,
+      "candidates": 0,
+      "recordedOperations": 15,
+      "observedLifecycleRecords": 15,
+      "allObservedCleanupConfirmed": true,
+      "minimumOperationMs": 1183,
+      "medianOperationMs": 1729,
+      "maximumOperationMs": 3307,
+      "checksWithNoStartedOperation": 3
+    },
+    {
+      "id": "288c0841-877b-402a-9489-9681e1337199",
+      "variant": "baseline",
+      "status": "infrastructure_error",
+      "elapsedMs": 30532,
+      "candidates": 0,
+      "recordedOperations": 15,
+      "observedLifecycleRecords": 15,
+      "allObservedCleanupConfirmed": true,
+      "minimumOperationMs": 1492,
+      "medianOperationMs": 1659,
+      "maximumOperationMs": 3290,
+      "checksWithNoStartedOperation": 3
+    }
+  ],
+  "projectOwnedListingEmpty": true,
+  "providerCalls": 0
+}

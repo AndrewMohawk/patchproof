@@ -1,0 +1,18 @@
+(node:3417930) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ only the exact recorded local policy increases mock timing; live and absent policy stay historical (2.54126ms)
+✔ all three mock arms keep equal 60-second batches, three proposals and the unchanged aggregate allowance (421.831792ms)
+✔ remaining aggregate deadline shrinks later batches and prevents a third proposal at 120 seconds (118.509475ms)
+✔ legacy coordinator locks retain 30-second batches without rewriting historical policy (146.026025ms)
+✔ malformed policy prevents coordinator construction before checker or proposal entry (33.153958ms)
+✔ historical2.0/2.1/2.2 replays retain30, new mock policy uses60, and live replay never increases (348.951423ms)
+✔ recorded repeats share one accepted mock60 or historical30 budget (70.17812ms)
+✔ unknown replay policy fails before any runner entry, even when hashes are internally consistent (11.431492ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1447.216987

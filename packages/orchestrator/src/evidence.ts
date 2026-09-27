@@ -12,6 +12,7 @@ import { fixtureDigests, validatePaths } from './fixtures.ts';
 import { applyPatch, createPatch } from './patch.ts';
 import { runnerForFrozenProtocol } from './repeated-checks.ts';
 import { isDeepStrictEqual } from 'node:util';
+import { resolveCheckBatchSeconds } from './local-check-timing.ts';
 
 const normalize = <T>(value: T): T => cloneJsonData(value) as T;
 export function buildEvidence(runValue: ProductRun, fixture: Fixture, runtimeLock: unknown): ProductEvidence {
@@ -119,12 +120,13 @@ export class EvidenceStore {
 
 export async function reproduceEvidence(bundleValue: unknown, runner: CheckRunner, signal: AbortSignal) {
   const bundle = verifyEvidence(bundleValue);
+  const timeoutSeconds = resolveCheckBatchSeconds(bundle.mode, bundle.runtimeLock);
   const selected = bundle.run.candidates.find(c => c.id === bundle.run.selectedCandidateId);
   if (!selected) return { status: 'no_selected_patch', mode: bundle.mode, competitionReady: false, executionPerformed: false };
   const files = await applyPatch(bundle.fixture.files, bundle.files['patch.diff']!.content);
   if (digestJson(files) !== digestJson(selected.files)) throw new ContractError('digest_mismatch', 'Applied patch differs from candidate.');
   const checks = await runnerForFrozenProtocol(runner, bundle.runtimeLock).run({ files, entrypoint: bundle.fixture.entrypoint,
-    cases: [...bundle.fixture.visibleCases, ...bundle.fixture.acceptanceCases], timeoutSeconds: 30, contractVersion: bundle.schemaVersion }, signal);
+    cases: [...bundle.fixture.visibleCases, ...bundle.fixture.acceptanceCases], timeoutSeconds, contractVersion: bundle.schemaVersion }, signal);
   const expected = [...selected.visibleChecks, ...selected.acceptanceChecks];
   const consistent = checks.infrastructureError === null && checks.checks.length === expected.length && checks.checks.every(check =>
     expected.some(previous => previous.id === check.id && previous.requirementId === check.requirementId && previous.status === check.status && isDeepStrictEqual(previous.actual, check.actual)));

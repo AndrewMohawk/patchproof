@@ -16,6 +16,7 @@ import { verifyOperationalLock } from '../packages/orchestrator/src/operational-
 import { ReleaseDigestSchema } from './release-receipts.ts';
 import { buildReleasePacket, verifyReleasePacket } from './release-packet.ts';
 import { readReleaseInput } from './release-input.ts';
+import { resolveCheckBatchSeconds } from '../packages/orchestrator/src/local-check-timing.ts';
 
 const root = new URL('../', import.meta.url);
 const [command, argument, variant = 'patchproof'] = process.argv.slice(2);
@@ -115,7 +116,8 @@ async function main() {
     const lock = bundle.runtimeLock as { localCheckImage?: string; operationalLock?: unknown };
     if (lock.operationalLock) verifyOperationalLock(fileURLToPath(root), lock.operationalLock);
     if (!lock.localCheckImage) throw new ContractError('setup_error', 'Export has no pinned local checker image.');
-    const replay = await reproduceEvidence(bundle, new DockerCheckRunner({ image: lock.localCheckImage }), AbortSignal.timeout(35_000));
+    const replayTimeoutMs = (resolveCheckBatchSeconds(bundle.mode, bundle.runtimeLock) + 5) * 1000;
+    const replay = await reproduceEvidence(bundle, new DockerCheckRunner({ image: lock.localCheckImage }), AbortSignal.timeout(replayTimeoutMs));
     print({ ...replay, bundleDigest: bundle.bundleDigest, authenticityVerified: false });
     if (replay.status !== 'reproduced') process.exitCode = 2;
     return;

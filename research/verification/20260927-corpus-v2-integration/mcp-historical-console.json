@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "3cc45df2b854effe6aca727934f02170fb6eb605",
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "### Result\nTotal messages: 1 (Errors: 1, Warnings: 0)\n\n[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:43171/runs/288c0841-877b-402a-9489-9681e1337199/evidence:0"
+      }
+    ]
+  },
+  "assessment": "Historical2.0/2.1 task context rendered correctly. One409 arose while current2.2 terminal state preceded its evidence publication; retained for the bounded terminal-publication fix. No zero-console-error claim for this first handoff."
+}

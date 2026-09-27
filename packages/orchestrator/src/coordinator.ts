@@ -12,6 +12,7 @@ import { LOCAL_REPAIR_POLICY, repairInput, RevisionCheckError, runRevisionLoop }
 import { FLAKY_CHECK_MESSAGE } from './repeated-checks.ts';
 import { resolveTrustedSmokeCapability, TrustedSmokeGateError } from './trusted-smoke.ts';
 import type { TrustedSmokeSettings } from './trusted-smoke.ts';
+import { resolveCheckBatchSeconds } from './local-check-timing.ts';
 
 export const LOCAL_LIMITS = LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 24000,
   outputTokenLimit: 6000, wallTimeLimitSeconds: 120, sandboxCpuSecondsLimit: 60, maxApprovedSpendUsd: 0 });
@@ -25,12 +26,14 @@ export class Coordinator {
   readonly #checks: CheckRunner;
   readonly #verifyRuntime: (() => void) | undefined;
   readonly #trustedSmoke: TrustedSmokeSettings | null;
+  readonly #checkBatchSeconds: 30 | 60;
   readonly #jobs = new Map<string, { controller: AbortController; promise: Promise<void> }>();
   readonly #listeners = new Map<string, Set<(event: ProductEvent) => void>>();
 
   constructor(options: { fixtures: Fixture[]; runtimeLock: unknown; provider: RepairProvider;
     checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void; trustedSmokeCapability?: unknown }) {
     this.#fixtures = new Map(options.fixtures.map(fixture => [fixture.id, structuredClone(fixture)]));
+    this.#checkBatchSeconds = resolveCheckBatchSeconds(options.provider.mode, options.runtimeLock);
     this.#runtimeLock = structuredClone(options.runtimeLock);
     this.#provider = options.provider; this.#checks = options.checks;
     this.#verifyRuntime = options.verifyRuntime;
@@ -43,7 +46,18 @@ export class Coordinator {
   get(id: string) { return this.journal.get(id); }
   list() { return this.journal.list(); }
   async evidence(id: string) {
-    const digest = this.journal.evidenceDigest(id);
+    let digest = this.journal.evidenceDigest(id);
+    // Polling may observe the terminal journal row while its immutable bundle is
+    // still being written. Wait only for this terminal job, never active repair.
+    const job = !digest ? this.#jobs.get(id) : undefined;
+    const publication = job && this.get(id).phase === 'terminal' ? job.promise : undefined;
+    if (publication) {
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await Promise.race([publication, new Promise<void>(resolve => { timer = setTimeout(resolve, 5_000); })]);
+      } finally { if (timer !== undefined) clearTimeout(timer); }
+      digest = this.journal.evidenceDigest(id);
+    }
     if (!digest) throw new ContractError('evidence_not_ready', 'Evidence is not available yet.', 409);
     return this.store.get(digest);
   }
@@ -155,7 +169,7 @@ export class Coordinator {
     const remainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - Date.parse(run.createdAt)) / 1000);
     if (remainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for another check batch.');
     const result = await this.#checks.run({ files, entrypoint: fixture.entrypoint,
-      cases: [...fixture.visibleCases, ...fixture.acceptanceCases], timeoutSeconds: Math.min(this.#trustedSmoke?.maximumCheckBatchSeconds ?? 30, remainingSeconds),
+      cases: [...fixture.visibleCases, ...fixture.acceptanceCases], timeoutSeconds: Math.min(this.#trustedSmoke?.maximumCheckBatchSeconds ?? this.#checkBatchSeconds, remainingSeconds),
       contractVersion: run.schemaVersion, ownerRunId: run.id, onOperation: id => { run.sandboxOperationIds.push(id); this.journal.save(run); },
     }, signal);
     for (const id of result.operationIds) if (!run.sandboxOperationIds.includes(id)) run.sandboxOperationIds.push(id);

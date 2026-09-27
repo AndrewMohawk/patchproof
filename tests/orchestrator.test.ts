@@ -86,6 +86,54 @@ test('publication failure cannot leave an approval in the final journal event', 
   await coordinator.close();
 });
 
+test('terminal evidence reads wait for that publication and retain failure when publication rejects', async t => {
+  for (const outcome of ['published', 'failed', 'timeout']) {
+    await t.test(outcome, async t => {
+      const dir = await mkdtemp(join(tmpdir(), 'patchproof-pending-publication-'));
+      t.after(() => rm(dir, { recursive: true, force: true }));
+      const started = Promise.withResolvers<void>();
+      const release = Promise.withResolvers<void>();
+      class DelayedStore extends EvidenceStore {
+        override async put(bundle: Parameters<EvidenceStore['put']>[0]) {
+          started.resolve(); await release.promise;
+          if (outcome === 'failed') throw new Error('Invented publication failure.');
+          return super.put(bundle);
+        }
+      }
+      const coordinator = new Coordinator({ fixtures: [fixture], runtimeLock: {}, provider, checks: checker,
+        journal: new RunJournal(join(dir, 'runs.sqlite')), store: new DelayedStore(join(dir, 'evidence')) });
+      try {
+        await assert.rejects(coordinator.evidence('unknown-run'), { code: 'evidence_not_ready' });
+        const { run } = coordinator.create({ taskId: fixture.id, variant: 'patchproof', mode: 'mock', idempotencyKey: 'pending-publication' });
+        await assert.rejects(coordinator.evidence(run.id), { code: 'evidence_not_ready' });
+        await started.promise;
+        assert.equal(coordinator.get(run.id).phase, 'terminal');
+        assert.equal(coordinator.journal.evidenceDigest(run.id), null);
+        if (outcome === 'timeout') t.mock.timers.enable({ apis: ['setTimeout'] });
+        let settled = false;
+        const pending = coordinator.evidence(run.id).then(bundle => ({ bundle }), error => ({ error })).finally(() => { settled = true; });
+        await new Promise(resolve => setImmediate(resolve));
+        assert.equal(settled, false, 'A terminal row does not imply its bundle is already published.');
+        if (outcome === 'timeout') {
+          t.mock.timers.tick(4_999);
+          await new Promise(resolve => setImmediate(resolve));
+          assert.equal(settled, false, 'The publication wait stays pending until its bound.');
+          t.mock.timers.tick(1);
+        } else release.resolve();
+        const result = await pending;
+        if (outcome !== 'published') {
+          assert.ok('error' in result); assert.equal(result.error.code, 'evidence_not_ready');
+          if (outcome === 'failed') assert.equal(coordinator.get(run.id).reason, 'evidence_publish_failed');
+          else assert.equal(coordinator.journal.evidenceDigest(run.id), null);
+        } else {
+          assert.ok('bundle' in result); assert.equal(verifyEvidence(result.bundle).run.id, run.id);
+          assert.equal(coordinator.journal.evidenceDigest(run.id), result.bundle.bundleDigest);
+        }
+      } finally { t.mock.timers.reset(); release.resolve(); await coordinator.close(); }
+    });
+  }
+});
+
 test('restart recovery reconciles run-owned handles before recording interruption', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'patchproof-restart-test-')); t.after(() => rm(dir, { recursive: true, force: true }));
   const journal = new RunJournal(join(dir, 'runs.sqlite'));

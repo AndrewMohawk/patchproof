@@ -1,0 +1,92 @@
+{
+  "kind": "local-mock-recorded-check-timing-change",
+  "recordedAt": "2026-09-27T15:23:23.526Z",
+  "baseCommit": "3cc45df2b854effe6aca727934f02170fb6eb605",
+  "sourceDigests": {
+    "packages/orchestrator/src/local-check-timing.ts": "sha256:9886d073e1ac5162fe579fbd1199713bff91ee93079c188305aaec96b6e5a6f2",
+    "apps/api/src/application.ts": "sha256:c527f7e69207fb401d284e7a8575183695eb77284771d8d8374850ccd631d265",
+    "packages/orchestrator/src/coordinator.ts": "sha256:79d9440c943f27f0647eb21ad574469c02728341e4ebd5d7fd196239fbc4516c",
+    "packages/orchestrator/src/evidence.ts": "sha256:e1aceea1aafabdce423a868c7621a0ba87227d9365d09e2a4848b5af0288e557",
+    "scripts/product-cli.ts": "sha256:58f97ea9d4ebc243f0dc9c94a326d6eac81776471e0c2b41f754e1c848df8516",
+    "apps/web/verify-browser.ts": "sha256:52b51ca69a4b0415bf211cd789cad2b3111260bcede7508f17aae0c631d094c8",
+    "scripts/verify-browser.ts": "sha256:29a09cadeafc2749d2e097427d2decfc1725ea50c6417b300357cb62e8c197e9",
+    "tests/local-check-timing.test.ts": "sha256:87ced526dda874768ee6156fa51676cea4ea6e772ee286f0b07e967d6cb74162"
+  },
+  "scope": "Uncommitted source and synthetic timing controls only; no candidate, Docker, provider or actual replay execution.",
+  "policy": {
+    "runtimeLockField": "localCheckTimingPolicy",
+    "supported": {
+      "id": "local-mock-check-timing-v1",
+      "maximumBatchWallSeconds": 60
+    },
+    "historicalAbsentSeconds": 30,
+    "liveSeconds": 30,
+    "malformed": "Rejected before coordinator scheduling or replay runner entry",
+    "application": "New policy recorded only for mock local runtime",
+    "coordinator": "Batch cap is the minimum of the trusted-smoke maximum (when present) or resolved local cap, and remaining aggregate seconds. The 120-second aggregate allowance and three proposals are unchanged.",
+    "replay": "Mode and recorded policy determine batch cap; frozen repetition behavior unchanged",
+    "cli": "Accepted cap plus 5 seconds for the outer signal, after existing source/image guards: historical 35 seconds, new mock 65 seconds.",
+    "observer": "150-second comparison wait; existing 160-second wrapper unchanged (rehearsal wrapper remains 200 seconds). No execution-cap increase."
+  },
+  "tests": [
+    {
+      "command": "node --test tests/local-check-timing.test.ts",
+      "exitCode": 0,
+      "passed": 8,
+      "log": "local-timing-first-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 2,
+      "log": "local-timing-first-typecheck.log",
+      "finding": "The deliberate caller-mutation test assigned 1 to a field inferred as literal 60; production logic passed all eight controls.",
+      "resolution": "Widened explicitly mutable caller test input annotation; no implementation change."
+    },
+    {
+      "command": "node --test tests/local-check-timing.test.ts tests/repeated-checks.test.ts tests/evidence-version.test.ts",
+      "exitCode": 0,
+      "passed": 13,
+      "log": "local-timing-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "local-timing-typecheck.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "testedBoundaries": [
+    "All three arms receive equal 60-second batches and an unchanged 120-second, three-proposal allowance",
+    "Caller lock mutation cannot alter the recorded policy",
+    "Simulated aggregate clock yields batch caps of 60, 50 and 1 seconds and stops proposals at 120 seconds",
+    "Historical coordinator lock stays at 30 seconds",
+    "Exact policy only; undefined, null, unknown, extra, non-numeric and accessor values rejected",
+    "Synthetic 2.0/2.1/2.2 replay inputs remain byte-identical",
+    "New mock replay uses 60 seconds; historical and live replay use 30 seconds",
+    "Repeated checks share one cap",
+    "Unknown policy cannot enter the injected runner"
+  ],
+  "separateWork": "Coordinator.evidence() publication-race fix and tests/orchestrator.test.ts belong to root and are not claimed as this agent timing proof.",
+  "preservedPriorBrowserArtifacts": {
+    "browser-first-attempt.json": "sha256:236cc52bdc8820dd3f2f2f1d6a2e394e83be1d80665a8db4314bed28b4fcd57d",
+    "browser-timeout-diagnosis.json": "sha256:40319a9858b91d1f3625df5c7ec73f706413ec36698a06ef5f1f4a0c29fa7aac",
+    "browser.log": "sha256:2d2030e078bc8519e79b5b8b2358093942c9a5f1926d896b95e9c2fc5d77d67e"
+  },
+  "notRun": [
+    "Full integrated suite",
+    "Actual v2 Docker/browser/replay",
+    "Real provider/model calls",
+    "No schema/fixture/checker/repetition changes"
+  ],
+  "independentReview": {
+    "reviewer": "/root/json_contract_review",
+    "result": "No concrete blocker found",
+    "scope": "Read-only resolver, application/coordinator timing, evidence replay, CLI and browser-wait source plus synthetic test definitions",
+    "testsExecuted": false,
+    "excluded": "Root-owned Coordinator.evidence publication-race hunk"
+  },
+  "committed": false
+}

@@ -1,0 +1,25 @@
+✔ the historical demonstration retains its frozen 2.0 fingerprint while 2.1 binds metadata (8.825733ms)
+(node:3425859) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ only the exact recorded local policy increases mock timing; live and absent policy stay historical (2.452727ms)
+✔ all three mock arms keep equal 60-second batches, three proposals and the unchanged aggregate allowance (561.894045ms)
+✔ remaining aggregate deadline shrinks later batches and prevents a third proposal at 120 seconds (136.520646ms)
+✔ legacy coordinator locks retain 30-second batches without rewriting historical policy (1118.551548ms)
+✔ malformed policy prevents coordinator construction before checker or proposal entry (668.439884ms)
+✔ historical2.0/2.1/2.2 replays retain30, new mock policy uses60, and live replay never increases (1259.438796ms)
+✔ recorded repeats share one accepted mock60 or historical30 budget (79.519072ms)
+✔ unknown replay policy fails before any runner entry, even when hashes are internally consistent (9.651933ms)
+(node:3425860) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ repeat observations retain both passes, failures, operation handles and shared time allowance (3.38713ms)
+✔ infrastructure uncertainty and expired batch allowance cannot trigger another repeat or pass (0.812352ms)
+✔ a candidate with contradictory fresh observations abstains and exports both records without another model call (238.429608ms)
+✔ replay honors the frozen repeat protocol and does not approve a single lucky observation (272.25937ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4125.374861

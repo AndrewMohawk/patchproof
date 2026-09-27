@@ -1,0 +1,15 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: infrastructure_error
+    at file:///tmp/patchproof-handoff-3cc45df/apps/web/verify-browser.ts:95:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'infrastructure_error',
+  expected: 'infrastructure_error',
+  operator: 'notStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.5.0
