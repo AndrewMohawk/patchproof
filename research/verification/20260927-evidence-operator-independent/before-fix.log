@@ -1,0 +1,27 @@
+(node:1644124) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling (87.134657ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 363.77933
+
+✖ failing tests:
+
+test at tests/evidence-operator.test.ts:98:1
+✖ URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling (87.134657ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///tmp/patchproof-evidence-operator-review/tests/evidence-operator.test.ts:106:3)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /evidence_curated_path_invalid/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

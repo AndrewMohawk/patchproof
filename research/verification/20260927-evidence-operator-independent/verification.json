@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "independent-private-evidence-operator-review-and-local-fix",
+  "observedAt": "2026-09-27T12:14:09.570361+00:00",
+  "reviewedCommit": "167898cb686310e8b42dc1d48e1783646de67b5f",
+  "testedCommit": "1603d75ae2470889257261035e363b7f41b7fc40",
+  "originalSourceDigest": "sha256:b1fe700597eda2e06a7e0eca5f771e20ad46f0600bb6eab9d6c40c788b776196",
+  "testedFiles": {
+    "scripts/evidence-operator.ts": "sha256:48cc87e85e1e1150dcdc1415bfe64b23ac74ffa0e2b478e58dda246373484371",
+    "tests/evidence-operator.test.ts": "sha256:658096bcabb9e6fdf11e072263cf45da5dbe22198771325726136501e01829e4"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "--test-name-pattern",
+        "URL-reinterpreted",
+        "tests/evidence-operator.test.ts"
+      ],
+      "sourceState": "before fix; new regression appended",
+      "exitCode": 1,
+      "expectation": "missing expected rejection confirms boundary defect",
+      "log": "before-fix.log"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/evidence-operator.test.ts"
+      ],
+      "sourceState": "tested commit source",
+      "exitCode": 0,
+      "testsPassed": 16,
+      "log": "after-fix.log"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "sourceState": "tested commit source",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    }
+  ],
+  "logs": {
+    "typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "after-fix.log": "sha256:36f34931f1398535ff67472eaea8f871146002fe56bddba107a53af98f6ec06c",
+    "before-fix.log": "sha256:81e6bed0cf0120ce8e673ae5c94a375ca293dc9e7fb96427f6fe1f2c43534624"
+  },
+  "inputs": "Invented inert fixture metadata and task-owned temporary SQLite/filesystem state only",
+  "candidateExecutions": 0,
+  "providerCalls": 0,
+  "paidCalls": 0,
+  "corpusAccess": false,
+  "publication": false
+}
