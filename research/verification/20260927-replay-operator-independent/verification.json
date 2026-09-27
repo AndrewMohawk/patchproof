@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "independent-replay-metadata-boundary-review-and-ledger-fix",
+  "observedAt": "2026-09-27T12:21:35.602289+00:00",
+  "baseCommit": "167898cb686310e8b42dc1d48e1783646de67b5f",
+  "testedOwnedCommit": "bd0096a8dbfa4d45a912ae9b70c1c92ce57b9ce6",
+  "ownedFileDigests": {
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:e78bf9334f33c92f4b68dc51dcd16dc700b345a7f4c78c480e106c0cc9c7c649",
+    "tests/budget-ledger-existing.test.ts": "sha256:5f728ca6d33a4f3b289c384a38eb9bc1861fc50585730a1ffbcbf8232f234103",
+    "tests/replay-operator-independent.test.ts": "sha256:cca08c6d03f9fe81dbb1b152482bf27a6935aea04040cc23a50a73802c92651c"
+  },
+  "copiedRootFileDigests": {
+    "scripts/replay-operator.ts": "sha256:8f68044f1776fbfedb82926a96390c380f3b189a7686379d26f8f92b11ac40b8",
+    "packages/orchestrator/src/trusted-replay.ts": "sha256:94c9adcfc3f766e5aca5d1e97abd5c1df1fca831bdeab8fdf8febf66940f87f6",
+    "tests/replay-operator.test.ts": "sha256:c94dbdd1404e611d202f6d7ba91af876115b72ad34328ee8fd4138b3c03c5506",
+    "tests/helpers/replay-data.ts": "sha256:1e24d3245cec7b0e228ab5816d101445b1f639cbfd96ffbdc266a3d30fb8681e"
+  },
+  "integrationRequired": "Copied replay-operator.ts uses existingOnly:true; coordinator must apply that one line in its own replay implementation commit. Copied files are not included in the owned commit.",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "--test-name-pattern",
+        "preflight rejects empty",
+        "tests/replay-operator-independent.test.ts"
+      ],
+      "state": "Copied replay operator with existingOnly option temporarily removed; default ledger initializer unchanged",
+      "exitCode": 1,
+      "expected": "Missing expected rejection confirms empty file approval initialization",
+      "log": "before-fix.log"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/budget-ledger-existing.test.ts",
+        "tests/budget-ledger.test.ts",
+        "tests/replay-operator.test.ts",
+        "tests/replay-operator-independent.test.ts"
+      ],
+      "exitCode": 0,
+      "testsPassed": 34,
+      "log": "focused-tests.log"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "typecheck.log"
+    }
+  ],
+  "logDigests": {
+    "typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "focused-tests.log": "sha256:3a1cdb05cb51786578cb7b7385d06aeb632921c2a39b55afb83019d282062a0d",
+    "before-fix.log": "sha256:c8fde40ea3bb785bdaefd08da2b687bc394eda2e0dd30f612847d54dc785fde8"
+  },
+  "actualProviderCalls": 0,
+  "candidateExecutions": 0,
+  "fakeTransportsUsed": true,
+  "paidCalls": 0,
+  "corpusAccess": false,
+  "publication": false
+}

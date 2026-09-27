@@ -1,0 +1,50 @@
+(node:1838008) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ existing-only missing paths, empty files and unrelated databases never initialize an allowance (41.101013ms)
+✔ existing-only reads the current durable approval and reservation inventory through a live WAL without initialization (174.119997ms)
+✔ existing-only refuses missing tables, absent approval and changed schema without repairing or migrating them (384.865979ms)
+✔ existing-only refuses permissive modes and filesystem aliases without chmod or following links (94.457953ms)
+(node:1838009) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ USD conversion is decimal-exact and rejects implicit fractional-micro rounding (1.994814ms)
+✔ ledger reads the project schema, keeps approved stage ceilings, and creates private files (156.738714ms)
+✔ separate connections enforce durable stage and aggregate reservations without float loss (139.247464ms)
+✔ IDs bind immutable request fingerprints and each episode has one aggregate allowance (118.41112ms)
+✔ runtime input validation rejects unbounded, nonfinite and partial reservations (106.45365ms)
+✔ attempt, unknown billing and cancellation survive restart and never silently release money (189.341684ms)
+✔ even unattempted cancellation retains the hold until explicit zero-cost reconciliation (138.367987ms)
+✔ explicit uncertain billing blocks dispatch even when an attempted marker was missing (120.139974ms)
+✔ late incomplete billing cannot resurrect a reconciled episode for dispatch (125.020778ms)
+✔ overrun is retained beyond the reservation and freezes future spending across restarts (162.026171ms)
+✔ late increased billing remains recorded and positive charges without dispatch freeze accounting (141.331613ms)
+✔ charge without a recorded dispatch is never discarded (109.861055ms)
+✔ approval expiry prevents reservation and dispatch but still permits honest reconciliation (108.690928ms)
+✔ missing and future authorization fail closed (94.218258ms)
+✔ reduced approval caps freeze existing exposure and stale connections cannot restore prior permission (134.863076ms)
+✔ changed configuration with equal approval timestamp needs explicit CAS and older approval is refused (100.311976ms)
+✔ credits do not expand approved ceilings and snapshots/events omit private approval text (96.280108ms)
+✔ SQLite integer costs retain precision past JavaScript safe integers and aggregate without overflow (101.132045ms)
+✔ symlink ledger files and directories are refused without changing the target (7.049276ms)
+✔ simultaneous processes cannot oversubscribe a stage reservation ceiling (364.492662ms)
+✔ simultaneous identical IDs create exactly one durable reservation and event (291.603054ms)
+✔ simultaneous workers obtain at most one dispatch grant for the episode (372.563733ms)
+✔ process termination after granting dispatch leaves its unknown charge durably held (307.287254ms)
+(node:1838010) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ replay preflight rejects empty or unrelated existing ledger files without creating a fresh approval (121.728937ms)
+✔ late report collision preserves raw batches and a durable terminal no-retry claim (667.78283ms)
+(node:1838016) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ preflight is credential-free; exact exported public bundle replays once with durable private results and unknown billing (755.980434ms)
+✔ configuration, source, bundle and current curated fixture pins fail before provider dispatch (487.73349ms)
+✔ missing ledger, output overwrite and database-sidecar collisions cannot initialize another allowance (311.184245ms)
+✔ status does not create sessions; cancel and recover never grant another start (273.709829ms)
+✔ durable cancellation during a fake running operation drains cleanup and retains the full reservation (379.986737ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3721.888396
