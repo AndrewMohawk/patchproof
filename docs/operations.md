@@ -63,7 +63,11 @@ image/architecture and rate units; fill `runtime-lock.json` with observed facts
 and references. The conditional Nebius check runner and
 [trusted smoke factory](trusted-smoke.md) have synthetic transport/lifecycle tests.
 The factory accepts verified model/tokenizer/control receipts and explicit trusted
-dependencies; a live operator entry point remains to be connected. Verify isolation controls against the
+dependencies. The [private smoke operator](trusted-smoke-operator.md) implements
+preflight, single-attempt execution, status and cancellation; the separate
+[live experiment operator](live-experiment-operator.md) connects the frozen plan,
+runtime, protected adjudication and independent phase-accounting intake. Both are
+tested with fake provider transports. Verify isolation controls against the
 account, not only fake transports. Retain the request/operation IDs for two
 curated smoke cases, cancellation, timeouts, failed calls and billing records.
 

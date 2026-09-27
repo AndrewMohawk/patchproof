@@ -31,7 +31,10 @@ try {
       createdIds.push(run.id);
     }
   });
-  await page.goto(base, { waitUntil: 'networkidle' });
+  // Active runs keep their SSE connections open. Wait for rendered task data,
+  // not an idle network, so an observer can attach while work is streaming.
+  await page.goto(base, { waitUntil: 'domcontentloaded' });
+  await page.locator('.task-card').first().waitFor({ state: 'visible' });
   assert.equal(await page.title(), 'PatchProof — review the evidence');
   assert.match(await page.locator('.mode-banner').innerText(), /No paid inference or competition-ready evidence/);
   assert.match(await page.locator('.mode-indicator').innerText(), /Mock model · Local checks/);
@@ -124,7 +127,7 @@ try {
   caption('Download the immutable source, selected patch, runtime lock, logs and accounting for a fresh local replay.');
   if (recordingDirectory) await page.waitForTimeout(3500);
 
-  await page.reload({ waitUntil: 'networkidle' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await page.getByRole('link', { name: 'Download evidence ↓', exact: true }).waitFor();
   assert.equal(new URL(page.url()).hash, `#evidence/${product.id}`, 'Reload preserves the addressed run.');
   await page.setViewportSize({ width: 390, height: 844 });

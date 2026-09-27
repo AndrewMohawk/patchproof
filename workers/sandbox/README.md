@@ -180,7 +180,11 @@ conservative full-batch charge ceiling before side effects and never refunds it
 from API cost values. This raw-runner allowance is process-local. The separate
 trusted smoke factory adds a durable aggregate reservation and conditional
 coordinator path; see [trusted smoke boundaries](../../docs/trusted-smoke.md).
-Public API/CLI live selection and automated live crash recovery remain unwired.
+The [private smoke operator](../../docs/trusted-smoke-operator.md) and
+[private experiment operator](../../docs/live-experiment-operator.md) now select
+these adapters behind verified account, policy and budget gates. The public
+product API accepts mock jobs only. Automatic live retry/resume is deliberately
+disabled; recovery retains unresolved operation handles and budget holds.
 Restarting a runner is not authorization for a new budget.
 
 Reported `consumed_cpu` values are summed only when every submitted operation has
@@ -188,8 +192,8 @@ a terminal measurement; missing or ambiguous observations leave CPU `null`.
 `resources.cost` is retained as `providerCostUnspecifiedUnit`, because the public
 schema does not name a currency. `measuredCostUsd` remains `null`, including failed
 and cancelled requests. Tests do not establish measured sponsor costs or matched
-paid evaluation. There is no fallback from Nebius to Docker and no live API/CLI
-selection has been added.
+paid evaluation. There is no fallback from Nebius to Docker; private operator
+wiring is not evidence of a real-provider run.
 
 Official interfaces inspected on 2026-09-27:
 
