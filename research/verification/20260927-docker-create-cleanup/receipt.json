@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "local-docker-lifecycle-validation",
+  "recordedAt": "2026-09-27T11:45:58.820Z",
+  "baseCommit": "7f60d99806e2d8c61869374986a62be2b28f9b8d",
+  "implementationCommit": "5a282b87d6ab5ca15e00e1ae7e555555ad4986a4",
+  "scope": "Bounded exact-owned local Docker lifecycle; injected process controls plus real pinned local containers.",
+  "actualProviderCalls": 0,
+  "actualSpendUsd": 0,
+  "benchmarkExecuted": false,
+  "commands": [
+    {
+      "command": "node --test tests/runtime-sandbox.test.ts tests/runtime-docker-cleanup.test.ts",
+      "exitCode": 0,
+      "passed": 21,
+      "failed": 0,
+      "log": "research/verification/20260927-docker-create-cleanup/tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/20260927-docker-create-cleanup/typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/20260927-docker-create-cleanup/contracts.log"
+    },
+    {
+      "command": "git diff --cached --check",
+      "exitCode": 0
+    },
+    {
+      "command": "/usr/bin/docker version --format '{{json .Client.Version}}'",
+      "exitCode": 0,
+      "observedClientVersion": "29.8.1"
+    },
+    {
+      "command": "/usr/bin/docker image inspect sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51 --format '{{json .RepoDigests}}'",
+      "exitCode": 0,
+      "observedRepoDigests": [
+        "python@sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f"
+      ]
+    }
+  ],
+  "sources": {
+    "workers/sandbox/index.ts": "sha256:25bdc0781a0232c77d8c70650b6ec0c097f0d331d1e9adf9a288ade3e802aa50",
+    "workers/sandbox/driver.ts": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8",
+    "workers/sandbox/local-cleanup.ts": "sha256:789f5f727c5ab26ac06b30ac0975ee218b87dfba49779abe5d5888dd56271507",
+    "workers/sandbox/process.ts": "sha256:1653666a878d0dfc2ef0ab67f56babcd5f9a49a96656385666387575c2580e4c",
+    "workers/sandbox/reconcile.ts": "sha256:5d084a0fdb885b71810e3bccdd698e15d10a37e88e32eee3955a090826707dc7",
+    "tests/runtime-sandbox.test.ts": "sha256:c3d6905ce53628da22c40c4582d91d712763af8418b653928999086331f2f4de",
+    "tests/runtime-docker-cleanup.test.ts": "sha256:0d53738c1ef284a6fbc29456ee4c707aaf7858e72753f58f9b226b0c99a670d2"
+  },
+  "artifacts": {
+    "research/verification/20260927-docker-create-cleanup/tests.log": "sha256:7dd1c74a10b18bc3cd8e34511c48c07cbc8e6eb9ab88a6970744a6124663ca3c",
+    "research/verification/20260927-docker-create-cleanup/typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/20260927-docker-create-cleanup/contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "logNormalization": "Trailing blank lines removed; command output content preserved.",
+  "controls": [
+    "Container create is separately acknowledged, exact immutable ID/name/image/owned/operation/run labels are inspected, and cancellation/deadline are checked before start/attach.",
+    "An unresolved create is never retried or started. Repeated missing inspections cannot establish cleanup without acknowledged or observed creation; unknown cleanup halts the batch and keeps its operation handle.",
+    "A controlled real Docker create completes only after the first cleanup inspection returns missing. Bounded cleanup discovers and removes the immutable ID, verifies absence, and no start is issued.",
+    "A real container with an expired guest deadline exits without invoking candidate source. The retained BusyBox timer test also limits a far-future wall deadline to a one-second cap and observes exit 137 before a longer host timeout.",
+    "Cancellation from the operation journal and an exhausted image-inspection allowance prevent creation. Removal failure preserves the observed immutable identity.",
+    "Existing parent-death launcher, exact-run restart recovery, no-overlap, host comparison and read-only/no-network containment controls pass."
+  ],
+  "bounds": {
+    "creationTimeout": "At most min(10 seconds, remaining monotonic batch wall). Image inspection, ownership inspection and start use the same remaining batch allowance.",
+    "cleanup": "Separate 5-second monotonic deadline; each inspect/removal uses at most the remaining deadline and at most 1 second. Original aborted signal is not reused.",
+    "guest": "Absolute wall deadline plus a finite positive duration cap no greater than the originally validated remaining allowance; original BusyBox SIGKILL timer remains.",
+    "cpu": "Local quota remains 0.5 CPU; measured CPU remains unknown. These tests do not establish paid or evaluated CPU matching."
+  },
+  "interfaces": {
+    "dockerCliVersion": "29.8.1",
+    "imageId": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "imageRepoDigest": "python@sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f",
+    "localHelpInspected": [
+      "docker create --help",
+      "docker start --help"
+    ],
+    "officialDocumentation": [
+      {
+        "url": "https://docs.docker.com/reference/cli/docker/container/create/",
+        "accessedAt": "2026-09-27",
+        "verifiedBy": "parent coordinator; create does not start, prints ID and supports the retained flags"
+      },
+      {
+        "url": "https://docs.docker.com/reference/cli/docker/container/start/",
+        "accessedAt": "2026-09-27",
+        "verifiedBy": "parent coordinator; attach and interactive flags"
+      }
+    ],
+    "addedDependencies": []
+  },
+  "limitations": [
+    "The origin of the previously observed Created container is unknown. The late-create test controls the completion order with an injected process wrapper and real Docker create/remove; it does not reproduce the original natural daemon race.",
+    "Finite cleanup polling cannot prove no accepted daemon create will appear later. An unobserved create remains unconfirmed; if it appears after cleanup or owner death it is inert because this runner never issued start.",
+    "reconcileContainers(runIds) remains unchanged. Run-ID listing and removal prove only the observed snapshot, not daemon request quiescence or atomic crash cleanup. Later exact-run reconciliation may still be required.",
+    "Parent-death protection stops the CLI; it does not cancel accepted daemon requests. Already-started containers rely on the guest bound and exact-owned recovery.",
+    "No provider, credential, existing evaluator workspace, sealed fixture, gold data or paid resource was accessed. Candidate Python ran only inside task-owned local containers.",
+    "All removal actions target exact test-owned names or independently verified immutable IDs; no project-wide destructive cleanup was performed."
+  ],
+  "notRun": [
+    {
+      "check": "Full integrated repository suite/browser/replays",
+      "reason": "Parent performs one integrated run after source and independent-review integration."
+    },
+    {
+      "check": "Physical power-loss recovery or unbounded daemon delay",
+      "reason": "Not proven by these finite local process and container controls."
+    },
+    {
+      "check": "Live provider or experiment evaluation",
+      "reason": "Out of scope; no provider calls or evaluator corpus access authorized."
+    }
+  ]
+}
