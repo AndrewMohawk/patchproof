@@ -3,7 +3,7 @@
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
   "status": "in_progress",
-  "recordedAt": "2026-09-27T12:54:59.178320+00:00",
+  "recordedAt": "2026-09-27T13:01:08.553756+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -16,7 +16,7 @@
       "agent": "/root/corpus_v2_repo01",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
-      "status": "revision-002-review-pending",
+      "status": "revision-003-review-pending",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -26,6 +26,10 @@
         {
           "revision": "revision-002",
           "submissionDigest": "sha256:5682aeb3b0cdec351ebb12546155e76a268334b2b300b4bb6e3686ca3be0a8cd"
+        },
+        {
+          "revision": "revision-003",
+          "submissionDigest": "sha256:2655a75f648a8879a82d7169b8e6107ed372fb6bb75ae15e58803cd96d729f86"
         }
       ]
     },
@@ -34,7 +38,7 @@
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
-      "status": "review-pending",
+      "status": "review_revision_requested",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -48,18 +52,39 @@
       "agent": "/root/corpus_v2_repo03",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo03",
-      "status": "authoring",
+      "status": "review-pending",
       "launchTool": "collaboration.spawn_agent",
-      "submittedRevisions": []
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:491c8755d00e0225979daf8b445c87bd807af47bd2fefb413bd5c73bf017ec8d"
+        }
+      ]
     },
     {
       "slot": "repo04",
       "agent": "/root/corpus_v2_repo04",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo04",
+      "status": "review-pending",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:0d83904c127ed1781d9e6a9446ed6c9731d15ee829324bc3f15db4ff0abd89df"
+        }
+      ],
+      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
+    },
+    {
+      "slot": "repo05",
+      "agent": "/root/corpus_v2_repo05",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo05",
       "status": "authoring",
       "launchTool": "collaboration.spawn_agent",
-      "submittedRevisions": []
+      "submittedRevisions": [],
+      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
     }
   ]
 }

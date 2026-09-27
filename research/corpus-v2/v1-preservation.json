@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "v1-corpus-preservation-index",
+  "recordedAt": "2026-09-27T12:57:20.391592+00:00",
+  "sourceCommit": "4e0116dacc9cf16d1e701b07ae875232e8b952c4",
+  "repository": "https://github.com/AndrewMohawk/patchproof",
+  "repositoryVisibility": "private",
+  "scope": "Public development/calibration fixtures and root-safe manifest/receipts only. Sealed oracle contents and gold are absent.",
+  "files": [
+    {
+      "path": "fixtures/LICENSE-CC0.txt",
+      "gitBlob": "f38d14a5f4d8caca8eb06662e79831d4278574cb",
+      "digest": "sha256:f98d1d0191b7e1b0e66dae22afc8a2d266151193cb06e73a2a1244e897e2baff"
+    },
+    {
+      "path": "fixtures/README.md",
+      "gitBlob": "6dd29b8708203f34b83b0bd5b036539abd545575",
+      "digest": "sha256:11c40711b330d879ff5f16f25df48ebc4bcea3665a3acb34d49259e9aa0e14b8"
+    },
+    {
+      "path": "fixtures/calibration/boolean-setting-24.json",
+      "gitBlob": "7dfe4a6ae1a9a624c83f11942a589fafe4372ef5",
+      "digest": "sha256:3cacac2d9a07bc374043542f867b0e39449fd2cda42ad61aed09ec229f2ec02b"
+    },
+    {
+      "path": "fixtures/calibration/business-offset-29.json",
+      "gitBlob": "b219c63fd3939f6d316d1749c32607cf3b57f5be",
+      "digest": "sha256:d594274d065fc2f5dce6df137fac2fadb183a75926851e45ce8f9d63da41ec89"
+    },
+    {
+      "path": "fixtures/calibration/csv-row-23.json",
+      "gitBlob": "c74f4d1bb1ce2d2b2ee07cec53150034db6db1f4",
+      "digest": "sha256:7dc05f12a7bdc88cd77adb3ebd5d9f0fff8f9cfdc7b784cec95af0299cc4fa4f"
+    },
+    {
+      "path": "fixtures/calibration/date-month-end-30.json",
+      "gitBlob": "f200b6fa59a5ca7a1eb9d5d6d8b52e14010dd479",
+      "digest": "sha256:61ea4bbc7ae1672cf22ffe3bcb275466ccd76a9c5eb6932fe30362a28bd54f0b"
+    },
+    {
+      "path": "fixtures/calibration/duration-format-28.json",
+      "gitBlob": "a2cc05bafcff59326b549c9e80a3770764c51655",
+      "digest": "sha256:cd91c952db6b805c4bd0ff3f82700615865ff16f2ab7f42fa03b384467b907f6"
+    },
+    {
+      "path": "fixtures/calibration/hex-bytes-25.json",
+      "gitBlob": "7dd62afa4fe47d4cb459db88b277a9a31f12584c",
+      "digest": "sha256:1b14432957f3ab4207c6b0ea8dc0a44c6b8b8b97a279a30c6969034c929e8881"
+    },
+    {
+      "path": "fixtures/calibration/interval-overlap-27.json",
+      "gitBlob": "f489e8c86dbb93d56315025548fc6e26890d13a2",
+      "digest": "sha256:4786d244db695bdeaa1e028d001f95d80a57fea214023d0ad5c75ad895268593"
+    },
+    {
+      "path": "fixtures/calibration/json-canonical-21.json",
+      "gitBlob": "4cf86d8fe55051a0ed00f3577afc4e812baf3b30",
+      "digest": "sha256:9e607f4cff5b7d16aadd3434f0d9367204c4d7d2ef8b91d7a654c311db08432a"
+    },
+    {
+      "path": "fixtures/calibration/page-window-26.json",
+      "gitBlob": "b30d1b77a28013047198b69b0d215cd6551a3ed3",
+      "digest": "sha256:6fe416e40c434133d1052fefd068017661f0b7631cd52a1b1cc75dc5a9fa8cfa"
+    },
+    {
+      "path": "fixtures/calibration/query-pairs-22.json",
+      "gitBlob": "b50391bce69cb5260aff64088ae53eb20c890aa0",
+      "digest": "sha256:e72a41c6c8389f44f63a90e23891e9eb202adfa713192e143a96ba8d891878c4"
+    },
+    {
+      "path": "fixtures/development/adjacent-runs-05.json",
+      "gitBlob": "4c3ab1ce40f5dbb0b7fe2983de47d8cf3d285000",
+      "digest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746"
+    },
+    {
+      "path": "fixtures/development/chunk-list-02.json",
+      "gitBlob": "fae98acccabfa027f6262b8635513188943c45af",
+      "digest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c"
+    },
+    {
+      "path": "fixtures/development/clamp-number-16.json",
+      "gitBlob": "41304c5fdb64b3d5f5ec51f71c75821ebe1108b1",
+      "digest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3"
+    },
+    {
+      "path": "fixtures/development/divide-ceiling-19.json",
+      "gitBlob": "c596c010ddde9ed1973fa27c69407376463705bf",
+      "digest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4"
+    },
+    {
+      "path": "fixtures/development/flatten-once-03.json",
+      "gitBlob": "e20af39371de38ce7fcc9ca746b0c77200f441b6",
+      "digest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8"
+    },
+    {
+      "path": "fixtures/development/invert-multimap-13.json",
+      "gitBlob": "e3425a878d54469f746ee55e07a2d5544ee82c2f",
+      "digest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba"
+    },
+    {
+      "path": "fixtures/development/line-endings-06.json",
+      "gitBlob": "e17fc9e4a81f5a7f2bd9f2026c1500d48d67e8dc",
+      "digest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5"
+    },
+    {
+      "path": "fixtures/development/mean-empty-17.json",
+      "gitBlob": "99a876e5a7b0720b648d7f771ef87ce22ce31ec0",
+      "digest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9"
+    },
+    {
+      "path": "fixtures/development/median-even-18.json",
+      "gitBlob": "00b792fd8a9246c203e3d7518a090bd55edf8b06",
+      "digest": "sha256:0c8f3c6abecb179fa68b181699d931c31f56d94138e5afeefd71204d8456c6c3"
+    },
+    {
+      "path": "fixtures/development/merge-defaults-11.json",
+      "gitBlob": "000169d835d004035fd1170b766d034cafea6a3b",
+      "digest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41"
+    },
+    {
+      "path": "fixtures/development/nested-lookup-12.json",
+      "gitBlob": "6db14019af8f5912d81f6e5e069be037076304cd",
+      "digest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699"
+    },
+    {
+      "path": "fixtures/development/pick-keys-14.json",
+      "gitBlob": "74b9950a0870214b29f812ef10255a0aa767f405",
+      "digest": "sha256:732babf02cc2688bd557c43d592287240e3a593eaa37cba7ebb6890a1cbaea50"
+    },
+    {
+      "path": "fixtures/development/remove-prefix-07.json",
+      "gitBlob": "d4b9ae1c6253a8666bb48168ddccf2bb7cd9fb7d",
+      "digest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb"
+    },
+    {
+      "path": "fixtures/development/rename-key-15.json",
+      "gitBlob": "a672a6ab8e54f38f919918efda667fc2ea29baa1",
+      "digest": "sha256:faa5de4e6938ee8dd0be0333c5b1d5c2b86316e5e32f71f30076c69ce5857744"
+    },
+    {
+      "path": "fixtures/development/rotate-list-04.json",
+      "gitBlob": "de7290eb2966384455208a8da471b868b592a5df",
+      "digest": "sha256:1b9d62c166ec8081043dcb4f4684b3d5f2e66e044543ba7998d8eb23d9b7c085"
+    },
+    {
+      "path": "fixtures/development/split-first-08.json",
+      "gitBlob": "1d759cee50db25da5f05078a4ce6614f72d85884",
+      "digest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3"
+    },
+    {
+      "path": "fixtures/development/stable-unique-01.json",
+      "gitBlob": "7d0a554a3a7e4913a795301b7fd31dcaa2fce7db",
+      "digest": "sha256:ede00162da2d803f5acd98c0a6cc0edeaf71d18302ec2dc2b670811cef4cccfb"
+    },
+    {
+      "path": "fixtures/development/truncate-text-09.json",
+      "gitBlob": "2ed81eb0a199d1d6975177fbdd2d863467ac500d",
+      "digest": "sha256:0ccafa4dcf011468d9e5c376be2beb23cf5e7577f54a8d6540b7b10b9d0d78bb"
+    },
+    {
+      "path": "fixtures/development/weighted-mean-20.json",
+      "gitBlob": "b232fa40d9628f493401a8b7ddda3a755bcba9c3",
+      "digest": "sha256:eb8c5e6e6ca56ae05864954f6e5804713134ee429297622ec9d817eb1088f37d"
+    },
+    {
+      "path": "fixtures/development/word-counts-10.json",
+      "gitBlob": "d4fd43d46606db4f9b7cb88d9d4fe8cc534188c3",
+      "digest": "sha256:81ff59be872ac53dc286c419442e6b2b82eb64611edb19c1f9a0c2270d876f4e"
+    },
+    {
+      "path": "fixtures/independent-review-summary.json",
+      "gitBlob": "dc2ce9591e658c331481ff0d199e8bb2eef474bb",
+      "digest": "sha256:06f884e31465350eba51a013e6f2eb1a865e13e7cc6f43ffb3545fe7ee0ff628"
+    },
+    {
+      "path": "fixtures/oracle-validation-summary.json",
+      "gitBlob": "a701a7c39d4d6e082cb3eb5c5a02720a8c650e63",
+      "digest": "sha256:58f8c7a78f7b6779f5a5da9fd13510be1ff2fe464fbf2264ebff77b97225df11"
+    },
+    {
+      "path": "fixtures/split-manifest.json",
+      "gitBlob": "309001c171aa24b06f00de0e5aa019f12820bb25",
+      "digest": "sha256:9550e0f8a53fa3ba2db9739389cbe5223487ff41a68f0ff704bc8c6fe7a4d8d8"
+    }
+  ],
+  "privateEvaluatorWorkspace": "/home/andrewmohawk/patchproof-evaluation",
+  "privateWorkspaceAction": "No reads or writes by this preservation-index command; original evaluator retains private snapshots.",
+  "reproduction": "Use the recorded full source checkout and exact original bundle. Do not replay old evidence against replacement fixture definitions.",
+  "replacementStatus": "prospective v2 in progress; no scored model result observed"
+}
