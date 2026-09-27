@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "private-live-operator-composed-synthetic-verification",
+  "observedAt": "2026-09-27T11:24:31.806234+00:00",
+  "baseCommit": "885dbe5bc07f8dcbd0005680bf1cf43aa71e587c",
+  "sourceDigests": {
+    "Makefile": "sha256:b2d95b4b88c34712c362bf9659bf5a717feaf1b60b2a444291c41f46fa631a08",
+    "scripts/live-experiment-operator.ts": "sha256:527d02723e29fe61384e68cef01e6d0306e04f8d46e779536ef82eebfb43a20a",
+    "workers/evaluator/nebius-adjudication.ts": "sha256:d88cf54f383f0144d41cb312b1e7dff416b818420a55a2215dd93e839bc8672e",
+    "scripts/phase-accounting-cli.ts": "sha256:a9eef7605fdc61514b6425ddd3583238f0f9c432e278748ddb9add2b22e31121",
+    "tests/live-experiment-operator.test.ts": "sha256:7c59e94a9070a6bdf7c26f4aa909eb94d1daf1e81ad3ce69f9461492d06ae556",
+    "tests/nebius-adjudication.test.ts": "sha256:e2eba0ce2dbc31312e6e53402477299b978ba7efa512d5c023311f5b33d5ff43",
+    "tests/phase-accounting-cli.test.ts": "sha256:f1e7379abeeb6afbc70449293b0a07e9a46e643c6f078d2c2b28932fad107e48"
+  },
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/live-experiment-operator.test.ts",
+        "tests/nebius-adjudication.test.ts",
+        "tests/phase-accounting-cli.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/focused-tests.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/typecheck.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/contracts.log"
+    }
+  ],
+  "focusedTests": {
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  "composedTest": {
+    "execution": "fake HTTP transports and invented private unit oracle only",
+    "runtimeReceiptUsd": "0.01",
+    "adjudicationReceiptUsd": "0.02",
+    "combinedTestLedgerMicros": "30000",
+    "duplicateDispatchRepeated": false,
+    "realProviderCalls": 0
+  },
+  "developmentFailures": [
+    {
+      "command": "node --test tests/nebius-adjudication.test.ts",
+      "exitCode": 1,
+      "reason": "One initial test incorrectly expected DELETE for an already-terminal success. Corrected expectation and added genuine cancel/DELETE cleanup control."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 2,
+      "reason": "Protected callback inferred outcome as string; added strict AdjudicationSchema validation at the boundary."
+    },
+    {
+      "command": "node --test tests/live-experiment-operator.test.ts tests/nebius-adjudication.test.ts",
+      "exitCode": 1,
+      "passed": 9,
+      "failed": 1,
+      "reason": "Cancel after budget change failed because the ledger constructor rejected a changed policy. Control-only connections now read the existing durable policy without granting or synchronizing authority."
+    }
+  ],
+  "providerCalls": 0,
+  "actualSpendUsd": 0,
+  "approvedProjectCeilingUsd": 25,
+  "externalInterfaces": "Existing pinned HTTP adapters and source/version receipts in research/nebius-sandbox-sources.json; no new provider endpoint or SDK method.",
+  "remainingFailures": [
+    "Real access, account/control/tokenizer/calibration proofs and actual billing/cleanup remain unverified.",
+    "72/270 real experiments, independent-machine replay, reviewer study and release evidence remain unrun."
+  ],
+  "notes": [
+    "Cancellation drains owned bounded operations before closing shared state.",
+    "Raw late adjudication result is written privately and synced before final-usage callbacks.",
+    "Fixed project ledger is required; typo paths cannot create a new allowance.",
+    "Receipt digests establish consistency, not authenticity."
+  ]
+}

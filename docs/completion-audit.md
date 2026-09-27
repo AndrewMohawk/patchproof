@@ -95,3 +95,26 @@ account and tokenizer proofs are absent and live episode token/CPU ceilings are
 unconfigured. Real smoke, calibration, experiment, human-review and release proof
 gates remain open. The original audit paragraphs above are preserved as historical
 observations; this follow-up supersedes their operator/export implementation gaps.
+
+## Live experiment composition
+
+The guarded 24-call/48-batch live factory and private session command are now wired
+to the existing adapters, protected selected-candidate adjudication, a fixed project
+ledger and separate runtime/adjudication receipt intake. Configured `make pilot`
+and `make evaluate` enforce the corresponding plan kind. Default invocations
+remain blocked. Phase receipts cannot release funds or reopen a terminal episode.
+The composed fake-provider test requires two separately accepted receipts, records
+their combined charge once and retains the final aggregate. These are invented
+observations, not actual calibration, billing or model results.
+
+Independent controls exposed decimal rounding, mutable-request, SQLite sidecar
+collision and cleanup-drain issues; fixes and original failing controls are preserved
+in the verification receipts. Cancellation/recovery can use the existing durable
+ledger policy even after execution configuration changes. Raw late check evidence
+stays in the protected evaluator workspace, while terminal history stays immutable.
+
+This closes the earlier local factory/session/dispatch wiring gap. Provider access,
+authoritative costs and cleanup evidence, verified calibration/protocol acceptance,
+real smoke and experiments, human review, independent-machine replay and release
+decisions remain required. The $25 approval does not establish experiment affordability.
+Final-evaluation and hosting allocations are still zero.

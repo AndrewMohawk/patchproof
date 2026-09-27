@@ -60,7 +60,7 @@ another loopback port. Do not expose this local prototype as a public service.
 | `make export RUN=<id>` | Exports immutable patch, inputs, locks, logs, coverage, events and cost ledger from the durable journal. |
 | `make reproduce RUN=<id>` | Validates the bundle, applies its patch in a fresh workspace and executes declared checks in fresh pinned containers. |
 | `make smoke` | Exits 2 without configuration. `make smoke CONFIG=<absolute-private-json>` invokes the guarded operator; verified account, tokenizer, control and budget inputs are required. |
-| `make pilot` / `make evaluate` | Exit 2; offline plan/analysis tools exist, but no live experiment has run. |
+| `make pilot` / `make evaluate` | Exit 2 without configuration. Explicit private session/runtime configs invoke the guarded experiment operator; see its guide below. No live experiment has run. |
 | `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
 | `make release-packet INPUT=<relative-json>` | Builds a private immutable packet from explicitly selected, scanned exports; receipt requirements are in the release guide. |
 | `make verify-packet PACKET=<path> DIGEST=<sha256>` | Verifies a local packet's exact file set, checksums and embedded evidence. |
@@ -105,13 +105,18 @@ See [task evidence](research/task-evidence.md), [evaluation](docs/evaluation.md)
 The [budget ledger](docs/budget-ledger.md), [reviewer study](docs/reviewer-study.md)
 and [release evidence guide](docs/release-evidence.md) describe the new tools.
 The [trusted dispatcher](docs/experiment-dispatcher.md) preserves full experiment
-accounting; its calibrated live executor and account setup remain unconnected.
+accounting. The [guarded live executor](docs/live-experiment-runtime.md) and
+[private experiment operator](docs/live-experiment-operator.md) connect the existing
+adapters, ledger, final adjudication and independently accepted phase receipts.
+This path is tested with fake transports; actual account and calibration evidence is absent.
 The [synthetic experiment executor](docs/experiment-executor.md) tests up to 24
 revisions across three branches using the same loop as the product. It rejects
 live providers. [Accounting receipts](docs/accounting-reconciliation.md) support
 trusted reconciliation and crash recovery. The [private accounting command](docs/accounting-operator.md)
 imports separately reviewed receipts and recovers interrupted imports; actual
-provider billing verification and automatic runtime ingestion remain pending.
+provider billing verification remains pending. The separate
+[phase accounting operator](docs/phase-accounting-operator.md) records cumulative
+runtime/adjudication observations without releasing holds or granting execution.
 The [aggregate exporter](docs/experiment-export.md) and its
 [private command](docs/experiment-export-operator.md) retain every planned episode
 and verify immutable metadata bundles. Synthetic exports remain unscored; source
@@ -121,8 +126,8 @@ and budget ledger for an explicitly configured integration run of at most three
 proposals. The [private smoke operator](docs/trusted-smoke-operator.md) adds preflight,
 durable single-attempt sessions, cancellation and status. Its tests use fake
 transports; account verification, calibrated ceilings and actual smoke runs remain pending.
-The [completion audit](docs/completion-audit.md) describes remaining integration
-work and distinguishes implemented tools from actual provider or human results.
+The [completion audit](docs/completion-audit.md) distinguishes implemented tools
+from the remaining provider, billing, calibration and human evidence.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
 refers to that original package. `tasks.json` is a living acceptance tracker.
 

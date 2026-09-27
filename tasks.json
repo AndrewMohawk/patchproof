@@ -295,8 +295,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G2",
-      "implementation_note": "Fixed 72-episode planner, durable dispatcher, synthetic 24-revision executor, reviewed accounting commands and immutable aggregate export are implemented and tested. No real pilot or continuation result exists. Calibrated live experiment factory/dispatch wiring, authoritative billing/cleanup ingestion, verified access/prices and G1 remain pending.",
-      "blocked_reason": "Fixed 72-episode planner, durable dispatcher, synthetic 24-revision executor, reviewed accounting commands and immutable aggregate export are implemented and tested. No real pilot or continuation result exists. Calibrated live experiment factory/dispatch wiring, authoritative billing/cleanup ingestion, verified access/prices and G1 remain pending.",
+      "implementation_note": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
+      "blocked_reason": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -309,7 +309,12 @@
         "research/verification/runtime-followup/accounting-independent-review.json",
         "docs/accounting-operator.md",
         "docs/experiment-export-operator.md",
-        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json"
+        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json",
+        "docs/live-experiment-operator.md",
+        "docs/phase-accounting-operator.md",
+        "docs/adjudication-accounting.md",
+        "research/verification/20260927-live-experiment/receipt.json",
+        "research/verification/runtime-followup/adjudication-accounting-verification.json"
       ]
     },
     {
@@ -370,8 +375,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G3",
-      "implementation_note": "Fixed final planner, durable dispatcher, synthetic 24-revision executor, one-use sealed adjudication, clustered analysis, immutable aggregate export and blinded reviewer tools are implemented with synthetic tests. Reviewed accounting import/recovery is wired to a private CLI. Real final runs, calibrated live experiment dispatch, authoritative accounting/cleanup, final budget and human results remain pending.",
-      "blocked_reason": "Fixed final planner, durable dispatcher, synthetic 24-revision executor, one-use sealed adjudication, clustered analysis, immutable aggregate export and blinded reviewer tools are implemented with synthetic tests. Reviewed accounting import/recovery is wired to a private CLI. Real final runs, calibrated live experiment dispatch, authoritative accounting/cleanup, final budget and human results remain pending.",
+      "implementation_note": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
+      "blocked_reason": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -385,7 +390,12 @@
         "research/verification/runtime-followup/accounting-independent-review.json",
         "docs/accounting-operator.md",
         "docs/experiment-export-operator.md",
-        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json"
+        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json",
+        "docs/live-experiment-operator.md",
+        "docs/phase-accounting-operator.md",
+        "docs/adjudication-accounting.md",
+        "research/verification/20260927-live-experiment/receipt.json",
+        "research/verification/runtime-followup/adjudication-accounting-verification.json"
       ]
     },
     {

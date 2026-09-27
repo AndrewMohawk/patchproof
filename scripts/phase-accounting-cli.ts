@@ -22,6 +22,9 @@ export function runPhaseAccountingOperator(args: string[], projectRoot: string) 
     const read = (path: string) => readPrivateOperatorJson(path, { projectRoot });
     const config = PhaseAccountingOperatorConfigSchema.parse(read(configPath!));
     if (digestJson(config) !== Digest.parse(configDigest)) fail('phase_operator_config_digest_mismatch');
+    const dataPaths = [configPath!, ...(command === 'accept' ? rest.slice(0, 2) : command === 'request' ? [rest[2]!] : [])];
+    const protectedPaths = ['', '-wal', '-shm', '-journal'].map(suffix => config.journalPath + suffix);
+    if (new Set(dataPaths).size !== dataPaths.length || dataPaths.some(path => protectedPaths.includes(path))) fail('phase_operator_path_collision');
     assertPrivateOperatorPath(config.journalPath, projectRoot, { database: true });
     // Intake requires a pre-existing journal with an immutable runtime request. No typo-created state.
     if (command === 'accept') {

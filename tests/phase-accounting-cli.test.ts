@@ -73,3 +73,13 @@ test('observer deadline preserves pending request and never manufactures zero bi
   assert.equal(fixture.store.requests().length, 1); const observation = fixture.store.readObservedUsage(request());
   assert.equal(observation.measuredCostUsd, null); assert.equal(observation.sandboxCpuSeconds, null); assert.equal(observation.billingComplete, false);
 });
+test('operator input or exported request cannot alias a SQLite journal sidecar', async t => {
+  const fixture = await setup(t);
+  const config = { ...fixture.config, journalPath: join(fixture.dir, 'alias.sqlite') };
+  // Deliberately misname the config itself; refusal must occur before opening the DB.
+  const path = await fixture.write('alias.sqlite-wal', config), original = await readFile(path);
+  const result = fixture.run('status', path, digestJson(config)); assert.equal(result.exitCode, 2);
+  assert.deepEqual(await readFile(path), original);
+  const exported = fixture.run('request', ...fixture.args, ID, 'runtime', fixture.config.journalPath + '-wal');
+  assert.equal(exported.exitCode, 2); assert.match(JSON.stringify(exported.output), /phase_operator_path_collision/);
+});

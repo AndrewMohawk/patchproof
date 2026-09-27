@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-09-27T11:23:50.367175+00:00",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/live-experiment-operator.test.ts",
+        "tests/nebius-adjudication.test.ts",
+        "tests/phase-accounting-cli.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/focused-tests.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/typecheck.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator/contracts.log"
+    }
+  ],
+  "providerCalls": 0,
+  "spendUsd": 0
+}

@@ -19,7 +19,8 @@ provisioner outside the repository, candidate workspaces and logs, the next work
    to the implemented smoke operator. Its preflight, single-attempt session, cancellation
    and status commands are built and synthetically tested. It binds the adapters to one
    durable reservation and at most three proposals. Actual provider accounting/cleanup
-   verification and the calibrated live experiment executor remain unfinished;
+   verification remains unfinished. The separate live experiment factory and private
+   dispatch entry point are implemented against fake transports and reviewed receipts;
    the public product API continues to accept mock jobs only.
 4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
    curated real cases, retain real operation IDs and reconcile actual charges.
@@ -31,9 +32,9 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 | T02 | Typed contracts, version locks, tests, workspace | Live provider contract verification. |
 | T03 | 60 authored synthetic tasks; separate evaluator; gold/start/repeat validation and independent review | Scored-experiment protocol freeze and production evaluator account separation. |
 | T05–T08 | Three bounded policies, protected checks, durable journal, export and fresh local replay | Live matched usage, sponsor cancellation and billing reconciliation. |
-| T09/G2 | Fixed 72-episode planner and analysis | Real pilot, affordable price projection and written continuation decision. |
+| T09/G2 | Fixed 72-episode planner, bounded live factory, private dispatcher and analysis | Actual calibrated/account proofs, real pilot, affordable price projection and written continuation decision. |
 | T10 | Task/comparison/evidence views; real local checks and browser flow | Live-provider state validation and uncoached reviewer exercise. |
-| T11/G3 | Fixed 270-episode planner, sealed adjudication and clustered analysis | Authorized final budget, real final runs, ablations and reviewer study. |
+| T11/G3 | Fixed 270-episode planner, private dispatch, protected phase-accounted adjudication and clustered analysis | Authorized final budget, real final runs, ablations and reviewer study. |
 | T12 | Local lifecycle tests and operations runbook | Public deployment authorization, hardened operator boundary and funded judge access. |
 | T13/G4 | Setup guide, honest draft/storyboard/platform feedback | Sponsor-backed runs, final recording and public licensed source. |
 | T14 | Local evidence/review and private source history | Independent clean-machine replay, final rules/license/secret audit and owner release decisions. |
@@ -45,17 +46,19 @@ requires a prospective revised protocol and narrower claims.
 Two-observation runtime checks, prospective reviewer-study tools and a source-bound
 local operational lock are now implemented. Their synthetic/unit evidence does
 not replace real reviewer participation or a calibrated live protocol. See the
-completion audit for implementation gaps; do not treat account access alone as
+completion audit for evidence boundaries; do not treat account access alone as
 completion of the submission.
 
 A synthetic 24-revision executor, reviewed accounting receipt command and immutable
 aggregate export command now exist. Their tests cover policy limits, trace retention,
 cumulative charges, copied journals, interrupted receipt recovery and full planned
-denominators. The executor rejects live providers; the importer does not obtain or
-authenticate billing data. Remaining code is the calibrated live experiment
-factory/dispatch entry point and authoritative billing/cleanup ingestion. The smoke
-operator already has a separate private entry point; no verified account configuration
-or real-provider result is present.
+denominators. The synthetic executor rejects live providers. The separate guarded
+live factory and private dispatch command are implemented, including two distinct
+phase receipts and draining owned cleanup before closing local state. A complete
+invented-provider episode exercises the composed path; it is not a benchmark.
+Receipt intake does not obtain or authenticate billing data. Verified authoritative
+billing/cleanup evidence and any account-specific collector remain external
+integration work. No verified account configuration or real-provider result is present.
 
 Application license, public source/video, public demo operator and service budget
 through the required judging period remain owner decisions. No terms were

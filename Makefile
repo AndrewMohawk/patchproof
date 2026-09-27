@@ -8,7 +8,7 @@ test:
 smoke:
 	$(if $(CONFIG),node scripts/smoke-operator.ts start "$(CONFIG)",node scripts/product-cli.ts smoke)
 pilot evaluate:
-	node scripts/product-cli.ts $@
+	$(if $(CONFIG),node scripts/live-experiment-operator.ts $@ "$(CONFIG)" "$(CONFIG_DIGEST)" "$(RUNTIME)" "$(RUNTIME_DIGEST)",node scripts/product-cli.ts $@)
 release-check release-packet:
 	node scripts/product-cli.ts $@ $(if $(INPUT),"$(INPUT)")
 verify-packet:
