@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "currency": "USD",
+  "maxApprovedSpendUsd": 25,
+  "ownerApproval": {
+    "approvedBy": "project_owner",
+    "approvedAt": "2026-09-27T07:42:19.279Z",
+    "expiresAt": null,
+    "reference": "User instruction: you can make the spending cap $25"
+  },
+  "verifiedCredits": [],
+  "stages": {
+    "smoke": 5,
+    "pilot": 20,
+    "evaluate": 0,
+    "hosting": 0
+  },
+  "episodeLimits": {
+    "inferenceCallLimit": 24,
+    "inputTokenLimit": null,
+    "outputTokenLimit": null,
+    "wallTimeLimitSeconds": 900,
+    "sandboxCpuSecondsLimit": null,
+    "candidateBranchLimit": 3
+  },
+  "note": "Owner authorized $25 total on 2026-09-27. Coordinator allocated up to $5 smoke and $20 pilot within that total. No expiry supplied. No credits verified. Account access, prices and runtime limits remain blockers; stage caps do not bypass dependency gates."
+}

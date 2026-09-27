@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "mock",
+  "observedAt": "2026-09-27T07:29:00Z",
+  "local": { "node": "25.5.0", "npm": "11.8.0", "python": "3.12.3", "architecture": "x64", "platform": "linux" },
+  "model": {
+    "provider": "nebius-token-factory",
+    "baseUrl": "https://api.tokenfactory.nebius.com/v1/",
+    "id": null,
+    "accountVerifiedAt": null,
+    "licenseUrl": null,
+    "modelCardUrl": null,
+    "contextLimit": null,
+    "toolOutputBehavior": null,
+    "inputUsdPerMillionTokens": null,
+    "outputUsdPerMillionTokens": null
+  },
+  "sandbox": {
+    "provider": "nebius-sandboxes",
+    "endpoint": null,
+    "sdkVersion": null,
+    "imageDigest": null,
+    "architecture": null,
+    "accountVerifiedAt": null,
+    "billingUnit": null,
+    "usdPerBillingUnit": null,
+    "networkControlsVerifiedAt": null,
+    "cancellationVerifiedAt": null
+  },
+  "integrationOperationIds": [],
+  "sources": [
+    "https://docs.tokenfactory.nebius.com/quickstart",
+    "https://docs.tokenfactory.nebius.com/sandboxes/overview",
+    "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images"
+  ]
+}
