@@ -1,0 +1,47 @@
+{
+  "purpose": "generic invented JSON mapping fidelity probe",
+  "source": {
+    "path": "/home/andrewmohawk/patchproof/packages/contracts/src/product.ts",
+    "digest": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343"
+  },
+  "nodeVersion": "v25.5.0",
+  "results": [
+    {
+      "input": {
+        "__proto__": 3
+      },
+      "accepted": true,
+      "parsedArgument": {}
+    },
+    {
+      "input": {
+        "constructor": 4
+      },
+      "accepted": false,
+      "parsedArgument": null
+    },
+    {
+      "input": {
+        "toString": 5
+      },
+      "accepted": true,
+      "parsedArgument": {
+        "toString": 5
+      }
+    },
+    {
+      "input": {
+        "é": 3,
+        "é": 4
+      },
+      "accepted": true,
+      "parsedArgument": {
+        "é": 3,
+        "é": 4
+      }
+    }
+  ],
+  "candidateExecution": false,
+  "providerCalls": 0,
+  "spendUsd": 0
+}

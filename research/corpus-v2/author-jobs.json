@@ -3,7 +3,7 @@
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
   "status": "in_progress",
-  "recordedAt": "2026-09-27T13:11:20.097187+00:00",
+  "recordedAt": "2026-09-27T13:34:17.540261+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -41,14 +41,15 @@
         "repeatStable": 5,
         "controlsPassed": 7,
         "infrastructureFailures": 0
-      }
+      },
+      "staticReview": "approved by independent evaluator"
     },
     {
       "slot": "repo02",
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
-      "status": "runtime-validation-in-progress",
+      "status": "runtime-validated",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -59,14 +60,25 @@
           "revision": "revision-002",
           "submissionDigest": "sha256:d2ea57f257c2e948d1301e279a92b43b5a2a758b9b1c41da8eeae53472b5180e"
         }
-      ]
+      ],
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:f7547cf750c1fdd64189b972aed32a83a7fe42bb3e8b7ea47aad52bac9ecae8d",
+        "reportedBy": "/root/fixtures_evaluation",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 8,
+        "infrastructureFailures": 0
+      }
     },
     {
       "slot": "repo03",
       "agent": "/root/corpus_v2_repo03",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo03",
-      "status": "runtime-validation-in-progress",
+      "status": "runtime-validated-original-contract",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -77,14 +89,25 @@
           "revision": "revision-002",
           "submissionDigest": "sha256:0d2bc355682532b5bacf78c96fb72493a83dccfa056a554f3e771c4e2842e8db"
         }
-      ]
+      ],
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:cc8549e830afed1ce81db9501c9ad9f86ff5f7ad221c0900bb3558c9b0a3a038",
+        "reportedBy": "/root/fixtures_evaluation",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0
+      }
     },
     {
       "slot": "repo04",
       "agent": "/root/corpus_v2_repo04",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo04",
-      "status": "revision-002-review-pending",
+      "status": "runtime-validated-original-contract",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -97,14 +120,25 @@
         }
       ],
       "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared.",
-      "contextClarification": "Original provenance incorrectly inferred parent conversation inheritance. Author clarified seeing global agent/tool instructions, user project/environment setup and its direct assignment, but no parent task history. Original statement retained in revision001; corrected in revision002."
+      "contextClarification": "Original provenance incorrectly inferred parent conversation inheritance. Author clarified seeing global agent/tool instructions, user project/environment setup and its direct assignment, but no parent task history. Original statement retained in revision001; corrected in revision002.",
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:4def59b02213f8e0b397ed736465781ff80dc21107e7e756de68375d71742908",
+        "reportedBy": "/root/fixtures_evaluation",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 12,
+        "infrastructureFailures": 0
+      }
     },
     {
       "slot": "repo05",
       "agent": "/root/corpus_v2_repo05",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo05",
-      "status": "static-approved-runtime-pending",
+      "status": "partial-preparation-parser-blocked",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -112,32 +146,116 @@
           "submissionDigest": "sha256:7965b1b143a1cb2bf6734f8e611617740297d7297289df966f1fdcef78ccb9ae"
         }
       ],
-      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
+      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared.",
+      "staticReview": "approved by independent evaluator",
+      "partialPreparation": {
+        "exitCode": 1,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "infrastructureFailures": 0,
+        "failure": "Reviewer-only ordinary-key case rejected by current schema; not a fixture/gold failure. Original attempt preserved; full acceptance pending."
+      }
     },
     {
       "slot": "repo06",
       "agent": "/root/corpus_v2_repo06",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo06",
-      "status": "review_revision_requested",
+      "status": "static-approved-runtime-held",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:fd85c17d7f9c4122f402da7d40b426d8a67e14b41c838d418c755653e6f70276"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:929272c93a8fae5eb838d765b6735e1f4de68e7b1ef822784caa6b772533bbf5"
         }
       ],
-      "genericContractClarification": "JSON number normalization; dedicated requirement cases; no sibling contents or scored outcomes shared."
+      "genericContractClarification": "JSON number normalization; dedicated requirement cases; no sibling contents or scored outcomes shared.",
+      "staticReview": "approved by independent evaluator"
     },
     {
       "slot": "repo07",
       "agent": "/root/corpus_v2_repo07",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo07",
+      "status": "static-approved-runtime-held",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:7fa4cc763e6eef2c49bfa49703cf2470a62a989e765020b4f5c61cbcd6330578"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:7a62df52d4c9b9a46f4bec5775789708cb8b2476125cc3dd8b6c103282f5695b"
+        }
+      ],
+      "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared.",
+      "staticReview": "approved by independent evaluator"
+    },
+    {
+      "slot": "repo08",
+      "agent": "/root/corpus_v2_repo08",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo08",
+      "status": "static-approved-runtime-held",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:3f3b752c34b5a3494dd69c8ce598e14727a2f72612e7dadeafc9e153108193f5"
+        }
+      ],
+      "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared.",
+      "staticReview": "approved by independent evaluator"
+    },
+    {
+      "slot": "repo09",
+      "agent": "/root/corpus_v2_repo09",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo09",
+      "status": "static-approved-runtime-held",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:782b83d2e6cbfed85a79ba389887ffd712e2e3612be21b45926339b9c21bd07d"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:abe43abe0a71799bf8039fb4612aa7c9b344194138210316c75be99f3b6c7a69"
+        }
+      ],
+      "genericContractClarification": "JSON number normalization, dedicated requirement cases and actual setup/identity provenance; no sibling content or scored outcomes shared.",
+      "staticReview": "approved by independent evaluator"
+    },
+    {
+      "slot": "repo10",
+      "agent": "/root/corpus_v2_repo10",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo10",
+      "status": "review_revision_requested",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:c11acb289b75661f3cfa407e5e35cbf3e79d091b72c303c7d0a12c0430b41d00"
+        }
+      ]
+    },
+    {
+      "slot": "repo11",
+      "agent": "/root/corpus_v2_repo11",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo11",
       "status": "authoring",
       "launchTool": "collaboration.spawn_agent",
-      "submittedRevisions": [],
-      "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared."
+      "submittedRevisions": []
     }
-  ]
+  ],
+  "runtimeHold": "Further validation paused during versioned JSON parser fidelity fix; all original observations remain bound to original sources."
 }

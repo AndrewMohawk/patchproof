@@ -1,0 +1,40 @@
+{
+  "purpose": "Root-safe original local corpus validation source binding",
+  "sourceObservation": "Actual reviewer execution of repositories01-04; repository05 partial attempt uses the same original bound files. This is not an assertion that any later checkout matches.",
+  "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+  "sourceBindings": [
+    {
+      "path": "packages/contracts/src/product.ts",
+      "digest": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "digest": "sha256:4e477571842142bc7fc2992a0f0975918e151f1a9fb2fba0d16bdf74624ab7c9"
+    },
+    {
+      "path": "workers/evaluator/fixture-validation.ts",
+      "digest": "sha256:95bbb211101a7f47be0c3f08bd43670f5070b6766592c40bcd14720b06bc86ad"
+    },
+    {
+      "path": "workers/sandbox/index.ts",
+      "digest": "sha256:25bdc0781a0232c77d8c70650b6ec0c097f0d331d1e9adf9a288ade3e802aa50"
+    },
+    {
+      "path": "workers/sandbox/driver.ts",
+      "digest": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8"
+    },
+    {
+      "path": "workers/sandbox/process.ts",
+      "digest": "sha256:1653666a878d0dfc2ef0ab67f56babcd5f9a49a96656385666387575c2580e4c"
+    },
+    {
+      "path": "workers/sandbox/local-cleanup.ts",
+      "digest": "sha256:789f5f727c5ab26ac06b30ac0975ee218b87dfba49779abe5d5888dd56271507"
+    },
+    {
+      "path": "workers/sandbox/reconcile.ts",
+      "digest": "sha256:5d084a0fdb885b71810e3bccdd698e15d10a37e88e32eee3955a090826707dc7"
+    }
+  ],
+  "indirectDependencyNote": "These eight source files were directly byte-bound; package/transitive dependencies beyond them were not exhaustively traversed in this authoring tool. Any reuse decision must inspect newly added imports or changed logic reachable by checks."
+}

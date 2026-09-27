@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "json-fidelity-pre-change-record",
+  "recordedAt": "2026-09-27T13:36:08.680874+00:00",
+  "sourceCommit": "8921dc8c85a7c91b6066ba6c5222ba9cb7a86b37",
+  "sourceFiles": {
+    "packages/contracts/src/product.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+    "packages/contracts/src/product-validation.ts": "sha256:386d5a706fc0083dc958863553825ecad9e11afcbb7d63f61808acc3cd918499",
+    "packages/orchestrator/src/evidence.ts": "sha256:586e54c1fec7838eba36842e9da3dbbaf28a76a52dc22c45e6d9599b95e2a390"
+  },
+  "historicalCheck": {
+    "command": "node research/verification/20260927-json-contract/verify-historical.mjs /home/andrewmohawk/patchproof /home/andrewmohawk/patchproof/.local/product/evidence /home/andrewmohawk/patchproof/research/verification/20260927-json-contract/historical-before.json",
+    "exitCode": 0,
+    "realStoredExports": 14,
+    "versions": [
+      "2.0",
+      "2.1"
+    ],
+    "changedObjects": 0,
+    "candidateExecutions": 0
+  },
+  "genericProbe": {
+    "executedBy": "independent evaluator",
+    "inventedInputOnly": true,
+    "finding": "Pinned schema can reject or drop ordinary JSON mapping keys. Actual authored case impact has not been observed in metadata preflight; one reviewer-only probe failed preparation."
+  },
+  "decision": "Implement explicit contract2.2 JSON fidelity with preserved historical schemas and faithful version routing; hold new corpus validation until reviewed.",
+  "artifacts": [
+    {
+      "path": "research/corpus-v2/generic-json-probe/json-mapping-fidelity-probe.mjs",
+      "digest": "sha256:3021a46649c1cd3c8e37245d38d8adb9cfab349939f03467902a81c68181a7d2"
+    },
+    {
+      "path": "research/corpus-v2/generic-json-probe/json-mapping-fidelity-result.json",
+      "digest": "sha256:64d211cfaecc1cbca64fa23e9b20529542c777184f69843585f32874c11d89f2"
+    },
+    {
+      "path": "research/corpus-v2/validation-runner-original-binding.json",
+      "digest": "sha256:b0fbf557e52d2af285345443232298a07945f6fe2f0776b8840627448e71c1aa"
+    },
+    {
+      "path": "research/verification/20260927-json-contract/historical-before.json",
+      "digest": "sha256:adf34d9e4e19b2ae627fb5a00168169c2eb8db77b56634e076305d5a6b8468fe"
+    },
+    {
+      "path": "research/verification/20260927-json-contract/verify-historical.mjs",
+      "digest": "sha256:4c6dcf72e8c37213c37b49a2b27db989f49d06525b6c2104bd2ee7c80f40b602"
+    }
+  ],
+  "providerCalls": 0,
+  "providerSpendUsd": 0
+}
