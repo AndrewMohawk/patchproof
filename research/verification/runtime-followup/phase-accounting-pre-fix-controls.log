@@ -1,0 +1,45 @@
+(node:3888098) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ an exact decimal first receipt below the known USD lower bound rejects before projection rounding (76.015304ms)
+✖ observer snapshots its original request before polling and cannot be redirected to another phase (60.681263ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 382.098523
+
+✖ failing tests:
+
+test at tests/phase-accounting-independent.test.ts:53:1
+✖ an exact decimal first receipt below the known USD lower bound rejects before projection rounding (76.015304ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/patchproof-phase-accounting-review.GernUU/tests/phase-accounting-independent.test.ts:55:10)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.start (node:internal/test_runner/test:1006:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /USD|lower|discard/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/phase-accounting-independent.test.ts:59:1
+✖ observer snapshots its original request before polling and cannot be redirected to another phase (60.681263ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///tmp/patchproof-phase-accounting-review.GernUU/tests/phase-accounting-independent.test.ts:67:9)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

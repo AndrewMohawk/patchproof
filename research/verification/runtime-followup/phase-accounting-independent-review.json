@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "bounded-independent-phase-accounting-review",
+  "reviewDate": "2026-09-27",
+  "baseCommit": "9eb5e5d30ba4f8f38ff9302d45c145cd49603a10",
+  "scope": "Trusted phase-accounting request, receipt intake, read projection and polling observer. All controls use invented metadata in temporary private SQLite files.",
+  "originalSourceDigest": "sha256:5ee140ca2db8100a28a974ed3530428c7fbb79dd285012275cc4b0454d04afab",
+  "sourceDigests": {
+    "packages/orchestrator/src/phase-accounting.ts": "sha256:865b9e6a6e797614ef256846111228a29b88f70d84ba51c279ad088b41396cf1",
+    "tests/phase-accounting-independent.test.ts": "sha256:1571a8f4eed2094ccde27c2f07bb1f214b613488c8fe899fd63dc1bf3e7f4e0b"
+  },
+  "findings": [
+    {
+      "id": "lossy-usd-lower-bound-comparison",
+      "status": "resolved",
+      "originalBehavior": "A receipt containing cumulative USD 0.039999999999999999 was accepted against an observed 0.04 lower bound because Number conversion rounded both to the same value.",
+      "independentReproduction": "The original copied source failed the exact-decimal rejection assertion before any source update.",
+      "fix": "Root compares exact receipt atoms against an exact interpretation of the numeric lower bound's decimal serialization, including exponent notation and upward rounding below receipt precision.",
+      "finalControls": "The original intake control passes; additional tests cover 1e-7 and 1e-19 bounds and the read-projection completeness check before microdollar rounding."
+    },
+    {
+      "id": "mutable-polling-request-redirection",
+      "status": "resolved",
+      "originalBehavior": "After runtime polling began, mutation of the caller-owned request's phase redirected a later poll to an already-complete adjudication receipt.",
+      "independentReproduction": "The original copied source resolved instead of rejecting on cancellation in the independent mutable-request control.",
+      "fix": "Root parses a private deep copy of the request once before the observer's first await.",
+      "finalControls": "The same caller mutation cannot redirect polling; the observer keeps waiting for its original runtime phase and rejects on cancellation."
+    }
+  ],
+  "verification": [
+    { "command": "node --test tests/phase-accounting-independent.test.ts", "source": "original copied implementation", "exitCode": 1, "passed": 17, "failed": 2, "purpose": "Independent reproduction of the two reported defects." },
+    { "command": "node --test --test-name-pattern='exact decimal first|observer snapshots' tests/phase-accounting-independent.test.ts", "source": "original copied implementation", "exitCode": 1, "failed": 2, "log": "research/verification/runtime-followup/phase-accounting-pre-fix-controls.log" },
+    { "command": "node --test tests/phase-accounting-independent.test.ts", "source": "fixed implementation at bound digest", "exitCode": 0, "passed": 21, "failed": 0, "log": "research/verification/runtime-followup/phase-accounting-independent-tests.log" },
+    { "command": "npm run typecheck", "source": "isolated checkout with fixed metadata module", "exitCode": 0, "log": "research/verification/runtime-followup/phase-accounting-independent-typecheck.log" }
+  ],
+  "additionalControls": [
+    "Absent receipts remain null and incomplete even for an empty recorded inventory.",
+    "Cumulative revisions replace totals rather than being added; old duplicate acceptance returns the current head without moving it backward.",
+    "A stale second connection cannot replace an accepted compare-and-swap head.",
+    "Changed same-ID bodies, noncontiguous revisions, wrong previous digests and stale expected heads reject.",
+    "Recorded source, plan, model, policy, dispatch, reservation, phase, mode, cap, stage, checkpoint and operation coverage cannot be replaced by a self-consistent receipt/context pair.",
+    "Live null model locks, duplicate handles, changed final requests and unsupported whole-episode scope reject.",
+    "Unknown currency, non-USD units, unsupported estimated fields and missing evidence cannot establish complete measured USD.",
+    "Unresolved inventory, incomplete cleanup and continuing retention preserve incompleteness and polling remains cancellable.",
+    "Known cumulative USD and CPU cannot decrease or become unknown in later accepted revisions.",
+    "Expired, predating and future-issued observations cannot authorize current completeness; historical numeric values remain lower bounds.",
+    "Runtime and adjudication are separate cumulative domains; the store never adds them together.",
+    "Read-only reopen exposes accepted history without allowing intake or request creation.",
+    "Returned data and later caller mutations do not change stored request or receipt bindings.",
+    "Missing read-only files, symlinks, hardlinks, broad permissions and corrupted stored receipt bodies reject."
+  ],
+  "limitations": [
+    "This review did not inspect or execute provider, repair, candidate or sealed evaluation code.",
+    "No actual provider receipt, USD unit, CPU metric, cleanup state, retention finality or external receipt authenticity was verified.",
+    "The module intentionally performs no ledger reconciliation or dispatch writes; live prospective budgets, terminal-state protection and exactly-once combination of runtime plus adjudication remain caller integration responsibilities.",
+    "Accepted-digest context is independently trusted input; hashes alone do not authenticate measurements.",
+    "The store is private trusted metadata infrastructure, not isolation against a privileged same-UID adversary or coordinated rollback of all durable state.",
+    "Private experiment-session and phase-accounting CLI reviews are outside this receipt's scope."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "benchmarkExecuted": false,
+  "competitionReady": false
+}

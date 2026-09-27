@@ -1,0 +1,31 @@
+(node:3893555) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ an exact decimal first receipt below the known USD lower bound rejects before projection rounding (64.261694ms)
+✔ observer snapshots its original request before polling and cannot be redirected to another phase (109.787047ms)
+✔ no receipt remains wholly unknown even with a recorded empty operation inventory (36.816323ms)
+✔ cumulative revisions replace totals and old accepted duplicates never move the head backwards (48.637347ms)
+✔ a stale second connection cannot replace an accepted CAS head (51.03875ms)
+✔ changed receipt ID content, revision gaps, wrong previous digest and stale head reject (46.429602ms)
+✔ every immutable identity dimension must match the recorded final request (49.113261ms)
+✔ live null model lock, duplicate operations, changed request and unsupported receipt scope reject (39.371175ms)
+✔ exact inventory set is required; missing known handles cannot be self-authorized by context (46.765525ms)
+✔ unknown, non-USD or estimated billing never satisfies measured complete observation (46.75136ms)
+✔ incomplete cleanup, unresolved inventory and continuing retention cannot complete polling (72.817308ms)
+✔ CPU and USD cannot decrease or become unknown across revisions (53.096342ms)
+✔ expired receipts and changed checkpoints retain historical lower bounds without completeness (44.938001ms)
+✔ pre-checkpoint observations and future-issued receipts reject before acceptance (44.711293ms)
+✔ runtime and adjudication remain disjoint cumulative domains and are never summed by the store (66.054487ms)
+✔ read-only reopen preserves accepted history but grants neither recording nor execution (38.771094ms)
+✔ receipt and request data returned to callers cannot mutate durable bindings (34.179318ms)
+✔ private database readers reject missing paths, symlinks, hardlinks and broad permissions (38.573295ms)
+✔ stored body corruption is detected and does not become authoritative projection (36.120247ms)
+✔ exponent and sub-receipt-precision numeric lower bounds never round down to zero (87.949724ms)
+✔ read projection also compares exact decimal amounts before microdollar rounding (37.824173ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1352.693207
