@@ -1,0 +1,57 @@
+(node:4128900) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent archive: source/config disappearance cannot change verified byte snapshots (116.542016ms)
+✔ independent archive: scoped GET surface rejects active routes, origin aliases and unknown identities (43.321499ms)
+✔ independent archive: source acceptance-policy mutation rejects historical-version bundle too (31.23835ms)
+✔ independent archive: independent configuration pin and safe failures never reflect private input (6.294223ms)
+(node:4128901) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ archive serves exact pinned live and historical mock bytes with explicit read-only capabilities (103.965381ms)
+✔ opened archive snapshots survive later evidence, configuration, fixture and caller metadata changes (41.689272ms)
+✔ all mutation and active event routes reject without creating files or disclosing operator paths (55.636608ms)
+✔ wrong config, bundle and run pins reject before serving any archive (20.375424ms)
+✔ tampered body and rehashed unapproved fixture content both reject (16.50407ms)
+▶ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive
+  ✔ unknown_task (16.954259ms)
+  ✔ final_split (10.962825ms)
+  ✔ experiment_trace (6.882009ms)
+  ✔ candidate_only (5.751318ms)
+  ✔ nonterminal (20.828738ms)
+✔ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive (63.242567ms)
+▶ private regular external files are required; links, broad permissions, URLs and oversized inputs reject
+  ✔ symlink (7.9122ms)
+  ✔ hardlink (6.17984ms)
+  ✔ permissions (6.810773ms)
+  ✔ inside_project (4.654791ms)
+  ✔ url (4.40057ms)
+  ✔ oversized (26.873814ms)
+✔ private regular external files are required; links, broad permissions, URLs and oversized inputs reject (58.492342ms)
+✔ configuration is bounded, strict and unambiguous; source changes before startup reject (18.322887ms)
+(node:4128902) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ inspection verifies one explicit published bundle and creates no SQLite sidecars or output (132.981872ms)
+✔ exclusive export writes exact original JSON bytes with private mode and never overwrites (91.632392ms)
+✔ exported-byte verification needs no original journal but requires the approved current public fixture (86.177641ms)
+✔ wrong config digest, run ID and bundle digest refuse without export or database changes (63.749046ms)
+✔ journal publication, terminal state and exact run document must all agree (159.788483ms)
+✔ changed curated source, policy, full legacy fixture metadata and unknown fixture pin all reject (273.704645ms)
+✔ tampered bundle/artifact and invalid byte encoding cannot export (95.43302ms)
+✔ missing journal is never created and unknown schemas are never migrated (68.211297ms)
+✔ active WAL data is refused without a checkpoint or implicit sidecar changes (67.148741ms)
+✔ output and configuration collisions with every database sidecar preserve original inputs (317.064999ms)
+✔ symlink and hardlink aliases are refused for config, evidence, output and public fixture tree (72.18782ms)
+✔ bounded evidence/database reads and public tree size stop before output (121.750316ms)
+✔ private CLI status is compact and neither config credentials nor private event details escape (310.193641ms)
+✔ private evidence reader rejects permissive file modes and request mutations cannot switch selected bundle (101.221724ms)
+✔ URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling (103.067695ms)
+✔ concurrent metadata exports grant one exclusive output and preserve exact selected bytes (97.426276ms)
+✔ an optional Makefile RUN binding must match the selected private configuration (69.211209ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2525.466761
+command_exit_code: 0

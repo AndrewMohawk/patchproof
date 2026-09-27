@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { digestBytes, digestJson } from '../packages/contracts/src/digest.ts';
+import { digestJson } from '../packages/contracts/src/digest.ts';
 import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { buildOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 import type { Configuration } from './config.ts';
@@ -11,17 +11,15 @@ import { readReleaseFile } from './release-files.ts';
 import { resolveReleaseBindings } from './release-protocol.ts';
 import type { ReleaseLiveSelection } from './release-protocol.ts';
 
+import { inspectContractLocks } from './contract-locks.ts';
+
 type Item = { id: string; status: 'pass' | 'blocked' | 'not_run'; detail: string };
 export interface ReleaseAuditEvidence { bindings: ReleaseBindings; receipts: unknown[]; trustedReceiptDigests: string[]; liveProtocol?: ReleaseLiveSelection; now?: Date; }
 
 /** Local inspection only. This command neither runs paid checks nor publishes. */
 export async function auditRelease(root: URL, config: Configuration, evidence?: ReleaseAuditEvidence) {
   const checks: Item[] = [];
-  for (const filename of ['research/contracts-v1-lock.json', 'research/contracts-v2-lock.json']) {
-    const lock = JSON.parse(await readFile(new URL(filename, root), 'utf8')) as { files: Record<string, string> };
-    const matches = await Promise.all(Object.entries(lock.files).map(async ([path, digest]) => digestBytes(await readFile(new URL(path, root))) === digest));
-    checks.push({ id: filename, status: matches.every(Boolean) ? 'pass' : 'blocked', detail: 'Checked all recorded source digests.' });
-  }
+  checks.push(...await inspectContractLocks(root));
   const fixtures = await loadFixtures(root);
   checks.push({ id: 'public_fixtures', status: fixtures.length === 30 && fixtures.every(f => f.license === 'CC0-1.0') ? 'pass' : 'blocked', detail: `${fixtures.length} schema-valid public fixtures; sealed workspace not inspected.` });
   const metadata = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));

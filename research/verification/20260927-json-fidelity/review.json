@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "product-json-contract-2.2-verification",
+  "recordedAt": "2026-09-27T13:50:22.568436+00:00",
+  "baseCommit": "8921dc8c85a7c91b6066ba6c5222ba9cb7a86b37",
+  "branch": "fix/product-json-fidelity-2_2",
+  "scope": "Defensive JSON metadata correctness and explicit historical compatibility. Synthetic unit inputs and injected metadata callbacks only.",
+  "sourceDigests": {
+    "packages/contracts/src/product.ts": "sha256:12f7f93d92c581ddea55618ed6beafaf42f2f4e2521f0b0f0f853f69e1ed1fa8",
+    "packages/contracts/src/product-validation.ts": "sha256:c3528f20e548175f8bce7f5914e16e3f1422e1b8c79cbcf994c855097ea1d890",
+    "packages/contracts/src/json-data.ts": "sha256:ebb37df7d8b93a53fb896f5dbac01c1e777d228ac68f78227b1c6155f23ce711",
+    "packages/contracts/src/legacy-product-v2.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+    "packages/contracts/src/legacy-product-validation-v2.ts": "sha256:97e726119c43bc0a67ba814a13b8835e0ba6090223fc78fa10ffdb30e57151ff",
+    "packages/contracts/src/digest.ts": "sha256:e15d2b8369f25cbdd86674e051e51d3f58dbcd140373b93639746a70dbb7db3d",
+    "packages/orchestrator/src/coordinator.ts": "sha256:180c3a0fa6d9cf37493423c323e881eb9657007d70d46750ba5524281320998e",
+    "packages/orchestrator/src/evidence.ts": "sha256:e798030c2833de547c6743a0b8a7868aafbe746f14e0137ba90d9cd3f87d8ea9",
+    "packages/orchestrator/src/fixtures.ts": "sha256:944a1172de125578266fe7bae48cb448ad640b46f1c3710e85a3c1b384cea3c4",
+    "packages/orchestrator/src/repeated-checks.ts": "sha256:24c355192db6f539dcd5d5a98306d8c90d815f9099da2ef38c6645a6e17c43dc",
+    "workers/sandbox/index.ts": "sha256:0bc243e55fbc5a8180741e8b8640e66e69cd77c775db696b7273405431447597",
+    "workers/sandbox/nebius-runner.ts": "sha256:a8005e880d0053a88a0bd00fa1fa56f2491a73a6626b0cad8e34eb87bcddf8d4",
+    "scripts/contract-locks.ts": "sha256:1e1797eb2c1c1c482340237592d60f4970b396e62a432869b50309bb60dbce9e",
+    "scripts/check-contract-lock.ts": "sha256:2c18f71892bc89983cd2d5aeb1135c271d84ebda561af79bdc63c97e96e89157",
+    "scripts/release-audit.ts": "sha256:6a3918e9e9e7dad9c844007131d55fd0c6d930d3a9a7988aff7516b58b141092",
+    "scripts/evidence-operator.ts": "sha256:bbd39af3e1ce09d4d78e7ca82cb7696396e608649edc5847c01f7c706d7eb058",
+    "apps/api/src/evidence-archive.ts": "sha256:cc7a57a3216cb7632a10df6d61ed8c453a5599c8a9dd930cc6272821b7fe52d7",
+    "package-lock.json": "sha256:d86b5655a36e9f3374a55129f275ddae88a1b28f51295e1ae1d5dffa81adaaee"
+  },
+  "testDigests": {
+    "tests/json-fidelity.test.ts": "sha256:09b9c018bcc5c371e259dd8ba6492614e9ed47798026d03435723836ae6a17b3",
+    "tests/contract-lock-compatibility.test.ts": "sha256:ecc1f129fdb7025cfec6ea98a0e29b71350e5a4cb4f8fc9615aa388cdc24ca62",
+    "tests/orchestrator.test.ts": "sha256:56a8a3176eb4e8b6857348d7da2f2a7666938212da77b01b83a955fb25949b75",
+    "tests/evidence-archive.test.ts": "sha256:dc72c04eb3acd2ca470124177d9e47ee782e5a17985c7a9c763a614fd5962d2f",
+    "tests/evidence-archive-independent.test.ts": "sha256:699ad7e1e350102d4adae4602bf397803e976138648abe4ca1aa6ea420e55faa",
+    "tests/evidence-operator.test.ts": "sha256:47ecb873240d7f1ebaaedfc6497228324bd0216429e7efd94779c011dca7c5d8",
+    "tests/release-protocol.test.ts": "sha256:361520378c28301d257284bf9c0ffa1b10e70dae879317db9d43618c38df8455",
+    "tests/helpers/archive-fixture.ts": "sha256:52a77f98fe94566d6a62f89a54070a2ec3598b83a74733a997ec12af81f1bfd8"
+  },
+  "contractLocks": {
+    "research/contracts-v1-lock.json": "sha256:96a567c7bcbadf0eec1d0b73a40d766b1835cb6fcb105f2fec4b3a826d81013b",
+    "research/contracts-v2-lock.json": "sha256:92f00f44c7f8181f78ef66d2d87a947bf13714ff65e6030a66c2279f2ce49beb",
+    "research/contracts-v2.2-lock.json": "sha256:519d78d7119f02c7bf7240b6f874e9226591d88afd663c0496824fdd57a9a3b5",
+    "research/contracts-history/2.1/contracts-v2-lock.json": "sha256:92f00f44c7f8181f78ef66d2d87a947bf13714ff65e6030a66c2279f2ce49beb",
+    "research/contracts-history/2.1/product.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+    "research/contracts-history/2.1/product-validation.ts": "sha256:386d5a706fc0083dc958863553825ecad9e11afcbb7d63f61808acc3cd918499"
+  },
+  "results": {
+    "focusedTests": {
+      "passed": 68,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    "typecheckExitCode": 0,
+    "contractLockExitCode": 0,
+    "newTargetedTests": 15,
+    "originalFailedAttemptsRetained": true,
+    "realProviderCalls": 0,
+    "candidateExecutions": 0,
+    "containersStarted": 0,
+    "corpusValidationPerformed": false,
+    "sealedInputsRead": false,
+    "paidSpendUsd": 0,
+    "syntheticProviderAndCheckerCallbacksUsed": true
+  },
+  "compatibility": {
+    "newVersion": "2.2",
+    "historicalVersions": [
+      "2.0",
+      "2.1"
+    ],
+    "canonicalDigestImplementationChanged": false,
+    "historicalDigestFormulasChanged": false,
+    "historicalSourceAndLockSnapshotsExact": true,
+    "legacyReaderDifference": "Product validation import points at the copied legacy product module; executable legacy product module is byte-identical to historical product.ts.",
+    "legacyUnsupportedOwnKeys": [
+      "constructor",
+      "__proto__"
+    ],
+    "replayVersion": "Recorded bundle version forwarded explicitly through repeated checks; unsupported legacy inputs/responses fail clearly.",
+    "projection": "Exact admitted property order/values retained; exporter/archive serve exact approved bytes; no old bundles rewritten."
+  },
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 2,
+      "passedTests": null,
+      "note": "Initial WIP implementation type errors; unchanged failure rerun retained before fixing narrowing and Zod input types.",
+      "artifact": "research/verification/20260927-json-fidelity/typecheck-before-fix.log",
+      "capturedOutputDigest": "sha256:8511d0d7e566f66d7e3d98af119f37fe91354a3c0f99353a4b4999871abeda07",
+      "storedArtifactDigest": "sha256:db43c8dd11711ee0bd3a15dcfd0d1dc440061be0225962014b171d2b7f744517",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "passedTests": null,
+      "note": "After initial type fixes.",
+      "artifact": "research/verification/20260927-json-fidelity/typecheck-after-types.log",
+      "capturedOutputDigest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+      "storedArtifactDigest": "sha256:0b91b95610dfcf7e4d39dd5cb35e37365770b26c0dfc5ec9b44bd1dd8336a6b6",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "node --test tests/evidence-archive.test.ts tests/evidence-archive-independent.test.ts tests/evidence-operator.test.ts",
+      "exitCode": 0,
+      "passedTests": 40,
+      "note": "Initial archive/export compatibility controls.",
+      "artifact": "research/verification/20260927-json-fidelity/existing-metadata-tests.log",
+      "capturedOutputDigest": "sha256:2607a95d89ad01565ef8a6bc9bb04240b925e2a241be3b98196ac6f145055a9e",
+      "storedArtifactDigest": "sha256:9a6009a5b017e42703308ae9364d79895e804c6cb576890f66d72c84a4a1bb3d",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "node --test tests/json-fidelity.test.ts",
+      "exitCode": 0,
+      "passedTests": 13,
+      "note": "Initial fidelity controls before final exception-envelope addition.",
+      "artifact": "research/verification/20260927-json-fidelity/fidelity-tests-first.log",
+      "capturedOutputDigest": "sha256:a221dd9de977e03597b149d24e2652f14ac55b989d1b876d148ccf521aea70f9",
+      "storedArtifactDigest": "sha256:d1db53b88469eee079683ea6e6a4ec2b2e1d9aa64e61a3269a445231bf4e4ffa",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "passedTests": null,
+      "note": "After observation and version-forwarding changes.",
+      "artifact": "research/verification/20260927-json-fidelity/typecheck-with-observation.log",
+      "capturedOutputDigest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+      "storedArtifactDigest": "sha256:0b91b95610dfcf7e4d39dd5cb35e37365770b26c0dfc5ec9b44bd1dd8336a6b6",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "node --test tests/json-fidelity.test.ts tests/contract-lock-compatibility.test.ts tests/evidence-archive.test.ts tests/evidence-archive-independent.test.ts tests/evidence-operator.test.ts tests/release-protocol.test.ts",
+      "exitCode": 0,
+      "passedTests": 59,
+      "note": "First complete metadata-only focused pass.",
+      "artifact": "research/verification/20260927-json-fidelity/final-focused-tests.log",
+      "capturedOutputDigest": "sha256:12555232a3ddc22aadeb181157c7868e218c3eee1a5452620514d19e82195a2c",
+      "storedArtifactDigest": "sha256:eb98dd03c6c1f0472d66922ec73d741528afbd794af4df34cea1bf7d75dce3b6",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "node --test tests/json-fidelity.test.ts tests/contract-lock-compatibility.test.ts tests/evidence-archive.test.ts tests/evidence-archive-independent.test.ts tests/evidence-operator.test.ts tests/release-protocol.test.ts tests/orchestrator.test.ts",
+      "exitCode": 0,
+      "passedTests": 68,
+      "note": "Final focused pass including existing invented coordinator callbacks and explicit historical controls.",
+      "artifact": "research/verification/20260927-json-fidelity/final-integrated-tests.log",
+      "capturedOutputDigest": "sha256:db283692829b58effa65b06fd8a2338f2d499cc827f18af8670f3153e8b275ad",
+      "storedArtifactDigest": "sha256:763b471605c6999ff5b33dab1195a302e07f0e4c289ed071baa7c0cf12deaa4f",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "passedTests": null,
+      "note": "Final source/test typecheck.",
+      "artifact": "research/verification/20260927-json-fidelity/final-typecheck.log",
+      "capturedOutputDigest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+      "storedArtifactDigest": "sha256:0b91b95610dfcf7e4d39dd5cb35e37365770b26c0dfc5ec9b44bd1dd8336a6b6",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "passedTests": null,
+      "note": "Current 1.0/2.2 and preserved historical 2.1 bindings pass.",
+      "artifact": "research/verification/20260927-json-fidelity/final-contract-locks.log",
+      "capturedOutputDigest": "sha256:828dc2f98b70adfbdb10730a5d4ce6bddd9bcbf9eef1cac2b526a63d5166a7dd",
+      "storedArtifactDigest": "sha256:da9d89871847e3120d40c2e96784d492965450b0044f6b216066169184c82b4e",
+      "logEncoding": "verbatim captured output followed by command_exit_code footer"
+    },
+    {
+      "command": "node --test --test-name-pattern='2.1 evidence' tests/orchestrator.test.ts",
+      "exitCode": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "note": "Expected integration assertion drift identified by coordinator: old current-version assertion 2.1 versus new 2.2. Test name/assertion updated; explicit legacy controls retained; final68 pass.",
+      "artifact": "research/verification/20260927-json-fidelity/stale-current-version-assertion.log.json",
+      "storedArtifactDigest": "sha256:7cfaff05717664994119ad6946d90691d3a3d0ca400b36863cafab24748f2132",
+      "capturedOutputDigest": "sha256:d3020a4633fbb4c2b2fec66564781c7d8996cdc34a7a8b6255b6eb9a225a1e06",
+      "logEncoding": "exact stdout/stderr retained in JSON string, no whitespace normalization"
+    }
+  ],
+  "independentReview": {
+    "reviewer": "parent coordinator",
+    "basis": "Reported bounded read-only source review of clone, routing/evidence, observation forwarding and targeted controls; no blocking finding.",
+    "historicalExportFirstPass": {
+      "reportedPassed": 14,
+      "versions": [
+        "2.0",
+        "2.1"
+      ],
+      "returnedObjectsUnchanged": true,
+      "artifactInIntegrationWorkspace": "research/verification/20260927-json-contract/historical-branch-first-pass.json",
+      "attribution": "Coordinator execution, not executed by this implementation agent."
+    }
+  },
+  "notRun": [
+    {
+      "name": "Complete project test suite",
+      "reason": "Coordinator owns post-integration suite; focused synthetic68 run here."
+    },
+    {
+      "name": "Final commit-bound actual historical export verification",
+      "reason": "Coordinator will rerun its14-export read-only helper after this commit."
+    },
+    {
+      "name": "Real runtime/corpus/provider checks",
+      "reason": "Not authorized in this bounded metadata implementation; none executed."
+    }
+  ],
+  "limitations": [
+    "Legacy records outside the declared lossless domain reject; already-lost historical information cannot be reconstructed.",
+    "JSON bounds apply to each defensive in-memory copy; byte-limited transport reads remain separate.",
+    "Unrelated v1/tokenizer metadata contracts are outside this product2.2 migration.",
+    "No eligibility, account access, budget reconciliation, experiment or release gate is established by this receipt."
+  ]
+}

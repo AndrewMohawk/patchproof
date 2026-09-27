@@ -1,0 +1,24 @@
+(node:197669) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ 2.2 faithfully clones every own JSON key into detached ordinary objects (2.325146ms)
+✔ function arguments, outer and nested kwargs, and expected values preserve special keys (2.324183ms)
+✔ historical parser defect is reproduced on inert metadata while the current parser retains keys (2.045104ms)
+✔ non-JSON values and lossy object/array shapes are refused without invoking accessors or proxy traps (3.350952ms)
+✔ JSON depth, node count and encoded bytes are explicitly bounded (375.471429ms)
+✔ 2.2 run, evidence, runtime lock and check observations retain keys and original property order (13.782486ms)
+✔ valid 2.0 and 2.1 evidence keeps exact projection, bytes-derived digest and original formula (8.660412ms)
+✔ legacy lossy keys reject explicitly instead of being silently migrated or normalized (4.628263ms)
+✔ evidence versions and normalization-sensitive omissions cannot be relabeled under a different projection (3.586066ms)
+✔ host observation parser preserves returned keys, compares complete mappings, and refuses legacy loss (1.938251ms)
+✔ historical unsupported input is rejected before any local process invocation (1.003232ms)
+✔ replay passes the bound version through repeated checks to an inert metadata-only runner (158.235277ms)
+✔ private export and read-only archive admit the same 2.2 projection and preserve exact selected bytes (162.603701ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1131.889733
+command_exit_code: 0

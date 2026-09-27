@@ -1,0 +1,47 @@
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+packages/contracts/src/json-data.ts(38,34): error TS2345: Argument of type '{} | undefined' is not assignable to parameter of type 'object'.
+  Type 'undefined' is not assignable to type 'object'.
+packages/contracts/src/json-data.ts(50,28): error TS18048: 'descriptor' is possibly 'undefined'.
+packages/contracts/src/product-validation.ts(62,84): error TS2345: Argument of type '$ZodIssue' is not assignable to parameter of type 'string | { [x: string]: unknown; readonly format: $ZodStringFormats | (string & {}); readonly pattern?: string; readonly code: "invalid_format"; readonly input?: string; readonly message?: string | undefined; readonly path?: PropertyKey[] | undefined; readonly inst?: $ZodType<...> | $ZodCheck<...>; readonly continue...'.
+  Type '$ZodIssueInvalidStringFormat' is not assignable to type 'string | { [x: string]: unknown; readonly format: $ZodStringFormats | (string & {}); readonly pattern?: string; readonly code: "invalid_format"; readonly input?: string; readonly message?: string | undefined; readonly path?: PropertyKey[] | undefined; readonly inst?: $ZodType<...> | $ZodCheck<...>; readonly continue...'.
+    Type '$ZodIssueInvalidStringFormat' is not assignable to type '{ [x: string]: unknown; readonly format: $ZodStringFormats | (string & {}); readonly pattern?: string; readonly code: "invalid_format"; readonly input?: string; readonly message?: string | undefined; readonly path?: PropertyKey[] | undefined; readonly inst?: $ZodType<...> | $ZodCheck<...>; readonly continue?: boolea...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Index signature for type 'string' is missing in type '$ZodIssueInvalidStringFormat'.
+packages/contracts/src/product.ts(16,55): error TS2345: Argument of type 'ZodObject<{ id: ZodString; requirementId: ZodString; function: ZodString; args: ZodArray<ZodPipe<ZodUnknown, ZodTransform<string | number | boolean | JsonData[] | { ...; } | null, unknown>>>; kwargs: ZodDefault<...>; assertArgsUnchanged: ZodDefault<...>; expected: ZodOptional<...>; expectedException: ZodOptional<......' is not assignable to parameter of type '$ZodType<any, string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null, $ZodTypeInternals<any, string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null>>'.
+  The types of '_zod.input' are incompatible between these types.
+    Type '{ id: string; requirementId: string; function: string; args: unknown[]; kwargs?: unknown; assertArgsUnchanged?: boolean | undefined; expected?: unknown; expectedException?: string | undefined; }' is not assignable to type 'string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null'.
+      Type '{ id: string; requirementId: string; function: string; args: unknown[]; kwargs?: unknown; assertArgsUnchanged?: boolean | undefined; expected?: unknown; expectedException?: string | undefined; }' is not assignable to type '{ [key: string]: JsonData; }'.
+        Property 'args' is incompatible with index signature.
+          Type 'unknown[]' is not assignable to type 'JsonData'.
+            Type 'unknown[]' is not assignable to type 'JsonData[]'.
+              Type 'unknown' is not assignable to type 'JsonData'.
+packages/contracts/src/product.ts(24,50): error TS2345: Argument of type 'ZodObject<{ id: ZodString; repoId: ZodString; split: ZodEnum<{ development: "development"; calibration: "calibration"; final: "final"; }>; title: ZodString; ... 8 more ...; provenance: ZodString; }, $strict>' is not assignable to parameter of type '$ZodType<any, string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null, $ZodTypeInternals<any, string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null>>'.
+  The types of '_zod.input' are incompatible between these types.
+    Type '{ id: string; repoId: string; split: "development" | "calibration" | "final"; title: string; description: string; requirements: { id: string; text: string; }[]; files: unknown; editAllowlist: string[]; entrypoint: string; visibleCases: unknown[]; acceptanceCases: unknown[]; license: "CC0-1.0"; provenance: string; }' is not assignable to type 'string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null'.
+      Type '{ id: string; repoId: string; split: "development" | "calibration" | "final"; title: string; description: string; requirements: { id: string; text: string; }[]; files: unknown; editAllowlist: string[]; entrypoint: string; visibleCases: unknown[]; acceptanceCases: unknown[]; license: "CC0-1.0"; provenance: string; }' is not assignable to type '{ [key: string]: JsonData; }'.
+        Property 'files' is incompatible with index signature.
+          Type 'unknown' is not assignable to type 'JsonData'.
+packages/orchestrator/src/coordinator.ts(80,42): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/orchestrator/src/coordinator.ts(171,57): error TS7006: Parameter 'c' implicitly has an 'any' type.
+packages/orchestrator/src/coordinator.ts(268,45): error TS7006: Parameter 'requirement' implicitly has an 'any' type.
+packages/orchestrator/src/episode-engine.ts(80,34): error TS7006: Parameter 'requirement' implicitly has an 'any' type.
+packages/orchestrator/src/evidence.ts(76,51): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/orchestrator/src/experiment-executor-core.ts(134,48): error TS7006: Parameter 'check' implicitly has an 'any' type.
+packages/orchestrator/src/experiment-executor-core.ts(134,104): error TS7006: Parameter 'check' implicitly has an 'any' type.
+packages/orchestrator/src/experiment-executor-core.ts(134,140): error TS7006: Parameter 'requirement' implicitly has an 'any' type.
+packages/orchestrator/src/experiment-executor-core.ts(207,65): error TS7006: Parameter 'check' implicitly has an 'any' type.
+packages/orchestrator/src/fixtures.ts(47,66): error TS7006: Parameter 'path' implicitly has an 'any' type.
+packages/orchestrator/src/fixtures.ts(49,61): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/orchestrator/src/live-experiment.ts(108,63): error TS2571: Object is of type 'unknown'.
+packages/orchestrator/src/live-experiment.ts(108,112): error TS18046: 'n' is of type 'unknown'.
+packages/orchestrator/src/live-experiment.ts(108,134): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string | ArrayBufferLike | ArrayBufferView<ArrayBufferLike>'.
+packages/orchestrator/src/trusted-smoke.ts(90,7): error TS2571: Object is of type 'unknown'.
+packages/orchestrator/src/trusted-smoke.ts(90,62): error TS18046: 'total' is of type 'unknown'.
+packages/orchestrator/src/trusted-smoke.ts(90,88): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string | ArrayBufferLike | ArrayBufferView<ArrayBufferLike>'.
+tests/evaluation.test.ts(69,58): error TS7006: Parameter 'r' implicitly has an 'any' type.
+tests/evaluation.test.ts(70,41): error TS7006: Parameter 'r' implicitly has an 'any' type.
+tests/evaluation.test.ts(80,46): error TS7006: Parameter 'c' implicitly has an 'any' type.
+workers/evaluator/adjudicate.ts(36,63): error TS7006: Parameter 'requirement' implicitly has an 'any' type.
+command_exit_code: 2

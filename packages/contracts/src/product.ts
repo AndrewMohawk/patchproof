@@ -1,23 +1,33 @@
 import { z } from 'zod';
+import { JsonDataSchema, jsonRecord, jsonShape, assertLegacyJsonDomain } from './json-data.ts';
+import { FixtureSchema as LegacyFixtureSchema } from './legacy-product-v2.ts';
 import { DigestSchema, TaskIdSchema, VariantSchema, TerminalStatusSchema, LimitsSchema, RequirementSchema } from './index.ts';
 
-export const PRODUCT_CONTRACT_VERSION = '2.1' as const;
-export const ProductContractVersionSchema = z.enum(['2.0', '2.1']);
+export const PRODUCT_CONTRACT_VERSION = '2.2' as const;
+export const ProductContractVersionSchema = z.enum(['2.0', '2.1', '2.2']);
 export type ProductContractVersion = z.infer<typeof ProductContractVersionSchema>;
 export const ProductModeSchema = z.enum(['mock', 'live']);
-export const FunctionCaseSchema = z.strictObject({
+const FunctionCaseObjectSchema = z.strictObject({
   id: z.string(), requirementId: z.string(), function: z.string(),
-  args: z.array(z.json()), kwargs: z.record(z.string(), z.json()).default({}),
+  args: z.array(JsonDataSchema), kwargs: jsonRecord(JsonDataSchema).default({}),
   assertArgsUnchanged: z.boolean().default(false),
-  expected: z.json().optional(), expectedException: z.string().optional(),
+  expected: JsonDataSchema.optional(), expectedException: z.string().optional(),
 }).refine(value => (value.expected !== undefined) !== (value.expectedException !== undefined), 'Exactly one expected outcome required.');
-export const FixtureSchema = z.strictObject({
+export const FunctionCaseSchema = jsonShape(FunctionCaseObjectSchema);
+const FixtureObjectSchema = z.strictObject({
   id: TaskIdSchema, repoId: z.string(), split: z.enum(['development', 'calibration', 'final']),
   title: z.string(), description: z.string(), requirements: z.array(RequirementSchema).min(1),
-  files: z.record(z.string(), z.string()), editAllowlist: z.array(z.string()).min(1),
+  files: jsonRecord(z.string()), editAllowlist: z.array(z.string()).min(1),
   entrypoint: z.string(), visibleCases: z.array(FunctionCaseSchema), acceptanceCases: z.array(FunctionCaseSchema),
   license: z.literal('CC0-1.0'), provenance: z.string(),
 });
+export const FixtureSchema = jsonShape(FixtureObjectSchema);
+export function parseFixtureForVersion(value: unknown, version: ProductContractVersion) {
+  const copy = JsonDataSchema.parse(value);
+  if (version === '2.2') return FixtureSchema.parse(copy);
+  if (version === '2.0' || version === '2.1') { assertLegacyJsonDomain(copy); return LegacyFixtureSchema.parse(copy); }
+  throw new Error('Unsupported fixture contract version.');
+}
 export type Fixture = z.infer<typeof FixtureSchema>;
 export type FunctionCase = z.infer<typeof FunctionCaseSchema>;
 
@@ -62,7 +72,7 @@ export interface SandboxCheckResult {
   infrastructureError: string | null;
 }
 export interface CheckRunner {
-  run(input: { files: Record<string, string>; entrypoint: string; cases: FunctionCase[]; timeoutSeconds: number;
+  run(input: { files: Record<string, string>; entrypoint: string; cases: FunctionCase[]; timeoutSeconds: number; contractVersion?: ProductContractVersion;
     ownerRunId?: string; onOperation?: (id: string) => void },
     signal: AbortSignal): Promise<SandboxCheckResult>;
   reconcile?(runIds: string[]): Promise<{ remainingOperationIds: string[]; error: string | null }>;

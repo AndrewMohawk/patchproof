@@ -24,7 +24,7 @@ export function fixtureDigests(fixture: Fixture, version: ProductContractVersion
       entrypoint: fixture.entrypoint, visibleCases: fixture.visibleCases, acceptanceCases: fixture.acceptanceCases,
     }) };
   }
-  if (version === '2.1') {
+  if (version === '2.1' || version === '2.2') {
     const { files: _sourceFiles, ...policy } = fixture;
     return { sourceDigest, policyDigest: digestJson(policy) };
   }

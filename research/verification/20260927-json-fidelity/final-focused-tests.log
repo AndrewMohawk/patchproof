@@ -1,0 +1,78 @@
+✔ current contract locks and exact historical snapshots are validated independently (69.898886ms)
+(node:258193) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent archive: source/config disappearance cannot change verified byte snapshots (93.874821ms)
+✔ independent archive: scoped GET surface rejects active routes, origin aliases and unknown identities (60.531451ms)
+✔ independent archive: source acceptance-policy mutation rejects historical-version bundle too (18.455287ms)
+✔ independent archive: independent configuration pin and safe failures never reflect private input (4.954189ms)
+(node:258194) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ archive serves exact pinned live and historical mock bytes with explicit read-only capabilities (114.993429ms)
+✔ opened archive snapshots survive later evidence, configuration, fixture and caller metadata changes (27.624943ms)
+✔ all mutation and active event routes reject without creating files or disclosing operator paths (68.641756ms)
+✔ wrong config, bundle and run pins reject before serving any archive (16.922527ms)
+✔ tampered body and rehashed unapproved fixture content both reject (15.298778ms)
+▶ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive
+  ✔ unknown_task (8.40034ms)
+  ✔ final_split (5.915856ms)
+  ✔ experiment_trace (6.774347ms)
+  ✔ candidate_only (9.530514ms)
+  ✔ nonterminal (30.763535ms)
+✔ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive (63.256722ms)
+▶ private regular external files are required; links, broad permissions, URLs and oversized inputs reject
+  ✔ symlink (16.109915ms)
+  ✔ hardlink (7.215201ms)
+  ✔ permissions (6.633876ms)
+  ✔ inside_project (9.78375ms)
+  ✔ url (5.551285ms)
+  ✔ oversized (46.100032ms)
+✔ private regular external files are required; links, broad permissions, URLs and oversized inputs reject (93.273913ms)
+✔ configuration is bounded, strict and unambiguous; source changes before startup reject (25.866249ms)
+(node:258195) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ inspection verifies one explicit published bundle and creates no SQLite sidecars or output (97.030764ms)
+✔ exclusive export writes exact original JSON bytes with private mode and never overwrites (96.450883ms)
+✔ exported-byte verification needs no original journal but requires the approved current public fixture (105.890772ms)
+✔ wrong config digest, run ID and bundle digest refuse without export or database changes (87.084063ms)
+✔ journal publication, terminal state and exact run document must all agree (193.145657ms)
+✔ changed curated source, policy, full legacy fixture metadata and unknown fixture pin all reject (210.653118ms)
+✔ tampered bundle/artifact and invalid byte encoding cannot export (65.44516ms)
+✔ missing journal is never created and unknown schemas are never migrated (53.754491ms)
+✔ active WAL data is refused without a checkpoint or implicit sidecar changes (57.324273ms)
+✔ output and configuration collisions with every database sidecar preserve original inputs (202.239028ms)
+✔ symlink and hardlink aliases are refused for config, evidence, output and public fixture tree (71.104211ms)
+✔ bounded evidence/database reads and public tree size stop before output (122.9984ms)
+✔ private CLI status is compact and neither config credentials nor private event details escape (340.013294ms)
+✔ private evidence reader rejects permissive file modes and request mutations cannot switch selected bundle (65.655557ms)
+✔ URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling (61.660919ms)
+✔ concurrent metadata exports grant one exclusive output and preserve exact selected bytes (70.974502ms)
+✔ an optional Makefile RUN binding must match the selected private configuration (55.253842ms)
+(node:258201) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ 2.2 faithfully clones every own JSON key into detached ordinary objects (2.483817ms)
+✔ function arguments, outer and nested kwargs, and expected values preserve special keys (2.598345ms)
+✔ historical parser defect is reproduced on inert metadata while the current parser retains keys (2.000994ms)
+✔ non-JSON values and lossy object/array shapes are refused without invoking accessors or proxy traps (3.316377ms)
+✔ JSON depth, node count and encoded bytes are explicitly bounded (412.365762ms)
+✔ 2.2 run, evidence, runtime lock and check observations retain keys and original property order (13.564899ms)
+✔ valid 2.0 and 2.1 evidence keeps exact projection, bytes-derived digest and original formula (8.891873ms)
+✔ legacy lossy keys reject explicitly instead of being silently migrated or normalized (4.590444ms)
+✔ evidence versions and normalization-sensitive omissions cannot be relabeled under a different projection (3.51578ms)
+✔ host observation parser preserves returned keys, compares complete mappings, and refuses legacy loss (1.876071ms)
+✔ historical unsupported input is rejected before any local process invocation (1.211533ms)
+✔ replay passes the bound version through repeated checks to an inert metadata-only runner (164.041423ms)
+✔ private export and read-only archive admit the same 2.2 projection and preserve exact selected bytes (125.084798ms)
+✔ observation exception and argument envelopes retain mapping keys and malformed JSON stays an error (1.208574ms)
+✔ default release bindings stay local and supplied calibrated proof explicitly selects a distinct frozen protocol (37.766329ms)
+✔ missing trust, stale proofs and changed source/runtime/model/calibration fail closed (16.705539ms)
+✔ CLI input and audit share live selection; receipts cannot select it and synthetic scope still blocks actual gates (49.220378ms)
+✔ matching smoke retains its own presentation policy while mock, historical and mismatched pins never become current experiment execution (12.36555ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 59
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2256.508283
+command_exit_code: 0

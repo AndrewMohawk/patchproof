@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { FunctionCaseSchema } from '../../packages/contracts/src/product.ts';
+import { FunctionCaseSchema, PRODUCT_CONTRACT_VERSION, ProductContractVersionSchema } from '../../packages/contracts/src/product.ts';
+import { cloneJsonData, assertLegacyJsonDomain } from '../../packages/contracts/src/json-data.ts';
 import type { CheckRunner, CheckResult, SandboxCheckResult } from '../../packages/contracts/src/product.ts';
 import type { NebiusSandboxTransport } from './nebius.ts';
 import { SandboxTransportError, SandboxVerificationSchema, terminalOperation, decodeStream, waitForPoll } from './nebius-types.ts';
@@ -69,6 +70,10 @@ export class NebiusSandboxCheckRunner implements CheckRunner {
     const unavailable = (reason: string): SandboxCheckResult => ({ checks: errorChecks(original.cases, reason), isolation: 'unavailable',
       operationIds: [], cpuSeconds: null, measuredCostUsd: null, infrastructureError: reason });
     if (signal.aborted) return unavailable('cancelled');
+    const contractVersion = ProductContractVersionSchema.safeParse(original.contractVersion ?? PRODUCT_CONTRACT_VERSION);
+    if (!contractVersion.success) return unavailable('unsupported_product_contract_version');
+    try { if (contractVersion.data !== '2.2') assertLegacyJsonDomain(cloneJsonData(original.cases)); }
+    catch { return unavailable('unsupported_legacy_json_key'); }
     const receipt = this.#verified();
     if (!receipt) return unavailable('sandbox_controls_unverified');
     // A repeated check can receive a positive remainder smaller than the API's integral second.
@@ -140,7 +145,7 @@ export class NebiusSandboxCheckRunner implements CheckRunner {
         if (operation.image_uuid !== receipt.imageUuid && operation.metadata.image !== receipt.imageUuid) throw new SandboxTransportError('sandbox_image_unconfirmed');
         if (result.state.timed_out !== false || result.state.stopped === true || result.state.exit_code !== 0 || (result.state.signal !== 0 && result.state.signal !== null)) throw new SandboxTransportError('sandbox_candidate_process_error');
         const stdout = decodeStream(result.stdout), stderr = decodeStream(result.stderr);
-        const check = evaluateObservation(c, stdout, Date.now() - started);
+        const check = evaluateObservation(c, stdout, Date.now() - started, contractVersion.data);
         check.log = JSON.stringify({ comparison: JSON.parse(check.log.startsWith('{') ? check.log : '{}'), stdout, stderr, operation: audit.at(-1) });
         checks.push(check);
       }

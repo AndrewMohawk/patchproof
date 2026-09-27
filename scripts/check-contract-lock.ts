@@ -1,14 +1,6 @@
-import { readFile } from 'node:fs/promises';
-import { digestBytes } from '../packages/contracts/src/digest.ts';
+import { inspectContractLocks } from './contract-locks.ts';
 
-const root = new URL('../', import.meta.url);
-for (const filename of ['research/contracts-v1-lock.json', 'research/contracts-v2-lock.json']) {
-const lock = JSON.parse(await readFile(new URL(filename, root), 'utf8')) as {
-  version: string; files: Record<string, string>;
-};
-for (const [path, expected] of Object.entries(lock.files)) {
-  const actual = digestBytes(await readFile(new URL(path, root)));
-  if (actual !== expected) throw new Error(`Contract changed without a reviewed lock update: ${path}`);
-}
-console.log(`Contract ${lock.version}: ${Object.keys(lock.files).length} source digests match. Dependency gates remain separate.`);
-}
+const checks = await inspectContractLocks(new URL('../', import.meta.url));
+for (const check of checks) console.log(`${check.status}: ${check.detail}`);
+if (checks.some(check => check.status !== 'pass')) throw new Error('Contract lock validation failed; a reviewed current or historical binding is missing.');
+console.log('Contract byte checks do not satisfy independent execution, access or release gates.');

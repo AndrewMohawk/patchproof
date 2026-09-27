@@ -169,7 +169,7 @@ test('diff replay reconstructs added files and exact missing final newlines', as
   assert.deepEqual(await applyPatch(before, createPatch(before, after)), after);
 });
 
-test('2.1 evidence binds all task metadata and never guesses a legacy digest after mismatch', async t => {
+test('current evidence binds all task metadata and never guesses a legacy digest after mismatch', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'patchproof-evidence-version-test-')); t.after(() => rm(dir, { recursive: true, force: true }));
   const coordinator = new Coordinator({ fixtures: [fixture], runtimeLock: {}, provider, checks: checker,
     journal: new RunJournal(join(dir, 'runs.sqlite')), store: new EvidenceStore(join(dir, 'evidence')) });
@@ -178,7 +178,7 @@ test('2.1 evidence binds all task metadata and never guesses a legacy digest aft
     await coordinator.settled();
     const bundle = await coordinator.evidence(run.id);
     assert.equal(bundle.schemaVersion, PRODUCT_CONTRACT_VERSION);
-    assert.equal(bundle.schemaVersion, '2.1');
+    assert.equal(bundle.schemaVersion, '2.2');
     const redigest = <T extends { bundleDigest: string }>(value: T) => { const { bundleDigest: _digest, ...body } = value; return { ...body, bundleDigest: digestJson(body) }; };
     for (const field of ['description', 'title', 'repoId', 'provenance'] as const) {
       const changed = structuredClone(bundle);

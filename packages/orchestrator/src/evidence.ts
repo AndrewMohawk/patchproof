@@ -4,7 +4,8 @@ import { join } from 'node:path';
 import { z } from 'zod';
 import { digestBytes, digestJson } from '../../contracts/src/digest.ts';
 import { ContractError } from '../../contracts/src/index.ts';
-import { FixtureSchema } from '../../contracts/src/product.ts';
+import { parseFixtureForVersion } from '../../contracts/src/product.ts';
+import { cloneJsonData } from '../../contracts/src/json-data.ts';
 import { ProductEvidenceSchema } from '../../contracts/src/product-validation.ts';
 import type { CheckRunner, Fixture, ProductEvidence, ProductRun } from '../../contracts/src/product.ts';
 import { fixtureDigests, validatePaths } from './fixtures.ts';
@@ -12,7 +13,7 @@ import { applyPatch, createPatch } from './patch.ts';
 import { runnerForFrozenProtocol } from './repeated-checks.ts';
 import { isDeepStrictEqual } from 'node:util';
 
-const normalize = <T>(value: T): T => JSON.parse(JSON.stringify(value));
+const normalize = <T>(value: T): T => cloneJsonData(value) as T;
 export function buildEvidence(runValue: ProductRun, fixture: Fixture, runtimeLock: unknown): ProductEvidence {
   const run = normalize(runValue);
   const selected = run.candidates.find(candidate => candidate.id === run.selectedCandidateId);
@@ -37,14 +38,17 @@ export function buildEvidence(runValue: ProductRun, fixture: Fixture, runtimeLoc
 export function verifyEvidence(value: unknown, trustedDigest?: string): ProductEvidence {
   if (!value || typeof value !== 'object') throw new ContractError('digest_mismatch', 'Invalid evidence.');
   const parsed = ProductEvidenceSchema.safeParse(value);
-  if (!parsed.success) throw new ContractError('digest_mismatch', 'Evidence schema validation failed.');
-  const bundle = value as ProductEvidence;
+  if (!parsed.success) {
+    const legacy = parsed.error.issues.some(issue => issue.message === 'unsupported_legacy_json_key');
+    throw new ContractError('digest_mismatch', legacy ? 'Unsupported legacy JSON key; original evidence must not be reinterpreted.' : 'Evidence schema validation failed.');
+  }
+  const bundle = parsed.data;
   const { bundleDigest, ...body } = bundle;
   if (body.format !== 'patchproof-evidence-v2' || body.competitionReady !== false ||
       bundleDigest !== digestJson(body) || (trustedDigest !== undefined && bundleDigest !== trustedDigest)) {
     throw new ContractError('digest_mismatch', 'Evidence digest mismatch.');
   }
-  const fixture = FixtureSchema.parse(bundle.fixture);
+  const fixture = parseFixtureForVersion(bundle.fixture, bundle.schemaVersion);
   const run = bundle.run;
   if (!z.uuid().safeParse(run.id).success || run.phase !== 'terminal' || run.schemaVersion !== body.schemaVersion ||
       run.competitionReady !== false || run.taskId !== fixture.id || run.mode !== body.mode) {
@@ -120,7 +124,7 @@ export async function reproduceEvidence(bundleValue: unknown, runner: CheckRunne
   const files = await applyPatch(bundle.fixture.files, bundle.files['patch.diff']!.content);
   if (digestJson(files) !== digestJson(selected.files)) throw new ContractError('digest_mismatch', 'Applied patch differs from candidate.');
   const checks = await runnerForFrozenProtocol(runner, bundle.runtimeLock).run({ files, entrypoint: bundle.fixture.entrypoint,
-    cases: [...bundle.fixture.visibleCases, ...bundle.fixture.acceptanceCases], timeoutSeconds: 30 }, signal);
+    cases: [...bundle.fixture.visibleCases, ...bundle.fixture.acceptanceCases], timeoutSeconds: 30, contractVersion: bundle.schemaVersion }, signal);
   const expected = [...selected.visibleChecks, ...selected.acceptanceChecks];
   const consistent = checks.infrastructureError === null && checks.checks.length === expected.length && checks.checks.every(check =>
     expected.some(previous => previous.id === check.id && previous.requirementId === check.requirementId && previous.status === check.status && isDeepStrictEqual(previous.actual, check.actual)));

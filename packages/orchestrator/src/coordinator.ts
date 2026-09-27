@@ -156,7 +156,7 @@ export class Coordinator {
     if (remainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for another check batch.');
     const result = await this.#checks.run({ files, entrypoint: fixture.entrypoint,
       cases: [...fixture.visibleCases, ...fixture.acceptanceCases], timeoutSeconds: Math.min(this.#trustedSmoke?.maximumCheckBatchSeconds ?? 30, remainingSeconds),
-      ownerRunId: run.id, onOperation: id => { run.sandboxOperationIds.push(id); this.journal.save(run); },
+      contractVersion: run.schemaVersion, ownerRunId: run.id, onOperation: id => { run.sandboxOperationIds.push(id); this.journal.save(run); },
     }, signal);
     for (const id of result.operationIds) if (!run.sandboxOperationIds.includes(id)) run.sandboxOperationIds.push(id);
     run.usage.sandboxCpuSeconds = result.cpuSeconds === null || run.usage.sandboxCpuSeconds === null ? null : run.usage.sandboxCpuSeconds + result.cpuSeconds;

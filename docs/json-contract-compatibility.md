@@ -1,0 +1,21 @@
+# Product JSON contract 2.2
+
+New ProductRun and ProductEvidence records use `schemaVersion: "2.2"`. JSON dictionary names are data: `constructor`, `__proto__`, `prototype`, empty names and other own string keys are preserved in function arguments, outer and nested keyword arguments, expected values, returned observations, check records and runtime locks. Dictionaries returned by validation have ordinary object prototypes and detached contents. The canonical digest implementation is unchanged.
+
+The defensive JSON copy accepts finite numbers, strings, booleans, null, dense ordinary arrays and ordinary objects containing enumerable own string data properties. It rejects undefined, functions, symbols, bigint, nonfinite numbers, accessors, proxies, custom/null prototypes, symbol or nonenumerable properties, sparse/extended arrays and cycles. It does not call accessors or proxy traps. Shared acyclic values are copied independently. Each copy is bounded to depth 64, 200,000 nodes and 33,554,432 encoded JSON bytes; narrower archive and provider envelopes still apply. These are in-memory JSON data checks, not a replacement for byte limits on transport reads.
+
+The pinned Zod version remains 4.1.12. Product JSON dictionaries bypass its legacy record projection using explicit data-property copies. Whole fixture/case and published run/evidence envelopes are checked before shape access. Exported evidence must already contain its normalized fixture defaults: admission rejects a shape parse that would change the JSON projection. Admission returns a detached copy preserving original property order and values. Private export and the archive continue serving the exact explicitly pinned source bytes, not a newly serialized replacement.
+
+## Historical evidence and replay
+
+Product 2.0 and 2.1 have explicit readers. The unchanged 2.1 source and original lock are preserved under `research/contracts-history/2.1/`; the original `research/contracts-v2-lock.json` is also unchanged. Current source and the guarded legacy readers are bound separately by `research/contracts-v2.2-lock.json`. Both the contract command and release audit use the same read-only lock inspection.
+
+The 2.0 policy digest retains its historical metadata omissions. Versions 2.1 and 2.2 share the existing full-metadata policy digest formula. No old bundle bytes, artifact contents, version labels or digest formulas are rewritten. Valid legacy records in the lossless domain retain the exact admitted JSON projection. An own `constructor` or `__proto__` key anywhere in legacy evidence is explicitly unsupported; it is rejected rather than passed through the old lossy parser or silently treated as 2.2. Already-lost information cannot be recovered from an old stored bundle.
+
+Replay passes the recorded bundle version through `CheckRunner.contractVersion`, including repeated observations. The host observation parser preserves JSON keys for 2.2. Legacy responses outside the lossless domain become `unsupported_legacy_json_key` errors; historical input with such keys is rejected before starting a local process. Ordinary supported responses keep the prior comparison behavior. New direct runner calls default to the current contract. Current product coordination passes its run version explicitly. This does not bypass frozen operational-source requirements, authorize paid replay, or make an old live runtime lock current.
+
+## Verification scope
+
+`tests/json-fidelity.test.ts` uses invented JSON, inert source strings, an in-memory observation callback, temporary metadata SQLite rows and a loopback read-only archive. It never starts an interpreter, container, model or provider. It demonstrates the frozen parser's original key loss, current preservation, clear legacy refusal, exact export/archive bytes, and version forwarding. `tests/contract-lock-compatibility.test.ts` independently changes invented current sources, legacy readers and historical snapshots to check each binding. Test logs and a source-bound receipt are in `research/verification/20260927-json-fidelity/`.
+
+Actual historical export checks are performed and attributed separately by the coordinator. No corpus validation, candidate execution, real inference or new account evidence is established by these controls. Unrelated v1 and tokenizer metadata contracts remain outside this product2.2 migration.

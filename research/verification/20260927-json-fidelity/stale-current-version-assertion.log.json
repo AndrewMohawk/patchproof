@@ -1,0 +1,6 @@
+{
+  "command": "node --test --test-name-pattern='2.1 evidence' tests/orchestrator.test.ts",
+  "exitCode": 1,
+  "capturedBytesDigest": "sha256:d3020a4633fbb4c2b2fec66564781c7d8996cdc34a7a8b6255b6eb9a225a1e06",
+  "stdoutStderr": "(node:353785) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2716 2.1 evidence binds all task metadata and never guesses a legacy digest after mismatch (191.680097ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 0\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 504.997788\n\n\u2716 failing tests:\n\ntest at tests/orchestrator.test.ts:172:1\n\u2716 2.1 evidence binds all task metadata and never guesses a legacy digest after mismatch (191.680097ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  '2.2' !== '2.1'\n  \n      at TestContext.<anonymous> (file:///tmp/patchproof-json-fidelity/tests/orchestrator.test.ts:181:12)\n      at async Test.run (node:internal/test_runner/test:1116:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: '2.2',\n    expected: '2.1',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n"
+}

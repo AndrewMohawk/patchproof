@@ -4,7 +4,9 @@ import { join, dirname } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
-import type { CheckRunner, CheckResult, FunctionCase, SandboxCheckResult } from '../../packages/contracts/src/product.ts';
+import { FunctionCaseSchema, PRODUCT_CONTRACT_VERSION, ProductContractVersionSchema } from '../../packages/contracts/src/product.ts';
+import { JsonDataSchema, jsonRecord, jsonShape, cloneJsonData, assertLegacyJsonDomain, JsonDataError } from '../../packages/contracts/src/json-data.ts';
+import type { ProductContractVersion, CheckRunner, CheckResult, FunctionCase, SandboxCheckResult } from '../../packages/contracts/src/product.ts';
 import { MockRepairProvider } from '../repair/index.ts';
 import { PYTHON_DRIVER, GUEST_DEADLINE_LAUNCHER } from './driver.ts';
 import { runDocker } from './process.ts';
@@ -14,11 +16,11 @@ import type { ProcessRunner } from './process.ts';
 
 export const LOCAL_IMAGE_ID = 'sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51';
 export const LOCAL_IMAGE_REPO_DIGEST = 'python@sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f';
-const observationSchema = z.discriminatedUnion('kind', [
-  z.strictObject({ kind: z.literal('return'), value: z.json(), argsAfter: z.array(z.json()), kwargsAfter: z.record(z.string(), z.json()) }),
-  z.strictObject({ kind: z.literal('exception'), exception: z.string().regex(/^[A-Za-z][A-Za-z0-9_]*$/), argsAfter: z.array(z.json()), kwargsAfter: z.record(z.string(), z.json()) }),
+const observationSchema = jsonShape(z.discriminatedUnion('kind', [
+  z.strictObject({ kind: z.literal('return'), value: JsonDataSchema, argsAfter: z.array(JsonDataSchema), kwargsAfter: jsonRecord(JsonDataSchema) }),
+  z.strictObject({ kind: z.literal('exception'), exception: z.string().regex(/^[A-Za-z][A-Za-z0-9_]*$/), argsAfter: z.array(JsonDataSchema), kwargsAfter: jsonRecord(JsonDataSchema) }),
   z.strictObject({ kind: z.literal('driver_error') }),
-]);
+]));
 
 export interface LocalRuntimeStatus { available: boolean; image: string | null; reason: string | null; }
 export function errorChecks(cases: FunctionCase[], reason: string): CheckResult[] {
@@ -28,10 +30,16 @@ export function errorChecks(cases: FunctionCase[], reason: string): CheckResult[
 }
 
 /** Compares observed return/exception/arguments in the trusted host controller. */
-export function evaluateObservation(c: FunctionCase, stdout: string, durationMs: number): CheckResult {
+export function evaluateObservation(c: FunctionCase, stdout: string, durationMs: number, contractVersion: ProductContractVersion = PRODUCT_CONTRACT_VERSION): CheckResult {
   let observed: z.infer<typeof observationSchema>;
-  try { observed = observationSchema.parse(JSON.parse(stdout)); }
-  catch { return { ...errorChecks([c], 'invalid_candidate_output')[0]!, durationMs }; }
+  try {
+    ProductContractVersionSchema.parse(contractVersion);
+    const value = cloneJsonData(JSON.parse(stdout));
+    if (contractVersion !== '2.2') assertLegacyJsonDomain(value);
+    observed = observationSchema.parse(value);
+  } catch (error) {
+    return { ...errorChecks([c], error instanceof JsonDataError && error.code === 'unsupported_legacy_json_key' ? error.code : 'invalid_candidate_output')[0]!, durationMs };
+  }
   if (observed.kind === 'driver_error') return { ...errorChecks([c], 'candidate_import_or_serialization_error')[0]!, durationMs };
   const outcome = c.expectedException !== undefined ? observed.kind === 'exception' && observed.exception === c.expectedException :
     observed.kind === 'return' && isDeepStrictEqual(observed.value, c.expected);
@@ -75,6 +83,13 @@ export class DockerCheckRunner implements CheckRunner {
     const unavailable = (reason: string): SandboxCheckResult => ({ checks: errorChecks(input.cases, reason), isolation: 'unavailable',
       operationIds: [], cpuSeconds: null, measuredCostUsd: null, infrastructureError: reason });
     if (signal.aborted) return unavailable('cancelled');
+    const contractVersion = ProductContractVersionSchema.safeParse(input.contractVersion ?? PRODUCT_CONTRACT_VERSION);
+    if (!contractVersion.success) return unavailable('unsupported_product_contract_version');
+    const cases = z.array(FunctionCaseSchema).safeParse(input.cases);
+    if (!cases.success) return unavailable('invalid_candidate_input');
+    input = { ...input, cases: cases.data };
+    try { if (contractVersion.data !== '2.2') assertLegacyJsonDomain(cloneJsonData(input.cases)); }
+    catch { return unavailable('unsupported_legacy_json_key'); }
     if (input.ownerRunId !== undefined && !z.uuid().safeParse(input.ownerRunId).success) return unavailable('invalid_owner_run_id');
     const paths = Object.keys(input.files);
     if (!paths.length || paths.length > 32 || paths.some(path => !/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.py$/.test(path)) ||
@@ -158,7 +173,7 @@ export class DockerCheckRunner implements CheckRunner {
                 const reason = result.error ?? (result.code === 125 ? 'docker_setup_error' : 'candidate_process_error');
                 checks.push({ ...errorChecks([c], reason)[0]!, durationMs: Date.now() - started });
                 if (['docker_unavailable', 'docker_setup_error', 'timeout', 'cancelled'].includes(reason) || reason.startsWith('parent_death_launcher_')) infrastructureError = reason;
-              } else checks.push(evaluateObservation(c, result.stdout, Date.now() - started));
+              } else checks.push(evaluateObservation(c, result.stdout, Date.now() - started, contractVersion.data));
             }
           }
         } catch {
