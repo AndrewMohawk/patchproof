@@ -1,5 +1,15 @@
 # Completion audit — local implementation versus external proof
 
+Current coordinator status: the local product, guarded live factory/session,
+protected adjudication, accounting intake, reviewer tools and release-packet
+tooling are implemented. The implementation gaps in the original review below
+are historical; subsequent source-bound verification sections record their
+closure. Actual provider access, calibration, billing, experiments, human review,
+independent-machine replay and owner release decisions remain required. See
+[the current blockers](../research/blockers.md) for the active gates.
+
+## Original independent review
+
 Reviewed 2026-09-27 against source commit `b3ee8ea9d4b9dcdd4a8666481197748c48707a77` and the working tree at review time. This is a bounded, independent evaluator review of the original PRD, task deliverables and public repository. It is not a release approval, task-status change, provider test or scored experiment. No sealed task contents or gold sources were used in this audit.
 
 The local product is implemented, with recorded browser and fresh-container replay evidence. Provider credentials alone would not finish the original package: several orchestration and study components still need code. Parallel work may supersede the observations below; each item needs its own linked test receipt before closure.
