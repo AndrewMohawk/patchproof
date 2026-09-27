@@ -7,6 +7,7 @@ import { FunctionCaseSchema } from '../packages/contracts/src/product.ts';
 import { DockerCheckRunner, createLocalRuntime, LOCAL_IMAGE_ID, evaluateObservation, NebiusSandboxTransport, NebiusSandboxCheckRunner } from '../workers/sandbox/index.ts';
 import { runDocker, PARENT_DEATH_LAUNCHER } from '../workers/sandbox/process.ts';
 import type { ProcessRunner } from '../workers/sandbox/process.ts';
+import { GUEST_DEADLINE_LAUNCHER } from '../workers/sandbox/driver.ts';
 
 const check = (extra: Record<string, unknown> = {}) => FunctionCaseSchema.parse({ id: 'case-one', requirementId: 'R01', function: 'unique', args: [[3, 1, 3]], expected: [3, 1], ...extra });
 const signal = () => new AbortController().signal;
@@ -84,11 +85,22 @@ test('Docker invocation exposes inputs only and enforces declared local containm
   const calls: string[][] = [];
   const ownerRunId = randomUUID();
   const announced: string[] = [];
+  const id = 'a'.repeat(64); let name = '', removed = false;
   const fake: ProcessRunner = async (args, options) => {
     calls.push(args);
     if (args[0] === 'image') return { code: 0, error: null, stderr: '', stdout: JSON.stringify({ Id: LOCAL_IMAGE_ID, Architecture: process.arch === 'arm64' ? 'arm64' : 'amd64', Os: 'linux' }) };
-    if (args[0] === 'rm') return { code: 0, error: null, stderr: '', stdout: '' };
-    assert.deepEqual(announced, [`docker:${args[args.indexOf('--name') + 1]}`], 'Operation must be persisted before spawn.');
+    if (args[0] === 'create') {
+      name = args[args.indexOf('--name') + 1]!;
+      assert.deepEqual(announced, [`docker:${name}`], 'Operation must be persisted before creation.');
+      assert.equal(options?.stdin, undefined, 'Creation must not receive the invocation.');
+      return { code: 0, error: null, stderr: '', stdout: id };
+    }
+    if (args[0] === 'container') return removed ? { code: 1, error: null, stdout: '', stderr: 'No such container' } :
+      { code: 0, error: null, stderr: '', stdout: JSON.stringify({ Id: id, Name: '/' + name, Image: LOCAL_IMAGE_ID, Config: { Labels: {
+        'org.patchproof.owned': 'true', 'org.patchproof.operation': name, 'org.patchproof.run-id': ownerRunId,
+      } } }) };
+    if (args[0] === 'rm') { assert.deepEqual(args, ['rm', '-f', id]); removed = true; return { code: 0, error: null, stderr: '', stdout: '' }; }
+    assert.deepEqual(args, ['start', '--attach', '--interactive', id]);
     const sent = JSON.parse(options!.stdin!);
     assert.deepEqual(Object.keys(sent).sort(), ['args', 'function', 'kwargs']);
     assert.ok(!options!.stdin!.includes('expected'));
@@ -99,16 +111,16 @@ test('Docker invocation exposes inputs only and enforces declared local containm
     ownerRunId, onOperation: id => announced.push(id) }, signal());
   assert.equal(result.checks[0]!.status, 'pass');
   assert.deepEqual(result.operationIds, announced);
-  const command = calls.find(c => c[0] === 'run')!;
+  const command = calls.find(c => c[0] === 'create')!;
   assert.ok(command.includes(`org.patchproof.run-id=${ownerRunId}`));
   for (const [flag, value] of [['--network', 'none'], ['--cap-drop', 'ALL'], ['--security-opt', 'no-new-privileges'], ['--cpus', '0.5'], ['--pids-limit', '32'], ['--user', '65534:65534'], ['--pull', 'never']]) {
     assert.equal(command[command.indexOf(flag!) + 1], value);
   }
   assert.ok(command.includes('--read-only'));
   assert.ok(command.includes('--init'), 'Init must own PID 1 so the container timer can SIGKILL Python.');
-  assert.equal(command[command.indexOf('--entrypoint') + 1], '/bin/busybox');
-  assert.deepEqual(command.slice(command.indexOf(LOCAL_IMAGE_ID) + 1, command.indexOf(LOCAL_IMAGE_ID) + 4), ['timeout', '-s', 'KILL']);
-  assert.ok(Number(command[command.indexOf(LOCAL_IMAGE_ID) + 4]) <= 10);
+  assert.equal(command[command.indexOf('--entrypoint') + 1], '/usr/local/bin/python');
+  assert.equal(command[command.indexOf('-c') + 1], GUEST_DEADLINE_LAUNCHER);
+  assert.ok(Number(command[command.indexOf(GUEST_DEADLINE_LAUNCHER) + 2]) <= 10);
   assert.equal(command.filter(arg => arg === '--mount').length, 1);
   assert.ok(command[command.indexOf('--mount') + 1]!.endsWith(',dst=/candidate,readonly'));
   assert.ok(calls.some(c => c[0] === 'rm'));
@@ -218,16 +230,19 @@ test('unavailable Docker and pre-cancellation produce check errors with no execu
 });
 
 test('unconfirmed cleanup stops the batch before another container can overlap it', async () => {
-  let launches = 0;
+  let launches = 0, name = ''; const id = 'c'.repeat(64);
   const runner = new DockerCheckRunner({ process: async args => {
     if (args[0] === 'image') return { code: 0, error: null, stderr: '', stdout: JSON.stringify({ Id: LOCAL_IMAGE_ID, Architecture: process.arch === 'arm64' ? 'arm64' : 'amd64', Os: 'linux' }) };
-    if (args[0] === 'run') {
+    if (args[0] === 'create') { name = args[args.indexOf('--name') + 1]!; return { code: 0, error: null, stderr: '', stdout: id }; }
+    if (args[0] === 'start') {
       launches++;
       // Output saturation kills the client; the container may still be executing.
       return { code: null, error: 'output_limit', stdout: '', stderr: '' };
     }
-    assert.equal(args[0], 'rm');
-    return { code: 1, error: null, stdout: '', stderr: 'synthetic removal failure' };
+    assert.equal(args[0], 'container');
+    return launches ? { code: 1, error: null, stdout: '', stderr: 'synthetic inspection failure' } :
+      { code: 0, error: null, stderr: '', stdout: JSON.stringify({ Id: id, Name: '/' + name, Image: LOCAL_IMAGE_ID,
+        Config: { Labels: { 'org.patchproof.owned': 'true', 'org.patchproof.operation': name } } }) };
   } });
   const result = await runner.run({ files: { 'solution.py': good }, entrypoint: 'solution.py', timeoutSeconds: 10,
     cases: [check(), check({ id: 'case-two' })] }, signal());
@@ -253,10 +268,8 @@ test('local cancellation removes its running container and records non-passing c
   const controller = new AbortController();
   let name = '';
   const runner = new DockerCheckRunner({ process: async (args, options) => {
-    if (args[0] === 'run') {
-      name = args[args.indexOf('--name') + 1]!;
-      setTimeout(() => controller.abort(), 700);
-    }
+    if (args[0] === 'create') name = args[args.indexOf('--name') + 1]!;
+    if (args[0] === 'start') setTimeout(() => controller.abort(), 700);
     return runDocker(args, options);
   } });
   const result = await runner.run({ files: { 'solution.py': 'import time\ndef unique(values):\n    time.sleep(20)\n    return values\n' }, entrypoint: 'solution.py', cases: [check()], timeoutSeconds: 10 }, controller.signal);
@@ -271,15 +284,21 @@ test('in-container wall limit kills sleeping candidate before the longer host pr
   let commandResult: Awaited<ReturnType<ProcessRunner>> | undefined;
   let name = '';
   const runner = new DockerCheckRunner({ process: async (args, options) => {
-    if (args[0] !== 'run') return runDocker(args, options);
-    name = args[args.indexOf('--name') + 1]!;
+    if (args[0] === 'create') {
+      name = args[args.indexOf('--name') + 1]!;
+      // A far-future wall clock cannot grant more than this validated duration cap.
+      const changed = [...args], position = changed.indexOf(GUEST_DEADLINE_LAUNCHER);
+      changed[position + 1] = String(Date.now() + 60_000); changed[position + 2] = '1';
+      return runDocker(changed, options);
+    }
+    if (args[0] !== 'start') return runDocker(args, options);
     // Deliberately leave the host watchdog longer to isolate the container timer.
     commandResult = await runDocker(args, { ...options, timeoutMs: 10_000 });
     return commandResult;
   } });
   const started = Date.now();
   const result = await runner.run({ files: { 'solution.py': 'import time\ndef unique(values):\n    time.sleep(20)\n    return values\n' },
-    entrypoint: 'solution.py', cases: [check()], timeoutSeconds: 1 }, signal());
+    entrypoint: 'solution.py', cases: [check()], timeoutSeconds: 10 }, signal());
   assert.ok(Date.now() - started < 8000);
   assert.equal(commandResult?.error, null, 'Host watchdog must not cause termination.');
   assert.equal(commandResult?.code, 137, 'BusyBox SIGKILL must terminate the container command.');

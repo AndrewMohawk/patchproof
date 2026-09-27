@@ -6,9 +6,10 @@ import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
 import type { CheckRunner, CheckResult, FunctionCase, SandboxCheckResult } from '../../packages/contracts/src/product.ts';
 import { MockRepairProvider } from '../repair/index.ts';
-import { PYTHON_DRIVER } from './driver.ts';
+import { PYTHON_DRIVER, GUEST_DEADLINE_LAUNCHER } from './driver.ts';
 import { runDocker } from './process.ts';
 import { reconcileContainers } from './reconcile.ts';
+import { cleanupOwnedContainer, inspectOwnedContainer } from './local-cleanup.ts';
 import type { ProcessRunner } from './process.ts';
 
 export const LOCAL_IMAGE_ID = 'sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51';
@@ -53,9 +54,9 @@ export class DockerCheckRunner implements CheckRunner {
     this.#image = options.image ?? LOCAL_IMAGE_ID;
     this.#process = options.process ?? runDocker;
   }
-  async status(): Promise<LocalRuntimeStatus> {
+  async status(options: { timeoutMs?: number; signal?: AbortSignal } = {}): Promise<LocalRuntimeStatus> {
     if (!/^sha256:[a-f0-9]{64}$/.test(this.#image)) return { available: false, image: null, reason: 'immutable_image_required' };
-    const inspected = await this.#process(['image', 'inspect', this.#image, '--format', '{{json .}}']);
+    const inspected = await this.#process(['image', 'inspect', this.#image, '--format', '{{json .}}'], options);
     if (inspected.error || inspected.code !== 0) return { available: false, image: null, reason: inspected.error ?? 'local_python_image_unavailable' };
     try {
       const image = JSON.parse(inspected.stdout) as { Id: string; Os: string; Architecture: string };
@@ -80,9 +81,11 @@ export class DockerCheckRunner implements CheckRunner {
         !paths.includes(input.entrypoint) || Object.values(input.files).reduce((n, source) => n + Buffer.byteLength(source), 0) > 262_144 ||
         !Number.isFinite(input.timeoutSeconds) || input.timeoutSeconds <= 0 || input.timeoutSeconds > 900 ||
         input.cases.some(c => !/^[a-zA-Z][a-zA-Z0-9_]*$/.test(c.function))) return unavailable('invalid_candidate_input');
-    const status = await this.status();
+    const deadline = performance.now() + input.timeoutSeconds * 1000;
+    const guestDeadline = Date.now() + input.timeoutSeconds * 1000;
+    const remainingMs = () => Math.max(0, deadline - performance.now());
+    const status = await this.status({ timeoutMs: Math.max(1, remainingMs()), signal });
     if (!status.available) return unavailable(status.reason!);
-    const deadline = Date.now() + input.timeoutSeconds * 1000;
     const directory = await mkdtemp(join(tmpdir(), 'patchproof-candidate-'));
     const checks: CheckResult[] = [], operationIds: string[] = [];
     let infrastructureError: string | null = null;
@@ -93,7 +96,7 @@ export class DockerCheckRunner implements CheckRunner {
         await writeFile(join(directory, path), source, { mode: 0o444, flag: 'wx' });
       }
       for (const c of input.cases) {
-        if (signal.aborted || Date.now() >= deadline) {
+        if (signal.aborted || remainingMs() <= 0) {
           infrastructureError = signal.aborted ? 'cancelled' : 'timeout';
           checks.push(...errorChecks(input.cases.slice(checks.length), infrastructureError));
           break;
@@ -109,30 +112,70 @@ export class DockerCheckRunner implements CheckRunner {
           checks.push(...errorChecks(input.cases.slice(checks.length), infrastructureError));
           break;
         }
+        if (signal.aborted || remainingMs() <= 0) {
+          infrastructureError = signal.aborted ? 'cancelled' : 'timeout';
+          checks.push(...errorChecks(input.cases.slice(checks.length), infrastructureError));
+          break;
+        }
+        let acknowledged = false, containerId: string | null = null;
+        let cleanup: Awaited<ReturnType<typeof cleanupOwnedContainer>> | undefined;
         try {
-          const result = await this.#process(['run', '--rm', '--init', '--pull', 'never', '--name', name,
-            '--label', 'org.patchproof.owned=true',
+          // Creation is a separate, non-executing step. Never retry an uncertain create.
+          const created = await this.#process(['create', '--rm', '--init', '--pull', 'never', '--name', name,
+            '--label', 'org.patchproof.owned=true', '--label', `org.patchproof.operation=${name}`,
             ...(input.ownerRunId ? ['--label', `org.patchproof.run-id=${input.ownerRunId}`] : []),
             '--network', 'none', '--read-only', '--cap-drop', 'ALL',
             '--security-opt', 'no-new-privileges', '--pids-limit', '32', '--memory', '128m', '--memory-swap', '128m',
             '--cpus', '0.5', '--ulimit', 'cpu=5:5', '--ulimit', 'nofile=64:64', '--user', '65534:65534',
             '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', '--mount', `type=bind,src=${directory},dst=/candidate,readonly`,
-            '--workdir', '/candidate', '--log-driver', 'none', '--entrypoint', '/bin/busybox', '-i',
-            this.#image, 'timeout', '-s', 'KILL', String(Math.max(0.001, (deadline - Date.now()) / 1000)),
-            '/usr/local/bin/python', '-I', '-B', '-c', PYTHON_DRIVER, `/candidate/${input.entrypoint}`], {
-              stdin: JSON.stringify({ function: c.function, args: c.args, kwargs: c.kwargs }),
-              timeoutMs: Math.max(1, deadline - Date.now()), signal,
+            '--workdir', '/candidate', '--log-driver', 'none', '--entrypoint', '/usr/local/bin/python', '-i',
+            this.#image, '-I', '-B', '-c', GUEST_DEADLINE_LAUNCHER, String(guestDeadline), String(Math.max(0.001, remainingMs() / 1000)),
+            PYTHON_DRIVER, `/candidate/${input.entrypoint}`], {
+              timeoutMs: Math.max(1, Math.min(10_000, remainingMs())), signal,
             });
-          if (result.error || result.code !== 0) {
-            const reason = result.error ?? (result.code === 125 ? 'docker_setup_error' : 'candidate_process_error');
-            checks.push({ ...errorChecks([c], reason)[0]!, durationMs: Date.now() - started });
-            if (['docker_unavailable', 'docker_setup_error', 'timeout', 'cancelled'].includes(reason) || reason.startsWith('parent_death_launcher_')) infrastructureError = reason;
-          } else checks.push(evaluateObservation(c, result.stdout, Date.now() - started));
+          const id = created.stdout.trim();
+          acknowledged = !created.error && created.code === 0 && /^[a-f0-9]{64}$/.test(id);
+          if (acknowledged) containerId = id;
+          if (!acknowledged) {
+            infrastructureError = created.error ?? (created.code === 0 ? 'docker_create_unconfirmed' : 'docker_setup_error');
+            checks.push({ ...errorChecks([c], infrastructureError)[0]!, durationMs: Date.now() - started });
+          } else if (signal.aborted || remainingMs() <= 0) {
+            infrastructureError = signal.aborted ? 'cancelled' : 'timeout';
+            checks.push({ ...errorChecks([c], infrastructureError)[0]!, durationMs: Date.now() - started });
+          } else {
+            const owned = await inspectOwnedContainer(this.#process, { name, image: this.#image, id,
+              ...(input.ownerRunId ? { ownerRunId: input.ownerRunId } : {}) }, Math.max(1, remainingMs()), signal);
+            // This check is after inspection as well: ownership I/O may consume the allowance.
+            if (signal.aborted || remainingMs() <= 0 || owned.state !== 'present') {
+              infrastructureError = signal.aborted ? 'cancelled' : remainingMs() <= 0 ? 'timeout' : 'container_ownership_unconfirmed';
+              checks.push({ ...errorChecks([c], infrastructureError)[0]!, durationMs: Date.now() - started });
+            } else {
+              const result = await this.#process(['start', '--attach', '--interactive', id], {
+                stdin: JSON.stringify({ function: c.function, args: c.args, kwargs: c.kwargs }),
+                timeoutMs: Math.max(1, remainingMs()), signal,
+              });
+              if (result.error || result.code !== 0) {
+                const reason = result.error ?? (result.code === 125 ? 'docker_setup_error' : 'candidate_process_error');
+                checks.push({ ...errorChecks([c], reason)[0]!, durationMs: Date.now() - started });
+                if (['docker_unavailable', 'docker_setup_error', 'timeout', 'cancelled'].includes(reason) || reason.startsWith('parent_death_launcher_')) infrastructureError = reason;
+              } else checks.push(evaluateObservation(c, result.stdout, Date.now() - started));
+            }
+          }
+        } catch {
+          infrastructureError = 'docker_setup_error';
+          checks.push({ ...errorChecks([c], infrastructureError)[0]!, durationMs: Date.now() - started });
         } finally {
-          // Independent of the cancelled signal: killing the CLI is not container cleanup.
-          const cleanup = await this.#process(['rm', '-f', name], { timeoutMs: 5000 });
-          if (cleanup.error || (cleanup.code !== 0 && !/No such (container|object)/i.test(cleanup.stderr))) infrastructureError = 'container_cleanup_unconfirmed';
+          // Absence is final only after an acknowledged/observed create. A delayed
+          // unacknowledged create can leave an inert object, but it can never be started here.
+          cleanup = await cleanupOwnedContainer(this.#process, { name, image: this.#image,
+            ...(containerId ? { id: containerId } : {}), ...(input.ownerRunId ? { ownerRunId: input.ownerRunId } : {}) }, acknowledged);
+          if (!cleanup.confirmed) infrastructureError = 'container_cleanup_unconfirmed';
         }
+        const recorded = checks.at(-1)!;
+        recorded.log = JSON.stringify({ observationLog: recorded.log, dockerLifecycle: {
+          operationId, createAcknowledged: acknowledged, containerId: cleanup.id ?? containerId,
+          cleanupConfirmed: cleanup.confirmed, cleanupReason: cleanup.reason,
+        } });
         // Never overlap a new case with an operation whose termination is uncertain.
         if (infrastructureError) {
           checks.push(...errorChecks(input.cases.slice(checks.length), infrastructureError));
