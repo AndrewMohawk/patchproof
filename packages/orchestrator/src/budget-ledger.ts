@@ -2,7 +2,8 @@ import { DatabaseSync } from 'node:sqlite';
 import type { SQLInputValue } from 'node:sqlite';
 import { createHash,randomUUID } from 'node:crypto';
 import { closeSync, openSync, lstatSync, mkdirSync, chmodSync, constants } from 'node:fs';
-import { dirname, isAbsolute, parse, join } from 'node:path';
+import { dirname, isAbsolute, parse, join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { z } from 'zod';
 import { BudgetSchema } from '../../../scripts/config.ts';
 
@@ -77,6 +78,59 @@ function prepareFile(filename: string) {
   }
 }
 
+/** Existing-only opening is deliberately stricter than the initializer: no mkdir, chmod,
+ * missing-file creation, schema migration or approval initialization is permitted. */
+function existingFile(filename: string) {
+  if (!isAbsolute(filename) || resolve(filename) !== filename || /[\x00-\x1f\x7f]/.test(filename)) fail('invalid_path', 'Expected a canonical existing ledger path.');
+  const parent = dirname(filename), root = parse(parent).root;
+  let current = root;
+  for (const component of parent.slice(root.length).split('/').filter(Boolean)) {
+    current = join(current, component);
+    const entry = lstatSync(current);
+    if (!entry.isDirectory() || entry.isSymbolicLink()) fail('invalid_path', 'Existing ledger directories must not use symlinks.');
+  }
+  const directory = lstatSync(parent);
+  if ((process.getuid && directory.uid !== process.getuid()) || (directory.mode & 0o077) !== 0) fail('invalid_path', 'Existing ledger directory must be private and owned.');
+  const inspect = (path: string) => {
+    const entry = lstatSync(path);
+    if (!entry.isFile() || entry.isSymbolicLink() || entry.nlink !== 1 || (process.getuid && entry.uid !== process.getuid()) || (entry.mode & 0o077) !== 0) fail('invalid_path', 'Existing ledger files must be private owned regular files.');
+    return entry;
+  };
+  const main = inspect(filename);
+  for (const suffix of ['-wal', '-shm', '-journal']) {
+    try { inspect(filename + suffix); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  }
+  return { dev: main.dev, ino: main.ino };
+}
+const LEDGER_SCHEMA_SQL = `CREATE TABLE IF NOT EXISTS budget_meta (
+        id INTEGER PRIMARY KEY CHECK(id=1), schema_version INTEGER NOT NULL CHECK(schema_version=1),
+        approval_revision INTEGER NOT NULL, approval_digest TEXT NOT NULL, approval_json TEXT NOT NULL,
+        frozen_reason TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_reservations (
+        id TEXT PRIMARY KEY, episode_id TEXT UNIQUE NOT NULL, stage TEXT NOT NULL CHECK(stage IN ('smoke','pilot','evaluate','hosting')),
+        amount_micros INTEGER NOT NULL CHECK(amount_micros>0), fingerprint TEXT NOT NULL, request_digest TEXT NOT NULL,
+        state TEXT NOT NULL CHECK(state IN ('reserved','attempted','cancelled','reconciled')), attempted_at TEXT,
+        actual_micros INTEGER CHECK(actual_micros>=0), reconciliation_complete INTEGER NOT NULL CHECK(reconciliation_complete IN (0,1)),
+        evidence_digest TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_events (
+        sequence INTEGER PRIMARY KEY AUTOINCREMENT, timestamp TEXT NOT NULL, kind TEXT NOT NULL,
+        reservation_id TEXT, approval_revision INTEGER NOT NULL, payload TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_accounting_journal (
+        id INTEGER PRIMARY KEY CHECK(id=1), journal_digest TEXT NOT NULL, ledger_id TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS budget_accounting_receipts (
+        reservation_id TEXT PRIMARY KEY,revision INTEGER NOT NULL,receipt_digest TEXT NOT NULL,previous_digest TEXT);`;
+const normalizeSchema = (sql: string) => sql.replace(/\bIF\s+NOT\s+EXISTS\b/gi, '').replace(/\s+/g, '').toLowerCase();
+function assertExistingSchema(db: DatabaseSync) {
+  for (const statement of LEDGER_SCHEMA_SQL.split(';').map(sql => sql.trim()).filter(Boolean)) {
+    const name = /^CREATE TABLE IF NOT EXISTS (\w+)/.exec(statement)![1]!;
+    const row = db.prepare('SELECT type,sql FROM sqlite_schema WHERE name=?').get(name);
+    if (row?.type !== 'table' || typeof row.sql !== 'string' || normalizeSchema(row.sql) !== normalizeSchema(statement) ||
+        db.prepare("SELECT 1 FROM sqlite_schema WHERE type='trigger' AND tbl_name=? LIMIT 1").get(name)) fail('existing_ledger_invalid', 'Existing ledger schema is missing, unsupported or changed.');
+  }
+  if (db.prepare('PRAGMA journal_mode').get()?.journal_mode !== 'wal') fail('existing_ledger_invalid', 'Existing ledger must already use its recorded WAL journal mode.');
+}
+
 type Row = Record<string,unknown>;
 interface Meta { revision: number; digest: string; policy: Policy; frozenReason: string | null; }
 export interface ReservationView {
@@ -108,31 +162,31 @@ export class BudgetLedger {
   #revision = 0;
   #approvalDigest: string;
 
-  constructor(options: { filename: string; budget: unknown; now?: () => Date }) {
+  constructor(options: { filename: string; budget: unknown; now?: () => Date; existingOnly?: boolean }) {
     const configured = policy(options.budget);
-    prepareFile(options.filename);
+    const identity = options.existingOnly ? existingFile(options.filename) : null;
+    if (!options.existingOnly) prepareFile(options.filename);
     this.#now = options.now ?? (() => new Date());
     this.#approvalDigest = configured.digest;
-    this.#db = new DatabaseSync(options.filename);
+    const location = pathToFileURL(options.filename);
+    if (options.existingOnly) location.search = 'mode=rw';
+    this.#db = new DatabaseSync(options.existingOnly ? location : options.filename);
     try {
+      if (identity) {
+        this.#db.exec('PRAGMA trusted_schema=OFF; BEGIN;');
+        try {
+          assertExistingSchema(this.#db);
+          const metadata = this.#meta(), after = existingFile(options.filename);
+          if (identity.dev !== after.dev || identity.ino !== after.ino) fail('invalid_path', 'Existing ledger identity changed while opening.');
+          if (metadata.digest !== configured.digest) fail('approval_mismatch', 'Configured budget disagrees with durable approval; trusted synchronization is required.');
+          this.#revision = metadata.revision;
+          this.#db.exec('COMMIT;');
+        } catch (error) { this.#db.exec('ROLLBACK;'); throw error; }
+        this.#db.exec('PRAGMA busy_timeout=5000; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;');
+        return;
+      }
       this.#db.exec('PRAGMA busy_timeout=5000; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;');
-      this.#db.exec(`CREATE TABLE IF NOT EXISTS budget_meta (
-        id INTEGER PRIMARY KEY CHECK(id=1), schema_version INTEGER NOT NULL CHECK(schema_version=1),
-        approval_revision INTEGER NOT NULL, approval_digest TEXT NOT NULL, approval_json TEXT NOT NULL,
-        frozen_reason TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS budget_reservations (
-        id TEXT PRIMARY KEY, episode_id TEXT UNIQUE NOT NULL, stage TEXT NOT NULL CHECK(stage IN ('smoke','pilot','evaluate','hosting')),
-        amount_micros INTEGER NOT NULL CHECK(amount_micros>0), fingerprint TEXT NOT NULL, request_digest TEXT NOT NULL,
-        state TEXT NOT NULL CHECK(state IN ('reserved','attempted','cancelled','reconciled')), attempted_at TEXT,
-        actual_micros INTEGER CHECK(actual_micros>=0), reconciliation_complete INTEGER NOT NULL CHECK(reconciliation_complete IN (0,1)),
-        evidence_digest TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS budget_events (
-        sequence INTEGER PRIMARY KEY AUTOINCREMENT, timestamp TEXT NOT NULL, kind TEXT NOT NULL,
-        reservation_id TEXT, approval_revision INTEGER NOT NULL, payload TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS budget_accounting_journal (
-        id INTEGER PRIMARY KEY CHECK(id=1), journal_digest TEXT NOT NULL, ledger_id TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS budget_accounting_receipts (
-        reservation_id TEXT PRIMARY KEY,revision INTEGER NOT NULL,receipt_digest TEXT NOT NULL,previous_digest TEXT);`);
+      this.#db.exec(LEDGER_SCHEMA_SQL);
       this.#transaction(() => {
         const existing = this.#row('SELECT * FROM budget_meta WHERE id=1');
         if (!existing) {
