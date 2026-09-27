@@ -1,0 +1,21 @@
+(node:2610948) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent: failed-task charges can reverse the cheapest eligible model, without deleting the failure (35.645525ms)
+✔ independent: one missing expensive-model row blocks selection despite complete cheap-model results (5.387541ms)
+✔ independent: incomplete billing preserves a reported lower bound but cannot establish total cost or selection (5.939588ms)
+✔ independent: current separately accepted proof and exact accepted observation digests remain mandatory (17.529185ms)
+✔ independent: synthetic rows stay excluded even when their digests are explicitly accepted (6.810177ms)
+✔ independent: accepted failures exceeding a frozen allowance still block an otherwise eligible model (4.554528ms)
+✔ independent: reviewed approval, model-evidence and timestamp contradictions reject at parsing (2.75556ms)
+✔ independent: recomputing a digest cannot legitimize a changed matched episode allowance (17.761451ms)
+✔ independent: private CLI writes a blocked report without altering source inputs or creating runtime state (22.722381ms)
+✔ independent: private CLI refuses linked metadata inputs and leaves the target bytes intact (3.53144ms)
+✔ independent: the matched plan explicitly freezes the repair variant before any model result (10.971115ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 380.625842

@@ -1,0 +1,30 @@
+(node:2567360) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ independent: the matched plan explicitly freezes the repair variant before any model result (29.029195ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 268.890623
+
+✖ failing tests:
+
+test at tests/model-probe-independent.test.ts:159:1
+✖ independent: the matched plan explicitly freezes the repair variant before any model result (29.029195ms)
+  AssertionError [ERR_ASSERTION]: Matched model comparison omits the repair variant.
+      at TestContext.<anonymous> (file:///tmp/patchproof-model-probe-review/tests/model-probe-independent.test.ts:161:10)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.start (node:internal/test_runner/test:1006:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

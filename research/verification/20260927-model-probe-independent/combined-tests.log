@@ -1,0 +1,31 @@
+(node:2636826) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent: failed-task charges can reverse the cheapest eligible model, without deleting the failure (33.571758ms)
+✔ independent: one missing expensive-model row blocks selection despite complete cheap-model results (10.496949ms)
+✔ independent: incomplete billing preserves a reported lower bound but cannot establish total cost or selection (5.867817ms)
+✔ independent: current separately accepted proof and exact accepted observation digests remain mandatory (17.162959ms)
+✔ independent: synthetic rows stay excluded even when their digests are explicitly accepted (7.41782ms)
+✔ independent: accepted failures exceeding a frozen allowance still block an otherwise eligible model (5.857707ms)
+✔ independent: reviewed approval, model-evidence and timestamp contradictions reject at parsing (3.029899ms)
+✔ independent: recomputing a digest cannot legitimize a changed matched episode allowance (6.771233ms)
+✔ independent: private CLI writes a blocked report without altering source inputs or creating runtime state (24.669372ms)
+✔ independent: private CLI refuses linked metadata inputs and leaves the target bytes intact (3.614339ms)
+✔ independent: the matched plan explicitly freezes the repair variant before any model result (12.302211ms)
+(node:2636834) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ probe fixes eight development tasks across four repositories before outcomes and gives every model equal limits (38.183864ms)
+✔ crossed splits, duplicate tasks/models, unverified proof windows and unbounded reservations reject (2.556055ms)
+✔ no invented catalog is required for a draft, and an empty draft cannot recommend a model (2.173986ms)
+✔ only complete accepted evidence can recommend the cheapest suitable candidate, retaining all cost and failure rows (10.494733ms)
+✔ missing, unaccepted, synthetic, incompletely billed and unknown-CPU observations suppress every selection (36.034764ms)
+✔ contradictory approvals, zero-call successes and falsified timestamp intervals are structurally invalid (6.685135ms)
+✔ setup failure before inference stays in the denominator and cost; changed bindings and duplicate rows reject (9.597739ms)
+✔ private offline command preserves accepted plan, exclusive outputs, modes and redacted rejection (58.808075ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 413.399431

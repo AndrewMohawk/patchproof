@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "artifactKind": "unfilled-uncoached-product-observation-template",
+  "status": "NOT_RUN",
+  "containsActualParticipantData": false,
+  "protocol": {
+    "version": null,
+    "digest": null,
+    "frozenAt": null,
+    "sourceCommit": null,
+    "interfaceMode": null,
+    "archiveDigest": null,
+    "plannedParticipantCount": null,
+    "plannedAssignmentCount": null,
+    "recruitmentAndExperienceCriteria": null,
+    "maximumTaskTimeMs": null,
+    "taskOrder": [],
+    "scoringKeyDigest": null,
+    "independentKeyReviewerPseudonym": null,
+    "operatorPseudonym": null
+  },
+  "assignment": {
+    "participantPseudonym": null,
+    "assignmentId": null,
+    "taskId": null,
+    "assignedRunIds": [],
+    "assignedBundleDigests": [],
+    "launchCriterionApplicability": null,
+    "consentRecorded": null,
+    "priorProductExposure": null,
+    "accommodations": null
+  },
+  "observation": {
+    "startedAt": null,
+    "finishedOrStoppedAt": null,
+    "elapsedWallMs": null,
+    "finalDisposition": null,
+    "participantReviewDecision": null,
+    "participantExplanation": null,
+    "participantModeIdentification": null,
+    "assistanceEvents": [],
+    "technicalInterruptions": [],
+    "criteria": {
+      "relevantTaskAndContract": { "score": null, "evidence": null },
+      "appropriateExecutionBehavior": { "score": null, "evidence": null },
+      "acceptanceAndFailureInterpretation": { "score": null, "evidence": null },
+      "comparison": { "score": null, "evidence": null },
+      "modeAndClaimBoundary": { "score": null, "evidence": null },
+      "evidenceExport": { "score": null, "evidence": null }
+    },
+    "exportedRunId": null,
+    "exportedBundleDigest": null,
+    "exportIdentityCheckedAfterResponse": null,
+    "unassistedCompletion": null,
+    "observerNotes": null
+  },
+  "retention": {
+    "privateEvidenceReferences": [],
+    "supersedesObservationDigest": null,
+    "correctionReason": null
+  },
+  "notice": "Blank planning template only. No human participated and no answers, timing, consent or completion are asserted. Keep filled copies private outside the repository; retain all planned, missing, failed and assisted assignments."
+}

@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-offline-model-probe-review",
+  "reviewedAt": "2026-09-27T12:50:50.890965+00:00",
+  "baseCommit": "e3601da602be50bd75e19fd3ed732ac8b071eb88",
+  "scope": "Offline metadata plan/analyzer and private file CLI, using independently invented input records only. No fixture sources, candidate/runtime/provider execution or sealed material.",
+  "status": "bounded-controls-passed",
+  "sourceDigests": {
+    "workers/evaluator/model-probe.ts": "sha256:805f5ff6093d96bc28184eb940a4035b409ae4d6e16abb58c76998192c8733ff",
+    "scripts/model-probe.ts": "sha256:e4e798727d67c8a47a018cebacee6ed1f722dc05c63634a2ad5c8b87676b3382",
+    "tests/model-probe.test.ts": "sha256:d873f922f788d40c398e7fbd70393b76c4c3bcb57ccbc277e0b668843446e97a",
+    "tests/model-probe-independent.test.ts": "sha256:803583e47415fa1f743f127b7d2b9462c07866b89c2bcfef27915d3ca404bc1c",
+    "docs/uncoached-product-exercise.md": "sha256:d51450fa64ef68230b5ebe4a56871511e00fe62bb2067ab3df2e6305451c751e",
+    "docs/uncoached-product-observation.json": "sha256:4c29d61364198bc2ef75c74c68e58f3a4a84c243329421d6928a13e80bf5a5b8"
+  },
+  "logDigests": {
+    "research/verification/20260927-model-probe-independent/combined-tests.log": "sha256:b7932de887e44084f010ee7c743d81c5edac677f71fe8973435765d9b947da4f",
+    "research/verification/20260927-model-probe-independent/final-independent-tests.log": "sha256:78c0dbd86e59d72f74f0fd9831b6ff11ea7509c4e4ddc18e821e4cef1d4018dc",
+    "research/verification/20260927-model-probe-independent/initial-tests.log": "sha256:22b6cfd9e415ede49208f7d1fb9add4f5fb53f7948067c39b6d2caa548242b03",
+    "research/verification/20260927-model-probe-independent/typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/20260927-model-probe-independent/variant-gap-original.log": "sha256:95d100b0fb545ca2752c8d37074ccd01eaa806f313f40f82a0f3d66423d5fd6c"
+  },
+  "execution": [
+    {
+      "command": "node --test tests/model-probe-independent.test.ts",
+      "phase": "initial ten controls before variant field",
+      "reportedTests": 10,
+      "passed": 10,
+      "failed": 0,
+      "exitCode": 0,
+      "log": "initial-tests.log"
+    },
+    {
+      "command": "node --test --test-name-pattern='explicitly freezes the repair variant' tests/model-probe-independent.test.ts",
+      "phase": "historical prospective variant gap",
+      "reportedTests": 1,
+      "passed": 0,
+      "failed": 1,
+      "exitCode": 1,
+      "sourceDigest": "sha256:99126e87a2f7201b755cbbfb275572bb35f83460cd5ae5c9d7cc136698a2b94a",
+      "log": "variant-gap-original.log"
+    },
+    {
+      "command": "node --test tests/model-probe-independent.test.ts",
+      "phase": "final contract",
+      "reportedTests": 11,
+      "passed": 11,
+      "failed": 0,
+      "exitCode": 0,
+      "log": "final-independent-tests.log"
+    },
+    {
+      "command": "node --test tests/model-probe.test.ts tests/model-probe-independent.test.ts",
+      "reportedTests": 19,
+      "passed": 19,
+      "failed": 0,
+      "exitCode": 0,
+      "log": "combined-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    }
+  ],
+  "findings": [
+    {
+      "id": "P01",
+      "finding": "Approved no-patch/infrastructure-error observations could avoid both unverified-correctness blocking and false-approval accounting.",
+      "originalEvidence": "Source review only; no pre-fix execution.",
+      "resolution": "Approved observations require adjudicated correct/incorrect outcome; final independent schema controls reject contradictory approval.",
+      "status": "resolved-in-reviewed-source"
+    },
+    {
+      "id": "P02",
+      "finding": "Reported elapsedMs could contradict full startedAt/finishedAt interval, bypassing matched wall limits and affecting latency ordering.",
+      "originalEvidence": "Source review only; no pre-fix execution.",
+      "resolution": "Full interval equality is required; independent controls reject shortened elapsed time and contradictory timestamps.",
+      "status": "resolved-in-reviewed-source"
+    },
+    {
+      "id": "P03",
+      "finding": "Correct/incorrect results could omit all model-call evidence by recording zero inference calls.",
+      "originalEvidence": "Source review only; no pre-fix execution.",
+      "resolution": "Correct/incorrect results require positive inference and request IDs, with per-row unique request/operation IDs; independent controls reject absent and repeated IDs.",
+      "status": "resolved-in-reviewed-source"
+    },
+    {
+      "id": "P04",
+      "finding": "Prospective plan/episode/result did not identify which repair variant generated the observations, so equal allowances did not establish a matched procedure.",
+      "originalEvidence": "Source review and the preserved red structural control against source99126e87.",
+      "resolution": "Author freezes literal baseline at plan/episode/result and requires a one-call ceiling. Final independent control verifies all three projections and rejects missing/checks-only/P rows and a three-call plan.",
+      "testAdaptation": "Original assertion looked for an explicit prospective input field. Author chose a fixed literal field at plan/episode/result, so final assertion follows that explicit API; original red log is retained unchanged.",
+      "status": "resolved-in-reviewed-source"
+    }
+  ],
+  "additionalVerifiedInvariants": [
+    "Costs from failed episodes can reverse the cheapest eligible model; failures remain in denominators.",
+    "One missing model/task observation suppresses selection despite complete competing-model observations.",
+    "Incomplete billing retains its numeric lower bound but suppresses the model total and any selection.",
+    "Current accepted account-proof digests and exact observation digests are mandatory; stale acceptance does not survive changed rows.",
+    "Accepted synthetic observations remain in the descriptive report but cannot recommend a model.",
+    "A resource overrun in a failed episode is retained and blocks selection.",
+    "Rehashing a changed episode allowance does not make it a valid fixed plan.",
+    "Private CLI writes an explicitly blocked report without modifying inputs or creating runtime state; symbolic and hard-linked inputs reject."
+  ],
+  "uncoachedExercisePreparation": {
+    "protocol": "docs/uncoached-product-exercise.md",
+    "blankSheet": "docs/uncoached-product-observation.json",
+    "status": "prepared-not-run",
+    "humanParticipants": 0,
+    "actualResponses": 0,
+    "templateValidation": "JSON parsed; all criterion scores, answers, timing and completion fields are null; containsActualParticipantData:false.",
+    "separateFromPacketStudy": true,
+    "separateDocumentationReview": {
+      "status": "completed-no-concrete-correction",
+      "reviewer": "separate evaluator agent",
+      "scope": "Docs only: neutral goals, assistance/attrition, planned denominators, timing and packet distinction, private artifact/key binding and blank template.",
+      "testsRun": false,
+      "humanExerciseRun": false
+    }
+  },
+  "limitations": [
+    "Accepting supplied result/proof digests is an external trust decision, not provider authentication; final report still says authenticityVerified:false.",
+    "Invented actual-provider scope labels exercise the accepted branch in tests only; they are not account or model observations.",
+    "The eight-task probe is descriptive development selection, not a scored final experiment or statistical benefit claim.",
+    "No live model selection, real cost measurement, account catalog verification, participant recruitment or human usability result was produced.",
+    "No full test suite, provider/runtime, corpus, candidate execution or external network call was performed."
+  ],
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "humanResultsCreated": false,
+  "published": false,
+  "dependencyCommit": "3f5735dbc9d1a30f07faf1dbfdb10cefbb96eb84",
+  "dependencyNote": "Apply reviewer tests/docs/receipt after the author source commit. This commit does not duplicate model-probe source, CLI or author tests.",
+  "formattingCorrection": {
+    "originalCheck": "git diff --cached --check reported a trailing blank line in successful typecheck stdout; no test failure or source change.",
+    "file": "research/verification/20260927-model-probe-independent/typecheck.log",
+    "change": "Removed trailing blank lines only; original failed variant log untouched.",
+    "originalDigest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "storedDigest": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "originalRetainedAt": "/tmp/patchproof-model-probe-typecheck-original.log"
+  }
+}
