@@ -1,0 +1,31 @@
+(node:1692352) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ archive serves exact pinned live and historical mock bytes with explicit read-only capabilities (91.23592ms)
+✔ opened archive snapshots survive later evidence, configuration, fixture and caller metadata changes (23.317904ms)
+✔ all mutation and active event routes reject without creating files or disclosing operator paths (57.328038ms)
+✔ wrong config, bundle and run pins reject before serving any archive (19.28767ms)
+✔ tampered body and rehashed unapproved fixture content both reject (15.732052ms)
+▶ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive
+  ✔ unknown_task (9.357206ms)
+  ✔ final_split (9.28205ms)
+  ✔ experiment_trace (5.463087ms)
+  ✔ candidate_only (12.188255ms)
+  ✔ nonterminal (11.15153ms)
+✔ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive (49.123717ms)
+▶ private regular external files are required; links, broad permissions, URLs and oversized inputs reject
+  ✔ symlink (11.935462ms)
+  ✔ hardlink (5.656827ms)
+  ✔ permissions (5.915454ms)
+  ✔ inside_project (8.775647ms)
+  ✔ url (7.385761ms)
+  ✔ oversized (34.552821ms)
+✔ private regular external files are required; links, broad permissions, URLs and oversized inputs reject (75.811416ms)
+✔ configuration is bounded, strict and unambiguous; source changes before startup reject (15.180572ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 631.931954

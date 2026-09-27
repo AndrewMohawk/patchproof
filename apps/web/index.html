@@ -18,9 +18,9 @@
       <a href="#compare" data-nav="compare"><span class="nav-number">02</span> Compare</a>
       <a href="#evidence" data-nav="evidence"><span class="nav-number">03</span> Evidence</a>
     </nav>
-    <div class="mode-indicator"><span class="mode-dot" aria-hidden="true"></span>Mock model · Local checks</div>
+    <div id="mode-indicator" class="mode-indicator">Loading workspace…</div>
   </header>
-  <div class="mode-banner"><span class="label">LOCAL WORKSPACE</span><span>Scripted model responses. Checks execute in local containers. No paid inference or competition-ready evidence.</span></div>
+  <div class="mode-banner"><span id="mode-label" class="label">WORKSPACE</span><span id="mode-description">Loading recorded capabilities…</span></div>
   <div id="error" class="error-banner" role="alert" hidden></div>
   <p id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
   <main id="main" tabindex="-1">
@@ -36,7 +36,7 @@
       <div class="page-heading compact"><div><p class="eyebrow">Same task. Same resource limits.</p><h1 id="compare-heading">Compare the approaches.</h1><p class="lead">Inspect ordinary repair, acceptance feedback and candidate selection side by side.</p></div></div>
       <div class="toolbar"><div><label for="compare-task">Maintenance task</label><select id="compare-task"></select></div><button id="compare-run" class="button primary" disabled>Run comparison <span aria-hidden="true">→</span></button></div>
       <div id="comparison" class="comparison"></div>
-      <div class="callout"><strong>What this comparison can tell you</strong><p>These local runs demonstrate the workflow using scripted model responses. Their results are not a model benchmark or evidence that one repair approach performs better. Sealed evaluation and sponsor integration remain separate gates.</p></div>
+      <div class="callout"><strong>What this comparison can tell you</strong><p id="comparison-notice">A comparison depends on matching recorded inputs and resource limits.</p></div>
     </section>
     <section id="evidence-view" class="view" aria-labelledby="evidence-heading" hidden>
       <div class="page-heading compact"><div><p class="eyebrow">A decision you can inspect.</p><h1 id="evidence-heading">Review the evidence.</h1><p class="lead">Follow the candidate history, inspect the change and trace each result to its requirement.</p></div></div>

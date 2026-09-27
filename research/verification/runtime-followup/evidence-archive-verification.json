@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "read-only-evidence-archive-verification",
+  "createdAt": "2026-09-27T12:15:18.674813+00:00",
+  "baseCommit": "259882c753a9a9bc6ff9f435ca44394aee4c34c4",
+  "dependencyCommit": "6312c1bf9f8805664faa14ebec5582edc08ab7b8",
+  "dependencyNote": "Shared private-byte/curated-evidence helpers are provided by the separate evidence-operator commit and are not duplicated in this change.",
+  "status": "local-implementation-verified-with-synthetic-inputs",
+  "competitionReady": false,
+  "artifacts": {
+    "apps/api/src/evidence-archive.ts": "sha256:cc7a57a3216cb7632a10df6d61ed8c453a5599c8a9dd930cc6272821b7fe52d7",
+    "apps/api/src/product-server.ts": "sha256:1a6c02509f6bc485eedcc03329a6c25ef33eed47b5a89e3988fa1be5e8961389",
+    "apps/web/app.js": "sha256:a307772b172f2b0f7cdcbe65f56abf4016bb87f3988aef50232f94e488a8e7f2",
+    "apps/web/index.html": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+    "apps/web/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa",
+    "scripts/evidence-archive.ts": "sha256:3bb9e59b1d9f512c993a6eb9695b5272391b072ebaaab497667f1eb859367317",
+    "scripts/verify-evidence-archive.ts": "sha256:edad3d25bacbac6f442f3757c1c3c222b67765614af74b50c77a9208fbc25df2",
+    "tests/evidence-archive.test.ts": "sha256:dc72c04eb3acd2ca470124177d9e47ee782e5a17985c7a9c763a614fd5962d2f",
+    "tests/helpers/archive-fixture.ts": "sha256:52a77f98fe94566d6a62f89a54070a2ec3598b83a74733a997ec12af81f1bfd8",
+    "docs/evidence-archive.md": "sha256:43cae07b40a026a27dcaf6a063a3458a8fa80d28b5843daa7023f38703815b84",
+    "scripts/evidence-operator.ts": "sha256:b1fe700597eda2e06a7e0eca5f771e20ad46f0600bb6eab9d6c40c788b776196",
+    "research/verification/runtime-followup/evidence-archive-tests.log": "sha256:11ad3214a3f14e76b617497f2391fb815461261154f759954a7ce929f6fd2223",
+    "research/verification/runtime-followup/evidence-archive-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/runtime-followup/evidence-archive-contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97",
+    "research/verification/runtime-followup/evidence-archive-browser-tests.log": "sha256:70b02145f212e24f680ce204f4047cd5627d7a56b2fc6ce88f7c922978e5258a",
+    "research/verification/runtime-followup/evidence-archive-browser.json": "sha256:7ffd10860c26caf8a9ac4c3cf40b3490cf569346a677b02bdc17abcb00f1be28"
+  },
+  "executed": [
+    {
+      "command": "node --test tests/evidence-archive.test.ts",
+      "exitCode": 0,
+      "reportedTests": 19,
+      "topLevelTests": 8,
+      "subtests": 11,
+      "passed": 19,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/evidence-archive-tests.log"
+    },
+    {
+      "command": "node scripts/verify-evidence-archive.ts",
+      "exitCode": 0,
+      "checks": 11,
+      "log": "research/verification/runtime-followup/evidence-archive-browser-tests.log",
+      "receipt": "research/verification/runtime-followup/evidence-archive-browser.json"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/evidence-archive-typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/evidence-archive-contracts.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "verifiedBehavior": [
+    "Private strict config pins each exact run and bundle digest; bounded public-curated verification excludes final fixtures, unknown tasks, experiment traces, candidate-only records and nonterminal runs.",
+    "External private regular files are required; symlinks, hardlinks, broad modes, URLs, in-project paths and oversized inputs reject.",
+    "HTTP mutations and event streams reject; host/origin controls remain loopback/same-origin and operator paths are omitted.",
+    "In-memory snapshots survive later bundle deletion, configuration/fixture changes and caller mutation of the returned safe manifest.",
+    "Downloads preserve exact verified JSON bytes, including historical version 2.0 evidence and its original commands.",
+    "Three-screen UI distinguishes recorded live and recorded mock from execution, hides archive mutation controls, preserves unknown usage and explains explicit private live-replay configuration.",
+    "Rendered checks cover keyboard task selection, mobile layout, literal patch markup, exact-byte downloads, reload and no archive mutations/event streams/browser errors.",
+    "A separate synthetic HTTP stub confirms the existing mock UI still exposes its mock launch action and submits mode mock."
+  ],
+  "developmentCorrections": [
+    "Initial Host-header negative control used Node fetch, which did not transmit the supplied Host override. Replaced the test transport with node:http and verified the actual forbidden host is denied; not a server defect.",
+    "Initial typecheck rejected new error-code strings against the frozen contract enum. Reused existing method_not_allowed and infrastructure_error codes without changing shared contracts.",
+    "Initial browser selector matched both hidden comparison and visible evidence labels. Scoped the assertion to the evidence view; not a product rendering defect."
+  ],
+  "browserMethod": "Shared Playwright MCP navigation was unavailable because its browser profile was already in use. Used a separate local pinned Playwright Chromium process; no shared browser was stopped.",
+  "independentReview": "Requested from the separate evaluator; pending at author receipt creation. Any independent findings or completion are recorded separately.",
+  "limitations": [
+    "All displayed live-shaped records and failed observations are invented unit metadata, not real inference or check execution.",
+    "Digests and curated input matching verify integrity/binding, not provider or billing authenticity, publication approval, human usability, or generalization.",
+    "No journal, ledger, model/sandbox factory, provider request, candidate execution, replay or remote/public deployment is performed by the archive.",
+    "Historical evidence with changed current public fixture metadata/source/policy fails startup. The archive does not relabel or rewrite historical bundles.",
+    "The default full product/Docker/browser suite was not rerun in this role. Root owns integrated runtime verification; apps/web/verify-browser.ts was untouched.",
+    "Same-UID trusted operator interference and copied private evidence containing unreviewed sensitive text are not solved by an integrity digest; only explicitly reviewed public-curated records should be configured."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0,
+  "published": false
+}

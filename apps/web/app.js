@@ -33,8 +33,25 @@ function time(value) { return new Date(value).toLocaleTimeString([], { hour: '2-
 function taskFor(id) { return state.tasks.find(task => task.id === id); }
 function currentTask() { return taskFor(state.taskId); }
 function mockSupported(task) { return task?.mockSupported === true; }
+function isArchive() { return state.meta.mode === 'archive'; }
+function canCreate() { return !isArchive() && state.meta.capabilities?.createRuns !== false; }
+function canCancel() { return !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
+function modeLabel(run) {
+  if (isArchive()) return run.mode === 'live' ? 'RECORDED LIVE · READ ONLY' : 'RECORDED MOCK · READ ONLY';
+  return run.mode === 'mock' ? 'MOCK MODEL · LOCAL CHECKS' : run.phase === 'terminal' ? 'RECORDED LIVE' : 'LIVE PROVIDER';
+}
+function renderMode() {
+  byId('mode-indicator').textContent = isArchive() ? 'Recorded evidence · Read only' : 'Mock model · Local checks';
+  byId('mode-label').textContent = isArchive() ? 'EVIDENCE ARCHIVE' : 'LOCAL WORKSPACE';
+  byId('mode-description').textContent = isArchive()
+    ? 'Recorded runs, verified against pinned bundle digests and approved public fixtures. Viewing does not execute work or authenticate provider and billing claims.'
+    : 'Scripted model responses. Checks execute in local containers. No paid inference or competition-ready evidence.';
+  byId('comparison-notice').textContent = isArchive()
+    ? 'This view compares the supplied recorded runs. Source modes remain visible; mock and live records are never a matched comparison. No new runs or checks execute here. A few recorded runs do not establish a benchmark result.'
+    : 'These local runs demonstrate the workflow using scripted model responses. Their results are not a model benchmark or evidence that one repair approach performs better. Sealed evaluation and sponsor integration remain separate gates.';
+}
 function runsForTask() { return [...state.runs.values()].filter(run => run.taskId === state.taskId).sort((a, b) => b.createdAt.localeCompare(a.createdAt)); }
-function runName(run) { return `${taskFor(run.taskId)?.title ?? run.taskId} · ${variants[run.variant]?.name ?? run.variant} · ${time(run.createdAt)}`; }
+function runName(run) { return `${taskFor(run.taskId)?.title ?? run.taskId} · ${variants[run.variant]?.name ?? run.variant}${isArchive() ? ` · recorded ${run.mode}` : ''} · ${time(run.createdAt)}`; }
 function selectedCandidate(run) { return run.candidates.find(candidate => candidate.id === run.selectedCandidateId); }
 function outcome(run) { return outcomes[run.terminalStatus] ?? phaseNames[run.phase] ?? run.phase; }
 function outcomeClass(run) { return run.terminalStatus === 'failed' || run.terminalStatus === 'infrastructure_error' ? 'fail' : run.terminalStatus === 'needs_review' ? 'warn' : ''; }
@@ -87,7 +104,7 @@ function renderTasks() {
     const node = button('', () => chooseTask(task.id), 'task-card');
     node.setAttribute('aria-pressed', String(task.id === state.taskId));
     node.dataset.taskId = task.id;
-    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `${task.requirements.length} requirements · ${mockSupported(task) ? 'Local demo ready' : 'Connected model required'}`));
+    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `${task.requirements.length} requirements · ${isArchive() ? 'Recorded evidence available' : mockSupported(task) ? 'Local demo ready' : 'Connected model required'}`));
     if (task.id === state.taskId) append(node, el('span', 'selection-mark', '✓'));
     return node;
   }));
@@ -95,13 +112,25 @@ function renderTasks() {
 }
 function renderTaskPicker() {
   byId('compare-task').replaceChildren(...state.tasks.map(task => new Option(task.title, task.id, false, task.id === state.taskId)));
-  byId('compare-run').disabled = state.busy || !mockSupported(currentTask());
+  byId('compare-run').disabled = !canCreate() || state.busy || !mockSupported(currentTask());
+  byId('compare-run').hidden = !canCreate();
 }
 function renderTaskDetail() {
   const task = currentTask(); if (!task) return;
   const requirements = el('ol', 'requirements');
   for (const requirement of task.requirements) append(requirements, append(el('li'), el('span', 'requirement-id', requirement.id), el('span', '', requirement.text)));
   const allowance = el('div', 'allowance');
+  if (isArchive()) {
+    const runs = runsForTask();
+    append(allowance, el('strong', '', 'Recorded evidence · Read only'), el('p', '', `${runs.length} archived run${runs.length === 1 ? '' : 's'} for this approved public task. Resource limits and usage belong to those recorded runs; this viewer grants no execution allowance.`));
+    byId('task-detail').replaceChildren(
+      append(el('div', 'detail-top'), pill('PYTHON MAINTENANCE'), el('span', 'quiet', task.repoId ?? task.id)),
+      el('h2', '', task.title), el('p', 'task-description', task.description), el('h3', 'requirements-heading', 'Requirements to preserve'), requirements, allowance,
+      append(el('div', 'actions'), runs[0] && link('Review recorded evidence →', `#evidence/${runs[0].id}`, 'button primary'), link('Compare recorded approaches', '#compare', 'button')),
+      el('p', 'fine-print', 'Only explicitly configured evidence is available. Nothing is executed, merged or published by this viewer.'),
+    );
+    return;
+  }
   append(allowance, append(el('div', 'allowance-title'), el('span', '', mockSupported(task) ? 'Mock model · Local checks' : 'Requires connected model'), el('span', '', '$0 provider spend')),
     el('p', '', `Project ceiling: ${money(state.meta.maxApprovedSpendUsd ?? state.meta.allowance?.maxApprovedSpendUsd ?? 25)}. Paid execution is unavailable in this local build.`));
   if (!mockSupported(task)) append(allowance, el('p', '', 'This fixture is ready for connected model development. Scripted local repair is available only for the stable-unique demonstration task.'));
@@ -109,7 +138,7 @@ function renderTaskDetail() {
   append(allowance, el('p', '', limits ? `Identical per-run limits: ${limits.inferenceCallLimit} model calls · ${count(limits.inputTokenLimit)} input / ${count(limits.outputTokenLimit)} output tokens · ${limits.wallTimeLimitSeconds} s elapsed. CPU usage is not measured; ${limits.sandboxCpuSecondsLimit} s is the configured allowance, not a verified cumulative limit.` : 'Per-run resource limits are fixed by the coordinator and included in every run record.'));
   const start = button('Run PatchProof →', () => launch(['patchproof']), 'button primary');
   const compare = button('Compare all three', () => launch(Object.keys(variants)), 'button');
-  start.disabled = compare.disabled = state.busy || !mockSupported(task);
+  start.disabled = compare.disabled = !canCreate() || state.busy || !mockSupported(task);
   byId('task-detail').replaceChildren(
     append(el('div', 'detail-top'), pill('PYTHON MAINTENANCE'), el('span', 'quiet', task.repoId ?? task.id)),
     el('h2', '', task.title), el('p', 'task-description', task.description),
@@ -118,7 +147,7 @@ function renderTaskDetail() {
   );
 }
 async function launch(selectedVariants) {
-  if (state.busy || !mockSupported(currentTask())) return;
+  if (!canCreate() || state.busy || !mockSupported(currentTask())) return;
   const taskId = state.taskId;
   state.busy = true; clearError(); renderTaskDetail(); renderTaskPicker();
   try {
@@ -143,6 +172,7 @@ function storeRun(run) {
   if (pollTimer && ![...state.runs.values()].some(item => item.phase !== 'terminal')) { clearInterval(pollTimer); pollTimer = undefined; }
 }
 function watchRun(id) {
+  if (isArchive() || state.meta.capabilities?.streamEvents === false) return;
   if (streams.has(id)) return;
   const stream = new EventSource(`/runs/${encodeURIComponent(id)}/events`); streams.set(id, stream);
   const onEvent = () => refreshRun(id).catch(showError);
@@ -177,10 +207,10 @@ function progress(run) {
 }
 function coverageText(run) { return `${run.coverage.filter(row => row.status === 'pass').length} / ${taskFor(run.taskId)?.requirements.length ?? run.coverage.length}`; }
 function matchedContext(runs) {
-  if (runs.length < 3) return { matched: false, message: 'Run all three approaches to compare their source, policy and resource limits.' };
+  if (runs.length < 3) return { matched: false, message: isArchive() ? 'The archive needs all three approaches to compare their source, policy and resource limits.' : 'Run all three approaches to compare their source, policy and resource limits.' };
   const signature = run => JSON.stringify([run.schemaVersion, run.sourceDigest, run.policyDigest, run.runtimeLockDigest, run.mode, Object.entries(run.limits).sort()]);
   const matched = runs.every(run => signature(run) === signature(runs[0]));
-  return { matched, message: matched ? 'Source snapshot, acceptance policy, runtime lock and every resource limit match.' : 'These runs have different inputs or limits. Start a new comparison before drawing conclusions.' };
+  return { matched, message: matched ? 'Source snapshot, acceptance policy, runtime lock and every resource limit match.' : isArchive() ? 'These recorded runs have different modes, inputs or limits. They are not a matched comparison.' : 'These runs have different inputs or limits. Start a new comparison before drawing conclusions.' };
 }
 function renderComparison() {
   const runs = runsForTask();
@@ -192,10 +222,15 @@ function renderComparison() {
     const run = latest[index]; const card = el('article', `variant-card${key === 'patchproof' ? ' featured' : ''}`);
     append(card, el('p', 'variant-kicker', variant.label), el('h2', '', variant.name), el('p', 'variant-description', variant.description));
     if (run) {
+      if (isArchive()) append(card, pill(modeLabel(run), 'neutral'));
       append(card, el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)),
         metrics([['Requirements passing', coverageText(run)], ['Candidates recorded', run.candidates.length], ['Elapsed', duration(run.usage.elapsedMs)], ['Provider cost', money(run.usage.measuredCostUsd)]]),
         run.phase !== 'terminal' && progress(run), link('Review evidence ↗', `#evidence/${run.id}`, 'button'));
     } else {
+      if (!canCreate()) {
+        append(card, el('p', 'empty-small', 'No recorded run for this approach in the archive.'));
+        cards.append(card); return;
+      }
       const start = button('Run this approach →', () => launch([key]), 'button');
       start.disabled = state.busy || !mockSupported(currentTask());
       append(card, el('p', 'empty-small', mockSupported(currentTask()) ? 'No run for this task yet.' : 'Requires a connected model. Local scripted repair is unavailable for this task.'), start);
@@ -230,7 +265,7 @@ function renderComparison() {
     tbody.append(row);
   }
   append(table, tbody); tableWrap.append(table);
-  byId('comparison').replaceChildren(context, cards, el('p', 'table-scroll-hint', 'Scroll the table → to compare every approach.'), tableWrap, el('p', 'fine-print', 'Usage / limit. Mock model counters describe scripted operations; they are not measurements of real model inference.'));
+  byId('comparison').replaceChildren(context, cards, el('p', 'table-scroll-hint', 'Scroll the table → to compare every approach.'), tableWrap, el('p', 'fine-print', isArchive() ? 'Recorded usage / limit. Unknown values remain unmeasured. Mock counters describe scripted operations; an archive digest does not authenticate live-provider measurements.' : 'Usage / limit. Mock model counters describe scripted operations; they are not measurements of real model inference.'));
 }
 function renderRunPicker() {
   const picker = byId('evidence-run');
@@ -323,11 +358,21 @@ function provenancePanel(run) {
   const candidate = selectedCandidate(run);
   for (const [name, value] of [['Source snapshot', run.sourceDigest], ['Acceptance policy', run.policyDigest], ['Runtime lock', run.runtimeLockDigest], ['Run ID', run.id], ['Model identifier', candidate?.modelId ?? (run.mode === 'mock' ? 'Mock response provider; no model inference.' : 'Not recorded')], ['Provider request ID', candidate?.providerRequestId ?? 'Not recorded']]) append(list, el('dt', '', name), el('dd', '', value));
   if (candidate?.sandboxOperationIds.length) append(list, el('dt', '', 'Selected candidate operation IDs'), el('dd', '', candidate.sandboxOperationIds.join('\n')));
+  if (isArchive()) {
+    const entry = state.meta.bundles?.find(item => item.runId === run.id);
+    if (entry) append(list, el('dt', '', 'Pinned archive bundle'), el('dd', '', entry.bundleDigest));
+    append(list, el('dt', '', 'Archive verification'), el('dd', '', 'Integrity and approved public fixture match verified at load. Provider and billing authenticity not established.'));
+  }
   append(body, list);
-  if (run.phase === 'terminal') append(body, el('p', 'fine-print', 'Export the bundle, then reproduce the recorded checks from the project checkout:'), el('code', 'reproduce-command', `make reproduce RUN=${run.id}`), el('p', 'fine-print', 'The export records its inputs and digests. Replay is a fresh check execution; it does not rerun model inference.'));
+  if (run.phase === 'terminal' && run.mode === 'live') {
+    append(body, el('p', 'fine-print', 'Replay of recorded live evidence is a separate operator action requiring an approved private configuration and its digest. This viewer does not execute checks.'),
+      el('code', 'reproduce-command', `make reproduce RUN=${run.id} CONFIG=<private-replay.json> CONFIG_DIGEST=<digest>`),
+      el('p', 'fine-print', 'The download preserves the original evidence and historical commands. Use the current private replay instructions; replay may incur separately authorized provider charges.'));
+  } else if (run.phase === 'terminal') append(body, el('p', 'fine-print', 'Export the bundle, then reproduce the recorded checks from the project checkout:'), el('code', 'reproduce-command', `make reproduce RUN=${run.id}`), el('p', 'fine-print', 'The export records its inputs and digests. Replay is a separate fresh check execution; it does not rerun model inference.'));
   return panel('Reproducibility', 'Immutable inputs and trace references.', body);
 }
 async function cancelRun(id, control) {
+  if (!canCancel()) return;
   control.disabled = true;
   try {
     const run = await request(`/runs/${encodeURIComponent(id)}/cancel`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
@@ -340,12 +385,12 @@ function renderEvidence() {
     byId('evidence').replaceChildren(empty(state.runId ? 'Loading this run…' : 'Your evidence starts with a run.', state.runId ? 'Fetching the recorded state from the coordinator.' : 'Choose a curated task and run one approach, or start a comparison to review all three.', state.runId ? null : 'Choose a task →', '#tasks')); return;
   }
   const summary = el('section', 'panel run-summary'); const intro = el('div');
-  append(intro, pill(run.mode === 'mock' ? 'MOCK MODEL · LOCAL CHECKS' : 'LIVE PROVIDER'), el('h2', '', taskFor(run.taskId)?.title ?? run.taskId), el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded run' : 'In progress'} · ${variants[run.variant]?.name ?? run.variant} · ${new Date(run.createdAt).toLocaleString()}`), el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)), run.reason && el('p', 'run-reason', humanReason(run.reason)));
+  append(intro, pill(modeLabel(run)), el('h2', '', taskFor(run.taskId)?.title ?? run.taskId), el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded run' : 'In progress'} · ${variants[run.variant]?.name ?? run.variant} · ${new Date(run.createdAt).toLocaleString()}`), el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)), run.reason && el('p', 'run-reason', humanReason(run.reason)));
   if (run.phase !== 'terminal') append(intro, progress(run), el('p', 'stream-note', 'Displaying recorded execution events. This page reconnects to the same run if the stream drops.'));
   const actions = el('div', 'actions');
   if (run.phase === 'terminal') {
     const download = link('Download evidence ↓', `/runs/${encodeURIComponent(run.id)}/evidence`, 'button primary'); download.download = `${run.id}.json`; append(actions, download);
-  } else { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
+  } else if (canCancel()) { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
   append(summary, intro, actions);
   const columns = el('div', 'evidence-grid'); const primary = el('div'); const secondary = el('aside'); secondary.setAttribute('aria-label', 'Run coverage and provenance');
   append(primary, candidateHistory(run));
@@ -366,6 +411,7 @@ route();
 try {
   const [meta, history] = await Promise.all([request('/tasks'), request('/runs')]);
   state.meta = meta; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
+  renderMode();
   for (const run of history.runs) storeRun(run);
   renderTasks(); renderTaskDetail(); renderTaskPicker(); renderRunPicker(); renderComparison(); renderEvidence(); route();
 } catch (error) {

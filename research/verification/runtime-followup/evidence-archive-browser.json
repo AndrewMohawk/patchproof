@@ -1,0 +1,30 @@
+{
+  "kind": "evidence-archive-browser-verification",
+  "scope": "invented unit bundles only",
+  "status": "passed",
+  "checks": [
+    "archive task controls are read only",
+    "keyboard task selection",
+    "recorded live provenance, unknown usage and private replay label",
+    "patch markup rendered literally",
+    "exact archived bytes download",
+    "historical recorded mock display",
+    "comparison preserves missing approaches without launch controls",
+    "mobile evidence without horizontal page overflow",
+    "recorded route survives reload",
+    "no archive browser errors, mutation requests or active event streams",
+    "existing mock surface still enables only its mock launch flow"
+  ],
+  "mode": "archive",
+  "recordedModesTested": [
+    "live",
+    "mock"
+  ],
+  "realProviderEvidence": false,
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "screenshots": [
+    "/tmp/patchproof-evidence-archive-desktop.png",
+    "/tmp/patchproof-evidence-archive-mobile.png"
+  ]
+}

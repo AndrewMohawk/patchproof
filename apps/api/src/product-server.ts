@@ -28,6 +28,7 @@ export function createProductServer(coordinator: Coordinator, options: {
       }
       if (req.method === 'GET' && path === '/tasks') {
         sendJson(res, 200, { schemaVersion: PRODUCT_CONTRACT_VERSION, mode: 'mock', competitionReady: false, tasks: coordinator.tasks(),
+          capabilities: { createRuns: true, cancelRuns: true, replay: false, streamEvents: true },
           limits: LOCAL_LIMITS, maxApprovedSpendUsd: options.approvedSpendUsd,
           realExecutionEnabled: false, localRuntime: options.localRuntime }); return;
       }
