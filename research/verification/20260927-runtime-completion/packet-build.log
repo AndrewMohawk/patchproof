@@ -1,0 +1,14 @@
+node scripts/product-cli.ts release-packet "research/verification/20260927-runtime-completion/release-input.json"
+(node:1425407) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "command": "release-packet",
+  "status": "local_preparation",
+  "directory": "/tmp/patchproof-handoff-15f39c7/artifacts/release-packets/ad9cbb709618f9d7db244e31a7be4fc9971245ce7abfd7875012f981e7ceb349",
+  "packetDigest": "sha256:ad9cbb709618f9d7db244e31a7be4fc9971245ce7abfd7875012f981e7ceb349",
+  "evidenceStatus": "blocked",
+  "paidCalls": 0,
+  "published": false
+}

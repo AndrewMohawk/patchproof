@@ -151,3 +151,16 @@ One initial release receipt test supplied a duplicate trusted digest list and
 failed schema validation before reaching its intended duplicate-receipt check.
 The fixture was corrected to isolate that condition, with duplicate-trust rejection
 retained separately. Its failed log is preserved; the 150-test pass includes the fix.
+
+Implementation/reference commit: `15f39c7191dedf85a4f18395807ab300c37e7fb1`,
+pushed to the private repository. In a detached checkout of that commit, exact
+selected bundle scans were ingested and a real local packet was built and verified.
+Packet build, structural verification and `sha256sum --check SHA256SUMS` exited 0;
+the release audit with the genuine scan receipt still exited 2 for missing external
+gates. `packet-receipt.json` and `packet-manifest.json` preserve the source reference,
+packet digest and honest mock/failure scope. Every selected bundle matched the
+recorded source and runtime. This was same-host verification, not independent custody.
+
+The exact source tar remains beside the private rehearsal. `rehearsal-custody.json`
+identifies the preferred captioned v2 video and reviewed frame; the first oversized
+caption rendering was retained rather than silently replaced. No asset was published.

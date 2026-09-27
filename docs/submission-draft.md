@@ -53,6 +53,8 @@ A 91-second private local rehearsal now exists under
 captions and a manifest tied to the actual displayed runs. It shows scripted
 proposals and real local checks; it does not present sponsor or benchmark results.
 Its hashes and browser/replay verification are in the runtime-completion receipt.
+The preferred caption rendering is `local-rehearsal-captioned-v2.mp4`; its source
+archive and separately recorded hashes are identified by `rehearsal-custody.json`.
 
 ## Platform feedback draft
 

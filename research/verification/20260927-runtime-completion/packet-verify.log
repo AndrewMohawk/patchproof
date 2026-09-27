@@ -1,0 +1,9 @@
+node scripts/product-cli.ts verify-packet "artifacts/release-packets/ad9cbb709618f9d7db244e31a7be4fc9971245ce7abfd7875012f981e7ceb349" "sha256:ad9cbb709618f9d7db244e31a7be4fc9971245ce7abfd7875012f981e7ceb349"
+(node:1439891) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "status": "consistent",
+  "packetDigest": "sha256:ad9cbb709618f9d7db244e31a7be4fc9971245ce7abfd7875012f981e7ceb349",
+  "authenticityVerified": false,
+  "publicationAuthorized": false
+}

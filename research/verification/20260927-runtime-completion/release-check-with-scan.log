@@ -1,0 +1,236 @@
+node scripts/product-cli.ts release-check "research/verification/20260927-runtime-completion/release-input.json"
+(node:1440052) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "command": "release-check",
+  "status": "blocked",
+  "mode": "mock",
+  "competitionReady": false,
+  "paidCalls": 0,
+  "experimentEpisodesExecuted": 0,
+  "checks": [
+    {
+      "id": "research/contracts-v1-lock.json",
+      "status": "pass",
+      "detail": "Checked all recorded source digests."
+    },
+    {
+      "id": "research/contracts-v2-lock.json",
+      "status": "pass",
+      "detail": "Checked all recorded source digests."
+    },
+    {
+      "id": "public_fixtures",
+      "status": "pass",
+      "detail": "30 schema-valid public fixtures; sealed workspace not inspected."
+    },
+    {
+      "id": "dependency_pins",
+      "status": "pass",
+      "detail": "Direct npm versions are exact; license notices still require final release review."
+    },
+    {
+      "id": "application_license",
+      "status": "blocked",
+      "detail": "Owner-selected application license must agree with package metadata."
+    },
+    {
+      "id": "owner_release",
+      "status": "blocked",
+      "detail": "Public source, demo and entry are separately controlled by the owner."
+    },
+    {
+      "id": "hosting_assignment",
+      "status": "blocked",
+      "detail": "Operator unassigned; hosting allocation $0."
+    },
+    {
+      "id": "release_binding",
+      "status": "pass",
+      "detail": "Compared release bindings against current source, runtime and operational behavior."
+    },
+    {
+      "id": "live_smoke",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "pilot",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "sealed_evaluation",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "reviewer_study",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "presentation_runs",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "independent_replay",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "hosted_judge_access",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "release_secrets",
+      "status": "pass",
+      "detail": "pass: Accepted actual-scope receipt and referenced bytes match these bindings; claims remain attestations."
+    },
+    {
+      "id": "current_rules",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "license_review",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "NVIDIA model/account availability not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Selected model license/card not pinned."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Model billing rates unknown."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox endpoint/entitlement not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox SDK/image/architecture not pinned."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox network controls not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox billing rate/unit unknown."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Episode token/CPU limits not calibrated."
+    }
+  ],
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated."
+  ],
+  "receiptAssessment": {
+    "status": "blocked",
+    "bindings": {
+      "sourceDigest": "sha256:b39595fdf815f266073aa1be4e87d5f9caaefa2b65455d86c397391123b77b3d",
+      "runtimeDigest": "sha256:3cd8ee786eadf4a8adec070f1d8cf2b49267fb1d27ed41913006a98187fcbdb5",
+      "protocolDigest": "sha256:b0466c074ae76239ff642286976f3f83e5ec91969fda631f74cf22850a0aa91e",
+      "bundleDigests": [
+        "sha256:0318a5cc9285a73c9a7d6d7922ec8262fdf4c36481fd7dccb6d328a86c8b4559",
+        "sha256:18d56c88c4948e29ab579835b7bb24c60c6bc374eb63fe3b069d6b079a3f3be3",
+        "sha256:7c2c577f0335cba9f7560948e1de5eb81e7245036071a1b0d478ab070808099f"
+      ],
+      "runtimeMode": "mock",
+      "liveProtocolFrozen": false
+    },
+    "gates": [
+      {
+        "id": "live_smoke",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "pilot",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "sealed_evaluation",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "reviewer_study",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "presentation_runs",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "independent_replay",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "hosted_judge_access",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "release_secrets",
+        "status": "pass",
+        "receiptDigest": "sha256:31c67ced19e4bec55ecc9d1b2b827378bf3a36f870b435a01436c7caf77fd5eb",
+        "detail": "Accepted actual-scope receipt and referenced bytes match these bindings; claims remain attestations."
+      },
+      {
+        "id": "current_rules",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "license_review",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      }
+    ],
+    "malformedCount": 0,
+    "authenticityVerified": false,
+    "publicationAuthorized": false,
+    "notice": "Digests establish content consistency, not the truth, independence or authorship of observations. Publication and entry are separate owner actions."
+  },
+  "note": "Local content/receipt audit only. Accepted records do not authenticate claims. Publication, hosting and entry remain separate owner actions."
+}
+make: *** [Makefile:11: release-check] Error 2

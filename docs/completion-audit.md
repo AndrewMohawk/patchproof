@@ -27,3 +27,19 @@ The original PRD requested independently authored repositories. Current document
 ## Audit evidence and limits
 
 Read-only source inspections used `rg`, `rg --files`, numbered source views and JSON metadata inspection. `git rev-parse HEAD` returned the commit above. A public-fixture metadata check counted 30 files, all with one source file and the allowlist `solution.py`. Existing verification receipts were inspected, including the same-host clean checkout receipt; their commands were not rerun for this audit. **Tests: NOT RUN for this source/documentation audit.** No provider calls, spending, human responses or experiment rows were created. The separate independent protocol review already records 26 synthetic algorithm checks; that is narrower than an end-to-end experiment dispatcher test.
+
+## Coordinator follow-up (not the original independent review)
+
+Commits `8ca9f0e` and `15f39c7` implement and verify variant-specific inputs/selection,
+two-observation runtime checks, source/configuration-bound local locks, a durable USD
+ledger, prospective reviewer tools with a separate rendered collector, and release
+receipt/packet tooling. The source-bound browser flow, all three fresh patch replays,
+150 tests, synthetic reviewer browser exercise and scan-gated local packet checks
+passed. A private 91-second mock rehearsal, captions and exact source archive were
+captured. See the linked task evidence and `20260927-runtime-completion` receipts.
+
+These close the identified local checker, reviewer-surface, packet and rehearsal
+implementation gaps within their documented limits. They do not close live protocol
+calibration, bounded provider factory/dispatcher integration, real experiments,
+actual human review, independent-machine replay or public release requirements.
+The operational lock deliberately states that it is local and unscored.

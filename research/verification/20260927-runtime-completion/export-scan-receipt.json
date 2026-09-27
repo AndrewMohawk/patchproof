@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0",
+  "id": "fc92eea4-6875-46c6-bcfd-595b08b32c9c",
+  "gate": "release_secrets",
+  "observedAt": "2026-09-27T09:18:04.796Z",
+  "expiresAt": "2026-09-28T09:18:04.796Z",
+  "bindings": {
+    "sourceDigest": "sha256:b39595fdf815f266073aa1be4e87d5f9caaefa2b65455d86c397391123b77b3d",
+    "runtimeDigest": "sha256:3cd8ee786eadf4a8adec070f1d8cf2b49267fb1d27ed41913006a98187fcbdb5",
+    "protocolDigest": "sha256:b0466c074ae76239ff642286976f3f83e5ec91969fda631f74cf22850a0aa91e",
+    "bundleDigests": [
+      "sha256:0318a5cc9285a73c9a7d6d7922ec8262fdf4c36481fd7dccb6d328a86c8b4559",
+      "sha256:18d56c88c4948e29ab579835b7bb24c60c6bc374eb63fe3b069d6b079a3f3be3",
+      "sha256:7c2c577f0335cba9f7560948e1de5eb81e7245036071a1b0d478ab070808099f"
+    ],
+    "runtimeMode": "mock",
+    "liveProtocolFrozen": false
+  },
+  "scope": {
+    "origin": "actual",
+    "execution": "local",
+    "human": "none",
+    "independence": "same_host"
+  },
+  "outcome": "pass",
+  "assertions": [
+    "selected_artifacts_scanned",
+    "scanner_scope_and_findings_reviewed",
+    "no_unresolved_secret_findings"
+  ],
+  "evidence": [
+    {
+      "path": "research/verification/20260927-runtime-completion/scan-baseline.log",
+      "digest": "sha256:8ab8101766e9cd099449ef3335b7123b51ff854a4f7c2427f8f39c708166ef97"
+    },
+    {
+      "path": "research/verification/20260927-runtime-completion/scan-checks_only.log",
+      "digest": "sha256:bbdec377705245ae8e3b9280a96faf3c48c83cc5f58dc28b20196b9b13e15545"
+    },
+    {
+      "path": "research/verification/20260927-runtime-completion/scan-patchproof.log",
+      "digest": "sha256:b2193c2a25e0f0111db53363bee94fcf7fc42c87cb17765af86bdabf0ee398d1"
+    }
+  ],
+  "scannedArtifacts": [
+    {
+      "path": "artifacts/9453ea26-941b-4033-85e4-97ec640af81f.json",
+      "digest": "sha256:85e9c7ce835581c8e406724514107371f1d0ae119eff1c0ac7b0ff7bed93fbc9"
+    },
+    {
+      "path": "artifacts/377b2c34-a093-41be-9051-21d2206c948f.json",
+      "digest": "sha256:8bea6d3d38cda9317e32e910b2273733ed2e8845869dd32f47a09baa390825a2"
+    },
+    {
+      "path": "artifacts/1396daa0-3997-4721-a81a-78e2e3da8897.json",
+      "digest": "sha256:c74012cbae0321db91c61d47840efdbb30cb4b747c0959ec3cb804bd381cde60"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "gitleaks",
+        "dir",
+        "artifacts/9453ea26-941b-4033-85e4-97ec640af81f.json",
+        "--redact",
+        "--no-banner"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-runtime-completion/scan-baseline.log",
+        "digest": "sha256:8ab8101766e9cd099449ef3335b7123b51ff854a4f7c2427f8f39c708166ef97"
+      }
+    },
+    {
+      "argv": [
+        "gitleaks",
+        "dir",
+        "artifacts/377b2c34-a093-41be-9051-21d2206c948f.json",
+        "--redact",
+        "--no-banner"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-runtime-completion/scan-checks_only.log",
+        "digest": "sha256:bbdec377705245ae8e3b9280a96faf3c48c83cc5f58dc28b20196b9b13e15545"
+      }
+    },
+    {
+      "argv": [
+        "gitleaks",
+        "dir",
+        "artifacts/1396daa0-3997-4721-a81a-78e2e3da8897.json",
+        "--redact",
+        "--no-banner"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-runtime-completion/scan-patchproof.log",
+        "digest": "sha256:b2193c2a25e0f0111db53363bee94fcf7fc42c87cb17765af86bdabf0ee398d1"
+      }
+    }
+  ],
+  "receiptDigest": "sha256:31c67ced19e4bec55ecc9d1b2b827378bf3a36f870b435a01436c7caf77fd5eb"
+}
