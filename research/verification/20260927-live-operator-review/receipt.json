@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "bounded-peer-code-and-synthetic-test-review",
+  "recordedAt": "2026-09-27T11:26:06.400Z",
+  "baseCommit": "30e8cb3ea60e8a489e4f6ba8397025ac69849820",
+  "operationalSourceDigest": "sha256:0b9eb8df3deea1338f70451a206c0b5c854900cf5275667ff5edefed9a65e04e",
+  "scope": "Coordinator-owned private live operator and protected Nebius adjudication adapter; local synthetic tests only.",
+  "reviewerBoundary": "Separate reviewer worktree and test. Reviewer also contributed the shared runtime factory; this is not independent human/account/evaluation validation.",
+  "actualProviderCalls": 0,
+  "actualSpendUsd": 0,
+  "benchmarkExecuted": false,
+  "authenticityVerified": false,
+  "competitionReady": false,
+  "commands": [
+    {
+      "command": "node --test tests/live-experiment-operator.test.ts tests/nebius-adjudication.test.ts tests/nebius-adjudication-late-evidence.test.ts",
+      "exitCode": 0,
+      "passed": 12,
+      "failed": 0,
+      "log": "research/verification/20260927-live-operator-review/tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator-review/typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-operator-review/contracts.log"
+    }
+  ],
+  "sources": {
+    "scripts/live-experiment-operator.ts": "sha256:527d02723e29fe61384e68cef01e6d0306e04f8d46e779536ef82eebfb43a20a",
+    "workers/evaluator/nebius-adjudication.ts": "sha256:d88cf54f383f0144d41cb312b1e7dff416b818420a55a2215dd93e839bc8672e",
+    "tests/live-experiment-operator.test.ts": "sha256:7c59e94a9070a6bdf7c26f4aa909eb94d1daf1e81ad3ce69f9461492d06ae556",
+    "tests/nebius-adjudication.test.ts": "sha256:e2eba0ce2dbc31312e6e53402477299b978ba7efa512d5c023311f5b33d5ff43",
+    "packages/orchestrator/src/live-experiment.ts": "sha256:0c59a49193adc65d05e0fd82a378d649a1af05dcfca3f284674b8fce203d212f",
+    "packages/orchestrator/src/live-experiment-policy.ts": "sha256:a568fb990dc71f02a800cc83201b2ea7f57687f75da8769225db2a7bf93b8955",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:0da1adfc69cdbe9e8922fd73654d795c114328f16813ea4916981a96eab7cfa0",
+    "packages/orchestrator/src/phase-accounting.ts": "sha256:865b9e6a6e797614ef256846111228a29b88f70d84ba51c279ad088b41396cf1",
+    "packages/orchestrator/src/experiment-trace-store.ts": "sha256:76296c7f05acb2108c7310e0f76164a629828011aee323deea631ba7405f4874",
+    "workers/evaluator/adjudication-accounting.ts": "sha256:186e9e8b92074d98514dee1549e5cddd101fb8ea5595e7b2ca857e0d054376f6",
+    "workers/evaluator/dispatcher.ts": "sha256:c642d3ca36ea1d16a7a2c736c0c06944a46b6d55bf05006c6945e5ea047a0bb8",
+    "workers/evaluator/experiment-session.ts": "sha256:86027726fb3ae2330829204ff0c869ef00891c771ba4a5cb09169fc859dff7cb",
+    "workers/evaluator/adjudicate.ts": "sha256:7e729532dba0eb72c4062017c75c0057dee4bdea2c8ac2420171994691403684",
+    "workers/sandbox/nebius.ts": "sha256:d1c6861acca2fb9f07342d0af38d092ba28bf4738de45d29e3f2a7d4de679815",
+    "workers/sandbox/nebius-runner.ts": "sha256:8aba0a3a96b9c280133832e4d3c34ed06430234586050bc1a11fb3de4785d699",
+    "scripts/operator-files.ts": "sha256:d67985b2217e7276abe15cfc5a1fb36730a7eb110667da7564903347c1a8f330",
+    "tests/helpers/smoke-operator-data.ts": "sha256:a53869426a3c57652e7fe0680bc0c708acc5e619ce83e92ecef24a8c61ee541b",
+    "tests/nebius-adjudication-late-evidence.test.ts": "sha256:14311cc16374f0380605ec237cf53abdc921a7fefd0c8a3bbfcedfe8b35b72a0"
+  },
+  "artifacts": {
+    "research/verification/20260927-live-operator-review/tests.log": "sha256:3c86d3146d00db32ff29ab4cfda41afedac7225e84fc2607646003082fd64135",
+    "research/verification/20260927-live-operator-review/typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/20260927-live-operator-review/contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "findings": [
+    {
+      "status": "corrected-and-tested",
+      "area": "Control-only cancellation/recovery",
+      "evidence": "Existing durable approval opens the ledger without current repository budget or credential files; focused cancellation/recovery control passes."
+    },
+    {
+      "status": "corrected-and-tested",
+      "area": "SQLite path collision",
+      "evidence": "Runtime configuration aliasing the ledger WAL path is rejected before SQLite opens; bytes remain unchanged."
+    },
+    {
+      "status": "corrected-and-tested",
+      "area": "Protected aggregate result type",
+      "evidence": "Protected callback result passes AdjudicationSchema parsing; TypeScript check passes."
+    },
+    {
+      "status": "source-reviewed",
+      "area": "Raw evidence durability",
+      "evidence": "Exclusive private raw-result file and containing directory are fsynced. No power-loss durability test was performed."
+    },
+    {
+      "status": "tested",
+      "area": "Late result preservation",
+      "evidence": "Standalone regression cancels an active instance and rejects its final-usage callback. One cleanup DELETE occurs; raw results retain the operation handle and known CPU 0.01 while actual USD remains null and the full temporary hold remains."
+    }
+  ],
+  "remainingFindings": [],
+  "limitations": [
+    "No new blocking defect was found within this bounded review; this is not an exhaustive audit.",
+    "Account/control/calibration/tokenizer proofs, provider HTTP, and accounting receipts used by these tests are invented. The composed test charge of 0.03 USD is a simulated ledger value, not actual provider spending or billing evidence.",
+    "The tests create only ephemeral synthetic input/oracle records through the reviewed helper. No existing evaluator corpus, sealed fixture or gold data was accessed; no candidate Python was executed.",
+    "This receipt is peer test evidence and cannot satisfy real account, billing, calibration, final experiment, human review, publication or entry gates."
+  ],
+  "notRun": [
+    {
+      "check": "Full repository integration suite",
+      "reason": "Parent performs comprehensive integration after merge."
+    },
+    {
+      "check": "Live provider execution and actual billing",
+      "reason": "No provider calls or actual account proofs permitted for this task."
+    },
+    {
+      "check": "Crash/power-loss or remote cleanup proof",
+      "reason": "Regression exercises bounded in-process cancellation with fake transport; it does not prove daemon/provider or storage behavior under power loss."
+    }
+  ],
+  "logNormalization": "Trailing blank lines removed; command output content preserved."
+}
