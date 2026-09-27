@@ -5,8 +5,9 @@ controlled requirements and exports a patch with replayable evidence.
 
 **Working local product; real Nebius integration and competition evaluation are
 not complete.** The three-screen app uses scripted model responses and executes
-real Python checks in isolated local containers. Every API response, screen and
-export identifies mock mode. It makes no claim about model performance.
+real Python checks in isolated local containers. Every active local run identifies
+mock mode. A separate read-only archive labels recorded live and mock evidence
+without enabling execution. It makes no claim about model performance.
 
 The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot.
 Actual provider spending is **$0**. Account access is deferred at the owner's
@@ -57,8 +58,8 @@ another loopback port. Do not expose this local prototype as a public service.
 | `npm run test:browser` | Starts an isolated local app, runs all three policies, checks desktop/mobile flow and exports evidence. Requires installed Playwright Chromium. |
 | `npm run record:rehearsal` | Performs that flow and records a local mock rehearsal, captions and a run-bound claims manifest under `.local/rehearsal/`. Nothing is published. |
 | `npm run run -- stable-unique-01 patchproof` | Runs the same local coordinator from the CLI; stop `make dev` first because one process owns its state. |
-| `make export RUN=<id>` | Exports immutable patch, inputs, locks, logs, coverage, events and cost ledger from the durable journal. |
-| `make reproduce RUN=<id>` | Validates the bundle, applies its patch in a fresh workspace and executes declared checks in fresh pinned containers. |
+| `make export RUN=<id>` | Exports local mock evidence. With private `CONFIG` and `CONFIG_DIGEST`, verifies and exports exact completed smoke evidence. |
+| `make reproduce RUN=<id>` | Replays local mock evidence in fresh pinned containers. Recorded live evidence requires private `CONFIG` and `CONFIG_DIGEST` plus a new approved replay reservation. |
 | `make smoke` | Exits 2 without configuration. `make smoke CONFIG=<absolute-private-json>` invokes the guarded operator; verified account, tokenizer, control and budget inputs are required. |
 | `make pilot` / `make evaluate` | Exit 2 without configuration. Explicit private session/runtime configs invoke the guarded experiment operator; see its guide below. No live experiment has run. |
 | `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
@@ -126,6 +127,11 @@ and budget ledger for an explicitly configured integration run of at most three
 proposals. The [private smoke operator](docs/trusted-smoke-operator.md) adds preflight,
 durable single-attempt sessions, cancellation and status. Its tests use fake
 transports; account verification, calibrated ceilings and actual smoke runs remain pending.
+The [private evidence operator](docs/private-evidence.md) verifies and exports
+completed smoke bundles. The [read-only archive](docs/evidence-archive.md) displays
+selected recorded live/mock bundles without enabling a provider. The
+[guarded replay operator](docs/replay-operator.md) repeats a selected live patch's
+checks under a separate reservation; its provider tests are synthetic.
 The [completion audit](docs/completion-audit.md) distinguishes implemented tools
 from the remaining provider, billing, calibration and human evidence.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`

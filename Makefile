@@ -13,7 +13,9 @@ release-check release-packet:
 	node scripts/product-cli.ts $@ $(if $(INPUT),"$(INPUT)")
 verify-packet:
 	node scripts/product-cli.ts $@ "$(PACKET)" "$(DIGEST)"
-reproduce export:
-	node scripts/product-cli.ts $@ "$(RUN)"
+reproduce:
+	$(if $(CONFIG),node scripts/replay-operator.ts start "$(CONFIG)" "$(CONFIG_DIGEST)" "$(RUN)",node scripts/product-cli.ts reproduce "$(RUN)")
+export:
+	$(if $(CONFIG),node scripts/evidence-operator.ts export "$(CONFIG)" "$(CONFIG_DIGEST)" "$(RUN)",node scripts/product-cli.ts export "$(RUN)")
 dev:
 	npm run dev

@@ -68,12 +68,39 @@ Publication/entry decisions remain the separate owner configuration checked by
 The audit's optional third argument is:
 
 ```ts
-{ bindings, receipts, trustedReceiptDigests, now?: Date }
+{ bindings, receipts, trustedReceiptDigests, liveProtocol?: ReleaseLiveSelection, now?: Date }
 ```
 
 It recomputes the current bindings and reads the referenced repository files
 itself. It does not accept a stale caller binding as current. Relative file reads
 reject traversal, symlinks, nonregular files and oversized input.
+
+## Explicit live protocol selection
+
+The default audit uses the local, unfrozen operational protocol. After actual
+calibration and trusted verification, an optional input `liveProtocol` reference
+can select a public metadata projection:
+`{ path, digest, acceptedProofDigest }`. `digest` binds the exact file bytes;
+`acceptedProofDigest` separately identifies the reviewed acceptance record.
+The exact schema is `ReleaseLiveProtocolSchema` in `scripts/release-protocol.ts`.
+It binds current executable sources, the whole operational lock, runtime/model
+settings, accepted calibration and policy. Missing input stays unfrozen;
+malformed, stale or mismatched input fails.
+
+Settle source, runtime, budget and owner decisions **before** accepting the live
+protocol and recording presentation runs. Those files are part of the source
+binding; changing them later intentionally invalidates the old binding. The
+packet does not authenticate a self-declared acceptance or substitute a digest
+for actual account/calibration observations. See the
+[source-bound verification and freeze-order guide](../research/verification/20260927-release-live-protocol/README.md).
+
+A selected live document produces packet format 1.1 and is copied only after
+its exact bytes are covered by an accepted scan receipt. Existing packet 1.0
+verification remains unchanged. Matching three-proposal smoke bundles are
+classified `compatible_presentation` with `executionScope: trusted-smoke-only`;
+they do not establish execution of the separate 24-call experiment policy.
+Actual experiment receipts and every other release gate are still required.
+Historical or mismatched evidence keeps a blocked packet status.
 
 ## Scan and packet contents
 

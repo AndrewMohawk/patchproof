@@ -60,7 +60,11 @@ test('real loopback HTTP flow: catalogue → mock record → events → typed ev
 
   const page = await fetch(base);
   assert.match(page.headers.get('content-security-policy')!, /frame-ancestors 'none'/);
-  assert.match(await page.text(), /Scripted model responses/);
+  const shell = await page.text();
+  // The same shell supports live/mock archives. Rendered mode comes from /tasks;
+  // until metadata loads, it must remain neutral with execution disabled.
+  assert.match(shell, /Loading workspace…/);
+  assert.match(shell, /id="compare-run"[^>]*disabled/);
   for (const path of ['/app.js', '/style.css']) assert.equal((await fetch(`${base}${path}`)).status, 200);
 
   const deniedCases: Array<[Response, number, string]> = [

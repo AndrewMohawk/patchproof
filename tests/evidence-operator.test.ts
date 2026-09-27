@@ -115,3 +115,11 @@ test('concurrent metadata exports grant one exclusive output and preserve exact 
   assert.ok(rejected&&rejected.status==='rejected');assert.equal((rejected.reason as NodeJS.ErrnoException).code,'EEXIST');
   assert.deepEqual(readFileSync(s.config.outputFile!),s.bytes);assert.deepEqual(s.snapshot(),before);
 });
+
+test('an optional Makefile RUN binding must match the selected private configuration',async t=>{
+  const s=setup(t),before=s.snapshot();
+  const wrong=await runEvidenceOperator(['export',s.configPath,privateEvidenceConfigDigest(s.config),'22222222-2222-4222-8222-222222222222'],s.projectRoot);
+  assert.equal(wrong.exitCode,2);assert.equal(existsSync(s.config.outputFile!),false);assert.deepEqual(s.snapshot(),before);
+  const right=await runEvidenceOperator(['inspect',s.configPath,privateEvidenceConfigDigest(s.config),ID],s.projectRoot);
+  assert.equal(right.exitCode,0);
+});
