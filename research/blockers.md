@@ -15,11 +15,12 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 2. Pin sandbox API/image/architecture and verify supported filesystem, network,
    memory, PID, CPU, cancellation and billing controls. Public HTTP mappings alone
    do not establish these properties.
-3. Supply verified model/tokenizer/control proofs and trusted credential suppliers
-   to the implemented smoke factory. It binds the model and sandbox adapters to one
-   durable reservation and at most three proposals. A live operator entry point,
-   provider accounting/cleanup ingestion and calibrated live executor remain unfinished;
-   public product commands still refuse live execution.
+3. Supply verified model/tokenizer/control proofs and private credential-file references
+   to the implemented smoke operator. Its preflight, single-attempt session, cancellation
+   and status commands are built and synthetically tested. It binds the adapters to one
+   durable reservation and at most three proposals. Actual provider accounting/cleanup
+   verification and the calibrated live experiment executor remain unfinished;
+   the public product API continues to accept mock jobs only.
 4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
    curated real cases, retain real operation IDs and reconcile actual charges.
 
@@ -47,11 +48,14 @@ not replace real reviewer participation or a calibrated live protocol. See the
 completion audit for implementation gaps; do not treat account access alone as
 completion of the submission.
 
-A synthetic 24-revision executor and trusted accounting receipt importer now exist.
-Their tests cover policy limits, trace retention, cumulative charges, copied journals
-and interrupted receipt recovery. The executor rejects live providers; the importer
-does not obtain or authenticate billing data. Live factory/session configuration,
-operator commands and export wiring still require implementation and verified inputs.
+A synthetic 24-revision executor, reviewed accounting receipt command and immutable
+aggregate export command now exist. Their tests cover policy limits, trace retention,
+cumulative charges, copied journals, interrupted receipt recovery and full planned
+denominators. The executor rejects live providers; the importer does not obtain or
+authenticate billing data. Remaining code is the calibrated live experiment
+factory/dispatch entry point and authoritative billing/cleanup ingestion. The smoke
+operator already has a separate private entry point; no verified account configuration
+or real-provider result is present.
 
 Application license, public source/video, public demo operator and service budget
 through the required judging period remain owner decisions. No terms were

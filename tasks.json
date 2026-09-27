@@ -126,15 +126,17 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Conditional Nebius upload/spawn/poll/cancel adapter and trusted three-proposal smoke factory connect model, repeated checks, source/account gates and one durable budget reservation. Fake-transport lifecycle/accounting tests pass. Live operator wiring, account/model/control evidence and two real billed smoke cases remain open.",
-      "blocked_reason": "Conditional Nebius upload/spawn/poll/cancel adapter and trusted three-proposal smoke factory connect model, repeated checks, source/account gates and one durable budget reservation. Fake-transport lifecycle/accounting tests pass. Live operator wiring, account/model/control evidence and two real billed smoke cases remain open.",
+      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open.",
+      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "docs/trusted-smoke.md",
-        "research/verification/runtime-followup/trusted-smoke-verification.json"
+        "research/verification/runtime-followup/trusted-smoke-verification.json",
+        "docs/trusted-smoke-operator.md",
+        "research/verification/20260927-smoke-operator/receipt.json"
       ]
     },
     {
@@ -293,8 +295,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G2",
-      "implementation_note": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
-      "blocked_reason": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
+      "implementation_note": "Fixed 72-episode planner, durable dispatcher, synthetic 24-revision executor, reviewed accounting commands and immutable aggregate export are implemented and tested. No real pilot or continuation result exists. Calibrated live experiment factory/dispatch wiring, authoritative billing/cleanup ingestion, verified access/prices and G1 remain pending.",
+      "blocked_reason": "Fixed 72-episode planner, durable dispatcher, synthetic 24-revision executor, reviewed accounting commands and immutable aggregate export are implemented and tested. No real pilot or continuation result exists. Calibrated live experiment factory/dispatch wiring, authoritative billing/cleanup ingestion, verified access/prices and G1 remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -304,7 +306,10 @@
         "docs/experiment-executor.md",
         "docs/accounting-reconciliation.md",
         "research/verification/runtime-followup/experiment-executor-verification.json",
-        "research/verification/runtime-followup/accounting-independent-review.json"
+        "research/verification/runtime-followup/accounting-independent-review.json",
+        "docs/accounting-operator.md",
+        "docs/experiment-export-operator.md",
+        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json"
       ]
     },
     {
@@ -365,8 +370,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G3",
-      "implementation_note": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
-      "blocked_reason": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
+      "implementation_note": "Fixed final planner, durable dispatcher, synthetic 24-revision executor, one-use sealed adjudication, clustered analysis, immutable aggregate export and blinded reviewer tools are implemented with synthetic tests. Reviewed accounting import/recovery is wired to a private CLI. Real final runs, calibrated live experiment dispatch, authoritative accounting/cleanup, final budget and human results remain pending.",
+      "blocked_reason": "Fixed final planner, durable dispatcher, synthetic 24-revision executor, one-use sealed adjudication, clustered analysis, immutable aggregate export and blinded reviewer tools are implemented with synthetic tests. Reviewed accounting import/recovery is wired to a private CLI. Real final runs, calibrated live experiment dispatch, authoritative accounting/cleanup, final budget and human results remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -377,7 +382,10 @@
         "docs/experiment-executor.md",
         "docs/accounting-reconciliation.md",
         "research/verification/runtime-followup/experiment-executor-verification.json",
-        "research/verification/runtime-followup/accounting-independent-review.json"
+        "research/verification/runtime-followup/accounting-independent-review.json",
+        "docs/accounting-operator.md",
+        "docs/experiment-export-operator.md",
+        "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json"
       ]
     },
     {
@@ -483,7 +491,7 @@
       ]
     }
   ],
-  "execution_as_of": "2026-09-27",
+  "execution_as_of": "2026-09-27T10:37:05.000377+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {

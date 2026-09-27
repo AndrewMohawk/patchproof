@@ -45,7 +45,10 @@ no CLI invokes this dispatcher, and no account/pricing/runner bound is attested 
 The product coordinator and smoke path remain limited to three proposals. A live
 factory must enforce all per-operation limits, pin actual generation behavior,
 verify source/account bindings, connect the external adjudicator and authoritative
-billing/cleanup ingestion, and export immutable aggregate rows. Human/operator
+billing/cleanup ingestion. The [aggregate exporter](experiment-export.md) and
+[private export command](experiment-export-operator.md) now provide immutable
+metadata rows and offline verification; they do not dispatch work or establish
+provider/source authenticity. Human/operator
 configuration remains outside candidate control.
 
 Validation commands are `node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts` and `npm run typecheck`. All test task metadata and candidate-shaped strings are invented unit inputs; no sealed corpus or candidate execution is involved.

@@ -1,0 +1,24 @@
+node scripts/product-cli.ts smoke
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "command": "smoke",
+  "status": "blocked",
+  "paidCalls": 0,
+  "experimentEpisodesExecuted": 0,
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated.",
+    "Real-provider smoke, sandbox isolation and billing reconciliation have not been verified; no automatic fallback."
+  ],
+  "note": "Full local implementation is authorized; real integration/evaluation and competition readiness remain gated."
+}
+(node:3498262) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+make: *** [Makefile:9: smoke] Error 2

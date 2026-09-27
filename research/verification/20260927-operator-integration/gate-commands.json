@@ -1,0 +1,60 @@
+{
+  "kind": "default-release-command-gates",
+  "observedAt": "2026-09-27T10:37:24.826843+00:00",
+  "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+  "commands": [
+    {
+      "command": [
+        "make",
+        "doctor"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "research/verification/20260927-operator-integration/doctor.log",
+      "sha256": "9b97423567149389fda4d0d200928a66f2782e36315d69f284edaf5bf3b76685"
+    },
+    {
+      "command": [
+        "make",
+        "smoke"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-operator-integration/smoke.log",
+      "sha256": "e34757f290da6918ee4b559b0d47f48ef845a9d2f7d7f009cea6427a21897bee"
+    },
+    {
+      "command": [
+        "make",
+        "pilot"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-operator-integration/pilot.log",
+      "sha256": "266809e8a49601a092bc0c58c9ae2f45796f2e640222e957f8af542d4ef0c7fa"
+    },
+    {
+      "command": [
+        "make",
+        "evaluate"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-operator-integration/evaluate.log",
+      "sha256": "1d4da52058391137591b5f7113c46f918643c2c9d51321b9f9de583d4beb719c"
+    },
+    {
+      "command": [
+        "make",
+        "release-check"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-operator-integration/release-check.log",
+      "sha256": "f3ca7c17d5533346ed3a9e0faa871c07580d439b02742e291b5d72956c41014a"
+    }
+  ],
+  "providerCalls": 0,
+  "actualProviderSpendUsd": 0,
+  "approvedProjectCapUsd": 25
+}

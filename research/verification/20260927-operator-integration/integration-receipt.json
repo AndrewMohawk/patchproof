@@ -1,0 +1,354 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "integrated-local-operator-verification",
+  "observedAt": "2026-09-27T10:42:47.539323+00:00",
+  "testedSourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+  "testedSourceFilesDirty": false,
+  "sourceMapDigest": "sha256:1e18f023c117543bb7521f5c2d8121c4d7c38c0ab1db4a4f208b08c3c4658437",
+  "operationalLockDigest": "sha256:b65eddbfcdf1448737a520110387dfa07109c47de7597cb8e692c7066aff9340",
+  "tests": {
+    "command": {
+      "command": [
+        "make",
+        "test"
+      ],
+      "exitCode": 0,
+      "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+      "observedAt": "2026-09-27T10:36:05.031985+00:00",
+      "log": "research/verification/20260927-operator-integration/make-test.log",
+      "sha256": "f6bb071f3dba4cc409d00bcf678c8337448e99c0bee5dccab23b159ff3efef0b",
+      "providerCalls": 0,
+      "actualProviderSpendUsd": 0
+    },
+    "passed": 339,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "testedAt": "2026-09-27T10:39:58.131Z",
+    "status": "passed",
+    "mode": "mock",
+    "competitionReady": false,
+    "browserVersion": "145.0.7632.6",
+    "base": "http://127.0.0.1:34855",
+    "observation": "new_ui_comparison",
+    "resumeRunIds": [],
+    "runs": [
+      {
+        "id": "8115dfaa-14a4-4b49-b048-d40c43982444",
+        "variant": "baseline",
+        "status": "failed"
+      },
+      {
+        "id": "6f03fedb-43cb-4934-892e-a89a43b22183",
+        "variant": "checks_only",
+        "status": "verified_for_declared_checks"
+      },
+      {
+        "id": "9fe46436-b82b-4ad8-9c59-dcd588666721",
+        "variant": "patchproof",
+        "status": "verified_for_declared_checks"
+      }
+    ],
+    "checks": [
+      "task selection updates requirements",
+      "unsupported tasks cannot launch mock repair",
+      "honest mock labels",
+      "real three-variant execution",
+      "matched resource limits",
+      "candidate rejection and repair",
+      "local operation IDs",
+      "readable diff and check logs",
+      "downloaded evidence identity",
+      "addressed-run reload",
+      "mobile all views",
+      "keyboard focus",
+      "no console errors",
+      "same-origin browser traffic"
+    ],
+    "artifactDigest": "sha256:9bd96c3aa50c55e917ca2efa79f40108b3e0308fe9f4a413d8f568382cfd98d3",
+    "createdIds": [
+      "8115dfaa-14a4-4b49-b048-d40c43982444",
+      "6f03fedb-43cb-4934-892e-a89a43b22183",
+      "9fe46436-b82b-4ad8-9c59-dcd588666721"
+    ],
+    "screenshots": [
+      "/tmp/patchproof-tasks-desktop.png",
+      "/tmp/patchproof-comparison-desktop.png",
+      "/tmp/patchproof-evidence-desktop.png",
+      "/tmp/patchproof-evidence-mobile.png",
+      "/tmp/patchproof-compare-mobile.png",
+      "/tmp/patchproof-tasks-mobile.png"
+    ]
+  },
+  "browserAttempts": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exitCode": 1,
+      "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+      "observedAt": "2026-09-27T10:37:17.116239+00:00",
+      "log": "research/verification/20260927-operator-integration/browser.log",
+      "sha256": "a7ea552bf22c052b5d9f00c81bfe32b3215c6a6942acf853c8b46fe8da9f0514",
+      "providerCalls": 0,
+      "actualProviderSpendUsd": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exitCode": 0,
+      "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+      "observedAt": "2026-09-27T10:39:58.279074+00:00",
+      "attempt": 2,
+      "priorFailurePreserved": true,
+      "reasonForRetry": "One-case local runtime diagnostic passed in 1332ms after first-case startup took 19 seconds; exact failed-run leftovers reconciled. No source or budget changes.",
+      "log": "research/verification/20260927-operator-integration/browser.log",
+      "sha256": "9625438825968032446188e2f9fa1f5d991f743088016e55f9324eb3e82dc019",
+      "providerCalls": 0,
+      "actualProviderSpendUsd": 0
+    }
+  ],
+  "replay": {
+    "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+    "observedAt": "2026-09-27T10:41:19.083649+00:00",
+    "commands": [
+      {
+        "command": [
+          "make",
+          "reproduce",
+          "RUN=8115dfaa-14a4-4b49-b048-d40c43982444"
+        ],
+        "exitCode": 0,
+        "variant": "baseline",
+        "runId": "8115dfaa-14a4-4b49-b048-d40c43982444",
+        "log": "research/verification/20260927-operator-integration/baseline-replay.log",
+        "sha256": "7900762bee52f3abe8215366becb2453ad5e25dc62e39df8b9df899944dc76ca"
+      },
+      {
+        "command": [
+          "make",
+          "reproduce",
+          "RUN=6f03fedb-43cb-4934-892e-a89a43b22183"
+        ],
+        "exitCode": 0,
+        "variant": "checks_only",
+        "runId": "6f03fedb-43cb-4934-892e-a89a43b22183",
+        "log": "research/verification/20260927-operator-integration/checks_only-replay.log",
+        "sha256": "cbbf99a9fa718a7b97e9eeb1e8fe326f0d95a7081c3d48d98d4e07b7c1e4d450"
+      },
+      {
+        "command": [
+          "make",
+          "reproduce",
+          "RUN=9fe46436-b82b-4ad8-9c59-dcd588666721"
+        ],
+        "exitCode": 0,
+        "variant": "patchproof",
+        "runId": "9fe46436-b82b-4ad8-9c59-dcd588666721",
+        "log": "research/verification/20260927-operator-integration/patchproof-replay.log",
+        "sha256": "3cebe010dfeaee3e8c6fffe3eb3986885d680be4123402b7bc8ab1771c4b6da3"
+      }
+    ],
+    "providerCalls": 0,
+    "actualProviderSpendUsd": 0
+  },
+  "gates": {
+    "kind": "default-release-command-gates",
+    "observedAt": "2026-09-27T10:37:24.826843+00:00",
+    "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+    "commands": [
+      {
+        "command": [
+          "make",
+          "doctor"
+        ],
+        "exitCode": 0,
+        "expectedExitCode": 0,
+        "log": "research/verification/20260927-operator-integration/doctor.log",
+        "sha256": "9b97423567149389fda4d0d200928a66f2782e36315d69f284edaf5bf3b76685"
+      },
+      {
+        "command": [
+          "make",
+          "smoke"
+        ],
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "log": "research/verification/20260927-operator-integration/smoke.log",
+        "sha256": "e34757f290da6918ee4b559b0d47f48ef845a9d2f7d7f009cea6427a21897bee"
+      },
+      {
+        "command": [
+          "make",
+          "pilot"
+        ],
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "log": "research/verification/20260927-operator-integration/pilot.log",
+        "sha256": "266809e8a49601a092bc0c58c9ae2f45796f2e640222e957f8af542d4ef0c7fa"
+      },
+      {
+        "command": [
+          "make",
+          "evaluate"
+        ],
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "log": "research/verification/20260927-operator-integration/evaluate.log",
+        "sha256": "1d4da52058391137591b5f7113c46f918643c2c9d51321b9f9de583d4beb719c"
+      },
+      {
+        "command": [
+          "make",
+          "release-check"
+        ],
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "log": "research/verification/20260927-operator-integration/release-check.log",
+        "sha256": "f3ca7c17d5533346ed3a9e0faa871c07580d439b02742e291b5d72956c41014a"
+      }
+    ],
+    "providerCalls": 0,
+    "actualProviderSpendUsd": 0,
+    "approvedProjectCapUsd": 25
+  },
+  "handoff": {
+    "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+    "checkout": "/tmp/patchproof-handoff-abfa450",
+    "processId": 3578232,
+    "execSession": 24010,
+    "url": "http://127.0.0.1:43171/#evidence",
+    "title": "PatchProof \u2014 review the evidence",
+    "taskCount": 30,
+    "runCount": 8,
+    "active": 0,
+    "preservedRunIds": true,
+    "errors": [],
+    "browserVersion": "145.0.7632.6",
+    "observedAt": "2026-09-27T10:41:52.318Z",
+    "mode": "mock",
+    "providerCalls": 0,
+    "actualProviderSpendUsd": 0,
+    "probeCorrection": "First read-only handoff probe looked for a button; navigation is a link. Corrected selector, no app change or new run."
+  },
+  "preservedFailure": {
+    "runIds": [
+      "0b49aa42-452e-4c81-86c0-a2a84eb182d3",
+      "4c5c5532-e9ed-4688-a1d9-0af6a03f0e9a",
+      "5a24e7f8-381d-4510-b152-e2c7d98aaace"
+    ],
+    "reason": "The first case took about 19 seconds and all three original-source repeated batches reached their unchanged 30-second deadline before proposal generation. Cause of startup latency not established.",
+    "diagnostic": {
+      "kind": "bounded-local-runtime-diagnostic",
+      "ownerRunId": "61c01665-d540-4ecd-871a-1c45c09f35cd",
+      "observedAt": "2026-09-27T10:38:28.641Z",
+      "result": {
+        "checks": [
+          {
+            "id": "visible-01",
+            "requirementId": "R01",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check.",
+            "actual": [
+              1,
+              2
+            ],
+            "expected": [
+              1,
+              2
+            ],
+            "durationMs": 1332,
+            "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[1,2],\"argsAfter\":[[1,1,2]],\"kwargsAfter\":{}}}"
+          }
+        ],
+        "isolation": "local_container",
+        "operationIds": [
+          "docker:patchproof-check-643eb54e-202f-42b7-a551-5289fcefbade"
+        ],
+        "cpuSeconds": null,
+        "measuredCostUsd": 0,
+        "infrastructureError": null
+      },
+      "providerCalls": 0
+    },
+    "scopedCleanup": {
+      "kind": "failed-browser-owned-runtime-cleanup",
+      "runIds": [
+        "0b49aa42-452e-4c81-86c0-a2a84eb182d3",
+        "4c5c5532-e9ed-4688-a1d9-0af6a03f0e9a",
+        "5a24e7f8-381d-4510-b152-e2c7d98aaace"
+      ],
+      "result": {
+        "remainingOperationIds": [],
+        "error": null
+      },
+      "observedAt": "2026-09-27T10:38:39.272Z",
+      "scope": "Only exact owner UUIDs from preserved failed browser exports",
+      "providerCalls": 0
+    },
+    "sourceOrLimitsChangedBeforeRetry": false
+  },
+  "limits": {
+    "approvedProjectSpendUsd": 25,
+    "actualProviderSpendUsd": 0,
+    "providerCalls": 0,
+    "realBenchmarkEpisodes": 0,
+    "humanResults": 0,
+    "published": false,
+    "competitionReady": false,
+    "independentMachineReplay": false
+  },
+  "remainingImplementation": [
+    "Calibrated live 24-revision experiment factory and private dispatch entry point",
+    "Authoritative provider billing and cleanup evidence ingestion"
+  ],
+  "artifacts": {
+    "research/verification/20260927-operator-integration/0b49aa42-452e-4c81-86c0-a2a84eb182d3.json": "sha256:6a1f173f8a8415c29a097f433cea100ececd254913aef47f32c137a0ec157656",
+    "research/verification/20260927-operator-integration/4c5c5532-e9ed-4688-a1d9-0af6a03f0e9a.json": "sha256:f73be974e2ce3db94f15da0282e9a044b4748b15b6eac2f5fef659fa0318f7b9",
+    "research/verification/20260927-operator-integration/5a24e7f8-381d-4510-b152-e2c7d98aaace.json": "sha256:28f636951fe898026c10df750f494c4f59201f1e52c0c62e2ddf1c2b2a76df73",
+    "research/verification/20260927-operator-integration/6f03fedb-43cb-4934-892e-a89a43b22183.json": "sha256:295530c5eb60c7bf2553f70dade350ecb7ff4d37b8691b5b4e13f70c190be363",
+    "research/verification/20260927-operator-integration/8115dfaa-14a4-4b49-b048-d40c43982444.json": "sha256:250c117cf82d0e32cd3a6e71f222ca0c0a24a5bfe77fd05e1c412a4c85d27f0e",
+    "research/verification/20260927-operator-integration/9fe46436-b82b-4ad8-9c59-dcd588666721.json": "sha256:f55171995861e5676d7a8597fe601226b46ca928c36dd2c36510dac3843b941a",
+    "research/verification/20260927-operator-integration/accounting-operator-receipt.json": "sha256:090b5dacbaaa218a47219e0b80690f33c8da8bcabd552f694df7bcd741b1d638",
+    "research/verification/20260927-operator-integration/accounting-operator-tests.log": "sha256:e80e748fba2639f2edf816d79ce14210d0d75eeaf64e39a152e1a7a1ee3c000b",
+    "research/verification/20260927-operator-integration/accounting-operator-typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260927-operator-integration/baseline-replay.log": "sha256:7900762bee52f3abe8215366becb2453ad5e25dc62e39df8b9df899944dc76ca",
+    "research/verification/20260927-operator-integration/browser-command.json": "sha256:402062b3571a1eb3520559e2769805f71a9ad4977fa660b509e111ecffbb0d9b",
+    "research/verification/20260927-operator-integration/browser-first-attempt-command.json": "sha256:9faa2e6bf2e633dd6c9518504fc8f90bf0b47f1ba5bf119d0a9edb66379a0f38",
+    "research/verification/20260927-operator-integration/browser-first-attempt-runs.json": "sha256:4180b7f14244a8a4618c72023481b8878d444965f3e6014659d5a493dc3c9e77",
+    "research/verification/20260927-operator-integration/browser-first-attempt.log": "sha256:a7ea552bf22c052b5d9f00c81bfe32b3215c6a6942acf853c8b46fe8da9f0514",
+    "research/verification/20260927-operator-integration/browser.log": "sha256:9625438825968032446188e2f9fa1f5d991f743088016e55f9324eb3e82dc019",
+    "research/verification/20260927-operator-integration/checks_only-replay.log": "sha256:cbbf99a9fa718a7b97e9eeb1e8fe326f0d95a7081c3d48d98d4e07b7c1e4d450",
+    "research/verification/20260927-operator-integration/doctor.log": "sha256:9b97423567149389fda4d0d200928a66f2782e36315d69f284edaf5bf3b76685",
+    "research/verification/20260927-operator-integration/evaluate.log": "sha256:1d4da52058391137591b5f7113c46f918643c2c9d51321b9f9de583d4beb719c",
+    "research/verification/20260927-operator-integration/experiment-export-cli-receipt.json": "sha256:50184f646dfb370948f869845ceb1809b8f28e4c9544a9a0e5fbb2d17ca2ad9a",
+    "research/verification/20260927-operator-integration/experiment-export-cli-tests.log": "sha256:1c21435cfea9171b68671a2e5bd658cea4690acc060bdd4177a253e1f24efacf",
+    "research/verification/20260927-operator-integration/experiment-export-cli-typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260927-operator-integration/failed-browser-cleanup.json": "sha256:f57d2235ea012783b573faec463168d751de6b632ae8e8d7645045c66dea770c",
+    "research/verification/20260927-operator-integration/gate-commands.json": "sha256:c6a72710afcad8708935687a7db453b0169994eb51ec1ffdeba483319299f35e",
+    "research/verification/20260927-operator-integration/make-test-command.json": "sha256:92d24e14ae73a0719276a0cd38c0f4376e07e09838db9dbee3cfbace8e81252f",
+    "research/verification/20260927-operator-integration/make-test.log": "sha256:f6bb071f3dba4cc409d00bcf678c8337448e99c0bee5dccab23b159ff3efef0b",
+    "research/verification/20260927-operator-integration/patchproof-compare-mobile.png": "sha256:152b6719bec193f966d16c73ce4f86657b7241f6df0880b845a14cc1218e2001",
+    "research/verification/20260927-operator-integration/patchproof-comparison-desktop.png": "sha256:295fcbf2f07561ff6957411683508645c9981c3581a9bbad9604f35dd0416fe9",
+    "research/verification/20260927-operator-integration/patchproof-evidence-desktop.png": "sha256:08f360f0baf0de44752c3d3ce8f35710849c8ccaf7e0367a200341d47a185acd",
+    "research/verification/20260927-operator-integration/patchproof-evidence-mobile.png": "sha256:de71f0449b47407944b9eef5b75a2faaf99b7deb9b1f2acbe3ebe92800692d2f",
+    "research/verification/20260927-operator-integration/patchproof-replay.log": "sha256:3cebe010dfeaee3e8c6fffe3eb3986885d680be4123402b7bc8ab1771c4b6da3",
+    "research/verification/20260927-operator-integration/patchproof-tasks-desktop.png": "sha256:974aca2f23261813994323ee297f37a99764645d84bf4bdb226f6f3f044d2573",
+    "research/verification/20260927-operator-integration/patchproof-tasks-mobile.png": "sha256:5d7fdfbe9ac6d9dd74aeef4efb28fd9f9d1a908733a8c68387e0c8f9a035d03c",
+    "research/verification/20260927-operator-integration/pilot.log": "sha256:266809e8a49601a092bc0c58c9ae2f45796f2e640222e957f8af542d4ef0c7fa",
+    "research/verification/20260927-operator-integration/product-browser.json": "sha256:5d81d98c8a676592d5db0744c4299fd5aafde84650a5280f0c77cf98f39353b7",
+    "research/verification/20260927-operator-integration/release-check.log": "sha256:f3ca7c17d5533346ed3a9e0faa871c07580d439b02742e291b5d72956c41014a",
+    "research/verification/20260927-operator-integration/replay-commands.json": "sha256:86c2b9233615efcf1cc1a1b88a0b3407a1d230230adba9951c0bd85b6e7a4a93",
+    "research/verification/20260927-operator-integration/running-app-evidence.png": "sha256:5b447adaf54ba2b25cebdab252d9a12afa2d112e1210180170b85e738a96f7cc",
+    "research/verification/20260927-operator-integration/running-app-handoff.json": "sha256:23e1679834ecaf066d2f21c481bf036e53b2cb8f0eddad77aeaa7bb072c44f9c",
+    "research/verification/20260927-operator-integration/runtime-diagnostic.json": "sha256:340679b239d2e016b353d6efb57d98e523888ef87e3a7a6b6f9bb426a0037355",
+    "research/verification/20260927-operator-integration/smoke-entrypoint-gates.json": "sha256:db2f92ed7f095eac30272ac8ad6e371135166208f4851665655d318b596164d2",
+    "research/verification/20260927-operator-integration/smoke.log": "sha256:e34757f290da6918ee4b559b0d47f48ef845a9d2f7d7f009cea6427a21897bee"
+  }
+}

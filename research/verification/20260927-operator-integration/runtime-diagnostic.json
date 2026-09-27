@@ -1,0 +1,33 @@
+{
+  "kind": "bounded-local-runtime-diagnostic",
+  "ownerRunId": "61c01665-d540-4ecd-871a-1c45c09f35cd",
+  "observedAt": "2026-09-27T10:38:28.641Z",
+  "result": {
+    "checks": [
+      {
+        "id": "visible-01",
+        "requirementId": "R01",
+        "status": "pass",
+        "message": "Observed outcome matches the declared check.",
+        "actual": [
+          1,
+          2
+        ],
+        "expected": [
+          1,
+          2
+        ],
+        "durationMs": 1332,
+        "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[1,2],\"argsAfter\":[[1,1,2]],\"kwargsAfter\":{}}}"
+      }
+    ],
+    "isolation": "local_container",
+    "operationIds": [
+      "docker:patchproof-check-643eb54e-202f-42b7-a551-5289fcefbade"
+    ],
+    "cpuSeconds": null,
+    "measuredCostUsd": 0,
+    "infrastructureError": null
+  },
+  "providerCalls": 0
+}

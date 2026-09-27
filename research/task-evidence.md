@@ -294,3 +294,43 @@ reservations, fresh-journal reset and file collisions. Their receipt is
 `verification/runtime-followup/accounting-cli-independent-review.json`. Existing
 ledger/importer limits and pinned Node/Zod interfaces are unchanged. No provider
 call, real bill, benchmark result or new spending is represented by these tests.
+
+## Integrated private operator handoff
+
+Commits `713bdf3` and `abfa450` add the private smoke operator and explicit configured
+`make smoke` route. Preflight, single-attempt sessions, status, cancellation and a
+pinned local tokenizer engine are implemented. The default command still stops on
+missing provider/account proofs and unconfigured token/CPU ceilings. Reviewed
+accounting and aggregate-export commands are separate from execution.
+
+On exact executable source `abfa450d645480c5d2cec5ad7776d36079de5532`, `make test`
+exited 0 with **339 tests passed, no failures/skips**, including typecheck and frozen
+contract locks. The initial rendered browser attempt exited 1: roughly 19 seconds
+of first-case startup consumed the unchanged original-check deadline, and all
+three runs ended in infrastructure errors before any proposal. All three failed
+bundles are preserved. Two late-created containers were identified by exact failed
+run UUIDs and reconciled; no owned container remained. A one-case diagnostic then
+passed in 1.332 seconds. The underlying host startup-latency cause is unconfirmed.
+
+An unchanged second browser attempt passed all 14 checks, with zero console/page
+errors and desktop/mobile screenshots. All three new policy bundles reproduced
+in fresh pinned containers with exit 0, including the failing baseline. No source,
+check, timeout or allowance was increased to obtain the retry. `make doctor`
+exited 0; default smoke/pilot/evaluate/release-check exited their expected 2.
+Commands, exit codes, source and artifact hashes, failures, cleanup, fresh replays
+and screenshots are in
+`verification/20260927-operator-integration/integration-receipt.json`.
+
+The loopback app at `http://127.0.0.1:43171` now runs that tested detached checkout.
+All eight saved terminal runs were preserved, with no active jobs interrupted.
+A rendered Evidence-navigation probe passed; its initial button-versus-link test
+selector mistake was corrected without an app change and is disclosed in the
+handoff receipt. The runtime remains same-host and explicitly mock.
+
+The new external dependency is exactly `@huggingface/tokenizers@0.2.0`, Apache-2.0,
+with package integrity and official source references preserved in
+`verification/20260927-smoke-operator/receipt.json` and the third-party notices.
+No provider calls, paid charges, real experiment scores or human observations were
+created. Live experiment factory/dispatch and authoritative provider accounting/
+cleanup ingestion remain unfinished; verified access, calibration, real smoke,
+experiments and release approvals remain acceptance gates.

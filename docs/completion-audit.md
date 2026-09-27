@@ -73,3 +73,25 @@ all three fresh patch replays. See
 Remaining implementation is the calibrated live factory/session, trusted operator
 commands, authoritative evidence ingestion and aggregate export wiring. The earlier
 external proof gates remain open. No final benchmark result has been observed.
+
+## Private operators and aggregate export
+
+The private smoke entry point now supports preflight, durable single-attempt
+sessions, status and cancellation. It pins a bounded tokenizer engine and requires
+verified artifact/account/control inputs. Separate accounting commands import
+reviewed receipts and recover expired prepared writes. Aggregate export/verification
+retains every planned identity without copying candidate or sealed contents.
+Its manifest explicitly does not authenticate historical source execution.
+
+Integrated source `abfa450` passes **339 tests**, typecheck and frozen contract locks.
+The operator-level tests include actual metadata CLI subprocesses, synthetic session
+lifecycle and independent accounting/export controls. The source-digest mismatch
+found during CLI review was fixed before integration. These are implementation
+checks, not live provider or participant results.
+
+Remaining local integration is the calibrated live 24-revision experiment factory
+and dispatch entry point, plus authoritative billing/cleanup ingestion. Current
+account and tokenizer proofs are absent and live episode token/CPU ceilings are
+unconfigured. Real smoke, calibration, experiment, human-review and release proof
+gates remain open. The original audit paragraphs above are preserved as historical
+observations; this follow-up supersedes their operator/export implementation gaps.

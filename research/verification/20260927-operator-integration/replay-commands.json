@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+  "observedAt": "2026-09-27T10:41:19.083649+00:00",
+  "commands": [
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=8115dfaa-14a4-4b49-b048-d40c43982444"
+      ],
+      "exitCode": 0,
+      "variant": "baseline",
+      "runId": "8115dfaa-14a4-4b49-b048-d40c43982444",
+      "log": "research/verification/20260927-operator-integration/baseline-replay.log",
+      "sha256": "7900762bee52f3abe8215366becb2453ad5e25dc62e39df8b9df899944dc76ca"
+    },
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=6f03fedb-43cb-4934-892e-a89a43b22183"
+      ],
+      "exitCode": 0,
+      "variant": "checks_only",
+      "runId": "6f03fedb-43cb-4934-892e-a89a43b22183",
+      "log": "research/verification/20260927-operator-integration/checks_only-replay.log",
+      "sha256": "cbbf99a9fa718a7b97e9eeb1e8fe326f0d95a7081c3d48d98d4e07b7c1e4d450"
+    },
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=9fe46436-b82b-4ad8-9c59-dcd588666721"
+      ],
+      "exitCode": 0,
+      "variant": "patchproof",
+      "runId": "9fe46436-b82b-4ad8-9c59-dcd588666721",
+      "log": "research/verification/20260927-operator-integration/patchproof-replay.log",
+      "sha256": "3cebe010dfeaee3e8c6fffe3eb3986885d680be4123402b7bc8ab1771c4b6da3"
+    }
+  ],
+  "providerCalls": 0,
+  "actualProviderSpendUsd": 0
+}
