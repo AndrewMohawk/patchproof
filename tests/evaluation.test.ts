@@ -68,19 +68,23 @@ test('public fixture bytes match immutable manifest and each check maps to a req
       assert.equal(new Set(checks.map(c => c.id)).size, checks.length);
       assert(checks.every(c => fixture.requirements.some(r => r.id === c.requirementId)));
       assert(fixture.requirements.every(r => checks.some(c => c.requirementId === r.id)));
-      assert.deepEqual(Object.keys(fixture.files), ['solution.py']);
+      const sourcePaths = Object.keys(fixture.files);
+      assert(sourcePaths.length >= 1 && sourcePaths.length <= 3);
+      assert(sourcePaths.every(path => /^[a-zA-Z0-9_-]+\.py$/.test(path)));
+      assert(sourcePaths.includes(fixture.entrypoint));
+      assert(fixture.editAllowlist.every(path => sourcePaths.includes(path)));
       assert(!('goldFiles' in fixture));
     }
   }
   await assert.rejects(readdir(new URL('../fixtures/final/', import.meta.url)), /ENOENT/);
 });
 
-test('stable unique mutation check distinguishes argument mutation from scripted ordering failure', async () => {
+test('stable unique mutation check rejects changed arguments even with the correct return', async () => {
   const fixture = FixtureSchema.parse(JSON.parse(await readFile(new URL('../fixtures/development/stable-unique-01.json',import.meta.url),'utf8')));
   const check = fixture.acceptanceCases.find(c=>c.requirementId==='R02')!;
-  const scriptedResult = [...new Set(check.args[0] as number[])].sort((a,b)=>a-b);
-  assert.equal(evaluateObservation(check,JSON.stringify({kind:'return',value:scriptedResult,argsAfter:check.args,kwargsAfter:check.kwargs}),1).status,'pass');
-  assert.equal(evaluateObservation(check,JSON.stringify({kind:'return',value:scriptedResult,argsAfter:[scriptedResult],kwargsAfter:check.kwargs}),1).status,'fail');
+  assert.equal(check.assertArgsUnchanged, true);
+  assert.equal(evaluateObservation(check,JSON.stringify({kind:'return',value:check.expected,argsAfter:check.args,kwargsAfter:check.kwargs}),1).status,'pass');
+  assert.equal(evaluateObservation(check,JSON.stringify({kind:'return',value:check.expected,argsAfter:[...check.args,null],kwargsAfter:check.kwargs}),1).status,'fail');
 });
 
 test('prospective plans contain balanced 72/270 grids and identical aggregate budgets', () => {

@@ -257,7 +257,7 @@ test('real local pinned Python container independently observes return, exceptio
   const runtime = await createLocalRuntime();
   assert.equal(runtime.status.available, true, runtime.status.reason ?? 'Local Python image required for this integration test.');
   const result = await runtime.checks.run({ files: { 'solution.py': good }, entrypoint: 'solution.py', timeoutSeconds: 15,
-    cases: [check({ assertArgsUnchanged: true }), check({ id: 'none', args: [null], expected: undefined, expectedException: 'TypeError' })] }, signal());
+    cases: [check({ assertArgsUnchanged: true }), FunctionCaseSchema.parse({ id: 'none', requirementId: 'R01', function: 'unique', args: [null], expectedException: 'TypeError' })] }, signal());
   assert.equal(result.infrastructureError, null);
   assert.deepEqual(result.checks.map(c => c.status), ['pass', 'pass']);
   const mutated = await runtime.checks.run({ files: { 'solution.py': 'def unique(values):\n    values[:] = [3, 1]\n    return values\n' }, entrypoint: 'solution.py', timeoutSeconds: 10, cases: [check({ assertArgsUnchanged: true })] }, signal());

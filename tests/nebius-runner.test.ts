@@ -131,7 +131,7 @@ test('fake candidate PASS text and mutation cannot approve checks; exceptions us
   for (const [stdout, caseInput, expectedStatus] of [
     ['PASS', check(), 'error'],
     [observation({ argsAfter: [[1, 3]] }), check({ assertArgsUnchanged: true }), 'fail'],
-    [observation({ kind: 'exception', exception: 'TypeError', value: undefined, argsAfter: [null] }), check({ args: [null], expected: undefined, expectedException: 'TypeError' }), 'pass'],
+    [observation({ kind: 'exception', exception: 'TypeError', value: undefined, argsAfter: [null] }), FunctionCaseSchema.parse({ id: 'exception-check', requirementId: 'R01', function: 'unique', args: [null], expectedException: 'TypeError' }), 'pass'],
     [observation(), check({ expected: 'ORACLE-SENTINEL-PRIVATE' }), 'fail'],
   ] as const) {
     const fake = setup(call => {

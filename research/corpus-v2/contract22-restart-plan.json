@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Prospective corpus validation restart after JSON fidelity correction",
+  "status": "waiting_for_reviewed_contract_2.2",
+  "reason": "Old FunctionCase and sandbox observation parsing reject or lose ordinary JSON object keys. Old check logs hold parsed observations, so input equivalence alone cannot establish observation fidelity.",
+  "historicalCompletePreparations": [
+    {
+      "repoId": "owned-v2-r01",
+      "receiptDigest": "sha256:5d40887a3460ffd947f3389baca27875a48fc769f7fc59c96c6ccb2c6604774e",
+      "tasks": 5,
+      "oldStatus": "validated",
+      "usedAsContract22Execution": false
+    },
+    {
+      "repoId": "owned-v2-r02",
+      "receiptDigest": "sha256:f7547cf750c1fdd64189b972aed32a83a7fe42bb3e8b7ea47aad52bac9ecae8d",
+      "tasks": 5,
+      "oldStatus": "validated",
+      "usedAsContract22Execution": false
+    },
+    {
+      "repoId": "owned-v2-r03",
+      "receiptDigest": "sha256:cc8549e830afed1ce81db9501c9ad9f86ff5f7ad221c0900bb3558c9b0a3a038",
+      "tasks": 5,
+      "oldStatus": "validated",
+      "usedAsContract22Execution": false
+    },
+    {
+      "repoId": "owned-v2-r04",
+      "receiptDigest": "sha256:4def59b02213f8e0b397ed736465781ff80dc21107e7e756de68375d71742908",
+      "tasks": 5,
+      "oldStatus": "validated",
+      "usedAsContract22Execution": false
+    }
+  ],
+  "historicalPartialPreparation": {
+    "repoId": "owned-v2-r05",
+    "goldPassedTasks": 5,
+    "buggyRejectedTasks": 5,
+    "repeatStableTasks": 5,
+    "finalAcceptance": false,
+    "reason": "Reviewer probe schema error before its execution; original output and failed attempt preserved."
+  },
+  "newRequiredPreparation": {
+    "tasks": 60,
+    "repositories": 12,
+    "contractVersion": "2.2",
+    "goldStartRepeat": "all tasks, fresh local containers",
+    "authorNegativeControls": "all accepted author controls",
+    "reviewerProbes": "all bound independent probes, including original ordinary-key repo05 probe",
+    "acceptedEvidence": "only fresh validated 2.2 receipts bound to unchanged accepted submissions",
+    "newSourceBindings": null
+  },
+  "limits": {
+    "concurrentRepositories": 2,
+    "concurrencyPerRepository": 2,
+    "batchTimeoutSeconds": 120,
+    "containerCpuQuota": 0.5,
+    "containerMemoryMiB": 128,
+    "guestCpuSecondsPerInvocation": 5
+  },
+  "scoredModelEvaluation": false,
+  "providerCalls": 0,
+  "spendUsd": 0,
+  "preservation": "All prior attempts, revisions, logs, reports, and original checker snapshots remain immutable. No old result is relabeled as a new-source execution."
+}

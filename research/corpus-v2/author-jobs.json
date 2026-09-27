@@ -3,7 +3,7 @@
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
   "status": "in_progress",
-  "recordedAt": "2026-09-27T13:34:17.540261+00:00",
+  "recordedAt": "2026-09-27T13:51:24.666397+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -16,7 +16,7 @@
       "agent": "/root/corpus_v2_repo01",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
-      "status": "runtime-validated",
+      "status": "runtime-validated-original-contract",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -49,7 +49,7 @@
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
-      "status": "runtime-validated",
+      "status": "runtime-validated-original-contract",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -172,6 +172,10 @@
         {
           "revision": "revision-002",
           "submissionDigest": "sha256:929272c93a8fae5eb838d765b6735e1f4de68e7b1ef822784caa6b772533bbf5"
+        },
+        {
+          "revision": "revision-003",
+          "submissionDigest": "sha256:29318451743ea9b454edca8eccaa2c36dc0aef9de7806e4e246b27268f140c24"
         }
       ],
       "genericContractClarification": "JSON number normalization; dedicated requirement cases; no sibling contents or scored outcomes shared.",
@@ -238,24 +242,58 @@
       "agent": "/root/corpus_v2_repo10",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo10",
-      "status": "review_revision_requested",
+      "status": "static-approved-runtime-held",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:c11acb289b75661f3cfa407e5e35cbf3e79d091b72c303c7d0a12c0430b41d00"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:037cc619bb1d99fdfa8a117bd9d1b4e69b1185838c5ae73def1d107f5dc21b2c"
         }
-      ]
+      ],
+      "staticReview": "approved by independent evaluator"
     },
     {
       "slot": "repo11",
       "agent": "/root/corpus_v2_repo11",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo11",
-      "status": "authoring",
+      "status": "static-approved-runtime-held",
       "launchTool": "collaboration.spawn_agent",
-      "submittedRevisions": []
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:e3466525ffc1cc3e53f9cd329e83f1fcf9a1ec363b2fea15cec73bcc9b5570ed"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:b05591f0f1f761f627a188e332800b33e78071d4fb76c393a6e3b2773b7b1c1c"
+        }
+      ],
+      "staticReview": "approved by independent evaluator"
+    },
+    {
+      "slot": "repo12",
+      "agent": "/root/corpus_v2_repo12",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo12",
+      "status": "static-approved-runtime-held",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:13177e105683689b27b1f7d672957585e09d540c9356e4a7a377a316a5a43812"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:0903fb9715c716319ad59e126b78f1b12ecf75157f85ec1716f35f2d94da67b0"
+        }
+      ],
+      "staticReview": "approved by independent evaluator"
     }
   ],
-  "runtimeHold": "Further validation paused during versioned JSON parser fidelity fix; all original observations remain bound to original sources."
+  "runtimeHold": "All evaluator Docker jobs stopped. New contract2.2 corrects both inputs and observations; all60 will require fresh validation under new bindings. Preserve20 complete original-contract observations and repo05 partial attempt; no input-only evidence reuse."
 }

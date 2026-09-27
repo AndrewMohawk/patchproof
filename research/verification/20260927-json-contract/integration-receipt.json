@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "coordinator-json-contract-integration",
+  "recordedAt": "2026-09-27T13:54:54.050434+00:00",
+  "sourceCommit": "092114ee2e5d8b2970d917f4b6deec15dbdfd216",
+  "productContractVersion": "2.2",
+  "files": {
+    "tests/evaluation.test.ts": "sha256:c31590112aac8f215d7e8c6d142d08bb9a2a530b8fe9c4f5a23900e2de873b49",
+    "tests/nebius-runner.test.ts": "sha256:5dcd6d647d752f2622792350f13b6e763935e4f338c8d5896680b58cb0271abd",
+    "tests/runtime-sandbox.test.ts": "sha256:20a4fbcb663d4f7cc852929b5e2e081273438279a1a7c3c5237bf1f32c3a612e",
+    "tests/json-fidelity-independent.test.ts": "sha256:1e7a08d92ef514bc2f8440917098cfb9a59d977a9be7b2d1e224c6de1cd829b8",
+    "packages/contracts/src/json-data.ts": "sha256:ebb37df7d8b93a53fb896f5dbac01c1e777d228ac68f78227b1c6155f23ce711",
+    "packages/contracts/src/product.ts": "sha256:12f7f93d92c581ddea55618ed6beafaf42f2f4e2521f0b0f0f853f69e1ed1fa8",
+    "packages/contracts/src/product-validation.ts": "sha256:c3528f20e548175f8bce7f5914e16e3f1422e1b8c79cbcf994c855097ea1d890",
+    "packages/contracts/src/legacy-product-v2.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+    "packages/contracts/src/legacy-product-validation-v2.ts": "sha256:97e726119c43bc0a67ba814a13b8835e0ba6090223fc78fa10ffdb30e57151ff",
+    "packages/orchestrator/src/evidence.ts": "sha256:e798030c2833de547c6743a0b8a7868aafbe746f14e0137ba90d9cd3f87d8ea9",
+    "packages/orchestrator/src/fixtures.ts": "sha256:944a1172de125578266fe7bae48cb448ad640b46f1c3710e85a3c1b384cea3c4",
+    "packages/orchestrator/src/coordinator.ts": "sha256:180c3a0fa6d9cf37493423c323e881eb9657007d70d46750ba5524281320998e",
+    "workers/sandbox/index.ts": "sha256:0bc243e55fbc5a8180741e8b8640e66e69cd77c775db696b7273405431447597",
+    "workers/sandbox/nebius-runner.ts": "sha256:a8005e880d0053a88a0bd00fa1fa56f2491a73a6626b0cad8e34eb87bcddf8d4",
+    "scripts/contract-locks.ts": "sha256:1e1797eb2c1c1c482340237592d60f4970b396e62a432869b50309bb60dbce9e",
+    "scripts/check-contract-lock.ts": "sha256:2c18f71892bc89983cd2d5aeb1135c271d84ebda561af79bdc63c97e96e89157",
+    "scripts/release-audit.ts": "sha256:6a3918e9e9e7dad9c844007131d55fd0c6d930d3a9a7988aff7516b58b141092",
+    "research/contracts-v2.2-lock.json": "sha256:519d78d7119f02c7bf7240b6f874e9226591d88afd663c0496824fdd57a9a3b5"
+  },
+  "validation": [
+    {
+      "command": "make test",
+      "exitCode": 2,
+      "tests": 571,
+      "passed": 569,
+      "failed": 2,
+      "log": "merged-make-test.log",
+      "reason": "Two historical test helpers explicitly supplied undefined expected fields. Contract2.2 correctly rejects non-JSON own values; exception-only literals replaced them without weakening assertions or changing implementation."
+    },
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "tests": 571,
+      "passed": 571,
+      "failed": 0,
+      "log": "merged-make-test-after-fixtures.log"
+    },
+    {
+      "command": "node --test tests/json-fidelity-independent.test.ts",
+      "exitCode": 0,
+      "tests": 2,
+      "passed": 2,
+      "log": "independent-metadata-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-with-independent.log"
+    },
+    {
+      "command": "node research/verification/20260927-json-contract/verify-historical.mjs /home/andrewmohawk/patchproof /home/andrewmohawk/patchproof/.local/product/evidence /home/andrewmohawk/patchproof/research/verification/20260927-json-contract/historical-after-092114e.json",
+      "exitCode": 0,
+      "historicalRecords": 14,
+      "versions": [
+        "2.0",
+        "2.1"
+      ],
+      "exactPreviousRecordIdentitiesMatched": true,
+      "verifierChangedObjects": 0,
+      "executedCandidates": 0,
+      "providerCalls": 0
+    }
+  ],
+  "independentReview": {
+    "agent": "/root/json_contract_review",
+    "reviewedOriginalCommit": "5cdac844b46bda2eb0e22f4acb7e5ccd3c8b7594",
+    "blockingFindings": 0,
+    "focusedTestsPassed": 15,
+    "additionalControlsPassed": 2,
+    "additionalControlCases": 64,
+    "scope": "JSON fidelity, guarded historical readers, replay/observation version routing, digest formulas and current/historical lock routing. No corpus access, Docker, candidate or provider execution.",
+    "limitation": "A test-name filter did not exclude an existing archive test; that test made loopback-only read-archive HTTP requests. No external network requests."
+  },
+  "artifacts": {
+    "before-receipt.json": "sha256:487c9dc2536cc699cf6372a129364ff3ddec8988a8faacdc1fbea08b7848885f",
+    "historical-after-092114e.json": "sha256:16574a6946c8da19ac9115a3dab0cc05a3c34ac0479ce306aa7a0a70f7fb5545",
+    "historical-before.json": "sha256:adf34d9e4e19b2ae627fb5a00168169c2eb8db77b56634e076305d5a6b8468fe",
+    "historical-branch-first-pass.json": "sha256:b669ac2369134a0769fe75c4b99b9cd7f8b892470fef07a050f6a22ab6308139",
+    "independent-metadata-tests.log": "sha256:08410b8e33413163d11583192097687c29186cd849a5326d654b88ee539311ad",
+    "merged-make-test-after-fixtures.log": "sha256:8a3b1453a069e22eb238cb1ee227570d63f0d7e4a65f426b823ce7adf198d856",
+    "merged-make-test.log": "sha256:87daa598992e7e06b9271f0e6967e4eaf1acce2b37339ba8dbf819bc16173192",
+    "typecheck-with-independent.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "verify-historical.mjs": "sha256:4c6dcf72e8c37213c37b49a2b27db989f49d06525b6c2104bd2ee7c80f40b602"
+  },
+  "corpusPreparation": {
+    "staticApprovedRepositories": 12,
+    "staticApprovedTasks": 60,
+    "freshContract22Runtime": "NOT RUN; cleared after this verification, all60 required; old observations retained"
+  },
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "competitionReady": false,
+  "remainingFailures": [
+    "Real provider access/integration, model probe/calibration, experiments, human exercises, independent-machine replay and release owner decisions remain open."
+  ]
+}
