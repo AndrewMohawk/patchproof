@@ -1,0 +1,36 @@
+(node:1493443) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (214.332889ms)
+✔ source, accepted-control, image, CPU and budget drift reject before credentials or any dispatch (79.582028ms)
+✔ credential-time revocation denies new requests while retaining the attempted reservation (148.539565ms)
+✔ raw persistence failure retains known CPU and operation handles without releasing billing hold (98.608072ms)
+✔ changed observations produce a mismatch and pre-cancellation cannot reserve or read a credential (93.296269ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 951.793552
+
+✖ failing tests:
+
+test at tests/trusted-replay.test.ts:26:1
+✖ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (214.332889ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'mismatch_or_infrastructure_error'
+  - 'reproduced'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/trusted-replay.test.ts:32:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'mismatch_or_infrastructure_error',
+    expected: 'reproduced',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

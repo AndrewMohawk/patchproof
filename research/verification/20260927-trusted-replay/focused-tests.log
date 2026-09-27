@@ -1,0 +1,41 @@
+(node:1754122) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ inspection verifies one explicit published bundle and creates no SQLite sidecars or output (93.522853ms)
+✔ exclusive export writes exact original JSON bytes with private mode and never overwrites (111.059107ms)
+✔ exported-byte verification needs no original journal but requires the approved current public fixture (90.173532ms)
+✔ wrong config digest, run ID and bundle digest refuse without export or database changes (71.22751ms)
+✔ journal publication, terminal state and exact run document must all agree (206.492485ms)
+✔ changed curated source, policy, full legacy fixture metadata and unknown fixture pin all reject (236.786285ms)
+✔ tampered bundle/artifact and invalid byte encoding cannot export (83.417238ms)
+✔ missing journal is never created and unknown schemas are never migrated (87.507153ms)
+✔ active WAL data is refused without a checkpoint or implicit sidecar changes (91.432006ms)
+✔ output and configuration collisions with every database sidecar preserve original inputs (333.587256ms)
+✔ symlink and hardlink aliases are refused for config, evidence, output and public fixture tree (163.712419ms)
+✔ bounded evidence/database reads and public tree size stop before output (183.520755ms)
+✔ private CLI status is compact and neither config credentials nor private event details escape (309.8197ms)
+✔ private evidence reader rejects permissive file modes and request mutations cannot switch selected bundle (97.518873ms)
+✔ URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling (78.653473ms)
+✔ concurrent metadata exports grant one exclusive output and preserve exact selected bytes (106.28096ms)
+✔ an optional Makefile RUN binding must match the selected private configuration (101.083397ms)
+(node:1754123) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ preflight is credential-free; exact exported public bundle replays once with durable private results and unknown billing (752.092195ms)
+✔ configuration, source, bundle and current curated fixture pins fail before provider dispatch (443.713812ms)
+✔ missing ledger, output overwrite and database-sidecar collisions cannot initialize another allowance (432.367905ms)
+✔ status does not create sessions; cancel and recover never grant another start (275.697214ms)
+✔ durable cancellation during a fake running operation drains cleanup and retains the full reservation (511.937825ms)
+(node:1754124) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (246.355393ms)
+✔ source, accepted-control, image, CPU and budget drift reject before credentials or any dispatch (127.58537ms)
+✔ credential-time revocation denies new requests while retaining the attempted reservation (148.652828ms)
+✔ raw persistence failure retains known CPU and operation handles without releasing billing hold (134.903129ms)
+✔ changed observations produce a mismatch and pre-cancellation cannot reserve or read a credential (146.42072ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2750.02958

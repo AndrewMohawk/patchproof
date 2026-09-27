@@ -1,0 +1,22 @@
+(node:1696600) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ preflight is credential-free; exact exported public bundle replays once with durable private results and unknown billing (633.428901ms)
+✔ configuration, source, bundle and current curated fixture pins fail before provider dispatch (300.173011ms)
+✔ missing ledger, output overwrite and database-sidecar collisions cannot initialize another allowance (185.294552ms)
+✔ status does not create sessions; cancel and recover never grant another start (162.893782ms)
+✔ durable cancellation during a fake running operation drains cleanup and retains the full reservation (300.809107ms)
+(node:1696602) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (231.209429ms)
+✔ source, accepted-control, image, CPU and budget drift reject before credentials or any dispatch (97.191142ms)
+✔ credential-time revocation denies new requests while retaining the attempted reservation (145.589376ms)
+✔ raw persistence failure retains known CPU and operation handles without releasing billing hold (127.0217ms)
+✔ changed observations produce a mismatch and pre-cancellation cannot reserve or read a credential (128.022865ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1899.8199

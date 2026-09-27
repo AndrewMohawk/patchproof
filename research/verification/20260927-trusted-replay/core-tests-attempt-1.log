@@ -1,0 +1,53 @@
+(node:1409041) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (263.162105ms)
+✔ source, accepted-control, image, CPU and budget drift reject before credentials or any dispatch (139.894373ms)
+✔ credential-time revocation denies new requests while retaining the attempted reservation (167.231111ms)
+✖ raw persistence failure retains known CPU and operation handles without releasing billing hold (139.361853ms)
+✔ changed observations produce a mismatch and pre-cancellation cannot reserve or read a credential (155.253477ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1236.889036
+
+✖ failing tests:
+
+test at tests/trusted-replay.test.ts:26:1
+✖ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (263.162105ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'mismatch_or_infrastructure_error'
+  - 'reproduced'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/trusted-replay.test.ts:32:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'mismatch_or_infrastructure_error',
+    expected: 'reproduced',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/trusted-replay.test.ts:76:1
+✖ raw persistence failure retains known CPU and operation handles without releasing billing hold (139.361853ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 0.01
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/trusted-replay.test.ts:81:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0.01,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

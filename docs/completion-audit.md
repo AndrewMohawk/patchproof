@@ -8,6 +8,15 @@ closure. Actual provider access, calibration, billing, experiments, human review
 independent-machine replay and owner release decisions remain required. See
 [the current blockers](../research/blockers.md) for the active gates.
 
+The latest local integration adds private product-evidence export, a read-only
+recorded evidence archive, a funded single-attempt check-only replay and explicit
+accepted live-protocol release binding. Executable source `4e0116d` passes 537
+tests. New provider paths are tested with invented inputs; no account observation
+or scored result is implied. The
+[integration receipt](../research/verification/20260927-trusted-replay/receipt.json)
+separates this suite, the real local Docker/browser flow on `92a2baf`, the retained
+first replay timeout and unchanged retry, and the current loopback app handoff.
+
 ## Original independent review
 
 Reviewed 2026-09-27 against source commit `b3ee8ea9d4b9dcdd4a8666481197748c48707a77` and the working tree at review time. This is a bounded, independent evaluator review of the original PRD, task deliverables and public repository. It is not a release approval, task-status change, provider test or scored experiment. No sealed task contents or gold sources were used in this audit.

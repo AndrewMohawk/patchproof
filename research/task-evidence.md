@@ -334,3 +334,33 @@ No provider calls, paid charges, real experiment scores or human observations we
 created. Live experiment factory/dispatch and authoritative provider accounting/
 cleanup ingestion remain unfinished; verified access, calibration, real smoke,
 experiments and release approvals remain acceptance gates.
+
+## Recorded evidence and release integration
+
+Executable source `4e0116dacc9cf16d1e701b07ae875232e8b952c4` passes `make test`
+with **537/537 tests**, typecheck and frozen contract checks. Private smoke
+inspection/export now verifies exact terminal journal and curated-input bindings;
+the archive shows recorded live/mock modes without execution routes. The new
+private check-only replay reserves once against an existing approved ledger,
+retains unknown billing and raw operation evidence, and supports cancellation
+without automatic restart. Release inputs can select an explicitly accepted live
+protocol while preserving smoke presentation scope and historical packet formats.
+
+Independent review fixed literal public-fixture path interpretation, a mutable
+replay envelope and accidental initialization of an empty ledger during preflight.
+Original failures and bounded review receipts are retained. Provider/operator
+tests use invented unit inputs and fake HTTP; they are not sponsor observations.
+
+The actual local browser flow on source `92a2baf` passed 14 checks, including
+desktop/mobile comparison and downloads. All three bundles reproduced in fresh
+containers. Baseline's first replay timed out under the unchanged 30-second
+allowance; one unchanged retry passed. Both attempts remain recorded. The source
+used for that flow has identical app/checker/coordinator files to `4e0116d`.
+The current loopback app is pinned to `4e0116d`, preserves 14 historical terminal
+runs, and was rendered again via Playwright MCP without launching new work.
+
+See `verification/20260927-trusted-replay/receipt.json` and
+`verification/20260927-merged-ui-docker/verification.json` for commands, exit codes,
+source/artifact digests, exact limitations and cleanup. `make doctor` exits 0;
+unconfigured smoke/pilot/evaluate/release-check correctly exit 2. No actual
+provider spending, experiment result, human study or public release was created.

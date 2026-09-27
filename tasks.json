@@ -262,13 +262,16 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "SQLite events, immutable source-bound evidence and repeated fresh-container patch replay are tested. Historical 2.0/2.1 policies remain explicit; CPU measurement and provider billing remain unknown where unmeasured.",
+      "implementation_note": "Source-bound local journal/export/replay and private terminal smoke export are implemented. A separate check-only live replay requires verified controls, current curated pins and an existing approved ledger; fake-transport and independent controls pass. Actual Nebius replay and reconciled costs remain unobserved.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
-        "research/verification/20260927-docker-integration/integration-receipt.json"
+        "research/verification/20260927-docker-integration/integration-receipt.json",
+        "docs/private-evidence.md",
+        "docs/replay-operator.md",
+        "research/verification/20260927-trusted-replay/receipt.json"
       ]
     },
     {
@@ -345,12 +348,15 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Three-screen loopback UI with actual local run/check/export flow, mobile and keyboard checks. Built before pilot by explicit owner instruction; real modes and uncoached exercise pending.",
+      "implementation_note": "Three-screen loopback product plus read-only curated archive with recorded live/mock labels, exact evidence downloads and no execution route. Real local browser/container flow and synthetic archive browser controls pass. Built before pilot by owner instruction; actual provider-state validation and uncoached human exercise remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-docker-integration/integration-receipt.json"
+        "research/verification/20260927-docker-integration/integration-receipt.json",
+        "docs/evidence-archive.md",
+        "research/verification/20260927-merged-ui-docker/verification.json",
+        "research/verification/20260927-trusted-replay/receipt.json"
       ]
     },
     {
@@ -496,17 +502,19 @@
       ],
       "requires_owner_action": true,
       "gate": null,
-      "implementation_note": "Evidence-bound release receipts and scan-gated immutable local packets are implemented/tested. Real external receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
-      "blocked_reason": "Evidence-bound release receipts and scan-gated immutable local packets are implemented/tested. Real external receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
+      "implementation_note": "Evidence-bound receipts and scan-gated immutable packets now accept explicit calibrated live protocol metadata without hardcoded local-only bindings. Smoke presentation scope is distinct from experiment completion; synthetic tests pass. Real release receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
+      "blocked_reason": "Evidence-bound receipts and scan-gated immutable packets now accept explicit calibrated live protocol metadata without hardcoded local-only bindings. Smoke presentation scope is distinct from experiment completion; synthetic tests pass. Real release receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-runtime-completion/workflows-receipt.json"
+        "research/verification/20260927-runtime-completion/workflows-receipt.json",
+        "research/verification/20260927-release-live-protocol/verification.json",
+        "research/verification/20260927-trusted-replay/receipt.json"
       ]
     }
   ],
-  "execution_as_of": "2026-09-27T11:49:02.526722+00:00",
+  "execution_as_of": "2026-09-27T12:27:43.706492+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {

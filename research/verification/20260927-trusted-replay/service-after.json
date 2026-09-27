@@ -1,0 +1,30 @@
+{
+  "pid": 2006972,
+  "sourceCommit": "4e0116dacc9cf16d1e701b07ae875232e8b952c4",
+  "checkout": "/tmp/patchproof-handoff-4e0116d",
+  "mode": "mock",
+  "approvedSpendUsd": 25,
+  "taskCount": 30,
+  "historyCount": 14,
+  "capabilities": {
+    "createRuns": true,
+    "cancelRuns": true,
+    "replay": false,
+    "streamEvents": true
+  },
+  "activeRunIds": [],
+  "browserObservation": {
+    "tool": "Playwright MCP",
+    "url": "http://127.0.0.1:43171/",
+    "title": "PatchProof — review the evidence",
+    "visibleMode": "Mock model · Local checks",
+    "visibleSpend": "$0 provider spend",
+    "visibleCeiling": "$25.00",
+    "scope": "Rendered existing catalogue; no new run launched during service switch"
+  },
+  "observedAt": "2026-09-27T12:26:14.501Z",
+  "earlierMetadataAttempt": {
+    "exitCode": 1,
+    "reason": "Verification script used approvedSpendUsd instead of API maxApprovedSpendUsd; corrected to existing schema. No product change."
+  }
+}

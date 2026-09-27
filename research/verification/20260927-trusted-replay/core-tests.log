@@ -1,0 +1,15 @@
+(node:1504655) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ live replay reserves once, performs only frozen checks, retains raw IDs and never guesses billing from provider cost (208.121176ms)
+✔ source, accepted-control, image, CPU and budget drift reject before credentials or any dispatch (84.776407ms)
+✔ credential-time revocation denies new requests while retaining the attempted reservation (98.614098ms)
+✔ raw persistence failure retains known CPU and operation handles without releasing billing hold (92.380054ms)
+✔ changed observations produce a mismatch and pre-cancellation cannot reserve or read a credential (104.594836ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 894.870121

@@ -1,0 +1,293 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "private-evidence-replay-release-integration",
+  "capturedAt": "2026-09-27T12:28:14.513Z",
+  "sourceCommit": "4e0116dacc9cf16d1e701b07ae875232e8b952c4",
+  "sourceMapDigest": "sha256:57d4d0a9d4db51d2a59659e9635c1f092352a9f3fbdfa76ca73472060d9f1a11",
+  "operationalLockDigest": "sha256:fbe98520bc8dadf12182822cb1af54899c2a16545f2fb2b2258845e3838082bd",
+  "mode": "local-and-synthetic-provider-verification",
+  "competitionReady": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "approvedProjectCeilingUsd": 25,
+  "changes": [
+    "Private exact-byte terminal evidence inspect/export with current curated pins",
+    "Read-only curated recorded live/mock archive",
+    "One funded check-only replay, immutable envelope, durable single-attempt claim and cancellation, unknown billing retained",
+    "Existing-only ledger opening cannot initialize approval or migrate schema",
+    "Explicit accepted live protocol for release audit and packet1.1, smoke presentation separated from experiments"
+  ],
+  "commands": [
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "tests": 537,
+      "passed": 537,
+      "failed": 0,
+      "skipped": 0,
+      "log": "research/verification/20260927-trusted-replay/full-tests.log",
+      "includes": [
+        "npm run typecheck",
+        "npm run check:contracts",
+        "npm test"
+      ]
+    },
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "log": "research/verification/20260927-trusted-replay/doctor.log"
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedBlocked": true,
+      "log": "research/verification/20260927-trusted-replay/smoke.log"
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedBlocked": true,
+      "log": "research/verification/20260927-trusted-replay/pilot.log"
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedBlocked": true,
+      "log": "research/verification/20260927-trusted-replay/evaluate.log"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedBlocked": true,
+      "log": "research/verification/20260927-trusted-replay/release-check.log"
+    },
+    {
+      "command": "gitleaks git --redact --no-banner --log-opts='259882c..HEAD'",
+      "headAtScan": "3675d72",
+      "exitCode": 0,
+      "scannedCommits": 12,
+      "log": "research/verification/20260927-trusted-replay/incoming-history-scan.log"
+    },
+    {
+      "command": "gitleaks git --staged --redact --no-banner",
+      "exitCode": 0,
+      "scope": "Root source/docs/tests staged for4e0116d",
+      "log": "research/verification/20260927-trusted-replay/staged-source-scan.log"
+    },
+    {
+      "command": "git diff 92a2baf..4e0116d --name-only -- apps workers/sandbox packages/orchestrator/src/coordinator.ts packages/orchestrator/src/operational-lock.ts packages/orchestrator/src/repeated-checks.ts",
+      "exitCode": 0,
+      "result": "No differences in app, checker, coordinator or operational/repeated-check sources."
+    },
+    {
+      "command": "gitleaks git --staged --redact --no-banner",
+      "exitCode": 0,
+      "scope": "Final source-bound receipts, original failed logs and task documentation",
+      "log": "research/verification/20260927-trusted-replay/final-evidence-scan.log"
+    },
+    {
+      "command": "git diff --cached --check",
+      "exitCode": 2,
+      "reason": "Exact captured raw logs contain trailing whitespace and a blank EOF; retained unchanged."
+    },
+    {
+      "command": "git diff --cached --check -- . ':!*.log'",
+      "exitCode": 0,
+      "scope": "All staged non-log artifacts and documents"
+    }
+  ],
+  "retainedFailures": [
+    {
+      "artifact": "research/verification/20260927-trusted-replay/initial-failure.json",
+      "summary": "Node strip-only constructor syntax failure before test execution; fixed explicit property assignment. Original raw output is summarized."
+    },
+    {
+      "artifact": "research/verification/20260927-trusted-replay/core-tests-attempt-1.log",
+      "summary": "Synthetic transport omitted required upload checksum/size, two failures; production verifier correctly rejected it."
+    },
+    {
+      "artifact": "research/verification/20260927-trusted-replay/core-tests-attempt-2.log",
+      "summary": "Synthetic terminal operation omitted required image/process state; one failure. A subsequent diagnostic in tool output identified sandbox_image_unconfirmed; fake response corrected."
+    },
+    {
+      "artifact": "research/verification/20260927-trusted-replay/typecheck-attempt-1.log",
+      "summary": "New operator narrowing/type errors corrected by explicit never-return function declaration."
+    },
+    {
+      "artifact": "research/verification/20260927-trusted-replay/full-tests-attempt-1.log",
+      "exitCode": 2,
+      "tests": 523,
+      "passed": 522,
+      "failed": 1,
+      "summary": "Old API shell test expected hardcoded mock text. Updated to neutral loading shell and disabled execution until metadata; rendered mock/archive labels tested separately."
+    },
+    {
+      "artifact": "research/verification/20260927-merged-ui-docker/reproduce-baseline.log",
+      "exitCode": 2,
+      "summary": "First baseline replay exhausted original30-second limit. Same command/bundle/source retry after root tests finished passed; contention causation unconfirmed."
+    },
+    {
+      "artifact": "research/verification/20260927-trusted-replay/service-after.json",
+      "summary": "First service metadata script used wrong approval field; script corrected to existing maxApprovedSpendUsd without product change."
+    }
+  ],
+  "externalInterfaces": {
+    "node": "v25.5.0",
+    "npm": "npm@11.8.0",
+    "dependencies": {
+      "@huggingface/tokenizers": "0.2.0",
+      "zod": "4.1.12"
+    },
+    "devDependencies": {
+      "@types/node": "25.5.0",
+      "playwright": "1.58.2",
+      "typescript": "5.9.3"
+    },
+    "sandboxMapping": {
+      "inspectedAt": "2026-09-27",
+      "openApiVersion": "1.0.0",
+      "serviceBase": "https://api.tokenfactory.nebius.com/sandboxes",
+      "base": "https://api.tokenfactory.nebius.com/sandboxes/v1",
+      "upload": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/files/upload-a-file-to-the-server-the-body-must-be-a-file-content",
+      "spawn": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance",
+      "status": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/get-an-operation-status",
+      "cancel": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/cancel-an-operation",
+      "auth": "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration"
+    },
+    "realAccountControlsVerified": false
+  },
+  "service": {
+    "url": "http://127.0.0.1:43171",
+    "sourceCommit": "4e0116dacc9cf16d1e701b07ae875232e8b952c4",
+    "pid": 2006972,
+    "mode": "mock",
+    "statePreserved": true,
+    "historicalTerminalRuns": 14,
+    "activeRunsAtSwitch": 0,
+    "probe": "Playwright MCP rendered catalogue only; no new jobs during service switch",
+    "artifacts": [
+      "research/verification/20260927-trusted-replay/service-before.json",
+      "research/verification/20260927-trusted-replay/service-after.json"
+    ]
+  },
+  "limits": [
+    "Actual live replay, account provisioning, model calibration and sponsor billing NOT RUN; access deferred by owner.",
+    "Browser plus three-policy Docker execution and fresh replay are bound to92a2baf, not a claimed whole-source4e0116d execution. Current service catalogue-only probe is4e0116d.",
+    "Archive/replay/release provider tests use invented unit evidence; no scored result or real human exercise.",
+    "Independent-machine replay, actual pilot/final, public hosting, license/publication and entry decisions remain open.",
+    "Exact copied bytes and digests prove integrity, not authenticated provenance; same-UID filesystem changes are outside operator hygiene guarantee."
+  ],
+  "changedFiles": [
+    "Makefile",
+    "README.md",
+    "apps/api/src/evidence-archive.ts",
+    "apps/api/src/product-server.ts",
+    "apps/web/app.js",
+    "apps/web/index.html",
+    "apps/web/verify-browser.ts",
+    "docs/budget-ledger.md",
+    "docs/evidence-archive.md",
+    "docs/operations.md",
+    "docs/private-evidence.md",
+    "docs/release-evidence.md",
+    "docs/replay-operator.md",
+    "packages/orchestrator/src/budget-ledger.ts",
+    "packages/orchestrator/src/trusted-replay.ts",
+    "research/verification/20260927-browser-stream-observer/active-runs-at-attach.json",
+    "research/verification/20260927-browser-stream-observer/browser-report.json",
+    "research/verification/20260927-browser-stream-observer/browser.log",
+    "research/verification/20260927-browser-stream-observer/bundles/3c8140a1-573f-4d61-b1ed-c0cb5b1f24d5.json",
+    "research/verification/20260927-browser-stream-observer/bundles/4c8e7ef3-4b99-4474-a111-42b2f255c564.json",
+    "research/verification/20260927-browser-stream-observer/bundles/b54f359d-21c8-42f5-9c2d-c450efe33841.json",
+    "research/verification/20260927-browser-stream-observer/observer-source.sha256",
+    "research/verification/20260927-browser-stream-observer/receipt.json",
+    "research/verification/20260927-evidence-operator-independent/README.md",
+    "research/verification/20260927-evidence-operator-independent/after-fix.log",
+    "research/verification/20260927-evidence-operator-independent/before-fix.log",
+    "research/verification/20260927-evidence-operator-independent/typecheck.log",
+    "research/verification/20260927-evidence-operator-independent/verification.json",
+    "research/verification/20260927-release-live-protocol/README.md",
+    "research/verification/20260927-release-live-protocol/contracts.log",
+    "research/verification/20260927-release-live-protocol/default-release-check.json",
+    "research/verification/20260927-release-live-protocol/focused-tests.log",
+    "research/verification/20260927-release-live-protocol/typecheck.log",
+    "research/verification/20260927-release-live-protocol/verification.json",
+    "research/verification/20260927-replay-operator-independent/README.md",
+    "research/verification/20260927-replay-operator-independent/before-fix.log",
+    "research/verification/20260927-replay-operator-independent/focused-tests.log",
+    "research/verification/20260927-replay-operator-independent/typecheck.log",
+    "research/verification/20260927-replay-operator-independent/verification.json",
+    "research/verification/runtime-followup/evidence-archive-browser-tests.log",
+    "research/verification/runtime-followup/evidence-archive-browser.json",
+    "research/verification/runtime-followup/evidence-archive-contracts.log",
+    "research/verification/runtime-followup/evidence-archive-independent-review.json",
+    "research/verification/runtime-followup/evidence-archive-tests.log",
+    "research/verification/runtime-followup/evidence-archive-typecheck.log",
+    "research/verification/runtime-followup/evidence-archive-verification.json",
+    "research/verification/runtime-followup/evidence-operator-tests.log",
+    "research/verification/runtime-followup/evidence-operator-typecheck.log",
+    "research/verification/runtime-followup/evidence-operator-verification.json",
+    "research/verification/runtime-followup/independent-replay-archive-release/controls-pre-helper-refresh.log",
+    "research/verification/runtime-followup/independent-replay-archive-release/controls.log",
+    "research/verification/runtime-followup/independent-replay-archive-release/replay-initial.log",
+    "research/verification/runtime-followup/independent-replay-archive-release/typecheck.log",
+    "research/verification/runtime-followup/release-protocol-independent-review.json",
+    "research/verification/runtime-followup/trusted-replay-independent-review.json",
+    "scripts/config.ts",
+    "scripts/evidence-archive.ts",
+    "scripts/evidence-operator.ts",
+    "scripts/product-cli.ts",
+    "scripts/release-audit.ts",
+    "scripts/release-input.ts",
+    "scripts/release-packet.ts",
+    "scripts/release-protocol.ts",
+    "scripts/replay-operator.ts",
+    "scripts/verify-evidence-archive.ts",
+    "tests/api.test.ts",
+    "tests/budget-ledger-existing.test.ts",
+    "tests/evidence-archive-independent.test.ts",
+    "tests/evidence-archive.test.ts",
+    "tests/evidence-operator.test.ts",
+    "tests/helpers/archive-fixture.ts",
+    "tests/helpers/release-live-data.ts",
+    "tests/helpers/replay-data.ts",
+    "tests/release-packet.test.ts",
+    "tests/release-protocol-independent.test.ts",
+    "tests/release-protocol.test.ts",
+    "tests/replay-operator-independent.test.ts",
+    "tests/replay-operator.test.ts",
+    "tests/trusted-replay-independent.test.ts",
+    "tests/trusted-replay.test.ts",
+    "workers/sandbox/README.md"
+  ],
+  "artifacts": {
+    "research/verification/20260927-trusted-replay/core-tests-attempt-1.log": "sha256:3b3e3a8aa83d30b980ad357819f72dca67258802f1710735fcf22a0afd6f3cfa",
+    "research/verification/20260927-trusted-replay/core-tests-attempt-2.log": "sha256:648142280a6a67d04cc2a953258fbbc8a23cf8717460c3c2b2292d28a7a3a3a8",
+    "research/verification/20260927-trusted-replay/core-tests.log": "sha256:970ab73892e30c1a0336cc9f988cd38536c19c07581ff397565804b911ef6cb8",
+    "research/verification/20260927-trusted-replay/doctor.log": "sha256:6d370a1d4f270fbb5af320d369b4ccec9ef957704967b10b400ec9e94e645f26",
+    "research/verification/20260927-trusted-replay/evaluate.log": "sha256:00e581caf5d34ec367fcae3c8a09c6642e50269f9236e49d54764bb5ff707fd1",
+    "research/verification/20260927-trusted-replay/focused-tests.log": "sha256:44dcfcdaa1b2a0aa5a678c860b830805559883b639f804ed0c92ab793a7dd2b1",
+    "research/verification/20260927-trusted-replay/full-tests-attempt-1.log": "sha256:2be7274d1db06aa8beacd198b11b1e32245f24a8a9acf719a03594f24e4c6aac",
+    "research/verification/20260927-trusted-replay/full-tests.log": "sha256:5fc0d6e0ea3beb4c8b5d5890a932925770531b331ec4204b7dc0cf3b463d7b0a",
+    "research/verification/20260927-trusted-replay/incoming-history-scan.log": "sha256:3e29dc8ff2fe6fbe96be86ba4f0939f514ce4faf151adeac8e4b2a54b5b552e6",
+    "research/verification/20260927-trusted-replay/initial-failure.json": "sha256:50ca00f815eaf4fb29cca57d2d01850f2373f466b9f0cf93f62c9c79acdcdc7f",
+    "research/verification/20260927-trusted-replay/operator-tests-attempt-1.log": "sha256:e952cf111952c754f1bfe31ca488ba93a92d89dec3d89f64b6d0660aea9dee47",
+    "research/verification/20260927-trusted-replay/pilot.log": "sha256:1b7e964eaf3d0f30616154e0632ff639954e4c62688f9ed0c85efd46018de592",
+    "research/verification/20260927-trusted-replay/release-check.log": "sha256:58e2ee217a43ac69009a1849308c754b0659e0430fbfb5648301e5b25bcc22fa",
+    "research/verification/20260927-trusted-replay/service-after.json": "sha256:729dde4008240ede8595fbc627d5372c8553f4cf887fa3e954ae13057689074d",
+    "research/verification/20260927-trusted-replay/service-before.json": "sha256:fe9be565d9940a3f70aede3d611449352db1ddfb4bf8fc18e091c0dd2ed25c45",
+    "research/verification/20260927-trusted-replay/smoke.log": "sha256:05984290b93db91ee82311402240ac1ed446e39b92018a4953d36f341f898747",
+    "research/verification/20260927-trusted-replay/staged-source-scan.log": "sha256:630f8fc5e6e1cfab7f5b63f7dd8ecf88663a628c19a663ac796db96e675b36b5",
+    "research/verification/20260927-trusted-replay/typecheck-attempt-1.log": "sha256:8cc9a84d01b14e7f100ccf29a30f5a321951f4a41d9359538de58fbff7ea2013",
+    "research/verification/20260927-trusted-replay/typecheck-attempt-2.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260927-merged-ui-docker/verification.json": "sha256:c859446dcb1dc639290695f7772bf81f16ab1d55d92237e5072d9a50035e91f0",
+    "research/verification/runtime-followup/evidence-archive-verification.json": "sha256:f80cc242c445a4289c23e99ac0e575e57b4ed0fb19c117d2fcd4dd0710326d41",
+    "research/verification/runtime-followup/evidence-archive-independent-review.json": "sha256:de21746e86079ed7291abba1f67df3907c0c4e5743cef2ebf70afe90a5dd18cf",
+    "research/verification/runtime-followup/trusted-replay-independent-review.json": "sha256:2d888a049f3b2bc31ac38467f3a52b44d52cf470a67411598186427aed377bc7",
+    "research/verification/runtime-followup/release-protocol-independent-review.json": "sha256:04411b6d98c70da138bba6422d2e9244fe7c0818e5f5e9a4e66bbfc97962973e",
+    "research/verification/20260927-replay-operator-independent/verification.json": "sha256:5ed3957eab1a3f2eebc3cd4e47580d504e9b3551d3738d6d77d1c368218d3680",
+    "research/verification/20260927-evidence-operator-independent/verification.json": "sha256:4f5ea074d3f511d1ac9dd5946fc112051fccb228a7b8d7a515a073d4e42a8558",
+    "research/verification/20260927-release-live-protocol/verification.json": "sha256:5a2e1f112de56606ea2ddf0fe8ed9180181f49022f5a4149c4c242859d8d5a9b",
+    "research/verification/20260927-trusted-replay/final-evidence-scan.log": "sha256:54a88ca4f4706764b38f883b0511e0a13c4d7832b9159dff4c0295b775ec7b5f"
+  }
+}

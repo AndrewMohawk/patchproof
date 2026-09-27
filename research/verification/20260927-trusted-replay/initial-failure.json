@@ -1,0 +1,11 @@
+{
+  "command": "node --test tests/trusted-replay.test.ts",
+  "exitCode": 1,
+  "passed": 0,
+  "failed": 1,
+  "failureBeforeTestExecution": true,
+  "error": "ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX: TypeScript parameter property is not supported in strip-only mode",
+  "location": "packages/orchestrator/src/trusted-replay.ts:23",
+  "correction": "Use an explicit class property and constructor assignment.",
+  "note": "This is a summary of the original tool output, not a raw log."
+}

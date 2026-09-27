@@ -5,6 +5,14 @@ build before provider access. **Real Nebius integration is the first remaining
 external gate.** It is not a missing spending approval: $25 total is approved;
 actual spending is $0. The private repository and ongoing pushes are authorized.
 
+The final local wiring now includes private exact-byte smoke export, a read-only
+recorded live/mock evidence viewer, a separately budgeted check-only replay, and
+explicit accepted live-protocol selection for release auditing. **537 tests pass**
+on executable source `4e0116d`; browser/container verification and the retained
+replay timeout are linked in `verification/20260927-trusted-replay/receipt.json`.
+Live-protocol test documents and fake provider observations are synthetic only.
+These paths are ready for future verified inputs; they do not close the gates below.
+
 ## Provider integration (T01/T04, G0/G1)
 
 Access has been deliberately deferred. When supplied through an approved file or
