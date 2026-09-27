@@ -77,3 +77,15 @@ No provider calls, paid spending, source publication or evaluator access occurre
 as part of this review. Remaining live integration, measured resource accounting,
 flakiness handling and public-release limits are substantive, not documentation
 substitutes for completed work.
+
+## Coordinator follow-up after this review
+
+Commit `f482bd7` contains the integrated implementation. Final `make test` exited
+0 with 71 passed and no skips; actual product2.1 browser checks passed in both
+temporary and persistent state. Fresh-container replay passed for all three
+2.1 policy records and a historical2.0 export. The staged redacted secret scan
+passed. A fresh source archive on the same host installed its exact lock offline
+and reproduced the selected bundle without the original run database. See
+`research/verification/20260927T082926Z-local-product/` and
+`research/verification/20260927T0836Z-clean-checkout/`. These are coordinator-run
+checks; they do not replace the independent-machine/live-provider gates above.

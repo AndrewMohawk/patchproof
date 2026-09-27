@@ -1,0 +1,91 @@
+node scripts/product-cli.ts release-check
+{
+  "command": "release-check",
+  "status": "blocked",
+  "mode": "mock",
+  "competitionReady": false,
+  "paidCalls": 0,
+  "experimentEpisodesExecuted": 0,
+  "checks": [
+    {
+      "id": "research/contracts-v1-lock.json",
+      "status": "pass",
+      "detail": "Checked all recorded source digests."
+    },
+    {
+      "id": "research/contracts-v2-lock.json",
+      "status": "pass",
+      "detail": "Checked all recorded source digests."
+    },
+    {
+      "id": "public_fixtures",
+      "status": "pass",
+      "detail": "30 schema-valid public fixtures; sealed workspace not inspected."
+    },
+    {
+      "id": "dependency_pins",
+      "status": "pass",
+      "detail": "Direct npm versions are exact; license notices still require final release review."
+    },
+    {
+      "id": "application_license",
+      "status": "blocked",
+      "detail": "Owner-selected application license must agree with package metadata."
+    },
+    {
+      "id": "owner_release",
+      "status": "blocked",
+      "detail": "Public source, demo and entry are separately controlled by the owner."
+    },
+    {
+      "id": "hosted_judge_access",
+      "status": "blocked",
+      "detail": "No deployment verified; operator unassigned; hosting allocation $0."
+    },
+    {
+      "id": "live_smoke",
+      "status": "not_run",
+      "detail": "Two sponsor-backed cases, actual operation IDs and reconciled billing are not available."
+    },
+    {
+      "id": "pilot",
+      "status": "not_run",
+      "detail": "0 of 72 scored pilot episodes; no continuation decision."
+    },
+    {
+      "id": "sealed_evaluation",
+      "status": "not_run",
+      "detail": "0 of 270 final episodes; no scored ablation or reviewer study."
+    },
+    {
+      "id": "independent_replay",
+      "status": "not_run",
+      "detail": "No independent clean-machine reviewer replay has been recorded."
+    },
+    {
+      "id": "release_secrets",
+      "status": "not_run",
+      "detail": "This command does not run a secret scanner; inspect the separately recorded staged scan."
+    },
+    {
+      "id": "current_rules",
+      "status": "not_run",
+      "detail": "Recheck official rules before owner-controlled entry; current source ledger is not an entry approval."
+    }
+  ],
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated.",
+    "Real-provider smoke, sandbox isolation and billing reconciliation have not been verified; no automatic fallback."
+  ],
+  "note": "Local audit only. Live execution and public release remain unavailable; no setting alone activates them."
+}
+(node:458389) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+make: *** [Makefile:9: release-check] Error 2

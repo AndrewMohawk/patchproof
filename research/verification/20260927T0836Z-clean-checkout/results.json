@@ -1,0 +1,64 @@
+{
+  "sourceCommit": "f482bd7edf49155db1dc392c29fe772eef413a90",
+  "scope": "Clean archived source directory on the same host; installed Docker image and npm cache shared; not independent-machine verification.",
+  "recordedAt": "2026-09-27T08:37:25.628164+00:00",
+  "providerCalls": 0,
+  "commands": [
+    {
+      "name": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "install.log"
+    },
+    {
+      "name": "contracts",
+      "command": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "contracts.log"
+    },
+    {
+      "name": "doctor",
+      "command": [
+        "make",
+        "doctor"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "doctor.log"
+    },
+    {
+      "name": "reproduce",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=5efc92a7-1e5a-43ee-a9a0-6b5a960e6dfd"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "reproduce.log"
+    },
+    {
+      "name": "release-check",
+      "command": [
+        "make",
+        "release-check"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "release-check.log"
+    }
+  ]
+}

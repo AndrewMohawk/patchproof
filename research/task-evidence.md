@@ -98,3 +98,13 @@ checks. A missing-field/NaN budget gate defect was corrected with strict runtime
 validation; draft plans were rebound and originals preserved before any model
 episode. The persistent app browser check also passed after the accessibility
 CSS adjustment, and its screenshots and selected bundle are retained.
+
+## Committed implementation and clean checkout
+
+Implementation commit: `f482bd7edf49155db1dc392c29fe772eef413a90`, pushed to
+the private repository. `research/verification/20260927T0836Z-clean-checkout/`
+records a fresh archive of that commit: offline exact-lock install, contract
+checks, doctor and selected patch replay all exited 0. The checkout had no prior
+run database or artifacts; the selected committed bundle was copied explicitly.
+The same host Docker image/npm cache were shared, so this is not independent
+clean-machine verification. Release-check correctly exited 2.

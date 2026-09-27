@@ -25,7 +25,7 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 | Task/gate | Implemented locally | Still required |
 |---|---|---|
 | T02 | Typed contracts, version locks, tests, workspace | Live provider contract verification. |
-| T03 | 60 authored synthetic tasks; separate evaluator; gold/start/repeat validation and independent review | Final manifest freeze and production evaluator account separation. |
+| T03 | 60 authored synthetic tasks; separate evaluator; gold/start/repeat validation and independent review | Scored-experiment protocol freeze and production evaluator account separation. |
 | T05–T08 | Three bounded policies, protected checks, durable journal, export and fresh local replay | Live matched usage, sponsor cancellation and billing reconciliation. |
 | T09/G2 | Fixed 72-episode planner and analysis | Real pilot, affordable price projection and written continuation decision. |
 | T10 | Task/comparison/evidence views; real local checks and browser flow | Live-provider state validation and uncoached reviewer exercise. |
