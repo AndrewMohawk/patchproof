@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "bounded-independent-metadata-export-review",
+  "reviewDate": "2026-09-27",
+  "scope": "Trusted evaluator aggregate capture, export and offline verification using invented metadata only.",
+  "sourceDigests": {
+    "workers/evaluator/experiment-export.ts": "sha256:1a743afb51ba2c0147eb0237f3c7f4ef5112fdbbfafd9ff6c11e8eb006c13e12",
+    "workers/evaluator/analysis.ts": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b",
+    "workers/evaluator/protocol.ts": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112",
+    "tests/experiment-export-independent.test.ts": "sha256:fe3c4def69feade0e036d7d8904da80ae92adfd2a2e4deb7caeb4e2958b5ec4e"
+  },
+  "findings": [
+    {
+      "id": "reason-count-inherited-property",
+      "discovery": "Independent source review found that the accepted reason constructor collided with an inherited property on a plain object, producing a nonnumeric count.",
+      "resolution": "Author replaced inherited property lookup with Map counting and Object.fromEntries.",
+      "status": "resolved",
+      "verification": "Independent test confirms repeated constructor reasons produce the numeric count 2 through export and offline verification. No pre-fix runtime reproduction is claimed."
+    },
+    {
+      "id": "unverified-completed-adjudication-contradiction",
+      "discovery": "Independent source review found unverified results could declare completed sealed adjudication despite the dispatcher's non-scored outcome invariant.",
+      "resolution": "Author requires completed sealed adjudication exactly for correct or incorrect aggregate outcomes.",
+      "status": "resolved",
+      "verification": "Independent synthetic and invented live-shaped contradictory rows both reject. No real adjudication or pre-fix runtime reproduction is claimed."
+    },
+    {
+      "id": "output-parent-directory-durability",
+      "discovery": "Source review noted that the new output directory's parent was not fsynced after bundle creation.",
+      "resolution": "Author added output-directory synchronization after final permissions and parent-directory synchronization.",
+      "status": "resolved-by-source-review",
+      "verification": "Implementation inspected and final export tests passed; no power-loss or hardware-durability experiment was performed."
+    }
+  ],
+  "executedByIndependentReviewer": [
+    { "command": "node --test tests/experiment-export-independent.test.ts", "exitCode": 0, "passed": 8, "failed": 0 },
+    { "command": "npm run typecheck", "exitCode": 0 }
+  ],
+  "authorCombinedVerification": {
+    "command": "node --test tests/experiment-export.test.ts tests/experiment-export-independent.test.ts",
+    "exitCode": 0,
+    "passed": 21,
+    "failed": 0,
+    "log": "research/verification/runtime-followup/experiment-export-tests.log",
+    "independentlyInspectedLog": true
+  },
+  "independentControls": [
+    "Inherited names remain numeric reason counts.",
+    "Unverified results cannot claim completed adjudication.",
+    "One SQLite read transaction preserves a consistent snapshot while another connection commits changed metadata and a shortened grid.",
+    "Only metadata columns are exported; intentionally invalid excluded detail columns are never parsed or copied.",
+    "Offline verification succeeds after deleting the originating dispatcher database and source-tree directory.",
+    "Unknown final USD and CPU remain null while observed lower bounds survive and comparisons stay suppressed.",
+    "Cancelled and missing entries retain the full planned denominator.",
+    "Readiness requires an externally accepted digest, matching transport bindings and a timestamp no later than capture.",
+    "Rehashing artifact bytes cannot hide a duplicate or changed planned episode identity."
+  ],
+  "testDevelopmentCorrection": "The first independent run failed before exercising exporter behavior because its invented plan used a 120-second wall allowance. The test fixture was corrected to protocol v1's fixed 900 seconds; this was not a product defect.",
+  "limitations": [
+    "All records, readiness assertions and live-shaped rows were invented test metadata; no real benchmark, candidate execution, provider request or billing verification occurred.",
+    "Hash and schema verification establishes internal consistency and artifact integrity, not provider authenticity.",
+    "The dispatcher database does not bind the historical executing checkout; sourceExecutionVerified remains false.",
+    "The exporter does not read or reconcile the budget ledger; known checkpoint lower bounds are not final reconciled costs.",
+    "Readiness evidence is an external trust input; the module cannot establish historical preflight timing beyond its recorded timestamp comparison.",
+    "Privileged same-UID file modification and full-bundle replacement require external digest pins and operational controls.",
+    "No source or material from the private evaluation corpus was used in these tests or this receipt."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "benchmarkExecuted": false,
+  "competitionReady": false
+}
