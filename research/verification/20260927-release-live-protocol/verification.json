@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "author-local-release-binding-verification",
+  "observedAt": "2026-09-27T12:08:24.807529+00:00",
+  "sourceCommit": "b3a649c27b838ea328408a170cc7061cfbf33588",
+  "baseCommit": "259882c753a9a9bc6ff9f435ca44394aee4c34c4",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/release-protocol.test.ts",
+        "tests/release-receipts.test.ts",
+        "tests/release-packet.test.ts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "output": "research/verification/20260927-release-live-protocol/focused-tests.log",
+      "outputDigest": "sha256:a74e55ffb406ad16ba42778307d7fb1c25b153bbd92f750b7a88086055a891f4"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "output": "research/verification/20260927-release-live-protocol/typecheck.log",
+      "outputDigest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "output": "research/verification/20260927-release-live-protocol/contracts.log",
+      "outputDigest": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/product-cli.ts",
+        "release-check"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "output": "research/verification/20260927-release-live-protocol/default-release-check.json",
+      "outputDigest": "sha256:5bf80ed0124cc5fe17384297c7657d5e55ed261cf340c4d1568e0347d7761be4"
+    }
+  ],
+  "files": {
+    "scripts/config.ts": "sha256:731f136e39fbc453d6d1f062fe47bf3d6aebe479e2a7df1a6dc134bee565b460",
+    "scripts/product-cli.ts": "sha256:94c70da39e37fc4432b2090afa15c76ed5ddf9f23d9f8c23f6fc04729871141d",
+    "scripts/release-audit.ts": "sha256:d8fdedf3921df97b58112eb952b3e1c3b0d60d6754654172b14795447a7961ce",
+    "scripts/release-packet.ts": "sha256:7cb1401559d34a582f68d4735b5838506cf35cb4e812d0eafd26b8a9b1859461",
+    "scripts/release-input.ts": "sha256:480762b6fb5e5e10de843921c893f1977b19ab9884808d902596f7a8241ca5d5",
+    "scripts/release-protocol.ts": "sha256:b4acd28b79efd5c57e1a9053d6604af65b4a74360594443a985354a661e278a4",
+    "tests/helpers/release-live-data.ts": "sha256:6f576aac730666daaeb7a72e0b4eef758e847e03646cd5f7345179ded0c75231",
+    "tests/release-protocol.test.ts": "sha256:361520378c28301d257284bf9c0ffa1b10e70dae879317db9d43618c38df8455",
+    "tests/release-packet.test.ts": "sha256:74856555c7556c47a8ca815d310ca985b37cf2e1a70fa31590753f6d893c8788"
+  },
+  "proofInputs": "Synthetic invented metadata and unit bundles; no actual account or calibration claims",
+  "providerCalls": 0,
+  "paidCalls": 0,
+  "sealedCorpusAccess": false,
+  "actualReleaseGatesEstablished": false,
+  "publicationAuthorized": false
+}
