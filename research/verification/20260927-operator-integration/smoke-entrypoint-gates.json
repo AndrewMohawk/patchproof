@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "make",
+      "smoke"
+    ],
+    "exitCode": 2,
+    "expectedExitCode": 2,
+    "stdout": "node scripts/product-cli.ts smoke\n{\n  \"mode\": \"mock\",\n  \"competitionReady\": false,\n  \"command\": \"smoke\",\n  \"status\": \"blocked\",\n  \"paidCalls\": 0,\n  \"experimentEpisodesExecuted\": 0,\n  \"blockers\": [\n    \"NVIDIA model/account availability not verified.\",\n    \"Selected model license/card not pinned.\",\n    \"Model billing rates unknown.\",\n    \"Sandbox endpoint/entitlement not verified.\",\n    \"Sandbox SDK/image/architecture not pinned.\",\n    \"Sandbox network controls not verified.\",\n    \"Sandbox billing rate/unit unknown.\",\n    \"Episode token/CPU limits not calibrated.\",\n    \"Real-provider smoke, sandbox isolation and billing reconciliation have not been verified; no automatic fallback.\"\n  ],\n  \"note\": \"Full local implementation is authorized; real integration/evaluation and competition readiness remain gated.\"\n}\n",
+    "stderr": "(node:3455016) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nmake: *** [Makefile:9: smoke] Error 2\n",
+    "providerCalls": 0
+  },
+  {
+    "command": [
+      "make",
+      "smoke",
+      "CONFIG=/nonexistent-patchproof-operator-config.json"
+    ],
+    "exitCode": 2,
+    "expectedExitCode": 2,
+    "stdout": "node scripts/smoke-operator.ts start \"/nonexistent-patchproof-operator-config.json\"\n{\"command\":\"smoke-operator\",\"status\":\"blocked\",\"error\":{\"code\":\"operator_directory_not_private\"},\"note\":\"No retry is implied. Inspect private session state and unresolved billing before another explicit episode.\"}\n",
+    "stderr": "(node:3455296) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nmake: *** [Makefile:9: smoke] Error 2\n",
+    "providerCalls": 0
+  }
+]

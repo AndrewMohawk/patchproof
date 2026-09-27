@@ -5,7 +5,9 @@ test:
 	npm run typecheck
 	npm run check:contracts
 	npm test
-smoke pilot evaluate:
+smoke:
+	$(if $(CONFIG),node scripts/smoke-operator.ts start "$(CONFIG)",node scripts/product-cli.ts smoke)
+pilot evaluate:
 	node scripts/product-cli.ts $@
 release-check release-packet:
 	node scripts/product-cli.ts $@ $(if $(INPUT),"$(INPUT)")

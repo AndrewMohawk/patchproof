@@ -1,5 +1,9 @@
 # Private trusted smoke operator
 
+`make smoke CONFIG=<absolute-private-json>` runs the same explicit `start` command
+described below. Without `CONFIG`, `make smoke` reports the current provider blockers
+and exits 2. Preflight remains a separate no-provider-call command.
+
 The local operator wires the existing trusted smoke factory to an explicit private
 configuration and durable session. It supports `preflight`, `start`, `status` and
 `cancel`. The browser remains mock and `make smoke` remains blocked by default.

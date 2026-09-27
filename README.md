@@ -59,7 +59,7 @@ another loopback port. Do not expose this local prototype as a public service.
 | `npm run run -- stable-unique-01 patchproof` | Runs the same local coordinator from the CLI; stop `make dev` first because one process owns its state. |
 | `make export RUN=<id>` | Exports immutable patch, inputs, locks, logs, coverage, events and cost ledger from the durable journal. |
 | `make reproduce RUN=<id>` | Validates the bundle, applies its patch in a fresh workspace and executes declared checks in fresh pinned containers. |
-| `make smoke` | Exits 2 with actual provider prerequisites; real execution is not wired into this command. |
+| `make smoke` | Exits 2 without configuration. `make smoke CONFIG=<absolute-private-json>` invokes the guarded operator; verified account, tokenizer, control and budget inputs are required. |
 | `make pilot` / `make evaluate` | Exit 2; offline plan/analysis tools exist, but no live experiment has run. |
 | `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
 | `make release-packet INPUT=<relative-json>` | Builds a private immutable packet from explicitly selected, scanned exports; receipt requirements are in the release guide. |
@@ -118,8 +118,9 @@ and verify immutable metadata bundles. Synthetic exports remain unscored; source
 hashes do not establish which code a past dispatcher actually executed.
 The [trusted smoke factory](docs/trusted-smoke.md) connects the provider adapters
 and budget ledger for an explicitly configured integration run of at most three
-proposals. Its tests use fake transports; actual account verification and a live
-operator entry point remain pending.
+proposals. The [private smoke operator](docs/trusted-smoke-operator.md) adds preflight,
+durable single-attempt sessions, cancellation and status. Its tests use fake
+transports; account verification, calibrated ceilings and actual smoke runs remain pending.
 The [completion audit](docs/completion-audit.md) describes remaining integration
 work and distinguishes implemented tools from actual provider or human results.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
