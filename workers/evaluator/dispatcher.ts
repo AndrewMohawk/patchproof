@@ -62,6 +62,7 @@ export const ExecutionFailureReasonSchema = z.enum([
   'sandbox_setup_failure', 'invalid_candidate', 'protected_path', 'flaky_check',
   'resource_limit', 'source_changed', 'runtime_binding_changed',
   'account_verification_failed', 'billing_incomplete', 'cleanup_unverified',
+  'execution_or_setup_failed',
 ]);
 /** Trusted adapter classification only. Never put provider bodies, private observations,
  * or candidate content into an exception message. Checkpoint partial usage first. */

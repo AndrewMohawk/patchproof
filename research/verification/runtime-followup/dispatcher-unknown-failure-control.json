@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-09-27T09:55:11.122294+00:00",
+  "change": "Allow trusted adapters to explicitly report an unclassified failure without receiving an infrastructure exclusion.",
+  "file": "workers/evaluator/dispatcher.ts",
+  "sourceDigest": "sha256:47550448ddf98f50cd65f2071c3030c5f0be8017cc54009261f00ce8e634fbfd",
+  "command": "node --test --test-name-pattern='typed runtime failures|plain and forged' tests/evaluation-dispatcher.test.ts",
+  "exitCode": 0,
+  "passed": 2,
+  "failed": 0,
+  "synthetic": true,
+  "paidCalls": 0,
+  "limitations": [
+    "Focused reason/denominator controls only; no provider execution."
+  ]
+}
