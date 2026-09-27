@@ -60,18 +60,20 @@ credentials. No local-to-paid automatic fallback exists.
 
 Discover actual account model availability, model license/card/context behavior,
 image/architecture and rate units; fill `runtime-lock.json` with observed facts
-and references. The conditional Nebius check runner now has transport/lifecycle
-tests. Wire it through the trusted live coordinator only after verifying its
-required account and control receipt. Verify isolation controls against the
+and references. The conditional Nebius check runner and
+[trusted smoke factory](trusted-smoke.md) have synthetic transport/lifecycle tests.
+The factory accepts verified model/tokenizer/control receipts and explicit trusted
+dependencies; a live operator entry point remains to be connected. Verify isolation controls against the
 account, not only fake transports. Retain the request/operation IDs for two
 curated smoke cases, cancellation, timeouts, failed calls and billing records.
 
 Use the [durable dollar ledger](budget-ledger.md) before paid scheduling. Reserve
 worst-case input/output/sandbox cost for all branches/retries/setup; actual
 remaining funds must include unresolved reservations. Unknown prices/costs block
-further paid work. The present product coordinator spends zero; connecting its
-live factory to this tested ledger remains required. $5 smoke plus $20 pilot
-shares one $25 ceiling.
+further paid work. The present public product coordinator spends zero. The trusted
+smoke factory is connected to the ledger and retains unknown charges after any
+terminal outcome. $5 smoke plus $20 pilot shares one $25 ceiling. Actual billing
+and cleanup reconciliation must be established before another paid episode.
 
 Once G1 is evidenced, freeze a prospective affordable pilot plan. A smaller plan
 needs a named protocol revision before results. Never discard costly or failed

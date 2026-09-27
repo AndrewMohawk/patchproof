@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-09-27T09:46:50.850Z",
+  "base": "http://127.0.0.1:43171",
+  "sourceCommit": "d575f24a551aa73f7887e62bcf43ea60b5cb7fb0",
+  "sourceDirectory": "/tmp/patchproof-handoff-d575f24",
+  "stateDirectory": "/home/andrewmohawk/patchproof/.local/product",
+  "execSession": 72618,
+  "pid": 2252447,
+  "mode": "mock",
+  "paidCalls": 0,
+  "note": "Do not delete this detached checkout while the verified app uses it. Historical source checkouts and exports retained.",
+  "kind": "same-host-local-app-handoff",
+  "verification": {
+    "offlinePinnedInstallExitCode": 0,
+    "loopbackRenderExitCode": 0,
+    "pageTitle": "PatchProof \u2014 review the evidence",
+    "taskCount": 30,
+    "savedRunCount": 8,
+    "activeRunCount": 0,
+    "mockLabelsObserved": 2,
+    "consoleOrPageErrors": []
+  },
+  "previousSourceCommit": "15f39c7191dedf85a4f18395807ab300c37e7fb1",
+  "previousProcessId": 1605922,
+  "historicalStatePreserved": true,
+  "publicExposure": false,
+  "limitations": [
+    "Same host and shared exact dependency cache.",
+    "Full three-policy browser flow and fresh replays are recorded separately in integration-receipt.json.",
+    "Further main-branch work does not automatically change this pinned app checkout."
+  ]
+}

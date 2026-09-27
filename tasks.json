@@ -293,12 +293,14 @@
       ],
       "requires_owner_action": false,
       "gate": "G2",
-      "implementation_note": "Fixed 72-episode planner/analysis implemented; no real pilot episodes or continuation result. Access/prices/G1 pending.",
-      "blocked_reason": "Fixed 72-episode planner/analysis implemented; no real pilot episodes or continuation result. Access/prices/G1 pending.",
+      "implementation_note": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending.",
+      "blocked_reason": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "docs/experiment-dispatcher.md",
+        "research/verification/runtime-followup/dispatcher-failures-verification.json"
       ]
     },
     {
@@ -359,13 +361,15 @@
       ],
       "requires_owner_action": false,
       "gate": "G3",
-      "implementation_note": "Fixed final planner, one-use sealed adjudication, cluster analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated dispatch integration and human results remain pending.",
-      "blocked_reason": "Fixed final planner, one-use sealed adjudication, cluster analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated dispatch integration and human results remain pending.",
+      "implementation_note": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending.",
+      "blocked_reason": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-runtime-completion/workflows-receipt.json"
+        "research/verification/20260927-runtime-completion/workflows-receipt.json",
+        "docs/experiment-dispatcher.md",
+        "research/verification/runtime-followup/dispatcher-failures-verification.json"
       ]
     },
     {

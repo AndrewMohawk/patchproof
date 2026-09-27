@@ -208,3 +208,20 @@ The local factory is not that experiment executor.
 The earlier dispatcher commit's staged whitespace check reported one trailing blank
 line in its verbatim npm output log; source whitespace and secret checks passed.
 Raw command logs are preserved, and source whitespace checks exclude `.log` files.
+
+## Safe experiment failure reasons and pinned local app
+
+Commit `69b6f65` adds a finite trusted runtime failure class. Rate limits, missing
+credentials, setup failures and flaky checks retain distinct reasons; raw exception
+text cannot become a report field. Invalid/protected/flaky candidate outcomes stay
+unverified, and only the four frozen infrastructure reasons may be excluded from
+the secondary denominator. All rows stay in the primary denominator. Typecheck
+and the 40 dispatcher/boundary/independent tests exited 0; the receipt is
+`runtime-followup/dispatcher-failures-verification.json`. No provider ran.
+
+The loopback app now uses the pinned, tested `d575f24` checkout with all
+eight historical terminal runs preserved. Exact-lock offline install and a real
+Chromium page render passed; 30 tasks, explicit mock labels and no console/page
+errors were observed. The source checkout is insulated from ongoing main-branch
+work. `20260927-smoke-integration/running-app-handoff.json` records the session and
+source binding. This is still a same-host local product, not a public deployment.
