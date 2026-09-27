@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "local-model-probe-verification",
+  "verifiedAt": "2026-09-27T12:51:20.011446+00:00",
+  "sourceCommit": "3f5735dbc9d1a30f07faf1dbfdb10cefbb96eb84",
+  "scope": "Offline prospective planning and accepted observation analysis only. All catalog, operation, cost and outcome records used in tests are invented.",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/model-probe.test.ts"
+      ],
+      "startedAt": "2026-09-27T12:49:43.179438+00:00",
+      "exitCode": 0,
+      "log": "research/verification/20260927-model-probe/author-1.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "startedAt": "2026-09-27T12:49:43.666253+00:00",
+      "exitCode": 0,
+      "log": "research/verification/20260927-model-probe/author-2.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "startedAt": "2026-09-27T12:49:48.969327+00:00",
+      "exitCode": 0,
+      "log": "research/verification/20260927-model-probe/author-3.log"
+    },
+    {
+      "command": "make test",
+      "startedAt": "2026-09-27T12:49:51.984298+00:00",
+      "finishedAt": "2026-09-27T12:50:33.982414+00:00",
+      "exitCode": 0,
+      "log": "research/verification/20260927-model-probe/full-make-test.log"
+    }
+  ],
+  "fullSuite": {
+    "tests": 545,
+    "passed": 545,
+    "failed": 0
+  },
+  "artifacts": [
+    {
+      "path": "workers/evaluator/model-probe.ts",
+      "digest": "sha256:805f5ff6093d96bc28184eb940a4035b409ae4d6e16abb58c76998192c8733ff"
+    },
+    {
+      "path": "scripts/model-probe.ts",
+      "digest": "sha256:e4e798727d67c8a47a018cebacee6ed1f722dc05c63634a2ad5c8b87676b3382"
+    },
+    {
+      "path": "tests/model-probe.test.ts",
+      "digest": "sha256:d873f922f788d40c398e7fbd70393b76c4c3bcb57ccbc277e0b668843446e97a"
+    },
+    {
+      "path": "docs/model-probe.md",
+      "digest": "sha256:08b120f3ea5f48cf91a6465b7d7024b3767db8b6df43f59db4ef7d04bdcd1932"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/author-1.log",
+      "digest": "sha256:4143e3c1b5eb6e487f54b20c1d8817f5d003c41a98967e07bbb4a1d3f91fb168"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/author-2.log",
+      "digest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/author-3.log",
+      "digest": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/author-checks.json",
+      "digest": "sha256:bf9b9b78eef50e188b1866dc513331fe6972e126978de18c6510ef7e3f9847eb"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/full-make-test.json",
+      "digest": "sha256:73cc359304adcefd295155f2c6a9aca8e3ca508409f07c74072e32447a1145fd"
+    },
+    {
+      "path": "research/verification/20260927-model-probe/full-make-test.log",
+      "digest": "sha256:90bbe09ece8428c587759ed28e7e9c1fed788032068e2c6a30aa6eb7030eada3"
+    }
+  ],
+  "interfaces": {
+    "node": "v25.5.0",
+    "zod": "4.1.12 from package-lock.json",
+    "typescript": "5.9.3 from package-lock.json",
+    "externalProviderInterfaceChanged": false
+  },
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "actualModelProbe": "NOT RUN; verified account catalog and provider access deferred by owner",
+  "modelSelected": null,
+  "scoredExperiment": "NOT RUN",
+  "failuresRemaining": [
+    "No accepted live model catalog, actual result rows or provider billing",
+    "Independent v2 corpus authoring, review and validation in progress",
+    "Actual uncoached human product acceptance not observed"
+  ],
+  "independentReview": "Agent review receipt and eleven controls pending separate commit; initial missing-variant finding retained there."
+}

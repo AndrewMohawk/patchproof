@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/model-probe.test.ts"
+    ],
+    "startedAt": "2026-09-27T12:49:43.179438+00:00",
+    "exitCode": 0,
+    "log": "research/verification/20260927-model-probe/author-1.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "startedAt": "2026-09-27T12:49:43.666253+00:00",
+    "exitCode": 0,
+    "log": "research/verification/20260927-model-probe/author-2.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "check:contracts"
+    ],
+    "startedAt": "2026-09-27T12:49:48.969327+00:00",
+    "exitCode": 0,
+    "log": "research/verification/20260927-model-probe/author-3.log"
+  }
+]
