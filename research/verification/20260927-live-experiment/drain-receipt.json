@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T11:16:57.028Z",
+  "baseCommit": "e05c346fd0ae338baa806e0ecfa0bd8e15ff7848",
+  "scope": "synthetic-cancellation-drain-and-prospective-reserve-controls",
+  "actualProviderCalls": 0,
+  "actualSpendUsd": 0,
+  "benchmarkExecuted": false,
+  "commands": [
+    {
+      "command": "node --test tests/live-experiment.test.ts",
+      "exitCode": 0,
+      "passed": 14,
+      "failed": 0,
+      "log": "research/verification/20260927-live-experiment/drain-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-experiment/drain-typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "sources": {
+    "packages/orchestrator/src/live-experiment.ts": "sha256:0c59a49193adc65d05e0fd82a378d649a1af05dcfca3f284674b8fce203d212f",
+    "tests/live-experiment.test.ts": "sha256:20929bf656a971bfd40ab56efc6d5faa7d6266486c9a0901d228fe844e118ed5",
+    "docs/live-experiment-runtime.md": "sha256:e1c87b1d9a3cf7be3464583b93a753676c73e260cd632936b59fa8681427cd48"
+  },
+  "artifacts": {
+    "research/verification/20260927-live-experiment/drain-tests.log": "sha256:7491396e1121d7f6cb917bb0756b2cd18cadf4674477ccef628ab8e29896a3ee",
+    "research/verification/20260927-live-experiment/drain-typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+  },
+  "controls": [
+    "Outer caller cancellation rejects before bounded native checker cleanup; settled remains pending until cleanup returns and late CPU observation is retained.",
+    "Repeated settled drains do not dispatch more work or create another grant.",
+    "An adjudication reserve smaller than accounting wait plus cleanup plus one usable check second is rejected before credentials or grant."
+  ],
+  "typeOnlyPrerequisite": {
+    "path": "packages/orchestrator/src/phase-accounting.ts",
+    "sha256": "sha256:5ee140ca2db8100a28a974ed3530428c7fbb79dd285012275cc4b0454d04afab",
+    "owner": "parent coordinator",
+    "status": "Copied for typecheck; excluded from this task commit."
+  },
+  "integrationRequirement": "Parent operator must await executor.settled() before closing shared ledger and journals, and separately drain its protected raw adjudication promises.",
+  "limitations": [
+    "Drain tracks owned core/model/checker promises. It does not claim arbitrary injected callbacks ignoring cancellation have stopped, or prove remote cleanup from drain alone.",
+    "All account proofs, provider responses and accounting receipts in these tests are invented controls; actual provider, billing, calibration and account verification remain NOT RUN.",
+    "No sealed corpus, oracle definition or gold file was read; no candidate Python was executed."
+  ],
+  "notRun": [
+    {
+      "check": "Actual providers or paid experiment",
+      "reason": "No actual account access or accepted real proofs; tests use injected fake transports."
+    },
+    {
+      "check": "Parent live operator/adjudication integration",
+      "reason": "Parent-owned changes remain in progress and require separate integrated testing."
+    }
+  ]
+}

@@ -260,3 +260,41 @@ test('source or reservation changes while accounting resolves cannot escape as f
     assert.equal(s.ledger.get(input.dispatchId).reconciliationComplete, false); assert.equal(s.observed.modelCalls, 1);
   }
 });
+
+test('settled drains bounded checker cleanup after the caller abort race has already returned', async t => {
+  const s = await setup(t), executor = createLiveExperimentExecutor(s.options), input = s.input(); s.grant(input);
+  const controller = new AbortController();
+  let cleanupEntered!: () => void, releaseCleanup!: () => void;
+  const entered = new Promise<void>(resolve => { cleanupEntered = resolve; });
+  const gate = new Promise<void>(resolve => { releaseCleanup = resolve; });
+  const interrupted = new Promise<never>((_resolve, reject) => controller.signal.addEventListener('abort', () => reject(new Error('unit-outer-abort')), { once: true }));
+  s.hooks.status = async id => {
+    if (!s.operations.get(id)!.cancelled) {
+      controller.abort(); return Response.json({ uuid: id, kind: 'instance', status: 'EXECUTING', metadata: {} });
+    }
+    cleanupEntered(); await gate;
+    // The owner must keep this ledger usable until the underlying checker has returned.
+    assert.equal(s.ledger.get(input.dispatchId).state, 'cancelled');
+    return Response.json({ uuid: id, kind: 'instance', status: 'CANCELLED', image_uuid: s.options.sandboxVerification.imageUuid,
+      consumed_cpu: 0.1, metadata: { image: s.options.sandboxVerification.imageUuid } });
+  };
+  const execution = executor.execute(input, controller.signal);
+  await assert.rejects(Promise.race([execution, interrupted]), /unit-outer-abort/);
+  s.ledger.cancel(input.dispatchId); await entered;
+  let settled = false; const drain = executor.settled().then(() => { settled = true; });
+  await new Promise(resolve => setTimeout(resolve, 20)); assert.equal(settled, false);
+  releaseCleanup(); await Promise.allSettled([execution]); await drain;
+  assert.equal(settled, true); assert.equal(s.observed.deletes, 1); assert.equal(s.operations.size, 1);
+  assert.ok(s.observed.checkpoints.some(value => value.usage.sandboxCpuSeconds === 0.1));
+  await executor.settled(); // Repeated draining cannot create work or another grant.
+  assert.equal(s.observed.modelCalls, 1); assert.equal(s.ledger.snapshot().reservationCount, 1);
+});
+
+test('adjudication reserve must fit accounting, cleanup and one usable check second before any grant', async t => {
+  const s = await setup(t);
+  s.options.settings.adjudicationReserve.wallSeconds = s.options.settings.accountingTimeoutSeconds + s.options.settings.cleanupTimeoutSeconds;
+  s.accept();
+  assert.throws(() => createLiveExperimentExecutor(s.options), /resource_limit/);
+  assert.equal(s.observed.credentials + s.observed.modelCalls + s.observed.sandboxCalls, 0);
+  assert.equal(s.ledger.snapshot().reservationCount, 0);
+});

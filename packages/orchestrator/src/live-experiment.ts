@@ -41,9 +41,16 @@ const failure = (reason: ConstructorParameters<typeof ExperimentRuntimeGateError
 /** Separate trusted issuer: owns no budget grant, discovery, adjudicator, account intake or CLI. */
 export function createLiveExperimentExecutor(options: LiveExperimentOptions) {
   const constructedAt = Date.now(), seen = new Set<string>(), ledger = options.ledger;
+  const pending = new Set<Promise<unknown>>();
+  const owned = <T>(promise: Promise<T>): Promise<T> => {
+    pending.add(promise);
+    void promise.finally(() => { pending.delete(promise); }).catch(() => {});
+    return promise;
+  };
   const model = Object.freeze({ ...options.model }), sandbox = Object.freeze({ ...options.sandbox }), tokenizer = Object.freeze({ ...options.tokenizer });
   const source = options.verifySourceDigest, projectReservation = options.reservationForExecution, observeAccounting = options.accountingObserver;
   const acceptance = LiveExperimentAcceptanceSchema.parse(options.acceptance), policy = buildLiveExperimentPolicy(options.settings);
+  if (policy.settings.adjudicationReserve.wallSeconds < policy.settings.accountingTimeoutSeconds + policy.settings.cleanupTimeoutSeconds + 1) failure('resource_limit');
   const proof = SmokeModelProofSchema.parse(options.modelProof), controls = SandboxVerificationSchema.parse(options.sandboxVerification), cpu = SmokeCpuProofSchema.parse(options.cpuProof);
   const planDigest = DigestSchema.parse(options.planDigest), policyDigest = hashJson(policy), acceptedDigests = z.array(DigestSchema).min(1).max(100).parse(options.acceptedProofDigests);
   const modelLock = buildLiveExperimentModelLock({ proof, accountVerifiedAt: model.accountVerifiedAt,
@@ -154,12 +161,12 @@ export function createLiveExperimentExecutor(options: LiveExperimentOptions) {
         fetch: async (url, request) => { gate(true); if (request?.signal?.aborted || ++modelCalls > 24) failure('resource_limit'); return model.fetch(url, request); },
         onOperation: event => { gate(event.kind === 'request_intent'); operation(event.kind === 'request_intent' ? `nebius:model-intent:${event.id}` : event.id); },
       });
-      const provider: RepairProvider = { mode: 'live', propose: (request, signal) => repair.propose({ ...request,
-        remaining: { ...request.remaining, wallTimeLimitSeconds: Math.min(settings.maxModelCallSeconds, request.remaining.wallTimeLimitSeconds) } }, signal) };
+      const provider: RepairProvider = { mode: 'live', propose: (request, signal) => owned(repair.propose({ ...request,
+        remaining: { ...request.remaining, wallTimeLimitSeconds: Math.min(settings.maxModelCallSeconds, request.remaining.wallTimeLimitSeconds) } }, signal)) };
       return { provider, batchSeconds: settings.maxCheckBatchSeconds, verify: () => { gate(true); },
         checks: { run: async (request, signal) => {
           gate(true); if (++batchCalls > 48) failure('resource_limit'); sandboxGate = null;
-          const checked: SandboxCheckResult = await checker.run(request, signal);
+          const checked: SandboxCheckResult = await owned(checker.run(request, signal));
           if (sandboxGate) { const error = sandboxGate as ExperimentRuntimeGateError;
             Object.assign(error, { operationIds: checked.operationIds, usage: { cpuSeconds: checked.cpuSeconds, measuredCostUsd: checked.measuredCostUsd } }); throw error; }
           return checked;
@@ -189,5 +196,9 @@ export function createLiveExperimentExecutor(options: LiveExperimentOptions) {
       };
     },
   });
-  return { ...result, adjudicationBounds: structuredClone(policy.settings.adjudicationBounds) };
+  return { ...result, execute: (...args: Parameters<typeof result.execute>) => owned(result.execute(...args)),
+    // A caller's abort race can finish before owned adapters complete bounded cleanup.
+    // Keep their shared ledger/journals open until this drain resolves.
+    settled: async () => { while (pending.size) await Promise.allSettled([...pending]); },
+    adjudicationBounds: structuredClone(policy.settings.adjudicationBounds) };
 }

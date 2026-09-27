@@ -105,7 +105,9 @@ The factory checks every bound before credentials or provider calls:
   enforces the aggregate runtime deadline. A failed batch stops the run, so the
   failure path reserves one bounded cleanup window rather than retrying batches.
 - Adjudication's CPU/spend reserve must cover its independently supplied CPU/rate/
-  fixed-cost bounds for its reserved wall slice. The dispatcher still recomputes
+  fixed-cost bounds for its reserved wall slice. That slice must also fit the
+  configured accounting wait, cleanup window and at least one usable check second.
+  The dispatcher still recomputes
   its remaining allowance from known runtime measurements before adjudicating.
 - Upload/instance POST counters and the possible complete intent/ID inventory fit
   their prospective bounds and the dispatcher's 1,000-handle limit. No extra retry
@@ -152,7 +154,13 @@ intent/operation evidence and the project hold.
 Cancellation prevents new work, while GET/DELETE cleanup of known operations can
 continue under the existing bounded cleanup signal after approval/source/new-work
 gates close. The owned live checker is awaited through its cleanup before the executor
-finalizes failure evidence. Unknown creation responses cannot be mapped to remote
+finalizes failure evidence. Callers that race cancellation against `execute()` must
+await the factory's `settled()` drain before closing its shared ledger or journals.
+The drain tracks the core and native model/checker promises, so an outer dispatcher
+abort cannot close resources while bounded checker cleanup is still using them.
+It does not claim that arbitrary injected callbacks which ignore cancellation have
+stopped; the owned adapters fence their late results and bound their own waits.
+Unknown creation responses cannot be mapped to remote
 objects by an invented idempotency API; no immediate atomic cleanup is claimed.
 
 The separate immutable experiment trace records the accepted bindings, prospective
