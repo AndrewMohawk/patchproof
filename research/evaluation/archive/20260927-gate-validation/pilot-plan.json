@@ -1,0 +1,1330 @@
+{
+  "schemaVersion": "1.0",
+  "protocolVersion": "patchproof-evaluation-v1",
+  "kind": "pilot",
+  "evidenceStatus": "planned-not-executed",
+  "benchmarkExecuted": false,
+  "createdAt": "2026-09-27T08:24:15.736Z",
+  "sourceManifestDigest": "sha256:9550e0f8a53fa3ba2db9739389cbe5223487ff41a68f0ff704bc8c6fe7a4d8d8",
+  "modelLockDigest": null,
+  "policyDigest": "sha256:821df7bdc0bba874432ee0da95a20194dca755bf4e40e22785b0c0ff0921d1e3",
+  "approvedExperimentBudgetUsd": 0,
+  "estimatedExperimentCostUsd": null,
+  "fixedRuntimeFeedbackRounds": 24,
+  "finalOracleFeedbackRounds": 0,
+  "repetitions": 3,
+  "plannedEpisodes": 72,
+  "episodes": [
+    {
+      "id": "pilot:adjacent-runs-05:baseline:0",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:adjacent-runs-05:patchproof:0",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:chunk-list-02:baseline:0",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:chunk-list-02:patchproof:0",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:flatten-once-03:baseline:0",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:flatten-once-03:patchproof:0",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:line-endings-06:baseline:0",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:line-endings-06:patchproof:0",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:remove-prefix-07:baseline:0",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:remove-prefix-07:patchproof:0",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:split-first-08:baseline:0",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:split-first-08:patchproof:0",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:invert-multimap-13:baseline:0",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:invert-multimap-13:patchproof:0",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:merge-defaults-11:baseline:0",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:merge-defaults-11:patchproof:0",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:nested-lookup-12:baseline:0",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:nested-lookup-12:patchproof:0",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:clamp-number-16:baseline:0",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:clamp-number-16:patchproof:0",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:baseline:0",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:patchproof:0",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:mean-empty-17:baseline:0",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    },
+    {
+      "id": "pilot:mean-empty-17:patchproof:0",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 0,
+      "seed": 20260927,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    },
+    {
+      "id": "pilot:adjacent-runs-05:baseline:1",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:adjacent-runs-05:patchproof:1",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:chunk-list-02:baseline:1",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:chunk-list-02:patchproof:1",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:flatten-once-03:baseline:1",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:flatten-once-03:patchproof:1",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:line-endings-06:baseline:1",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:line-endings-06:patchproof:1",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:remove-prefix-07:baseline:1",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:remove-prefix-07:patchproof:1",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:split-first-08:baseline:1",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:split-first-08:patchproof:1",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:invert-multimap-13:baseline:1",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:invert-multimap-13:patchproof:1",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:merge-defaults-11:baseline:1",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:merge-defaults-11:patchproof:1",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:nested-lookup-12:baseline:1",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:nested-lookup-12:patchproof:1",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:clamp-number-16:baseline:1",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:clamp-number-16:patchproof:1",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:baseline:1",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:patchproof:1",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:mean-empty-17:baseline:1",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    },
+    {
+      "id": "pilot:mean-empty-17:patchproof:1",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 1,
+      "seed": 20260928,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    },
+    {
+      "id": "pilot:adjacent-runs-05:baseline:2",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:adjacent-runs-05:patchproof:2",
+      "taskId": "adjacent-runs-05",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
+      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+    },
+    {
+      "id": "pilot:chunk-list-02:baseline:2",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:chunk-list-02:patchproof:2",
+      "taskId": "chunk-list-02",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
+      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+    },
+    {
+      "id": "pilot:flatten-once-03:baseline:2",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:flatten-once-03:patchproof:2",
+      "taskId": "flatten-once-03",
+      "repoId": "fixture-01",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
+      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+    },
+    {
+      "id": "pilot:line-endings-06:baseline:2",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:line-endings-06:patchproof:2",
+      "taskId": "line-endings-06",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
+      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+    },
+    {
+      "id": "pilot:remove-prefix-07:baseline:2",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:remove-prefix-07:patchproof:2",
+      "taskId": "remove-prefix-07",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
+      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+    },
+    {
+      "id": "pilot:split-first-08:baseline:2",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:split-first-08:patchproof:2",
+      "taskId": "split-first-08",
+      "repoId": "fixture-02",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
+      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+    },
+    {
+      "id": "pilot:invert-multimap-13:baseline:2",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:invert-multimap-13:patchproof:2",
+      "taskId": "invert-multimap-13",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
+      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+    },
+    {
+      "id": "pilot:merge-defaults-11:baseline:2",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:merge-defaults-11:patchproof:2",
+      "taskId": "merge-defaults-11",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
+      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+    },
+    {
+      "id": "pilot:nested-lookup-12:baseline:2",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:nested-lookup-12:patchproof:2",
+      "taskId": "nested-lookup-12",
+      "repoId": "fixture-03",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
+      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+    },
+    {
+      "id": "pilot:clamp-number-16:baseline:2",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:clamp-number-16:patchproof:2",
+      "taskId": "clamp-number-16",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
+      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:baseline:2",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:divide-ceiling-19:patchproof:2",
+      "taskId": "divide-ceiling-19",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
+      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+    },
+    {
+      "id": "pilot:mean-empty-17:baseline:2",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "baseline",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    },
+    {
+      "id": "pilot:mean-empty-17:patchproof:2",
+      "taskId": "mean-empty-17",
+      "repoId": "fixture-04",
+      "variant": "patchproof",
+      "repetition": 2,
+      "seed": 20260929,
+      "limits": {
+        "inferenceCallLimit": 24,
+        "inputTokenLimit": 64000,
+        "outputTokenLimit": 16000,
+        "wallTimeLimitSeconds": 900,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0
+      },
+      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
+      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+    }
+  ],
+  "analysis": {
+    "samplingUnit": "repository",
+    "paired": true,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 20260927,
+    "confidenceLevel": 0.95,
+    "primaryDenominator": "all_planned_episodes",
+    "infrastructureExclusions": [
+      "provider_unavailable",
+      "provider_rate_limit",
+      "sandbox_setup_failure",
+      "provider_timeout"
+    ],
+    "taskAggregation": "majority_of_three_repetitions"
+  }
+}

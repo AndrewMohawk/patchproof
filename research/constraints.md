@@ -28,8 +28,12 @@ The [sandbox overview](https://docs.tokenfactory.nebius.com/sandboxes/overview)
 documents beta operations, checkpoints, cancellation and metrics. These are
 provider claims, not isolation tests. The [image-list reference](https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images)
 documents IAM bearer authentication plus a Project header. Its rendered example
-reports a missing request URL; the sandbox endpoint therefore remains unknown.
-SDK and SWE-agent documentation fetches timed out in this recheck.
+reported a missing request URL in the first retrieval. A subsequent runtime
+review resolved the documented base endpoint as
+`https://api.tokenfactory.nebius.com/sandboxes`; account entitlement remains
+unverified. The SDK/SWE-agent pages initially timed out; the later runtime review
+retrieved official HTTP mappings and the documented integration incompatibility.
+Exact inspected interfaces are listed in `workers/sandbox/README.md`.
 
 ## Open decisions and blockers
 

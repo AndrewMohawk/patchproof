@@ -1,25 +1,24 @@
-import { readFile } from 'node:fs/promises';
-import { createMockServer } from './server.ts';
+import { createApplication } from './application.ts';
 
-const runtimeLock = JSON.parse(await readFile(new URL('../../../runtime-lock.json', import.meta.url), 'utf8'));
 const rawPort = process.env.PATCHPROOF_PORT ?? '43171';
 if (!/^\d{1,5}$/.test(rawPort) || Number(rawPort) > 65535 || Number(rawPort) < 1024) {
   throw new Error('PATCHPROOF_PORT must be an unprivileged port (1024–65535).');
 }
 const port = Number(rawPort);
-const { server, coordinator } = createMockServer(runtimeLock);
+const { server, close } = await createApplication(new URL('../../../', import.meta.url));
 server.on('error', error => {
   const code = (error as NodeJS.ErrnoException).code;
   console.error(code === 'EADDRINUSE' ? 'PatchProof port is occupied; set PATCHPROOF_PORT to a free unprivileged port.' : 'PatchProof could not start its loopback listener.');
   process.exitCode = 1;
+  void close();
 });
 server.listen(port, '127.0.0.1', () => {
-  console.log(`PatchProof MOCK contract inspector: http://127.0.0.1:${port}`);
-  console.log('No inference, sandbox execution or patch verification. State is memory-only.');
+  console.log(`PatchProof: http://127.0.0.1:${port}`);
+  console.log('Mock model with real isolated local checks. No paid provider calls.');
 });
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.once(signal, () => {
     server.closeAllConnections();
-    server.close(() => { void coordinator.settled().then(() => process.exit(0)); });
+    server.close(() => { void close().then(() => process.exit(0)); });
   });
 }

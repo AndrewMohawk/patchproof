@@ -1,0 +1,142 @@
+{
+  "id": "interval-overlap-27",
+  "repoId": "fixture-06",
+  "split": "calibration",
+  "title": "Use half-open interval overlap",
+  "description": "Return the length of overlap between valid half-open numeric intervals.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Compute nonnegative intersection length."
+    },
+    {
+      "id": "R02",
+      "text": "Touching or empty intervals have zero overlap."
+    },
+    {
+      "id": "R03",
+      "text": "Reversed endpoints raise ValueError."
+    }
+  ],
+  "files": {
+    "solution.py": "def overlap(a, b):\n    return min(a[1],b[1])-max(a[0],b[0])\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          0,
+          4
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "expected": 2,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "expected": 0,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "expected": 0,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "expected": 0,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "overlap",
+      "kwargs": {},
+      "args": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

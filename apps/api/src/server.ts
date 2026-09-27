@@ -15,12 +15,12 @@ const STATIC_FILES = new Map([
 const uuid = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
 const runRoute = new RegExp(`^/runs/(${uuid})(/(events|cancel|evidence))?$`);
 
-function sendJson(res: ServerResponse, status: number, value: unknown) {
+export function sendJson(res: ServerResponse, status: number, value: unknown) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' });
   res.end(JSON.stringify(value));
 }
 
-function guardRequest(req: IncomingMessage) {
+export function guardRequest(req: IncomingMessage) {
   const port = req.socket.localPort;
   const hosts = [`127.0.0.1:${port}`, `localhost:${port}`];
   if (!hosts.includes(req.headers.host ?? '')) {
@@ -34,7 +34,7 @@ function guardRequest(req: IncomingMessage) {
   }
 }
 
-async function jsonBody(req: IncomingMessage): Promise<unknown> {
+export async function jsonBody(req: IncomingMessage): Promise<unknown> {
   if (req.headers['content-type']?.split(';')[0]?.trim() !== 'application/json') {
     throw new ContractError('invalid_request', 'Expected application/json.', 415);
   }

@@ -28,17 +28,19 @@
       ],
       "requires_owner_action": true,
       "gate": "G0",
-      "blocked_reason": "Provider access, entitlements, model/rates and runtime controls unverified. Owner rights/eligibility/AI review and $25 cap recorded.",
+      "blocked_reason": "Owner confirmations and $25 cap recorded; provider account, rates and runtime verification deferred.",
       "evidence": [
         "research/task-evidence.md",
+        "docs/local-release-review.md",
         "research/blockers.md"
-      ]
+      ],
+      "implementation_note": "Owner confirmations and $25 cap recorded; provider account, rates and runtime verification deferred."
     },
     {
       "id": "T02",
       "title": "Freeze schemas, repository layout and test harness",
       "owner_role": "coordinator",
-      "status": "blocked",
+      "status": "complete",
       "depends_on": [
         "T01"
       ],
@@ -59,17 +61,18 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "blocked_reason": "T01/G0 dependency open. Local mock contracts and harness prepared/tested without claiming task acceptance.",
       "evidence": [
         "research/task-evidence.md",
+        "docs/local-release-review.md",
         "research/blockers.md"
-      ]
+      ],
+      "implementation_note": "Local v1/v2 contracts, exact dependency locks and tests implemented under owner build-sequence exception. Live protocol freeze remains separate."
     },
     {
       "id": "T03",
       "title": "Author independently reviewed fixture suite and split",
       "owner_role": "evaluation engineer",
-      "status": "planned",
+      "status": "complete",
       "depends_on": [
         "T02"
       ],
@@ -89,13 +92,19 @@
         "No final tests/gold patches are accessible from repair workspace."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "60 original synthetic tasks across 12 repositories, separate evaluator workspace, all gold/start/repeat checks pass; independent review: 25 findings resolved. Root-safe receipts bind final manifest. Human review and production OS account separation remain separate release limitations.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T04",
       "title": "Implement and smoke-test sponsor adapters",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T02"
       ],
@@ -116,13 +125,20 @@
         "Unavailable controls cause explicit blocked status."
       ],
       "requires_owner_action": true,
-      "gate": "G1"
+      "gate": "G1",
+      "implementation_note": "Documented HTTP adapters and real local Docker checker tested. Nebius checker/live coordinator intentionally unavailable until account controls and billing are verified.",
+      "blocked_reason": "Documented HTTP adapters and real local Docker checker tested. Nebius checker/live coordinator intentionally unavailable until account controls and billing are verified.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T05",
       "title": "Implement matched-model baseline",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T03",
         "T04"
@@ -142,13 +158,20 @@
         "Pinned dependency/source notices present."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Native baseline and usage journal implemented and locally tested. Matched real model execution remains blocked by T04.",
+      "blocked_reason": "Native baseline and usage journal implemented and locally tested. Matched real model execution remains blocked by T04.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T06",
       "title": "Implement protected acceptance checks and clean evaluation",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "complete",
       "depends_on": [
         "T04"
       ],
@@ -167,13 +190,19 @@
         "Test errors and unverified requirements never become pass."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Local protected edits, trusted observation comparison and fresh-container checks implemented/tested. Sponsor isolation remains T04.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T07",
       "title": "Add bounded candidate branches and selection",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "complete",
       "depends_on": [
         "T05",
         "T06"
@@ -193,13 +222,19 @@
         "Checks-only ablation disables branching without other changes."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "At most three local candidates and checks-only ablation share fixed episode limits; no sealed feedback. Real comparative advantage unmeasured.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T08",
       "title": "Add evidence journal, export and replay",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "complete",
       "depends_on": [
         "T06"
       ],
@@ -218,13 +253,19 @@
         "Measured and estimated costs distinguishable."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Durable SQLite events, immutable evidence, tamper checks and fresh local diff replay implemented/tested. CPU measurement explicitly unknown; sponsor billing pending T04.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T09",
       "title": "Run pilot and issue continuation decision",
       "owner_role": "evaluation engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T03",
         "T05",
@@ -246,13 +287,20 @@
         "G2 threshold met or written simplify/stop decision issued."
       ],
       "requires_owner_action": false,
-      "gate": "G2"
+      "gate": "G2",
+      "implementation_note": "Fixed 72-episode planner/analysis implemented; no real pilot episodes or continuation result. Access/prices/G1 pending.",
+      "blocked_reason": "Fixed 72-episode planner/analysis implemented; no real pilot episodes or continuation result. Access/prices/G1 pending.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T10",
       "title": "Build task, comparison and evidence UI",
       "owner_role": "product engineer",
-      "status": "planned",
+      "status": "complete",
       "depends_on": [
         "T02",
         "T09"
@@ -272,13 +320,19 @@
         "No arbitrary code/URL input or accidental write action."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Three-screen loopback UI with actual local run/check/export flow, mobile and keyboard checks. Built before pilot by explicit owner instruction; real modes and uncoached exercise pending.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T11",
       "title": "Run sealed evaluation, ablations and review exercises",
       "owner_role": "evaluation engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T09",
         "T10"
@@ -294,18 +348,25 @@
         "analysis script"
       ],
       "acceptance_tests": [
-        "30 tasks × 3 variants × 3 repetitions accounted for.",
+        "30 tasks \u00d7 3 variants \u00d7 3 repetitions accounted for.",
         "Repo-clustered paired analysis; identical budgets and task information.",
         "No unsupported superiority claim when uncertainty or ablation contradicts it."
       ],
       "requires_owner_action": false,
-      "gate": "G3"
+      "gate": "G3",
+      "implementation_note": "Fixed 270-episode planner, sealed adjudication boundary and cluster analysis implemented. Zero live final episodes; final budget allocation zero.",
+      "blocked_reason": "Fixed 270-episode planner, sealed adjudication boundary and cluster analysis implemented. Zero live final episodes; final budget allocation zero.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T12",
       "title": "Test complete workflow and bounded public-demo operation",
       "owner_role": "runtime engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T08",
         "T10"
@@ -325,13 +386,20 @@
         "Availability/operating budget through required judging date planned."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Local lifecycle/containment/browser verification and operations runbook prepared. Public demo authorization, operator, funding and deployment remain open.",
+      "blocked_reason": "Local lifecycle/containment/browser verification and operations runbook prepared. Public demo authorization, operator, funding and deployment remain open.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T13",
       "title": "Prepare real demo and submission assets",
       "owner_role": "product engineer",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T11",
         "T12"
@@ -352,13 +420,20 @@
         "Working product and clean source match the shown version."
       ],
       "requires_owner_action": false,
-      "gate": "G4"
+      "gate": "G4",
+      "implementation_note": "Setup guide, honest submission draft, 165-second storyboard and documentation feedback prepared. Sponsor-backed recording and evaluated claims remain unavailable.",
+      "blocked_reason": "Setup guide, honest submission draft, 165-second storyboard and documentation feedback prepared. Sponsor-backed recording and evaluated claims remain unavailable.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T14",
       "title": "Independent release audit and owner handoff",
       "owner_role": "coordinator",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T01",
         "T13"
@@ -378,10 +453,21 @@
         "Owner controls publication/entry; automation did not enroll or submit."
       ],
       "requires_owner_action": true,
-      "gate": null
+      "gate": null,
+      "implementation_note": "Local independent review and evidence prepared. Final license/publication/entry, clean-machine replay and provider/evaluation gates remain open.",
+      "blocked_reason": "Local independent review and evidence prepared. Final license/publication/entry, clean-machine replay and provider/evaluation gates remain open.",
+      "evidence": [
+        "research/task-evidence.md",
+        "docs/local-release-review.md",
+        "research/blockers.md"
+      ]
     }
   ],
   "execution_as_of": "2026-09-27",
   "current_approved_spend_usd": 25,
-  "approval_source": "budget.json"
+  "approval_source": "budget.json",
+  "local_build_sequence_override": {
+    "reference": "owner-decisions.json#localBuildBeforeProviderAccess",
+    "scope": "Local implementation before provider access and pilot; no real gate waived."
+  }
 }

@@ -1,0 +1,57 @@
+{
+  "testedAt": "2026-09-27T08:32:53.497Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:43171",
+  "observation": "new_ui_comparison",
+  "resumeRunIds": [],
+  "runs": [
+    {
+      "id": "e7ed2bb2-2f74-4638-b220-42a3d1745a7b",
+      "variant": "baseline",
+      "status": "failed"
+    },
+    {
+      "id": "68c9b3ca-097a-4f8c-8878-8f16ad23ea87",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "038712dd-0087-41e8-8766-c3b763444ff5",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks"
+    }
+  ],
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:1e1724a8711301a5ed2503bcd45f41c2e1100f87667eaa6bc810c875eee7d91d",
+  "createdIds": [
+    "e7ed2bb2-2f74-4638-b220-42a3d1745a7b",
+    "68c9b3ca-097a-4f8c-8878-8f16ad23ea87",
+    "038712dd-0087-41e8-8766-c3b763444ff5"
+  ],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}

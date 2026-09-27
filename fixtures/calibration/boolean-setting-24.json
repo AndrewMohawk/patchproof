@@ -1,0 +1,133 @@
+{
+  "id": "boolean-setting-24",
+  "repoId": "fixture-05",
+  "split": "calibration",
+  "title": "Reject ambiguous boolean settings",
+  "description": "Parse case-insensitive true/false, yes/no and 1/0 with surrounding whitespace.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Recognize the documented truth and false spellings."
+    },
+    {
+      "id": "R02",
+      "text": "Preserve actual bool values."
+    },
+    {
+      "id": "R03",
+      "text": "Other strings and non-bool non-string values raise ValueError."
+    }
+  ],
+  "files": {
+    "solution.py": "def parse_bool(value):\n    return bool(value)\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        "true"
+      ],
+      "expected": true,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        false
+      ],
+      "expected": false,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        "maybe"
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        " NO "
+      ],
+      "expected": false,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        true
+      ],
+      "expected": true,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "parse_bool",
+      "kwargs": {},
+      "args": [
+        0
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-04",
+      "requirementId": "R01",
+      "function": "parse_bool",
+      "args": [
+        "false"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expected": false
+    },
+    {
+      "id": "acceptance-05",
+      "requirementId": "R01",
+      "function": "parse_bool",
+      "args": [
+        "1"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expected": true
+    },
+    {
+      "id": "acceptance-06",
+      "requirementId": "R01",
+      "function": "parse_bool",
+      "args": [
+        "0"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expected": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

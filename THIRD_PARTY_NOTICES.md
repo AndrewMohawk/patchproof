@@ -20,3 +20,9 @@ repository; Playwright downloads include their own notices. The local Node
 runtime is external to this repository. A full redistribution/license audit is
 still required before the public release, including any selected NVIDIA model
 and sponsor SDK/image. The PatchProof project license itself is not selected yet.
+
+The installed Python/Alpine container, Docker engine, host Python and BusyBox are
+external runtime prerequisites, not copied into this repository. The runtime
+guide pins the observed image and identifies BusyBox. Their upstream image and
+component notices must accompany any future redistributed runtime image; this
+source checkout does not grant additional redistribution rights.

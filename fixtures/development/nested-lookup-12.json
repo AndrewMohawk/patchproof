@@ -1,0 +1,138 @@
+{
+  "id": "nested-lookup-12",
+  "repoId": "fixture-03",
+  "split": "development",
+  "title": "Retain falsy nested values",
+  "description": "Look up a sequence of dictionary keys; use default only when a component is missing.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Return existing nested values even when falsy."
+    },
+    {
+      "id": "R02",
+      "text": "Empty path returns the original mapping by value without mutation."
+    },
+    {
+      "id": "R03",
+      "text": "Traversal into a non-dictionary returns default."
+    }
+  ],
+  "files": {
+    "solution.py": "def get_path(data, path, default=None):\n    value=data\n    for key in path:\n        value=value.get(key) if isinstance(value,dict) else None\n    return value or default\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {
+          "a": {
+            "b": 2
+          }
+        },
+        [
+          "a",
+          "b"
+        ],
+        9
+      ],
+      "expected": 2,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {
+          "a": 1
+        },
+        [],
+        0
+      ],
+      "expected": {
+        "a": 1
+      },
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {
+          "a": 1
+        },
+        [
+          "a",
+          "b"
+        ],
+        "missing"
+      ],
+      "expected": "missing",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {
+          "a": false
+        },
+        [
+          "a"
+        ],
+        true
+      ],
+      "expected": false,
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {
+          "a": null
+        },
+        [
+          "a"
+        ],
+        "missing"
+      ],
+      "expected": null,
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "get_path",
+      "kwargs": {},
+      "args": [
+        {},
+        [
+          "a"
+        ],
+        "missing"
+      ],
+      "expected": "missing",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

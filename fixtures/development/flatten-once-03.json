@@ -1,0 +1,139 @@
+{
+  "id": "flatten-once-03",
+  "repoId": "fixture-01",
+  "split": "development",
+  "title": "Flatten exactly one level",
+  "description": "Flatten one level of nested lists, preserving deeper lists and input order.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Flatten exactly one level and retain all values."
+    },
+    {
+      "id": "R02",
+      "text": "Empty input returns empty without mutation."
+    },
+    {
+      "id": "R03",
+      "text": "A non-list member raises TypeError."
+    }
+  ],
+  "files": {
+    "solution.py": "def flatten_once(groups):\n    return [value for group in groups for value in group if not isinstance(value,list)]\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ],
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        []
+      ],
+      "expected": [],
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        [
+          "ab"
+        ]
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        [
+          [
+            1,
+            [
+              2
+            ]
+          ],
+          [
+            3
+          ]
+        ]
+      ],
+      "expected": [
+        1,
+        [
+          2
+        ],
+        3
+      ],
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        [
+          [],
+          [
+            0
+          ]
+        ]
+      ],
+      "expected": [
+        0
+      ],
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "flatten_once",
+      "kwargs": {},
+      "args": [
+        [
+          7
+        ]
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

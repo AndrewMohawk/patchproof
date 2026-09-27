@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-09-27T08:09:00.911Z",
+  "scope": "Actual browser integration observer attempts; all observed the same three UI-created local runs.",
+  "runIds": [
+    "85a287fe-a5d4-4ca2-bfd4-af006212fe91",
+    "40b74457-f082-4b2a-ab7b-7f0d288cd6fe",
+    "35a60dcc-3c9c-4550-b896-359a2a9d4eef"
+  ],
+  "attempts": [
+    {
+      "toolSession": 32884,
+      "exitCode": 1,
+      "observedError": "AssertionError: null !== 'failed'",
+      "cause": "Verifier used async waitForFunction predicate. Installed Playwright treats returned promise as immediately truthy, so unfinished run was observed.",
+      "resolution": "Use synchronous rendered terminal-state predicate. Preserve live runs; resume same IDs."
+    },
+    {
+      "toolSession": 54575,
+      "exitCode": 1,
+      "observedError": "AssertionError: evidence view must not overflow on mobile. true !== false",
+      "cause": "Real candidate diff imposed a min-content width on the mobile grid. Document width411 exceeded viewport390.",
+      "resolution": "Use minmax(0,1fr) mobile grid and min-width:0 on grid children."
+    },
+    {
+      "toolSession": 46262,
+      "exitCode": 0,
+      "status": "passed",
+      "scope": "Full existing-run browser flow, three variants, export and mobile verification."
+    }
+  ],
+  "providerSpendUsd": 0,
+  "notes": "Scripted model; real local Docker checks. These are UI/runtime observations, not a model benchmark."
+}

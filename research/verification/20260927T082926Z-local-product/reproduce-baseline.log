@@ -1,0 +1,136 @@
+node scripts/product-cli.ts reproduce "8ef07bac-b736-4491-98c8-45e223aed359"
+{
+  "status": "reproduced",
+  "mode": "mock",
+  "competitionReady": false,
+  "executionPerformed": true,
+  "isolation": "local_container",
+  "checkCount": 6,
+  "checks": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": [
+        1,
+        2
+      ],
+      "expected": [
+        1,
+        2
+      ],
+      "durationMs": 1679,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[1,2],\"argsAfter\":[[1,1,2]],\"kwargsAfter\":{}}}"
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": {
+        "outcome": [],
+        "argsAfter": [
+          []
+        ],
+        "kwargsAfter": {}
+      },
+      "expected": {
+        "outcome": [],
+        "argsAfter": [
+          []
+        ],
+        "kwargsAfter": {}
+      },
+      "durationMs": 1270,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}}}"
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": {
+        "exception": "TypeError"
+      },
+      "expected": {
+        "exception": "TypeError"
+      },
+      "durationMs": 1510,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"exception\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"exception\",\"exception\":\"TypeError\",\"argsAfter\":[null],\"kwargsAfter\":{}}}"
+    },
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "status": "fail",
+      "message": "Observed outcome differs from the declared check.",
+      "actual": [
+        1,
+        2,
+        3
+      ],
+      "expected": [
+        3,
+        1,
+        2
+      ],
+      "durationMs": 1413,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[1,2,3],\"argsAfter\":[[3,1,3,2]],\"kwargsAfter\":{}}}"
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": {
+        "outcome": [
+          1,
+          2
+        ],
+        "argsAfter": [
+          [
+            1,
+            2,
+            2
+          ]
+        ],
+        "kwargsAfter": {}
+      },
+      "expected": {
+        "outcome": [
+          1,
+          2
+        ],
+        "argsAfter": [
+          [
+            1,
+            2,
+            2
+          ]
+        ],
+        "kwargsAfter": {}
+      },
+      "durationMs": 1349,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}}}"
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": {
+        "exception": "TypeError"
+      },
+      "expected": {
+        "exception": "TypeError"
+      },
+      "durationMs": 1454,
+      "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"exception\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"exception\",\"exception\":\"TypeError\",\"argsAfter\":[null],\"kwargsAfter\":{}}}"
+    }
+  ],
+  "infrastructureError": null,
+  "bundleDigest": "sha256:7234e8b027c6b41bb95066446f9abc7753fa23290fb484a374364896be52bd7d",
+  "authenticityVerified": false
+}
+(node:297263) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

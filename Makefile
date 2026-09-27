@@ -1,13 +1,13 @@
 .PHONY: doctor test smoke pilot evaluate reproduce export release-check dev
 doctor:
-	node scripts/cli.ts doctor
+	node scripts/product-cli.ts doctor
 test:
 	npm run typecheck
 	npm run check:contracts
 	npm test
 smoke pilot evaluate release-check:
-	node scripts/cli.ts $@
+	node scripts/product-cli.ts $@
 reproduce export:
-	node scripts/cli.ts $@ "$(RUN)" "$(DIGEST)"
+	node scripts/product-cli.ts $@ "$(RUN)"
 dev:
 	npm run dev

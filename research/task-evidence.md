@@ -1,62 +1,100 @@
-# Task evidence — local preparation
+# Task evidence — local product
 
-## Scope and references
+## Scope and source references
 
-- `4bf1335`: original seven-file non-ZIP package read; all six entries in
-  `SHA256SUMS.txt` validated before task-state edits. ZIP excluded.
-- `811ef1a`: T01 official-source recheck, private repository and owner decisions,
-  exact $25 aggregate approval, unknown provider fields preserved.
-- Mock implementation reference: the commit containing this record and
-  `research/contracts-v1-lock.json`; later validation records identify its SHA.
-- Changed implementation paths: `packages/contracts/`, `packages/mock/`,
-  `apps/api/`, `apps/web/`, `scripts/`, `tests/`, workspace/Make configuration and
-  exact npm lockfile. `tasks.json` records dependency blocks, not completed gates.
+- `4bf1335`: initial seven non-ZIP package files; all six original checksums
+  verified before edits. ZIP excluded.
+- `811ef1a`: official-source recheck, private repository, owner confirmations and
+  exact $25 aggregate approval.
+- `251b62f`: initial 17-test contract-only mock scaffold. Its logs in
+  `research/verification/20260927T074603Z-local-preparation/` are historical.
+- Product implementation: source commit containing this record, exact contracts
+  in `research/contracts-v2-lock.json`, and the later local-product verification
+  record. That record includes actual commands, exit codes, bundles and run IDs.
 
-## Executed verification
+The owner explicitly authorized full local development before provider access.
+Original real-provider/experiment/release gates remain unpassed. `tasks.json`
+separates completed local implementation from blocked external acceptance.
+No paid provider call, benchmark result, public deployment or entry is claimed.
 
-| Command/check | Exit/result | Evidence |
+## Implemented paths and verification
+
+| Scope | Changed paths | Executed checks and evidence |
 |---|---|---|
-| `sha256sum -c SHA256SUMS.txt` before tracker edits | 0, six passed | Original commit `4bf1335`. |
-| Official event/rules/gallery and provider documentation retrieval | Public docs fetched; SDK/SWE-agent pages timed out | `research/constraints.md`, `research/sources.json`. |
-| `npm ci --ignore-scripts --no-audit --no-fund` | See final validation record | Exact `package-lock.json`; no lifecycle scripts. |
-| `make test` | 0, 17 tests passed before final freeze | Type checks, HTTP/SSE, budgets, idempotency, mock labels, integrity, cancellation and protected local export paths. |
-| `npm run test:browser` | 0 | `.local/verification/browser.json`, browser download in `artifacts/`; screenshots `/tmp/patchproof-contract-{desktop,mobile}.png`. |
-| Browser-downloaded bundle → `make reproduce RUN=<id> DIGEST=<digest>` | 0, integrity only | No inference/check execution or authenticated provenance claimed. |
-| `make doctor` | 0, diagnostics complete with G0 blocked | Unknown entitlement/model/rates listed; this exit is not gate approval. |
-| `make smoke`, `make pilot`, `make evaluate`, `make release-check` | Direct CLI exit 2 tested; gate-report-only | Zero provider calls and zero experiment episodes. |
+| T01/T02 | `owner-decisions.json`, `budget.json`, `runtime-lock.json`, contracts, workspace | Config validation, exact $25 ceiling, v1/v2 digest locks, TypeScript checks. Unknown account fields stay null. |
+| T03 | `fixtures/`, `workers/evaluator/`, separate evaluator workspace | Full 60 gold/start/repeat validation, targeted revalidation after independent review, aggregate artifacts and preserved revisions. No gold or final vectors in this checkout. |
+| T04 | `workers/repair/`, `workers/sandbox/` | Fake HTTP transports plus actual pinned Docker checks, cancellation, parent death, wall deadlines and exact run-owned cleanup. Real Nebius calls NOT RUN. |
+| T05–T07 | `packages/orchestrator/` | Same limits, protected paths, policy variants, actual rejected/accepted candidates; scripted model only. Final feedback inaccessible to repair loop. |
+| T08 | journal, lease, evidence and patch modules | Durable reopen/idempotency, failed publication, partial infrastructure logs, interrupted-runtime drift, immutable bundle and fresh patch replay. |
+| T09/T11 | evaluator planner/adjudicator/analyzer, `research/evaluation/` | Fixed 72/270 plans, protected one-use final adjudication tests, matched budgets/denominators and clustered inference tests. Scored experiments NOT RUN. |
+| T10 | `apps/web/`, product API | Actual browser task/comparison/evidence flow, real container observations, export/reload, desktop/mobile and keyboard; HTTP cancellation/denial/SSE tests. |
+| T12–T14 | operations, submission draft, local release review, release audit | Local lifecycle/evidence checks, explicit NOT RUN provider/release items; no public rollout or recording. |
 
-Final command logs and exit codes are retained in `research/verification/`.
-Generated mock IDs/digests are not benchmark results. No token, performance or
-provider-cost measurements exist beyond zero calls in this mock implementation.
+`make test` runs type checking, locked-contract checks and the full suite, including
+real local container tests. The final local-product validation records its actual
+count/exit rather than inferring success from implementation. `npm run
+test:browser` creates three actual local runs against an isolated state directory.
+The validator preserves all three exported bundles and freshly replays each.
+It additionally executes/export-checks the unsupported-task abstention. Its
+replay returns exit2 because there is no selected patch; that is expected.
 
-## Found and corrected during review/testing
+## Findings corrected and preserved
 
-- Throwing event subscribers interrupted completion: isolated listener failures
-  and added explicit mock-error finalization.
-- Individually valid fields admitted contradictory evidence: added task/spec,
-  event/run, requirement/coverage and terminal-state cross-validation.
-- Sparse arrays collided in canonical digests: non-JSON sparse values rejected.
-- Browser exports initially required an unavailable CLI reference: now supports
-  downloaded-file verification and reports the actual integrity basis.
-- Export writes could overwrite files or follow symlinks: exclusive immutable
-  writes, no-follow file opens and checked directory components. A failing test
-  caught trailing-slash directory checks; fixed and regression passed.
-- First Host-header test used `fetch`, which normalized that header: changed to
-  the raw HTTP client and confirmed server-side rejection.
-- First browser check found a missing favicon and mobile overflow in the digest
-  instructions: fixed; automated browser rerun reports no errors/overflow.
-- Default port 4317 was occupied: no existing service was touched; moved the
-  default to loopback 43171 and added a clear bind-error message.
+- Mock-handler listener errors and contradictory evidence were fixed in v1;
+  its failed attempts and original logs remain in the initial validation record.
+- The first full browser observer ended before its jobs completed. It was fixed
+  to wait for actual terminal UI states and resumed those exact run IDs; no
+  replacement result was substituted for an unfinished job. Earlier records
+  remain in local verification history.
+- A wide real diff overflowed the mobile grid; width constraints were corrected
+  and all three mobile views rechecked.
+- Independent oracle review found finite-example gaps, ambiguous requirement
+  mappings and discrepancies between descriptions/checks. Original manifests
+  and detailed revisions remain with the evaluator; root artifacts expose only
+  aggregate evidence. Corrections precede all scored model experiments.
+- The stable-unique nonmutation check also asserted order on an unsorted input,
+  falsely attributing the scripted sorting defect to nonmutation. Its separate
+  mutation case now isolates that clause with an otherwise unambiguous return.
+- Unconfirmed container cleanup previously allowed the next case to start;
+  the batch now stops with errors. A negative regression proves no second launch.
+- Restart with changed runtime inputs could republish incompatible evidence;
+  recovery now preserves original digests, abstains, clears stale export binding
+  and allows startup. Cleanup/publication failures are recorded per run.
+- CPU usage remains unknown. UI and runtime guide no longer describe its
+  configured allowance as a verified cumulative usage counter.
+- Product 2.1 binds task metadata as well as source/check policy. Product 2.0 uses
+  its explicit legacy formula for historical replay; no silent digest fallback.
 
-## External interfaces and remaining work
+## External interfaces and limits
 
-Node 25.5.0 / npm 11.8.0; Zod 4.1.12; TypeScript 5.9.3; Node types 25.5.0;
-Playwright 1.58.2 / observed Chromium 145.0.7632.6. See exact package integrity
-values in the lockfile and licenses in `THIRD_PARTY_NOTICES.md`.
+Node25.5.0, npm11.8.0, TypeScript5.9.3, Zod4.1.12, Node types25.5.0,
+Playwright1.58.2; observed Chromium145.0.7632.6. Exact package integrity and
+license metadata are locked. Local Python image/control details are in
+`workers/sandbox/README.md`. Public provider URLs and retrieval statuses are in
+`research/sources.json`; unversioned docs are not account verification.
 
-Nebius SDK/model/image/endpoint account verification: **NOT RUN**, awaiting
-project access. Provider docs are unversioned; exact inspected URLs and failures
-are in the source ledger. Real smoke, baseline, pilot, sealed evaluation,
-protected evaluator execution, cost reconciliation and production release
-checks: **NOT RUN** because their dependencies remain blocked. T03/T04 were not
-started; no sealed authoring or candidate agent workspace exists yet.
+Sponsor smoke/cost reconciliation, real 72/270 episodes, independent clean-machine
+replay, uncoached reviewer timing/accuracy, public demo availability and final
+submission: **NOT RUN**, for the specific gates in `research/blockers.md`.
+Application license and owner publication/entry decisions remain open.
+
+## Final local validation record
+
+`research/verification/20260927T082926Z-local-product/` records a complete
+exit0 validation pass: 66 tests at that snapshot, actual three-policy browser
+execution, fresh replay of all three verdicts, and a durable unsupported-task
+abstention. Real commands correctly exit2 with explicit blockers. A subsequent
+fixture-receipt consistency regression is recorded separately. Historical 2.0
+evidence also replays through the explicit legacy verifier (exit0).
+
+The staged secret scan initially flagged a synthetic test idempotency string
+(`generic-api-key`, tests/orchestrator.test.ts); it was not a credential. The
+fixture was renamed to an unambiguous test label, its targeted tests reran, and
+the redacted staged scan passed without adding an allowlist.
+
+Final integrated `make test`: **exit0, 71 passed, zero failures/skips** in
+`tests-final.log`. Independent protocol review additionally passed26 synthetic
+checks. A missing-field/NaN budget gate defect was corrected with strict runtime
+validation; draft plans were rebound and originals preserved before any model
+episode. The persistent app browser check also passed after the accessibility
+CSS adjustment, and its screenshots and selected bundle are retained.

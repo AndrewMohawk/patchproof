@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0",
+  "reviewedAt": "2026-09-27T08:34:50.437Z",
+  "scope": "Independent algorithmic review with synthetic in-memory plans and outcome rows; no authored task/oracle content, model inference, candidate execution or scored experiment.",
+  "sourceDigests": [
+    {
+      "path": "/home/andrewmohawk/patchproof/workers/evaluator/protocol.ts",
+      "digest": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112"
+    },
+    {
+      "path": "/home/andrewmohawk/patchproof/workers/evaluator/analysis.ts",
+      "digest": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b"
+    }
+  ],
+  "findings": [
+    {
+      "id": "PR01",
+      "status": "resolved",
+      "summary": "Live readiness previously inspected only supplied gate properties, so missing fields and nonfinite remaining budget were not guaranteed to reject.",
+      "resolution": "Required strict runtime gate schema validates all booleans and a finite nonnegative budget before readiness decisions.",
+      "priorExecutionEvidence": "Source-level finding; no live execution was performed."
+    }
+  ],
+  "limitations": [
+    "Review covers deterministic planner and analyzer algorithms, not authenticity of externally supplied episode ledgers.",
+    "Four pilot and six final logical repository clusters provide coarse uncertainty and do not establish external validity.",
+    "Synthetic rows are unit probes, not measured model outcomes or benchmark evidence."
+  ],
+  "checks": [
+    {
+      "id": "balanced_pilot_72",
+      "passed": true
+    },
+    {
+      "id": "balanced_final_270",
+      "passed": true
+    },
+    {
+      "id": "unequal_allowances_rejected",
+      "passed": true
+    },
+    {
+      "id": "unpaired_seeds_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_rows_retained_and_suppress_claims",
+      "passed": true
+    },
+    {
+      "id": "measuredCostUsd_unknown_suppresses_final_claims",
+      "passed": true
+    },
+    {
+      "id": "sandboxCpuSeconds_unknown_suppresses_final_claims",
+      "passed": true
+    },
+    {
+      "id": "infra_only_excluded_from_secondary_denominator",
+      "passed": true
+    },
+    {
+      "id": "paired_repository_cluster_extremes",
+      "passed": true
+    },
+    {
+      "id": "valid_complete_gate_object_accepted",
+      "passed": true
+    },
+    {
+      "id": "empty_gate_object_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_accountAccessVerified_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_sandboxEntitlementVerified_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_modelVerified_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_realIntegrationPassed_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_oracleIndependentlyReviewed_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_experimentApproved_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_approvedRemainingSpendUsd_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_pricesVerified_rejected",
+      "passed": true
+    },
+    {
+      "id": "missing_gate_finalProtocolFrozen_rejected",
+      "passed": true
+    },
+    {
+      "id": "invalid_remaining_budget_NaN_rejected",
+      "passed": true
+    },
+    {
+      "id": "invalid_remaining_budget_Infinity_rejected",
+      "passed": true
+    },
+    {
+      "id": "invalid_remaining_budget_negative_rejected",
+      "passed": true
+    },
+    {
+      "id": "invalid_remaining_budget_string_rejected",
+      "passed": true
+    },
+    {
+      "id": "string_false_gate_rejected",
+      "passed": true
+    },
+    {
+      "id": "unknown_gate_field_rejected",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "passedChecks": 26,
+  "totalChecks": 26,
+  "providerSpendUsd": 0
+}

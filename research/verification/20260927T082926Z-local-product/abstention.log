@@ -1,0 +1,248 @@
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "run": {
+    "schemaVersion": "2.1",
+    "id": "43db79cf-59f4-4ae8-810d-de6dd9378ef7",
+    "taskId": "chunk-list-02",
+    "variant": "patchproof",
+    "mode": "mock",
+    "competitionReady": false,
+    "notice": "Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.",
+    "phase": "terminal",
+    "terminalStatus": "needs_review",
+    "reason": "mock_task_unavailable",
+    "createdAt": "2026-09-27T08:30:45.116Z",
+    "finishedAt": "2026-09-27T08:30:55.306Z",
+    "sourceDigest": "sha256:15520a505d54379f250a3cbecea22c73ab5d430f1dc24d062e70fe0b224c4d8d",
+    "policyDigest": "sha256:9a9d3825a58033987b99e9081cc8901474cf336039c8837e760a55098be0f8d6",
+    "runtimeLockDigest": "sha256:65c865a67efff6415dfc800f96731b59ca47e17c42c43540261f6c366575218f",
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 24000,
+      "outputTokenLimit": 6000,
+      "wallTimeLimitSeconds": 120,
+      "sandboxCpuSecondsLimit": 60,
+      "maxApprovedSpendUsd": 0
+    },
+    "usage": {
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0,
+      "costIsEstimate": false,
+      "elapsedMs": 10047
+    },
+    "baselineChecks": {
+      "visible": [
+        {
+          "id": "visible-01",
+          "requirementId": "R01",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "durationMs": 1725,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[[1,2],[3,4]],\"argsAfter\":[[1,2,3,4],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "visible-02",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "outcome": [],
+            "argsAfter": [
+              [],
+              2
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [],
+            "argsAfter": [
+              [],
+              2
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 1506,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "visible-03",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "ValueError"
+          },
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 1425,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"exception\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"exception\",\"exception\":\"ValueError\",\"argsAfter\":[[1],0],\"kwargsAfter\":{}}}"
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "acceptance-01",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": [
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ]
+          ],
+          "durationMs": 1609,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[[1,2]],\"argsAfter\":[[1,2,3],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "acceptance-02",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": {
+            "outcome": [],
+            "argsAfter": [
+              [
+                4
+              ],
+              8
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [
+              [
+                4
+              ]
+            ],
+            "argsAfter": [
+              [
+                4
+              ],
+              8
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 1609,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[4],8],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "acceptance-03",
+          "requirementId": "R03",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": [],
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 1494,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[1],-2],\"kwargsAfter\":{}}}"
+        }
+      ]
+    },
+    "candidates": [],
+    "selectedCandidateId": null,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R02",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R03",
+        "status": "unverified",
+        "checkIds": []
+      }
+    ],
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-09-27T08:30:45.206Z",
+        "phase": "queued",
+        "message": "Run queued with a fixed shared resource allowance."
+      },
+      {
+        "sequence": 2,
+        "timestamp": "2026-09-27T08:30:45.259Z",
+        "phase": "preflight",
+        "message": "Checking immutable input digests and isolated local runtime."
+      },
+      {
+        "sequence": 3,
+        "timestamp": "2026-09-27T08:30:45.306Z",
+        "phase": "baseline_capture",
+        "message": "Running original source against frozen declared checks."
+      },
+      {
+        "sequence": 4,
+        "timestamp": "2026-09-27T08:30:55.257Z",
+        "phase": "repair",
+        "message": "Requesting scripted candidate 1; no model inference call."
+      },
+      {
+        "sequence": 5,
+        "timestamp": "2026-09-27T08:30:55.306Z",
+        "phase": "export",
+        "message": "Preserving source, patch, checks, costs and observed events."
+      },
+      {
+        "sequence": 6,
+        "timestamp": "2026-09-27T08:30:55.340Z",
+        "phase": "terminal",
+        "message": "needs_review: mock_task_unavailable. Mock model mode remains explicit."
+      }
+    ],
+    "sandboxOperationIds": [
+      "docker:patchproof-check-0e980e87-b37e-41ee-91da-a4c3d6752438",
+      "docker:patchproof-check-07910076-35cf-4e39-b45f-fce377d01b10",
+      "docker:patchproof-check-9350dc97-5550-4be5-a63a-fd3c79534288",
+      "docker:patchproof-check-ca7cc5f6-f01a-4908-943a-28c8d53af8d9",
+      "docker:patchproof-check-c359ca67-2d4f-47fb-981a-3ba78c9e75ad",
+      "docker:patchproof-check-4b843386-de9f-4e2c-8f74-c3666740a9b2"
+    ]
+  },
+  "commands": [
+    "make export RUN=43db79cf-59f4-4ae8-810d-de6dd9378ef7",
+    "make reproduce RUN=43db79cf-59f4-4ae8-810d-de6dd9378ef7"
+  ]
+}
+(node:309610) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1.0",
+  "reviewedAt": "2026-09-27T08:34:50.791929+00:00",
+  "scope": "Root-safe independent review summary: no sealed task content, cases, names or gold source.",
+  "status": "reviewed_and_author_runtime_validated",
+  "manifestDigest": "sha256:9550e0f8a53fa3ba2db9739389cbe5223487ff41a68f0ff704bc8c6fe7a4d8d8",
+  "reviewArtifactDigest": "sha256:a7fe921f415e0a1b14889e685c458926d7efa43b5a83f0238541999d77186ec7",
+  "counts": {
+    "tasksReviewed": 60,
+    "publicTasksReviewed": 30,
+    "sealedTasksReviewed": 30,
+    "repositories": 12,
+    "caseDefinitionsReviewed": 563,
+    "findings": 25,
+    "tasksWithFindings": 21,
+    "structuralFailures": 0,
+    "exactCrossSplitStartingSourceDuplicates": 0,
+    "exactCrossSplitGoldDuplicates": 0,
+    "sealedCasesIdenticalToVisibleOrRuntime": 11,
+    "resolvedFindings": 25,
+    "unresolvedFindings": 0,
+    "verifiedExactProposals": 22,
+    "independentSemanticProbesPassed": 3,
+    "independentNegativeControlsRejected": 2
+  },
+  "publicTaskIdsWithResolvedFindings": [
+    "boolean-setting-24",
+    "hex-bytes-25",
+    "json-canonical-21",
+    "median-even-18",
+    "rename-key-15",
+    "split-first-08",
+    "stable-unique-01",
+    "weighted-mean-20",
+    "word-counts-10"
+  ],
+  "independentHumanReview": false,
+  "independentAIReview": true,
+  "authorRuntimeEvidenceMatchesManifest": true,
+  "authorRuntimeCounts": {
+    "totalTasks": 60,
+    "goldPassedTasks": 60,
+    "buggyRejectedTasks": 60,
+    "repeatStableTasks": 60,
+    "infrastructureFailedTasks": 0
+  },
+  "independentChecks": {
+    "semanticDiscrepanciesOriginallyObserved": 3,
+    "finalSemanticProbesPass": 3,
+    "negativeControlsOriginallyAccepted": 2,
+    "finalNegativeControlsRejected": 2,
+    "containerExecutions": 3,
+    "productionRunnerIndependentlyReexecutedForAllTasks": false
+  },
+  "scoredModelEvaluationPerformed": false,
+  "providerSpendUsd": 0,
+  "remainingGates": [
+    "Verified sponsor model/sandbox access and real integration",
+    "Frozen scored experiment protocol and matched model budgets",
+    "Owner human review of intended scope and deployment/submission authorization"
+  ],
+  "limitations": [
+    "Synthetic tasks from one authoring process; logical repository-disjoint groups are not independently sampled real repositories.",
+    "Finite checks and JSON value observations do not establish universal correctness, alias identity, arbitrary Python objects or unbounded numeric behavior.",
+    "No sealed definitions or gold were shared with repair agents.",
+    "Owner human review and real sponsor integration remain separate."
+  ],
+  "protocolReview": {
+    "status": "passed",
+    "sourceDigests": [
+      {
+        "path": "/home/andrewmohawk/patchproof/workers/evaluator/protocol.ts",
+        "digest": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112"
+      },
+      {
+        "path": "/home/andrewmohawk/patchproof/workers/evaluator/analysis.ts",
+        "digest": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b"
+      }
+    ],
+    "artifactDigest": "sha256:2e30ce4ea86febd2c1e61a01c8703425ffdc39f4d47677a1b902a6e71bb7e624",
+    "syntheticChecksPassed": 26,
+    "syntheticChecksTotal": 26,
+    "resolvedFindings": 1,
+    "unresolvedFindings": 0,
+    "summary": "Fixed grids, matched allowances, retained failure denominators, repository pairing and suppression of claims with incomplete resource evidence verified; strict runtime readiness gate validation corrected. Synthetic algorithm checks only; no scored experiment."
+  }
+}

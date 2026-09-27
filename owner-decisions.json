@@ -15,5 +15,11 @@
   "publicDemoAuthorized": false,
   "entryAuthorized": false,
   "demoOperator": null,
-  "confirmedAt": "2026-09-27T07:40:33.628Z"
+  "confirmedAt": "2026-09-27T07:40:33.628Z",
+  "localBuildBeforeProviderAccess": {
+    "authorized": true,
+    "confirmedAt": "2026-09-27T07:48:00.683Z",
+    "basis": "User: just build the whole thing and we can get that afterwards",
+    "scope": "Full local implementation and mock testing; defer provider account access and real integration. Does not authorize publication, entry, fabricated evidence or exceeding $25."
+  }
 }

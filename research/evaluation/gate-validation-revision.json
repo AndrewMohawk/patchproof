@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "changedAt": "2026-09-27T08:34:37.446281+00:00",
+  "classification": "pre-experiment-draft-correction",
+  "reason": "Execution readiness now requires strict runtime validation of every gate boolean and finite nonnegative remaining budget.",
+  "episodesOccurred": false,
+  "evidence": "Both preserved plans have null model lock, zero experiment allocation, zero per-episode allocations and planned-not-executed status.",
+  "onlyPlanFieldChanged": "policyDigest",
+  "revisions": [
+    {
+      "plan": "research/evaluation/pilot-plan.json",
+      "preservedOriginal": "research/evaluation/archive/20260927-gate-validation/pilot-plan.json",
+      "previousProtocolDigest": "sha256:821df7bdc0bba874432ee0da95a20194dca755bf4e40e22785b0c0ff0921d1e3",
+      "currentProtocolDigest": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112"
+    },
+    {
+      "plan": "research/evaluation/final-plan.json",
+      "preservedOriginal": "research/evaluation/archive/20260927-gate-validation/final-plan.json",
+      "previousProtocolDigest": "sha256:821df7bdc0bba874432ee0da95a20194dca755bf4e40e22785b0c0ff0921d1e3",
+      "currentProtocolDigest": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112"
+    }
+  ]
+}

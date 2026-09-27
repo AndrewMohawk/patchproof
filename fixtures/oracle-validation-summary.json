@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "fixture-oracle-preparation",
+  "benchmarkExecuted": false,
+  "totalTasks": 60,
+  "goldPassedTasks": 60,
+  "buggyRejectedTasks": 60,
+  "repeatStableTasks": 60,
+  "infrastructureFailedTasks": 0,
+  "independentlyReviewed": false,
+  "independentReviewStatus": "NOT RUN",
+  "runner": "local_container",
+  "manifestDigest": "sha256:9550e0f8a53fa3ba2db9739389cbe5223487ff41a68f0ff704bc8c6fe7a4d8d8",
+  "startedAt": "2026-09-27T08:00:17.445Z",
+  "finishedAt": "2026-09-27T08:28:15.534Z",
+  "metadataCorrection": {
+    "taskId": "json-canonical-21",
+    "previousManifestDigest": "sha256:5bf2d1a195dade59aff8af96f435ee87f37f769ec8e113497a42240c4c87cda2",
+    "beforeRequirement": "Unsupported objects or non-finite values raise a value/type error as specified.",
+    "afterRequirement": "Preserve arrays and primitive JSON values.",
+    "executableInputsUnchanged": true,
+    "affectedTaskReexecuted": true,
+    "unchangedTaskResultsRetained": 59
+  },
+  "revisionHistory": [
+    {
+      "reason": "Independent oracle review and public demo requirement isolation",
+      "previousManifestDigest": "sha256:664a25cade61c68e598fcddbe451c20f387fc2da5f90eedd6bb3dcb6c16a30d9",
+      "previousPrivateReportDigest": "sha256:b783e1aa70c5d855f5ad564724e428d9438baa326a1807512ee7d8ad63407d98",
+      "changedTaskIds": [
+        "stable-unique-01",
+        "hex-bytes-25",
+        "sealed-045",
+        "sealed-054"
+      ],
+      "reexecutedTaskCount": 4,
+      "unchangedTaskResultsRetained": 56
+    },
+    {
+      "reason": "Independent oracle review and public demo requirement isolation",
+      "previousManifestDigest": "sha256:35488a67f66de49816c7d96b57f9d57bb5bf3c07251f4e0d5cad277940a4c024",
+      "previousPrivateReportDigest": "sha256:b34adff3cd3bd9c502eb042303347a15a55f32385e94477de24f4962fcf1647d",
+      "changedTaskIds": [
+        "split-first-08",
+        "word-counts-10",
+        "rename-key-15",
+        "median-even-18",
+        "weighted-mean-20",
+        "json-canonical-21",
+        "boolean-setting-24",
+        "hex-bytes-25",
+        "sealed-032",
+        "sealed-035",
+        "sealed-037",
+        "sealed-040",
+        "sealed-047",
+        "sealed-049",
+        "sealed-051",
+        "sealed-053",
+        "sealed-055",
+        "sealed-058"
+      ],
+      "reexecutedTaskCount": 18,
+      "unchangedTaskResultsRetained": 42
+    },
+    {
+      "reason": "Manifest status correction only: preparation is reviewed but no scored experiment has run",
+      "previousManifestDigest": "sha256:0e2f176560ab5efeaa80407817ace6c343c21bedfbc28cfdb1c0c316d4d37893",
+      "previousPrivateReportDigest": "sha256:b38d42ab8171949d308af4b19ab1a4422bd1d305bfccff2a5b01784a38e030dc",
+      "changedTaskIds": [],
+      "reexecutedTaskCount": 0,
+      "unchangedTaskResultsRetained": 60
+    }
+  ]
+}

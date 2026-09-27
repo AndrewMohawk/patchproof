@@ -1,0 +1,459 @@
+{
+  "format": "patchproof-evidence-v2",
+  "schemaVersion": "2.1",
+  "mode": "mock",
+  "competitionReady": false,
+  "run": {
+    "schemaVersion": "2.1",
+    "id": "43db79cf-59f4-4ae8-810d-de6dd9378ef7",
+    "taskId": "chunk-list-02",
+    "variant": "patchproof",
+    "mode": "mock",
+    "competitionReady": false,
+    "notice": "Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.",
+    "phase": "terminal",
+    "terminalStatus": "needs_review",
+    "reason": "mock_task_unavailable",
+    "createdAt": "2026-09-27T08:30:45.116Z",
+    "finishedAt": "2026-09-27T08:30:55.306Z",
+    "sourceDigest": "sha256:15520a505d54379f250a3cbecea22c73ab5d430f1dc24d062e70fe0b224c4d8d",
+    "policyDigest": "sha256:9a9d3825a58033987b99e9081cc8901474cf336039c8837e760a55098be0f8d6",
+    "runtimeLockDigest": "sha256:65c865a67efff6415dfc800f96731b59ca47e17c42c43540261f6c366575218f",
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 24000,
+      "outputTokenLimit": 6000,
+      "wallTimeLimitSeconds": 120,
+      "sandboxCpuSecondsLimit": 60,
+      "maxApprovedSpendUsd": 0
+    },
+    "usage": {
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0,
+      "costIsEstimate": false,
+      "elapsedMs": 10047
+    },
+    "baselineChecks": {
+      "visible": [
+        {
+          "id": "visible-01",
+          "requirementId": "R01",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "durationMs": 1725,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[[1,2],[3,4]],\"argsAfter\":[[1,2,3,4],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "visible-02",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "outcome": [],
+            "argsAfter": [
+              [],
+              2
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [],
+            "argsAfter": [
+              [],
+              2
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 1506,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "visible-03",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "ValueError"
+          },
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 1425,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"exception\",\"outcomeMatches\":true,\"argsUnchanged\":true,\"observed\":{\"kind\":\"exception\",\"exception\":\"ValueError\",\"argsAfter\":[[1],0],\"kwargsAfter\":{}}}"
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "acceptance-01",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": [
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ]
+          ],
+          "durationMs": 1609,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[[1,2]],\"argsAfter\":[[1,2,3],2],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "acceptance-02",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": {
+            "outcome": [],
+            "argsAfter": [
+              [
+                4
+              ],
+              8
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [
+              [
+                4
+              ]
+            ],
+            "argsAfter": [
+              [
+                4
+              ],
+              8
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 1609,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[4],8],\"kwargsAfter\":{}}}"
+        },
+        {
+          "id": "acceptance-03",
+          "requirementId": "R03",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": [],
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 1494,
+          "log": "{\"comparisonPerformedBy\":\"host_controller\",\"kind\":\"return\",\"outcomeMatches\":false,\"argsUnchanged\":true,\"observed\":{\"kind\":\"return\",\"value\":[],\"argsAfter\":[[1],-2],\"kwargsAfter\":{}}}"
+        }
+      ]
+    },
+    "candidates": [],
+    "selectedCandidateId": null,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R02",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R03",
+        "status": "unverified",
+        "checkIds": []
+      }
+    ],
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-09-27T08:30:45.206Z",
+        "phase": "queued",
+        "message": "Run queued with a fixed shared resource allowance."
+      },
+      {
+        "sequence": 2,
+        "timestamp": "2026-09-27T08:30:45.259Z",
+        "phase": "preflight",
+        "message": "Checking immutable input digests and isolated local runtime."
+      },
+      {
+        "sequence": 3,
+        "timestamp": "2026-09-27T08:30:45.306Z",
+        "phase": "baseline_capture",
+        "message": "Running original source against frozen declared checks."
+      },
+      {
+        "sequence": 4,
+        "timestamp": "2026-09-27T08:30:55.257Z",
+        "phase": "repair",
+        "message": "Requesting scripted candidate 1; no model inference call."
+      },
+      {
+        "sequence": 5,
+        "timestamp": "2026-09-27T08:30:55.306Z",
+        "phase": "export",
+        "message": "Preserving source, patch, checks, costs and observed events."
+      },
+      {
+        "sequence": 6,
+        "timestamp": "2026-09-27T08:30:55.340Z",
+        "phase": "terminal",
+        "message": "needs_review: mock_task_unavailable. Mock model mode remains explicit."
+      }
+    ],
+    "sandboxOperationIds": [
+      "docker:patchproof-check-0e980e87-b37e-41ee-91da-a4c3d6752438",
+      "docker:patchproof-check-07910076-35cf-4e39-b45f-fce377d01b10",
+      "docker:patchproof-check-9350dc97-5550-4be5-a63a-fd3c79534288",
+      "docker:patchproof-check-ca7cc5f6-f01a-4908-943a-28c8d53af8d9",
+      "docker:patchproof-check-c359ca67-2d4f-47fb-981a-3ba78c9e75ad",
+      "docker:patchproof-check-4b843386-de9f-4e2c-8f74-c3666740a9b2"
+    ]
+  },
+  "fixture": {
+    "id": "chunk-list-02",
+    "repoId": "fixture-01",
+    "split": "development",
+    "title": "Keep final partial chunk",
+    "description": "Split a list into consecutive chunks of positive integer size; keep the short trailing chunk.",
+    "requirements": [
+      {
+        "id": "R01",
+        "text": "Keep input order and the final partial chunk."
+      },
+      {
+        "id": "R02",
+        "text": "Empty input returns an empty list without modifying input."
+      },
+      {
+        "id": "R03",
+        "text": "Nonpositive size raises ValueError."
+      }
+    ],
+    "files": {
+      "solution.py": "def chunks(values, size):\n    return [values[i:i+size] for i in range(0,len(values)-size+1,size)]\n"
+    },
+    "editAllowlist": [
+      "solution.py"
+    ],
+    "entrypoint": "solution.py",
+    "visibleCases": [
+      {
+        "id": "visible-01",
+        "requirementId": "R01",
+        "function": "chunks",
+        "args": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          2
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      {
+        "id": "visible-02",
+        "requirementId": "R02",
+        "function": "chunks",
+        "args": [
+          [],
+          2
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": true,
+        "expected": []
+      },
+      {
+        "id": "visible-03",
+        "requirementId": "R03",
+        "function": "chunks",
+        "args": [
+          [
+            1
+          ],
+          0
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expectedException": "ValueError"
+      }
+    ],
+    "acceptanceCases": [
+      {
+        "id": "acceptance-01",
+        "requirementId": "R01",
+        "function": "chunks",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          2
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      {
+        "id": "acceptance-02",
+        "requirementId": "R02",
+        "function": "chunks",
+        "args": [
+          [
+            4
+          ],
+          8
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": true,
+        "expected": [
+          [
+            4
+          ]
+        ]
+      },
+      {
+        "id": "acceptance-03",
+        "requirementId": "R03",
+        "function": "chunks",
+        "args": [
+          [
+            1
+          ],
+          -2
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expectedException": "ValueError"
+      }
+    ],
+    "license": "CC0-1.0",
+    "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+  },
+  "runtimeLock": {
+    "schemaVersion": "1.0",
+    "mode": "mock",
+    "observedAt": "2026-09-27T07:29:00Z",
+    "local": {
+      "node": "25.5.0",
+      "npm": "11.8.0",
+      "python": "3.12.3",
+      "architecture": "x64",
+      "platform": "linux"
+    },
+    "model": {
+      "provider": "nebius-token-factory",
+      "baseUrl": "https://api.tokenfactory.nebius.com/v1/",
+      "id": null,
+      "accountVerifiedAt": null,
+      "licenseUrl": null,
+      "modelCardUrl": null,
+      "contextLimit": null,
+      "toolOutputBehavior": null,
+      "inputUsdPerMillionTokens": null,
+      "outputUsdPerMillionTokens": null
+    },
+    "sandbox": {
+      "provider": "nebius-sandboxes",
+      "endpoint": "https://api.tokenfactory.nebius.com/sandboxes",
+      "sdkVersion": null,
+      "imageDigest": null,
+      "architecture": null,
+      "accountVerifiedAt": null,
+      "billingUnit": null,
+      "usdPerBillingUnit": null,
+      "networkControlsVerifiedAt": null,
+      "cancellationVerifiedAt": null
+    },
+    "integrationOperationIds": [],
+    "sources": [
+      "https://docs.tokenfactory.nebius.com/quickstart",
+      "https://docs.tokenfactory.nebius.com/sandboxes/overview",
+      "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images",
+      "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance",
+      "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration"
+    ],
+    "localCheckImage": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "localExecution": {
+      "available": true,
+      "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+      "reason": null
+    }
+  },
+  "files": {
+    "patch.diff": {
+      "content": "",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commands.json": {
+      "content": "{\n  \"replay\": \"make reproduce RUN=43db79cf-59f4-4ae8-810d-de6dd9378ef7\",\n  \"isolatedEntrypoint\": \"solution.py\"\n}",
+      "digest": "sha256:ead5151a16a87f9caad46b8e5e2413c23890b24f522fe1e9f2f6884b33dc34a5"
+    },
+    "coverage.json": {
+      "content": "[\n  {\n    \"requirementId\": \"R01\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  },\n  {\n    \"requirementId\": \"R02\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  },\n  {\n    \"requirementId\": \"R03\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  }\n]",
+      "digest": "sha256:a4be7c6c930e5ecbafb5af1de9d6f2f198431185ab5d92f4262d0f2dd2040494"
+    },
+    "cost-ledger.json": {
+      "content": "{\n  \"mode\": \"mock\",\n  \"aggregate\": {\n    \"inferenceCalls\": 0,\n    \"inputTokens\": 0,\n    \"outputTokens\": 0,\n    \"sandboxCpuSeconds\": null,\n    \"measuredCostUsd\": 0,\n    \"costIsEstimate\": false,\n    \"elapsedMs\": 10047\n  },\n  \"attempts\": []\n}",
+      "digest": "sha256:2e3901864496902adf315a6285a63506fc88ed093185e62f2ebab3dcfc329502"
+    },
+    "events.json": {
+      "content": "[\n  {\n    \"sequence\": 1,\n    \"timestamp\": \"2026-09-27T08:30:45.206Z\",\n    \"phase\": \"queued\",\n    \"message\": \"Run queued with a fixed shared resource allowance.\"\n  },\n  {\n    \"sequence\": 2,\n    \"timestamp\": \"2026-09-27T08:30:45.259Z\",\n    \"phase\": \"preflight\",\n    \"message\": \"Checking immutable input digests and isolated local runtime.\"\n  },\n  {\n    \"sequence\": 3,\n    \"timestamp\": \"2026-09-27T08:30:45.306Z\",\n    \"phase\": \"baseline_capture\",\n    \"message\": \"Running original source against frozen declared checks.\"\n  },\n  {\n    \"sequence\": 4,\n    \"timestamp\": \"2026-09-27T08:30:55.257Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Requesting scripted candidate 1; no model inference call.\"\n  },\n  {\n    \"sequence\": 5,\n    \"timestamp\": \"2026-09-27T08:30:55.306Z\",\n    \"phase\": \"export\",\n    \"message\": \"Preserving source, patch, checks, costs and observed events.\"\n  },\n  {\n    \"sequence\": 6,\n    \"timestamp\": \"2026-09-27T08:30:55.340Z\",\n    \"phase\": \"terminal\",\n    \"message\": \"needs_review: mock_task_unavailable. Mock model mode remains explicit.\"\n  }\n]",
+      "digest": "sha256:5549e53663defaf7c9776bc30cb9b02dc78d3277767b46a41a03ad60604c2326"
+    }
+  },
+  "bundleDigest": "sha256:8289679ffd1becd4f3dc7e6a7c4cae0752380f34ab0e1cbbdd479e1ff92c4519"
+}

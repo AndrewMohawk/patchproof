@@ -11,6 +11,7 @@ const OwnerSchema = z.strictObject({
   aiAssistanceReviewed: z.boolean(), openSourceLicense: z.string().nullable(),
   publicSourceAuthorized: z.boolean(), publicDemoAuthorized: z.boolean(),
   entryAuthorized: z.boolean(), demoOperator: z.string().nullable(), confirmedAt: timestamp.nullable(),
+  localBuildBeforeProviderAccess: z.strictObject({ authorized: z.boolean(), confirmedAt: timestamp, basis: z.string(), scope: z.string() }).optional(),
 });
 
 export const BudgetSchema = z.strictObject({
@@ -82,6 +83,6 @@ export function readiness(config: Configuration, now = new Date()): string[] {
   if (!budget.episodeLimits.inputTokenLimit || !budget.episodeLimits.outputTokenLimit || !budget.episodeLimits.sandboxCpuSecondsLimit) {
     blockers.push('Episode token/CPU limits not calibrated.');
   }
-  blockers.push('T04 real-provider adapters not implemented; no automatic fallback.');
+  blockers.push('Real-provider smoke, sandbox isolation and billing reconciliation have not been verified; no automatic fallback.');
   return blockers;
 }

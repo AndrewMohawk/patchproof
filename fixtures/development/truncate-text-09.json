@@ -1,0 +1,106 @@
+{
+  "id": "truncate-text-09",
+  "repoId": "fixture-02",
+  "split": "development",
+  "title": "Count suffix inside the limit",
+  "description": "Truncate text to a nonnegative width, including the suffix in that width.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Output length never exceeds limit and suffix counts toward limit."
+    },
+    {
+      "id": "R02",
+      "text": "Already-short text is unchanged and zero limit returns empty."
+    },
+    {
+      "id": "R03",
+      "text": "Negative limit raises ValueError."
+    }
+  ],
+  "files": {
+    "solution.py": "def truncate(text, limit, suffix=\"...\"):\n    return text if len(text)<=limit else text[:limit]+suffix\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "abcdef",
+        5
+      ],
+      "expected": "ab...",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "ab",
+        5
+      ],
+      "expected": "ab",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "a",
+        -1
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "abcdef",
+        2
+      ],
+      "expected": "..",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "abcdef",
+        0
+      ],
+      "expected": "",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "truncate",
+      "kwargs": {},
+      "args": [
+        "",
+        -3
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

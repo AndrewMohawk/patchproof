@@ -1,0 +1,214 @@
+{
+  "scope": "scripted_model_real_local_container_checks",
+  "competitionReady": false,
+  "recordedAt": "2026-09-27T08:30:56.145032+00:00",
+  "providerCalls": 0,
+  "actualProviderSpendUsd": 0,
+  "commands": [
+    {
+      "name": "tests",
+      "command": [
+        "make",
+        "test"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "tests.log"
+    },
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "browser.log"
+    },
+    {
+      "name": "reproduce-baseline",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=8ef07bac-b736-4491-98c8-45e223aed359"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "reproduce-baseline.log"
+    },
+    {
+      "name": "reproduce-checks_only",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=ecad2f1e-1588-43f7-ba67-c36e04ed3cd2"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "reproduce-checks_only.log"
+    },
+    {
+      "name": "reproduce-patchproof",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=5efc92a7-1e5a-43ee-a9a0-6b5a960e6dfd"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "reproduce-patchproof.log"
+    },
+    {
+      "name": "doctor",
+      "command": [
+        "make",
+        "doctor"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "doctor.log"
+    },
+    {
+      "name": "smoke",
+      "command": [
+        "make",
+        "smoke"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "smoke.log"
+    },
+    {
+      "name": "pilot",
+      "command": [
+        "make",
+        "pilot"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "pilot.log"
+    },
+    {
+      "name": "evaluate",
+      "command": [
+        "make",
+        "evaluate"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "evaluate.log"
+    },
+    {
+      "name": "release-check",
+      "command": [
+        "make",
+        "release-check"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "release-check.log"
+    },
+    {
+      "name": "abstention",
+      "command": [
+        "node",
+        "scripts/product-cli.ts",
+        "run",
+        "chunk-list-02"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "abstention.log"
+    },
+    {
+      "name": "export-abstention",
+      "command": [
+        "make",
+        "export",
+        "RUN=43db79cf-59f4-4ae8-810d-de6dd9378ef7"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "export-abstention.log"
+    },
+    {
+      "name": "reproduce-abstention",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=43db79cf-59f4-4ae8-810d-de6dd9378ef7"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "reproduce-abstention.log"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "diff-check.log"
+    }
+  ],
+  "sourceBaseCommit": "251b62f18623bc5b8b3a5dd10d0dabd1e6112d2b",
+  "sourceReference": "Source commit containing this verification record; base above may have uncommitted product changes.",
+  "additionalChecks": [
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=dd40a478-a406-4192-b8ad-bdaea21dad13"
+      ],
+      "exitCode": 0,
+      "log": "legacy-2.0-replay.log",
+      "scope": "Actual fresh-container historical2.0 patch replay"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/orchestrator.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "orchestrator-final.log",
+      "scope": "After renaming synthetic idempotency test value"
+    },
+    {
+      "command": [
+        "node",
+        "apps/web/verify-browser.ts",
+        "http://127.0.0.1:43171"
+      ],
+      "exitCode": 0,
+      "log": "persistent-browser.log",
+      "scope": "Persistent application and final screenshot/accessibility CSS"
+    },
+    {
+      "command": [
+        "gitleaks",
+        "git",
+        "--staged",
+        "--redact",
+        "--no-banner"
+      ],
+      "exitCode": 0,
+      "log": "staged-secrets.log",
+      "scope": "Staged source scan; final scan after remaining docs recorded separately"
+    },
+    {
+      "command": [
+        "make",
+        "test"
+      ],
+      "exitCode": 0,
+      "testsPassed": 71,
+      "log": "tests-final.log",
+      "scope": "Full final suite after strict experiment-gate validation and fixture-receipt consistency regressions"
+    }
+  ]
+}

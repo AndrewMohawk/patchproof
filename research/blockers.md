@@ -1,49 +1,44 @@
-# Current blocker report — 2026-09-27
+# Remaining gates — 2026-09-27
 
-**G0 remains blocked on Nebius account access and runtime verification.** This
-is a provider integration blocker, not missing permission for GitHub or the
-already approved $25 allowance.
+The local product is implemented and tested under the owner's instruction to
+build before provider access. **Real Nebius integration is the first remaining
+external gate.** It is not a missing spending approval: $25 total is approved;
+actual spending is $0. The private repository and ongoing pushes are authorized.
 
-Completed owner decisions: eligibility/conflict review, rights to contributions,
-AI-assisted development and $25 total new spending. GitHub repo creation and
-ongoing commits/pushes are authorized. The private repo exists at
-<https://github.com/AndrewMohawk/patchproof>.
+## Provider integration (T01/T04, G0/G1)
 
-## Required to advance T01/G0
+Access has been deliberately deferred. When supplied through an approved file or
+provisioner outside the repository, candidate workspaces and logs, the next work is:
 
-1. Project-scoped Token Factory and Sandboxes access provisioned outside this
-   repository and candidate/evaluator workspaces. No credentials in chat or logs.
-2. Verify actual service entitlements, NVIDIA model ID, model license/card,
-   inference rates and sandbox billing unit/rate. Credits are still unverified.
-3. Pin documented sandbox SDK/interface, endpoint, image digest and architecture.
-   Verify the controls needed to separate execution from private networks/data.
-4. Set bounded smoke input/output/CPU limits from verified pricing; preserve the
-   $5 smoke ceiling and $25 aggregate ceiling. The remaining $20 is reserved for
-   the pilot; no separate $25 per stage or branch is authorized.
+1. Verify project entitlements, NVIDIA model ID/license/card, rates and any credits
+   with service, amount and expiry. Do not infer account availability from public docs.
+2. Pin sandbox API/image/architecture and verify supported filesystem, network,
+   memory, PID, CPU, cancellation and billing controls. Public HTTP mappings alone
+   do not establish these properties.
+3. Finish the live sandbox checker and coordinator execution path. They currently
+   refuse execution even if configuration fields are filled in.
+4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
+   curated real cases, retain real operation IDs and reconcile actual charges.
 
-The next operational step is read-only entitlement/catalog discovery using
-owner-provisioned access, then the two bounded real cases required by G1 after
-the contract/task dependency gates are accepted. The current CLI deliberately
-does not make provider calls, even if configuration values are edited.
+## Other remaining acceptance evidence
 
-## Gates not performed
+| Task/gate | Implemented locally | Still required |
+|---|---|---|
+| T02 | Typed contracts, version locks, tests, workspace | Live provider contract verification. |
+| T03 | 60 authored synthetic tasks; separate evaluator; gold/start/repeat validation and independent review | Final manifest freeze and production evaluator account separation. |
+| T05–T08 | Three bounded policies, protected checks, durable journal, export and fresh local replay | Live matched usage, sponsor cancellation and billing reconciliation. |
+| T09/G2 | Fixed 72-episode planner and analysis | Real pilot, affordable price projection and written continuation decision. |
+| T10 | Task/comparison/evidence views; real local checks and browser flow | Live-provider state validation and uncoached reviewer exercise. |
+| T11/G3 | Fixed 270-episode planner, sealed adjudication and clustered analysis | Authorized final budget, real final runs, ablations and reviewer study. |
+| T12 | Local lifecycle tests and operations runbook | Public deployment authorization, hardened operator boundary and funded judge access. |
+| T13/G4 | Setup guide, honest draft/storyboard/platform feedback | Sponsor-backed runs, final recording and public licensed source. |
+| T14 | Local evidence/review and private source history | Independent clean-machine replay, final rules/license/secret audit and owner release decisions. |
 
-| Gate / task | Evidence missing |
-|---|---|
-| T01/G0 | Account/resource verification above. |
-| T02 | Local contracts/harness prepared and tested; T01 dependency not passed. |
-| T03 | 60 authored/reviewed tasks, repo-disjoint split and separate sealed checkout. |
-| T04/G1 | Sponsor adapters, actual traces, cancellation, billing and two real cases. |
-| T05–T08 | Baseline, protected checks, branch policy, durable evidence and real replay. |
-| T09/G2 | 72 real pilot episodes and written continuation decision. |
-| T10 | Full task/comparison/evidence interface after the pilot. |
-| T11/G3 | 270 sealed episodes, analysis, ablations and reviewer exercises. |
-| T12–T14/G4 | Operations, real demo assets, license, release audit and owner handoff. |
+The $25 ceiling is not evidence that either experiment is affordable. Final
+experimentation and hosting currently have zero allocation. Any reduced grid
+requires a prospective revised protocol and narrower claims.
 
-The mock record demonstrates contract plumbing only. It cannot substantiate
-correctness, comparative yield, latency, cost per repair or sponsor integration.
-No negative feasibility result is inferred from missing account access.
-
-Before publication: choose an open-source license, authorize public source and
-demo operation, name the demo operator and fund required judge access. Human
-entry/terms/submission remain separate owner actions. No submission has occurred.
+Application license, public source/video, public demo operator and service budget
+through the required judging period remain owner decisions. No terms were
+accepted and no registration, publication or submission has occurred. Missing
+access is not a measured negative result for the product hypothesis.

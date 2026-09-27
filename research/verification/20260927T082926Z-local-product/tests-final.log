@@ -1,0 +1,102 @@
+npm run typecheck
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+npm run check:contracts
+
+> patchproof@0.0.1 check:contracts
+> node scripts/check-contract-lock.ts
+
+Contract 1.0: 4 source digests match. Dependency gates remain separate.
+Contract 2.1: 2 source digests match. Dependency gates remain separate.
+npm test
+
+> patchproof@0.0.1 test
+> node --test tests/*.test.ts
+
+✔ real loopback HTTP flow: catalogue → mock record → events → typed evidence (93.304956ms)
+✔ checked-in $25 total budget requires approval and rejects excess stage allocations (12.269951ms)
+✔ doctor performs local diagnostics; real-provider/release commands fail closed (1020.947587ms)
+✔ artifact commands reject arbitrary paths before reading files (185.002515ms)
+✔ curated contract accepts known tasks; rejects unknown tasks and extra execution inputs (2.76493ms)
+✔ budgets reject nonfinite, negative, fractional and excessive caps (15.677532ms)
+✔ canonical digest is key-order independent and rejects non-JSON values (0.57716ms)
+✔ catalogue and returned views are isolated from callers (1.996809ms)
+✔ idempotency retains one run and rejects reuse with different variants (1.767508ms)
+✔ all mock variants have identical aggregate caps and zero actual use (3.964025ms)
+✔ cancellation records partial mock work and never creates provider operations (3.360505ms)
+✔ subscriber failures cannot interrupt finalization; handler errors stay unverified (2.481978ms)
+✔ completed mock evidence cannot claim inference, execution or approval (2.059606ms)
+✔ cross-field validation rejects contradictory manifest, events and requirement mappings (4.042144ms)
+✔ bundle verification detects modifications and explicitly remains integrity-only (9.469475ms)
+✔ capacity caps mock records; idempotent retries still succeed at capacity (0.993658ms)
+✔ external evaluator paths reject project descendants and symlink aliases (6.047688ms)
+✔ adjudication retains expected values in trusted runner and exports only aggregate verdict (18.095315ms)
+✔ oracle and selected-candidate drift fail before execution (5.420849ms)
+✔ manifest has 60 distinct tasks in 12 disjoint five-task repositories (2.226705ms)
+✔ public preparation and independent-review receipts bind the current immutable manifest (9.392164ms)
+✔ public fixture bytes match immutable manifest and each check maps to a requirement (16.387282ms)
+✔ stable unique mutation check distinguishes argument mutation from scripted ordering failure (2.090211ms)
+✔ prospective plans contain balanced 72/270 grids and identical aggregate budgets (28.276279ms)
+✔ planning rejects cross-split repositories, incomplete groups and overspending (4.498274ms)
+✔ resource access, price, integration and independent oracle gates fail closed (2.395699ms)
+✔ execution gate runtime validation requires every boolean and remaining budget (22.854194ms)
+✔ execution gate runtime validation rejects nonfinite, negative and nonnumeric budgets (13.355044ms)
+✔ execution gate runtime validation rejects truthy substitutes and unknown fields (3.976925ms)
+✔ fully verified runtime gates with sufficient finite budget admit the unchanged plan (1.932783ms)
+✔ all failed and infrastructure episodes remain in primary denominator (49.629727ms)
+✔ false approvals show observed denominator and unresolved approvals separately (55.082183ms)
+✔ incomplete results suppress inferential claims and retain missing planned episodes (17.786767ms)
+✔ budget violation cannot support matched-budget inference (17.852512ms)
+✔ unknown billing or CPU usage cannot establish matched-budget advantage (18.239055ms)
+✔ incorrect oracles, duplicate results and model drift are rejected (20.676751ms)
+✔ paired bootstrap resamples repository clusters, preserving matched repetitions (4.589895ms)
+✔ pilot gate aggregates majority by task and final gate simplifies equal checks-only performance (367.266539ms)
+✔ any protocol change after final results is exploratory and preserves original report (0.203999ms)
+✔ the public demonstration retains its frozen 2.0 fingerprint while 2.1 binds metadata (9.368026ms)
+(node:419878) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ coordinator preserves protected helpers, publishes coherent evidence, and replays actual diff (212.490136ms)
+✔ infrastructure errors retain partial checks and operation IDs in evidence (299.767573ms)
+✔ publication failure cannot leave an approval in the final journal event (100.162316ms)
+✔ restart recovery reconciles run-owned handles before recording interruption (111.237023ms)
+✔ recovery with a changed runtime preserves old bindings without serving stale or fabricated evidence (109.03131ms)
+✔ recovery checker failure records an infrastructure error without blocking startup (108.859201ms)
+✔ coordinator lease refuses a second live owner and releases its own lease (4.495496ms)
+✔ diff replay reconstructs added files and exact missing final newlines (28.003055ms)
+✔ 2.1 evidence binds all task metadata and never guesses a legacy digest after mismatch (288.257103ms)
+(node:419884) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ product HTTP refuses arbitrary/live requests and durably exports an actual cancellation (507.802167ms)
+(node:419885) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch (8853.329389ms)
+✔ scripted mock is task bounded and uses the same files/feedback rule for every caller (1.943793ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.782263ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (32.22102ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (1.382051ms)
+✔ cancelled proposal sends nothing (0.346031ms)
+✔ trusted launcher kills an execed harmless child when its parent dies and reaps test processes (105.581899ms)
+✔ trusted launcher refuses exec when the original parent has changed (29.131812ms)
+✔ host comparison rejects wrong returns and mutated arguments even with correct return (9.070912ms)
+✔ Docker invocation exposes inputs only and enforces declared local containment flags (7.885886ms)
+✔ invalid owner IDs and failed operation journaling cannot start containers (2.955754ms)
+✔ recovery validates exact run ownership and fails closed on mismatched or unavailable state (2.391735ms)
+✔ recovery preserves remaining handles when removal or verification fails (1.018969ms)
+✔ real restart recovery removes only the specified sleeping run and confirms absence (2877.020545ms)
+✔ unavailable Docker and pre-cancellation produce check errors with no execution (1.010714ms)
+✔ unconfirmed cleanup stops the batch before another container can overlap it (4.656032ms)
+✔ real local pinned Python container independently observes return, exception and input mutation (4611.520577ms)
+✔ local cancellation removes its running container and records non-passing checks (1173.373068ms)
+✔ in-container wall limit kills sleeping candidate before the longer host process timeout (2051.268898ms)
+✔ Nebius fake transport maps verified methods and never includes oracle fields (36.577659ms)
+✔ mock artifacts are immutable and reject file/directory symlinks (42.687841ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 71
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11169.82889

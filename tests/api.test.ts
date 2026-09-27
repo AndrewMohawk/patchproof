@@ -60,7 +60,7 @@ test('real loopback HTTP flow: catalogue → mock record → events → typed ev
 
   const page = await fetch(base);
   assert.match(page.headers.get('content-security-policy')!, /frame-ancestors 'none'/);
-  assert.match(await page.text(), /MOCK · Not competition-ready/);
+  assert.match(await page.text(), /Scripted model responses/);
   for (const path of ['/app.js', '/style.css']) assert.equal((await fetch(`${base}${path}`)).status, 200);
 
   const deniedCases: Array<[Response, number, string]> = [

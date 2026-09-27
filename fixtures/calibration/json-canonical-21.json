@@ -1,0 +1,127 @@
+{
+  "id": "json-canonical-21",
+  "repoId": "fixture-05",
+  "split": "calibration",
+  "title": "Canonicalize JSON maps",
+  "description": "Serialize JSON with sorted keys, compact separators, and literal Unicode.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Sort dictionary keys recursively and omit formatting whitespace."
+    },
+    {
+      "id": "R02",
+      "text": "Preserve Unicode and JSON value types."
+    },
+    {
+      "id": "R03",
+      "text": "Preserve arrays and primitive JSON values."
+    }
+  ],
+  "files": {
+    "solution.py": "import json\ndef canonical_json(value):\n    return json.dumps(value)\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        {
+          "a": 1
+        }
+      ],
+      "expected": "{\"a\":1}",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        [
+          "é",
+          false,
+          null
+        ]
+      ],
+      "expected": "[\"é\",false,null]",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "canonical_json",
+      "args": [
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expected": "true"
+    },
+    {
+      "id": "visibleCases-retained-04",
+      "requirementId": "R01",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        {
+          "x": 1
+        }
+      ],
+      "expected": "{\"x\":1}",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        {
+          "b": 1,
+          "a": {
+            "d": 2,
+            "c": 3
+          }
+        }
+      ],
+      "expected": "{\"a\":{\"c\":3,\"d\":2},\"b\":1}",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        {}
+      ],
+      "expected": "{}",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "canonical_json",
+      "kwargs": {},
+      "args": [
+        [
+          "x"
+        ]
+      ],
+      "expected": "[\"x\"]",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

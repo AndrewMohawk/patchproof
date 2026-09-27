@@ -1,0 +1,106 @@
+{
+  "id": "business-offset-29",
+  "repoId": "fixture-06",
+  "split": "calibration",
+  "title": "Skip weekend days during offsets",
+  "description": "Add a signed weekday offset to an ISO date; zero preserves any starting date.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Count Monday through Friday only while moving."
+    },
+    {
+      "id": "R02",
+      "text": "Zero offset returns the original valid ISO date."
+    },
+    {
+      "id": "R03",
+      "text": "Invalid ISO date raises ValueError."
+    }
+  ],
+  "files": {
+    "solution.py": "from datetime import date,timedelta\ndef add_weekdays(value, amount):\n    return (date.fromisoformat(value)+timedelta(days=amount)).isoformat()\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "2026-09-21",
+        1
+      ],
+      "expected": "2026-09-22",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "2026-09-26",
+        0
+      ],
+      "expected": "2026-09-26",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "2026-02-30",
+        1
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "2026-09-25",
+        1
+      ],
+      "expected": "2026-09-28",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "2026-09-27",
+        0
+      ],
+      "expected": "2026-09-27",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "add_weekdays",
+      "kwargs": {},
+      "args": [
+        "bad",
+        0
+      ],
+      "expectedException": "ValueError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

@@ -2,7 +2,13 @@
   "schemaVersion": "1.0",
   "mode": "mock",
   "observedAt": "2026-09-27T07:29:00Z",
-  "local": { "node": "25.5.0", "npm": "11.8.0", "python": "3.12.3", "architecture": "x64", "platform": "linux" },
+  "local": {
+    "node": "25.5.0",
+    "npm": "11.8.0",
+    "python": "3.12.3",
+    "architecture": "x64",
+    "platform": "linux"
+  },
   "model": {
     "provider": "nebius-token-factory",
     "baseUrl": "https://api.tokenfactory.nebius.com/v1/",
@@ -17,7 +23,7 @@
   },
   "sandbox": {
     "provider": "nebius-sandboxes",
-    "endpoint": null,
+    "endpoint": "https://api.tokenfactory.nebius.com/sandboxes",
     "sdkVersion": null,
     "imageDigest": null,
     "architecture": null,
@@ -31,6 +37,8 @@
   "sources": [
     "https://docs.tokenfactory.nebius.com/quickstart",
     "https://docs.tokenfactory.nebius.com/sandboxes/overview",
-    "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images"
+    "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images",
+    "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance",
+    "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration"
   ]
 }

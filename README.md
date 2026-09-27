@@ -1,94 +1,100 @@
 # PatchProof
 
-A maintenance-agent build in progress: patches linked to independently controlled
-checks and reproducible reviewer evidence. Read [the PRD](nebius-patchproof-PRD.md)
-and [the task graph](tasks.json) for the full acceptance criteria.
+A local maintenance workflow that checks candidate patches against independently
+controlled requirements and exports a patch with replayable evidence.
 
-**Current state: local mock contract harness; G0 blocked on provider access.**
-No repair agent, model benchmark, provider entitlement, paid run, deployment or
-competition entry has been completed. The owner approved **$25 total** ($5 smoke,
-$20 pilot); spending so far is **$0**. See [decisions](decisions.md),
-[owner approvals](owner-decisions.json) and [budget](budget.json).
+**Working local product; real Nebius integration and competition evaluation are
+not complete.** The three-screen app uses scripted model responses and executes
+real Python checks in isolated local containers. Every API response, screen and
+export identifies mock mode. It makes no claim about model performance.
 
-Repository creation and ongoing commits are authorized by the project owner.
-The repository starts private; event entry, public publication and paid resources
-remain separate decisions. Do not place credentials or sealed evaluation data
-in this repository.
+The owner approved **$25 total**: $5 reserved for smoke and $20 for a pilot.
+Actual provider spending is **$0**. Account access is deferred at the owner's
+request while the local build proceeds. See [decisions](decisions.md),
+[budget](budget.json) and [remaining gates](research/blockers.md).
 
-## Run the local preparation
+## Run
 
-Use Node **25.5.0** and npm **11.8.0**, as pinned by `.node-version` and
-`package.json`. All dependencies are locked; lifecycle install scripts are disabled.
+Requirements: Linux, Node **25.5.0**, npm **11.8.0**, Git, `/usr/bin/python3`
+and a local Docker daemon accessible to the operator. Candidate code executes
+only in containers. Exact dependencies and licenses are recorded in the npm
+lockfile and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ```sh
-npm ci
+npm ci --ignore-scripts --no-audit --no-fund
 make doctor
 make test
 make dev
 ```
 
-Open `http://127.0.0.1:43171`. Set `PATCHPROOF_PORT` if the port is occupied.
-The server binds only to loopback. The small page is a contract inspector, not
-the planned three-screen product. Select the non-executable fixture, create a
-mock record, inspect real handler events, then download its explicitly labeled
-mock evidence. Every requirement remains unverified. No user code executes.
+Open **http://127.0.0.1:43171**. Select **Stable unique**, compare the three
+policies, inspect a rejected candidate's actual check output, and download its
+evidence. The scripted example supports this one task. Another 29 public tasks
+are inspectable and clearly require a connected model to launch.
 
-Browser check (requires the pinned Playwright Chromium browser):
+`make doctor` makes no paid calls. If the pinned local checker image is absent,
+it reports the blocker; there is no automatic image pull or provider fallback.
+The required image and local controls are in [the runtime guide](workers/sandbox/README.md).
+This Linux/amd64 build has not been verified on another platform.
+
+On a new Linux/amd64 machine, provision that exact image explicitly before
+starting the checker:
 
 ```sh
-npx playwright install chromium
-npm run test:browser
+docker pull --platform linux/amd64 python@sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f
 ```
 
-Only the schema fixture exists. It is not one of the required 60 evaluation
-tasks. All three variant names are accepted for contract testing; none implements
-the eventual repair policy. This harness does not measure baseline performance.
+The API binds to loopback, accepts curated task IDs, and has no upload, arbitrary
+command, remote URL, merge or publishing route. Set `PATCHPROOF_PORT` to choose
+another loopback port. Do not expose this local prototype as a public service.
 
-## Command status
+## Commands
 
-| Command | Implemented behavior now |
+| Command | Current behavior |
 |---|---|
-| `make doctor` | Local config/runtime diagnostics, explicit gate blockers; no provider calls. |
-| `make test` | Type checking and deterministic mock/contract/HTTP/file-integrity tests. |
-| `npm run test:browser` | Browser task-to-download flow, mobile layout and integrity check. |
-| `make smoke` | Reports G0/T04 blockers and exits 2; real adapter not implemented. |
-| `make pilot` | Reports blocked; zero of 72 episodes executed. |
-| `make evaluate` | Reports blocked; zero of 270 episodes executed. |
-| `make export RUN=<id>` | Exports a CLI-created mock record; immutable files, no patch. |
-| `make reproduce RUN=<id>` | Checks mock bundle integrity; **does not execute tests or reproduce a patch verdict**. |
-| `make release-check` | Reports missing release dependencies and exits 2; not a completed release audit. |
+| `make doctor` | Reports local runtime, fixtures, approval and provider blockers; no paid calls. |
+| `make test` | Type checks, contract locks, unit/HTTP/evaluation tests and real local container lifecycle tests. |
+| `npm run test:browser` | Starts an isolated local app, runs all three policies, checks desktop/mobile flow and exports evidence. Requires installed Playwright Chromium. |
+| `npm run run -- stable-unique-01 patchproof` | Runs the same local coordinator from the CLI; stop `make dev` first because one process owns its state. |
+| `make export RUN=<id>` | Exports immutable patch, inputs, locks, logs, coverage, events and cost ledger from the durable journal. |
+| `make reproduce RUN=<id>` | Validates the bundle, applies its patch in a fresh workspace and executes declared checks in fresh pinned containers. |
+| `make smoke` | Exits 2 with actual provider prerequisites; real execution is not wired into this command. |
+| `make pilot` / `make evaluate` | Exit 2; offline plan/analysis tools exist, but no live experiment has run. |
+| `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
 
-To exercise CLI mock export:
+Install the pinned browser if needed with `npx playwright install chromium`.
+For a browser download, save the bundle as `artifacts/<run-id>.json` before using
+`make reproduce`. Self-consistent hashes establish integrity, not authenticated
+provenance. A replayed mock-model run remains mock and cannot become competition
+ready. The original v1 contract-only scaffold is retained for historical tests;
+`npm run mock-run` produces that older non-executable format, not product evidence.
 
-```sh
-npm run mock-run
-# Use the run ID printed by that command:
-make export RUN=<id>
-make reproduce RUN=<id>
-```
+## Implementation and evidence
 
-For a browser download, save it as `artifacts/<id>.json`, then run the reproduce
-command shown on the page. The optional `DIGEST=sha256:...` compares against the
-digest shown before downloading. Without an original local record or a supplied
-digest, the check only confirms internal consistency. Digests alone do not prove
-authenticity, and mocks cannot become competition evidence.
+![Local task picker with explicit mock mode](docs/screenshots/tasks.png)
 
-## Current boundaries and next gate
+See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
+[comparison](docs/screenshots/comparison.png) / [evidence](docs/screenshots/evidence.png) screens.
 
-- Original planning package is preserved in commit `4bf1335`. `tasks.json` is a
-  living tracker; the original `SHA256SUMS.txt` applies to the initial package.
-- Owner eligibility, contribution rights and AI-assisted development confirmed.
-- Provider credentials must be provisioned outside this checkout and candidate
-  workspaces. No keys are read from home directories or inferred from homelab services.
-- Account entitlements, exact NVIDIA model, rates, SDK/image and runtime controls
-  remain unknown in [runtime-lock.json](runtime-lock.json).
-- T03/T04 have not started; T02's local preparation does not bypass T01/G0.
-- Mock HTTP runs live in memory. Restart loses them. Downloads and CLI mock
-  records persist locally in ignored directories. Production restart/cost
-  reconciliation and evaluator isolation have not been implemented.
-- Full UI work follows the real pilot gate. Publishing, license selection,
-  hosting and submission remain owner decisions. The private code is currently
-  `UNLICENSED`; this is not yet a public-source submission package.
+- SQLite journal, coordinator ownership lease, cancellation, scoped restart
+  reconciliation and content-addressed evidence persist locally in `.local/product/`.
+- B0 receives visible feedback; B1 receives declared acceptance feedback; P can
+  propose up to three candidates against the original snapshot. All policies use
+  one shared allowance per episode. No sealed final checks enter the repair loop.
+- The suite has 60 original synthetic tasks across 12 fixture repositories,
+  split 20/10/30 by repository. Public development/calibration files are here;
+  gold and sealed checks stay in the separate evaluator workspace. These are
+  synthetic examples, not a representative sample of real repositories.
+- Exact CPU consumption is unknown and displayed as such. The runner limits CPU
+  rate and wall time; it does not supply a measured cumulative CPU counter.
+- Fresh local replay is implemented. Independent clean-machine replay, sponsor
+  traces, reconciled billing, the 72-episode pilot and 270-episode final are pending.
 
-See [task evidence](research/task-evidence.md) and
-[the current blocker report](research/blockers.md) for verification and remaining work.
+See [task evidence](research/task-evidence.md), [evaluation](docs/evaluation.md),
+[operations](docs/operations.md), and [the submission draft](docs/submission-draft.md).
+The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
+refers to that original package. `tasks.json` is a living acceptance tracker.
+
+The GitHub repository is private. Application licensing, public source/video,
+public demo operation and event entry remain owner decisions. No entry,
+publication, deployment or automatic merge has occurred.

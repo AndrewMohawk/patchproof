@@ -1,0 +1,128 @@
+{
+  "id": "merge-defaults-11",
+  "repoId": "fixture-03",
+  "split": "development",
+  "title": "Preserve explicit false values",
+  "description": "Merge defaults with overrides; presence, including None or false, takes precedence.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Every explicit override wins, including falsy values."
+    },
+    {
+      "id": "R02",
+      "text": "Inputs remain unchanged."
+    },
+    {
+      "id": "R03",
+      "text": "Non-dictionary inputs raise TypeError."
+    }
+  ],
+  "files": {
+    "solution.py": "def merge_defaults(defaults, overrides):\n    return {key:overrides.get(key) or value for key,value in defaults.items()}\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        {
+          "x": 1
+        },
+        {
+          "x": 2
+        }
+      ],
+      "expected": {
+        "x": 2
+      },
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        {},
+        {}
+      ],
+      "expected": {},
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        null,
+        {}
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 0,
+          "z": null
+        }
+      ],
+      "expected": {
+        "x": 0,
+        "y": 2,
+        "z": null
+      },
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        {
+          "x": true
+        },
+        {
+          "x": false
+        }
+      ],
+      "expected": {
+        "x": false
+      },
+      "assertArgsUnchanged": true
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "merge_defaults",
+      "kwargs": {},
+      "args": [
+        {},
+        []
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}

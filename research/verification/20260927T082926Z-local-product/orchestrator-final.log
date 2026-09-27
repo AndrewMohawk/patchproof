@@ -1,0 +1,19 @@
+(node:336700) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ coordinator preserves protected helpers, publishes coherent evidence, and replays actual diff (467.187501ms)
+✔ infrastructure errors retain partial checks and operation IDs in evidence (447.012205ms)
+✔ publication failure cannot leave an approval in the final journal event (645.538081ms)
+✔ restart recovery reconciles run-owned handles before recording interruption (809.10805ms)
+✔ recovery with a changed runtime preserves old bindings without serving stale or fabricated evidence (515.42703ms)
+✔ recovery checker failure records an infrastructure error without blocking startup (604.15471ms)
+✔ coordinator lease refuses a second live owner and releases its own lease (5.344182ms)
+✔ diff replay reconstructs added files and exact missing final newlines (28.202174ms)
+✔ 2.1 evidence binds all task metadata and never guesses a legacy digest after mismatch (581.192647ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4353.032365

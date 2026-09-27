@@ -1,75 +1,47 @@
-import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
 import { once } from 'node:events';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, mkdir, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { promisify } from 'node:util';
-import { chromium } from 'playwright';
-import { createMockServer } from '../apps/api/src/server.ts';
-import { verifyBundle } from '../packages/mock/src/bundle.ts';
-import { writeBundle } from '../packages/mock/src/store.ts';
+import { fileURLToPath } from 'node:url';
+import { createApplication } from '../apps/api/src/application.ts';
 
 const root = new URL('../', import.meta.url);
-const lock = JSON.parse(await readFile(new URL('runtime-lock.json', root), 'utf8'));
-const { server } = createMockServer(lock);
-server.listen(0, '127.0.0.1');
-await once(server, 'listening');
-const address = server.address();
-assert.ok(address && typeof address !== 'string');
-const base = `http://127.0.0.1:${address.port}`;
-let browser;
+const directory = await mkdtemp(join(tmpdir(), 'patchproof-browser-'));
+const app = await createApplication(root, directory);
+const startedAt = new Date().toISOString();
+let observerPassed = false;
 try {
-  browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-  const errors: string[] = [];
-  const requests: string[] = [];
-  page.on('pageerror', error => errors.push(error.message));
-  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  page.on('request', request => requests.push(request.url()));
-  await page.goto(base, { waitUntil: 'networkidle' });
-  assert.equal(await page.title(), 'PatchProof — mock contract inspector');
-  assert.match(await page.locator('.notice').innerText(), /MOCK.*Not competition-ready/);
-  await page.getByRole('button', { name: 'Create mock record', exact: true }).click();
-  await page.getByRole('link', { name: 'Download mock evidence' }).waitFor();
-  assert.equal(await page.locator('#status').innerText(), 'MOCK · needs_review · $0 spent');
-  assert.equal(await page.locator('#events li').count(), 4);
-  const [download] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('link', { name: 'Download mock evidence' }).click(),
-  ]);
-  const stream = await download.createReadStream();
-  const chunks: Buffer[] = [];
-  for await (const chunk of stream) chunks.push(Buffer.from(chunk));
-  const bundle = verifyBundle(JSON.parse(Buffer.concat(chunks).toString('utf8')));
-  assert.equal(download.suggestedFilename(), `${bundle.run.id}.json`);
-  await writeBundle(root, 'artifacts/', bundle);
-  const { stdout } = await promisify(execFile)(process.execPath,
-    [new URL('scripts/cli.ts', root).pathname, 'reproduce', bundle.run.id, bundle.bundleDigest]);
-  const replay = JSON.parse(stdout);
-  assert.equal(replay.integrityBasis, 'provided_digest');
-  assert.equal(replay.executionPerformed, false);
-  assert.equal(replay.authenticityVerified, false);
-  const desktopScreenshot = '/tmp/patchproof-contract-desktop.png';
-  const mobileScreenshot = '/tmp/patchproof-contract-mobile.png';
-  await page.screenshot({ path: desktopScreenshot, fullPage: true });
-  await page.setViewportSize({ width: 390, height: 844 });
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
-  assert.equal(overflow, false, 'Mobile page must not require horizontal scrolling.');
-  assert.ok(await page.getByRole('link', { name: 'Download mock evidence' }).isVisible());
-  await page.screenshot({ path: mobileScreenshot, fullPage: true });
-  assert.deepEqual(errors, []);
-  assert.ok(requests.every(url => url.startsWith(base + '/')), 'Browser requests must remain on this loopback app.');
-  const report = {
-    testedAt: new Date().toISOString(), mode: 'mock', competitionReady: false,
-    status: 'passed', browserVersion: browser.version(), runId: bundle.run.id,
-    checks: ['task selection', 'mock labels', 'handler events', 'download', 'CLI integrity verification',
-      'mobile layout', 'no browser errors', 'only loopback requests'],
-    artifact: `artifacts/${bundle.run.id}.json`, bundleDigest: bundle.bundleDigest,
-    screenshots: [desktopScreenshot, mobileScreenshot], replay,
-  };
-  await mkdir(new URL('.local/verification/', root), { recursive: true });
-  await writeFile(new URL('.local/verification/browser.json', root), JSON.stringify(report, null, 2) + '\n');
-  console.log(JSON.stringify(report, null, 2));
+  app.server.listen(0, '127.0.0.1'); await once(app.server, 'listening');
+  const address = app.server.address();
+  if (!address || typeof address === 'string') throw new Error('Missing loopback listener.');
+  const result = await promisify(execFile)(process.execPath,
+    [fileURLToPath(new URL('apps/web/verify-browser.ts', root)), `http://127.0.0.1:${address.port}`],
+    { cwd: fileURLToPath(root), timeout: 160_000, maxBuffer: 2_000_000 });
+  observerPassed = true;
+  process.stdout.write(result.stdout);
 } finally {
-  await browser?.close();
-  server.closeAllConnections();
-  await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+  let exportsPreserved = false;
+  try {
+    // An observer failure must not discard unfinished or unsuccessful actual runs.
+    await app.coordinator.settled();
+    await mkdir(new URL('artifacts/', root), { recursive: true });
+    const ids: string[] = [];
+    for (const run of app.coordinator.list()) {
+      const bundle = await app.coordinator.evidence(run.id);
+      await writeFile(new URL(`artifacts/${run.id}.json`, root), JSON.stringify(bundle, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+      ids.push(run.id);
+    }
+    await mkdir(new URL('.local/verification/', root), { recursive: true });
+    await writeFile(new URL(`.local/verification/browser-attempt-${startedAt.replace(/[:.]/g, '-')}.json`, root),
+      JSON.stringify({ startedAt, finishedAt: new Date().toISOString(), observerPassed, exportedRunIds: ids, mode: 'mock' }, null, 2) + '\n', { flag: 'wx' });
+    exportsPreserved = true;
+  } finally {
+    app.server.closeAllConnections();
+    await new Promise<void>((resolve, reject) => app.server.close(error => error ? reject(error) : resolve()));
+    await app.close();
+    if (exportsPreserved) await rm(directory, { recursive: true, force: true });
+    else process.stderr.write(`Evidence preservation failed; run journal retained at ${directory}\n`);
+  }
 }

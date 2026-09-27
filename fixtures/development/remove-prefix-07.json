@@ -1,0 +1,106 @@
+{
+  "id": "remove-prefix-07",
+  "repoId": "fixture-02",
+  "split": "development",
+  "title": "Remove a literal prefix once",
+  "description": "Remove a specified literal prefix once, and only at the start.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Remove exactly one complete leading prefix."
+    },
+    {
+      "id": "R02",
+      "text": "Empty or missing prefixes preserve text."
+    },
+    {
+      "id": "R03",
+      "text": "Non-string text or prefix raises TypeError."
+    }
+  ],
+  "files": {
+    "solution.py": "def remove_prefix(text, prefix):\n    return text.lstrip(prefix)\n"
+  },
+  "editAllowlist": [
+    "solution.py"
+  ],
+  "entrypoint": "solution.py",
+  "visibleCases": [
+    {
+      "id": "visible-01",
+      "requirementId": "R01",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        "prehello",
+        "pre"
+      ],
+      "expected": "hello",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-02",
+      "requirementId": "R02",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        "hello",
+        ""
+      ],
+      "expected": "hello",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "visible-03",
+      "requirementId": "R03",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        null,
+        "x"
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "acceptance-01",
+      "requirementId": "R01",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        "preprehello",
+        "pre"
+      ],
+      "expected": "prehello",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-02",
+      "requirementId": "R02",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        "pepper",
+        "pre"
+      ],
+      "expected": "pepper",
+      "assertArgsUnchanged": false
+    },
+    {
+      "id": "acceptance-03",
+      "requirementId": "R03",
+      "function": "remove_prefix",
+      "kwargs": {},
+      "args": [
+        "x",
+        1
+      ],
+      "expectedException": "TypeError",
+      "assertArgsUnchanged": false
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+}
