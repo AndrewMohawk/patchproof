@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { FixtureSchema } from '../packages/contracts/src/product.ts';
+import { loadFixtures, publicTask } from '../packages/orchestrator/src/fixtures.ts';
 import { Coordinator } from '../packages/orchestrator/src/coordinator.ts';
 import { EvidenceStore, reproduceEvidence, verifyEvidence } from '../packages/orchestrator/src/evidence.ts';
 import { RunJournal } from '../packages/orchestrator/src/journal.ts';
@@ -13,8 +13,10 @@ import { DockerCheckRunner, LOCAL_IMAGE_ID } from '../workers/sandbox/index.ts';
 test('unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch', { timeout: 60_000 }, async t => {
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-abstention-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  // This public development fixture is explicitly outside the one scripted demonstration.
-  const fixture = FixtureSchema.parse(JSON.parse(await readFile(new URL('../fixtures/development/chunk-list-02.json', import.meta.url), 'utf8')));
+  // Exercise the current public catalogue without depending on a retired corpus filename.
+  const fixture = (await loadFixtures(new URL('../', import.meta.url)))
+    .find(task => task.split === 'development' && !publicTask(task).mockSupported);
+  assert.ok(fixture, 'The public catalogue must include an unsupported development task.');
   const journalPath = join(directory, 'runs.sqlite');
   const store = new EvidenceStore(join(directory, 'evidence'));
   const coordinator = new Coordinator({ fixtures: [fixture], runtimeLock: { mode: 'mock', localCheckImage: LOCAL_IMAGE_ID },

@@ -1,0 +1,387 @@
+{
+  "id": "v2-r03-t03",
+  "repoId": "owned-v2-r03",
+  "split": "development",
+  "title": "Include the final complete worksheet window",
+  "description": "Gridloom is an original stdlib-only worksheet library. This task concerns the named operation; retain all other functions. Inputs and outputs are JSON values. A valid worksheet is a list of lists whose cells are None or exact integers (booleans and floats are not integers). Integer inputs and all aggregate sums in scope are within the JavaScript safe range. No function may mutate any caller argument, including before raising an error. Empty rows and an empty worksheet are supported. Repair the reported regression while preserving the full contract below. The complete-window boundary check drops the last band when it ends exactly at the worksheet boundary.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "row_windows(rows, size, stride=1) returns each complete consecutive window of exactly size rows starting at indices 0, stride, 2*stride, and so on. Include a complete window ending exactly at len(rows). Preserve window order and each row and cell within it, including empty rows and None cells; overlapping windows are allowed."
+    },
+    {
+      "id": "R02",
+      "text": "Omit every incomplete trailing window. If rows is empty or size exceeds len(rows), return []. A stride larger than size may leave gaps and must not manufacture intermediate windows or a partial tail."
+    },
+    {
+      "id": "R03",
+      "text": "Reject a non-list worksheet, any non-list row, or any cell other than None or an exact integer with TypeError; this includes rejecting booleans, floats, strings (including Unicode), lists and objects as cells. Validate all rows, including rows after otherwise valid data. Require size and stride to be exact integers (not bool or float), otherwise TypeError. After type validation, either value <= 0 raises ValueError."
+    }
+  ],
+  "files": {
+    "gridloom.py": "\"\"\"Gridloom: small pure operations on ragged integer worksheets.\"\"\"\n\n\ndef _validate_rows(rows):\n    if not isinstance(rows, list):\n        raise TypeError(\"rows must be a list\")\n    for row in rows:\n        if not isinstance(row, list):\n            raise TypeError(\"each row must be a list\")\n        for cell in row:\n            if cell is not None and type(cell) is not int:\n                raise TypeError(\"cells must be integers or None\")\n\n\ndef fill_down(rows):\n    \"\"\"Carry each column's most recent integer into its None cells.\"\"\"\n    _validate_rows(rows)\n    previous = {}\n    result = []\n    for row in rows:\n        completed = []\n        for column, cell in enumerate(row):\n            if cell is None:\n                completed.append(previous.get(column))\n            else:\n                previous[column] = cell\n                completed.append(cell)\n        result.append(completed)\n    return result\n\n\ndef transpose(rows, fill=0):\n    \"\"\"Transpose ragged rows, substituting fill only for absent cells.\"\"\"\n    _validate_rows(rows)\n    if fill is not None and type(fill) is not int:\n        raise TypeError(\"fill must be an integer or None\")\n    width = max((len(row) for row in rows), default=0)\n    return [[row[column] if column < len(row) else fill for row in rows]\n            for column in range(width)]\n\n\ndef row_windows(rows, size, stride=1):\n    \"\"\"Return complete consecutive row windows at the requested stride.\"\"\"\n    _validate_rows(rows)\n    if type(size) is not int or type(stride) is not int:\n        raise TypeError(\"size and stride must be integers\")\n    if size <= 0 or stride <= 0:\n        raise ValueError(\"size and stride must be positive\")\n    result = []\n    for start in range(0, len(rows), stride):\n        if start + size < len(rows):\n            result.append([list(row) for row in rows[start:start + size]])\n    return result\n\n\ndef column_summary(rows):\n    \"\"\"Return an integer sum and populated-cell count for every column.\"\"\"\n    _validate_rows(rows)\n    width = max((len(row) for row in rows), default=0)\n    result = [{\"sum\": 0, \"count\": 0} for _ in range(width)]\n    for row in rows:\n        for column, cell in enumerate(row):\n            if cell is not None:\n                result[column][\"sum\"] += cell\n                result[column][\"count\"] += 1\n    return result\n\n\ndef collapse_rows(rows):\n    \"\"\"Keep one row from each maximal consecutive run of equal rows.\"\"\"\n    _validate_rows(rows)\n    result = []\n    for row in rows:\n        if not result or row != result[-1]:\n            result.append(list(row))\n    return result\n"
+  },
+  "editAllowlist": [
+    "gridloom.py"
+  ],
+  "entrypoint": "gridloom.py",
+  "visibleCases": [
+    {
+      "id": "v-r01-aligned-last",
+      "requirementId": "R01",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ]
+        ],
+        2
+      ],
+      "kwargs": {
+        "stride": 2
+      },
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        [
+          [
+            3
+          ],
+          [
+            4
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "v-r02-tail",
+      "requirementId": "R02",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        2
+      ],
+      "kwargs": {
+        "stride": 2
+      },
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "v-r03-zero-size",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "a-r01-single-rows",
+      "requirementId": "R01",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            2
+          ],
+          [],
+          [
+            null
+          ]
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [
+            2
+          ]
+        ],
+        [
+          []
+        ],
+        [
+          [
+            null
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "a-r01-overlap",
+      "requirementId": "R01",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            7
+          ],
+          [
+            -2
+          ],
+          [
+            0
+          ]
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [
+            7
+          ],
+          [
+            -2
+          ]
+        ],
+        [
+          [
+            -2
+          ],
+          [
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "a-r02-stride-tail",
+      "requirementId": "R02",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ]
+        ],
+        3
+      ],
+      "kwargs": {
+        "stride": 4
+      },
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "a-r02-empty",
+      "requirementId": "R02",
+      "function": "row_windows",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "a-r02-oversized",
+      "requirementId": "R02",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            8
+          ]
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "a-r03-size-bool",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-size-string",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        "2"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-size-null",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-size-float",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        2.5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-stride-zero",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {
+        "stride": 0
+      },
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "a-r03-stride-negative",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {
+        "stride": -1
+      },
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "a-r03-stride-bool",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {
+        "stride": false
+      },
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-outer-string",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        "abc",
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-cell-string",
+      "requirementId": "R03",
+      "function": "row_windows",
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            "ñ"
+          ]
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent author job repo03 for repository owned-v2-r03; authored by /root/corpus_v2_repo03; see private revision provenance.json."
+}

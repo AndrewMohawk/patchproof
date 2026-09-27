@@ -1,0 +1,305 @@
+{
+  "id": "v2-r03-t04",
+  "repoId": "owned-v2-r03",
+  "split": "development",
+  "title": "Count zero-valued worksheet cells as populated",
+  "description": "Gridloom is an original stdlib-only worksheet library. This task concerns the named operation; retain all other functions. Inputs and outputs are JSON values. A valid worksheet is a list of lists whose cells are None or exact integers (booleans and floats are not integers). Integer inputs and all aggregate sums in scope are within the JavaScript safe range. No function may mutate any caller argument, including before raising an error. Empty rows and an empty worksheet are supported. Repair the reported regression while preserving the full contract below. A truthiness shortcut undercounts columns containing explicit zero cells.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "column_summary(rows) returns one {\"sum\": integer, \"count\": integer} object per column, ordered from column zero through the longest row. sum is the signed integer sum of all present non-None cells in that column; missing cells and None contribute zero. A column with no integers has sum 0. Empty input or only empty rows returns []."
+    },
+    {
+      "id": "R02",
+      "text": "For each returned column, count is the number of present non-None cells in that column. Explicit zero and negative integers each count as one; missing cells and explicit None count as zero. A column with no integers has count 0."
+    },
+    {
+      "id": "R03",
+      "text": "Reject a non-list worksheet, any non-list row, or any cell other than None or an exact integer with TypeError; this includes rejecting booleans, floats, strings (including Unicode), lists and objects as cells. Validate all rows, including rows after otherwise valid data."
+    }
+  ],
+  "files": {
+    "gridloom.py": "\"\"\"Gridloom: small pure operations on ragged integer worksheets.\"\"\"\n\n\ndef _validate_rows(rows):\n    if not isinstance(rows, list):\n        raise TypeError(\"rows must be a list\")\n    for row in rows:\n        if not isinstance(row, list):\n            raise TypeError(\"each row must be a list\")\n        for cell in row:\n            if cell is not None and type(cell) is not int:\n                raise TypeError(\"cells must be integers or None\")\n\n\ndef fill_down(rows):\n    \"\"\"Carry each column's most recent integer into its None cells.\"\"\"\n    _validate_rows(rows)\n    previous = {}\n    result = []\n    for row in rows:\n        completed = []\n        for column, cell in enumerate(row):\n            if cell is None:\n                completed.append(previous.get(column))\n            else:\n                previous[column] = cell\n                completed.append(cell)\n        result.append(completed)\n    return result\n\n\ndef transpose(rows, fill=0):\n    \"\"\"Transpose ragged rows, substituting fill only for absent cells.\"\"\"\n    _validate_rows(rows)\n    if fill is not None and type(fill) is not int:\n        raise TypeError(\"fill must be an integer or None\")\n    width = max((len(row) for row in rows), default=0)\n    return [[row[column] if column < len(row) else fill for row in rows]\n            for column in range(width)]\n\n\ndef row_windows(rows, size, stride=1):\n    \"\"\"Return complete consecutive row windows at the requested stride.\"\"\"\n    _validate_rows(rows)\n    if type(size) is not int or type(stride) is not int:\n        raise TypeError(\"size and stride must be integers\")\n    if size <= 0 or stride <= 0:\n        raise ValueError(\"size and stride must be positive\")\n    result = []\n    for start in range(0, len(rows), stride):\n        if start + size <= len(rows):\n            result.append([list(row) for row in rows[start:start + size]])\n    return result\n\n\ndef column_summary(rows):\n    \"\"\"Return an integer sum and populated-cell count for every column.\"\"\"\n    _validate_rows(rows)\n    width = max((len(row) for row in rows), default=0)\n    result = [{\"sum\": 0, \"count\": 0} for _ in range(width)]\n    for row in rows:\n        for column, cell in enumerate(row):\n            if cell:\n                result[column][\"sum\"] += cell\n                result[column][\"count\"] += 1\n    return result\n\n\ndef collapse_rows(rows):\n    \"\"\"Keep one row from each maximal consecutive run of equal rows.\"\"\"\n    _validate_rows(rows)\n    result = []\n    for row in rows:\n        if not result or row != result[-1]:\n            result.append(list(row))\n    return result\n"
+  },
+  "editAllowlist": [
+    "gridloom.py"
+  ],
+  "entrypoint": "gridloom.py",
+  "visibleCases": [
+    {
+      "id": "v-r01-sums",
+      "requirementId": "R01",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            2,
+            -1
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": 5,
+          "count": 2
+        },
+        {
+          "sum": 3,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "v-r02-zero-count",
+      "requirementId": "R02",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": 0,
+          "count": 2
+        },
+        {
+          "sum": 2,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "v-r03-outer",
+      "requirementId": "R03",
+      "function": "column_summary",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "a-r01-signed-ragged",
+      "requirementId": "R01",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            4,
+            -4,
+            null
+          ],
+          [
+            -9,
+            6
+          ],
+          [
+            null,
+            -2,
+            8
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": -5,
+          "count": 2
+        },
+        {
+          "sum": 0,
+          "count": 3
+        },
+        {
+          "sum": 8,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "a-r01-null-columns",
+      "requirementId": "R01",
+      "function": "column_summary",
+      "args": [
+        [
+          [],
+          [
+            null,
+            null
+          ],
+          []
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": 0,
+          "count": 0
+        },
+        {
+          "sum": 0,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "id": "a-r01-empty",
+      "requirementId": "R01",
+      "function": "column_summary",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "a-r02-ragged-zero",
+      "requirementId": "R02",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            0,
+            null,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            null,
+            0,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": 5,
+          "count": 2
+        },
+        {
+          "sum": 0,
+          "count": 2
+        },
+        {
+          "sum": 0,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "a-r02-null-excluded",
+      "requirementId": "R02",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            null,
+            3
+          ],
+          [
+            7,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "sum": 7,
+          "count": 1
+        },
+        {
+          "sum": 3,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "a-r03-outer-object",
+      "requirementId": "R03",
+      "function": "column_summary",
+      "args": [
+        {}
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-row-string",
+      "requirementId": "R03",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            1
+          ],
+          "2"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-cell-bool",
+      "requirementId": "R03",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            false
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-cell-float",
+      "requirementId": "R03",
+      "function": "column_summary",
+      "args": [
+        [
+          [
+            -2.25
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent author job repo03 for repository owned-v2-r03; authored by /root/corpus_v2_repo03; see private revision provenance.json."
+}

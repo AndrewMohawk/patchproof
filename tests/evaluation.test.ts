@@ -38,20 +38,34 @@ test('manifest has 60 distinct tasks in 12 disjoint five-task repositories', () 
   }
 });
 
-test('public preparation and independent-review receipts bind the current immutable manifest', async () => {
+test('independent author and reviewer execution receipts bind the current immutable manifest', async () => {
   const bytes = await readFile(new URL('../fixtures/split-manifest.json', import.meta.url));
   const expected = 'sha256:' + createHash('sha256').update(bytes).digest('hex');
-  const author = JSON.parse(await readFile(new URL('../fixtures/oracle-validation-summary.json', import.meta.url),'utf8'));
   const reviewer = JSON.parse(await readFile(new URL('../fixtures/independent-review-summary.json', import.meta.url),'utf8'));
-  assert.equal(author.manifestDigest,expected); assert.equal(reviewer.manifestDigest,expected);
-  assert.equal(author.benchmarkExecuted,false);
-  assert.equal(author.totalTasks,60); assert.equal(author.goldPassedTasks,60);
-  assert.equal(author.buggyRejectedTasks,60); assert.equal(author.repeatStableTasks,60);
-  assert.equal(author.infrastructureFailedTasks,0);
-  assert.equal(reviewer.status,'reviewed_and_author_runtime_validated');
-  assert.equal(reviewer.authorRuntimeEvidenceMatchesManifest,true);
+  const provenanceBytes = await readFile(new URL('../fixtures/author-provenance.json', import.meta.url));
+  const provenance = JSON.parse(provenanceBytes.toString());
+  const launchBytes = await readFile(new URL('../research/corpus-v2/author-jobs.json', import.meta.url));
+  const launches = JSON.parse(launchBytes.toString());
+  assert.equal(reviewer.manifestDigest,expected); assert.equal(provenance.manifestDigest,expected);
+  assert.equal(reviewer.provenanceDigest, 'sha256:' + createHash('sha256').update(provenanceBytes).digest('hex'));
+  assert.equal(provenance.authorJobLedgerDigest, 'sha256:' + createHash('sha256').update(launchBytes).digest('hex'));
+  assert.equal(reviewer.status,'independently_authored_reviewed_and_reviewer_runtime_validated');
+  assert.equal(reviewer.reviewerRuntimeEvidenceMatchesManifest,true);
+  assert.equal(reviewer.reviewerIsAnAuthor,false);
+  assert.equal(reviewer.productContractVersion,'2.2');
+  assert.deepEqual(reviewer.reviewerRuntimeCounts, { totalTasks:60, goldPassedTasks:60, buggyRejectedTasks:60, repeatStableTasks:60, infrastructureFailedTasks:0 });
   assert.equal(reviewer.counts.tasksReviewed,60); assert.equal(reviewer.counts.unresolvedFindings,0);
+  assert.equal(reviewer.counts.independentAuthorJobs,12);
   assert.equal(reviewer.independentHumanReview,false); assert.equal(reviewer.scoredModelEvaluationPerformed,false);
+  assert.equal(provenance.repositories.length,12);
+  assert.equal(new Set(provenance.repositories.map((repo: { canonicalAuthorIdentity: string }) => repo.canonicalAuthorIdentity)).size,12);
+  for (const repo of provenance.repositories) {
+    const launch = launches.jobs.find((job: { agent: string }) => job.agent === repo.canonicalAuthorIdentity);
+    assert(launch); assert.equal(launch.forkTurns,'none');
+    assert(launch.submittedRevisions.some((revision: { revision: string; submissionDigest: string }) => revision.revision === repo.acceptedRevision && revision.submissionDigest === repo.submissionDigest));
+    assert.equal(launch.validation.receiptDigest,repo.runtimeValidationDigest);
+    assert.equal(repo.runtimeStatus,'independent_reviewer_validated');
+  }
 });
 
 test('public fixture bytes match immutable manifest and each check maps to a requirement', async () => {

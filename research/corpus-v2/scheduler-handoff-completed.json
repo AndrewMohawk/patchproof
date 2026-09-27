@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "explicit-scheduler-handoff-barrier-confirmed",
+  "recordedAt": "2026-09-27T14:55:27.288940+00:00",
+  "originalQueueId": "0e4b755a-1745-4b73-8c1d-db37d585a956",
+  "processExitCode": 1,
+  "lastDispatchedRepository": "repo09",
+  "lastDispatchedExitCode": 0,
+  "blockedRepository": "repo11",
+  "errorCode": "EEXIST",
+  "barrierLocation": "exclusive log open before child spawn",
+  "barrierDigest": "sha256:67bbc755c43097ecd82c3a16bcdf2f56d534178619e6642031d22c43ca2181d3",
+  "duplicateChildSpawned": false,
+  "primaryRepository11AttemptCount": 1,
+  "classification": "administrative_scheduler_stop_not_fixture_failure",
+  "activeToolingChanged": false
+}

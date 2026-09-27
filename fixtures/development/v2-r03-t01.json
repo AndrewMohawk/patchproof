@@ -1,0 +1,313 @@
+{
+  "id": "v2-r03-t01",
+  "repoId": "owned-v2-r03",
+  "split": "development",
+  "title": "Retain fill-down history across blank worksheet spans",
+  "description": "Gridloom is an original stdlib-only worksheet library. This task concerns the named operation; retain all other functions. Inputs and outputs are JSON values. A valid worksheet is a list of lists whose cells are None or exact integers (booleans and floats are not integers). Integer inputs and all aggregate sums in scope are within the JavaScript safe range. No function may mutate any caller argument, including before raising an error. Empty rows and an empty worksheet are supported. Repair the reported regression while preserving the full contract below. The current fill-down refactor forgets earlier column values after blank spans.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "fill_down(rows) replaces each explicit None cell with the most recent integer in the same column in any earlier input row, or leaves it None if no earlier integer exists. Explicit integers, including zero and negatives, remain unchanged. Carrying through consecutive None cells must keep the last integer."
+    },
+    {
+      "id": "R02",
+      "text": "Preserve the number and order of rows and the exact length of every row. Missing columns and empty rows do not clear earlier column history and do not gain new cells. An empty worksheet returns [], and empty rows remain []."
+    },
+    {
+      "id": "R03",
+      "text": "Reject a non-list worksheet, any non-list row, or any cell other than None or an exact integer with TypeError; this includes rejecting booleans, floats, strings (including Unicode), lists and objects as cells. Validate all rows, including rows after otherwise valid data."
+    }
+  ],
+  "files": {
+    "gridloom.py": "\"\"\"Gridloom: small pure operations on ragged integer worksheets.\"\"\"\n\n\ndef _validate_rows(rows):\n    if not isinstance(rows, list):\n        raise TypeError(\"rows must be a list\")\n    for row in rows:\n        if not isinstance(row, list):\n            raise TypeError(\"each row must be a list\")\n        for cell in row:\n            if cell is not None and type(cell) is not int:\n                raise TypeError(\"cells must be integers or None\")\n\n\ndef fill_down(rows):\n    \"\"\"Carry each column's most recent integer into its None cells.\"\"\"\n    _validate_rows(rows)\n    previous = {}\n    result = []\n    for row in rows:\n        completed = [previous.get(column) if cell is None else cell\n                     for column, cell in enumerate(row)]\n        result.append(completed)\n        previous = {column: cell for column, cell in enumerate(row)\n                    if cell is not None}\n    return result\n\n\ndef transpose(rows, fill=0):\n    \"\"\"Transpose ragged rows, substituting fill only for absent cells.\"\"\"\n    _validate_rows(rows)\n    if fill is not None and type(fill) is not int:\n        raise TypeError(\"fill must be an integer or None\")\n    width = max((len(row) for row in rows), default=0)\n    return [[row[column] if column < len(row) else fill for row in rows]\n            for column in range(width)]\n\n\ndef row_windows(rows, size, stride=1):\n    \"\"\"Return complete consecutive row windows at the requested stride.\"\"\"\n    _validate_rows(rows)\n    if type(size) is not int or type(stride) is not int:\n        raise TypeError(\"size and stride must be integers\")\n    if size <= 0 or stride <= 0:\n        raise ValueError(\"size and stride must be positive\")\n    result = []\n    for start in range(0, len(rows), stride):\n        if start + size <= len(rows):\n            result.append([list(row) for row in rows[start:start + size]])\n    return result\n\n\ndef column_summary(rows):\n    \"\"\"Return an integer sum and populated-cell count for every column.\"\"\"\n    _validate_rows(rows)\n    width = max((len(row) for row in rows), default=0)\n    result = [{\"sum\": 0, \"count\": 0} for _ in range(width)]\n    for row in rows:\n        for column, cell in enumerate(row):\n            if cell is not None:\n                result[column][\"sum\"] += cell\n                result[column][\"count\"] += 1\n    return result\n\n\ndef collapse_rows(rows):\n    \"\"\"Keep one row from each maximal consecutive run of equal rows.\"\"\"\n    _validate_rows(rows)\n    result = []\n    for row in rows:\n        if not result or row != result[-1]:\n            result.append(list(row))\n    return result\n"
+  },
+  "editAllowlist": [
+    "gridloom.py"
+  ],
+  "entrypoint": "gridloom.py",
+  "visibleCases": [
+    {
+      "id": "v-r01-fill",
+      "requirementId": "R01",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            2,
+            -3
+          ],
+          [
+            null,
+            4
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          -3
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "v-r02-shape",
+      "requirementId": "R02",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            1
+          ],
+          [],
+          [
+            5,
+            6
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1
+        ],
+        [],
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "v-r03-outer",
+      "requirementId": "R03",
+      "function": "fill_down",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "a-r01-chain",
+      "requirementId": "R01",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            0,
+            8
+          ],
+          [
+            null,
+            null
+          ],
+          [
+            null,
+            -2
+          ],
+          [
+            null,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          -2
+        ]
+      ]
+    },
+    {
+      "id": "a-r01-unseeded",
+      "requirementId": "R01",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            null,
+            2
+          ],
+          [
+            7,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          null,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "a-r02-missing-column",
+      "requirementId": "R02",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            4,
+            9
+          ],
+          [
+            6
+          ],
+          [
+            null,
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          4,
+          9
+        ],
+        [
+          6
+        ],
+        [
+          6,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "a-r02-empty-row",
+      "requirementId": "R02",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            5
+          ],
+          [],
+          [
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          5
+        ],
+        [],
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": "a-r02-empty-sheet",
+      "requirementId": "R02",
+      "function": "fill_down",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "a-r03-row",
+      "requirementId": "R03",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            1
+          ],
+          "bad"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-bool",
+      "requirementId": "R03",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            true
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-float",
+      "requirementId": "R03",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            1.5
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "a-r03-object-cell",
+      "requirementId": "R03",
+      "function": "fill_down",
+      "args": [
+        [
+          [
+            {
+              "x": 1
+            }
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent author job repo03 for repository owned-v2-r03; authored by /root/corpus_v2_repo03; see private revision provenance.json."
+}

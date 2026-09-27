@@ -1,8 +1,9 @@
-# Prospective independent fixture corpus
+# Independent fixture corpus v2
 
-Status: authoring, independent review and local validation in progress. The
-default product catalog still uses v1. No scored repair-model episode or final
-result has been observed. This directory contains coordinator provenance and
+Status: frozen after independent authoring, review and fresh local validation of
+all 60 tasks. The 30 public fixtures are integrated into the product catalogue;
+root product integration verification is recorded separately. No scored
+repair-model episode or final result has been observed. This directory contains coordinator provenance and
 aggregate evidence only, never final check definitions or gold source.
 
 The PRD asks for twelve independently authored fixture repositories. The v1
@@ -25,6 +26,35 @@ gold to pass, the intended faulty start to fail, repeated gold checks to agree,
 and benign incorrect alternatives to be rejected. Failures and earlier revisions
 remain evidence, including source-only findings that were never executed.
 These preparation checks are not a repair-model experiment.
+
+Static review is complete for all 60 tasks: 180 requirements and 1,582 authored
+cases (262 visible, 644 acceptance and 676 sealed). The authors supplied 75
+negative controls; the reviewer added 13 semantic probes and 12 mutation or
+error-preservation controls. All 51 findings were resolved across 12 correction
+revisions before scored model execution. The accepted preparations passed all 60
+gold/start/repeat checks and all 100 controls under product contract 2.2.
+
+Fourteen fresh repository attempts are retained: twelve accepted preparations
+(280 batches) and two infrastructure failures (49 batches). Those failures timed
+out during Docker creation; the exact owned containers were later found never
+started and explicitly removed. Reviewed complete reruns used unchanged source,
+fixtures and limits. The final read-only audit covered 443 historical and fresh
+batches, 7,653 operations and 108 source files, finding no unresolved owned
+handles. See [incident history](contract22-preparation-incidents.json),
+[handle audit](local-handle-audit.json) and
+[freeze receipt](freeze-publication-receipt.json). These are preparation results,
+not model-evaluation outcomes or proof of a host-load cause.
+
+One sealed invocation repeats a public invocation and is not new held-out
+coverage. Exact filename-and-source comparisons found no starting or gold source
+duplicates across repositories. Forty identical gold-map pairs occur within
+individual repositories that share complete modules. This is a textual audit,
+not a semantic independence claim; analysis must retain repository clusters.
+
+The [preparation tools](tools/README.md) preserve evaluator-only source snapshots
+and observed tool versions. The [restart plan](contract22-restart-plan.json)
+requires fresh contract 2.2 execution for all 60 tasks after correcting JSON
+input and observation fidelity. Original contract 2.1 attempts remain history.
 
 [`author-jobs.json`](author-jobs.json) records the coordinator's actual launch
 facts and submitted hashes. It is not an independently authenticated platform

@@ -1,0 +1,369 @@
+{
+  "id": "v2-r06-t02",
+  "repoId": "owned-v2-r06",
+  "split": "calibration",
+  "title": "Consume completed instruction occurrences only once",
+  "description": "A completion-accounting regression removes every occurrence of a repeated instruction label. Restore the occurrence-based behavior used by workshop progress views.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "remaining_steps(planned, completed) returns the planned labels left after consuming one earliest still-unconsumed equal planned occurrence per completed label. Compare strings exactly, including Unicode, case and empty labels. Preserve the original order of survivors. Extra completed occurrences and absent labels are ignored; empty planned returns [] and empty completed returns planned values."
+    },
+    {
+      "id": "R02",
+      "text": "Both arguments must be lists containing only strings; otherwise raise TypeError. Validate both entire lists even when planned is empty or a completed label would not match any planned label."
+    },
+    {
+      "id": "R03",
+      "text": "Both supplied lists must remain unchanged on success and on a validation exception."
+    }
+  ],
+  "files": {
+    "progress.py": "\"\"\"Completion accounting for ordered workshop instruction labels.\"\"\"\n\n\ndef remaining_steps(planned, completed):\n    for labels in (planned, completed):\n        if not isinstance(labels, list) or any(not isinstance(x, str) for x in labels):\n            raise TypeError(\"step labels must be lists of strings\")\n    counts = {}\n    for label in completed:\n        counts[label] = counts.get(label, 0) + 1\n    result = []\n    for label in planned:\n        if counts.get(label, 0) > 0:\n            counts[label] = counts[label]\n        else:\n            result.append(label)\n    return result\n"
+  },
+  "editAllowlist": [
+    "progress.py"
+  ],
+  "entrypoint": "progress.py",
+  "visibleCases": [
+    {
+      "id": "v2-r06-t02-v-r01-basic",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "cut",
+          "glue",
+          "dry"
+        ],
+        [
+          "glue"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "cut",
+        "dry"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-v-r02-type",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "cut"
+        ],
+        [
+          false
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-v-r03-input",
+      "requirementId": "R03",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "wash",
+          "paint"
+        ],
+        [
+          "wash"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "paint"
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r06-t02-a-r01-count",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "drill",
+          "sand",
+          "drill",
+          "seal",
+          "drill"
+        ],
+        [
+          "drill",
+          "drill"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "sand",
+        "seal",
+        "drill"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r01-earliest",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "a",
+          "b",
+          "a"
+        ],
+        [
+          "a"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "b",
+        "a"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r01-surplus",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "stitch",
+          "fold"
+        ],
+        [
+          "stitch",
+          "stitch",
+          "absent"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "fold"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r01-case",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "Cut",
+          "cut",
+          "CUT"
+        ],
+        [
+          "cut"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "Cut",
+        "CUT"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r01-empty-label",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "",
+          "x",
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "x",
+        ""
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r01-empty-planned",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [],
+        [
+          "cut"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r06-t02-a-r01-empty-completed",
+      "requirementId": "R01",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "z",
+          "a"
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "z",
+        "a"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r02-planned-null",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        null,
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r02-completed-null",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        [],
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r02-planned-string",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        "cut",
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r02-completed-object",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        [],
+        {}
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r02-planned-member",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "cut",
+          4
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r02-unused-completed",
+      "requirementId": "R02",
+      "function": "remaining_steps",
+      "args": [
+        [],
+        [
+          "cut",
+          null
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r03-normal",
+      "requirementId": "R03",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "zip",
+          "align",
+          "zip"
+        ],
+        [
+          "zip"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "align",
+        "zip"
+      ]
+    },
+    {
+      "id": "v2-r06-t02-a-r03-error",
+      "requirementId": "R03",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "zip",
+          "align"
+        ],
+        [
+          "zip",
+          2.5
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t02-a-r03-isolated-success",
+      "requirementId": "R03",
+      "function": "remaining_steps",
+      "args": [
+        [
+          "polish",
+          "assemble",
+          "pack"
+        ],
+        [
+          "assemble"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "polish",
+        "pack"
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for shared job repo06; repository owned-v2-r06; author /root/corpus_v2_repo06; no upstream source copied."
+}

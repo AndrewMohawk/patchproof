@@ -1,0 +1,31 @@
+{
+  "purpose": "Explicit reviewer cleanup of the exact independently ownership-checked late create; original preparation failure is retained",
+  "startedAt": "2026-09-27T14:33:25.994Z",
+  "finishedAt": "2026-09-27T14:33:26.501Z",
+  "expected": {
+    "name": "patchproof-check-fdd35fda-056a-4e12-8826-e30a134ef782",
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "ownerRunId": "8d435119-0858-4f2c-883b-5226058637ee",
+    "id": "6bfed53a5cde7316fe341dcfdfcf48231ad6752434639868516cc497590077bb"
+  },
+  "beforeState": {
+    "Status": "created",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "0001-01-01T00:00:00Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "cleanup": {
+    "confirmed": true,
+    "id": "6bfed53a5cde7316fe341dcfdfcf48231ad6752434639868516cc497590077bb",
+    "reason": null
+  },
+  "paidCalls": 0,
+  "newCandidateExecution": false
+}

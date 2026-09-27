@@ -1,0 +1,26 @@
+# Trusted v2 corpus preparation snapshots
+
+These exact source snapshots contain no task, gold, sealed-case, or reviewer-probe definitions. `snapshot-manifest.json` maps each copy to its private original and SHA-256 digest. They belong to the independently authored v2 preparation process; they are not a model experiment, a provider run, or a claim that preparation has completed.
+
+The scripts intentionally retain their execution-bound absolute workspace paths. An authorized evaluator must have the private `/home/andrewmohawk/patchproof-evaluation-v2` workspace and the project checkout at `843b3687eb7b07d5a9ae0c7b00d3079804e596a8`. Install the pinned Node dependencies; the Python structural pass additionally requires the installed `jsonschema` module. The bounded checker requires the pinned local Docker image. Review the source and access boundaries before running it in a different environment; changing paths produces a new tooling digest and must be recorded as a new preparation, not relabeled as the original execution.
+
+The private originals are used in this order:
+
+1. `node review/intake.mjs repoNN submission-revision-NNN.json` verifies submitted paths, bytes, metadata, contract shapes, and requirement mappings. Revision001 uses `submission.json`.
+2. `python3 review/structural.py repoNN submission-revision-NNN.json` validates the shared JSON profile and parses Python ASTs. It does not import or execute authored Python.
+3. An independent reviewer reads every task, implementation, case and negative control, preserves correction requests and original revisions, and writes the bound static review and reviewer probes. Scripts cannot manufacture that review or substitute for it.
+4. `node review/check-json-roundtrip.mjs` checks lossless contract projection of the accepted authored cases without Python execution.
+5. `node validation/validate-repository.mjs repoNN` creates an exclusive attempt directory, checks the static approval and accepted hashes, and runs gold/start/repeated gold, author controls and independent reviewer probes in fresh bounded local containers. Run at most two repositories concurrently; each uses concurrency2,0.5CPU and128MiB containers, five-second guest invocation limits and the existing120-second batch limit. Do not increase those limits to erase failures. Preserve each attempt and its exit code.
+6. Update the root-safe author-job ledger with each exact accepted runtime receipt digest. After all validation processes exit, run `node validation/audit-local-handles.mjs` to verify recorded operation bindings, preserved cleanup reconciliations, no remaining owned handles and the source inventory. Only after all12 repositories pass under the common source/image/tool binding and the coordinator finalizes the launch ledger, run `python3 review/freeze-corpus.py`. It creates a new private `frozen-v2` directory and prepares30 public fixture files plus metadata. It refuses existing output, missing/repeated accepted validation, source drift, split errors or ledger mismatch. Root integration is a separate reviewed action.
+
+All detailed case observations and private artifact paths remain in the evaluator workspace. Published metadata contains hashes/counts/procedural provenance only. Hashes provide integrity, not independent authenticity. The older `workers/evaluator/validate-fixtures.ts` does not reproduce the v2 author/provenance/reviewer process.
+
+Earlier contract2.1 attempts remain historical observations. Fresh v2 acceptance requires contract2.2 runs for all60 tasks, including the original ordinary-key reviewer regression. No provider or repair-model calls are involved.
+
+`validation/run-approved-queue.mjs` only schedules fixed, already approved repositories sequentially per lane and preserves each child process exit/log digest. At most two lanes run. It stops a lane on a nonzero exit and never retries. `validation/update-runtime-ledger.py` imports only accepted receipts with a matching durable successful process exit; it preserves older validation history and leaves top-level finalization to the coordinator.
+
+`validation/prepare-public-preview.py` creates a separate provisional snapshot after the20 development and10 calibration tasks have passed. It includes only those30 Fixture JSONs and a byte manifest. The final freeze checks that every public fixture matches the preview. It conveys no final-set preparation claim or execution/publication permission.
+
+`runtime-environment.json` records directly observed host Node/Python executables and the installed `jsonschema` version. `../operational-source-843b368.json` is a separate complete operational-source inventory captured after the first15 tasks finished; it is not relabeled as a retroactive before/after measurement. The final provenance binds both records and preserves the narrower original execution receipts.
+
+`validation/audit-local-handles.mjs` is read-only: it starts and removes no container. Exact-handle reconciliation scripts record separate cleanup actions for the two preserved infrastructure incidents; they are not retry commands and should not be rerun blindly. The final audit covers retained historical and fresh v2 batches; accepted fresh preparation counts remain separate.

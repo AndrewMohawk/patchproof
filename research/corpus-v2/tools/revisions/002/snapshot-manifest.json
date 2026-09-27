@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Exact reproduction source snapshots, not new runtime observations",
+  "privateWorkspace": "/home/andrewmohawk/patchproof-evaluation-v2",
+  "projectSourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+  "files": [
+    {
+      "publishedPath": "research/corpus-v2/tools/intake.mjs",
+      "privateOriginalPath": "review/intake.mjs",
+      "digest": "sha256:a8509ca57254ebd975cc39a888a3affc89f84569ce362d542eb98fb565f3481d",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/structural.py",
+      "privateOriginalPath": "review/structural.py",
+      "digest": "sha256:4653a57501a157374e4a91cb15000e3c30e9397ba07630206ee0514bdedcb7a8",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/freeze-corpus.py",
+      "privateOriginalPath": "review/freeze-corpus.py",
+      "digest": "sha256:b252e23a9ed4f15e9935e096bdc265d175b78595e437ab5df8b0e1b73c116159",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/check-json-roundtrip.mjs",
+      "privateOriginalPath": "review/check-json-roundtrip.mjs",
+      "digest": "sha256:8e281440642be841da41a7db9dbdcd327844af0483ec018f9d1a78adec356ca5",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/validate-repository.mjs",
+      "privateOriginalPath": "validation/validate-repository.mjs",
+      "digest": "sha256:47c36250c146f49490756b88f29d3c302527bf989466fce9ae3eb5728cdf0c60",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/run-approved-queue.mjs",
+      "privateOriginalPath": "validation/run-approved-queue.mjs",
+      "digest": "sha256:75531aa47a3895d5a2cffd1cd5b7ce4654176bc1ebc314110d298b4b156c3fcd",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/summarize-fresh.py",
+      "privateOriginalPath": "validation/summarize-fresh.py",
+      "digest": "sha256:642a1f659283c0dbfc2deb9762ebf2be8fc502def565084497663a322f050435",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/runtime-environment.json",
+      "privateOriginalPath": "validation/tooling-environment-contract22.json",
+      "digest": "sha256:870e9fa31a495c72cbf88f45198fd2ff155f9069bb8267a4454813cc01eb0de7",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    }
+  ],
+  "priorSnapshotManifestDigest": "sha256:13edc280d0f9bf929fe95dc0c53d4b8bd20066917d34009c532900dba1405b32",
+  "supersededUnexecutedFreezeSnapshot": {
+    "publishedPath": "research/corpus-v2/tools/revisions/001/freeze-corpus.py",
+    "digest": "sha256:2a01022f7e894ccea91968170fe5f1f01eb58f85a2801952541b4c8cf8e64232",
+    "note": "Earlier publication snapshot retained; never used to assemble a frozen corpus. Active runtime validator and intake bytes were not changed."
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "id": "v2-r05-t05",
+  "repoId": "owned-v2-r05",
+  "split": "calibration",
+  "title": "Apply ingredient substitutions once and simultaneously",
+  "description": "The pantry.py planner can substitute ingredient names before quantity planning. A duplicated mapping pass turns a single selected replacement into a second replacement. Repair substitute_items(items, replacements). items is a list of at most 100 Unicode strings; replacements is a mapping of at most 100 Unicode string keys to Unicode string values. Empty strings, repeated names, self-replacements and cycles in the map are supported. Exact string equality is used; no case or Unicode normalization occurs. None/null and all other shapes are outside this retained contract.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "At each original input position whose string is a replacement key, emit that key's direct mapped value exactly once. Preserve positions and duplicates; a mapped value must not be looked up again, even when it is itself a key."
+    },
+    {
+      "id": "R02",
+      "text": "At positions whose original string is absent from replacements, emit the original string unchanged, including case and Unicode composition. An empty items list returns []."
+    },
+    {
+      "id": "R03",
+      "text": "Leave both the items list and the replacements mapping unchanged in content, including when one or more names are replaced."
+    }
+  ],
+  "files": {
+    "pantry.py": "\"\"\"Small pure helpers for planning a batch-preparation shopping list.\"\"\"\n\n\ndef aggregate_items(rows):\n    \"\"\"Consolidate the shopping rows while retaining their encounter order.\"\"\"\n    totals = {}\n    for row in rows:\n        item = row[\"item\"]\n        totals[item] = totals.get(item, 0) + row[\"units\"]\n    return [{\"item\": item, \"units\": units} for item, units in totals.items()]\n\n\ndef split_batches(amounts, limit):\n    \"\"\"Partition each preparation amount into its own sequence of batches.\"\"\"\n    result = []\n    for amount in amounts:\n        full, tail = divmod(amount, limit)\n        batches = [limit] * full\n        if tail:\n            batches.append(tail)\n        result.append(batches)\n    return result\n\n\ndef plan_shortfall(requested, available):\n    \"\"\"Return the remaining units to buy for each requested ingredient.\"\"\"\n    result = {}\n    for item, units in requested.items():\n        result[item] = max(units - available.get(item, 0), 0)\n    return result\n\n\ndef rescale_units(recipe, from_servings, to_servings):\n    \"\"\"Rescale indivisible ingredient units for a new serving count.\"\"\"\n    result = {}\n    for item, units in recipe.items():\n        result[item] = (units * to_servings + from_servings - 1) // from_servings\n    return result\n\n\ndef substitute_items(items, replacements):\n    \"\"\"Apply the selected ingredient substitutions simultaneously.\"\"\"\n    result = []\n    for item in items:\n        first = replacements.get(item, item)\n        result.append(replacements.get(first, first))\n    return result\n"
+  },
+  "editAllowlist": [
+    "pantry.py"
+  ],
+  "entrypoint": "pantry.py",
+  "visibleCases": [
+    {
+      "id": "v2-r05-t05-v-r01",
+      "requirementId": "R01",
+      "function": "substitute_items",
+      "args": [
+        [
+          "milk",
+          "milk"
+        ],
+        {
+          "milk": "oat"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "oat",
+        "oat"
+      ]
+    },
+    {
+      "id": "v2-r05-t05-v-r02",
+      "requirementId": "R02",
+      "function": "substitute_items",
+      "args": [
+        [
+          "Salt",
+          ""
+        ],
+        {
+          "salt": "pepper"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "Salt",
+        ""
+      ]
+    },
+    {
+      "id": "v2-r05-t05-v-r03",
+      "requirementId": "R03",
+      "function": "substitute_items",
+      "args": [
+        [
+          "butter"
+        ],
+        {
+          "butter": "oil"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "oil"
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r05-t05-a-r01",
+      "requirementId": "R01",
+      "function": "substitute_items",
+      "args": [
+        [
+          "cream",
+          "milk"
+        ],
+        {
+          "cream": "milk",
+          "milk": "oat"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "milk",
+        "oat"
+      ]
+    },
+    {
+      "id": "v2-r05-t05-a-r01-cycle",
+      "requirementId": "R01",
+      "function": "substitute_items",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        {
+          "a": "b",
+          "b": "a"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "b",
+        "a"
+      ]
+    },
+    {
+      "id": "v2-r05-t05-a-r01-self",
+      "requirementId": "R01",
+      "function": "substitute_items",
+      "args": [
+        [
+          "salt",
+          "salt"
+        ],
+        {
+          "salt": "salt"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "salt",
+        "salt"
+      ]
+    },
+    {
+      "id": "v2-r05-t05-a-r02",
+      "requirementId": "R02",
+      "function": "substitute_items",
+      "args": [
+        [],
+        {
+          "a": "b"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r05-t05-a-r02-unicode",
+      "requirementId": "R02",
+      "function": "substitute_items",
+      "args": [
+        [
+          "Café",
+          "TEA"
+        ],
+        {
+          "Café": "coffee",
+          "tea": "herbal"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "Café",
+        "TEA"
+      ]
+    },
+    {
+      "id": "v2-r05-t05-a-r02-empty-map",
+      "requirementId": "R02",
+      "function": "substitute_items",
+      "args": [
+        [
+          "oats",
+          ""
+        ],
+        {}
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "oats",
+        ""
+      ]
+    },
+    {
+      "id": "v2-r05-t05-a-r03",
+      "requirementId": "R03",
+      "function": "substitute_items",
+      "args": [
+        [
+          "yogurt",
+          "yogurt"
+        ],
+        {
+          "yogurt": "soy"
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "soy",
+        "soy"
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI-authored batch-preparation library; author job repo05, repository owned-v2-r05; CC0-1.0. No upstream code or data."
+}

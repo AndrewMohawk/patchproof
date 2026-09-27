@@ -1,0 +1,425 @@
+{
+  "id": "v2-r06-t04",
+  "repoId": "owned-v2-r06",
+  "split": "calibration",
+  "title": "Allow a workshop tray to reach its exact capacity",
+  "description": "Tray planning now opens another tray when adding an item would exactly fill the current tray. Restore the documented contiguous greedy grouping, including zero-unit placeholders.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "batch_units(units, capacity) processes amounts in their original order. Append each amount to the current batch when its resulting sum is at most capacity; otherwise start a new batch containing that amount. Return the resulting nonempty batches without reordering or dropping amounts, including zeros. Empty units returns []."
+    },
+    {
+      "id": "R02",
+      "text": "units must be a list of integers and capacity a positive integer. Booleans and fractional numbers are invalid. Wrong container or numeric types raise TypeError. Nonpositive capacity or any amount below zero or above capacity raises ValueError. Validate every amount before returning a result."
+    },
+    {
+      "id": "R03",
+      "text": "The supplied units list must remain unchanged on both success and a validation exception."
+    }
+  ],
+  "files": {
+    "batches.py": "\"\"\"Contiguous capacity grouping for workshop tray plans.\"\"\"\n\n\ndef batch_units(units, capacity):\n    if not isinstance(units, list) or type(capacity) is not int:\n        raise TypeError(\"invalid list or capacity type\")\n    if capacity <= 0:\n        raise ValueError(\"capacity must be positive\")\n    for amount in units:\n        if type(amount) is not int:\n            raise TypeError(\"unit amounts must be integers\")\n        if amount < 0 or amount > capacity:\n            raise ValueError(\"unit amount outside capacity\")\n    result = []\n    current = []\n    load = 0\n    for amount in units:\n        if current and load + amount >= capacity:\n            result.append(current)\n            current = []\n            load = 0\n        current.append(amount)\n        load += amount\n    if current:\n        result.append(current)\n    return result\n"
+  },
+  "editAllowlist": [
+    "batches.py"
+  ],
+  "entrypoint": "batches.py",
+  "visibleCases": [
+    {
+      "id": "v2-r06-t04-v-r01-basic",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          2,
+          1,
+          4
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          1
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-v-r02-capacity",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          1
+        ],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t04-v-r03-input",
+      "requirementId": "R03",
+      "function": "batch_units",
+      "args": [
+        [
+          2,
+          3,
+          1
+        ],
+        7
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          3,
+          1
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r06-t04-a-r01-exact",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          2,
+          3,
+          1
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          3
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r01-single-exact",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          5
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r01-zeros",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          0,
+          2,
+          0,
+          3,
+          0,
+          1
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r01-only-zeros",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          0,
+          0
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r01-order",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [
+          1,
+          4,
+          2,
+          3
+        ],
+        6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r01-empty",
+      "requirementId": "R01",
+      "function": "batch_units",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r06-t04-a-r02-null-units",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        null,
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-object-units",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        {},
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-bool-capacity",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          1
+        ],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-fraction-capacity",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [],
+        2.5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-null-capacity",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [],
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-negative-capacity",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [],
+        -4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-bool-item",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          false
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-fraction-item",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          1.25
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-null-item",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          null
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-string-item",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          "2"
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-negative-item",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          -1
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t04-a-r02-too-large",
+      "requirementId": "R02",
+      "function": "batch_units",
+      "args": [
+        [
+          5
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t04-a-r03-normal",
+      "requirementId": "R03",
+      "function": "batch_units",
+      "args": [
+        [
+          2,
+          1,
+          3,
+          1
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t04-a-r03-error",
+      "requirementId": "R03",
+      "function": "batch_units",
+      "args": [
+        [
+          2,
+          3,
+          1,
+          9
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for shared job repo06; repository owned-v2-r06; author /root/corpus_v2_repo06; no upstream source copied."
+}

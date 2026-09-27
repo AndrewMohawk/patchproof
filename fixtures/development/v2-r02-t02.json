@@ -1,0 +1,306 @@
+{
+  "id": "v2-r02-t02",
+  "repoId": "owned-v2-r02",
+  "split": "development",
+  "title": "Exact-capacity sessions split too early",
+  "description": "Whole-chapter sessions unexpectedly split when their combined page count equals the configured limit. Repair chapter_sessions(chapter_lengths, limit) without changing input order or the handling of oversized chapters.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "chapter_sessions(chapter_lengths, limit) returns lists of whole chapter lengths in original order, greedily filling each session while its sum stays <= limit. Flush a nonempty session before a chapter that would make its sum exceed limit. An individually oversized chapter must occupy its own session unchanged. Never emit empty sessions; empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "The chapter_lengths list must remain unchanged on successful returns and ValueError paths, including when multiple chapters fit exactly into a session or a chapter is oversized."
+    },
+    {
+      "id": "R03",
+      "text": "chapter_lengths must be a list of plain integers from 1 through 1000000 inclusive, and limit must be a plain integer in the same range. Reject booleans, floats, strings (including Unicode), null, out-of-range integers and a non-list chapter_lengths value with ValueError."
+    }
+  ],
+  "files": {
+    "reading_plan.py": "\"\"\"Small deterministic helpers for a book club reading plan.\n\nOriginal implementation. SPDX-License-Identifier: CC0-1.0\n\"\"\"\n\n\ndef _plain_count(value, minimum):\n    return type(value) is int and minimum <= value <= 1000000\n\n\ndef _counts(values, minimum):\n    if type(values) is not list or any(\n        not _plain_count(value, minimum) for value in values\n    ):\n        raise ValueError(\"invalid counts\")\n\n\ndef page_runs(pages):\n    \"\"\"Represent recorded page numbers as inclusive contiguous runs.\"\"\"\n    _counts(pages, 1)\n    ordered = sorted(set(pages))\n    if not ordered:\n        return []\n    result = []\n    start = end = ordered[0]\n    for page in ordered[1:]:\n        if page == end + 1:\n            end = page\n        else:\n            result.append([start, end])\n            start = end = page\n    result.append([start, end])\n    return result\n\n\n\ndef chapter_sessions(chapter_lengths, limit):\n    \"\"\"Pack whole chapters into consecutive reading sessions.\"\"\"\n    _counts(chapter_lengths, 1)\n    if not _plain_count(limit, 1):\n        raise ValueError(\"invalid session limit\")\n    result = []\n    active = []\n    total = 0\n    for chapter in chapter_lengths:\n        if active and total + chapter >= limit:\n            result.append(active)\n            active = []\n            total = 0\n        active.append(chapter)\n        total += chapter\n    if active:\n        result.append(active)\n    return result\n\n\n\ndef locate_page(chapter_lengths, page):\n    \"\"\"Find the one-based chapter and chapter page for a book page.\"\"\"\n    _counts(chapter_lengths, 0)\n    if not _plain_count(page, 1):\n        raise ValueError(\"invalid book page\")\n    remaining = page\n    for chapter, length in enumerate(chapter_lengths, 1):\n        if remaining <= length:\n            return {\"chapter\": chapter, \"page\": remaining}\n        remaining -= length\n    return None\n\n\n\ndef reading_totals(records):\n    \"\"\"Aggregate session page counts by the exact book title.\"\"\"\n    if type(records) is not list:\n        raise ValueError(\"invalid records\")\n    for record in records:\n        if (\n            type(record) is not dict\n            or set(record) != {\"book\", \"pages\"}\n            or type(record[\"book\"]) is not str\n            or not _plain_count(record[\"pages\"], 0)\n        ):\n            raise ValueError(\"invalid reading record\")\n    totals = {}\n    for record in records:\n        book = record[\"book\"]\n        totals[book] = totals.get(book, 0) + record[\"pages\"]\n    return [{\"book\": book, \"pages\": pages} for book, pages in totals.items()]\n\n\n\ndef reading_percentage(completed, total):\n    \"\"\"Report whole percent progress, capped at one hundred.\"\"\"\n    if not _plain_count(completed, 0) or not _plain_count(total, 1):\n        raise ValueError(\"invalid progress counts\")\n    return min(100, (200 * completed + total) // (2 * total))\n\n"
+  },
+  "editAllowlist": [
+    "reading_plan.py"
+  ],
+  "entrypoint": "reading_plan.py",
+  "visibleCases": [
+    {
+      "id": "v2-r02-t02-v-ordinary",
+      "requirementId": "R01",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          2,
+          3,
+          4
+        ],
+        6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-v-empty",
+      "requirementId": "R01",
+      "function": "chapter_sessions",
+      "args": [
+        [],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r02-t02-v-oversized-only",
+      "requirementId": "R01",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          9
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-v-no-mutation",
+      "requirementId": "R02",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          4,
+          2,
+          3
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-v-null-list",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        null,
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-v-zero-length",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          0
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-v-bool-limit",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          2
+        ],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-v-isolated-no-mutation",
+      "requirementId": "R02",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          3,
+          1,
+          5
+        ],
+        6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          3,
+          1
+        ],
+        [
+          5
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r02-t02-a-exact-fill",
+      "requirementId": "R01",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          2,
+          4,
+          1
+        ],
+        6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          4
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-a-oversized-middle",
+      "requirementId": "R01",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          3,
+          11,
+          2
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          3
+        ],
+        [
+          11
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-a-preserve-exact-fill",
+      "requirementId": "R02",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          7,
+          2,
+          1
+        ],
+        8
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          7
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t02-a-zero-limit",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          3
+        ],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-a-bool-length",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          false
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-a-float-length",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          1.5
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t02-a-upper-limit",
+      "requirementId": "R03",
+      "function": "chapter_sessions",
+      "args": [
+        [
+          1
+        ],
+        1000001
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for author job repo02, repository owned-v2-r02; CC0-1.0. See external revision provenance.json."
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Observed host tooling metadata during fresh contract2.2 preparation; no package installation or environment change",
+  "observedAt": "2026-09-27T14:01:08.862964+00:00",
+  "node": {
+    "version": "v25.5.0",
+    "executable": "/home/andrewmohawk/.local/bin/node",
+    "executableDigest": "sha256:deb7d1b80806d61bffb2dc73ca4958e303a6a0b895ca4cc9c1dab92308edb57f"
+  },
+  "python": {
+    "version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/usr/bin/python3.12",
+    "executableDigest": "sha256:e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "jsonschema": {
+    "installedVersion": "4.25.1",
+    "purpose": "Python author-profile/AST structural validation only; not the containerized Python runtime"
+  },
+  "scope": "These are direct observations of installed versions, not a claim that an unpinned Python package was pinned historically. Container Python/image identity is separately bound by the runner image digest."
+}

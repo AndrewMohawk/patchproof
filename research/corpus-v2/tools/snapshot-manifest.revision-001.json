@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Exact reproduction source snapshots, not new runtime observations",
+  "privateWorkspace": "/home/andrewmohawk/patchproof-evaluation-v2",
+  "projectSourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+  "files": [
+    {
+      "publishedPath": "research/corpus-v2/tools/intake.mjs",
+      "privateOriginalPath": "review/intake.mjs",
+      "digest": "sha256:a8509ca57254ebd975cc39a888a3affc89f84569ce362d542eb98fb565f3481d",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/structural.py",
+      "privateOriginalPath": "review/structural.py",
+      "digest": "sha256:4653a57501a157374e4a91cb15000e3c30e9397ba07630206ee0514bdedcb7a8",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/freeze-corpus.py",
+      "privateOriginalPath": "review/freeze-corpus.py",
+      "digest": "sha256:2a01022f7e894ccea91968170fe5f1f01eb58f85a2801952541b4c8cf8e64232",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/check-json-roundtrip.mjs",
+      "privateOriginalPath": "review/check-json-roundtrip.mjs",
+      "digest": "sha256:8e281440642be841da41a7db9dbdcd327844af0483ec018f9d1a78adec356ca5",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/validate-repository.mjs",
+      "privateOriginalPath": "validation/validate-repository.mjs",
+      "digest": "sha256:47c36250c146f49490756b88f29d3c302527bf989466fce9ae3eb5728cdf0c60",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    }
+  ]
+}

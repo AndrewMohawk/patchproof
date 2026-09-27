@@ -1,0 +1,360 @@
+{
+  "id": "v2-r01-t02",
+  "repoId": "owned-v2-r01",
+  "split": "development",
+  "title": "Preserve a final partial list block",
+  "description": "This ListWeave snapshot exposes blocks(values, width), used to divide in-memory list data into consecutive display batches. A loop-bound regression drops a final short batch. Restore all documented behaviors. All inputs and outputs are JSON values; numbers are finite and integers are within JavaScript safe range.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For list values and a positive integer width, blocks returns consecutive nonempty sublists of at most width elements in original order. Every element appears exactly once. Include the final short block without padding; width 1 produces singleton blocks, and an empty values returns []."
+    },
+    {
+      "id": "R02",
+      "text": "For valid calls, blocks leaves values and its nested lists and dictionaries unchanged, including calls with a final partial block."
+    },
+    {
+      "id": "R03",
+      "text": "values must be a list and width must have Python type int, excluding booleans; any violation raises TypeError. With those types valid, zero or negative width raises ValueError, including when values is empty."
+    }
+  ],
+  "files": {
+    "blocks.py": "# ListWeave: original synthetic list-maintenance module. CC0-1.0.\ndef blocks(values, width):\n    if not isinstance(values, list) or type(width) is not int:\n        raise TypeError(\"expected a list and integer width\")\n    if width <= 0:\n        raise ValueError(\"width must be positive\")\n    complete_end = len(values) - len(values) % width\n    return [values[start:start + width] for start in range(0, complete_end, width)]\n"
+  },
+  "editAllowlist": [
+    "blocks.py"
+  ],
+  "entrypoint": "blocks.py",
+  "visibleCases": [
+    {
+      "id": "b-v-partial",
+      "requirementId": "R01",
+      "function": "blocks",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": "b-v-empty",
+      "requirementId": "R01",
+      "function": "blocks",
+      "args": [
+        [],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "b-v-singletons",
+      "requirementId": "R01",
+      "function": "blocks",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    {
+      "id": "b-v-mutation",
+      "requirementId": "R02",
+      "function": "blocks",
+      "args": [
+        [
+          {
+            "q": [
+              1
+            ]
+          },
+          [
+            2
+          ],
+          null
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          {
+            "q": [
+              1
+            ]
+          },
+          [
+            2
+          ]
+        ],
+        [
+          null
+        ]
+      ]
+    },
+    {
+      "id": "b-v-none",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        null,
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "b-v-bool",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        [
+          1
+        ],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "b-v-zero",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        [],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "b-v-isolated-mutation",
+      "requirementId": "R02",
+      "function": "blocks",
+      "args": [
+        [
+          {
+            "labels": [
+              "red"
+            ]
+          },
+          [
+            "small"
+          ],
+          null,
+          {
+            "labels": [
+              "blue"
+            ]
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          {
+            "labels": [
+              "red"
+            ]
+          },
+          [
+            "small"
+          ]
+        ],
+        [
+          null,
+          {
+            "labels": [
+              "blue"
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "b-a-large",
+      "requirementId": "R01",
+      "function": "blocks",
+      "args": [
+        [
+          "α",
+          false
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "α",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "b-a-even",
+      "requirementId": "R01",
+      "function": "blocks",
+      "args": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "b-a-mutation",
+      "requirementId": "R02",
+      "function": "blocks",
+      "args": [
+        [
+          [],
+          {
+            "n": [
+              4
+            ]
+          },
+          "tail",
+          null,
+          false,
+          [
+            "extra"
+          ]
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          [],
+          {
+            "n": [
+              4
+            ]
+          },
+          "tail"
+        ],
+        [
+          null,
+          false,
+          [
+            "extra"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "b-a-listtype",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        "abc",
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "b-a-float",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        [
+          1
+        ],
+        1.5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "b-a-nullwidth",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        [
+          1
+        ],
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "b-a-negative",
+      "requirementId": "R03",
+      "function": "blocks",
+      "args": [
+        [
+          1
+        ],
+        -2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic ListWeave repository maintenance task authored independently under independent-ai-author-repo01; assigned job shared/jobs/repo01.json; repo owned-v2-r01. No external source code or data."
+}

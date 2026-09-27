@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project": "PatchProof",
   "prd_version": "0.1",
-  "as_of": "2026-09-25",
+  "as_of": "2026-09-27",
   "default_new_spend_authorized_usd": 0,
   "tasks": [
     {
@@ -66,13 +66,13 @@
         "docs/local-release-review.md",
         "research/blockers.md"
       ],
-      "implementation_note": "Local v1/v2 contracts, exact dependency locks and tests implemented under owner build-sequence exception. Live protocol freeze remains separate."
+      "implementation_note": "Current product contract 2.2 preserves JSON keys and keeps explicit historical 2.0/2.1 readers and frozen source locks. Exact dependency locks and local contract tests are implemented under the owner build-sequence exception. Live protocol calibration and freeze remain separate."
     },
     {
       "id": "T03",
       "title": "Author independently reviewed fixture suite and split",
       "owner_role": "evaluation engineer",
-      "status": "in_progress",
+      "status": "complete",
       "depends_on": [
         "T02"
       ],
@@ -93,11 +93,16 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Original 60-task synthetic v1 corpus and oracle checks remain preserved. Full PRD independent-authorship requirement is not met by that shared authoring process. Prospective v2 uses 12 clean-context author jobs, one repo each, separate review and immutable author provenance; authoring/review/validation and integration are in progress. No scored model experiment has run.",
+      "implementation_note": "Local v2 corpus preparation is complete: 12 separate clean-context AI authors, 60 independently reviewed tasks, a 20/10/30 repository-disjoint split and fresh contract2.2 gold/start/repeat validation for all 60 tasks. Public fixtures and aggregate provenance are integrated; sealed definitions and gold remain in the external frozen-v2 evaluator workspace. All 51 review findings are resolved; two unsuccessful fresh preparation attempts remain preserved alongside 12 accepted repository preparations. Shared model/host authorship is procedural separation, not human or statistical independence. Original v1 corpus, plans and evidence remain intact. Production evaluator-account separation, human scope review, calibrated live protocol and scored experiments remain open; updated full product test/browser/replay verification is pending separately.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "fixtures/independent-review-summary.json",
+        "fixtures/author-provenance.json",
+        "fixtures/split-manifest.json",
+        "research/corpus-v2/freeze-publication-receipt.json",
+        "research/corpus-v2/v1-preservation.json"
       ]
     },
     {

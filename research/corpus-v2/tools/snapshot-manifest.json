@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Exact reproduction source snapshots, not new runtime observations",
+  "privateWorkspace": "/home/andrewmohawk/patchproof-evaluation-v2",
+  "projectSourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+  "files": [
+    {
+      "publishedPath": "research/corpus-v2/tools/intake.mjs",
+      "privateOriginalPath": "review/intake.mjs",
+      "digest": "sha256:a8509ca57254ebd975cc39a888a3affc89f84569ce362d542eb98fb565f3481d",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/structural.py",
+      "privateOriginalPath": "review/structural.py",
+      "digest": "sha256:4653a57501a157374e4a91cb15000e3c30e9397ba07630206ee0514bdedcb7a8",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/freeze-corpus.py",
+      "privateOriginalPath": "review/freeze-corpus.py",
+      "digest": "sha256:562deb587c7dd53031b0849ee37986209960c283859becfd6b6a1ecf9b0a2d57",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/check-json-roundtrip.mjs",
+      "privateOriginalPath": "review/check-json-roundtrip.mjs",
+      "digest": "sha256:8e281440642be841da41a7db9dbdcd327844af0483ec018f9d1a78adec356ca5",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/validate-repository.mjs",
+      "privateOriginalPath": "validation/validate-repository.mjs",
+      "digest": "sha256:47c36250c146f49490756b88f29d3c302527bf989466fce9ae3eb5728cdf0c60",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/run-approved-queue.mjs",
+      "privateOriginalPath": "validation/run-approved-queue.mjs",
+      "digest": "sha256:75531aa47a3895d5a2cffd1cd5b7ce4654176bc1ebc314110d298b4b156c3fcd",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/summarize-fresh.py",
+      "privateOriginalPath": "validation/summarize-fresh.py",
+      "digest": "sha256:642a1f659283c0dbfc2deb9762ebf2be8fc502def565084497663a322f050435",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/runtime-environment.json",
+      "privateOriginalPath": "validation/tooling-environment-contract22.json",
+      "digest": "sha256:870e9fa31a495c72cbf88f45198fd2ff155f9069bb8267a4454813cc01eb0de7",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/update-runtime-ledger.py",
+      "privateOriginalPath": "validation/update-runtime-ledger.py",
+      "digest": "sha256:756b4ec63fe418771ccc4507c4bf6f60113e92fb4056899d253eb1d4c1ca4d0e",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/prepare-public-preview.py",
+      "privateOriginalPath": "validation/prepare-public-preview.py",
+      "digest": "sha256:1c5ccd0c0d935f4a5fcab2626aeb0ec599dc5cf7bcfc3e864f17f558bfcc3938",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/inspect-repo07-attempt001.mjs",
+      "privateOriginalPath": "validation/inspect-repo07-attempt001.mjs",
+      "digest": "sha256:dd01ca81c837c474219826c0cebbccc9992fc37c3b0b104e924fdac0de4edbf4",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/reconcile-repo07-attempt001.mjs",
+      "privateOriginalPath": "validation/reconcile-repo07-attempt001.mjs",
+      "digest": "sha256:0ea2bc302592bf1231e17408c5de1c3e1a9b87a1a07f91bbed1fac53356a301a",
+      "purpose": "Trusted evaluator tooling or observed environment metadata only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/reconcile-repo11-attempt001.mjs",
+      "privateOriginalPath": "validation/reconcile-repo11-attempt001.mjs",
+      "digest": "sha256:2db4aab540914b02f861fd1a4701639b5a4f80536650afbbcd18ba422803632d",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/audit-local-handles.mjs",
+      "privateOriginalPath": "validation/audit-local-handles.mjs",
+      "digest": "sha256:da9686168f072258a047c568b7fce87601c2c4678b50c3fe04762cd3db62f7f5",
+      "purpose": "Trusted evaluator tooling only; contains no fixture or oracle definitions."
+    },
+    {
+      "publishedPath": "research/corpus-v2/tools/audit-local-handles.test.mjs",
+      "privateOriginalPath": "validation/audit-local-handles.test.mjs",
+      "digest": "sha256:b8697d948a09261e97cb53440ceecad4b30714e2f7454be042427cc9334df48e",
+      "purpose": "Invented metadata-only regression controls; no private corpus or candidate execution."
+    }
+  ],
+  "priorSnapshotManifestDigest": "sha256:6a645c0c9bc3dfed2cb402b1717979465f6fd23fc5aa3d7eca3af5fe15bda146",
+  "supersededUnexecutedFreezeSnapshot": {
+    "publishedPath": "research/corpus-v2/tools/revisions/001/freeze-corpus.py",
+    "digest": "sha256:2a01022f7e894ccea91968170fe5f1f01eb58f85a2801952541b4c8cf8e64232",
+    "note": "Earlier publication snapshot retained; never used to assemble a frozen corpus. Active runtime validator and intake bytes were not changed."
+  },
+  "additionalUnexecutedFreezeHistory": {
+    "manifestPath": "research/corpus-v2/tools/revisions/002/snapshot-manifest.json",
+    "freezePath": "research/corpus-v2/tools/revisions/002/freeze-corpus.py",
+    "note": "Pre-preview freeze snapshot; never assembled a corpus. Runtime validation tools remain unchanged."
+  },
+  "unexecutedFreezeHistory": [
+    {
+      "manifestPath": "research/corpus-v2/tools/revisions/003/snapshot-manifest.json",
+      "freezePath": "research/corpus-v2/tools/revisions/003/freeze-corpus.py",
+      "note": "Pre-incident freeze snapshot retained; never assembled a corpus. Runtime validation tools unchanged."
+    },
+    {
+      "manifestPath": "research/corpus-v2/tools/revisions/004/snapshot-manifest.json",
+      "freezePath": "research/corpus-v2/tools/revisions/004/freeze-corpus.py",
+      "note": "Pre-final-handle-audit freeze snapshot retained; never assembled a corpus. Active runtime validation tools unchanged."
+    }
+  ],
+  "unexecutedAuditHistory": [
+    {
+      "manifestPath": "research/corpus-v2/tools/revisions/005/snapshot-manifest.json",
+      "auditPath": "research/corpus-v2/tools/revisions/005/audit-local-handles.mjs",
+      "note": "Original audit was never executed. Four source-review fail-closed findings were corrected and tested with invented metadata; active runtime validation tooling remained unchanged."
+    }
+  ]
+}

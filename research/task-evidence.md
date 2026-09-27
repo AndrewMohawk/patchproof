@@ -8,9 +8,10 @@
   exact $25 aggregate approval.
 - `251b62f`: initial 17-test contract-only mock scaffold. Its logs in
   `research/verification/20260927T074603Z-local-preparation/` are historical.
-- Product implementation: source commit containing this record, exact contracts
-  in `research/contracts-v2-lock.json`, and the later local-product verification
-  record. That record includes actual commands, exit codes, bundles and run IDs.
+- Product implementation: current contract in `research/contracts-v2.2-lock.json`,
+  exact historical 2.1 snapshots under `research/contracts-history/2.1/`, and the
+  source-bound verification records below. They retain actual commands, exit
+  codes, bundles and run IDs.
 
 The owner explicitly authorized full local development before provider access.
 Original real-provider/experiment/release gates remain unpassed. `tasks.json`
@@ -22,7 +23,7 @@ No paid provider call, benchmark result, public deployment or entry is claimed.
 | Scope | Changed paths | Executed checks and evidence |
 |---|---|---|
 | T01/T02 | `owner-decisions.json`, `budget.json`, `runtime-lock.json`, contracts, workspace | Config validation, exact $25 ceiling, v1/v2 digest locks, TypeScript checks. Unknown account fields stay null. |
-| T03 | `fixtures/`, `workers/evaluator/`, separate evaluator workspace | Full 60 gold/start/repeat validation, targeted revalidation after independent review, aggregate artifacts and preserved revisions. No gold or final vectors in this checkout. |
+| T03 | `fixtures/`, `workers/evaluator/`, separate evaluator workspace | All 60 independently authored v2 tasks passed separate review and fresh contract 2.2 gold/start/repeat validation; all 100 controls passed. Immutable public integration, provenance, two preserved infrastructure failures and final cleanup audit are under `corpus-v2/`. V1 history remains preserved. No gold or final vectors in this checkout. |
 | T04 | `workers/repair/`, `workers/sandbox/` | Fake HTTP transports plus actual pinned Docker checks, cancellation, parent death, wall deadlines and exact run-owned cleanup. Real Nebius calls NOT RUN. |
 | T05–T07 | `packages/orchestrator/` | Same limits, protected paths, policy variants, actual rejected/accepted candidates; scripted model only. Final feedback inaccessible to repair loop. |
 | T08 | journal, lease, evidence and patch modules | Durable reopen/idempotency, failed publication, partial infrastructure logs, interrupted-runtime drift, immutable bundle and fresh patch replay. |

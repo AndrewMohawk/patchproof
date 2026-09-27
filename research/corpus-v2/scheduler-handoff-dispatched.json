@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "explicit-scheduler-handoff-dispatched",
+  "recordedAt": "2026-09-27T14:40:11.410836+00:00",
+  "handoffIntentDigest": "sha256:20de6ad0cd0794cc705d0860e87405e86722b9f181691220aa3eb10455b3e07a",
+  "slot": "repo11",
+  "originalQueueId": "0e4b755a-1745-4b73-8c1d-db37d585a956",
+  "receivingQueueId": "8740e10f-7dbf-4a34-883d-251203f7b42a",
+  "receivingQueuePlanDigest": "sha256:4aab590dec59991d65f68d277ac37bf74cd8aeb71a6a438704f55d59a82e7ebb",
+  "previousLaneFinishedRepository": "repo12",
+  "previousLaneExitCode": 0,
+  "activeRepositoriesAtDispatch": [
+    "repo07",
+    "repo11"
+  ],
+  "maximumConcurrentRepositories": 2,
+  "activeToolingChanged": false,
+  "originalQueueGuardRemains": true
+}

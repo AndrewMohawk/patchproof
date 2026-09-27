@@ -1,463 +1,465 @@
 {
   "schemaVersion": "1.0",
+  "corpusVersion": "v2",
   "authoredAt": "2026-09-27",
   "license": "CC0-1.0",
-  "source": "Original synthetic PatchProof maintenance fixtures; no third-party dataset copied.",
+  "source": "Original synthetic Python maintenance tasks from twelve separately launched AI author contexts; no third-party dataset copied.",
   "sealStatus": "prepared-not-scored",
   "caveats": [
-    "Repository-disjoint paths and task topics reduce direct leakage, but all fixtures share one authoring process and Python function-call format.",
-    "These are synthetic tasks, not independently sampled real maintenance repositories. Generalization claims must remain narrow.",
-    "Gold/start execution is oracle preparation, not a repair-model benchmark."
+    "Authors independently designed each repository without reading other corpus definitions; same-model procedural separation is not human authorship or statistical independence.",
+    "Repositories are synthetic, not independently sampled upstream maintenance projects; shared algorithm families and JSON function-call format limit generalization.",
+    "Gold/start/repeat and negative controls are oracle preparation by an independent reviewer, not a repair-model benchmark.",
+    "Finite checks and requirement labels do not establish universal correctness or exclusive fault localization."
   ],
   "splits": {
     "development": {
       "tasks": 20,
       "repositories": [
-        "fixture-01",
-        "fixture-02",
-        "fixture-03",
-        "fixture-04"
+        "owned-v2-r01",
+        "owned-v2-r02",
+        "owned-v2-r03",
+        "owned-v2-r04"
       ]
     },
     "calibration": {
       "tasks": 10,
       "repositories": [
-        "fixture-05",
-        "fixture-06"
+        "owned-v2-r05",
+        "owned-v2-r06"
       ]
     },
     "final": {
       "tasks": 30,
       "repositories": [
-        "fixture-07",
-        "fixture-08",
-        "fixture-09",
-        "fixture-10",
-        "fixture-11",
-        "fixture-12"
+        "owned-v2-r07",
+        "owned-v2-r08",
+        "owned-v2-r09",
+        "owned-v2-r10",
+        "owned-v2-r11",
+        "owned-v2-r12"
       ]
     }
   },
   "tasks": [
     {
       "id": "stable-unique-01",
-      "repoId": "fixture-01",
+      "repoId": "owned-v2-r01",
       "split": "development",
-      "fixtureDigest": "sha256:ede00162da2d803f5acd98c0a6cc0edeaf71d18302ec2dc2b670811cef4cccfb",
-      "oracleDigest": "sha256:0d7429fcc63949eacfe0c54d0ba4c1e047658f92abc4d565e223561e7aeff9b6"
+      "fixtureDigest": "sha256:d6d762e6ebfd3edcc44fb230d90d9376dafc515ea9191ded6d48862923a1fb5f",
+      "oracleDigest": "sha256:fcad502e63f586e2a9b8544774af98252284b6e3681ee982cae182e3ce7d5adc"
     },
     {
-      "id": "chunk-list-02",
-      "repoId": "fixture-01",
+      "id": "v2-r01-t02",
+      "repoId": "owned-v2-r01",
       "split": "development",
-      "fixtureDigest": "sha256:ee35270a9348da7bcc009be11c44b0f7dd61bc389e7757694d92674f9faeda3c",
-      "oracleDigest": "sha256:4c9233e8a29b0bcb8e66b072af38bd51aab69b8a4b9a1ef2d06aadafc501b411"
+      "fixtureDigest": "sha256:067e17c1a4597688facdcf0dff71d1dd5a6d69b7fd42bb1da8c7ed74918a146d",
+      "oracleDigest": "sha256:616da0a12253395dd04a23167449f5f2917c99e9100aeb8d1516b91cc8800658"
     },
     {
-      "id": "flatten-once-03",
-      "repoId": "fixture-01",
+      "id": "v2-r01-t03",
+      "repoId": "owned-v2-r01",
       "split": "development",
-      "fixtureDigest": "sha256:d50fe2572872fd8a14df5304a4be145818275d8f70be1235097bb0c98a490ce8",
-      "oracleDigest": "sha256:1389daf8d7047a4acc4dcb0c85eed64c9bbbfbd9ab421ed95270eaf4f3e073af"
+      "fixtureDigest": "sha256:5f3d613e1928f2fe0fd5791420b1fdb8da33cc002fb982b5f848248edfe04581",
+      "oracleDigest": "sha256:5306b2f5c5f553eb6191e14f9a65569ffcbd1e0e792c1e4ce6a6504f2c49d9a8"
     },
     {
-      "id": "rotate-list-04",
-      "repoId": "fixture-01",
+      "id": "v2-r01-t04",
+      "repoId": "owned-v2-r01",
       "split": "development",
-      "fixtureDigest": "sha256:1b9d62c166ec8081043dcb4f4684b3d5f2e66e044543ba7998d8eb23d9b7c085",
-      "oracleDigest": "sha256:e7a5a282c9fc25684002c694c89cb62f02821bca5d60b00f67b5d3304f1d285d"
+      "fixtureDigest": "sha256:b3e477dd13c4e21a04887f39dc7c2ff074b395ff078a6ef31b113fa5a18b95f6",
+      "oracleDigest": "sha256:0ba1a3cc2684f94b4e5f75a08d5f80913934840676f8ad6a4ca3af3ffeab877f"
     },
     {
-      "id": "adjacent-runs-05",
-      "repoId": "fixture-01",
+      "id": "v2-r01-t05",
+      "repoId": "owned-v2-r01",
       "split": "development",
-      "fixtureDigest": "sha256:ed1e447d3e5dd84bfc7a651b506b4ac719bae7afbab6c8b46610181c76874746",
-      "oracleDigest": "sha256:8c8b0f30d5154e69e75fcda7d4d353e489085b01361b29fbea1a859ef3d6729f"
+      "fixtureDigest": "sha256:4001e79809cb2297b6a8f2ca2e0513ae86af45dc09c83929f2ef6c786332723d",
+      "oracleDigest": "sha256:f5d15c3f77aea6add228bd5d7f6ebd34d1a7bb1ad8885a8d3d553134001a4e47"
     },
     {
-      "id": "line-endings-06",
-      "repoId": "fixture-02",
+      "id": "v2-r02-t01",
+      "repoId": "owned-v2-r02",
       "split": "development",
-      "fixtureDigest": "sha256:6224fd7a8f555dd3b8b7400d75e8cf7a178862b25cdc981482dd6e5c719fc0d5",
-      "oracleDigest": "sha256:034e5338473146b66e105a0988588add96c57e7ed793990a9d03881c2803c294"
+      "fixtureDigest": "sha256:a34013c1077f7a8233a3b1984433e1ff0f59a61ff7b85c72c00306b1d04fa072",
+      "oracleDigest": "sha256:9465ab98a885edb5fd135a54f4df2209b5486730d42c4fc22b75da8eedf511ef"
     },
     {
-      "id": "remove-prefix-07",
-      "repoId": "fixture-02",
+      "id": "v2-r02-t02",
+      "repoId": "owned-v2-r02",
       "split": "development",
-      "fixtureDigest": "sha256:376ad977b0c62aac4071981694e9093ce86bc123acbd56b75bb1b252d2cb9beb",
-      "oracleDigest": "sha256:b45c832e8835fd8356472af9cb1b2376991d0bd7d31d2dc47f1d0f7aee4781d6"
+      "fixtureDigest": "sha256:899bf2224fb757498cc1b651b6f1fff46ddb211be52a32f08b12b7cc4cd91723",
+      "oracleDigest": "sha256:ad0171871a45071426f0ab717a2e38687cc4f2c01b5f8b8e14c9d77f332cb50a"
     },
     {
-      "id": "split-first-08",
-      "repoId": "fixture-02",
+      "id": "v2-r02-t03",
+      "repoId": "owned-v2-r02",
       "split": "development",
-      "fixtureDigest": "sha256:2f70027aaf36c0a91ebddf0e2b44dc6c1d3e549d0f79aa64885daff17ff42ff3",
-      "oracleDigest": "sha256:81718024fbeb1c7368ff5d0dbf6b0f2527146803ba66a8a2a476a9845b2e53dc"
+      "fixtureDigest": "sha256:a9e8a0e87048d8d632366d98b93f4b0051e0c3caff0cdaea7ef4999631650b85",
+      "oracleDigest": "sha256:33eb5288499566bf118c1f5900c6fab38481fa51b55dc15f27076fe1485c4e5c"
     },
     {
-      "id": "truncate-text-09",
-      "repoId": "fixture-02",
+      "id": "v2-r02-t04",
+      "repoId": "owned-v2-r02",
       "split": "development",
-      "fixtureDigest": "sha256:0ccafa4dcf011468d9e5c376be2beb23cf5e7577f54a8d6540b7b10b9d0d78bb",
-      "oracleDigest": "sha256:ee142af846cf863be230173a69bb24efc07f3a7da029b00e01b060da9c149746"
+      "fixtureDigest": "sha256:28d1872b85a3a4a5d3e41d1e42a06b1578dc3a5463143d89e9355383eecefbfc",
+      "oracleDigest": "sha256:51bd79652f33f611106455b11a670adb1ee51ab307eb06a56549ccbeb3adf65b"
     },
     {
-      "id": "word-counts-10",
-      "repoId": "fixture-02",
+      "id": "v2-r02-t05",
+      "repoId": "owned-v2-r02",
       "split": "development",
-      "fixtureDigest": "sha256:81ff59be872ac53dc286c419442e6b2b82eb64611edb19c1f9a0c2270d876f4e",
-      "oracleDigest": "sha256:c5697d5a48049ed6c81df5ba1ebc05f4ef6958ea72bd6393114ad3229a8f6893"
+      "fixtureDigest": "sha256:49335fda5ebff5b4e5ab0e14ba153e51b79fbc42f298a7d2547c6a3cfbffa2d4",
+      "oracleDigest": "sha256:b4b0bda096e70c1828c9589deb1c58dcf6d9756b94eb723111b0143f9f8a943a"
     },
     {
-      "id": "merge-defaults-11",
-      "repoId": "fixture-03",
+      "id": "v2-r03-t01",
+      "repoId": "owned-v2-r03",
       "split": "development",
-      "fixtureDigest": "sha256:5f292aa64d4cfd499a75dff4a8d0b040f1d21d82b478011185722728bc291e41",
-      "oracleDigest": "sha256:34e12ab1e9af0336f301372fe464a1a218ccfe8154a401ba20e69ce137c02f68"
+      "fixtureDigest": "sha256:97c5584728988a18d9800f14e06f243dd949838fdd629c25483db0ea5dccadce",
+      "oracleDigest": "sha256:5afcbde2acd62e4b2a9394ae297bcb11727c6c5a40ef18340210a4e94c67f6c5"
     },
     {
-      "id": "nested-lookup-12",
-      "repoId": "fixture-03",
+      "id": "v2-r03-t02",
+      "repoId": "owned-v2-r03",
       "split": "development",
-      "fixtureDigest": "sha256:8d1991d110e14caaffe50adfde9b48aca66c4ca93dccc03cb176bf576e374699",
-      "oracleDigest": "sha256:244c1357275dc429e9fd9f48ea94207b2cc01af6c66aa9c315641938610548bc"
+      "fixtureDigest": "sha256:85448af02924e462a9d0c7219fa0da343d8d79917df20a1e673dabccb8c53477",
+      "oracleDigest": "sha256:1ecb862e4795348cd2fa14fa22c2514cbd913379ffa519da8e1c9582c8bd2d45"
     },
     {
-      "id": "invert-multimap-13",
-      "repoId": "fixture-03",
+      "id": "v2-r03-t03",
+      "repoId": "owned-v2-r03",
       "split": "development",
-      "fixtureDigest": "sha256:04eb04645ffdb84643982a5c85f469092f5c3f26c7a9e34cf6798d82c26ba8ba",
-      "oracleDigest": "sha256:c205f1311062b8ddacaa73ff96ea88e2f50b830ed6adb744b37c2e84f0311918"
+      "fixtureDigest": "sha256:fc94cd8f244beb88aef10fbb54b464195f46d069b45ec9d2bb737737f1579035",
+      "oracleDigest": "sha256:7167a05ba88dae2cc9a6e5e51a1f1370ad32171d2fab4740965e5cefa655b4b8"
     },
     {
-      "id": "pick-keys-14",
-      "repoId": "fixture-03",
+      "id": "v2-r03-t04",
+      "repoId": "owned-v2-r03",
       "split": "development",
-      "fixtureDigest": "sha256:732babf02cc2688bd557c43d592287240e3a593eaa37cba7ebb6890a1cbaea50",
-      "oracleDigest": "sha256:acce2d8e6947aa6cb7ce8a7321458ebf972336a6521bb26820d35dadca36802b"
+      "fixtureDigest": "sha256:e0f2d941647c16d42c3174a2b54db8900391636852b0e5bf8a8c25f3cdabc8d8",
+      "oracleDigest": "sha256:87069a82c4188172dbcf76f3f5800c1c9a0e9a7eda8efedff7b87222d9a0254d"
     },
     {
-      "id": "rename-key-15",
-      "repoId": "fixture-03",
+      "id": "v2-r03-t05",
+      "repoId": "owned-v2-r03",
       "split": "development",
-      "fixtureDigest": "sha256:faa5de4e6938ee8dd0be0333c5b1d5c2b86316e5e32f71f30076c69ce5857744",
-      "oracleDigest": "sha256:f867febe3a1d200e36b4d2406abe88b8f3299887c84d86d38ebc781f3d2abf06"
+      "fixtureDigest": "sha256:54246bd76d64729fe3586f183e269950512c8462f33e55a0b8d99a14490baf1c",
+      "oracleDigest": "sha256:6f4d944b99f18b1a4b61057b8087443cf8243e894ca25376b90cfcac3b8f1652"
     },
     {
-      "id": "clamp-number-16",
-      "repoId": "fixture-04",
+      "id": "v2-r04-t01",
+      "repoId": "owned-v2-r04",
       "split": "development",
-      "fixtureDigest": "sha256:9c475b20a6e8bac461152fa341f6ad8f8f0b2c50be96247cc7f2dc9dbf552af3",
-      "oracleDigest": "sha256:658790b1bcdc5be4a59c084fdc83f2e113f0fa6511999925be62c883aa722329"
+      "fixtureDigest": "sha256:088ae0a84314cb7498b002ca778d2b10064c242d2f7deca3bf55dedead6b913c",
+      "oracleDigest": "sha256:757fb07c42a30317e57428b09ca1cf0b641b53fce423acaf4acf9b235ffead9f"
     },
     {
-      "id": "mean-empty-17",
-      "repoId": "fixture-04",
+      "id": "v2-r04-t02",
+      "repoId": "owned-v2-r04",
       "split": "development",
-      "fixtureDigest": "sha256:dee2f6a90733622c8c19d238430ade70ae0fc6894656d43a523c6fd4b0d366f9",
-      "oracleDigest": "sha256:80e506d93c0f4b21c437c7f71f0a2d4bf4ad6f12fbd0b031b49741b33a461da0"
+      "fixtureDigest": "sha256:3b7047d4253b943e0007ee43bc6f7159104f493478a15a599a25e3b4ff19373d",
+      "oracleDigest": "sha256:5b4df6cab538d5df4c7e7e0c830757be2ea9606b29fa6777dac00d4c3a15554d"
     },
     {
-      "id": "median-even-18",
-      "repoId": "fixture-04",
+      "id": "v2-r04-t03",
+      "repoId": "owned-v2-r04",
       "split": "development",
-      "fixtureDigest": "sha256:0c8f3c6abecb179fa68b181699d931c31f56d94138e5afeefd71204d8456c6c3",
-      "oracleDigest": "sha256:3a0a7a68e6affb2c731dbe5d65d81f1a9dd25d7c4011c3bed55a8f17030cb545"
+      "fixtureDigest": "sha256:524639cb7de6851f9f516c2022dda21e5a1ec84de4edbdcc20e36e668b4d9e30",
+      "oracleDigest": "sha256:fd66209d1e87741a143cf183f52eee76abfd4fd70a70de7615f6db4d8352cfeb"
     },
     {
-      "id": "divide-ceiling-19",
-      "repoId": "fixture-04",
+      "id": "v2-r04-t04",
+      "repoId": "owned-v2-r04",
       "split": "development",
-      "fixtureDigest": "sha256:49f05b4cbc0ac21e049cf636a60c6325ee510b665610a53a387d2c0a77ac5be4",
-      "oracleDigest": "sha256:f1cbdbd30bffbc699de1c3a906384f4d832246e87b54e5122dd7cd4449796c02"
+      "fixtureDigest": "sha256:caaac44a3ca6242e100e732c9e0a935687f22becdf3971f558cb6cecb347f964",
+      "oracleDigest": "sha256:d0d4e2458978368df97b762bdc5c27d26579e73d53acb41f2b4ed29ece118482"
     },
     {
-      "id": "weighted-mean-20",
-      "repoId": "fixture-04",
+      "id": "v2-r04-t05",
+      "repoId": "owned-v2-r04",
       "split": "development",
-      "fixtureDigest": "sha256:eb8c5e6e6ca56ae05864954f6e5804713134ee429297622ec9d817eb1088f37d",
-      "oracleDigest": "sha256:9c8fd25cabccadbc9cc98caeaa8fcb19dbe375a393d48f3dbfabc6543a0a09e9"
+      "fixtureDigest": "sha256:6d7ba949bcd08132de5afe4cf06e17d62e48191e8e5f157ef2cf53c5c7a665a8",
+      "oracleDigest": "sha256:ca454d611deb4d3ce28ee1d9ade1c9fcc1174782651f991ce8bf460d109e8412"
     },
     {
-      "id": "json-canonical-21",
-      "repoId": "fixture-05",
+      "id": "v2-r05-t01",
+      "repoId": "owned-v2-r05",
       "split": "calibration",
-      "fixtureDigest": "sha256:9e607f4cff5b7d16aadd3434f0d9367204c4d7d2ef8b91d7a654c311db08432a",
-      "oracleDigest": "sha256:06d24e8fcf3f3ed5480ec5ff01f4a8849d84e339c296e22a0e2e070688836600"
+      "fixtureDigest": "sha256:2e0c7015298a3773254655342ea3b04265cab11af1d56fc025f382b8e72212a7",
+      "oracleDigest": "sha256:b40e78d00b8f912b52b3e186b3daf06f3effe61ee7372975380c78e7c6b01f9a"
     },
     {
-      "id": "query-pairs-22",
-      "repoId": "fixture-05",
+      "id": "v2-r05-t02",
+      "repoId": "owned-v2-r05",
       "split": "calibration",
-      "fixtureDigest": "sha256:e72a41c6c8389f44f63a90e23891e9eb202adfa713192e143a96ba8d891878c4",
-      "oracleDigest": "sha256:0bd92455f2542685e8c33f9119b052c71434b50ca8aace930580797875c20a5e"
+      "fixtureDigest": "sha256:3ce3cfbe1cf55cafea8bf348e950f75abfc8f8bbb484c5251e01010e4c062756",
+      "oracleDigest": "sha256:e9b0521706c305672875918a18dc3a2890f28dbe0f1e293a63628e1e23d1a141"
     },
     {
-      "id": "csv-row-23",
-      "repoId": "fixture-05",
+      "id": "v2-r05-t03",
+      "repoId": "owned-v2-r05",
       "split": "calibration",
-      "fixtureDigest": "sha256:7dc05f12a7bdc88cd77adb3ebd5d9f0fff8f9cfdc7b784cec95af0299cc4fa4f",
-      "oracleDigest": "sha256:847c45a6d1694f84e306e63873d5fd23cfff80a9db597e3dd5d43c5e28312162"
+      "fixtureDigest": "sha256:c9958b4053a2a2acaa56ce7cb4b5bfaefcc8dc519232380c8f850d459e60c453",
+      "oracleDigest": "sha256:c1ec5d60f638596110c0e3c562c6f012354190f19f6df4293e76d29572efaf93"
     },
     {
-      "id": "boolean-setting-24",
-      "repoId": "fixture-05",
+      "id": "v2-r05-t04",
+      "repoId": "owned-v2-r05",
       "split": "calibration",
-      "fixtureDigest": "sha256:3cacac2d9a07bc374043542f867b0e39449fd2cda42ad61aed09ec229f2ec02b",
-      "oracleDigest": "sha256:ac2750bab0ef2cc9cb41071d287136e8ef1b767b3d5489f45ca59067ce6efe7f"
+      "fixtureDigest": "sha256:737433546035021a05f03ee97f41429114412340c2708be68d99c89560202916",
+      "oracleDigest": "sha256:0cf94119a42b23ed69807add0c4a09769823813c8fb67666034b5ac7cc577202"
     },
     {
-      "id": "hex-bytes-25",
-      "repoId": "fixture-05",
+      "id": "v2-r05-t05",
+      "repoId": "owned-v2-r05",
       "split": "calibration",
-      "fixtureDigest": "sha256:1b14432957f3ab4207c6b0ea8dc0a44c6b8b8b97a279a30c6969034c929e8881",
-      "oracleDigest": "sha256:fdad5859676984eee73b903ae737e14e0c256729106ffffa7cb9122993219f52"
+      "fixtureDigest": "sha256:9db9459b1e448a51d966f6b30ba4be3ff6aa7d0650ddd0da41c4267ec0376fe4",
+      "oracleDigest": "sha256:1a69b6e675aad3757bb9f8abaaeaefe829146739436c197e29b4f09a98e0a0ad"
     },
     {
-      "id": "page-window-26",
-      "repoId": "fixture-06",
+      "id": "v2-r06-t01",
+      "repoId": "owned-v2-r06",
       "split": "calibration",
-      "fixtureDigest": "sha256:6fe416e40c434133d1052fefd068017661f0b7631cd52a1b1cc75dc5a9fa8cfa",
-      "oracleDigest": "sha256:590561097b27c8a0826888a30288a9e698e898db3b88444a506f5194d8be58eb"
+      "fixtureDigest": "sha256:c8e7c6698806a376b25c9ac5d54c7655e2b780d87c453a96d12cd85fe0e2ee1b",
+      "oracleDigest": "sha256:1c24873b00dd983ad568ef5f919b83e6ef1c9830ca78b0d0050e1497f6a70325"
     },
     {
-      "id": "interval-overlap-27",
-      "repoId": "fixture-06",
+      "id": "v2-r06-t02",
+      "repoId": "owned-v2-r06",
       "split": "calibration",
-      "fixtureDigest": "sha256:4786d244db695bdeaa1e028d001f95d80a57fea214023d0ad5c75ad895268593",
-      "oracleDigest": "sha256:59fbe3e019e6a4b06d67527a8694dcdc531d9357649fc6967ad9b3dd32010978"
+      "fixtureDigest": "sha256:0e40c0e74ce75473bdc4ec421fe40cc0ee42a2fd7d82d9e00321fdf74ebb6daa",
+      "oracleDigest": "sha256:8ff526b35bf7a79638594b0db956ed5bf8eeff2d4a6e305d5481d63e5cc9487b"
     },
     {
-      "id": "duration-format-28",
-      "repoId": "fixture-06",
+      "id": "v2-r06-t03",
+      "repoId": "owned-v2-r06",
       "split": "calibration",
-      "fixtureDigest": "sha256:cd91c952db6b805c4bd0ff3f82700615865ff16f2ab7f42fa03b384467b907f6",
-      "oracleDigest": "sha256:8f215096e19d11c1e7dbd626b3e755e736702f30e2556d0d1b48eb512d4f21d3"
+      "fixtureDigest": "sha256:fea013b62a63759cb71be4294f7410037b9327813b54f21b75cdf25aba2f7271",
+      "oracleDigest": "sha256:8b6f9756b985f57f9e638f04614d2045d82923d9d6a4a93e617fa77bb8b840c8"
     },
     {
-      "id": "business-offset-29",
-      "repoId": "fixture-06",
+      "id": "v2-r06-t04",
+      "repoId": "owned-v2-r06",
       "split": "calibration",
-      "fixtureDigest": "sha256:d594274d065fc2f5dce6df137fac2fadb183a75926851e45ce8f9d63da41ec89",
-      "oracleDigest": "sha256:3cf0d11f7602324a182365e31b46ed46303d4c71a38c867dba41549115c11a44"
+      "fixtureDigest": "sha256:0e843b83801946c0019c1809df454c9bebd41d53232f1c12c334f301b7112c7b",
+      "oracleDigest": "sha256:48071b885cc5db6d7a0b8ca34e3152efe483a4c9b99ad200312b8264ab6728d0"
     },
     {
-      "id": "date-month-end-30",
-      "repoId": "fixture-06",
+      "id": "v2-r06-t05",
+      "repoId": "owned-v2-r06",
       "split": "calibration",
-      "fixtureDigest": "sha256:61ea4bbc7ae1672cf22ffe3bcb275466ccd76a9c5eb6932fe30362a28bd54f0b",
-      "oracleDigest": "sha256:ca35cc728f338f3ec11c9ee07d55f51f3d13301f2ffa53b05341a084d23d72e5"
+      "fixtureDigest": "sha256:8aceb07333e2e38c95268e065847bab2815273ef2dd440ac28d5b421d5ee2a9b",
+      "oracleDigest": "sha256:0e7aa84fa6efa0c48011004f17f9698f9179e168f1c8441798f8c66303194a73"
     },
     {
-      "id": "sealed-031",
-      "repoId": "fixture-07",
+      "id": "v2-r07-t01",
+      "repoId": "owned-v2-r07",
       "split": "final",
-      "fixtureDigest": "sha256:8ded12fe2f168cc903264649638b990b3e740a78bd8cd0e8633343bef628e5bd",
-      "oracleDigest": "sha256:db3a6c61bd720efa3d161698399fa67b54816766f132cdb39bdba42bf986991f"
+      "fixtureDigest": "sha256:05afc920b19833e8b0e98a2544b90c68577be3171600d6027cfc7d180383a835",
+      "oracleDigest": "sha256:a036a06b91cd08f35a5ad5fd2354284ea9b8417a417d9b3f5ab5743bb92394d9"
     },
     {
-      "id": "sealed-032",
-      "repoId": "fixture-07",
+      "id": "v2-r07-t02",
+      "repoId": "owned-v2-r07",
       "split": "final",
-      "fixtureDigest": "sha256:f24d04376ed44897531c248de5fcd05757ba992ea34a9beb1bc16f6f0ccd24c5",
-      "oracleDigest": "sha256:f03131af71346c6fb0e15f701fb01fce883d75d801c95a7b95e578e132e797c5"
+      "fixtureDigest": "sha256:555ec002ad68c6b1d55319f796ccb6511b9703e4ca67989b247ca6b4fc745291",
+      "oracleDigest": "sha256:817645edf2b596ce624969abcc10d4a3891c08175f875afdb17ec4a5a7abf1eb"
     },
     {
-      "id": "sealed-033",
-      "repoId": "fixture-07",
+      "id": "v2-r07-t03",
+      "repoId": "owned-v2-r07",
       "split": "final",
-      "fixtureDigest": "sha256:130cc37d1788fdc65f1f653e1b3b183720b90227a5ff81dfe6a7687c3dbd06c4",
-      "oracleDigest": "sha256:c254115a34d3c02659521a6e896210a52381f70c3e21b146bec028480b9c9e3b"
+      "fixtureDigest": "sha256:0a8420a508eabd5adc24598000f95cec9a92a6b639e04b676ffc7ca9f63e334f",
+      "oracleDigest": "sha256:599e32d409e54e28f6fce665a56f64ceb411c92ce3899d7197145c5ff58aa480"
     },
     {
-      "id": "sealed-034",
-      "repoId": "fixture-07",
+      "id": "v2-r07-t04",
+      "repoId": "owned-v2-r07",
       "split": "final",
-      "fixtureDigest": "sha256:116f32eb96d7dbe7881ec1d68097d7fc184084a22b228b49845fcc3f7f0b4430",
-      "oracleDigest": "sha256:ce5271c094175cde52e0db528fa78dd489222bc646837ed7edc63c21eb46c7da"
+      "fixtureDigest": "sha256:9c67b76cd2c6f5d84c26f2e4400cced259fbbf3056e8aa437db33929ea39d856",
+      "oracleDigest": "sha256:f696fd6d662be19fb5006ae821408fd59aaa20a82bb7e815a929a5de934a0a0f"
     },
     {
-      "id": "sealed-035",
-      "repoId": "fixture-07",
+      "id": "v2-r07-t05",
+      "repoId": "owned-v2-r07",
       "split": "final",
-      "fixtureDigest": "sha256:17942ffd0f75221bd60e588968c1c075b28af362067fca3af739bdfece3c0e27",
-      "oracleDigest": "sha256:7a70197bf2e0e471425ce63637f29030ac819b5d0b8d6c6cc417add0a0cb733d"
+      "fixtureDigest": "sha256:ce2d0b43302a193665aba09a536e316fbc37f65061b44f5d48cc04c95be58263",
+      "oracleDigest": "sha256:01bb00cb009cec3579a94603fe574b5c5bfa1b47b87bd89eb96c4e92665e1142"
     },
     {
-      "id": "sealed-036",
-      "repoId": "fixture-08",
+      "id": "v2-r08-t01",
+      "repoId": "owned-v2-r08",
       "split": "final",
-      "fixtureDigest": "sha256:35be419dcd3c767e3ebebca4046146036f5e2e2c8546320d710eeeeb618fadb3",
-      "oracleDigest": "sha256:59fe28938f19578491b73ccf2ca6d8c89d3d457d2ffd0af53edd738b3444251b"
+      "fixtureDigest": "sha256:a23f011175de319648867bad651261b439046952c47a81f637409142308e4861",
+      "oracleDigest": "sha256:519f57f6e959bc8937dca22c91d2a0eab100a2879055c8fb006593c038667ce6"
     },
     {
-      "id": "sealed-037",
-      "repoId": "fixture-08",
+      "id": "v2-r08-t02",
+      "repoId": "owned-v2-r08",
       "split": "final",
-      "fixtureDigest": "sha256:9ed5670dd98a4662ac830d5b5ec1977ee3909cfafa7cb2a2c1875aec3a8a596d",
-      "oracleDigest": "sha256:4ca08a8eaaef1f20c499ec2f6be69e9ae6de4149ac555556414af92f416d6719"
+      "fixtureDigest": "sha256:ee105ac58238ea5f7203fa1ebae83fdd707e1d1f08d9249484e33fb69c23bbb0",
+      "oracleDigest": "sha256:12212085512825031489d3f6b72598b0e9640d19b208b0b1b003dccc3bffc13f"
     },
     {
-      "id": "sealed-038",
-      "repoId": "fixture-08",
+      "id": "v2-r08-t03",
+      "repoId": "owned-v2-r08",
       "split": "final",
-      "fixtureDigest": "sha256:b4a67d1f6ee535ab030cae0b7ab74482c840eeb75a5b5ec63618e8fea6ae91be",
-      "oracleDigest": "sha256:a0f6639dda0f7a3efc3f9e1db360da334ec5a2c5e0fbb52fbe2b25e0d95a86c0"
+      "fixtureDigest": "sha256:50d194e425694c734fb9c30bd1caa2d336be65b044713b6dd91d3d5020aec68c",
+      "oracleDigest": "sha256:874336104f16058d57f40b22836badc4ced17a8e64774ff11e6fa63939b78b1f"
     },
     {
-      "id": "sealed-039",
-      "repoId": "fixture-08",
+      "id": "v2-r08-t04",
+      "repoId": "owned-v2-r08",
       "split": "final",
-      "fixtureDigest": "sha256:f36413b020664cd3d143c93132a2b31934d32b7a06472862f00953de8e3f3a8a",
-      "oracleDigest": "sha256:51981069c428cdc3bc31373cbb2426a129625f640015531ff9ceff44fdb7b226"
+      "fixtureDigest": "sha256:9a9413d26eb3021dc318a4008604a9fff80cb093535592376b87bbd4d1136d36",
+      "oracleDigest": "sha256:faa5d17c73e35b0185bf5968bdc8952fe42411aadb568ba0b81d85c93a1cb8fc"
     },
     {
-      "id": "sealed-040",
-      "repoId": "fixture-08",
+      "id": "v2-r08-t05",
+      "repoId": "owned-v2-r08",
       "split": "final",
-      "fixtureDigest": "sha256:1357638428a9749b1c3200c630c87002b562f1688f422ea3fdb7ec84789979b3",
-      "oracleDigest": "sha256:3a73810ce0fe3942da098ac6f3d4950a86b42ac6b4a2aa5b7bf0f37bebc22ed3"
+      "fixtureDigest": "sha256:66e1e670027b31f1374dc8606648b24361a3bfa5b5a48ce1ee0a0e94bd3ad439",
+      "oracleDigest": "sha256:ebb8d40d36d6a66e07f95efe64d44fbcaf9d1d0edb774a298820ed30c030c9cc"
     },
     {
-      "id": "sealed-041",
-      "repoId": "fixture-09",
+      "id": "v2-r09-t01",
+      "repoId": "owned-v2-r09",
       "split": "final",
-      "fixtureDigest": "sha256:25ab862b79cbf90498e206394d639df91320d4d668196f307f11655e9a962595",
-      "oracleDigest": "sha256:4645e204aa9d75932e6ef91b59b5b75ae00007c56f2f33849fe925364601358b"
+      "fixtureDigest": "sha256:b358201ec426e7a3103c66e91711df3f5d4fb680cbf5fbfe4508d2e067276750",
+      "oracleDigest": "sha256:70df3e2d6a7ab2e76a8919eadd249b0eaae87c033d0b59839978125525b7e417"
     },
     {
-      "id": "sealed-042",
-      "repoId": "fixture-09",
+      "id": "v2-r09-t02",
+      "repoId": "owned-v2-r09",
       "split": "final",
-      "fixtureDigest": "sha256:b095a172a9eee4a0e9c60ecef9bc6647629fe66577fc39a3c43c7bcc821dd599",
-      "oracleDigest": "sha256:542453d3be129e835cfd0bc0f54a8a6699aca6c1189d030b257a18604fda84cc"
+      "fixtureDigest": "sha256:c17af94da8dfb1fcaa9fdc036d78beffe3e99423df2360b076685739d7dcf9e0",
+      "oracleDigest": "sha256:c11aec47cd33830cee21185df0650de864ec528d86c9e0ece6d8c4df8822a708"
     },
     {
-      "id": "sealed-043",
-      "repoId": "fixture-09",
+      "id": "v2-r09-t03",
+      "repoId": "owned-v2-r09",
       "split": "final",
-      "fixtureDigest": "sha256:778e7765b3df9f9d7b2d142ab14cc1a9f0db5f480d84278ea2edca80dfae57b1",
-      "oracleDigest": "sha256:50c7473a77e221b245cb43a3fd34473aae97bfd6f67ba6bd6dc251c9c13bf91f"
+      "fixtureDigest": "sha256:7aa2ead9c221e78105a766ce07d954ce625d056860edfe921eb1a8ede1dd8d60",
+      "oracleDigest": "sha256:ad957d9c95e95157e097dce22333b79cd63d045dfd42c71b2349260bb6b009e7"
     },
     {
-      "id": "sealed-044",
-      "repoId": "fixture-09",
+      "id": "v2-r09-t04",
+      "repoId": "owned-v2-r09",
       "split": "final",
-      "fixtureDigest": "sha256:1e3bb20caed38122c74ec7b86a61031ebe03a6503ee8164975a4158776001e99",
-      "oracleDigest": "sha256:aeb156a33af9fad7792ed8018686e923b497d9bf3f3b472f029aca988fe82445"
+      "fixtureDigest": "sha256:63945cd7cb078c6b9695d1612dd1c110c3c5f1e53e9c9eeb6f1584bcd7c7dea3",
+      "oracleDigest": "sha256:323183989113d664e9327e4a5119ea44c7ed6df7f74bdee461030e7776bea17e"
     },
     {
-      "id": "sealed-045",
-      "repoId": "fixture-09",
+      "id": "v2-r09-t05",
+      "repoId": "owned-v2-r09",
       "split": "final",
-      "fixtureDigest": "sha256:99c97ca4ccb8820e3b9f245436ba4beddc91279264d87cf9cf4e88a5d539ad99",
-      "oracleDigest": "sha256:8eef8dba09a18f1155c07dc5c84870c7e47618db0a35de08c52d996929adfd89"
+      "fixtureDigest": "sha256:3dc6a155f6d60d43f3b8df47f9d1f501a9e5eabaccd4f7875bdbd5428e991e0a",
+      "oracleDigest": "sha256:8213af17161539cdf46b302ce6e79c41567d4e0689ecf90d4b55bdb620cc1972"
     },
     {
-      "id": "sealed-046",
-      "repoId": "fixture-10",
+      "id": "v2-r10-t01",
+      "repoId": "owned-v2-r10",
       "split": "final",
-      "fixtureDigest": "sha256:5489672743973bb76cdebe1dbe84c40a5d5247ca4e2ad99c844b1a9e9780632c",
-      "oracleDigest": "sha256:cffe14ad080a6bb942a3eb05acdc8b75575fe3bba1a23aeeb2e58744904fd399"
+      "fixtureDigest": "sha256:4cc71ccc2f3274c7b3587e02bfe023e7f47df50fcb4eb60741b8212f19137857",
+      "oracleDigest": "sha256:671bd5e59a6d126645eb4db40215588c0a7a96b7dcce0064b00c226614d3841e"
     },
     {
-      "id": "sealed-047",
-      "repoId": "fixture-10",
+      "id": "v2-r10-t02",
+      "repoId": "owned-v2-r10",
       "split": "final",
-      "fixtureDigest": "sha256:19b583afe38d5f90d5d87d38e5330bb0b38425001e47b973aa2b32519511ccea",
-      "oracleDigest": "sha256:a431b9954218024f61752cefc65e485e56ef6345eb7d1734bea40cbdea79aa6b"
+      "fixtureDigest": "sha256:be1ace29c9c050dd450dfb63c4421ada12146b5660447e37b7a3be8ddb286a64",
+      "oracleDigest": "sha256:4825416efe21df3f49aa99a9af77ee381c77b3c4b48e54c954efd053e8280098"
     },
     {
-      "id": "sealed-048",
-      "repoId": "fixture-10",
+      "id": "v2-r10-t03",
+      "repoId": "owned-v2-r10",
       "split": "final",
-      "fixtureDigest": "sha256:44ebdd6c367920f34f20988debab320e723006b20c6be179ea15562edff22744",
-      "oracleDigest": "sha256:e5348147d916226d50af81a0015c4c2bf8790b28852406bef4765685758889c1"
+      "fixtureDigest": "sha256:78fd236c973f15196dcb15edcc703b6d1ac9774e2a25fac50596567f2fd7f68a",
+      "oracleDigest": "sha256:52faa140c04579c6260fd0fc882973baebfddfa7d71ad5fcdce29e7eeaddd0be"
     },
     {
-      "id": "sealed-049",
-      "repoId": "fixture-10",
+      "id": "v2-r10-t04",
+      "repoId": "owned-v2-r10",
       "split": "final",
-      "fixtureDigest": "sha256:285ec7a0d0933bee870c45ce3aaf40aa67a54abf98466253f455c9464a551baa",
-      "oracleDigest": "sha256:59ed1b0cd6d3ffc0fe575b634cbab29daf47d513de5b5ef894ef3209d37eb992"
+      "fixtureDigest": "sha256:5c93b6ae0d63a59587bbc940ea15af619e6c8535804c9924d333ffd690812815",
+      "oracleDigest": "sha256:2a4351ddf9e029913389b162dd8bd7242c1a5689be7fb5277af5e04b1c980e4a"
     },
     {
-      "id": "sealed-050",
-      "repoId": "fixture-10",
+      "id": "v2-r10-t05",
+      "repoId": "owned-v2-r10",
       "split": "final",
-      "fixtureDigest": "sha256:83bc03d68cfaea885167637934f0c97f15364557aac9399bc5c04edb3c944371",
-      "oracleDigest": "sha256:60a51cda0c6ec93bad46d1513a51539b20f360f705232f1f8387d0c6df5737e5"
+      "fixtureDigest": "sha256:2ed84b35aa4624e42c4025285e56b39742bf967191017490c098e3a6e2f59d0f",
+      "oracleDigest": "sha256:78a6f4c74f25046461e39aebe21848f3ab3dd17f845f10163562d284637a2651"
     },
     {
-      "id": "sealed-051",
-      "repoId": "fixture-11",
+      "id": "v2-r11-t01",
+      "repoId": "owned-v2-r11",
       "split": "final",
-      "fixtureDigest": "sha256:ea6f2bbe050bc5d8de4a01951f1485b572a45d67a863b08f0ef99f3794404d9f",
-      "oracleDigest": "sha256:f558a6034e1d49fed9ecff01983a497a2ce3cd3f0c5b8aaf20d3b6491a813008"
+      "fixtureDigest": "sha256:986e83f29dd0d14a5671b25c0dfb34e28be5c3ce7baf1fe9013a8e061230cd07",
+      "oracleDigest": "sha256:d40fb1f690eea8be568cfe0c982d794057d17a0566e38b35a92a568f840e5254"
     },
     {
-      "id": "sealed-052",
-      "repoId": "fixture-11",
+      "id": "v2-r11-t02",
+      "repoId": "owned-v2-r11",
       "split": "final",
-      "fixtureDigest": "sha256:5f09cabcd8f08b70f05784b3b4dfd4b6579a9bd7f95e54876183f1600894f564",
-      "oracleDigest": "sha256:7a9c12a81a52c4566896f72ba75664941cf8062f158cdb64a5ec28633618b47f"
+      "fixtureDigest": "sha256:bac25ce3b0af898b71be40e407df286cbb01c8d3e7b4e31dc8a33b5713cca18a",
+      "oracleDigest": "sha256:ae6528c4035e0967fb7f54bf027a6936b2ce1ccae2dae669d6b49cbbbede8b7e"
     },
     {
-      "id": "sealed-053",
-      "repoId": "fixture-11",
+      "id": "v2-r11-t03",
+      "repoId": "owned-v2-r11",
       "split": "final",
-      "fixtureDigest": "sha256:92115f88939b417e414c15fa624be53275cefa544d161d9952cbdac696a57bb3",
-      "oracleDigest": "sha256:ee78aa8bccf526d1fd2e6de68a51a7bc6ad5c1438b9b0ea68eaf22b708e99576"
+      "fixtureDigest": "sha256:87c839ec0dd8d4ed604543aa776397a9952ca2c2b99424b07a6df0f4b7ab4b52",
+      "oracleDigest": "sha256:813942648ddfaf2c9c7f19889ba20338bb2a0d9d75d0b85a987ab7e29d56d372"
     },
     {
-      "id": "sealed-054",
-      "repoId": "fixture-11",
+      "id": "v2-r11-t04",
+      "repoId": "owned-v2-r11",
       "split": "final",
-      "fixtureDigest": "sha256:0fb4170623acf3928dda098db11945f780e3404273e77a18de1f10c2f08eb3fa",
-      "oracleDigest": "sha256:970710fd77cdfa056a81b76c9d679de0e5ce958183d670b5e6a6d144184edb99"
+      "fixtureDigest": "sha256:144eced7f89587cca742e061c12e58df70bfa75ce6ae7286d41eaaa3b2587aeb",
+      "oracleDigest": "sha256:a8710a8b8c715b3356226ebd660c6115b20406fdba16a881c8026d6bb93b9a44"
     },
     {
-      "id": "sealed-055",
-      "repoId": "fixture-11",
+      "id": "v2-r11-t05",
+      "repoId": "owned-v2-r11",
       "split": "final",
-      "fixtureDigest": "sha256:ed5b6b42f6fe9f64ccc0de77797383764717330d2398d6675acf109aa6412511",
-      "oracleDigest": "sha256:af1ae96c358273870eae4b29ab600eaa9d459f6b1de1c836474df6ad237473b2"
+      "fixtureDigest": "sha256:6e562aa914ecb611f4e673c6d83b6004b5e32d8dcf344248e9f494071140731d",
+      "oracleDigest": "sha256:94a31adc62b40d9b6323eb832a467d6df6bca0f0834374cde788f5678078ab82"
     },
     {
-      "id": "sealed-056",
-      "repoId": "fixture-12",
+      "id": "v2-r12-t01",
+      "repoId": "owned-v2-r12",
       "split": "final",
-      "fixtureDigest": "sha256:75e23deec76bcbd79f8e0c86d8cb22c29620c84dff4f4e42b6edc3adfa3076ce",
-      "oracleDigest": "sha256:d96c0910f2d4d04ee1b0a362544cb2d1d5e42df1de0e8e7b98783d50969567ab"
+      "fixtureDigest": "sha256:6e36acb360eac2f49918188d29ce1206394ad585a4d843e7ab40ca535746efc3",
+      "oracleDigest": "sha256:efa45847a1d55d2f629fce9926ed6e07d32761ef9027cdca635910ecfc916126"
     },
     {
-      "id": "sealed-057",
-      "repoId": "fixture-12",
+      "id": "v2-r12-t02",
+      "repoId": "owned-v2-r12",
       "split": "final",
-      "fixtureDigest": "sha256:cb100493bde2ce5ff40ed13d13612639e5cf300714070894d9a6f110532f5732",
-      "oracleDigest": "sha256:412062af3b3cff6a7b2206874994ac1401606ba4a9c19da845bf30e7c3f92e8f"
+      "fixtureDigest": "sha256:342f22601e367decbce88a311e10d4af0363912ab11a4217684cf63a3649bd39",
+      "oracleDigest": "sha256:9303dca5c760ffea264f4fd1fdc73c1dbd7644a22be2dea3642eb958f4a328dc"
     },
     {
-      "id": "sealed-058",
-      "repoId": "fixture-12",
+      "id": "v2-r12-t03",
+      "repoId": "owned-v2-r12",
       "split": "final",
-      "fixtureDigest": "sha256:9a9944c1258ffa31d54a0efc37a4543dbf333f1105d2efe6cae534a65f52d632",
-      "oracleDigest": "sha256:60ffe3c597e12f0d69690745e662d83b63afafd9bbab8eb5390cda590a07aa1e"
+      "fixtureDigest": "sha256:d2f3ca1f9781e391311905344cef773c18e319242f8d19dfd282219344866468",
+      "oracleDigest": "sha256:e103b3305cdd72b539cfecaa2e5ad339a67d32f2b519b136c4c62c631eec8607"
     },
     {
-      "id": "sealed-059",
-      "repoId": "fixture-12",
+      "id": "v2-r12-t04",
+      "repoId": "owned-v2-r12",
       "split": "final",
-      "fixtureDigest": "sha256:3a0021e9ebc277042023c5fc3ea4b47bcdde000fb720b276e7e2ad5a572a345b",
-      "oracleDigest": "sha256:cdf16cfdcfd14ac9bc9553ace959b11f1045902e83e8776494d98cb8c0eecfd9"
+      "fixtureDigest": "sha256:35bc1a8370843014cc2963c839876b1f9e77773799da39733ead285ded475ca5",
+      "oracleDigest": "sha256:6e0e914c8c65f21f42500e6bb33f22f632ce4eb0292d228e918fbdec75ed0d51"
     },
     {
-      "id": "sealed-060",
-      "repoId": "fixture-12",
+      "id": "v2-r12-t05",
+      "repoId": "owned-v2-r12",
       "split": "final",
-      "fixtureDigest": "sha256:3f225f4d470d446cf4d710a75874160e54a9d7a00d0961c679d81b6c6ddb9247",
-      "oracleDigest": "sha256:5127295b63013d7500706b81b2583579db1fc1ab35da60f305baf91e8f6ede65"
+      "fixtureDigest": "sha256:2157770a3e04dd91587f2fd3bbbc3c618df77e72c05166112e5e87a4fcb1aac3",
+      "oracleDigest": "sha256:b2244464611cea21f2fb2756836ad97f09e2388b54f1edc2a4eae358bbe7bd6e"
     }
   ]
 }

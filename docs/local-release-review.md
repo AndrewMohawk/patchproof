@@ -1,5 +1,9 @@
 # Local release review — 2026-09-27
 
+This is the retained review of earlier source. The current product contract is
+2.2; [compatibility and migration evidence](json-contract-compatibility.md) records
+its later checks without rewriting the observations below.
+
 This review covers the local product against PRD F01–F12. It does not approve a
 competition release, public deployment, paid execution or benchmark claim.
 The available product uses a scripted repair provider and real local container

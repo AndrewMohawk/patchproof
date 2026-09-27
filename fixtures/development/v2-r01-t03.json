@@ -1,0 +1,350 @@
+{
+  "id": "v2-r01-t03",
+  "repoId": "owned-v2-r01",
+  "split": "development",
+  "title": "Honor signed cyclic list shifts",
+  "description": "This ListWeave snapshot contains rotate(values, steps), an in-memory sequence reordering helper. A refactor that handles the shift magnitude lost the leftward direction of negative steps. Restore the documented signed rotation. Inputs and outputs are JSON values with finite numbers and JavaScript-safe integers.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For list values and integer steps, rotate moves elements cyclically right by steps positions when positive and left by -steps when negative, preserving relative cyclic order. Reduce steps modulo list length; zero and whole-length multiples keep the order, a singleton keeps its value, and an empty list returns [] for every integer steps."
+    },
+    {
+      "id": "R02",
+      "text": "For valid calls, rotate leaves values and all nested lists and dictionaries unchanged, including negative shifts that change the returned order."
+    },
+    {
+      "id": "R03",
+      "text": "values must be a list and steps must have Python type int, excluding booleans; any violation raises TypeError, even when values is empty."
+    }
+  ],
+  "files": {
+    "cycles.py": "# ListWeave: original synthetic list-maintenance module. CC0-1.0.\ndef rotate(values, steps):\n    if not isinstance(values, list) or type(steps) is not int:\n        raise TypeError(\"expected a list and integer steps\")\n    if not values:\n        return []\n    shift = abs(steps) % len(values)\n    return values[-shift:] + values[:-shift] if shift else values[:]\n"
+  },
+  "editAllowlist": [
+    "cycles.py"
+  ],
+  "entrypoint": "cycles.py",
+  "visibleCases": [
+    {
+      "id": "r-v-right",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        4,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "r-v-left",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        -1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "b",
+        "c",
+        "d",
+        "a"
+      ]
+    },
+    {
+      "id": "r-v-zero",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          8,
+          9
+        ],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "r-v-empty",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "r-v-mutation",
+      "requirementId": "R02",
+      "function": "rotate",
+      "args": [
+        [
+          {
+            "n": [
+              1
+            ]
+          },
+          [
+            "x"
+          ],
+          null
+        ],
+        -1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "x"
+        ],
+        null,
+        {
+          "n": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "r-v-none",
+      "requirementId": "R03",
+      "function": "rotate",
+      "args": [
+        null,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "r-v-bool",
+      "requirementId": "R03",
+      "function": "rotate",
+      "args": [
+        [],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "r-v-isolated-mutation",
+      "requirementId": "R02",
+      "function": "rotate",
+      "args": [
+        [
+          {
+            "rack": [
+              9
+            ]
+          },
+          [
+            "east"
+          ],
+          false
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        false,
+        {
+          "rack": [
+            9
+          ]
+        },
+        [
+          "east"
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "r-a-largeleft",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          10,
+          20,
+          30,
+          40,
+          50
+        ],
+        -7
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        30,
+        40,
+        50,
+        10,
+        20
+      ]
+    },
+    {
+      "id": "r-a-largeright",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          "x",
+          "y",
+          "z"
+        ],
+        8
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "y",
+        "z",
+        "x"
+      ]
+    },
+    {
+      "id": "r-a-multiple",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          false,
+          null
+        ],
+        -6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        false,
+        null
+      ]
+    },
+    {
+      "id": "r-a-singleton",
+      "requirementId": "R01",
+      "function": "rotate",
+      "args": [
+        [
+          {
+            "x": 1
+          }
+        ],
+        -42
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "x": 1
+        }
+      ]
+    },
+    {
+      "id": "r-a-mutation",
+      "requirementId": "R02",
+      "function": "rotate",
+      "args": [
+        [
+          [],
+          {
+            "a": [
+              false
+            ]
+          },
+          "界",
+          0
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "a": [
+            false
+          ]
+        },
+        "界",
+        0,
+        []
+      ]
+    },
+    {
+      "id": "r-a-stringlist",
+      "requirementId": "R03",
+      "function": "rotate",
+      "args": [
+        "abc",
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "r-a-float",
+      "requirementId": "R03",
+      "function": "rotate",
+      "args": [
+        [
+          1,
+          2
+        ],
+        1.5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "r-a-nonint",
+      "requirementId": "R03",
+      "function": "rotate",
+      "args": [
+        [
+          1,
+          2
+        ],
+        "2"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic ListWeave repository maintenance task authored independently under independent-ai-author-repo01; assigned job shared/jobs/repo01.json; repo owned-v2-r01. No external source code or data."
+}

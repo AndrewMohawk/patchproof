@@ -1,25 +1,25 @@
 {
   "id": "stable-unique-01",
-  "repoId": "fixture-01",
+  "repoId": "owned-v2-r01",
   "split": "development",
-  "title": "Stable duplicate removal",
-  "description": "Repair unique(values) so deduplication preserves first occurrence order and caller-owned input. None must raise TypeError.",
+  "title": "Retain first occurrences throughout a list",
+  "description": "ListWeave is a small in-memory library for arranging JSON list data. This snapshot contains unique(values). A duplicate-filtering refactor now misses repeats separated by other entries. Restore the documented contract. values is either a JSON list or None; other argument types are outside this task contract. All JSON numbers are finite and integers stay within the JavaScript safe range.",
   "requirements": [
     {
       "id": "R01",
-      "text": "Return each distinct value once in first-occurrence order, using Python equality."
+      "text": "For a list values, unique returns the first member of each Python == equality class, in original first-occurrence order. Equality is recursive for lists and dictionaries; strings compare exactly without Unicode normalization, and Python numeric equality includes True == 1 and False == 0. Nested JSON values and None elements are supported. The empty list returns []."
     },
     {
       "id": "R02",
-      "text": "Do not mutate the input list."
+      "text": "For list input, unique leaves the caller list and all its nested lists and dictionaries unchanged, including when removing nonadjacent duplicates."
     },
     {
       "id": "R03",
-      "text": "Raise TypeError for None."
+      "text": "Passing None as values raises TypeError."
     }
   ],
   "files": {
-    "solution.py": "def unique(values):\n    if values is None:\n        return []\n    values.sort()\n    return list(set(values))\n"
+    "solution.py": "# ListWeave: original synthetic list-maintenance module. CC0-1.0.\ndef unique(values):\n    if values is None:\n        raise TypeError(\"values must be a list\")\n    result = []\n    for value in values:\n        if not result or value != result[-1]:\n            result.append(value)\n    return result\n"
   },
   "editAllowlist": [
     "solution.py"
@@ -27,97 +27,195 @@
   "entrypoint": "solution.py",
   "visibleCases": [
     {
-      "id": "visible-01",
+      "id": "u-v-order",
       "requirementId": "R01",
       "function": "unique",
-      "kwargs": {},
       "args": [
         [
-          1,
-          1,
-          2
+          "elm",
+          "ash",
+          "elm",
+          "birch"
         ]
       ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
       "expected": [
-        1,
-        2
-      ],
-      "assertArgsUnchanged": false
+        "elm",
+        "ash",
+        "birch"
+      ]
     },
     {
-      "id": "visible-02",
-      "requirementId": "R02",
+      "id": "u-v-empty",
+      "requirementId": "R01",
       "function": "unique",
-      "kwargs": {},
       "args": [
         []
       ],
-      "expected": [],
-      "assertArgsUnchanged": true
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
     },
     {
-      "id": "visible-03",
+      "id": "u-v-unicode",
+      "requirementId": "R01",
+      "function": "unique",
+      "args": [
+        [
+          "é",
+          "é",
+          "é"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "é",
+        "é"
+      ]
+    },
+    {
+      "id": "u-v-mutation",
+      "requirementId": "R02",
+      "function": "unique",
+      "args": [
+        [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          {
+            "p": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2
+        ],
+        {
+          "p": 3
+        }
+      ]
+    },
+    {
+      "id": "u-v-none",
       "requirementId": "R03",
       "function": "unique",
-      "kwargs": {},
       "args": [
         null
       ],
-      "expectedException": "TypeError",
-      "assertArgsUnchanged": false
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
     }
   ],
   "acceptanceCases": [
     {
-      "id": "acceptance-01",
+      "id": "u-a-nested",
       "requirementId": "R01",
       "function": "unique",
-      "kwargs": {},
       "args": [
         [
-          3,
-          1,
-          3,
-          2
+          {
+            "a": [
+              1
+            ]
+          },
+          [
+            "x"
+          ],
+          {
+            "a": [
+              1
+            ]
+          },
+          null,
+          null
         ]
       ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
       "expected": [
-        3,
-        1,
-        2
-      ],
-      "assertArgsUnchanged": false
+        {
+          "a": [
+            1
+          ]
+        },
+        [
+          "x"
+        ],
+        null
+      ]
     },
     {
-      "id": "acceptance-02",
+      "id": "u-a-numeric",
+      "requirementId": "R01",
+      "function": "unique",
+      "args": [
+        [
+          1,
+          "between",
+          true,
+          0,
+          false
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        1,
+        "between",
+        0
+      ]
+    },
+    {
+      "id": "u-a-mutation",
       "requirementId": "R02",
       "function": "unique",
-      "kwargs": {},
       "args": [
         [
-          1,
-          2,
-          2
+          {
+            "k": [
+              "violet"
+            ]
+          },
+          {
+            "k": [
+              "violet"
+            ]
+          },
+          []
         ]
       ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
       "expected": [
-        1,
-        2
-      ],
-      "assertArgsUnchanged": true
+        {
+          "k": [
+            "violet"
+          ]
+        },
+        []
+      ]
     },
     {
-      "id": "acceptance-03",
+      "id": "u-a-none",
       "requirementId": "R03",
       "function": "unique",
-      "kwargs": {},
-      "args": [
-        null
-      ],
-      "expectedException": "TypeError",
-      "assertArgsUnchanged": false
+      "args": [],
+      "kwargs": {
+        "values": null
+      },
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
     }
   ],
   "license": "CC0-1.0",
-  "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+  "provenance": "Original synthetic ListWeave repository maintenance task authored independently under independent-ai-author-repo01; assigned job shared/jobs/repo01.json; repo owned-v2-r01. No external source code or data."
 }

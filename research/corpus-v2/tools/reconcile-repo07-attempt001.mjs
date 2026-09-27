@@ -1,0 +1,12 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { cleanupOwnedContainer } from '/home/andrewmohawk/patchproof/workers/sandbox/local-cleanup.ts';
+import { runDocker } from '/home/andrewmohawk/patchproof/workers/sandbox/process.ts';
+const observed=JSON.parse(readFileSync('/home/andrewmohawk/patchproof-evaluation-v2/validation/repo07-attempt001-inspection.json','utf8'));
+if(observed.inspection.state!=='present'||!observed.inspection.id)throw new Error('An exact owned handle must first be observed');
+const expected={...observed.expected,id:observed.inspection.id},startedAt=new Date().toISOString();
+const state=await runDocker(['container','inspect',expected.id,'--format','{{json .State}}'],{timeoutMs:1000});
+const beforeState=!state.error&&state.code===0?JSON.parse(state.stdout):null;
+const cleanup=await cleanupOwnedContainer(runDocker,expected,false);
+const result={purpose:'Explicit reviewer cleanup of the exact independently ownership-checked late create; original preparation failure is retained',startedAt,finishedAt:new Date().toISOString(),expected,beforeState,cleanup,paidCalls:0,newCandidateExecution:false};
+writeFileSync('/home/andrewmohawk/patchproof-evaluation-v2/validation/repo07-attempt001-cleanup-reconciliation.json',JSON.stringify(result,null,2)+'\n',{flag:'wx',mode:0o600,flush:true});
+process.stdout.write(JSON.stringify({beforeStatus:beforeState?.Status,startedAt:beforeState?.StartedAt,cleanup})+'\n');if(!cleanup.confirmed)process.exitCode=2;

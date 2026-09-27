@@ -1,0 +1,477 @@
+{
+  "id": "v2-r06-t05",
+  "repoId": "owned-v2-r06",
+  "split": "calibration",
+  "title": "Use the requested final position when moving a workshop step",
+  "description": "Moving an instruction toward the end currently places it one slot early. The editor API defines destination as an index in the final sequence, and callers retain their original sequence for undo previews.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "reposition_step(steps, source, destination) returns a reordered list with the original source element at the destination index in the final list. Keep the relative order of every other element. Positions are zero based; source equal to destination returns the same values. Retain all string contents exactly, including duplicate, empty and Unicode labels."
+    },
+    {
+      "id": "R02",
+      "text": "steps must be a list of strings and source and destination must be integers, excluding booleans and fractional values; wrong types raise TypeError. Both positions must be at least zero and less than the length of steps; otherwise raise ValueError. Thus an empty list has no valid positions, and negative positions are not Python-style offsets."
+    },
+    {
+      "id": "R03",
+      "text": "The supplied steps list must remain unchanged on both a successful move and a validation exception."
+    }
+  ],
+  "files": {
+    "sequence.py": "\"\"\"Reorder workshop instruction sequences using final list positions.\"\"\"\n\n\ndef reposition_step(steps, source, destination):\n    if not isinstance(steps, list) or any(not isinstance(x, str) for x in steps):\n        raise TypeError(\"steps must be a list of strings\")\n    if type(source) is not int or type(destination) is not int:\n        raise TypeError(\"positions must be integers\")\n    if source < 0 or source >= len(steps) or destination < 0 or destination >= len(steps):\n        raise ValueError(\"position outside sequence\")\n    result = list(steps)\n    selected = result.pop(source)\n    if source < destination:\n        destination -= 1\n    result.insert(destination, selected)\n    return result\n"
+  },
+  "editAllowlist": [
+    "sequence.py"
+  ],
+  "entrypoint": "sequence.py",
+  "visibleCases": [
+    {
+      "id": "v2-r06-t05-v-r01-left",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "cut",
+          "glue",
+          "dry"
+        ],
+        2,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "dry",
+        "cut",
+        "glue"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-v-r02-range",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "cut"
+        ],
+        -1,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t05-v-r03-input",
+      "requirementId": "R03",
+      "function": "reposition_step",
+      "args": [
+        [
+          "cut",
+          "glue",
+          "dry"
+        ],
+        2,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "cut",
+        "dry",
+        "glue"
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r06-t05-a-r01-right",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "mark",
+          "cut",
+          "sand",
+          "coat"
+        ],
+        0,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "cut",
+        "sand",
+        "coat",
+        "mark"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-adjacent",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b",
+          "c"
+        ],
+        0,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "b",
+        "a",
+        "c"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-left",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "bind",
+          "fold",
+          "press",
+          "pack"
+        ],
+        3,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "bind",
+        "pack",
+        "fold",
+        "press"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-noop",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "cut",
+          "dry"
+        ],
+        1,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "cut",
+        "dry"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-single",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          ""
+        ],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        ""
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-duplicates",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "x",
+          "y",
+          "x",
+          "z"
+        ],
+        2,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "x",
+        "x",
+        "y",
+        "z"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r01-unicode-empty",
+      "requirementId": "R01",
+      "function": "reposition_step",
+      "args": [
+        [
+          "折",
+          "",
+          "é",
+          "é"
+        ],
+        1,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "折",
+        "é",
+        "é",
+        ""
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r02-null",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        null,
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-string",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        "cut",
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-member",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "cut",
+          null
+        ],
+        0,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-source-bool",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        true,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-dest-bool",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        0,
+        false
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-source-fraction",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        0.5,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-dest-fraction",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        0,
+        1.5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-source-null",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a"
+        ],
+        null,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-dest-string",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a"
+        ],
+        0,
+        "0"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-source-high",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        2,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-dest-high",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        0,
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-dest-negative",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [
+          "a",
+          "b"
+        ],
+        0,
+        -1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t05-a-r02-empty",
+      "requirementId": "R02",
+      "function": "reposition_step",
+      "args": [
+        [],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t05-a-r03-normal",
+      "requirementId": "R03",
+      "function": "reposition_step",
+      "args": [
+        [
+          "zip",
+          "align",
+          "press",
+          "pack"
+        ],
+        3,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        "pack",
+        "zip",
+        "align",
+        "press"
+      ]
+    },
+    {
+      "id": "v2-r06-t05-a-r03-error",
+      "requirementId": "R03",
+      "function": "reposition_step",
+      "args": [
+        [
+          "zip",
+          "align",
+          "press"
+        ],
+        0,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for shared job repo06; repository owned-v2-r06; author /root/corpus_v2_repo06; no upstream source copied."
+}

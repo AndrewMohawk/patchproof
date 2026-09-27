@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T15:06:56.630382+00:00",
+  "corpusVersion": "v2",
+  "manifestDigest": "sha256:e9843bc84d9cb24f13dbdacbee2a00b5efd3004954c85e3ec8181e08aa8524a4",
+  "commands": [
+    {
+      "command": "node workers/evaluator/cli.ts plan pilot research/evaluation/pilot-plan-v2-draft.json",
+      "exitCode": 0,
+      "path": "research/evaluation/pilot-plan-v2-draft.json"
+    },
+    {
+      "command": "node workers/evaluator/cli.ts plan final research/evaluation/final-plan-v2-draft.json",
+      "exitCode": 0,
+      "path": "research/evaluation/final-plan-v2-draft.json"
+    }
+  ],
+  "draftDigests": {
+    "research/evaluation/pilot-plan-v2-draft.json": "sha256:559db83ce045aeff5460e102b30c86dfee485383446e4676ff816438c4b5e131",
+    "research/evaluation/final-plan-v2-draft.json": "sha256:378409e22ec99ddc0a4dbdd183290c454e32a7ef156fa5030ab62ed76e2aa91e"
+  },
+  "v1PlanBytesUnchanged": {
+    "research/evaluation/pilot-plan.json": "sha256:8a0c88e59c6867bc1f76ee1c7f929965b55f9a6bde9ef3a51e61f5e58a5f00f1",
+    "research/evaluation/final-plan.json": "sha256:3f71efcc20c1cdb5ffd9b57bd809408e6e495abca928ea1e0ab3438685df19f0"
+  },
+  "executionAuthorized": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "modelCatalogVerified": false,
+  "pricesVerified": false,
+  "modelProbePlan": "NOT CREATED: no accepted quality threshold/catalog/calibration inputs; no invented placeholders.",
+  "scope": "Prospective metadata plans only; no scored episodes or final-set feedback."
+}

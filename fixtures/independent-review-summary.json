@@ -1,87 +1,155 @@
 {
   "schemaVersion": "1.0",
-  "reviewedAt": "2026-09-27T08:34:50.791929+00:00",
-  "scope": "Root-safe independent review summary: no sealed task content, cases, names or gold source.",
-  "status": "reviewed_and_author_runtime_validated",
-  "manifestDigest": "sha256:9550e0f8a53fa3ba2db9739389cbe5223487ff41a68f0ff704bc8c6fe7a4d8d8",
-  "reviewArtifactDigest": "sha256:a7fe921f415e0a1b14889e685c458926d7efa43b5a83f0238541999d77186ec7",
+  "corpusVersion": "v2",
+  "status": "independently_authored_reviewed_and_reviewer_runtime_validated",
+  "manifestDigest": "sha256:e9843bc84d9cb24f13dbdacbee2a00b5efd3004954c85e3ec8181e08aa8524a4",
+  "reviewArtifactDigest": "sha256:36f4848a0b3ade8f4f5b88d4f61c7fbd6946f5bb594c79ba0baa804f7f4c1be2",
+  "provenanceDigest": "sha256:a0d54021dbbc651cd895c118902ed53360c91cfc9777c803e189ba4a119310b1",
   "counts": {
     "tasksReviewed": 60,
     "publicTasksReviewed": 30,
     "sealedTasksReviewed": 30,
     "repositories": 12,
-    "caseDefinitionsReviewed": 563,
-    "findings": 25,
-    "tasksWithFindings": 21,
-    "structuralFailures": 0,
+    "independentAuthorJobs": 12,
+    "requirementsReviewed": 180,
+    "caseDefinitionsReviewed": 1582,
+    "casesByLayer": {
+      "visible": 262,
+      "acceptance": 644,
+      "sealed": 676
+    },
+    "sealedCasesIdenticalToVisibleOrRuntime": 1,
+    "resolvedFindings": 51,
+    "unresolvedFindings": 0,
+    "correctionRevisions": 12,
     "exactCrossSplitStartingSourceDuplicates": 0,
     "exactCrossSplitGoldDuplicates": 0,
-    "sealedCasesIdenticalToVisibleOrRuntime": 11,
-    "resolvedFindings": 25,
-    "unresolvedFindings": 0,
-    "verifiedExactProposals": 22,
-    "independentSemanticProbesPassed": 3,
-    "independentNegativeControlsRejected": 2
+    "exactSourceMapWithinRepositoryDuplicatePairs": {
+      "start": 0,
+      "gold": 40
+    },
+    "exactSourceMapAcrossRepositoryDuplicatePairs": {
+      "start": 0,
+      "gold": 0
+    },
+    "authorNegativeControlsRejected": 75,
+    "independentSemanticProbesPassed": 13,
+    "independentNegativeControlsRejected": 12
   },
-  "publicTaskIdsWithResolvedFindings": [
-    "boolean-setting-24",
-    "hex-bytes-25",
-    "json-canonical-21",
-    "median-even-18",
-    "rename-key-15",
-    "split-first-08",
-    "stable-unique-01",
-    "weighted-mean-20",
-    "word-counts-10"
-  ],
   "independentHumanReview": false,
   "independentAIReview": true,
-  "authorRuntimeEvidenceMatchesManifest": true,
-  "authorRuntimeCounts": {
+  "reviewerIsAnAuthor": false,
+  "reviewerRuntimeEvidenceMatchesManifest": true,
+  "reviewerRuntimeCounts": {
     "totalTasks": 60,
     "goldPassedTasks": 60,
     "buggyRejectedTasks": 60,
     "repeatStableTasks": 60,
     "infrastructureFailedTasks": 0
   },
-  "independentChecks": {
-    "semanticDiscrepanciesOriginallyObserved": 3,
-    "finalSemanticProbesPass": 3,
-    "negativeControlsOriginallyAccepted": 2,
-    "finalNegativeControlsRejected": 2,
-    "containerExecutions": 3,
-    "productionRunnerIndependentlyReexecutedForAllTasks": false
+  "reviewerRuntimeCountsScope": "Accepted one-per-repository preparations only; see freshPreparationHistory for unsuccessful attempts.",
+  "freshPreparationHistory": {
+    "attempts": 14,
+    "acceptedRepositories": 12,
+    "unsuccessfulAttempts": 2,
+    "infrastructureFailedTasksInUnsuccessfulAttempts": 2,
+    "completedBatchesInUnsuccessfulAttempts": 49,
+    "incidentMetadataDigest": "sha256:498d57f1dd8606dcc2f7b02747555dd650da413e9535698445f44756387b32ca",
+    "scope": "All fresh contract2.2 preparation attempts, including preserved failures; these are not model-evaluation episodes."
   },
   "scoredModelEvaluationPerformed": false,
   "providerSpendUsd": 0,
-  "remainingGates": [
-    "Verified sponsor model/sandbox access and real integration",
-    "Frozen scored experiment protocol and matched model budgets",
-    "Owner human review of intended scope and deployment/submission authorization"
-  ],
-  "limitations": [
-    "Synthetic tasks from one authoring process; logical repository-disjoint groups are not independently sampled real repositories.",
-    "Finite checks and JSON value observations do not establish universal correctness, alias identity, arbitrary Python objects or unbounded numeric behavior.",
-    "No sealed definitions or gold were shared with repair agents.",
-    "Owner human review and real sponsor integration remain separate."
-  ],
-  "protocolReview": {
-    "status": "passed",
-    "sourceDigests": [
+  "runner": {
+    "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "sources": [
       {
-        "path": "/home/andrewmohawk/patchproof/workers/evaluator/protocol.ts",
-        "digest": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112"
+        "path": "packages/contracts/src/catalogue.ts",
+        "digest": "sha256:26cf47e9945d4234402336abe65df1a379179999fc00b2a6a76d6c6cbc22728e"
       },
       {
-        "path": "/home/andrewmohawk/patchproof/workers/evaluator/analysis.ts",
-        "digest": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b"
+        "path": "packages/contracts/src/digest.ts",
+        "digest": "sha256:e15d2b8369f25cbdd86674e051e51d3f58dbcd140373b93639746a70dbb7db3d"
+      },
+      {
+        "path": "packages/contracts/src/index.ts",
+        "digest": "sha256:4e477571842142bc7fc2992a0f0975918e151f1a9fb2fba0d16bdf74624ab7c9"
+      },
+      {
+        "path": "packages/contracts/src/json-data.ts",
+        "digest": "sha256:ebb37df7d8b93a53fb896f5dbac01c1e777d228ac68f78227b1c6155f23ce711"
+      },
+      {
+        "path": "packages/contracts/src/legacy-product-v2.ts",
+        "digest": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343"
+      },
+      {
+        "path": "packages/contracts/src/legacy-product-validation-v2.ts",
+        "digest": "sha256:97e726119c43bc0a67ba814a13b8835e0ba6090223fc78fa10ffdb30e57151ff"
+      },
+      {
+        "path": "packages/contracts/src/product-validation.ts",
+        "digest": "sha256:c3528f20e548175f8bce7f5914e16e3f1422e1b8c79cbcf994c855097ea1d890"
+      },
+      {
+        "path": "packages/contracts/src/product.ts",
+        "digest": "sha256:12f7f93d92c581ddea55618ed6beafaf42f2f4e2521f0b0f0f853f69e1ed1fa8"
+      },
+      {
+        "path": "packages/contracts/src/providers.ts",
+        "digest": "sha256:7792fc50d3ecad452ed7b662fd4abeb1b0d797bb510e4956c280a09824d10e34"
+      },
+      {
+        "path": "package.json",
+        "digest": "sha256:dc3df27902932f572c3588830fb595143b94b8a430614a8bb43d724058f703ba"
+      },
+      {
+        "path": "package-lock.json",
+        "digest": "sha256:d86b5655a36e9f3374a55129f275ddae88a1b28f51295e1ae1d5dffa81adaaee"
+      },
+      {
+        "path": "workers/evaluator/fixture-validation.ts",
+        "digest": "sha256:95bbb211101a7f47be0c3f08bd43670f5070b6766592c40bcd14720b06bc86ad"
+      },
+      {
+        "path": "workers/repair/index.ts",
+        "digest": "sha256:d5c223ac696408794eaf2a43b833322162388898077070f0704eff4eb6b000cd"
+      },
+      {
+        "path": "workers/sandbox/index.ts",
+        "digest": "sha256:0bc243e55fbc5a8180741e8b8640e66e69cd77c775db696b7273405431447597"
+      },
+      {
+        "path": "workers/sandbox/driver.ts",
+        "digest": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8"
+      },
+      {
+        "path": "workers/sandbox/process.ts",
+        "digest": "sha256:1653666a878d0dfc2ef0ab67f56babcd5f9a49a96656385666387575c2580e4c"
+      },
+      {
+        "path": "workers/sandbox/local-cleanup.ts",
+        "digest": "sha256:789f5f727c5ab26ac06b30ac0975ee218b87dfba49779abe5d5888dd56271507"
+      },
+      {
+        "path": "workers/sandbox/reconcile.ts",
+        "digest": "sha256:5d084a0fdb885b71810e3bccdd698e15d10a37e88e32eee3955a090826707dc7"
       }
     ],
-    "artifactDigest": "sha256:2e30ce4ea86febd2c1e61a01c8703425ffdc39f4d47677a1b902a6e71bb7e624",
-    "syntheticChecksPassed": 26,
-    "syntheticChecksTotal": 26,
-    "resolvedFindings": 1,
-    "unresolvedFindings": 0,
-    "summary": "Fixed grids, matched allowances, retained failure denominators, repository pairing and suppression of claims with incomplete resource evidence verified; strict runtime readiness gate validation corrected. Synthetic algorithm checks only; no scored experiment."
-  }
+    "validationToolDigest": "sha256:47c36250c146f49490756b88f29d3c302527bf989466fce9ae3eb5728cdf0c60",
+    "intakeToolDigest": "sha256:a8509ca57254ebd975cc39a888a3affc89f84569ce362d542eb98fb565f3481d"
+  },
+  "toolingSnapshotManifestDigest": "sha256:8bc5e144bea7929b6f31ccc52dfec8f5a3e73b654219dd7c2af264e73bea2b18",
+  "toolingEnvironmentDigest": "sha256:870e9fa31a495c72cbf88f45198fd2ff155f9069bb8267a4454813cc01eb0de7",
+  "publicPreviewManifestDigest": "sha256:6d46f5a9bcc7f418e5284f1c622a405cc81887f55d6c03241149bd2d81bc3138",
+  "operationalSourceInventoryDigest": "sha256:cc765ad32fe57bd3747b7faf3a6e6865436cdd18d8187ede100a7ff5cdfbc9f9",
+  "localHandleAuditDigest": "sha256:73d21de09cb7b9790aca3ee69f7c24fcec126551dfff2b8c7e0ccae4f7acb108",
+  "productContractVersion": "2.2",
+  "historicalPreparationNote": "Earlier contract2.1 preparations are preserved but excluded from these fresh counts; see research/corpus-v2/contract22-restart-plan.json.",
+  "limitations": [
+    "Authors independently designed each repository without reading other corpus definitions; same-model procedural separation is not human authorship or statistical independence.",
+    "Repositories are synthetic, not independently sampled upstream maintenance projects; shared algorithm families and JSON function-call format limit generalization.",
+    "Gold/start/repeat and negative controls are oracle preparation by an independent reviewer, not a repair-model benchmark.",
+    "Finite checks and requirement labels do not establish universal correctness or exclusive fault localization."
+  ]
 }

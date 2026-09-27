@@ -1,0 +1,310 @@
+{
+  "id": "v2-r02-t04",
+  "repoId": "owned-v2-r02",
+  "split": "development",
+  "title": "Later reading sessions replace earlier page totals",
+  "description": "The book-club summary currently loses earlier sessions for a title. Repair reading_totals(records) while preserving exact title identity and the order in which titles first appear.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "reading_totals(records) returns one {\"book\": title, \"pages\": sum} record for each distinct exact book string, ordered by first occurrence. Sum all page counts for that string. Title matching is case-sensitive and performs no trimming or Unicode normalization. Empty strings and zero totals remain represented. Empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "The supplied records list and every record dictionary must remain unchanged on successful returns and ValueError paths, including duplicate-title aggregation."
+    },
+    {
+      "id": "R03",
+      "text": "records must be a list of dictionaries with exactly the keys \"book\" and \"pages\". book must be a string, with any Unicode content including an empty string allowed. pages must be a plain integer from 0 through 1000000 inclusive. Any invalid outer value, entry, key set, title type or page value (including booleans, floats and null) raises ValueError."
+    }
+  ],
+  "files": {
+    "reading_plan.py": "\"\"\"Small deterministic helpers for a book club reading plan.\n\nOriginal implementation. SPDX-License-Identifier: CC0-1.0\n\"\"\"\n\n\ndef _plain_count(value, minimum):\n    return type(value) is int and minimum <= value <= 1000000\n\n\ndef _counts(values, minimum):\n    if type(values) is not list or any(\n        not _plain_count(value, minimum) for value in values\n    ):\n        raise ValueError(\"invalid counts\")\n\n\ndef page_runs(pages):\n    \"\"\"Represent recorded page numbers as inclusive contiguous runs.\"\"\"\n    _counts(pages, 1)\n    ordered = sorted(set(pages))\n    if not ordered:\n        return []\n    result = []\n    start = end = ordered[0]\n    for page in ordered[1:]:\n        if page == end + 1:\n            end = page\n        else:\n            result.append([start, end])\n            start = end = page\n    result.append([start, end])\n    return result\n\n\n\ndef chapter_sessions(chapter_lengths, limit):\n    \"\"\"Pack whole chapters into consecutive reading sessions.\"\"\"\n    _counts(chapter_lengths, 1)\n    if not _plain_count(limit, 1):\n        raise ValueError(\"invalid session limit\")\n    result = []\n    active = []\n    total = 0\n    for chapter in chapter_lengths:\n        if active and total + chapter > limit:\n            result.append(active)\n            active = []\n            total = 0\n        active.append(chapter)\n        total += chapter\n    if active:\n        result.append(active)\n    return result\n\n\n\ndef locate_page(chapter_lengths, page):\n    \"\"\"Find the one-based chapter and chapter page for a book page.\"\"\"\n    _counts(chapter_lengths, 0)\n    if not _plain_count(page, 1):\n        raise ValueError(\"invalid book page\")\n    remaining = page\n    for chapter, length in enumerate(chapter_lengths, 1):\n        if remaining <= length:\n            return {\"chapter\": chapter, \"page\": remaining}\n        remaining -= length\n    return None\n\n\n\ndef reading_totals(records):\n    \"\"\"Aggregate session page counts by the exact book title.\"\"\"\n    if type(records) is not list:\n        raise ValueError(\"invalid records\")\n    for record in records:\n        if (\n            type(record) is not dict\n            or set(record) != {\"book\", \"pages\"}\n            or type(record[\"book\"]) is not str\n            or not _plain_count(record[\"pages\"], 0)\n        ):\n            raise ValueError(\"invalid reading record\")\n    totals = {}\n    for record in records:\n        book = record[\"book\"]\n        totals[book] = record[\"pages\"]\n    return [{\"book\": book, \"pages\": pages} for book, pages in totals.items()]\n\n\n\ndef reading_percentage(completed, total):\n    \"\"\"Report whole percent progress, capped at one hundred.\"\"\"\n    if not _plain_count(completed, 0) or not _plain_count(total, 1):\n        raise ValueError(\"invalid progress counts\")\n    return min(100, (200 * completed + total) // (2 * total))\n\n"
+  },
+  "editAllowlist": [
+    "reading_plan.py"
+  ],
+  "entrypoint": "reading_plan.py",
+  "visibleCases": [
+    {
+      "id": "v2-r02-t04-v-distinct",
+      "requirementId": "R01",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Pine",
+            "pages": 3
+          },
+          {
+            "book": "Ash",
+            "pages": 4
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "Pine",
+          "pages": 3
+        },
+        {
+          "book": "Ash",
+          "pages": 4
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-v-empty",
+      "requirementId": "R01",
+      "function": "reading_totals",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r02-t04-v-empty-title",
+      "requirementId": "R01",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "",
+            "pages": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "",
+          "pages": 0
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-v-preserve-record",
+      "requirementId": "R02",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Ink",
+            "pages": 2
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "Ink",
+          "pages": 2
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-v-null-list",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t04-v-missing-key",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Oak"
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r02-t04-a-sum-sessions",
+      "requirementId": "R01",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Pine",
+            "pages": 3
+          },
+          {
+            "book": "Ash",
+            "pages": 2
+          },
+          {
+            "book": "Pine",
+            "pages": 5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "Pine",
+          "pages": 8
+        },
+        {
+          "book": "Ash",
+          "pages": 2
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-a-distinct-case",
+      "requirementId": "R01",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Moon",
+            "pages": 2
+          },
+          {
+            "book": "moon",
+            "pages": 4
+          },
+          {
+            "book": "Moon",
+            "pages": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "Moon",
+          "pages": 3
+        },
+        {
+          "book": "moon",
+          "pages": 4
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-a-preserve-aggregation",
+      "requirementId": "R02",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "A",
+            "pages": 1
+          },
+          {
+            "book": "B",
+            "pages": 0
+          },
+          {
+            "book": "C",
+            "pages": 4
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "book": "A",
+          "pages": 1
+        },
+        {
+          "book": "B",
+          "pages": 0
+        },
+        {
+          "book": "C",
+          "pages": 4
+        }
+      ]
+    },
+    {
+      "id": "v2-r02-t04-a-bool-pages",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Oak",
+            "pages": true
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t04-a-negative-pages",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Oak",
+            "pages": -1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t04-a-invalid-title",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": 12,
+            "pages": 2
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t04-a-extra-key",
+      "requirementId": "R03",
+      "function": "reading_totals",
+      "args": [
+        [
+          {
+            "book": "Oak",
+            "pages": 1,
+            "note": "x"
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for author job repo02, repository owned-v2-r02; CC0-1.0. See external revision provenance.json."
+}

@@ -9,6 +9,10 @@ real Python checks in isolated local containers. Every active local run identifi
 mock mode. A separate read-only archive labels recorded live and mock evidence
 without enabling execution. It makes no claim about model performance.
 
+New evidence uses product contract **2.2**, which preserves ordinary JSON mapping
+keys throughout checking and export. Supported historical 2.0/2.1 bundles retain
+their original bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
+
 The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot.
 Actual provider spending is **$0**. Account access is deferred at the owner's
 request while the local build proceeds. See [decisions](decisions.md),
@@ -28,7 +32,8 @@ make test
 make dev
 ```
 
-Open **http://127.0.0.1:43171**. Select **Stable unique**, compare the three
+Open **http://127.0.0.1:43171**. Select **Retain first occurrences throughout a list**
+(`stable-unique-01`), compare the three
 policies, inspect a rejected candidate's actual check output, and download its
 evidence. The scripted example supports this one task. Another 29 public tasks
 are inspectable and clearly require a connected model to launch.
@@ -92,8 +97,10 @@ See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
 - New exports bind the executable source and configuration. Replay requires the
   recorded checkout; a running app refuses new runs after those files change.
   Historical exports keep their original explicitly versioned replay behavior.
-- The suite has 60 original synthetic tasks across 12 fixture repositories,
-  split 20/10/30 by repository. Public development/calibration files are here;
+- The current v2 suite has 60 original synthetic tasks from 12 fresh AI author
+  contexts, independently reviewed and validated, split 20/10/30 by repository.
+  [Provenance and preparation history](research/corpus-v2/README.md) preserve the
+  two infrastructure failures and reviewed reruns. Public development/calibration files are here;
   gold and sealed checks stay in the separate evaluator workspace. These are
   synthetic examples, not a representative sample of real repositories.
 - Exact CPU consumption is unknown and displayed as such. The runner limits CPU

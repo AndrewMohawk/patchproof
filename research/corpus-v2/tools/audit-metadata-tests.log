@@ -1,0 +1,20 @@
+✔ complete metadata binds each intent, result, event and lifecycle (1.724059ms)
+✔ enumeration includes orphan result and event stems and rejects unknown files (1.384594ms)
+✔ missing arrays and duplicate declared operations fail (0.338626ms)
+✔ extra and duplicate observed lifecycle IDs cannot disappear in a Map (0.414014ms)
+✔ extra, missing and duplicate operation events fail (0.325826ms)
+✔ explicit zero-operation infrastructure batch is retained; unexplained zero is rejected (0.269087ms)
+✔ cleanup flags must be literal booleans (1.707999ms)
+✔ reconciliation binds exact expected ID, run, image and literal confirmed flag (0.661982ms)
+✔ unknown original ID may reconcile only to exact later observed identity (0.273355ms)
+✔ fixed inventory accepts original108 and rejects empty, extra, changed commit or bytes (1.855798ms)
+✔ well-formed listings preserve in-scope and unrelated owned rows (0.292275ms)
+✔ malformed exit-zero listing rows and duplicate IDs fail closed (0.297651ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.501353

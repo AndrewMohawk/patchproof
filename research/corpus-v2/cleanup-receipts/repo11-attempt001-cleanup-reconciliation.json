@@ -1,0 +1,38 @@
+{
+  "purpose": "Explicit exact-handle reconciliation after an infrastructure error; preserve original incomplete cleanup record",
+  "startedAt": "2026-09-27T14:46:43.836Z",
+  "finishedAt": "2026-09-27T14:46:44.449Z",
+  "expected": {
+    "name": "patchproof-check-caf00419-e4dd-4347-b3e6-13012202adcd",
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "ownerRunId": "82fca7b9-0675-498e-bc0b-2ecfbdce419a",
+    "id": "0680410ddbbcc20a5d9c8b8b5ee6cf1ae6c0ca6e94fe60ecbe82e795dcc12cd0"
+  },
+  "originalLifecycle": {
+    "operationId": "docker:patchproof-check-caf00419-e4dd-4347-b3e6-13012202adcd",
+    "createAcknowledged": false,
+    "containerId": "0680410ddbbcc20a5d9c8b8b5ee6cf1ae6c0ca6e94fe60ecbe82e795dcc12cd0",
+    "cleanupConfirmed": false,
+    "cleanupReason": "create_unacknowledged"
+  },
+  "priorOwnedCreateObserved": true,
+  "inspection": {
+    "state": "present",
+    "id": "0680410ddbbcc20a5d9c8b8b5ee6cf1ae6c0ca6e94fe60ecbe82e795dcc12cd0",
+    "reason": null
+  },
+  "beforeState": {
+    "Status": "created",
+    "Running": false,
+    "Pid": 0,
+    "StartedAt": "0001-01-01T00:00:00Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "cleanup": {
+    "confirmed": true,
+    "id": "0680410ddbbcc20a5d9c8b8b5ee6cf1ae6c0ca6e94fe60ecbe82e795dcc12cd0",
+    "reason": null
+  },
+  "newCandidateExecution": false,
+  "paidCalls": 0
+}

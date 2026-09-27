@@ -1,0 +1,237 @@
+{
+  "id": "v2-r02-t03",
+  "repoId": "owned-v2-r02",
+  "split": "development",
+  "title": "Chapter boundary pages resolve to the wrong chapter",
+  "description": "The reading position view has an off-by-one error at chapter endings. Repair locate_page(chapter_lengths, page), retaining one-based indices and the positions of zero-length chapters in chapter numbering.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "locate_page(chapter_lengths, page) returns {\"chapter\": c, \"page\": p} for the chapter containing the one-based book page, with both c and p one-based. A chapter includes its last page. Zero-length chapters consume no book pages but retain their positions in chapter numbering. Return null when the book page exceeds the total length, including for empty/all-zero chapter lists."
+    },
+    {
+      "id": "R02",
+      "text": "The chapter_lengths list must be unchanged after a successful return or ValueError, preserving zero-length entries and their order."
+    },
+    {
+      "id": "R03",
+      "text": "chapter_lengths must be a list of plain integers from 0 through 1000000 inclusive; page must be a plain integer from 1 through 1000000 inclusive. Booleans, floats, strings (including Unicode), null, out-of-range values and a non-list chapter_lengths value must raise ValueError."
+    }
+  ],
+  "files": {
+    "reading_plan.py": "\"\"\"Small deterministic helpers for a book club reading plan.\n\nOriginal implementation. SPDX-License-Identifier: CC0-1.0\n\"\"\"\n\n\ndef _plain_count(value, minimum):\n    return type(value) is int and minimum <= value <= 1000000\n\n\ndef _counts(values, minimum):\n    if type(values) is not list or any(\n        not _plain_count(value, minimum) for value in values\n    ):\n        raise ValueError(\"invalid counts\")\n\n\ndef page_runs(pages):\n    \"\"\"Represent recorded page numbers as inclusive contiguous runs.\"\"\"\n    _counts(pages, 1)\n    ordered = sorted(set(pages))\n    if not ordered:\n        return []\n    result = []\n    start = end = ordered[0]\n    for page in ordered[1:]:\n        if page == end + 1:\n            end = page\n        else:\n            result.append([start, end])\n            start = end = page\n    result.append([start, end])\n    return result\n\n\n\ndef chapter_sessions(chapter_lengths, limit):\n    \"\"\"Pack whole chapters into consecutive reading sessions.\"\"\"\n    _counts(chapter_lengths, 1)\n    if not _plain_count(limit, 1):\n        raise ValueError(\"invalid session limit\")\n    result = []\n    active = []\n    total = 0\n    for chapter in chapter_lengths:\n        if active and total + chapter > limit:\n            result.append(active)\n            active = []\n            total = 0\n        active.append(chapter)\n        total += chapter\n    if active:\n        result.append(active)\n    return result\n\n\n\ndef locate_page(chapter_lengths, page):\n    \"\"\"Find the one-based chapter and chapter page for a book page.\"\"\"\n    _counts(chapter_lengths, 0)\n    if not _plain_count(page, 1):\n        raise ValueError(\"invalid book page\")\n    remaining = page\n    for chapter, length in enumerate(chapter_lengths, 1):\n        if remaining < length:\n            return {\"chapter\": chapter, \"page\": remaining}\n        remaining -= length\n    return None\n\n\n\ndef reading_totals(records):\n    \"\"\"Aggregate session page counts by the exact book title.\"\"\"\n    if type(records) is not list:\n        raise ValueError(\"invalid records\")\n    for record in records:\n        if (\n            type(record) is not dict\n            or set(record) != {\"book\", \"pages\"}\n            or type(record[\"book\"]) is not str\n            or not _plain_count(record[\"pages\"], 0)\n        ):\n            raise ValueError(\"invalid reading record\")\n    totals = {}\n    for record in records:\n        book = record[\"book\"]\n        totals[book] = totals.get(book, 0) + record[\"pages\"]\n    return [{\"book\": book, \"pages\": pages} for book, pages in totals.items()]\n\n\n\ndef reading_percentage(completed, total):\n    \"\"\"Report whole percent progress, capped at one hundred.\"\"\"\n    if not _plain_count(completed, 0) or not _plain_count(total, 1):\n        raise ValueError(\"invalid progress counts\")\n    return min(100, (200 * completed + total) // (2 * total))\n\n"
+  },
+  "editAllowlist": [
+    "reading_plan.py"
+  ],
+  "entrypoint": "reading_plan.py",
+  "visibleCases": [
+    {
+      "id": "v2-r02-t03-v-interior",
+      "requirementId": "R01",
+      "function": "locate_page",
+      "args": [
+        [
+          3,
+          4
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "chapter": 1,
+        "page": 2
+      }
+    },
+    {
+      "id": "v2-r02-t03-v-empty",
+      "requirementId": "R01",
+      "function": "locate_page",
+      "args": [
+        [],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": null
+    },
+    {
+      "id": "v2-r02-t03-v-unchanged",
+      "requirementId": "R02",
+      "function": "locate_page",
+      "args": [
+        [
+          2,
+          5,
+          1
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "chapter": 2,
+        "page": 2
+      }
+    },
+    {
+      "id": "v2-r02-t03-v-null-list",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        null,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t03-v-bool-length",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        [
+          true
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r02-t03-a-last-page",
+      "requirementId": "R01",
+      "function": "locate_page",
+      "args": [
+        [
+          3,
+          4
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "chapter": 1,
+        "page": 3
+      }
+    },
+    {
+      "id": "v2-r02-t03-a-empty-chapters",
+      "requirementId": "R01",
+      "function": "locate_page",
+      "args": [
+        [
+          0,
+          2,
+          0,
+          4
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "chapter": 4,
+        "page": 1
+      }
+    },
+    {
+      "id": "v2-r02-t03-a-past-book",
+      "requirementId": "R01",
+      "function": "locate_page",
+      "args": [
+        [
+          1,
+          2
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": null
+    },
+    {
+      "id": "v2-r02-t03-a-preserve-boundary",
+      "requirementId": "R02",
+      "function": "locate_page",
+      "args": [
+        [
+          0,
+          4,
+          2
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "chapter": 2,
+        "page": 3
+      }
+    },
+    {
+      "id": "v2-r02-t03-a-negative-length",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        [
+          -1
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t03-a-zero-page",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        [
+          2
+        ],
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t03-a-bool-page",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        [
+          2
+        ],
+        false
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t03-a-float-length",
+      "requirementId": "R03",
+      "function": "locate_page",
+      "args": [
+        [
+          2.25
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for author job repo02, repository owned-v2-r02; CC0-1.0. See external revision provenance.json."
+}

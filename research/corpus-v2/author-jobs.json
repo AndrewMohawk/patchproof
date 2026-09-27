@@ -2,8 +2,8 @@
   "schemaVersion": "1.0",
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
-  "status": "in_progress",
-  "recordedAt": "2026-09-27T13:51:24.666397+00:00",
+  "status": "authoring_review_and_runtime_validation_complete",
+  "recordedAt": "2026-09-27T15:05:09.896741+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -16,7 +16,7 @@
       "agent": "/root/corpus_v2_repo01",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
-      "status": "runtime-validated-original-contract",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -32,7 +32,8 @@
           "submissionDigest": "sha256:2655a75f648a8879a82d7169b8e6107ed372fb6bb75ae15e58803cd96d729f86"
         }
       ],
-      "validation": {
+      "staticReview": "approved by independent evaluator",
+      "historicalContract21Validation": {
         "receiptDigest": "sha256:5d40887a3460ffd947f3389baca27875a48fc769f7fc59c96c6ccb2c6604774e",
         "reportedBy": "/root/fixtures_evaluation",
         "exitCode": 0,
@@ -42,14 +43,26 @@
         "controlsPassed": 7,
         "infrastructureFailures": 0
       },
-      "staticReview": "approved by independent evaluator"
+      "validation": {
+        "receiptDigest": "sha256:c37983cf37dcec8fc1d305d643c8afea7b051f0c1cd035acb8b2dc47f95dedc0",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo02",
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
-      "status": "runtime-validated-original-contract",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -62,7 +75,7 @@
         }
       ],
       "staticReview": "approved by independent evaluator",
-      "validation": {
+      "historicalContract21Validation": {
         "receiptDigest": "sha256:f7547cf750c1fdd64189b972aed32a83a7fe42bb3e8b7ea47aad52bac9ecae8d",
         "reportedBy": "/root/fixtures_evaluation",
         "exitCode": 0,
@@ -71,6 +84,19 @@
         "repeatStable": 5,
         "controlsPassed": 8,
         "infrastructureFailures": 0
+      },
+      "validation": {
+        "receiptDigest": "sha256:790dd77806e3354e325c9dd2e010f682a83f99fe52fe2b926698d8a5600b37e5",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 8,
+        "infrastructureFailures": 0,
+        "sourceStable": true
       }
     },
     {
@@ -78,7 +104,7 @@
       "agent": "/root/corpus_v2_repo03",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo03",
-      "status": "runtime-validated-original-contract",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -91,7 +117,7 @@
         }
       ],
       "staticReview": "approved by independent evaluator",
-      "validation": {
+      "historicalContract21Validation": {
         "receiptDigest": "sha256:cc8549e830afed1ce81db9501c9ad9f86ff5f7ad221c0900bb3558c9b0a3a038",
         "reportedBy": "/root/fixtures_evaluation",
         "exitCode": 0,
@@ -100,6 +126,19 @@
         "repeatStable": 5,
         "controlsPassed": 7,
         "infrastructureFailures": 0
+      },
+      "validation": {
+        "receiptDigest": "sha256:3b1a273aa8fff75c9d9f4b07e4960218d80fd886a3cf9ccbe9d45ca20d1d42e0",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
       }
     },
     {
@@ -107,7 +146,7 @@
       "agent": "/root/corpus_v2_repo04",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo04",
-      "status": "runtime-validated-original-contract",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -123,6 +162,19 @@
       "contextClarification": "Original provenance incorrectly inferred parent conversation inheritance. Author clarified seeing global agent/tool instructions, user project/environment setup and its direct assignment, but no parent task history. Original statement retained in revision001; corrected in revision002.",
       "staticReview": "approved by independent evaluator",
       "validation": {
+        "receiptDigest": "sha256:082a81d14fa998f32b851daafbf30dfb087e5023dcc09ba60a0744cb09412e77",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 12,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      },
+      "historicalContract21Validation": {
         "receiptDigest": "sha256:4def59b02213f8e0b397ed736465781ff80dc21107e7e756de68375d71742908",
         "reportedBy": "/root/fixtures_evaluation",
         "exitCode": 0,
@@ -138,7 +190,7 @@
       "agent": "/root/corpus_v2_repo05",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo05",
-      "status": "partial-preparation-parser-blocked",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -155,6 +207,19 @@
         "repeatStable": 5,
         "infrastructureFailures": 0,
         "failure": "Reviewer-only ordinary-key case rejected by current schema; not a fixture/gold failure. Original attempt preserved; full acceptance pending."
+      },
+      "validation": {
+        "receiptDigest": "sha256:f9e0e0a0e24391528bf60419dd087ec2c91c42a39dd534b05cffac8bd9f822a0",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
       }
     },
     {
@@ -162,7 +227,7 @@
       "agent": "/root/corpus_v2_repo06",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo06",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -179,14 +244,27 @@
         }
       ],
       "genericContractClarification": "JSON number normalization; dedicated requirement cases; no sibling contents or scored outcomes shared.",
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:0ec68cdde01200da6bfa3c8123f40b1b2544c5e3ff8d441ade813be69816f5a2",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 12,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo07",
       "agent": "/root/corpus_v2_repo07",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo07",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -199,14 +277,27 @@
         }
       ],
       "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared.",
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:d909e87a05ad1b88bcaeb5b85c1e782264b34997fb65c78ad8c87cced9300e7e",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 12,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo08",
       "agent": "/root/corpus_v2_repo08",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo08",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -215,14 +306,27 @@
         }
       ],
       "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared.",
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:1647696b05f3e2ba55a8ef8dbe624c69e640892aa4baf58a2357fd1b64a40912",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo09",
       "agent": "/root/corpus_v2_repo09",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo09",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -235,14 +339,27 @@
         }
       ],
       "genericContractClarification": "JSON number normalization, dedicated requirement cases and actual setup/identity provenance; no sibling content or scored outcomes shared.",
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:4a9bf61f08e0c89cd4a1374aed01d3561fcad1e152f21d34bc874ac97635ba29",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo10",
       "agent": "/root/corpus_v2_repo10",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo10",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -254,14 +371,27 @@
           "submissionDigest": "sha256:037cc619bb1d99fdfa8a117bd9d1b4e69b1185838c5ae73def1d107f5dc21b2c"
         }
       ],
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:fafc9985dafc9b46d92b12f11cf379e705dd59222304630fa13cf99f418f997f",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo11",
       "agent": "/root/corpus_v2_repo11",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo11",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -273,14 +403,27 @@
           "submissionDigest": "sha256:b05591f0f1f761f627a188e332800b33e78071d4fb76c393a6e3b2773b7b1c1c"
         }
       ],
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:4ab4c6b2b1fa13f4a7aa7ff424b388fd7307d87046f4029e13ac5b1580881314",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     },
     {
       "slot": "repo12",
       "agent": "/root/corpus_v2_repo12",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo12",
-      "status": "static-approved-runtime-held",
+      "status": "runtime-validated-contract-2.2",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -292,8 +435,32 @@
           "submissionDigest": "sha256:0903fb9715c716319ad59e126b78f1b12ecf75157f85ec1716f35f2d94da67b0"
         }
       ],
-      "staticReview": "approved by independent evaluator"
+      "staticReview": "approved by independent evaluator",
+      "validation": {
+        "receiptDigest": "sha256:75a17d02bca70961787b1e4fbc70ae120081252107b2c209649dd75306b91830",
+        "reportedBy": "/root/fixtures_evaluation",
+        "productContractVersion": "2.2",
+        "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0,
+        "sourceStable": true
+      }
     }
   ],
-  "runtimeHold": "All evaluator Docker jobs stopped. New contract2.2 corrects both inputs and observations; all60 will require fresh validation under new bindings. Preserve20 complete original-contract observations and repo05 partial attempt; no input-only evidence reuse."
+  "historicalRuntimeHold": "All evaluator Docker jobs stopped. New contract2.2 corrects both inputs and observations; all60 will require fresh validation under new bindings. Preserve20 complete original-contract observations and repo05 partial attempt; no input-only evidence reuse.",
+  "runtimeStatus": "All60 tasks accepted under product contract2.2 and source843b368 after twelve independent author jobs and separate reviewer validation. Two unsuccessful fresh infrastructure attempts remain preserved; final handle/source audit passed. No scored model episodes or provider calls.",
+  "finalization": {
+    "purpose": "Immutable preparation ledger before corpus freeze; product integration is recorded separately.",
+    "acceptedRepositories": 12,
+    "acceptedTasks": 60,
+    "freshPreparationAttempts": 14,
+    "preservedUnsuccessfulInfrastructureAttempts": 2,
+    "localHandleAuditDigest": "sha256:73d21de09cb7b9790aca3ee69f7c24fcec126551dfff2b8c7e0ccae4f7acb108",
+    "integrationClaim": false,
+    "furtherEditsRequireNewProvenance": true
+  }
 }

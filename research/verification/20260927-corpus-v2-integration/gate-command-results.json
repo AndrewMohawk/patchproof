@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-27T15:11:41.225345+00:00",
+  "commands": [
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "research/verification/20260927-corpus-v2-integration/doctor.log"
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-corpus-v2-integration/smoke.log"
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-corpus-v2-integration/pilot.log"
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-corpus-v2-integration/evaluate.log"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-corpus-v2-integration/release-check.log"
+    }
+  ],
+  "providerCalls": 0
+}

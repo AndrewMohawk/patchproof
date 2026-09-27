@@ -38,7 +38,7 @@ have not run a scored model episode. No headline improvement percentage is claim
 | Time | What to show | Evidence constraint |
 |---|---|---|
 | 0–20s | Task and explicit requirements | Curated task, visible mode, exact recorded source. |
-| 20–45s | Ordinary candidate passes visible tests | Show actual logs and policy; no invented model reasoning. |
+| 20–45s | Ordinary candidate and visible-test results | Show its actual verdict, logs and policy; no invented model reasoning. |
 | 45–75s | Independent check rejects requirement violation | Actual expected/observed values and requirement mapping. |
 | 75–105s | Repair and comparison | Same task/lock/allowance; label recorded versus active run. |
 | 105–135s | Export and fresh replay | Exact bundle digest and successful command output. |
@@ -55,6 +55,9 @@ proposals and real local checks; it does not present sponsor or benchmark result
 Its hashes and browser/replay verification are in the runtime-completion receipt.
 The preferred caption rendering is `local-rehearsal-captioned-v2.mp4`; its source
 archive and separately recorded hashes are identified by `rehearsal-custody.json`.
+This preserves the earlier corpus and executable source. The video filename's
+`v2` means its caption revision, not the independently authored v2 corpus. It is
+historical rehearsal evidence, not a recording of the current catalogue.
 
 ## Platform feedback draft
 

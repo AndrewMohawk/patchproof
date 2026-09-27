@@ -1,0 +1,231 @@
+{
+  "id": "v2-r02-t01",
+  "repoId": "owned-v2-r02",
+  "split": "development",
+  "title": "Repeated page marks fragment contiguous reading runs",
+  "description": "The reading log receives repeated page marks after manual imports. Repair page_runs(pages) while retaining its inclusive, sorted run representation and validation behavior.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "page_runs(pages) returns sorted inclusive [first,last] pairs covering exactly the distinct input page numbers. Consecutive integers belong to one run; gaps start new runs. Input order and duplicate occurrences do not affect the result. An empty list returns []."
+    },
+    {
+      "id": "R02",
+      "text": "The function must leave the supplied pages list unchanged, including element order and duplicate occurrences, on both successful returns and ValueError paths."
+    },
+    {
+      "id": "R03",
+      "text": "pages must be a list whose every element is a plain integer from 1 through 1000000 inclusive. Booleans, floats, strings (including Unicode), null, out-of-range integers and non-list outer values are invalid; raise ValueError for any invalid input."
+    }
+  ],
+  "files": {
+    "reading_plan.py": "\"\"\"Small deterministic helpers for a book club reading plan.\n\nOriginal implementation. SPDX-License-Identifier: CC0-1.0\n\"\"\"\n\n\ndef _plain_count(value, minimum):\n    return type(value) is int and minimum <= value <= 1000000\n\n\ndef _counts(values, minimum):\n    if type(values) is not list or any(\n        not _plain_count(value, minimum) for value in values\n    ):\n        raise ValueError(\"invalid counts\")\n\n\ndef page_runs(pages):\n    \"\"\"Represent recorded page numbers as inclusive contiguous runs.\"\"\"\n    _counts(pages, 1)\n    ordered = sorted(pages)\n    if not ordered:\n        return []\n    result = []\n    start = end = ordered[0]\n    for page in ordered[1:]:\n        if page == end + 1:\n            end = page\n        else:\n            result.append([start, end])\n            start = end = page\n    result.append([start, end])\n    return result\n\n\n\ndef chapter_sessions(chapter_lengths, limit):\n    \"\"\"Pack whole chapters into consecutive reading sessions.\"\"\"\n    _counts(chapter_lengths, 1)\n    if not _plain_count(limit, 1):\n        raise ValueError(\"invalid session limit\")\n    result = []\n    active = []\n    total = 0\n    for chapter in chapter_lengths:\n        if active and total + chapter > limit:\n            result.append(active)\n            active = []\n            total = 0\n        active.append(chapter)\n        total += chapter\n    if active:\n        result.append(active)\n    return result\n\n\n\ndef locate_page(chapter_lengths, page):\n    \"\"\"Find the one-based chapter and chapter page for a book page.\"\"\"\n    _counts(chapter_lengths, 0)\n    if not _plain_count(page, 1):\n        raise ValueError(\"invalid book page\")\n    remaining = page\n    for chapter, length in enumerate(chapter_lengths, 1):\n        if remaining <= length:\n            return {\"chapter\": chapter, \"page\": remaining}\n        remaining -= length\n    return None\n\n\n\ndef reading_totals(records):\n    \"\"\"Aggregate session page counts by the exact book title.\"\"\"\n    if type(records) is not list:\n        raise ValueError(\"invalid records\")\n    for record in records:\n        if (\n            type(record) is not dict\n            or set(record) != {\"book\", \"pages\"}\n            or type(record[\"book\"]) is not str\n            or not _plain_count(record[\"pages\"], 0)\n        ):\n            raise ValueError(\"invalid reading record\")\n    totals = {}\n    for record in records:\n        book = record[\"book\"]\n        totals[book] = totals.get(book, 0) + record[\"pages\"]\n    return [{\"book\": book, \"pages\": pages} for book, pages in totals.items()]\n\n\n\ndef reading_percentage(completed, total):\n    \"\"\"Report whole percent progress, capped at one hundred.\"\"\"\n    if not _plain_count(completed, 0) or not _plain_count(total, 1):\n        raise ValueError(\"invalid progress counts\")\n    return min(100, (200 * completed + total) // (2 * total))\n\n"
+  },
+  "editAllowlist": [
+    "reading_plan.py"
+  ],
+  "entrypoint": "reading_plan.py",
+  "visibleCases": [
+    {
+      "id": "v2-r02-t01-v-basic",
+      "requirementId": "R01",
+      "function": "page_runs",
+      "args": [
+        [
+          1,
+          2,
+          5
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t01-v-empty",
+      "requirementId": "R01",
+      "function": "page_runs",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r02-t01-v-preserve-order",
+      "requirementId": "R02",
+      "function": "page_runs",
+      "args": [
+        [
+          6,
+          2,
+          3
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t01-v-null",
+      "requirementId": "R03",
+      "function": "page_runs",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t01-v-boolean",
+      "requirementId": "R03",
+      "function": "page_runs",
+      "args": [
+        [
+          true
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r02-t01-a-duplicates",
+      "requirementId": "R01",
+      "function": "page_runs",
+      "args": [
+        [
+          4,
+          4,
+          5,
+          9,
+          10,
+          10
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          4,
+          5
+        ],
+        [
+          9,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t01-a-one-page-hole",
+      "requirementId": "R01",
+      "function": "page_runs",
+      "args": [
+        [
+          1,
+          3
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t01-a-preserve-duplicates",
+      "requirementId": "R02",
+      "function": "page_runs",
+      "args": [
+        [
+          9,
+          7,
+          8,
+          3
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          3,
+          3
+        ],
+        [
+          7,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v2-r02-t01-a-zero",
+      "requirementId": "R03",
+      "function": "page_runs",
+      "args": [
+        [
+          0
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t01-a-string",
+      "requirementId": "R03",
+      "function": "page_runs",
+      "args": [
+        [
+          "7"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r02-t01-a-upper-invalid",
+      "requirementId": "R03",
+      "function": "page_runs",
+      "args": [
+        [
+          1000001
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for author job repo02, repository owned-v2-r02; CC0-1.0. See external revision provenance.json."
+}

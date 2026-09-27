@@ -1,0 +1,306 @@
+{
+  "id": "v2-r05-t01",
+  "repoId": "owned-v2-r05",
+  "split": "calibration",
+  "title": "Keep every contribution when consolidating shopping rows",
+  "description": "The pantry.py helpers serve one small batch-preparation planner. A row consolidation refactor now loses contributions for repeated ingredients. Repair aggregate_items(rows). The supported input is a list of at most 100 rows, each exactly a mapping with item (any Unicode string, including empty) and units (a whole-number JSON value from 0 through 1000000). Item equality is exact string equality, including case and Unicode composition. Whole-number JSON values mean finite integral numbers after JSON transport, excluding booleans; no Python int-versus-float distinction is promised. None/null, nonintegral numbers, other shapes, and inputs outside the stated bounds are outside this retained contract.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Return one {\"item\": name, \"units\": total} row for each distinct exact input item, summing units across all occurrences. Keep a row even when its total is zero. An empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "The output rows appear in the order of each item's first occurrence in the input, regardless of alphabetic order or later occurrences."
+    },
+    {
+      "id": "R03",
+      "text": "Leave the input list and every input row mapping unchanged in content, including on calls that consolidate repeated items."
+    }
+  ],
+  "files": {
+    "pantry.py": "\"\"\"Small pure helpers for planning a batch-preparation shopping list.\"\"\"\n\n\ndef aggregate_items(rows):\n    \"\"\"Consolidate the shopping rows while retaining their encounter order.\"\"\"\n    totals = {}\n    for row in rows:\n        item = row[\"item\"]\n        totals[item] = row[\"units\"]\n    return [{\"item\": item, \"units\": units} for item, units in totals.items()]\n\n\ndef split_batches(amounts, limit):\n    \"\"\"Partition each preparation amount into its own sequence of batches.\"\"\"\n    result = []\n    for amount in amounts:\n        full, tail = divmod(amount, limit)\n        batches = [limit] * full\n        if tail:\n            batches.append(tail)\n        result.append(batches)\n    return result\n\n\ndef plan_shortfall(requested, available):\n    \"\"\"Return the remaining units to buy for each requested ingredient.\"\"\"\n    result = {}\n    for item, units in requested.items():\n        result[item] = max(units - available.get(item, 0), 0)\n    return result\n\n\ndef rescale_units(recipe, from_servings, to_servings):\n    \"\"\"Rescale indivisible ingredient units for a new serving count.\"\"\"\n    result = {}\n    for item, units in recipe.items():\n        result[item] = (units * to_servings + from_servings - 1) // from_servings\n    return result\n\n\ndef substitute_items(items, replacements):\n    \"\"\"Apply the selected ingredient substitutions simultaneously.\"\"\"\n    return [replacements.get(item, item) for item in items]\n"
+  },
+  "editAllowlist": [
+    "pantry.py"
+  ],
+  "entrypoint": "pantry.py",
+  "visibleCases": [
+    {
+      "id": "v2-r05-t01-v-r01",
+      "requirementId": "R01",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "flour",
+            "units": 2
+          },
+          {
+            "item": "flour",
+            "units": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "flour",
+          "units": 5
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-v-r02",
+      "requirementId": "R02",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "zest",
+            "units": 1
+          },
+          {
+            "item": "beans",
+            "units": 2
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "zest",
+          "units": 1
+        },
+        {
+          "item": "beans",
+          "units": 2
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-v-r03",
+      "requirementId": "R03",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "lentils",
+            "units": 4
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "lentils",
+          "units": 4
+        }
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r05-t01-a-r01",
+      "requirementId": "R01",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "rice",
+            "units": 0
+          },
+          {
+            "item": "rice",
+            "units": 7
+          },
+          {
+            "item": "rice",
+            "units": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "rice",
+          "units": 7
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-a-r01-zero",
+      "requirementId": "R01",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "salt",
+            "units": 0
+          },
+          {
+            "item": "salt",
+            "units": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "salt",
+          "units": 0
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-a-r01-empty",
+      "requirementId": "R01",
+      "function": "aggregate_items",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r05-t01-a-r01-exact",
+      "requirementId": "R01",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "Tea",
+            "units": 2
+          },
+          {
+            "item": "tea",
+            "units": 3
+          },
+          {
+            "item": "Tea",
+            "units": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "Tea",
+          "units": 3
+        },
+        {
+          "item": "tea",
+          "units": 3
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-a-r02",
+      "requirementId": "R02",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "plum",
+            "units": 1
+          },
+          {
+            "item": "apple",
+            "units": 2
+          },
+          {
+            "item": "bean",
+            "units": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "plum",
+          "units": 1
+        },
+        {
+          "item": "apple",
+          "units": 2
+        },
+        {
+          "item": "bean",
+          "units": 3
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-a-r03",
+      "requirementId": "R03",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "c",
+            "units": 3
+          },
+          {
+            "item": "a",
+            "units": 5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "c",
+          "units": 3
+        },
+        {
+          "item": "a",
+          "units": 5
+        }
+      ]
+    },
+    {
+      "id": "v2-r05-t01-a-r02-repeat",
+      "requirementId": "R02",
+      "function": "aggregate_items",
+      "args": [
+        [
+          {
+            "item": "z",
+            "units": 0
+          },
+          {
+            "item": "a",
+            "units": 0
+          },
+          {
+            "item": "z",
+            "units": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "item": "z",
+          "units": 0
+        },
+        {
+          "item": "a",
+          "units": 0
+        }
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI-authored batch-preparation library; author job repo05, repository owned-v2-r05; CC0-1.0. No upstream code or data."
+}

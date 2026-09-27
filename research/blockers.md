@@ -5,21 +5,24 @@ build before provider access. **Real Nebius integration is the first remaining
 external gate.** It is not a missing spending approval: $25 total is approved;
 actual spending is $0. The private repository and ongoing pushes are authorized.
 
-The final local wiring now includes private exact-byte smoke export, a read-only
-recorded live/mock evidence viewer, a separately budgeted check-only replay, and
-explicit accepted live-protocol selection for release auditing. **537 tests pass**
-on executable source `4e0116d`; browser/container verification and the retained
-replay timeout are linked in `verification/20260927-trusted-replay/receipt.json`.
-Live-protocol test documents and fake provider observations are synthetic only.
-These paths are ready for future verified inputs; they do not close the gates below.
+The local implementation includes exact-byte smoke export, a read-only recorded
+evidence viewer, separately budgeted replay and accepted live-protocol selection
+for release auditing. Current product contract 2.2 preserves ordinary JSON keys
+without reinterpreting supported historical exports. The combined v2 corpus/UI
+integration passes all 573 tests, type checking and contract locks; all 14 actual
+historical exports verified unchanged. The original stale-fixture test failure
+is retained in `verification/20260927-corpus-v2-integration/`.
+The serving app still uses its earlier pinned checkout until corpus integration;
+these checks do not claim a new rendered handoff.
 
-A subsequent PRD audit reopened T03: the original v1 suite was independently
-reviewed but came from one authoring process. Twelve fresh AI author jobs are now
-preparing a prospective v2 under separate review; original evidence remains
-preserved. The eight-task model-probe planner/analyzer has been added in `3f5735d`:
-the full suite passed 545 tests, and 19 author/independent probe controls passed
-after integration. Its real catalog and observations are still NOT RUN. See
-`verification/20260927-model-probe/receipt.json` and the independent receipt.
+T03's local corpus is complete: twelve independent AI author jobs, separate review
+and fresh contract 2.2 validation cover all 60 tasks. Two infrastructure failures
+and their reviewed reruns remain preserved. V1's
+shared authoring process and its observations remain preserved history. The
+eight-task model-probe planner/analyzer is implemented and independently tested;
+its verified model catalog and real observations remain NOT RUN. See
+`corpus-v2/README.md`, `verification/20260927-model-probe/receipt.json` and the
+independent probe receipt. No local or fake-provider result closes the gates below.
 
 ## Provider integration (T01/T04, G0/G1)
 
@@ -46,7 +49,7 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 | Task/gate | Implemented locally | Still required |
 |---|---|---|
 | T02 | Typed contracts, version locks, tests, workspace | Live provider contract verification. |
-| T03 | Preserved v1 corpus/evidence; prospective v2 independent author jobs and separate reviewer | Finish twelve independently authored repositories, corrections, runtime validation and integration; protocol freeze and production evaluator account separation. |
+| T03 | Frozen v2 corpus: twelve independent AI author contexts, 60 validated tasks, immutable provenance; v1 history preserved | Human scope review, live protocol freeze and production evaluator account separation remain wider evaluation gates. |
 | T05–T08 | Three bounded policies, protected checks, durable journal, export and fresh local replay | Live matched usage, sponsor cancellation and billing reconciliation. |
 | T09/G2 | Fixed 72-episode planner, bounded live factory, private dispatcher and analysis | Actual calibrated/account proofs, real pilot, affordable price projection and written continuation decision. |
 | T10 | Task/comparison/evidence views; real local checks and browser flow; neutral exercise protocol and blank sheet | Live-provider state validation and actual uncoached human exercise. |

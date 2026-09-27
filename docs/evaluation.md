@@ -1,22 +1,32 @@
 # Evaluation protocol and offline tools
 
-The suite, protocol planner, sealed adjudication boundary and statistical analysis are implemented. No inference experiment or reviewer-time study has been performed. The $25 owner ceiling is shared by the whole project; draft plans allocate $0 until actual provider access, prices and projected costs have been verified. Planning never spends money.
+The frozen v2 suite, protocol planner, sealed adjudication boundary and statistical analysis are implemented. Local T03 preparation is complete: 12 separately authored repositories and all 60 tasks passed fresh contract 2.2 reviewer runtime validation. The integrated product suite passes all 573 tests; updated browser checks and replay are pending separately. No inference experiment or reviewer-time study has been performed. The $25 owner ceiling is shared by the whole project; draft plans allocate $0 until actual provider access, prices and projected costs have been verified. Planning never spends money.
 
 ## Fixed experiment grids
 
 The prerequisite [eight-task model probe](model-probe.md) has a separate offline
 planner/analyzer with one fixed baseline procedure across candidate models. Its
-catalog and real observations remain unavailable. The original v1 corpus is
-preserved while a prospective v2 is being independently authored in twelve fresh
-AI contexts; v1's shared authoring process does not meet the full independent
-repository authorship requirement. T03 remains in progress until review,
-execution and integration of v2 finish.
+catalog and real observations remain unavailable. The original v1 corpus and its
+plans are preserved. Twelve fresh AI contexts independently authored the v2
+repositories; separate static review, fresh contract 2.2 runtime validation and
+the immutable corpus freeze are complete. The 30 public fixtures and aggregate
+provenance are integrated into this checkout; gold and final definitions remain external.
+The author contexts share a model and host, so this is procedural authoring
+separation, not independent human authorship or a representative upstream sample.
 
 The pilot selects the first three task IDs in lexical order from each of four development repositories: 12 tasks × baseline/PatchProof × three repetitions = 72 episodes. The final grid includes every final task: 30 tasks × baseline/checks-only/PatchProof × three repetitions = 270 episodes. Selection is based only on the frozen task manifest, before result access.
 
 All arms receive identical task statements, requirements, model lock, source, token caps, inference-call caps, wall-time caps, CPU caps and dollar reservations. The v1 proposal fixes 24 calls and 900 wall seconds. Draft input/output limits are 64,000/16,000 tokens and require development-only calibration before freezing. Branches and retries share the episode allowance. The ordinary baseline receives visible-test feedback; checks-only and PatchProof receive the same independently controlled runtime acceptance feedback. This information difference is the declared B0/B1 ablation. The maximum feedback-round allowance is identical, and final oracle feedback is always zero during repair.
 
 The model is not declared deterministic because a seed exists. Repetitions measure variability; they are never treated as independent tasks.
+
+The current offline [v2 pilot draft](../research/evaluation/pilot-plan-v2-draft.json)
+and [v2 final draft](../research/evaluation/final-plan-v2-draft.json) bind the new
+manifest. Their [generation receipt](../research/evaluation/corpus-v2-draft-generation.json)
+records `executionAuthorized: false`, unknown model/prices and no provider calls.
+The v1 plans remain byte-identical historical artifacts. No model-probe plan has
+been accepted: its catalog, suitability threshold and calibration inputs remain
+unavailable. Draft generation is not a live protocol freeze or permission to execute.
 
 Create offline draft plans with explicit new output paths:
 
@@ -29,21 +39,49 @@ node workers/evaluator/cli.ts plan final /tmp/patchproof-final-plan.json
 
 ## Protected evaluation workspace
 
-The authoring checkout is the project-owned sibling `/home/andrewmohawk/patchproof-evaluation`, mode 0700. It contains `fixtures/`, `gold/`, `authoring/`, a copied split manifest, and private artifacts. This directory is never mounted into a candidate container. Local authoring agents share an OS identity, so the authoring boundary is procedural; runtime isolation is the container mount boundary. Production evaluation must run under a separate trusted evaluator account/workspace.
+The current frozen evaluation workspace is
+`/home/andrewmohawk/patchproof-evaluation-v2/frozen-v2`. Authors received their own
+job and shared schemas in fresh contexts, without sibling definitions or prior
+repair results. An evaluator who is not an author owns review, gold, sealed checks
+and runtime preparation. The [freeze receipt](../research/corpus-v2/freeze-publication-receipt.json)
+binds the accepted manifest and public staging bytes. Corpus acceptance does not
+authorize experiment dispatch. The original `patchproof-evaluation` workspace,
+v1 plans and evidence remain preserved history.
+
+These workspaces are never mounted into a candidate container. Local authoring
+agents share an OS identity, so context separation is procedural; runtime
+isolation is the container mount boundary. Production evaluation must run under
+a separate trusted evaluator account/workspace.
 
 `adjudicateSelectedCandidate()` accepts an explicit absolute external workspace, frozen fixture and oracle digests, and a finalized candidate digest. It compares the selected source with the task edit policy and independently reruns the visible, frozen acceptance and sealed checks, so passing a few sealed examples cannot excuse a known public regression. It sends only candidate source plus one function invocation to a fresh check container. Sealed expected values remain in the trusted checker. The function returns only aggregate adjudication and an artifact digest; detailed sealed check values/logs remain outside this repository. An exclusively created episode reservation prevents a second candidate from querying the same episode oracle. The repair loop has no evaluator callback.
 
-Gold/start/repeat preparation can be run with:
+The [v2 preparation tools](../research/corpus-v2/tools/README.md) document the
+source-pinned intake, structural checks, independent review, runtime validation
+and final freeze. They retain exact source snapshots and observed tool versions.
+The earlier `workers/evaluator/validate-fixtures.ts` command reproduces neither
+the v2 authorship process nor its full provenance review. Do not run it as a
+substitute or overwrite accepted receipts with a new attempt.
 
-```sh
-node workers/evaluator/validate-fixtures.ts /home/andrewmohawk/patchproof-evaluation
-```
+Static review covers 60 tasks, 180 requirements and 1,582 authored case definitions:
+262 visible, 644 acceptance and 676 sealed. All 51 findings were resolved across
+12 correction revisions. The runtime preparation additionally checks 75 authored
+negative controls, 13 reviewer semantic probes and 12 reviewer mutation or
+error-preservation controls. The [public reviewer summary](../fixtures/independent-review-summary.json)
+records all 60 accepted tasks with passing gold, a rejected faulty start and stable
+repeated gold observations. The 12 accepted repository preparations have no
+infrastructure failures; two unsuccessful fresh preparation attempts remain in
+history and are counted separately. Earlier contract 2.1 attempts are preserved
+and do not substitute for fresh 2.2 input and observation checks. These are fixture
+checks, not scored model episodes.
 
-That command uses the pinned local image through `DockerCheckRunner`, writes private detailed results beside the oracles, and writes only aggregate counts in this repository. It performs no model inference. Gold/start/repeat preparation and independent review are recorded separately: `fixtures/oracle-validation-summary.json` contains author-run execution evidence, while `fixtures/independent-review-summary.json` contains the separate evaluator review.
-
-The independent reviewer inspected all 60 tasks and 563 case definitions. All 25 findings were corrected before any scored model experiment. Three independent semantic probes now pass, and two mutation negative controls that previously passed all checks are now rejected. Earlier manifests and complete source/oracle snapshots were preserved; changed tasks were re-executed, with exact unchanged hashes binding retained observations. The reviewer was separated from fixture authors and repair agents, but was another AI agent rather than a human. Human scope review remains open. These controls improve the oracle; they do not make its finite examples infallible.
-
-The JSON invocation boundary tests JSON-representable values and argument snapshots. It does not establish returned-object alias identity, arbitrary Python objects or unbounded numeric behavior. Eleven sealed boundary assertions duplicate visible/runtime inputs; their confidentiality must not be represented as novel held-out coverage. The rest of the oracle contents and every gold source remain external to this repository.
+The JSON invocation boundary tests representable values and argument snapshots.
+It does not establish returned-object alias identity, arbitrary Python objects,
+unbounded numeric behavior or universal correctness. One sealed invocation
+repeats a public invocation and is not new held-out coverage. Exact source-map
+comparisons found no starting or gold duplicates across repositories; forty gold
+map pairs are identical within their own repositories. That textual audit does
+not prove semantic or statistical independence. Gold and sealed content remain
+outside the repair checkout. Human scope review remains open.
 
 ## Episode accounting and analysis
 
@@ -63,4 +101,4 @@ Post-result protocol changes are classified `exploratory` by `classifyProtocolCh
 
 ## Remaining evidence
 
-Live provider evaluation, owner-reviewed oracle quality, final freeze, observed costs, blinded reviewer timing/accuracy, and independent clean-machine replay are not established by the offline tools. The final corpus remains sealed and is intentionally absent from a normal public source clone. Publication of the suite requires an explicit owner-controlled release after the experiment; future uses must disclose public exposure.
+Live provider evaluation, owner-reviewed oracle quality, calibrated live-protocol freeze, observed costs, blinded reviewer timing/accuracy, and independent clean-machine replay are not established by the offline tools. The v2 corpus freeze is complete; the final corpus remains sealed and is intentionally absent from a normal public source clone. Publication of the suite requires an explicit owner-controlled release after the experiment; future uses must disclose public exposure.

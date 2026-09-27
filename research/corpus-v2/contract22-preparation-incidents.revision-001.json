@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Preserved contract2.2 fixture-preparation infrastructure history, not a scored model episode",
+  "recordedAt": "2026-09-27T14:34:01.127083+00:00",
+  "incidents": [
+    {
+      "slot": "repo07",
+      "acceptedRevision": "revision-002",
+      "originalValidationReceiptDigest": "sha256:945b809ef26be8e30f4566d2872f8cfbad0fc554f87c3ebb80ed3f7870569368",
+      "failedBatchDigest": "sha256:b0558e01e8f0e1e4b6280035cacd7680ac5d8e560eb2c624cfe46994c98ecce9",
+      "queueExitCode": 2,
+      "classification": "docker_create_timeout_and_unconfirmed_cleanup",
+      "affectedPhaseTypes": [
+        "repeat"
+      ],
+      "description": "Create was not acknowledged after its fixed command timeout. Cleanup inspection failed. A later exact-handle ownership inspection found a created container that had never started; explicit cleanup then confirmed its removal.",
+      "observedContainerStateBeforeCleanup": "created",
+      "containerHadStarted": false,
+      "ownershipImageAndRunLabelsVerified": true,
+      "cleanupConfirmed": true,
+      "cleanupReceiptDigest": "sha256:ce910b16629213aeb32dbc07536d59cc0e2035a68b730c8a7574b79137c391ae",
+      "originalSourceStable": true,
+      "unchangedSubmissionDigest": "sha256:7a62df52d4c9b9a46f4bec5775789708cb8b2476125cc3dd8b6c103282f5695b",
+      "authorControlsAndReviewerProbesPassed": true,
+      "followup": "A new complete repository preparation is justified after this explicit review and confirmed cleanup. It will use the same source, submissions, probes and original limits.",
+      "automaticRetry": false,
+      "limitsChanged": false,
+      "fixturesChanged": false,
+      "originalAttemptRetained": true,
+      "providerCalls": 0
+    }
+  ]
+}

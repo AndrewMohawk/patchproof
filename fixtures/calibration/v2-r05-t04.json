@@ -1,0 +1,174 @@
+{
+  "id": "v2-r05-t04",
+  "repoId": "owned-v2-r05",
+  "split": "calibration",
+  "title": "Round fractional preparation units upward",
+  "description": "The pantry.py planner rescales indivisible ingredient units, such as scoops. A rounding refactor sometimes underestimates the units needed. Repair rescale_units(recipe, from_servings, to_servings). recipe is a mapping of at most 100 arbitrary Unicode ingredient strings (including empty) to whole-number JSON quantities from 0 through 1000000. from_servings is a whole-number JSON value from 1 through 1000; to_servings is from 0 through 1000. Whole-number JSON values mean finite integral numbers after JSON transport, excluding booleans; no Python int-versus-float distinction is promised. None/null, nonintegral numbers, other shapes, and inputs outside the stated bounds are outside this retained contract.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For a positive target serving count, retain every recipe key and return the least integer greater than or equal to units * to_servings / from_servings for each key. An original zero quantity remains zero."
+    },
+    {
+      "id": "R02",
+      "text": "With to_servings equal to zero, retain all recipe keys with quantity zero. An empty recipe returns {} for every supported serving count."
+    },
+    {
+      "id": "R03",
+      "text": "Do not change the recipe mapping in content, including when scaling changes one or more ingredient quantities."
+    }
+  ],
+  "files": {
+    "pantry.py": "\"\"\"Small pure helpers for planning a batch-preparation shopping list.\"\"\"\n\n\ndef aggregate_items(rows):\n    \"\"\"Consolidate the shopping rows while retaining their encounter order.\"\"\"\n    totals = {}\n    for row in rows:\n        item = row[\"item\"]\n        totals[item] = totals.get(item, 0) + row[\"units\"]\n    return [{\"item\": item, \"units\": units} for item, units in totals.items()]\n\n\ndef split_batches(amounts, limit):\n    \"\"\"Partition each preparation amount into its own sequence of batches.\"\"\"\n    result = []\n    for amount in amounts:\n        full, tail = divmod(amount, limit)\n        batches = [limit] * full\n        if tail:\n            batches.append(tail)\n        result.append(batches)\n    return result\n\n\ndef plan_shortfall(requested, available):\n    \"\"\"Return the remaining units to buy for each requested ingredient.\"\"\"\n    result = {}\n    for item, units in requested.items():\n        result[item] = max(units - available.get(item, 0), 0)\n    return result\n\n\ndef rescale_units(recipe, from_servings, to_servings):\n    \"\"\"Rescale indivisible ingredient units for a new serving count.\"\"\"\n    result = {}\n    for item, units in recipe.items():\n        result[item] = (units * to_servings + from_servings // 2) // from_servings\n    return result\n\n\ndef substitute_items(items, replacements):\n    \"\"\"Apply the selected ingredient substitutions simultaneously.\"\"\"\n    return [replacements.get(item, item) for item in items]\n"
+  },
+  "editAllowlist": [
+    "pantry.py"
+  ],
+  "entrypoint": "pantry.py",
+  "visibleCases": [
+    {
+      "id": "v2-r05-t04-v-r01",
+      "requirementId": "R01",
+      "function": "rescale_units",
+      "args": [
+        {
+          "rice": 2,
+          "salt": 0
+        },
+        2,
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "rice": 4,
+        "salt": 0
+      }
+    },
+    {
+      "id": "v2-r05-t04-v-r02",
+      "requirementId": "R02",
+      "function": "rescale_units",
+      "args": [
+        {
+          "beans": 7
+        },
+        3,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "beans": 0
+      }
+    },
+    {
+      "id": "v2-r05-t04-v-r03",
+      "requirementId": "R03",
+      "function": "rescale_units",
+      "args": [
+        {
+          "lentils": 6
+        },
+        3,
+        6
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lentils": 12
+      }
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r05-t04-a-r01",
+      "requirementId": "R01",
+      "function": "rescale_units",
+      "args": [
+        {
+          "spice": 1,
+          "oil": 2
+        },
+        3,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "spice": 1,
+        "oil": 1
+      }
+    },
+    {
+      "id": "v2-r05-t04-a-r01-half",
+      "requirementId": "R01",
+      "function": "rescale_units",
+      "args": [
+        {
+          "flour": 5
+        },
+        2,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "flour": 8
+      }
+    },
+    {
+      "id": "v2-r05-t04-a-r02",
+      "requirementId": "R02",
+      "function": "rescale_units",
+      "args": [
+        {},
+        4,
+        7
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {}
+    },
+    {
+      "id": "v2-r05-t04-a-r02-zero",
+      "requirementId": "R02",
+      "function": "rescale_units",
+      "args": [
+        {
+          "rice": 3,
+          "pepper": 0
+        },
+        4,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "rice": 0,
+        "pepper": 0
+      }
+    },
+    {
+      "id": "v2-r05-t04-a-r03",
+      "requirementId": "R03",
+      "function": "rescale_units",
+      "args": [
+        {
+          "water": 8,
+          "grain": 4
+        },
+        4,
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "water": 4,
+        "grain": 2
+      }
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI-authored batch-preparation library; author job repo05, repository owned-v2-r05; CC0-1.0. No upstream code or data."
+}

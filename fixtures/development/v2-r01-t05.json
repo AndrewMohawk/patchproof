@@ -1,0 +1,373 @@
+{
+  "id": "v2-r01-t05",
+  "repoId": "owned-v2-r01",
+  "split": "development",
+  "title": "Count adjacent list runs independently",
+  "description": "This ListWeave snapshot contains runs(values), a compact representation of consecutive repeated list items for in-memory display summaries. A counting refactor merged separate runs of the same value. Restore the adjacent-run contract for JSON data, with finite numbers and JavaScript-safe integers.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For list values, runs returns one {\"value\": first_item, \"count\": positive_integer} object for each maximal contiguous Python == run, in order. Nonadjacent equal values stay separate. Equality is recursive for lists and dictionaries, exact for strings without Unicode normalization, and includes Python numeric equality True == 1 and False == 0. Each run retains its first item as value; None and empty nested containers are supported. Empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "For list input, runs leaves the caller list and all nested lists and dictionaries unchanged, including repeated values in separate runs."
+    },
+    {
+      "id": "R03",
+      "text": "A non-list values of any JSON type, including None, raises TypeError."
+    }
+  ],
+  "files": {
+    "runs.py": "# ListWeave: original synthetic list-maintenance module. CC0-1.0.\ndef runs(values):\n    if not isinstance(values, list):\n        raise TypeError(\"expected a list\")\n    groups = []\n    for value in values:\n        if not any(value == group[\"value\"] for group in groups):\n            groups.append({\"value\": value, \"count\": values.count(value)})\n    return groups\n"
+  },
+  "editAllowlist": [
+    "runs.py"
+  ],
+  "entrypoint": "runs.py",
+  "visibleCases": [
+    {
+      "id": "n-v-separated",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        [
+          "a",
+          "a",
+          "b",
+          "a"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": "a",
+          "count": 2
+        },
+        {
+          "value": "b",
+          "count": 1
+        },
+        {
+          "value": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "n-v-empty",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "n-v-unicode",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        [
+          "é",
+          "é",
+          "é"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": "é",
+          "count": 1
+        },
+        {
+          "value": "é",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "n-v-mutation",
+      "requirementId": "R02",
+      "function": "runs",
+      "args": [
+        [
+          {
+            "a": [
+              1
+            ]
+          },
+          {
+            "a": [
+              1
+            ]
+          },
+          [
+            2
+          ],
+          {
+            "a": [
+              1
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": {
+            "a": [
+              1
+            ]
+          },
+          "count": 2
+        },
+        {
+          "value": [
+            2
+          ],
+          "count": 1
+        },
+        {
+          "value": {
+            "a": [
+              1
+            ]
+          },
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "n-v-none",
+      "requirementId": "R03",
+      "function": "runs",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "n-v-isolated-mutation",
+      "requirementId": "R02",
+      "function": "runs",
+      "args": [
+        [
+          {
+            "tone": [
+              "amber"
+            ]
+          },
+          {
+            "tone": [
+              "amber"
+            ]
+          },
+          "rest",
+          "rest",
+          "rest"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": {
+            "tone": [
+              "amber"
+            ]
+          },
+          "count": 2
+        },
+        {
+          "value": "rest",
+          "count": 3
+        }
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "n-a-falsey",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        [
+          0,
+          0,
+          "",
+          "",
+          null,
+          null
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": 0,
+          "count": 2
+        },
+        {
+          "value": "",
+          "count": 2
+        },
+        {
+          "value": null,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "n-a-numeric",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        [
+          true,
+          1,
+          1,
+          false,
+          0,
+          true
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": true,
+          "count": 3
+        },
+        {
+          "value": false,
+          "count": 2
+        },
+        {
+          "value": true,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "n-a-nested",
+      "requirementId": "R01",
+      "function": "runs",
+      "args": [
+        [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          {
+            "a": 2
+          },
+          {
+            "a": 2
+          },
+          [
+            1
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": [
+            1
+          ],
+          "count": 2
+        },
+        {
+          "value": {
+            "a": 2
+          },
+          "count": 2
+        },
+        {
+          "value": [
+            1
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "n-a-mutation",
+      "requirementId": "R02",
+      "function": "runs",
+      "args": [
+        [
+          [],
+          [],
+          {
+            "x": [
+              false
+            ]
+          },
+          {
+            "x": [
+              false
+            ]
+          },
+          "tail",
+          "tail"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "value": [],
+          "count": 2
+        },
+        {
+          "value": {
+            "x": [
+              false
+            ]
+          },
+          "count": 2
+        },
+        {
+          "value": "tail",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "n-a-string",
+      "requirementId": "R03",
+      "function": "runs",
+      "args": [
+        "abc"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "n-a-number",
+      "requirementId": "R03",
+      "function": "runs",
+      "args": [
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic ListWeave repository maintenance task authored independently under independent-ai-author-repo01; assigned job shared/jobs/repo01.json; repo owned-v2-r01. No external source code or data."
+}

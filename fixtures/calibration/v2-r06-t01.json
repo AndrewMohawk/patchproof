@@ -1,0 +1,494 @@
+{
+  "id": "v2-r06-t01",
+  "repoId": "owned-v2-r06",
+  "split": "calibration",
+  "title": "Preserve exact material labels while consolidating workshop requirements",
+  "description": "The material-line consolidation helper has started treating differently cased labels as one item. Restore its retained public contract. Inputs and results are JSON arrays of [label, units] pairs. All input integer values and all derived output totals in the supported domain remain within the JavaScript safe-integer range (absolute value at most 9007199254740991). Input combinations requiring an output total outside that range are out of contract; no additional exception behavior is promised for them.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "combine_materials(lines) returns one [label, total_units] pair for each distinct label, summing all of its units. Labels compare by exact string equality, including case, Unicode code points and the empty string. Output follows first appearance of each label; retain labels whose total is zero. Empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "lines must be a list of two-element lists. Each label must be a string and each units value a nonnegative integer; booleans and fractional numbers are invalid. A wrong container, pair length or field type raises TypeError; negative integer units raise ValueError. Validate every line, including zero-unit lines."
+    },
+    {
+      "id": "R03",
+      "text": "The supplied list and its nested pairs must remain unchanged on both a successful call and a validation exception."
+    }
+  ],
+  "files": {
+    "materials.py": "\"\"\"Material-line helpers for a small craft workshop planning library.\"\"\"\n\n\ndef combine_materials(lines):\n    if not isinstance(lines, list):\n        raise TypeError(\"lines must be a list\")\n    for line in lines:\n        if not isinstance(line, list) or len(line) != 2:\n            raise TypeError(\"each line must be a pair\")\n        label, units = line\n        if not isinstance(label, str) or type(units) is not int:\n            raise TypeError(\"invalid material line\")\n        if units < 0:\n            raise ValueError(\"units must be nonnegative\")\n    result = []\n    positions = {}\n    for label, units in lines:\n        key = label.casefold()\n        if key in positions:\n            result[positions[key]][1] += units\n        else:\n            positions[key] = len(result)\n            result.append([label, units])\n    return result\n"
+  },
+  "editAllowlist": [
+    "materials.py"
+  ],
+  "entrypoint": "materials.py",
+  "visibleCases": [
+    {
+      "id": "v2-r06-t01-v-r01-sum",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            2
+          ],
+          [
+            "pin",
+            1
+          ],
+          [
+            "oak",
+            3
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "oak",
+          5
+        ],
+        [
+          "pin",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-v-r01-empty",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r06-t01-v-r02-type",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            true
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-v-r03-input",
+      "requirementId": "R03",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "felt",
+            1
+          ],
+          [
+            "felt",
+            2
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "felt",
+          3
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r06-t01-a-r01-case",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "Bolt",
+            2
+          ],
+          [
+            "bolt",
+            3
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "Bolt",
+          2
+        ],
+        [
+          "bolt",
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-a-r01-order",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "zinc",
+            1
+          ],
+          [
+            "ash",
+            2
+          ],
+          [
+            "zinc",
+            4
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "zinc",
+          5
+        ],
+        [
+          "ash",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-a-r01-zero",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "unused",
+            0
+          ],
+          [
+            "used",
+            3
+          ],
+          [
+            "unused",
+            0
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "unused",
+          0
+        ],
+        [
+          "used",
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-a-r01-empty-label",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "",
+            4
+          ],
+          [
+            "p",
+            2
+          ],
+          [
+            "",
+            1
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "",
+          5
+        ],
+        [
+          "p",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-a-r02-null",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-object",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        {
+          "oak": 2
+        }
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-pair-container",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          "oak"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-pair-short",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak"
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-pair-long",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            2,
+            1
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-label-number",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            7,
+            2
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-label-null-zero",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            null,
+            0
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-fraction",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            1.5
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-unit-null",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            null
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-unit-string",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            "2"
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t01-a-r02-negative",
+      "requirementId": "R02",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "oak",
+            -1
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t01-a-r03-normal",
+      "requirementId": "R03",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "wire",
+            0
+          ],
+          [
+            "wire",
+            7
+          ],
+          [
+            "pad",
+            2
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "wire",
+          7
+        ],
+        [
+          "pad",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t01-a-r03-error",
+      "requirementId": "R03",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "wax",
+            1
+          ],
+          [
+            "wax",
+            2
+          ],
+          [
+            "bad",
+            -4
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v2-r06-t01-a-r01-upper-safe-total",
+      "requirementId": "R01",
+      "function": "combine_materials",
+      "args": [
+        [
+          [
+            "brass",
+            4503599627370495
+          ],
+          [
+            "brass",
+            4503599627370496
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "brass",
+          9007199254740991
+        ]
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for shared job repo06; repository owned-v2-r06; author /root/corpus_v2_repo06; no upstream source copied."
+}

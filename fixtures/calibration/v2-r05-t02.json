@@ -1,0 +1,192 @@
+{
+  "id": "v2-r05-t02",
+  "repoId": "owned-v2-r05",
+  "split": "calibration",
+  "title": "Avoid zero-sized batches at exact capacity boundaries",
+  "description": "The same pantry.py planner partitions separate preparation orders. An arithmetic refactor creates an extra empty batch when an amount exactly fills its containers. Repair split_batches(amounts, limit). amounts is a list of at most 100 whole-number JSON values from 0 through 1000; limit is a whole-number JSON value from 1 through 100. Each amount is a separate order and must not be pooled with adjacent orders. Whole-number JSON values mean finite integral numbers after JSON transport, excluding booleans; no Python int-versus-float distinction is promised. None/null, nonintegral numbers, other shapes, and inputs outside the stated bounds are outside this retained contract.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For each positive amount, return an inner list of limit-sized batches followed by one remainder batch only when the remainder is positive. The inner list sums to that amount; no batch is zero. Preserve the outer order, and partition each amount independently."
+    },
+    {
+      "id": "R02",
+      "text": "A zero amount produces an empty inner list in its original position. An empty amounts list produces an empty outer list."
+    },
+    {
+      "id": "R03",
+      "text": "Do not change the content or order of the input amounts list while computing the batches."
+    }
+  ],
+  "files": {
+    "pantry.py": "\"\"\"Small pure helpers for planning a batch-preparation shopping list.\"\"\"\n\n\ndef aggregate_items(rows):\n    \"\"\"Consolidate the shopping rows while retaining their encounter order.\"\"\"\n    totals = {}\n    for row in rows:\n        item = row[\"item\"]\n        totals[item] = totals.get(item, 0) + row[\"units\"]\n    return [{\"item\": item, \"units\": units} for item, units in totals.items()]\n\n\ndef split_batches(amounts, limit):\n    \"\"\"Partition each preparation amount into its own sequence of batches.\"\"\"\n    result = []\n    for amount in amounts:\n        if amount == 0:\n            result.append([])\n            continue\n        full, tail = divmod(amount, limit)\n        result.append([limit] * full + [tail])\n    return result\n\n\ndef plan_shortfall(requested, available):\n    \"\"\"Return the remaining units to buy for each requested ingredient.\"\"\"\n    result = {}\n    for item, units in requested.items():\n        result[item] = max(units - available.get(item, 0), 0)\n    return result\n\n\ndef rescale_units(recipe, from_servings, to_servings):\n    \"\"\"Rescale indivisible ingredient units for a new serving count.\"\"\"\n    result = {}\n    for item, units in recipe.items():\n        result[item] = (units * to_servings + from_servings - 1) // from_servings\n    return result\n\n\ndef substitute_items(items, replacements):\n    \"\"\"Apply the selected ingredient substitutions simultaneously.\"\"\"\n    return [replacements.get(item, item) for item in items]\n"
+  },
+  "editAllowlist": [
+    "pantry.py"
+  ],
+  "entrypoint": "pantry.py",
+  "visibleCases": [
+    {
+      "id": "v2-r05-t02-v-r01",
+      "requirementId": "R01",
+      "function": "split_batches",
+      "args": [
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          3,
+          3,
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r05-t02-v-r02",
+      "requirementId": "R02",
+      "function": "split_batches",
+      "args": [
+        [
+          0
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        []
+      ]
+    },
+    {
+      "id": "v2-r05-t02-v-r03",
+      "requirementId": "R03",
+      "function": "split_batches",
+      "args": [
+        [
+          2,
+          1
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r05-t02-a-r01",
+      "requirementId": "R01",
+      "function": "split_batches",
+      "args": [
+        [
+          8,
+          5
+        ],
+        4
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r05-t02-a-r01-one",
+      "requirementId": "R01",
+      "function": "split_batches",
+      "args": [
+        [
+          3
+        ],
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r05-t02-a-r02",
+      "requirementId": "R02",
+      "function": "split_batches",
+      "args": [
+        [],
+        7
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r05-t02-a-r02-many",
+      "requirementId": "R02",
+      "function": "split_batches",
+      "args": [
+        [
+          0,
+          0
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [],
+        []
+      ]
+    },
+    {
+      "id": "v2-r05-t02-a-r03",
+      "requirementId": "R03",
+      "function": "split_batches",
+      "args": [
+        [
+          1,
+          3
+        ],
+        5
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI-authored batch-preparation library; author job repo05, repository owned-v2-r05; CC0-1.0. No upstream code or data."
+}

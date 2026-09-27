@@ -1,0 +1,387 @@
+{
+  "id": "v2-r06-t03",
+  "repoId": "owned-v2-r06",
+  "split": "calibration",
+  "title": "Keep separated operation runs distinct in compact instruction displays",
+  "description": "The compact instruction formatter has begun combining matching labels from separate sections. Restore adjacent-run formatting without changing the input sequence.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "operation_runs(labels) returns [label, positive_count] pairs for maximal consecutive runs, in sequence order. Equal labels separated by any different label form separate output rows. Equality is exact string equality, including case, Unicode code points and empty strings. Empty input returns []."
+    },
+    {
+      "id": "R02",
+      "text": "labels must be a list whose every member is a string; otherwise raise TypeError. Do not coerce numbers, booleans, null, nested lists or objects into labels."
+    },
+    {
+      "id": "R03",
+      "text": "The supplied labels list must remain unchanged on successful formatting and on a validation exception."
+    }
+  ],
+  "files": {
+    "runs.py": "\"\"\"Compact adjacent workshop operations for display.\"\"\"\n\n\ndef operation_runs(labels):\n    if not isinstance(labels, list) or any(not isinstance(x, str) for x in labels):\n        raise TypeError(\"labels must be a list of strings\")\n    result = []\n    for label in labels:\n        if any(row[0] == label for row in result):\n            next(row for row in result if row[0] == label)[1] += 1\n        else:\n            result.append([label, 1])\n    return result\n"
+  },
+  "editAllowlist": [
+    "runs.py"
+  ],
+  "entrypoint": "runs.py",
+  "visibleCases": [
+    {
+      "id": "v2-r06-t03-v-r01-adjacent",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        [
+          "cut",
+          "cut",
+          "join"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "cut",
+          2
+        ],
+        [
+          "join",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-v-r02-number",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        [
+          "cut",
+          1
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-v-r03-input",
+      "requirementId": "R03",
+      "function": "operation_runs",
+      "args": [
+        [
+          "sand",
+          "sand",
+          "buff"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "sand",
+          2
+        ],
+        [
+          "buff",
+          1
+        ]
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v2-r06-t03-a-r01-separated",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        [
+          "cut",
+          "cut",
+          "dry",
+          "cut"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "cut",
+          2
+        ],
+        [
+          "dry",
+          1
+        ],
+        [
+          "cut",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-a-r01-case",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        [
+          "Pin",
+          "pin",
+          "pin",
+          "Pin"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "Pin",
+          1
+        ],
+        [
+          "pin",
+          2
+        ],
+        [
+          "Pin",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-a-r01-empty-label",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        [
+          "",
+          "",
+          "glue",
+          "",
+          ""
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "",
+          2
+        ],
+        [
+          "glue",
+          1
+        ],
+        [
+          "",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-a-r01-empty",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v2-r06-t03-a-r01-unicode",
+      "requirementId": "R01",
+      "function": "operation_runs",
+      "args": [
+        [
+          "é",
+          "é",
+          "é",
+          "é"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "é",
+          1
+        ],
+        [
+          "é",
+          2
+        ],
+        [
+          "é",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-a-r02-null",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-string",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        "press"
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-object",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        {}
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-bool",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        [
+          "press",
+          true
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-null-member",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        [
+          "press",
+          null
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-list-member",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        [
+          "press",
+          []
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r02-object-member",
+      "requirementId": "R02",
+      "function": "operation_runs",
+      "args": [
+        [
+          "press",
+          {}
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r03-normal",
+      "requirementId": "R03",
+      "function": "operation_runs",
+      "args": [
+        [
+          "zip",
+          "zip",
+          "align",
+          "zip"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "zip",
+          2
+        ],
+        [
+          "align",
+          1
+        ],
+        [
+          "zip",
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v2-r06-t03-a-r03-error",
+      "requirementId": "R03",
+      "function": "operation_runs",
+      "args": [
+        [
+          "zip",
+          "align",
+          false
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "v2-r06-t03-a-r03-isolated-success",
+      "requirementId": "R03",
+      "function": "operation_runs",
+      "args": [
+        [
+          "stain",
+          "stain",
+          "coat",
+          "coat",
+          "label"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [
+          "stain",
+          2
+        ],
+        [
+          "coat",
+          2
+        ],
+        [
+          "label",
+          1
+        ]
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original independent AI authorship for shared job repo06; repository owned-v2-r06; author /root/corpus_v2_repo06; no upstream source copied."
+}

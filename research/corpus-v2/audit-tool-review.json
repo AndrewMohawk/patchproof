@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T15:03:03.073628+00:00",
+  "purpose": "Preparation cleanup audit tooling review, not corpus or model execution",
+  "auditDigest": "sha256:da9686168f072258a047c568b7fce87601c2c4678b50c3fe04762cd3db62f7f5",
+  "testDigest": "sha256:b8697d948a09261e97cb53440ceecad4b30714e2f7454be042427cc9334df48e",
+  "authorControls": {
+    "command": "node --test validation/audit-local-handles.test.mjs",
+    "exitCode": 0,
+    "passed": 12,
+    "total": 12,
+    "logDigest": "sha256:ff42b2ce3dbdb1b7915f8367c2054548fc0cff4415fc73b8c60f737bf15d6419",
+    "scope": "Invented in-memory metadata plus original public108-file inventory; no private corpus reads or Docker/provider calls"
+  },
+  "independentReview": {
+    "reviewer": "/root/json_contract_review",
+    "method": "source-only review and rereview",
+    "initialFindings": 4,
+    "resolvedFindings": 4,
+    "remainingBlockers": 0,
+    "testExecutionByReviewer": false,
+    "privateRecordsReadByReviewer": false,
+    "mainAuditExecutionByReviewer": false
+  },
+  "resolvedSourceFindings": [
+    "Union of batch artifact stems and exact unique intent/result/event/lifecycle binding",
+    "Literal pinned inventory byte digest,108-entry shape and source commit",
+    "Literal cleanup booleans and exact image/ID/owner reconciliation bindings",
+    "Strict parsing of every nonempty successful Docker listing row"
+  ],
+  "originalAuditExecuted": false,
+  "originalSnapshot": "research/corpus-v2/tools/revisions/005/audit-local-handles.mjs",
+  "actualRecordCompatibility": "NOT RUN at this tool-review record; final audit must establish it",
+  "activeRuntimeValidatorChanged": false,
+  "providerCalls": 0
+}

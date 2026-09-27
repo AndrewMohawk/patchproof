@@ -1,10 +1,17 @@
 # Completion audit — local implementation versus external proof
 
-Current coordinator status: a fresh PRD audit reopened two local requirements:
-independent authorship of all twelve fixture repositories, and the eight-task
-model-selection probe. The original v1 corpus is preserved while separate fresh
-AI author jobs prepare v2 under independent review. Probe planning/analysis is
-implemented and independently tested; real catalog discovery and observations await account access.
+Current coordinator status: local T03 corpus preparation is complete. Twelve
+separate AI authors produced 60 independently reviewed tasks; fresh contract 2.2
+gold/start/repeat validation and the immutable v2 freeze are complete, and the
+30 public fixtures and aggregate provenance are integrated. The
+[reviewer summary](../fixtures/independent-review-summary.json) retains the scope
+and unsuccessful preparation attempts. Production evaluator-account separation
+and human scope review remain open. The original v1 corpus, plans and evidence
+are preserved. The integrated full suite passes all 573 tests, type checking and
+contract locks; updated browser checks and replay remain pending separately.
+Eight-task model-probe
+planning/analysis is implemented and independently tested; real catalog discovery
+and observations await account access.
 T10's uncoached human acceptance also remains unverified despite successful
 automated browser checks. These are current gaps, distinct from the historical
 implementation review below.
@@ -17,14 +24,17 @@ closure. Actual provider access, calibration, billing, experiments, human review
 independent-machine replay and owner release decisions remain required. See
 [the current blockers](../research/blockers.md) for the active gates.
 
-The latest local integration adds private product-evidence export, a read-only
-recorded evidence archive, a funded single-attempt check-only replay and explicit
-accepted live-protocol release binding. Executable source `4e0116d` passes 537
-tests. New provider paths are tested with invented inputs; no account observation
-or scored result is implied. The
+The JSON contract migration integrated at `843b368` passes the full 571-test suite
+and two additional independent metadata controls. All 14 actual historical
+exports retain identical bytes, digests and admitted run data. The
+[migration receipt](../research/verification/20260927-json-contract/integration-receipt.json)
+preserves the failed test-fixture attempt and explicit compatibility limits.
+The loopback app still serves its previously verified `4e0116d` checkout ahead of
+the v2 product handoff; no new rendered handoff is claimed yet. The earlier
 [integration receipt](../research/verification/20260927-trusted-replay/receipt.json)
-separates this suite, the real local Docker/browser flow on `92a2baf`, the retained
-first replay timeout and unchanged retry, and the current loopback app handoff.
+records private export/archive/replay implementation and its separate source-bound
+Docker/browser checks. Provider paths use invented test inputs; no account
+observation or scored result is implied.
 
 ## Original independent review
 

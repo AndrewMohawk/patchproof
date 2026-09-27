@@ -1,0 +1,334 @@
+{
+  "id": "v2-r01-t04",
+  "repoId": "owned-v2-r01",
+  "split": "development",
+  "title": "Keep unpaired values during list weaving",
+  "description": "This ListWeave snapshot provides interleave(left, right), which weaves two in-memory sequences for a paired display. A zip-based refactor loses entries when list lengths differ. Restore the full documented behavior for JSON data; numbers are finite and integers stay within JavaScript safe range.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "For lists left and right, interleave returns left[0], right[0], left[1], right[1], and so on while both have elements, then all remaining elements of the longer list in their original order. Empty lists are supported, including both empty. Every occurrence is retained, even equal or nested JSON values."
+    },
+    {
+      "id": "R02",
+      "text": "For valid calls, interleave leaves both caller lists and all nested lists and dictionaries unchanged, including unequal-length inputs."
+    },
+    {
+      "id": "R03",
+      "text": "Both left and right must be lists; if either is any other JSON type, including None, raise TypeError before producing a result."
+    }
+  ],
+  "files": {
+    "braids.py": "# ListWeave: original synthetic list-maintenance module. CC0-1.0.\ndef interleave(left, right):\n    if not isinstance(left, list) or not isinstance(right, list):\n        raise TypeError(\"expected two lists\")\n    result = []\n    for a, b in zip(left, right):\n        result.extend([a, b])\n    return result\n"
+  },
+  "editAllowlist": [
+    "braids.py"
+  ],
+  "entrypoint": "braids.py",
+  "visibleCases": [
+    {
+      "id": "i-v-lefttail",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          "a"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        1,
+        "a",
+        2,
+        3
+      ]
+    },
+    {
+      "id": "i-v-balanced",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [
+          1,
+          2
+        ],
+        [
+          "x",
+          "y"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        1,
+        "x",
+        2,
+        "y"
+      ]
+    },
+    {
+      "id": "i-v-bothempty",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "i-v-mutation",
+      "requirementId": "R02",
+      "function": "interleave",
+      "args": [
+        [
+          {
+            "a": [
+              1
+            ]
+          },
+          [
+            2
+          ]
+        ],
+        [
+          [
+            3
+          ]
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "a": [
+            1
+          ]
+        },
+        [
+          3
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "i-v-leftnone",
+      "requirementId": "R03",
+      "function": "interleave",
+      "args": [
+        null,
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "i-v-rightnone",
+      "requirementId": "R03",
+      "function": "interleave",
+      "args": [
+        [],
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "i-v-isolated-mutation",
+      "requirementId": "R02",
+      "function": "interleave",
+      "args": [
+        [
+          {
+            "slot": [
+              2
+            ]
+          },
+          []
+        ],
+        [
+          [
+            "ink"
+          ],
+          {
+            "slot": [
+              8
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "slot": [
+            2
+          ]
+        },
+        [
+          "ink"
+        ],
+        [],
+        {
+          "slot": [
+            8
+          ]
+        }
+      ]
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "i-a-righttail",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [
+          false
+        ],
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        false,
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "i-a-leftempty",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [],
+        [
+          null,
+          0,
+          "z"
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        null,
+        0,
+        "z"
+      ]
+    },
+    {
+      "id": "i-a-rightempty",
+      "requirementId": "R01",
+      "function": "interleave",
+      "args": [
+        [
+          true,
+          "é"
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        true,
+        "é"
+      ]
+    },
+    {
+      "id": "i-a-mutation",
+      "requirementId": "R02",
+      "function": "interleave",
+      "args": [
+        [
+          [],
+          {
+            "k": [
+              "a"
+            ]
+          }
+        ],
+        [
+          {
+            "r": [
+              1
+            ]
+          },
+          null
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        [],
+        {
+          "r": [
+            1
+          ]
+        },
+        {
+          "k": [
+            "a"
+          ]
+        },
+        null
+      ]
+    },
+    {
+      "id": "i-a-leftstring",
+      "requirementId": "R03",
+      "function": "interleave",
+      "args": [
+        "abc",
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "i-a-rightobject",
+      "requirementId": "R03",
+      "function": "interleave",
+      "args": [
+        [],
+        {}
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    },
+    {
+      "id": "i-a-leftnumber",
+      "requirementId": "R03",
+      "function": "interleave",
+      "args": [
+        0,
+        [
+          1
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": false,
+      "expectedException": "TypeError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic ListWeave repository maintenance task authored independently under independent-ai-author-repo01; assigned job shared/jobs/repo01.json; repo owned-v2-r01. No external source code or data."
+}

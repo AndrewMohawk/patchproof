@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "explicit-pre-dispatch-handoff-claim",
+  "handoffId": "975a7fd9-a298-49d1-861e-ddc61a9d0960",
+  "recordedAt": "2026-09-27T14:39:34.434275+00:00",
+  "slot": "repo11",
+  "sourceQueueId": "0e4b755a-1745-4b73-8c1d-db37d585a956",
+  "sourceQueuePlanDigest": "sha256:f4c473e93ecf9de320b2981192bbc34d9fe17a6919f69ea3e57d8a622c6010e8",
+  "reason": "Coordinator-approved transfer to the idle lane after repository12 completes.",
+  "barrier": "Existing openSync(logfile,wx) occurs before spawn; this exclusive claim prevents the old queue from dispatching11.",
+  "oldQueueExpectedStop": "EEXIST before child creation; scheduler event, not a fixture validation attempt.",
+  "actual11AttemptsBeforeClaim": 0,
+  "activeToolingChanged": false,
+  "maximumConcurrentRepositories": 2,
+  "guardDigest": "sha256:67bbc755c43097ecd82c3a16bcdf2f56d534178619e6642031d22c43ca2181d3",
+  "guardFile": "/home/andrewmohawk/patchproof-evaluation-v2/validation/repo11-contract22-queue-0e4b755a-1745-4b73-8c1d-db37d585a956.log",
+  "status": "guarded-awaiting-idle-lane"
+}
