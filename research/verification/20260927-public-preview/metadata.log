@@ -1,0 +1,683 @@
+{
+  "scope": "Authorized provisional public-only preview; metadata/schema inspection only. No fixture execution.",
+  "testedAt": "2026-09-27T14:30:24.124Z",
+  "manifestDigest": "sha256:6d46f5a9bcc7f418e5284f1c622a405cc81887f55d6c03241149bd2d81bc3138",
+  "manifestStatus": "provisional-public-only-preview",
+  "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+  "clientCommit": "0b605f26453409e474587270fdf9292a7ec4aaf3",
+  "counts": {
+    "fixtures": 30,
+    "development": 20,
+    "calibration": 10,
+    "repositories": 6,
+    "mockSupported": 1
+  },
+  "tasks": [
+    {
+      "id": "stable-unique-01",
+      "repoId": "owned-v2-r01",
+      "split": "development",
+      "title": "Retain first occurrences throughout a list",
+      "entrypoint": "solution.py",
+      "filePaths": [
+        "solution.py"
+      ],
+      "editAllowlist": [
+        "solution.py"
+      ],
+      "sourceBytes": 296,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 4,
+      "functions": [
+        "unique"
+      ],
+      "mockSupported": true,
+      "fixtureProjectionDigest": "sha256:8f14e311c082ba11f3cb37df4c2db7012603fee63959d8c8fbb0905c0d21f734"
+    },
+    {
+      "id": "v2-r01-t02",
+      "repoId": "owned-v2-r01",
+      "split": "development",
+      "title": "Preserve a final partial list block",
+      "entrypoint": "blocks.py",
+      "filePaths": [
+        "blocks.py"
+      ],
+      "editAllowlist": [
+        "blocks.py"
+      ],
+      "sourceBytes": 424,
+      "requirements": 3,
+      "visibleCaseCount": 8,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "blocks"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:0ad548e02a77878559def24a3bf025bde4e6233044596acaa23e799df5b8fb88"
+    },
+    {
+      "id": "v2-r01-t03",
+      "repoId": "owned-v2-r01",
+      "split": "development",
+      "title": "Honor signed cyclic list shifts",
+      "entrypoint": "cycles.py",
+      "filePaths": [
+        "cycles.py"
+      ],
+      "editAllowlist": [
+        "cycles.py"
+      ],
+      "sourceBytes": 360,
+      "requirements": 3,
+      "visibleCaseCount": 8,
+      "acceptanceCaseCount": 8,
+      "functions": [
+        "rotate"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:89a584e6eaf208de7b9cbb5a7a405106e5b8bea7fd4c532866152a0aaaf1f822"
+    },
+    {
+      "id": "v2-r01-t04",
+      "repoId": "owned-v2-r01",
+      "split": "development",
+      "title": "Keep unpaired values during list weaving",
+      "entrypoint": "braids.py",
+      "filePaths": [
+        "braids.py"
+      ],
+      "editAllowlist": [
+        "braids.py"
+      ],
+      "sourceBytes": 305,
+      "requirements": 3,
+      "visibleCaseCount": 7,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "interleave"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:4fbb32f868385264dbc903cb4754b653ba8efd8eec2ca1051f6e28a598d1f8d8"
+    },
+    {
+      "id": "v2-r01-t05",
+      "repoId": "owned-v2-r01",
+      "split": "development",
+      "title": "Count adjacent list runs independently",
+      "entrypoint": "runs.py",
+      "filePaths": [
+        "runs.py"
+      ],
+      "editAllowlist": [
+        "runs.py"
+      ],
+      "sourceBytes": 362,
+      "requirements": 3,
+      "visibleCaseCount": 6,
+      "acceptanceCaseCount": 6,
+      "functions": [
+        "runs"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:c3ab432d989a5fcaa863bd9df070882f8423197113a9e3e8809b36aef9c1e8df"
+    },
+    {
+      "id": "v2-r02-t01",
+      "repoId": "owned-v2-r02",
+      "split": "development",
+      "title": "Repeated page marks fragment contiguous reading runs",
+      "entrypoint": "reading_plan.py",
+      "filePaths": [
+        "reading_plan.py"
+      ],
+      "editAllowlist": [
+        "reading_plan.py"
+      ],
+      "sourceBytes": 2818,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 6,
+      "functions": [
+        "page_runs"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:869889274622854d2b19a7aa2e660c2eaa93fd548100c6bb5ce5b04112e92c8c"
+    },
+    {
+      "id": "v2-r02-t02",
+      "repoId": "owned-v2-r02",
+      "split": "development",
+      "title": "Exact-capacity sessions split too early",
+      "entrypoint": "reading_plan.py",
+      "filePaths": [
+        "reading_plan.py"
+      ],
+      "editAllowlist": [
+        "reading_plan.py"
+      ],
+      "sourceBytes": 2824,
+      "requirements": 3,
+      "visibleCaseCount": 8,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "chapter_sessions"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:5969241596b5155a5aafe7534660b70a1a8f8278d647d8e76e0ab15a65992d87"
+    },
+    {
+      "id": "v2-r02-t03",
+      "repoId": "owned-v2-r02",
+      "split": "development",
+      "title": "Chapter boundary pages resolve to the wrong chapter",
+      "entrypoint": "reading_plan.py",
+      "filePaths": [
+        "reading_plan.py"
+      ],
+      "editAllowlist": [
+        "reading_plan.py"
+      ],
+      "sourceBytes": 2822,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 8,
+      "functions": [
+        "locate_page"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:b8b1c205b8b6fb66c21e3c464f7df9061680e7b708993eaf3d6112ae6288879a"
+    },
+    {
+      "id": "v2-r02-t04",
+      "repoId": "owned-v2-r02",
+      "split": "development",
+      "title": "Later reading sessions replace earlier page totals",
+      "entrypoint": "reading_plan.py",
+      "filePaths": [
+        "reading_plan.py"
+      ],
+      "editAllowlist": [
+        "reading_plan.py"
+      ],
+      "sourceBytes": 2801,
+      "requirements": 3,
+      "visibleCaseCount": 6,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "reading_totals"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:4b9c74303e02ef60fafe21fb58f55323801b767979e45711014dca112aa4d36c"
+    },
+    {
+      "id": "v2-r02-t05",
+      "repoId": "owned-v2-r02",
+      "split": "development",
+      "title": "Half-percent progress ties round down unexpectedly",
+      "entrypoint": "reading_plan.py",
+      "filePaths": [
+        "reading_plan.py"
+      ],
+      "editAllowlist": [
+        "reading_plan.py"
+      ],
+      "sourceBytes": 2813,
+      "requirements": 3,
+      "visibleCaseCount": 6,
+      "acceptanceCaseCount": 8,
+      "functions": [
+        "reading_percentage"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:12e2d6fca346f87e905acf4626506e5d41a459d5c753ec1b0f8c66e8c01fae82"
+    },
+    {
+      "id": "v2-r03-t01",
+      "repoId": "owned-v2-r03",
+      "split": "development",
+      "title": "Retain fill-down history across blank worksheet spans",
+      "entrypoint": "gridloom.py",
+      "filePaths": [
+        "gridloom.py"
+      ],
+      "editAllowlist": [
+        "gridloom.py"
+      ],
+      "sourceBytes": 2564,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 9,
+      "functions": [
+        "fill_down"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:8b41eaf139c32f2c74fb48e28db8daecf2830a8c314fdfd4ce2f45f003fcb2c4"
+    },
+    {
+      "id": "v2-r03-t02",
+      "repoId": "owned-v2-r03",
+      "split": "development",
+      "title": "Keep explicit empty cells during worksheet transposition",
+      "entrypoint": "gridloom.py",
+      "filePaths": [
+        "gridloom.py"
+      ],
+      "editAllowlist": [
+        "gridloom.py"
+      ],
+      "sourceBytes": 2606,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 10,
+      "functions": [
+        "transpose"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:ffb58b52b61b519dd0a34135a22ec54e8c081bb892f380472516422cf67a171f"
+    },
+    {
+      "id": "v2-r03-t03",
+      "repoId": "owned-v2-r03",
+      "split": "development",
+      "title": "Include the final complete worksheet window",
+      "entrypoint": "gridloom.py",
+      "filePaths": [
+        "gridloom.py"
+      ],
+      "editAllowlist": [
+        "gridloom.py"
+      ],
+      "sourceBytes": 2577,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 14,
+      "functions": [
+        "row_windows"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:a374912f18ccfef23a64086da24f178b03db98a84e2f1fe0ab2f74669209f021"
+    },
+    {
+      "id": "v2-r03-t04",
+      "repoId": "owned-v2-r03",
+      "split": "development",
+      "title": "Count zero-valued worksheet cells as populated",
+      "entrypoint": "gridloom.py",
+      "filePaths": [
+        "gridloom.py"
+      ],
+      "editAllowlist": [
+        "gridloom.py"
+      ],
+      "sourceBytes": 2566,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 9,
+      "functions": [
+        "column_summary"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:c14e4d136566c149507d112ef38f1e374455c4541383e5e2a83e40aa1d70e48d"
+    },
+    {
+      "id": "v2-r03-t05",
+      "repoId": "owned-v2-r03",
+      "split": "development",
+      "title": "Limit worksheet row deduplication to consecutive runs",
+      "entrypoint": "gridloom.py",
+      "filePaths": [
+        "gridloom.py"
+      ],
+      "editAllowlist": [
+        "gridloom.py"
+      ],
+      "sourceBytes": 2630,
+      "requirements": 3,
+      "visibleCaseCount": 4,
+      "acceptanceCaseCount": 8,
+      "functions": [
+        "collapse_rows"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:85963e4a302994046388fa3fa75b29e9702b965870f663f175e3a5a5a48d8e4d"
+    },
+    {
+      "id": "v2-r04-t01",
+      "repoId": "owned-v2-r04",
+      "split": "development",
+      "title": "Restore adjacency-aware band coalescing",
+      "entrypoint": "ribbonplan.py",
+      "filePaths": [
+        "ribbonplan.py"
+      ],
+      "editAllowlist": [
+        "ribbonplan.py"
+      ],
+      "sourceBytes": 847,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 10,
+      "functions": [
+        "coalesce"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:cc6c1096c314308aef4cfc9905d28345ded087372132107cce46c23517debe31"
+    },
+    {
+      "id": "v2-r04-t02",
+      "repoId": "owned-v2-r04",
+      "split": "development",
+      "title": "Restore partial-band span extraction",
+      "entrypoint": "ribbonplan.py",
+      "filePaths": [
+        "ribbonplan.py"
+      ],
+      "editAllowlist": [
+        "ribbonplan.py"
+      ],
+      "sourceBytes": 1097,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 14,
+      "functions": [
+        "slice_span"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:fcb4a627d5247cfb09839880c70dfd8cc9f9e2593238a4c71428c4c6998ce814"
+    },
+    {
+      "id": "v2-r04-t03",
+      "repoId": "owned-v2-r04",
+      "split": "development",
+      "title": "Restore whole-pattern tile order",
+      "entrypoint": "ribbonplan.py",
+      "filePaths": [
+        "ribbonplan.py"
+      ],
+      "editAllowlist": [
+        "ribbonplan.py"
+      ],
+      "sourceBytes": 900,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 12,
+      "functions": [
+        "tile"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:626c6aeea1c36264d909210b1186034f13e8007d341c6b75ff87cf11887b8b3d"
+    },
+    {
+      "id": "v2-r04-t04",
+      "repoId": "owned-v2-r04",
+      "split": "development",
+      "title": "Restore first-use order in material totals",
+      "entrypoint": "ribbonplan.py",
+      "filePaths": [
+        "ribbonplan.py"
+      ],
+      "editAllowlist": [
+        "ribbonplan.py"
+      ],
+      "sourceBytes": 870,
+      "requirements": 3,
+      "visibleCaseCount": 5,
+      "acceptanceCaseCount": 11,
+      "functions": [
+        "color_totals"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:79063e33ed333cafa7cf0acdcd393778d9ccb3d3d3f10a46af3afa2808792edd"
+    },
+    {
+      "id": "v2-r04-t05",
+      "repoId": "owned-v2-r04",
+      "split": "development",
+      "title": "Restore material-distance ribbon rotation",
+      "entrypoint": "ribbonplan.py",
+      "filePaths": [
+        "ribbonplan.py"
+      ],
+      "editAllowlist": [
+        "ribbonplan.py"
+      ],
+      "sourceBytes": 964,
+      "requirements": 3,
+      "visibleCaseCount": 6,
+      "acceptanceCaseCount": 14,
+      "functions": [
+        "rotate"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:6c2fd09b54fd74f0ee1a8d7111ebed1263d3bc603c570c76e5e58ced2983cca2"
+    },
+    {
+      "id": "v2-r05-t01",
+      "repoId": "owned-v2-r05",
+      "split": "calibration",
+      "title": "Keep every contribution when consolidating shopping rows",
+      "entrypoint": "pantry.py",
+      "filePaths": [
+        "pantry.py"
+      ],
+      "editAllowlist": [
+        "pantry.py"
+      ],
+      "sourceBytes": 1408,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "aggregate_items"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:d71c6d8d8d629028419112417b0e0d9b87f06b335b154b04411955abfbadee2e"
+    },
+    {
+      "id": "v2-r05-t02",
+      "repoId": "owned-v2-r05",
+      "split": "calibration",
+      "title": "Avoid zero-sized batches at exact capacity boundaries",
+      "entrypoint": "pantry.py",
+      "filePaths": [
+        "pantry.py"
+      ],
+      "editAllowlist": [
+        "pantry.py"
+      ],
+      "sourceBytes": 1438,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 5,
+      "functions": [
+        "split_batches"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:5b73fb1e08d2213faf68f715095c9ba91b589892a3291075c3c7d66ac253f313"
+    },
+    {
+      "id": "v2-r05-t03",
+      "repoId": "owned-v2-r05",
+      "split": "calibration",
+      "title": "Include requested ingredients absent from the inventory",
+      "entrypoint": "pantry.py",
+      "filePaths": [
+        "pantry.py"
+      ],
+      "editAllowlist": [
+        "pantry.py"
+      ],
+      "sourceBytes": 1457,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 6,
+      "functions": [
+        "plan_shortfall"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:615c71343c1d3644b05a146ea5cdb6f83da7df0712abbb9cc701492624ee89ee"
+    },
+    {
+      "id": "v2-r05-t04",
+      "repoId": "owned-v2-r05",
+      "split": "calibration",
+      "title": "Round fractional preparation units upward",
+      "entrypoint": "pantry.py",
+      "filePaths": [
+        "pantry.py"
+      ],
+      "editAllowlist": [
+        "pantry.py"
+      ],
+      "sourceBytes": 1431,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 5,
+      "functions": [
+        "rescale_units"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:3ffc8bb30ab7d1840ef08b6d9bfe65145cabf04184d1f12252251abc2cb54bd3"
+    },
+    {
+      "id": "v2-r05-t05",
+      "repoId": "owned-v2-r05",
+      "split": "calibration",
+      "title": "Apply ingredient substitutions once and simultaneously",
+      "entrypoint": "pantry.py",
+      "filePaths": [
+        "pantry.py"
+      ],
+      "editAllowlist": [
+        "pantry.py"
+      ],
+      "sourceBytes": 1526,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 7,
+      "functions": [
+        "substitute_items"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:054c2f24cce785064f8cf36c048d0743a133a415be69928561b6c7c8d694c9d0"
+    },
+    {
+      "id": "v2-r06-t01",
+      "repoId": "owned-v2-r06",
+      "split": "calibration",
+      "title": "Preserve exact material labels while consolidating workshop requirements",
+      "entrypoint": "materials.py",
+      "filePaths": [
+        "materials.py"
+      ],
+      "editAllowlist": [
+        "materials.py"
+      ],
+      "sourceBytes": 839,
+      "requirements": 3,
+      "visibleCaseCount": 4,
+      "acceptanceCaseCount": 18,
+      "functions": [
+        "combine_materials"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:f4f69c4b6a76c3da1a3df4ab1c764a77ae798c0751e35d2735c6f7f785f82036"
+    },
+    {
+      "id": "v2-r06-t02",
+      "repoId": "owned-v2-r06",
+      "split": "calibration",
+      "title": "Consume completed instruction occurrences only once",
+      "entrypoint": "progress.py",
+      "filePaths": [
+        "progress.py"
+      ],
+      "editAllowlist": [
+        "progress.py"
+      ],
+      "sourceBytes": 587,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 16,
+      "functions": [
+        "remaining_steps"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:ad9d030676eaed093f630488079f31abf77575899621592ed152addd71bc209f"
+    },
+    {
+      "id": "v2-r06-t03",
+      "repoId": "owned-v2-r06",
+      "split": "calibration",
+      "title": "Keep separated operation runs distinct in compact instruction displays",
+      "entrypoint": "runs.py",
+      "filePaths": [
+        "runs.py"
+      ],
+      "editAllowlist": [
+        "runs.py"
+      ],
+      "sourceBytes": 459,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 15,
+      "functions": [
+        "operation_runs"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:6fba84969d2e57c6303856acea3a72b289bc273792c64bcadffe0f88d52be522"
+    },
+    {
+      "id": "v2-r06-t04",
+      "repoId": "owned-v2-r06",
+      "split": "calibration",
+      "title": "Allow a workshop tray to reach its exact capacity",
+      "entrypoint": "batches.py",
+      "filePaths": [
+        "batches.py"
+      ],
+      "editAllowlist": [
+        "batches.py"
+      ],
+      "sourceBytes": 842,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 20,
+      "functions": [
+        "batch_units"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:89e698a94504239814f81acf13bd228aed0866006a460064f7cba269e85ce478"
+    },
+    {
+      "id": "v2-r06-t05",
+      "repoId": "owned-v2-r06",
+      "split": "calibration",
+      "title": "Use the requested final position when moving a workshop step",
+      "entrypoint": "sequence.py",
+      "filePaths": [
+        "sequence.py"
+      ],
+      "editAllowlist": [
+        "sequence.py"
+      ],
+      "sourceBytes": 700,
+      "requirements": 3,
+      "visibleCaseCount": 3,
+      "acceptanceCaseCount": 22,
+      "functions": [
+        "reposition_step"
+      ],
+      "mockSupported": false,
+      "fixtureProjectionDigest": "sha256:355e92048484cc2ca5ae45dd7c656b78d97ce2d0f05b6ce0b5dcd1ee89e966ec"
+    }
+  ],
+  "callerBoundary": {
+    "providersExecuted": 0,
+    "candidatesExecuted": 0,
+    "containersStarted": 0,
+    "privateCorpusRead": false
+  }
+}

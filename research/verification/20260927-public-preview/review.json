@@ -1,0 +1,147 @@
+{
+  "kind": "public-preview-product-integration-review",
+  "reviewedAt": "2026-09-27T14:37:01.199Z",
+  "status": "No blocking integration mismatch found in bounded public metadata/source/render review",
+  "preview": {
+    "directory": "/home/andrewmohawk/patchproof-evaluation-v2/public-preview-20260927T142827Z-565123ca-8953-4c77-abb4-0b8b9121ab5d",
+    "manifestDigest": "sha256:6d46f5a9bcc7f418e5284f1c622a405cc81887f55d6c03241149bd2d81bc3138",
+    "provisional": true,
+    "sourceCommit": "843b3687eb7b07d5a9ae0c7b00d3079804e596a8",
+    "byteRecheckAfterReview": "all 30 fixture hashes and manifest unchanged"
+  },
+  "reviewCommit": "0b605f26453409e474587270fdf9292a7ec4aaf3",
+  "sourceDigests": {
+    "apps/web/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+    "apps/web/verify-browser.ts": "sha256:a3e3629c10652e3abafefd36a9114137cba6701186ff1a69661343e2d14615b1",
+    "apps/api/src/application.ts": "sha256:4c405d476f747a4a2b0a093580b69b22eb11745b6b520a587b057bbad320ec8d",
+    "packages/orchestrator/src/fixtures.ts": "sha256:944a1172de125578266fe7bae48cb448ad640b46f1c3710e85a3c1b384cea3c4",
+    "packages/orchestrator/src/coordinator.ts": "sha256:180c3a0fa6d9cf37493423c323e881eb9657007d70d46750ba5524281320998e",
+    "packages/orchestrator/src/repeated-checks.ts": "sha256:24c355192db6f539dcd5d5a98306d8c90d815f9099da2ef38c6645a6e17c43dc",
+    "workers/repair/index.ts": "sha256:d5c223ac696408794eaf2a43b833322162388898077070f0704eff4eb6b000cd",
+    "workers/sandbox/index.ts": "sha256:0bc243e55fbc5a8180741e8b8640e66e69cd77c775db696b7273405431447597"
+  },
+  "counts": {
+    "fixtures": 30,
+    "development": 20,
+    "calibration": 10,
+    "repositories": 6,
+    "mockSupported": 1
+  },
+  "findings": [
+    {
+      "id": "catalogue-layout",
+      "result": "compatible",
+      "evidence": "All 30 fixtures admitted by current FixtureSchema/loadFixtures/publicTask. Single flat Python entrypoints exist and are editable; source sizes and names fit current limits."
+    },
+    {
+      "id": "mock-scope",
+      "result": "compatible",
+      "evidence": "Exactly stable-unique-01 is mock-supported, entrypoint/edit path solution.py and function unique remain compatible. Other 29 tasks require connected model; browser verified disabled launch and comparison controls."
+    },
+    {
+      "id": "scripted-correction",
+      "result": "no required change inferred",
+      "evidence": "Source-only: Python list membership preserves first equality-class representative and order, handles recursive JSON equality and numeric bool equality, does not mutate input/nested values, and None raises TypeError. No candidate executed; this is not a passing-run claim."
+    },
+    {
+      "id": "baseline-outcome",
+      "result": "observe actual verdict",
+      "evidence": "Source-only: sorted(set(values)) conflicts with visible first-order and nested-unhashable checks, so baseline can receive visible failure feedback. Sorting is not the sole possible rejection. No fixed B0 failure or product advantage is justified; queued 8503 verifier observes actual outcomes."
+    },
+    {
+      "id": "historical-context",
+      "result": "queued fix required on handoff",
+      "evidence": "Task ID stable-unique-01 is reused with a new title/requirements/source/policy. Queued 0b605 binds terminal context to saved evidence rather than the current catalogue. This browser pass used that commit; historical-context regression is separately recorded in that commit."
+    },
+    {
+      "id": "mock-wording",
+      "result": "no change required",
+      "evidence": "Current summaries accurately identify scripted sorted deduplication and subsequent first-occurrence/input-preservation correction. Existing mock/local-check labels and $0 provider-spend wording remain visible. Do not weaken fixture requirements or manufacture a baseline disadvantage."
+    }
+  ],
+  "stableUniqueExpectedBatchLayout": {
+    "proof": "source-only; actual counts and timing NOT RUN",
+    "visibleCases": 5,
+    "publicAcceptanceCases": 4,
+    "uniqueRowsPerBatch": 9,
+    "repetitions": 2,
+    "freshPerCaseOperationsIfBatchCompletes": 18,
+    "passOrder": [
+      "visible cases then acceptance cases, first invocation",
+      "same immutable cases again, second invocation"
+    ],
+    "batchWallSeconds": "min(30, remaining aggregate episode seconds), shared across both repetitions",
+    "batches": "One original-source batch, then one batch per proposed candidate, maximum three candidates",
+    "conditionalTwoCandidateOperationsPerApproach": 54,
+    "maximumCompletedThreeCandidateOperationsPerApproach": 72,
+    "limitsUnchanged": {
+      "wallTimeLimitSeconds": 120,
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 24000,
+      "outputTokenLimit": 6000,
+      "sandboxCpuSecondsLimit": 60,
+      "maxApprovedSpendUsd": 0
+    },
+    "cpuBoundary": "Local CPU remains unmeasured; configured allowance is not verified cumulative usage.",
+    "refs": [
+      "apps/api/src/application.ts:23",
+      "packages/orchestrator/src/repeated-checks.ts:5",
+      "packages/orchestrator/src/coordinator.ts:152",
+      "packages/orchestrator/src/coordinator.ts:183",
+      "workers/sandbox/index.ts:113"
+    ]
+  },
+  "verification": {
+    "metadata": {
+      "command": "node .local/public-preview-review/inspect.mjs",
+      "exitCode": 0
+    },
+    "browser": {
+      "command": "node .local/public-preview-review/browser.mjs",
+      "exitCode": 0,
+      "browserVersion": "145.0.7632.6",
+      "checkedTasks": 30,
+      "requestCount": 5,
+      "mutations": 0,
+      "errors": [],
+      "screenshotsVisuallyInspected": [
+        "desktop.png",
+        "mobile.png"
+      ]
+    },
+    "initialBrowserTool": "MCP new-tab failed due to an already-used shared profile; exact error retained. Shared browser was not changed; isolated local Playwright fallback passed.",
+    "cleanup": "Task-owned metadata server exited 0 after SIGTERM; task-owned Chromium closed in finally."
+  },
+  "notRun": [
+    "Candidate/Python execution",
+    "Docker",
+    "Providers/model inference",
+    "Replay",
+    "Actual application coordinator",
+    "All-60 corpus validation",
+    "Typecheck: no source change made in this review"
+  ],
+  "boundaries": {
+    "previewWrites": 0,
+    "mainEdits": 0,
+    "productSourceEdits": 0,
+    "privateEvaluationParentOrSiblingReads": false,
+    "paidSpendUsd": 0,
+    "receiptCommit": "Prepared separately after review at parent request"
+  },
+  "artifactDigests": {
+    "inspect.mjs": "sha256:2add3c5e7e63bc219dbbeb1e3e6d41845395fa0fa5038308929ec6a5931b67ef",
+    "metadata-report.json": "sha256:77eb277fbf9a326c9b173adb81915e73aa2b5540513cfeca66676816272dbd44",
+    "metadata.log": "sha256:77eb277fbf9a326c9b173adb81915e73aa2b5540513cfeca66676816272dbd44",
+    "catalogue.json": "sha256:fcd3c4740e8cbbc458f28fddbd79f8400a77e8ea492b444f5013dd1b8c34b087",
+    "render-server.mjs": "sha256:5f5977f8d894ae151ac401196cab8fd64bf3f4bec246656b856656454693660a",
+    "server.json": "sha256:22130690681968ae91e547ee6b447d60793e937435fe67363d4cccfa2f8c4777",
+    "browser.mjs": "sha256:218980a4ad16b3605f6c54b0192f38bdee1324f0db923371cc20d72648a7e6b6",
+    "browser-report.json": "sha256:7f3b74466bbf3b32da7321473c1b54e31ff40df1416eae6cd17f26fb2c6bb763",
+    "browser.log": "sha256:7f3b74466bbf3b32da7321473c1b54e31ff40df1416eae6cd17f26fb2c6bb763",
+    "browser-mcp-attempt.json": "sha256:3346754238c16abf91c9c1987d63f5ee918aaa2bc3d1cf3594c21c20e171c4b6",
+    "requests.json": "sha256:416d047767fffebcb62546c1e61f804ea76d911215aa6ea518e3134bf248ee11",
+    "desktop.png": "sha256:02af417e607788e54a473afc31699494d81f208d914d808cb6c674c971d9de91",
+    "mobile.png": "sha256:9e06317b93788644f3cf86c8cd32df8af734a4b6ea1588d47404e481ff0260cb"
+  }
+}

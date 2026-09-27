@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "scope": "Provisional authorized public catalogue with actual queued UI assets and inert GET-only HTTP metadata",
+  "manifestDigest": "sha256:6d46f5a9bcc7f418e5284f1c622a405cc81887f55d6c03241149bd2d81bc3138",
+  "clientCommit": "0b605f26453409e474587270fdf9292a7ec4aaf3",
+  "appDigest": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+  "browserVersion": "145.0.7632.6",
+  "checkedTasks": [
+    "stable-unique-01",
+    "v2-r01-t02",
+    "v2-r01-t03",
+    "v2-r01-t04",
+    "v2-r01-t05",
+    "v2-r02-t01",
+    "v2-r02-t02",
+    "v2-r02-t03",
+    "v2-r02-t04",
+    "v2-r02-t05",
+    "v2-r03-t01",
+    "v2-r03-t02",
+    "v2-r03-t03",
+    "v2-r03-t04",
+    "v2-r03-t05",
+    "v2-r04-t01",
+    "v2-r04-t02",
+    "v2-r04-t03",
+    "v2-r04-t04",
+    "v2-r04-t05",
+    "v2-r05-t01",
+    "v2-r05-t02",
+    "v2-r05-t03",
+    "v2-r05-t04",
+    "v2-r05-t05",
+    "v2-r06-t01",
+    "v2-r06-t02",
+    "v2-r06-t03",
+    "v2-r06-t04",
+    "v2-r06-t05"
+  ],
+  "controls": [
+    "All 30 task titles, descriptions and every requirement retain exact metadata text",
+    "Only stable-unique mock launch/comparison controls enabled",
+    "All 29 unsupported tasks visibly require connected model",
+    "Task keyboard selection works",
+    "Desktop and 390px mobile have no horizontal overflow",
+    "All requests GET-only; no run, event or evidence dispatch",
+    "No browser page or console errors"
+  ],
+  "longestRequirementTask": "v2-r04-t05",
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:39823/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:39823/style.css"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:39823/app.js"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:39823/tasks"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:39823/runs"
+    }
+  ],
+  "errors": [],
+  "notRun": [
+    "Candidates",
+    "Docker",
+    "Providers",
+    "Replay",
+    "Actual application coordinator",
+    "Final corpus validation"
+  ]
+}
