@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { BudgetLedger } from '../packages/orchestrator/src/budget-ledger.ts';
-import { ExperimentDispatcher,SyntheticEpisodeResultSchema } from '../workers/evaluator/dispatcher.ts';
+import { ExperimentDispatcher,ExperimentExecutionError,ExecutionFailureReasonSchema,SyntheticEpisodeResultSchema } from '../workers/evaluator/dispatcher.ts';
 import type { DispatcherTransport,ExecutionInput,FinalizedExecution } from '../workers/evaluator/dispatcher.ts';
 import { analyzeExperiment,EpisodeResultSchema } from '../workers/evaluator/analysis.ts';
 import { hashJson,planExperiment } from '../workers/evaluator/protocol.ts';
@@ -95,6 +95,46 @@ test('setup failures and exceptions remain terminal rows without artificial corr
   assert.equal(snapshot.results[0]!.outcome,'infrastructure_error');assert.equal(snapshot.results[0]!.usage.measuredCostUsd,null);
   assert.equal(snapshot.results[1]!.infrastructureExclusion,'sandbox_setup_failure');assert.equal(snapshot.results[1]!.sealedChecksExecuted,false);
   assert.doesNotMatch(JSON.stringify(snapshot),/private provider text/);
+});
+
+test('typed runtime failures keep safe distinct reasons and partial work without adjudication or retry',async t=>{
+  const {open}=await setup(t),plan=makePlan(),adapter=transport(plan);
+  const reasons=ExecutionFailureReasonSchema.options;
+  let attempts=0,adjudications=0;
+  adapter.execute=async input=>{
+    const index=plan.episodes.findIndex(episode=>episode.id===input.episodeId);
+    attempts++;
+    input.checkpoint({usage:usage(),operationIds:[`unit:partial:${index}`]});
+    throw new ExperimentExecutionError(reasons[index]!);
+  };
+  adapter.adjudicate=async()=>{adjudications++;throw new Error('must not adjudicate a failed runtime');};
+  const dispatcher=open(plan,adapter);
+  for(const [index,reason]of reasons.entries()){
+    const id=plan.episodes[index]!.id,view=await dispatcher.dispatch(id),row=view.result!;
+    assert.equal(view.reason,reason);
+    assert.equal(row.outcome,['invalid_candidate','protected_path','flaky_check'].includes(reason)?'unverified':'infrastructure_error');
+    assert.equal(row.infrastructureExclusion,['provider_rate_limit','provider_timeout','provider_unavailable','sandbox_setup_failure'].includes(reason)?reason:null);
+    assert.equal(row.sealedChecksExecuted,false);assert.equal(row.usage.inferenceCalls,2);
+    assert.equal(row.usage.inputTokens,30);assert.equal(row.usage.measuredCostUsd,null);
+    assert.deepEqual(view.operationIds,[`unit:partial:${index}`]);
+    await dispatcher.dispatch(id);
+  }
+  assert.equal(attempts,reasons.length);assert.equal(adjudications,0);
+});
+
+test('plain and forged exception classifications never copy unrecognized provider text',async t=>{
+  const {open}=await setup(t),plan=makePlan(),adapter=transport(plan);
+  adapter.execute=async input=>{
+    if(input.episodeId===plan.episodes[0]!.id)throw Object.assign(new Error('private provider body'),{reason:'provider_rate_limit'});
+    throw Object.assign(Object.create(ExperimentExecutionError.prototype),{reason:'private forged observation'});
+  };
+  const dispatcher=open(plan,adapter);
+  for(const episode of plan.episodes.slice(0,2)){
+    const view=await dispatcher.dispatch(episode.id);
+    assert.equal(view.reason,'execution_or_setup_failed');assert.equal(view.result!.infrastructureExclusion,null);
+  }
+  assert.doesNotMatch(JSON.stringify(dispatcher.snapshot()),/private provider|private forged/);
+  assert.doesNotMatch(JSON.stringify(dispatcher.events()),/private provider|private forged/);
 });
 
 test('cancellation records the active episode and all undispatched rows with no oracle call',async t=>{

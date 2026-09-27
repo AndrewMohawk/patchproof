@@ -57,6 +57,24 @@ export interface DispatcherTransport {
   execute:(input:ExecutionInput,signal:AbortSignal)=>Promise<FinalizedExecution>;
   adjudicate:(input:AdjudicationInput,signal:AbortSignal)=>Promise<AggregateAdjudication>;
 }
+export const ExecutionFailureReasonSchema = z.enum([
+  'missing_key', 'provider_rate_limit', 'provider_timeout', 'provider_unavailable',
+  'sandbox_setup_failure', 'invalid_candidate', 'protected_path', 'flaky_check',
+  'resource_limit', 'source_changed', 'runtime_binding_changed',
+  'account_verification_failed', 'billing_incomplete', 'cleanup_unverified',
+]);
+/** Trusted adapter classification only. Never put provider bodies, private observations,
+ * or candidate content into an exception message. Checkpoint partial usage first. */
+export class ExperimentExecutionError extends Error {
+  readonly reason: z.infer<typeof ExecutionFailureReasonSchema>;
+  constructor(reason: z.infer<typeof ExecutionFailureReasonSchema>) {
+    const parsed = ExecutionFailureReasonSchema.parse(reason);
+    super(parsed);
+    this.name = 'ExperimentExecutionError';
+    this.reason = parsed;
+    Object.freeze(this);
+  }
+}
 type Phase = 'pending'|'claimed'|'executing'|'selected'|'adjudicating'|'terminal';
 type Stored = {episode_id:string;dispatch_id:string;position:number;phase:Phase;owner_id:string|null;owner_pid:number|null;
   started_at:string|null;cancel_requested:number;usage_json:string;operations_json:string;execution_json:string|null;result_json:string|null;reason:string|null};
@@ -192,7 +210,9 @@ export class ExperimentDispatcher {
     if(this.#transport.executionMode==='live'){
       try{this.#ledger!.cancel(row.dispatch_id);}catch(error){if(!(error instanceof Error&&'code'in error&&error.code==='reservation_not_found'))throw error;}
     }
-    const result=this.#result(row,{outcome:reason==='cancelled'?'unverified':'infrastructure_error',sealed:false,usage,runtimeApproved,exclusion:null,
+    const unverified=['cancelled','invalid_candidate','protected_path','flaky_check'].includes(reason);
+    const exclusion=INFRASTRUCTURE_EXCLUSIONS.find(allowed=>allowed===reason)??null;
+    const result=this.#result(row,{outcome:unverified?'unverified':'infrastructure_error',sealed:false,usage,runtimeApproved,exclusion,
       artifactsDigest:hashJson({planDigest:this.#digest,dispatchId:row.dispatch_id,reason,usage,operationIds:JSON.parse(row.operations_json),usageMayBeIncomplete:attempted})});
     this.#terminal(id,reason,result);
   }
@@ -247,7 +267,10 @@ export class ExperimentDispatcher {
         this.#ledger!.reconcile({id:row.dispatch_id,actualCostMicros:known===null?(prior===null?null:BigInt(prior)):usdToMicros(known,'ceil'),complete:billingComplete,evidenceDigest:result.artifactsDigest});
       }
       this.#terminal(id,billingComplete?'completed':'billing_incomplete',result);
-    }catch(error){this.#failure(id,error instanceof DispatchStop?error.reason:'execution_or_setup_failed');}
+    }catch(error){
+      const typed=error instanceof ExperimentExecutionError?ExecutionFailureReasonSchema.safeParse(error.reason):null;
+      this.#failure(id,error instanceof DispatchStop?error.reason:typed?.success?typed.data:'execution_or_setup_failed');
+    }
     finally{clearInterval(poll);clearTimeout(timeout);signal?.removeEventListener('abort',onAbort);this.#controllers.delete(id);}
     return this.get(id);
   }

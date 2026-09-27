@@ -24,6 +24,15 @@ Cancellation terminalizes undispatched episodes and aborts active work; it retai
 
 Synthetic results have `executionMode: "synthetic"` and `benchmarkExecuted: false`; the existing live `EpisodeResultSchema` and analyzer reject them. Tests include complete synthetic grids, injected failure/cancellation/restart cases and isolated live-control branches with fake adapters. Those tests are not provider integrations, human results or scored experiments.
 
+Trusted adapters may throw `ExperimentExecutionError` with one of the finite exported
+reason codes after checkpointing partial usage and operation handles. This preserves
+missing credentials, rate limits, provider timeouts, setup failure, flaky checks and
+other declared stops without copying provider exception text. Invalid candidates,
+protected edits and flaky checks produce an unverified result; they cannot claim a
+sealed incorrect verdict. Only the four prospectively allowed infrastructure reasons
+receive an exclusion. Every failed row remains in the primary denominator and stays
+terminal. Plain exceptions and unrecognized reason strings remain sanitized.
+
 **Remaining wiring:** no calibrated 24-call/900-second experiment executor is connected to this module, no CLI invokes it, and no account/pricing/runner bound is attested here. The current product coordinator and separate smoke path have a three-proposal scope and must not be presented as this experiment executor. A trusted factory still needs to enforce all per-operation limits, pin actual generation behavior, verify the operational lock and account receipts, connect the external adjudicator, perform cleanup/billing reconciliation, and export immutable aggregate rows. Human/operator configuration remains outside candidate control.
 
 Validation commands are `node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts` and `npm run typecheck`. All test task metadata and candidate-shaped strings are invented unit inputs; no sealed corpus or candidate execution is involved.

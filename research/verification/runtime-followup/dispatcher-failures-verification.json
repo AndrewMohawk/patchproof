@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "typed-experiment-failure-verification",
+  "recordedAt": "2026-09-27T09:45:23.981423+00:00",
+  "baseCommit": "d575f24a551aa73f7887e62bcf43ea60b5cb7fb0",
+  "workingTreeChangesIncluded": true,
+  "sources": {
+    "workers/evaluator/dispatcher.ts": "sha256:4914b929ee6b703446ed7bb7a06d824fb176feee76e7aaf2a7beb3c81fdb9ae8",
+    "tests/evaluation-dispatcher.test.ts": "sha256:bcd2505c157aad4c25c3d02ea3e4476d5e1cd16d7bed43c5d579a5d57b019667",
+    "docs/experiment-dispatcher.md": "sha256:c2459396aead882fe84bbcbde72ccbc371e6c63a9872db2646374b2ec4634589"
+  },
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/dispatcher-failures-typecheck.log"
+    },
+    {
+      "command": "node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts",
+      "exitCode": 0,
+      "passed": 40,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/dispatcher-failures-tests.log"
+    }
+  ],
+  "paidCalls": 0,
+  "synthetic": true,
+  "limitations": [
+    "Invented callbacks and identifiers only; no candidate execution or provider calls.",
+    "Partial accounting still must be checkpointed by trusted runtime before throwing.",
+    "Finite reason codes do not authorize retry, relax billing gates or change the primary denominator."
+  ]
+}
