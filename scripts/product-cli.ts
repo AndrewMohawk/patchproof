@@ -10,6 +10,7 @@ import { EvidenceStore, verifyEvidence, reproduceEvidence } from '../packages/or
 import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
 import { auditRelease } from './release-audit.ts';
+import { verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 
 const root = new URL('../', import.meta.url);
 const [command, argument, variant = 'patchproof'] = process.argv.slice(2);
@@ -81,7 +82,8 @@ async function main() {
     let bundle;
     try { bundle = verifyEvidence(JSON.parse(await file.readFile('utf8'))); } finally { await file.close(); }
     if (bundle.run.id !== argument) throw new ContractError('digest_mismatch', 'Requested run and artifact differ.');
-    const lock = bundle.runtimeLock as { localCheckImage?: string };
+    const lock = bundle.runtimeLock as { localCheckImage?: string; operationalLock?: unknown };
+    if (lock.operationalLock) verifyOperationalLock(fileURLToPath(root), lock.operationalLock);
     if (!lock.localCheckImage) throw new ContractError('setup_error', 'Export has no pinned local checker image.');
     const replay = await reproduceEvidence(bundle, new DockerCheckRunner({ image: lock.localCheckImage }), AbortSignal.timeout(35_000));
     print({ ...replay, bundleDigest: bundle.bundleDigest, authenticityVerified: false });

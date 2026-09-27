@@ -9,6 +9,7 @@ import { EvidenceStore, buildEvidence } from './evidence.ts';
 import { fixtureDigests, publicTask, validatePaths } from './fixtures.ts';
 import { RunJournal } from './journal.ts';
 import { createPatch } from './patch.ts';
+import { FLAKY_CHECK_MESSAGE } from './repeated-checks.ts';
 
 export const LOCAL_LIMITS = LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 24000,
   outputTokenLimit: 6000, wallTimeLimitSeconds: 120, sandboxCpuSecondsLimit: 60, maxApprovedSpendUsd: 0 });
@@ -21,14 +22,16 @@ export class Coordinator {
   readonly #runtimeLock: unknown;
   readonly #provider: RepairProvider;
   readonly #checks: CheckRunner;
+  readonly #verifyRuntime: (() => void) | undefined;
   readonly #jobs = new Map<string, { controller: AbortController; promise: Promise<void> }>();
   readonly #listeners = new Map<string, Set<(event: ProductEvent) => void>>();
 
   constructor(options: { fixtures: Fixture[]; runtimeLock: unknown; provider: RepairProvider;
-    checks: CheckRunner; journal: RunJournal; store: EvidenceStore }) {
+    checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void }) {
     this.#fixtures = new Map(options.fixtures.map(fixture => [fixture.id, structuredClone(fixture)]));
     this.#runtimeLock = structuredClone(options.runtimeLock);
     this.#provider = options.provider; this.#checks = options.checks;
+    this.#verifyRuntime = options.verifyRuntime;
     this.journal = options.journal; this.store = options.store;
   }
 
@@ -56,6 +59,7 @@ export class Coordinator {
       if (prior.fingerprint !== fingerprint) throw new ContractError('idempotency_conflict', 'Key already used for a different request.', 409);
       return { run: this.get(prior.id), reused: true };
     }
+    this.#verifyRuntime?.();
     if (this.#jobs.size >= 3) throw new ContractError('capacity_exceeded', 'Three runs are already active.', 429);
     const id = randomUUID();
     const run: ProductRun = {
@@ -171,6 +175,7 @@ export class Coordinator {
       const original = await this.#check(run, fixture, fixture.files, controller.signal);
       run.baselineChecks = { visible: original.visible, acceptance: original.acceptance };
       if (original.result.infrastructureError) throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
+      if (original.result.checks.some(check => check.message === FLAKY_CHECK_MESSAGE)) throw new ContractError('flaky_check', 'Original observations are inconsistent.');
       let files = structuredClone(fixture.files);
       let feedback = run.variant === 'baseline' ? original.visible : [...original.visible, ...original.acceptance];
       for (let attempt = 0; attempt < Math.min(3, run.limits.inferenceCallLimit); attempt++) {
@@ -178,8 +183,10 @@ export class Coordinator {
         controller.signal.throwIfAborted();
         this.#event(run, 'repair', `Requesting scripted candidate ${attempt + 1}; no model inference call.`);
         const proposal = ProposalSchema.parse(await this.#provider.propose({ taskId: fixture.id, description: fixture.description,
-          requirements: fixture.requirements, files, editAllowlist: fixture.editAllowlist, visibleCases: fixture.visibleCases,
-          feedback: feedback.map(c => ({ requirementId: c.requirementId, status: c.status, message: c.message })), attempt,
+          requirements: fixture.requirements, files: run.variant === 'patchproof' ? structuredClone(fixture.files) : files,
+          editAllowlist: fixture.editAllowlist, visibleCases: fixture.visibleCases,
+          feedback: feedback.map(c => ({ requirementId: c.requirementId, status: c.status,
+            message: `Observed ${attempt === 0 ? 'on original source' : `on candidate ${attempt}`}; next proposal starts from ${run.variant === 'patchproof' ? 'original source' : 'supplied current source'}. ${c.message}` })), attempt,
           remaining: { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - attempt,
             inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens },
         }, controller.signal));
@@ -213,12 +220,19 @@ export class Coordinator {
         candidate.accepted = allPass([...checked.visible, ...checked.acceptance]);
         candidate.rejectionReason = candidate.accepted ? null : 'One or more declared checks failed or were unavailable.';
         candidate.elapsedMs = Date.now() - candidateStarted;
-        const previous = run.candidates.find(c => c.id === run.selectedCandidateId);
-        const score = (record: CandidateRecord) => [...record.visibleChecks, ...record.acceptanceChecks].filter(c => c.status === 'pass').length;
-        if (!previous || candidate.accepted || score(candidate) > score(previous)) run.selectedCandidateId = candidate.id;
+        if (checked.result.checks.some(check => check.message === FLAKY_CHECK_MESSAGE)) {
+          candidate.rejectionReason = 'flaky_check';
+          throw new ContractError('flaky_check', 'Candidate observations are inconsistent; no further repair feedback.');
+        }
+        if (run.variant !== 'patchproof') run.selectedCandidateId = candidate.id;
+        else {
+          const previous = run.candidates.find(c => c.id === run.selectedCandidateId);
+          const score = (record: CandidateRecord) => [...record.visibleChecks, ...record.acceptanceChecks].filter(c => c.status === 'pass').length;
+          if (!previous || score(candidate) > score(previous)) run.selectedCandidateId = candidate.id;
+        }
         files = candidateFiles;
         feedback = run.variant === 'baseline' ? checked.visible : [...checked.visible, ...checked.acceptance];
-        if (candidate.accepted || (run.variant === 'baseline' && allPass(checked.visible))) break;
+        if (run.variant === 'baseline' ? allPass(checked.visible) : candidate.accepted) break;
       }
       this.#coverage(run, fixture);
       const selected = run.candidates.find(c => c.id === run.selectedCandidateId);
@@ -232,7 +246,7 @@ export class Coordinator {
         const providerCode = error && typeof error === 'object' && 'code' in error ? String(error.code) : null;
         const knownCodes = new Set(['mock_task_unavailable', 'rate_limit', 'timeout', 'missing_key', 'protected_path', 'invalid_candidate', 'budget_exceeded', 'transport_error', 'invalid_response']);
         run.reason = error instanceof ContractError ? error.code : providerCode && knownCodes.has(providerCode) ? providerCode : 'setup_error';
-        run.terminalStatus = run.reason === 'mock_task_unavailable' ? 'needs_review' : 'infrastructure_error';
+        run.terminalStatus = ['mock_task_unavailable', 'flaky_check'].includes(run.reason) ? 'needs_review' : 'infrastructure_error';
         if (error && typeof error === 'object' && 'usage' in error) {
           const usage = ProposalSchema.shape.usage.safeParse(error.usage);
           if (usage.success) {

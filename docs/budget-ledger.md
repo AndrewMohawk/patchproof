@@ -1,0 +1,26 @@
+# Durable project budget ledger
+
+`packages/orchestrator/src/budget-ledger.ts` supplies trusted accounting for future paid execution. **It is not yet wired into provider dispatch.** It makes no provider calls, grants no account access and applies no credits. Current provider spending remains $0. The current `budget.json` approves $25 total: $5 smoke, $20 pilot, $0 evaluation (`evaluate`) and $0 hosting.
+
+`BudgetLedger` validates the existing `BudgetSchema` and stores approvals, reservations, measured charges and events in SQLite. Money uses integer microdollars (1 USD = 1,000,000 microdollars); snapshots expose decimal strings for safe JSON serialization. `usdToMicros` rejects fractional microdollars unless the caller explicitly requests upward rounding for measured costs. Transactions use `BEGIN IMMEDIATE`, WAL and full synchronous writes, so separate processes share the same atomic ceiling. Newly created directories use mode 0700 and database files use 0600; existing symlink paths are rejected.
+
+An episode has one immutable aggregate reservation covering all its operations, candidates and retries. `reserve({ id, episodeId, stage, amountMicros, fingerprint })` checks both stage and project ceilings. Repeating the identical request returns its original record; changing its fingerprint, amount, stage or episode under the same ID rejects. Another ID cannot obtain a second allowance for the same episode.
+
+| Operation | Accounting and dispatch behavior |
+| --- | --- |
+| `reserve` | Holds the full requested amount before dispatch. An idempotent response is not dispatch permission. |
+| `markAttempted(id)` | Durably marks the episode before returning `dispatchGranted: true` exactly once. Later calls return false. |
+| `cancel(id)` | Retains the hold, including when dispatch was never recorded. Cancellation does not prove zero provider charges. |
+| `reconcile({ id, actualCostMicros, complete, evidenceDigest })` | Records cumulative measured cost. Incomplete billing retains the unspent reservation; complete billing releases the unused portion. A complete zero-cost result must explicitly supply zero. |
+
+An attempted episode or an explicit incomplete billing record blocks further reservations and dispatch grants until reconciliation is complete. This survives process termination and restart. Partial billing keeps charged plus held money at least equal to the original reservation. Late incomplete billing can restore a hold while preserving a terminal episode's non-dispatchable state.
+
+Measured costs cannot decrease or disappear. A charge above its reservation is retained in full and creates a persistent freeze on new spending, even if a later approval raises the cap. Positive charges without a recorded dispatch also freeze spending. There is no automatic thaw, refund or credit operation. `get`, `snapshot` and paginated `events` expose accounting records without private owner-approval text; `close` releases the connection.
+
+Approval expiry, future-dated authorization, missing approval and reduced caps below existing exposure fail closed. Each connection binds the durable approval digest and revision. Stale connections cannot reserve or dispatch, and opening the database with a disagreeing configuration cannot overwrite its approval.
+
+`syncApproval(config, { expectedRevision })` is an **explicit trusted-coordinator compare-and-swap operation**. Invoke it only after reloading and verifying owner-authorized configuration, serialized by the trusted coordinator. Workers must never auto-sync cached configuration. Equal approval timestamps do not establish newer permission; older dated approvals reject. Synchronization changes no recorded charge or hold and cannot clear an overrun freeze.
+
+Future integration must derive a conservative episode ceiling from verified pricing, reserve before any paid operation, honor the single dispatch grant, enforce token/CPU/call limits inside the episode, retain per-operation billing evidence, and reconcile only when cumulative provider charges are known. Account entitlements, approval authority and runtime attestations remain caller responsibilities. These accounting tests establish local behavior; live provider billing remains unverified.
+
+Validation: `node --test tests/budget-ledger.test.ts` passed 23 tests, including simultaneous processes, one dispatch grant, abrupt process exit, incomplete billing, cancellation, stale approvals, reduced caps and overruns. `npm run typecheck` passed. The [independent budget review](../research/verification/runtime-followup/independent-budget-review.json) records its bounded source-review scope and corrected finding. The separate [reviewer-study verification receipt](../research/verification/runtime-followup/reviewer-study-verification.json) includes the combined 34-test run; synthetic study tests are not human results. Both receipts preserve their original source digests and were copied byte-for-byte from the evaluator workspace.

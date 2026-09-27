@@ -22,7 +22,7 @@ export class MockRepairProvider implements RepairProvider {
     if (signal.aborted) throw new RepairError('cancelled', 'Scripted proposal cancelled.');
     if (input.taskId !== 'stable-unique-01') throw new RepairError('mock_task_unavailable', 'Scripted mock supports only stable-unique-01; no model was called.');
     if (!input.editAllowlist.includes('solution.py')) throw new RepairError('protected_path', 'Demonstration source is not editable.');
-    const correction = input.files['solution.py'] === SCRIPTED_BAD && input.feedback.some(row => row.status === 'fail');
+    const correction = input.attempt > 0 && input.feedback.some(row => row.status === 'fail');
     return {
       files: { 'solution.py': correction ? SCRIPTED_CORRECTION : SCRIPTED_BAD },
       summary: correction ? 'SCRIPTED MOCK: preserve first occurrence order and caller input after observed failure.' :

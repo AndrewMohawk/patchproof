@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0",
+  "observedAt": "2026-09-27T08:50:49.545822+00:00",
+  "scope": "Independent evaluator implementation verification using synthetic unit records; no participant data, inference or spending.",
+  "files": {
+    "workers/evaluator/reviewer-study.ts": "sha256:053b58bd797dfe454911a57bf081b5e14c9556b9fb804adcadd32fb6ffe56a94",
+    "tests/reviewer-study.test.ts": "sha256:7e0ad78d8ecae50277d66409bcc2fde4a6a5486c6c3bedff48c0c99b20ed59c5",
+    "docs/reviewer-study.md": "sha256:a2192c6d6dfcbefb83739b332bd6faf31af7b27dec99e1787af2de09fe046914",
+    "docs/completion-audit.md": "sha256:122adee31fdc2d729b0397979a50e64ee55305abe80020200ab08e8c45d840d1"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/reviewer-study.test.ts",
+      "exitCode": 0,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check -- workers/evaluator/reviewer-study.ts tests/reviewer-study.test.ts docs/reviewer-study.md docs/completion-audit.md",
+      "exitCode": 0,
+      "limitation": "At this point the new files are untracked; typecheck and executable tests are the meaningful source validation."
+    }
+  ],
+  "earlierTypecheckAttempts": [
+    {
+      "exitCode": 2,
+      "reason": "Parallel budget-ledger work temporarily referenced a private method in a type query; unrelated to study source."
+    },
+    {
+      "exitCode": 2,
+      "reason": "Parallel provider work temporarily imported nebius-runner.ts before that new file existed; unrelated to study source."
+    }
+  ],
+  "realHumanResultsCreated": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "notEstablished": [
+    "Actual reviewer performance",
+    "Power or generalized usability benefit",
+    "Provider integration",
+    "A public study interface with direct browser timing"
+  ],
+  "independentReview": {
+    "reviewerRole": "Separate accounting/evaluator agent",
+    "scope": "Packet projection, frozen assignment balance/order, event state/digest/timing, all-planned denominator and time suppression",
+    "findings": 0,
+    "command": "node --test tests/reviewer-study.test.ts tests/budget-ledger.test.ts",
+    "exitCode": 0,
+    "passed": 34,
+    "studyTests": 11,
+    "ledgerTests": 23,
+    "realStudyResponsesCreated": false
+  }
+}

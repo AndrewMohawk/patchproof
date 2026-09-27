@@ -1,87 +1,149 @@
+import { createHash } from 'node:crypto';
 import { z } from 'zod';
-import type { CheckRunner, FunctionCase, SandboxCheckResult } from '../../packages/contracts/src/product.ts';
 import { PYTHON_DRIVER } from './driver.ts';
+import { SANDBOX_DOCUMENTATION, SandboxTransportError, operationSchema, withAbort } from './nebius-types.ts';
+import type { SandboxOperation } from './nebius-types.ts';
 
-export const SANDBOX_DOCUMENTATION = {
-  inspectedAt: '2026-09-27',
-  base: 'https://api.tokenfactory.nebius.com/sandboxes',
-  spawn: 'https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance',
-  status: 'https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/get-an-operation-status',
-  cancel: 'https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/cancel-an-operation',
-  auth: 'https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images',
-} as const;
+export { SANDBOX_DOCUMENTATION, SandboxTransportError, SandboxVerificationSchema } from './nebius-types.ts';
+export type { SandboxOperation, SandboxVerification } from './nebius-types.ts';
+export { NebiusSandboxCheckRunner } from './nebius-runner.ts';
+export type { NebiusSandboxRunnerOptions } from './nebius-runner.ts';
 
-const operationSchema = z.object({
-  uuid: z.uuid(), kind: z.enum(['instance', 'image_import']),
-  status: z.enum(['PENDING', 'ASSIGNED', 'EXECUTING', 'SUCCESS', 'FAILED', 'CANCELLED']),
-  consumed_cpu: z.number().nonnegative().nullable().optional(), metadata: z.record(z.string(), z.unknown()),
-});
 export interface SandboxTransportOptions {
   fetch: typeof globalThis.fetch;
   credential: () => Promise<{ token: string; projectId: string }>;
   authorized: boolean;
+  expectedProjectId?: string;
+  requestTimeoutMs?: number;
 }
 
-/** Low-level documented mapping only. It is not a verified CheckRunner. */
+async function boundedJson(response: Response, signal: AbortSignal): Promise<unknown> {
+  if (!response.body) throw new SandboxTransportError('sandbox_invalid_response');
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let length = 0;
+  try {
+    while (true) {
+      const { done, value } = await withAbort(reader.read(), signal);
+      if (done) break;
+      length += value.byteLength;
+      if (length > 1_048_576) throw new SandboxTransportError('sandbox_response_limit');
+      chunks.push(value);
+    }
+    return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks)));
+  } catch (error) {
+    void reader.cancel().catch(() => {});
+    if (error instanceof SandboxTransportError) throw error;
+    throw new SandboxTransportError('sandbox_invalid_response');
+  } finally { reader.releaseLock(); }
+}
+
+/** Documented API mapping. No ambient credentials, SDK guessing or undocumented isolation flags. */
 export class NebiusSandboxTransport {
   readonly #options: SandboxTransportOptions;
-  constructor(options: SandboxTransportOptions) { this.#options = options; }
-  async #request(path: string, method: string, body: unknown | undefined, signal: AbortSignal) {
-    if (!this.#options.authorized) throw new Error('sandbox_authorization_required');
-    if (signal.aborted) throw new Error('cancelled');
-    const { token, projectId } = await this.#options.credential();
-    if (!token || !projectId || /[\r\n]/.test(token + projectId)) throw new Error('sandbox_missing_credentials');
-    let response: Response;
-    try {
-      response = await this.#options.fetch(`${SANDBOX_DOCUMENTATION.base}${path}`, {
-        method, signal, redirect: 'error',
-        headers: { Authorization: `Bearer ${token}`, Project: projectId, 'Content-Type': 'application/json' },
-        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      });
-    } catch { throw new Error(signal.aborted ? 'cancelled' : 'sandbox_transport_error'); }
-    if (!response.ok) throw new Error(`sandbox_http_${response.status}`);
-    return response;
+  readonly #timeoutMs: number;
+  constructor(options: SandboxTransportOptions) {
+    this.#options = options;
+    this.#timeoutMs = options.requestTimeoutMs ?? 10_000;
+    if (!Number.isInteger(this.#timeoutMs) || this.#timeoutMs < 1 || this.#timeoutMs > 30_000) throw new Error('invalid_sandbox_request_timeout');
   }
+  get expectedProjectId() { return this.#options.expectedProjectId; }
+
+  async #json(result: { response: Response; signal: AbortSignal }, caller: AbortSignal) {
+    try { return await boundedJson(result.response, result.signal); }
+    catch (error) {
+      if (caller.aborted) throw new SandboxTransportError('cancelled');
+      if (result.signal.aborted) throw new SandboxTransportError('sandbox_request_timeout');
+      throw error;
+    }
+  }
+
+  async #request(path: string, method: string, body: string | Uint8Array | undefined, signal: AbortSignal, binary = false) {
+    if (!this.#options.authorized) throw new SandboxTransportError('sandbox_authorization_required');
+    if (signal.aborted) throw new SandboxTransportError('cancelled');
+    const bounded = AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]);
+    try {
+      const { token, projectId } = await withAbort(this.#options.credential(), bounded);
+      if (!token || !projectId || /[\r\n]/.test(token + projectId)) throw new SandboxTransportError('sandbox_missing_credentials');
+      if (this.#options.expectedProjectId !== undefined && projectId !== this.#options.expectedProjectId) throw new SandboxTransportError('sandbox_project_mismatch');
+      if (bounded.aborted) throw new SandboxTransportError('cancelled');
+      const response = await withAbort(this.#options.fetch(`${SANDBOX_DOCUMENTATION.base}${path}`, {
+        method, signal: bounded, redirect: 'error',
+        headers: { Authorization: `Bearer ${token}`, Project: projectId, 'Content-Type': binary ? 'application/octet-stream' : 'application/json' },
+        ...(body === undefined ? {} : { body: typeof body === 'string' ? body : Buffer.from(body) }),
+      }), bounded);
+      if (!response.ok) {
+        void response.body?.cancel().catch(() => {});
+        throw new SandboxTransportError(`sandbox_http_${response.status}`);
+      }
+      return { response, signal: bounded };
+    } catch (error) {
+      if (signal.aborted) throw new SandboxTransportError('cancelled');
+      if (bounded.aborted) throw new SandboxTransportError('sandbox_request_timeout');
+      if (error instanceof SandboxTransportError) throw error;
+      throw new SandboxTransportError('sandbox_transport_error');
+    }
+  }
+
+  async uploadSource(source: string, signal: AbortSignal): Promise<string> {
+    const bytes = Buffer.from(source, 'utf8');
+    if (bytes.byteLength > 262_144) throw new SandboxTransportError('sandbox_source_limit');
+    const result = await this.#request('/files', 'POST', bytes, signal, true);
+    const raw = await this.#json(result, signal);
+    const identity = z.object({ uuid: z.uuid() }).safeParse(raw);
+    const handles = identity.success ? [`nebius:file:${identity.data.uuid}`] : [];
+    if (result.response.status !== 201) throw new SandboxTransportError('sandbox_unexpected_upload_status', handles);
+    const parsed = z.object({ uuid: z.uuid(), sha256: z.string().regex(/^[a-f0-9]{64}$/), size: z.number().int().min(-1) }).safeParse(raw);
+    if (!parsed.success) throw new SandboxTransportError('sandbox_invalid_upload_response', handles);
+    const file = parsed.data;
+    if (file.sha256 !== createHash('sha256').update(bytes).digest('hex') || (file.size !== -1 && file.size !== bytes.byteLength)) throw new SandboxTransportError('sandbox_upload_integrity_mismatch', handles);
+    return file.uuid;
+  }
+
   async spawnInvocation(input: {
     imageUuid: string; files: Record<string, { uuid: string; uid: number; gid: number; mode: string }>;
     entrypoint: string; invocation: { function: string; args: unknown[]; kwargs: Record<string, unknown> };
     timeoutSeconds: number;
   }, signal: AbortSignal): Promise<string> {
-    z.uuid().parse(input.imageUuid);
-    if (!/^\/candidate\/[a-zA-Z0-9_/-]+\.py$/.test(input.entrypoint) || !Number.isInteger(input.timeoutSeconds) || input.timeoutSeconds < 1 || input.timeoutSeconds > 900) throw new Error('invalid_sandbox_request');
+    if (!z.uuid().safeParse(input.imageUuid).success || !/^\/candidate\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.py$/.test(input.entrypoint) ||
+        !Number.isInteger(input.timeoutSeconds) || input.timeoutSeconds < 1 || input.timeoutSeconds > 900 || !Object.hasOwn(input.files, input.entrypoint) ||
+        !/^[A-Za-z][A-Za-z0-9_]*$/.test(input.invocation.function)) throw new SandboxTransportError('invalid_sandbox_request');
     for (const [path, file] of Object.entries(input.files)) {
-      if (!/^\/candidate\/[a-zA-Z0-9_/-]+\.py$/.test(path) || file.mode !== '0444' || file.uid !== 65534 || file.gid !== 65534) throw new Error('invalid_sandbox_file_reference');
-      z.uuid().parse(file.uuid);
+      if (!/^\/candidate\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*\.py$/.test(path) || file.mode !== '0444' || file.uid !== 65534 || file.gid !== 65534 ||
+          !z.uuid().safeParse(file.uuid).success) throw new SandboxTransportError('invalid_sandbox_file_reference');
     }
-    const response = await this.#request('/instances', 'POST', {
+    const result = await this.#request('/instances', 'POST', JSON.stringify({
       image: input.imageUuid, command: '/usr/local/bin/python', args: ['-I', '-B', '-c', PYTHON_DRIVER, input.entrypoint],
       shell: false, env: {}, preserve_env: false, uid: 65534, gid: 65534,
       cwd: '/candidate', networking: { enabled: false }, disposable: true,
       resources_limits: { max_layer_bytes: 16_777_216 }, timeout: input.timeoutSeconds, truncate_output_at: 131_072,
       stdin: { value: Buffer.from(JSON.stringify(input.invocation)).toString('base64'), encoding: 'base64', close: true },
       files: input.files,
-    }, signal);
-    const record = z.object({ uuid: z.uuid() }).parse(await response.json());
+    }), signal);
+    const record = z.object({ uuid: z.uuid() }).safeParse(await this.#json(result, signal));
+    if (!record.success) throw new SandboxTransportError('sandbox_invalid_spawn_response');
+    if (result.response.status !== 201) throw new SandboxTransportError('sandbox_unexpected_spawn_status', [`nebius:operation:${record.data.uuid}`]);
     // Never follow an untrusted Location response header with authorization.
-    return record.uuid;
+    return record.data.uuid;
   }
-  async getOperation(id: string, signal: AbortSignal) {
-    z.uuid().parse(id);
-    const response = await this.#request(`/operations/${id}`, 'GET', undefined, signal);
-    return operationSchema.parse(await response.json());
-  }
-  async cancel(id: string, signal: AbortSignal): Promise<void> {
-    z.uuid().parse(id);
-    await this.#request(`/operations/${id}`, 'DELETE', undefined, signal);
-  }
-}
 
-/** Fail closed: public API mapping alone does not verify the required isolation controls. */
-export class NebiusSandboxCheckRunner implements CheckRunner {
-  async run(input: { files: Record<string, string>; entrypoint: string; cases: FunctionCase[]; timeoutSeconds: number }, signal: AbortSignal): Promise<SandboxCheckResult> {
-    const reason = signal.aborted ? 'cancelled' : 'sandbox_controls_unverified: account entitlement, immutable image, read-only rootfs, memory/pids/CPU caps, cancellation and billing require verified integration';
-    return { checks: input.cases.map(c => ({ id: c.id, requirementId: c.requirementId, status: 'error', message: reason,
-      actual: null, expected: c.expectedException ? { exception: c.expectedException } : c.expected, durationMs: 0, log: `NOT RUN: ${reason}` })),
-      isolation: 'unavailable', operationIds: [], cpuSeconds: null, measuredCostUsd: null, infrastructureError: reason };
+  async getOperation(id: string, signal: AbortSignal): Promise<SandboxOperation> {
+    if (!z.uuid().safeParse(id).success) throw new SandboxTransportError('invalid_sandbox_operation');
+    const result = await this.#request(`/operations/${id}`, 'GET', undefined, signal);
+    if (result.response.status !== 200) {
+      void result.response.body?.cancel().catch(() => {});
+      throw new SandboxTransportError('sandbox_unexpected_operation_status');
+    }
+    const parsed = operationSchema.safeParse(await this.#json(result, signal));
+    if (!parsed.success || parsed.data.uuid !== id) throw new SandboxTransportError('sandbox_invalid_operation_response');
+    const retry = result.response.headers.get('Retry-After');
+    return { ...parsed.data, retryAfterMs: retry !== null && /^\d+$/.test(retry) ? Math.min(2000, Number(retry) * 1000) : null };
+  }
+
+  async cancel(id: string, signal: AbortSignal): Promise<void> {
+    if (!z.uuid().safeParse(id).success) throw new SandboxTransportError('invalid_sandbox_operation');
+    const result = await this.#request(`/operations/${id}`, 'DELETE', undefined, signal);
+    void result.response.body?.cancel().catch(() => {});
+    if (result.response.status !== 202) throw new SandboxTransportError('sandbox_cancellation_unconfirmed');
   }
 }

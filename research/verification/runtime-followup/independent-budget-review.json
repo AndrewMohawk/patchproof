@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "reviewedAt": "2026-09-27T08:52:15.461997+00:00",
+  "scope": "Bounded independent read-only source review of trusted budget ledger; no paid operations, candidate execution or fixture work.",
+  "sourceDigest": "sha256:34f98745d37333f3a47ebb5e21212597227af56119343b4a4fe486e08ccc1c87",
+  "reviewedDimensions": [
+    "Integer conservation of charged and held amounts",
+    "Idempotent reservation identity and single dispatch grant",
+    "Retention of unknown billing and overruns",
+    "Stale approval compare-and-swap and cap reduction",
+    "Terminal-state handling of late billing"
+  ],
+  "finding": {
+    "status": "resolved",
+    "summary": "Late incomplete billing could relabel an unattempted reconciled reservation as reserved. Author now preserves the terminal state.",
+    "impactBoundary": "The existing pending-billing guard already prevented dispatch while billing was incomplete; no spending-cap bypass was demonstrated.",
+    "reviewCorrection": "Initial concern overstated dispatch resurrection; corrected after tracing pending-billing checks."
+  },
+  "independentExecution": "NOT RUN; this is source review. Author separately reports 23 passing tests, including process concurrency and late-billing regression.",
+  "remainingBoundary": "Paid scheduler must use dispatchGranted exactly once and preserve per-operation costs inside each aggregate episode hold."
+}

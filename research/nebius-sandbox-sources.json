@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "Public documentary verification only; no authenticated API, account verification or paid operation.",
+  "openApiVersion": "1.0.0",
+  "serviceBase": "https://api.tokenfactory.nebius.com/sandboxes",
+  "httpApiPrefix": "https://api.tokenfactory.nebius.com/sandboxes/v1",
+  "authentication": "IAM Bearer plus Project header; supplied by caller, never ambient credentials.",
+  "sources": [
+    {
+      "id": "index",
+      "url": "https://docs.tokenfactory.nebius.com/llms.txt",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/llms.txt",
+      "fetchedAt": "2026-09-27T08:53:51.853Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "3cf8bf6b3f567b792a596d834fcd8752c3fe20a126dcbe09c7f4b04309e73e1e",
+      "bytes": 31060,
+      "publishedDate": null
+    },
+    {
+      "id": "spawn",
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance",
+      "fetchedAt": "2026-09-27T08:53:51.674Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "90530b25094a550ab544f822ad8a98cf8c7bc4caf931ec750d437c4c6c7f96a6",
+      "bytes": 19657,
+      "publishedDate": null
+    },
+    {
+      "id": "status",
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/get-an-operation-status.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/get-an-operation-status",
+      "fetchedAt": "2026-09-27T08:53:51.752Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "d6eeeaca05dc1ee9061809da0958c3c2090361f5a08d06ec554e4626eaae5fc4",
+      "bytes": 22189,
+      "publishedDate": null
+    },
+    {
+      "id": "upload",
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/files/upload-a-file-to-the-server-the-body-must-be-a-file-content.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/files/upload-a-file-to-the-server-the-body-must-be-a-file-content",
+      "fetchedAt": "2026-09-27T08:53:51.666Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "7fcfb077a28b1c11fd136b01624935373e093db8e7f3ee1968547e2c38906ddd",
+      "bytes": 5532,
+      "publishedDate": null
+    },
+    {
+      "id": "cancel",
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/cancel-an-operation.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/operations/cancel-an-operation",
+      "fetchedAt": "2026-09-27T08:53:51.977Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "a5c16f4b95b7e8db5c5134a65ca3d928482737af2f4fa052a136250d95eb5965",
+      "bytes": 5094,
+      "publishedDate": null
+    },
+    {
+      "id": "configuration",
+      "url": "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration",
+      "fetchedAt": "2026-09-27T08:53:51.683Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "16b6c8e88ae4d27a7be701f50965eec47a5f0d373358dccc73e6d0c378a0abfa",
+      "bytes": 9669,
+      "publishedDate": null
+    },
+    {
+      "id": "overview",
+      "url": "https://docs.tokenfactory.nebius.com/sandboxes/overview.md",
+      "canonicalUrl": "https://docs.tokenfactory.nebius.com/sandboxes/overview",
+      "fetchedAt": "2026-09-27T08:53:51.669Z",
+      "method": "unauthenticated public documentation GET via curl",
+      "sha256": "70237e9cedd07349efe63d6c9b560b99989cc42cb78c771fa78be99f68f38cf9",
+      "bytes": 4603,
+      "publishedDate": null
+    }
+  ],
+  "documentedMappings": [
+    "POST /files: raw octet-stream; response uuid, sha256, size (-1 unknown).",
+    "POST /instances: pinned image UUID, command/args, files, disabled networking, timeout, disposable state, writable-layer cap.",
+    "GET /operations/{operationId}: status and metadata.result streams/state; consumed_cpu is CPU seconds or null.",
+    "DELETE /operations/{operationId}: 202 accepts cancellation; poll for terminal state."
+  ],
+  "unresolved": [
+    "No current verified account, image UUID/content binding, entitlement, rates or controls receipt.",
+    "Public instance schema does not expose memory, PID, CPU-quota, read-only-rootfs, capability-drop or no-new-privileges flags; verified equivalent external controls are mandatory.",
+    "No documented file-delete endpoint in the index; upload retention and its billing need account evidence.",
+    "Result resource cost has no documented currency; measuredCostUsd remains null.",
+    "No client-supplied creation UUID/idempotency field documented; a lost POST response can leave an operation without a known UUID.",
+    "GET status schema uses uppercase states; some examples elsewhere show lowercase. Strict adapter uses the schema and requires account conformance verification.",
+    "Publication/update dates were not supplied by these fetched pages; fetchedAt is an inspection timestamp only."
+  ],
+  "limitations": [
+    "Reference records are trusted control-plane inputs, not self-authenticating proofs. No receipt was created for real execution.",
+    "Transport and runner tests are synthetic and do not prove service entitlement, containment, cancellation, billing or latency.",
+    "Live startup, durable budget reservations and crash recovery are not wired. Request intent records preserve ambiguity but cannot cancel an unknown operation ID."
+  ]
+}

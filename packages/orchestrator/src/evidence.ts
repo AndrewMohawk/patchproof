@@ -9,6 +9,8 @@ import { ProductEvidenceSchema } from '../../contracts/src/product-validation.ts
 import type { CheckRunner, Fixture, ProductEvidence, ProductRun } from '../../contracts/src/product.ts';
 import { fixtureDigests, validatePaths } from './fixtures.ts';
 import { applyPatch, createPatch } from './patch.ts';
+import { runnerForFrozenProtocol } from './repeated-checks.ts';
+import { isDeepStrictEqual } from 'node:util';
 
 const normalize = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 export function buildEvidence(runValue: ProductRun, fixture: Fixture, runtimeLock: unknown): ProductEvidence {
@@ -117,11 +119,11 @@ export async function reproduceEvidence(bundleValue: unknown, runner: CheckRunne
   if (!selected) return { status: 'no_selected_patch', mode: bundle.mode, competitionReady: false, executionPerformed: false };
   const files = await applyPatch(bundle.fixture.files, bundle.files['patch.diff']!.content);
   if (digestJson(files) !== digestJson(selected.files)) throw new ContractError('digest_mismatch', 'Applied patch differs from candidate.');
-  const checks = await runner.run({ files, entrypoint: bundle.fixture.entrypoint,
+  const checks = await runnerForFrozenProtocol(runner, bundle.runtimeLock).run({ files, entrypoint: bundle.fixture.entrypoint,
     cases: [...bundle.fixture.visibleCases, ...bundle.fixture.acceptanceCases], timeoutSeconds: 30 }, signal);
   const expected = [...selected.visibleChecks, ...selected.acceptanceChecks];
   const consistent = checks.infrastructureError === null && checks.checks.length === expected.length && checks.checks.every(check =>
-    expected.some(previous => previous.id === check.id && previous.requirementId === check.requirementId && previous.status === check.status));
+    expected.some(previous => previous.id === check.id && previous.requirementId === check.requirementId && previous.status === check.status && isDeepStrictEqual(previous.actual, check.actual)));
   return { status: consistent ? 'reproduced' : 'mismatch_or_infrastructure_error', mode: bundle.mode,
     competitionReady: false, executionPerformed: checks.isolation !== 'unavailable', isolation: checks.isolation,
     checkCount: checks.checks.length, checks: checks.checks, infrastructureError: checks.infrastructureError };

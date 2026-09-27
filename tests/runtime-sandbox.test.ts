@@ -300,11 +300,12 @@ test('Nebius fake transport maps verified methods and never includes oracle fiel
       if (init?.method === 'DELETE') return new Response(null, { status: 202 });
       return Response.json({ uuid: id, kind: 'instance', status: 'SUCCESS', metadata: {}, consumed_cpu: 0.1 });
     } });
-  assert.equal(await transport.spawnInvocation({ imageUuid: id, files: {}, entrypoint: '/candidate/solution.py',
+  assert.equal(await transport.spawnInvocation({ imageUuid: id, files: { '/candidate/solution.py': { uuid: id, uid: 65534, gid: 65534, mode: '0444' } }, entrypoint: '/candidate/solution.py',
     invocation: { function: 'unique', args: [[1]], kwargs: {} }, timeoutSeconds: 10 }, signal()), id);
   assert.equal((await transport.getOperation(id, signal())).status, 'SUCCESS');
   await transport.cancel(id, signal());
   assert.deepEqual(calls.map(c => c.method), ['POST', 'GET', 'DELETE']);
+  assert.ok(calls.every(c => c.url.startsWith('https://api.tokenfactory.nebius.com/sandboxes/v1/')));
   const request = calls[0]!.body as { networking: { enabled: boolean }; shell: boolean; stdin: { value: string } };
   assert.equal(request.networking.enabled, false);
   assert.equal(request.shell, false);

@@ -16,15 +16,16 @@ const completion = (files: Record<string, string> = { 'solution.py': 'def unique
   choices: [{ message: { content: JSON.stringify({ files, summary: 'Synthetic transport test.' }) }, finish_reason: 'stop' }],
   usage: { prompt_tokens: 100, completion_tokens: 20 } });
 
-test('scripted mock is task bounded and uses the same files/feedback rule for every caller', async () => {
+test('scripted mock is task bounded and uses the same attempt/feedback rule for every caller', async () => {
   const provider = new MockRepairProvider();
   const first = await provider.propose(input(), signal());
   assert.equal(first.files['solution.py'], SCRIPTED_BAD);
   assert.match(first.summary, /SCRIPTED MOCK/);
   assert.equal(first.usage.inferenceCalls, 0);
-  const next = { ...input(), files: first.files, feedback: [{ requirementId: 'R01', status: 'fail', message: 'Order differs.' }] };
+  const next = { ...input(), attempt: 1, files: first.files, feedback: [{ requirementId: 'R01', status: 'fail', message: 'Order differs.' }] };
   const second = await provider.propose(next, signal());
   assert.notEqual(second.files['solution.py'], SCRIPTED_BAD);
+  assert.deepEqual((await provider.propose({ ...next, files: input().files }, signal())).files, second.files);
   assert.equal((await provider.propose({ ...next, feedback: [] }, signal())).files['solution.py'], SCRIPTED_BAD);
   await assert.rejects(provider.propose({ ...input(), taskId: 'other-task' }, signal()), (e: unknown) => e instanceof RepairError && e.code === 'mock_task_unavailable');
 });

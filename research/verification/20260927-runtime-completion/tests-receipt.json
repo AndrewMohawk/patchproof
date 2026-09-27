@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T09:01:29.144935+00:00",
+  "baseCommit": "b3ee8ea9d4b9dcdd4a8666481197748c48707a77",
+  "command": "make test",
+  "exitCode": 0,
+  "tests": 134,
+  "passed": 134,
+  "failures": 0,
+  "skipped": 0,
+  "mode": "local-mock-and-synthetic-transports",
+  "paidCalls": 0,
+  "providerSpendUsd": 0,
+  "log": "tests.log",
+  "logDigest": "sha256:bccea74fd250e5be5aeb516dfb8df505d302ba697f90c9f54b91620287b55491",
+  "sources": {
+    "apps/api/src/application.ts": "sha256:4c405d476f747a4a2b0a093580b69b22eb11745b6b520a587b057bbad320ec8d",
+    "packages/orchestrator/src/coordinator.ts": "sha256:bc4369cb3bafc995576697ca7092877b5edf6d47766facf9b5e43c11c818d0c8",
+    "packages/orchestrator/src/evidence.ts": "sha256:586e54c1fec7838eba36842e9da3dbbaf28a76a52dc22c45e6d9599b95e2a390",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:34f98745d37333f3a47ebb5e21212597227af56119343b4a4fe486e08ccc1c87",
+    "packages/orchestrator/src/operational-lock.ts": "sha256:bc25ccadd8de05728f3245f8c70a78fc421d4a7e622f0f49b5fcf016fdff35ff",
+    "packages/orchestrator/src/repeated-checks.ts": "sha256:24c355192db6f539dcd5d5a98306d8c90d815f9099da2ef38c6645a6e17c43dc",
+    "runtime-lock.json": "sha256:51b2ba48c71ee95eb287a45bee7e278f4be8358e2c7c59c215e52f92588db716",
+    "scripts/product-cli.ts": "sha256:b0056a05b0003b58dae7a6f26a9978b209096826f16d291de3d91adcef5da6aa",
+    "workers/repair/index.ts": "sha256:56029e0c2e99d4c71e43bd064bad9e293ca3496cef1b671a7efc3ffdf5d6b8e1",
+    "workers/sandbox/nebius.ts": "sha256:d1c6861acca2fb9f07342d0af38d092ba28bf4738de45d29e3f2a7d4de679815",
+    "workers/sandbox/nebius-types.ts": "sha256:95181fcd371702db95c6689748cceb0b8cfb810eb0e80303a72b05513f656a55",
+    "workers/sandbox/nebius-runner.ts": "sha256:6d2331c66789d819234682ce2b4e78044d42bafa4c7530301e15f5a9d11bd191",
+    "workers/evaluator/reviewer-study.ts": "sha256:053b58bd797dfe454911a57bf081b5e14c9556b9fb804adcadd32fb6ffe56a94",
+    "tests/budget-ledger.test.ts": "sha256:3bbcca65e8d5a7511e4d9d69701e492cb63d4cc2a2c442c412754beeda16b8c4",
+    "tests/nebius-runner.test.ts": "sha256:9992bbaa8ae56d3204ec82f6bd5e0c838bea86cb46ddd800132ed6f795e32c46",
+    "tests/nebius-transport.test.ts": "sha256:35573c9b31431063724a11bdbd0b2908c9cd11f5aca84532825de5a367a4da3b",
+    "tests/operational-lock.test.ts": "sha256:1587d3e87fec400c1ef1fd92b88dfde24ff7065f0ff2c51c74817031e64f3b0e",
+    "tests/repair-policy.test.ts": "sha256:1957b919ff057d5c5936b49f0161d111eed1eb31a40f6eaa75828806542cc8c0",
+    "tests/repeated-checks.test.ts": "sha256:cddf0aafda2f1cacdfccf457369dd787994606e7c1adf0286b401952b04853dd",
+    "tests/reviewer-study.test.ts": "sha256:7e0ad78d8ecae50277d66409bcc2fde4a6a5486c6c3bedff48c0c99b20ed59c5",
+    "tests/runtime-repair.test.ts": "sha256:1f7f1046d7136bc86b49ad37de1f44685d68bea9e5f3fcf2aa4dd7b8a90be417",
+    "tests/runtime-sandbox.test.ts": "sha256:f77edc715e8030f266d4bc42a23e51ffc93c08cea00196679d94c2894a726fe2"
+  },
+  "limits": [
+    "No live Nebius operation or billing verified.",
+    "No human reviewer data or scored model experiment.",
+    "Browser integration follows separately."
+  ],
+  "postSuiteChanges": [
+    {
+      "file": "tests/repair-policy.test.ts",
+      "reason": "Renamed synthetic idempotency label flagged by generic-api-key scan; no credential was present.",
+      "digest": "sha256:847c399d44721c961bba125d751ec17d3fdf69494cee13c7941e9092bfa5a2b6",
+      "command": "node --test tests/repair-policy.test.ts",
+      "exitCode": 0,
+      "log": "policy-after-scan.log"
+    }
+  ],
+  "stagedSecretScan": {
+    "command": "gitleaks git --staged --redact --no-banner",
+    "exitCode": 0,
+    "findings": 0,
+    "allowlistAdded": false
+  }
+}

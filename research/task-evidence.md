@@ -108,3 +108,24 @@ checks, doctor and selected patch replay all exited 0. The checkout had no prior
 run database or artifacts; the selected committed bundle was copied explicitly.
 The same host Docker image/npm cache were shared, so this is not independent
 clean-machine verification. Release-check correctly exited 2.
+
+## Runtime completion follow-up
+
+Based on `b3ee8ea9d4b9dcdd4a8666481197748c48707a77`, the runtime follow-up
+adds durable aggregate USD reservations, two observations per declared check,
+explicit B0/B1/P proposal and selection policies, source-bound local operational
+locks, a conditionally enabled Nebius lifecycle adapter and trusted reviewer-study
+planning/recording tools. Changed source/test paths and exact digests are recorded
+in `research/verification/20260927-runtime-completion/tests-receipt.json`.
+
+Executed `make test`: **exit 0, 134 passed, zero failures/skips**. This includes
+local container execution, concurrency/restart budget tests and synthetic provider
+and study inputs. Independent budget/study review receipts are under
+`research/verification/runtime-followup/`. Nebius interface sources and exact
+OpenAPI retrieval digests are in `research/nebius-sandbox-sources.json`.
+
+No real provider calls, costs, experiment rows or human answers were produced.
+The durable ledger and evaluator tools still need dispatcher/factory integration;
+the operational lock is explicitly local and unscored, not a frozen live protocol.
+Browser verification of repeated observations follows separately. The completion
+audit preserves the earlier gaps and will be supplemented with concrete receipts.
