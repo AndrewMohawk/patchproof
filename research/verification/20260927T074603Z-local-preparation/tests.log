@@ -1,0 +1,41 @@
+npm run typecheck
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+npm run check:contracts
+
+> patchproof@0.0.1 check:contracts
+> node scripts/check-contract-lock.ts
+
+Contract 1.0: 4 source digests match. Dependency gates remain separate.
+npm test
+
+> patchproof@0.0.1 test
+> node --test tests/*.test.ts
+
+✔ real loopback HTTP flow: catalogue → mock record → events → typed evidence (110.778808ms)
+✔ checked-in $25 total budget requires approval and rejects excess stage allocations (11.772332ms)
+✔ doctor performs local diagnostics; real-provider/release commands fail closed (975.793517ms)
+✔ artifact commands reject arbitrary paths before reading files (201.231645ms)
+✔ curated contract accepts known tasks; rejects unknown tasks and extra execution inputs (2.730513ms)
+✔ budgets reject nonfinite, negative, fractional and excessive caps (11.29984ms)
+✔ canonical digest is key-order independent and rejects non-JSON values (0.441652ms)
+✔ catalogue and returned views are isolated from callers (1.870063ms)
+✔ idempotency retains one run and rejects reuse with different variants (1.680834ms)
+✔ all mock variants have identical aggregate caps and zero actual use (3.933871ms)
+✔ cancellation records partial mock work and never creates provider operations (3.291421ms)
+✔ subscriber failures cannot interrupt finalization; handler errors stay unverified (2.51917ms)
+✔ completed mock evidence cannot claim inference, execution or approval (2.157727ms)
+✔ cross-field validation rejects contradictory manifest, events and requirement mappings (5.545717ms)
+✔ bundle verification detects modifications and explicitly remains integrity-only (9.369027ms)
+✔ capacity caps mock records; idempotent retries still succeed at capacity (0.974973ms)
+✔ mock artifacts are immutable and reject file/directory symlinks (36.271985ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1410.321353

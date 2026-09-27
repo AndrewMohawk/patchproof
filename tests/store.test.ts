@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { mkdtemp, rm, writeFile, symlink, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { MockCoordinator } from '../packages/mock/src/coordinator.ts';
+import { buildBundle } from '../packages/mock/src/bundle.ts';
+import { readBundle, writeBundle } from '../packages/mock/src/store.ts';
+
+test('mock artifacts are immutable and reject file/directory symlinks', async t => {
+  const directory = await mkdtemp(join(tmpdir(), 'patchproof-store-test-'));
+  const root = pathToFileURL(directory + '/');
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const coordinator = new MockCoordinator({ mode: 'mock' });
+  const { run } = coordinator.create({ taskId: 'contract-smoke', mode: 'mock', variant: 'baseline', idempotencyKey: 'store-test-01' });
+  await coordinator.settled();
+  const bundle = buildBundle(coordinator.get(run.id), { mode: 'mock' });
+  await writeBundle(root, 'artifacts/', bundle);
+  await writeBundle(root, 'artifacts/', bundle);
+  assert.equal((await readBundle(root, 'artifacts/', run.id)).bundleDigest, bundle.bundleDigest);
+  const path = new URL(`artifacts/${run.id}.json`, root);
+  await writeFile(path, 'existing unrelated contents');
+  await assert.rejects(writeBundle(root, 'artifacts/', bundle));
+  assert.equal(await readFile(path, 'utf8'), 'existing unrelated contents');
+  await rm(path);
+  const untouched = new URL('untouched.txt', root);
+  await writeFile(untouched, 'unchanged');
+  await symlink(untouched.pathname, path);
+  await assert.rejects(writeBundle(root, 'artifacts/', bundle));
+  assert.equal(await readFile(untouched, 'utf8'), 'unchanged');
+  await rm(new URL('artifacts/', root), { recursive: true });
+  await symlink(directory, new URL('artifacts', root));
+  await assert.rejects(writeBundle(root, 'artifacts/', bundle));
+  await assert.rejects(readBundle(root, 'artifacts/', run.id));
+});

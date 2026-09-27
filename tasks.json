@@ -9,7 +9,7 @@
       "id": "T01",
       "title": "Verify rules, rights, eligibility and available resources",
       "owner_role": "coordinator",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [],
       "estimated_engineering_hours": [
         2,
@@ -27,13 +27,18 @@
         "AI development assistance, publishing rights and prize-specific remote fulfillment reviewed by owner."
       ],
       "requires_owner_action": true,
-      "gate": "G0"
+      "gate": "G0",
+      "blocked_reason": "Provider access, entitlements, model/rates and runtime controls unverified. Owner rights/eligibility/AI review and $25 cap recorded.",
+      "evidence": [
+        "research/task-evidence.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T02",
       "title": "Freeze schemas, repository layout and test harness",
       "owner_role": "coordinator",
-      "status": "planned",
+      "status": "blocked",
       "depends_on": [
         "T01"
       ],
@@ -53,7 +58,12 @@
         "Typed interfaces build and contract tests pass."
       ],
       "requires_owner_action": false,
-      "gate": null
+      "gate": null,
+      "blocked_reason": "T01/G0 dependency open. Local mock contracts and harness prepared/tested without claiming task acceptance.",
+      "evidence": [
+        "research/task-evidence.md",
+        "research/blockers.md"
+      ]
     },
     {
       "id": "T03",
@@ -284,7 +294,7 @@
         "analysis script"
       ],
       "acceptance_tests": [
-        "30 tasks \u00d7 3 variants \u00d7 3 repetitions accounted for.",
+        "30 tasks × 3 variants × 3 repetitions accounted for.",
         "Repo-clustered paired analysis; identical budgets and task information.",
         "No unsupported superiority claim when uncertainty or ablation contradicts it."
       ],
@@ -370,5 +380,8 @@
       "requires_owner_action": true,
       "gate": null
     }
-  ]
+  ],
+  "execution_as_of": "2026-09-27",
+  "current_approved_spend_usd": 25,
+  "approval_source": "budget.json"
 }

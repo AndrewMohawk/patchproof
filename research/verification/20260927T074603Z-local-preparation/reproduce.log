@@ -1,0 +1,13 @@
+node scripts/cli.ts reproduce "23bd97ba-f09b-454d-a7a4-7d8f175aab93" ""
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "notice": "MOCK integrity check only. No patch verdict reproduced; not competition evidence.",
+  "command": "reproduce",
+  "status": "integrity_verified",
+  "replayScope": "integrity_only_no_execution",
+  "executionPerformed": false,
+  "integrityBasis": "local_reference",
+  "authenticityVerified": false,
+  "bundleDigest": "sha256:bcb5b10da2a0eb9e568e1de5984ddb066a6048b54aab28527bae087ac1249d8d"
+}

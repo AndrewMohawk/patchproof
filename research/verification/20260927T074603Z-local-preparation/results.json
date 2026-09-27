@@ -1,0 +1,136 @@
+{
+  "scope": "local_mock_preparation_only",
+  "competitionReady": false,
+  "recordedAt": "2026-09-27T07:46:12.371453+00:00",
+  "providerCalls": 0,
+  "commands": [
+    {
+      "name": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "install.log"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "make",
+        "test"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "tests.log"
+    },
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "browser.log"
+    },
+    {
+      "name": "doctor",
+      "command": [
+        "make",
+        "doctor"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "doctor.log"
+    },
+    {
+      "name": "smoke",
+      "command": [
+        "make",
+        "smoke"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "smoke.log"
+    },
+    {
+      "name": "pilot",
+      "command": [
+        "make",
+        "pilot"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "pilot.log"
+    },
+    {
+      "name": "evaluate",
+      "command": [
+        "make",
+        "evaluate"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "evaluate.log"
+    },
+    {
+      "name": "release-check",
+      "command": [
+        "make",
+        "release-check"
+      ],
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "release-check.log"
+    },
+    {
+      "name": "mock-run",
+      "command": [
+        "node",
+        "scripts/cli.ts",
+        "mock-run"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "mock-run.log"
+    },
+    {
+      "name": "export",
+      "command": [
+        "make",
+        "export",
+        "RUN=23bd97ba-f09b-454d-a7a4-7d8f175aab93"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "export.log"
+    },
+    {
+      "name": "reproduce",
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=23bd97ba-f09b-454d-a7a4-7d8f175aab93"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "reproduce.log"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "diff-check.log"
+    }
+  ]
+}

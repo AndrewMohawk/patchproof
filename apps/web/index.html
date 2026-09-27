@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PatchProof — mock contract inspector</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <main>
+    <h1>PatchProof</h1>
+    <p class="notice"><strong>MOCK · Not competition-ready.</strong> No model inference, sandbox execution or patch verification.</p>
+    <p>This local contract inspector precedes the product build. Runs use memory only and disappear on restart.</p>
+    <section aria-labelledby="task-heading">
+      <h2 id="task-heading">Inspect a contract fixture</h2>
+      <label for="task">Curated task</label>
+      <select id="task" disabled><option>Loading…</option></select>
+      <p id="description"></p>
+      <ul id="requirements"></ul>
+      <p>Mock resource allowance: $0. Actual execution is disabled until G0/G1 pass.</p>
+      <button id="run" disabled>Create mock record</button>
+    </section>
+    <section aria-labelledby="record-heading">
+      <h2 id="record-heading">Mock record</h2>
+      <p id="status" role="status" aria-live="polite">No record yet.</p>
+      <ol id="events"></ol>
+      <button id="cancel" disabled>Cancel mock record</button>
+      <a id="export" hidden>Download mock evidence</a>
+      <p id="replay" hidden></p>
+    </section>
+    <section aria-labelledby="evidence-heading">
+      <h2 id="evidence-heading">Evidence contract</h2>
+      <p>No patch or acceptance check has been executed. Every requirement remains unverified.</p>
+      <pre id="evidence">Select the fixture and create a mock record.</pre>
+    </section>
+  </main>
+</body>
+</html>

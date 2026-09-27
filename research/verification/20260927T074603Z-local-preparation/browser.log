@@ -1,0 +1,40 @@
+
+> patchproof@0.0.1 test:browser
+> node scripts/verify-browser.ts
+
+{
+  "testedAt": "2026-09-27T07:46:10.619Z",
+  "mode": "mock",
+  "competitionReady": false,
+  "status": "passed",
+  "browserVersion": "145.0.7632.6",
+  "runId": "73fdcb13-411e-4e0e-bcac-ee1479558246",
+  "checks": [
+    "task selection",
+    "mock labels",
+    "handler events",
+    "download",
+    "CLI integrity verification",
+    "mobile layout",
+    "no browser errors",
+    "only loopback requests"
+  ],
+  "artifact": "artifacts/73fdcb13-411e-4e0e-bcac-ee1479558246.json",
+  "bundleDigest": "sha256:abce31a557ad3697f81199786588cd481d0a16b485bc57427b9e4a8ad157a13c",
+  "screenshots": [
+    "/tmp/patchproof-contract-desktop.png",
+    "/tmp/patchproof-contract-mobile.png"
+  ],
+  "replay": {
+    "mode": "mock",
+    "competitionReady": false,
+    "notice": "MOCK integrity check only. No patch verdict reproduced; not competition evidence.",
+    "command": "reproduce",
+    "status": "integrity_verified",
+    "replayScope": "integrity_only_no_execution",
+    "executionPerformed": false,
+    "integrityBasis": "provided_digest",
+    "authenticityVerified": false,
+    "bundleDigest": "sha256:abce31a557ad3697f81199786588cd481d0a16b485bc57427b9e4a8ad157a13c"
+  }
+}

@@ -1,0 +1,26 @@
+node scripts/cli.ts smoke
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "notice": "MOCK — no model inference, sandbox execution or patch verification.",
+  "command": "smoke",
+  "status": "blocked",
+  "paidCalls": 0,
+  "implementation": "gate_report_only",
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated.",
+    "T04 real-provider adapters not implemented; no automatic fallback."
+  ],
+  "additionallyRequired": [
+    "Two authorized sponsor-backed cases."
+  ],
+  "experimentEpisodesExecuted": 0
+}
+make: *** [Makefile:9: smoke] Error 2

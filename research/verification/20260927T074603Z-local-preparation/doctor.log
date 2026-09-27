@@ -1,0 +1,42 @@
+node scripts/cli.ts doctor
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "notice": "MOCK — no model inference, sandbox execution or patch verification.",
+  "command": "doctor",
+  "status": "diagnostic_complete",
+  "paidCalls": 0,
+  "local": {
+    "node": "25.5.0",
+    "architecture": "x64",
+    "platform": "linux"
+  },
+  "expectedLocal": {
+    "node": "25.5.0",
+    "npm": "11.8.0",
+    "python": "3.12.3",
+    "architecture": "x64",
+    "platform": "linux"
+  },
+  "maxApprovedSpendUsd": 25,
+  "verifiedCreditCount": 0,
+  "entitlements": "unverified",
+  "gates": {
+    "G0": "blocked",
+    "G1": "not_run",
+    "G2": "not_run",
+    "G3": "not_run",
+    "G4": "not_run"
+  },
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated.",
+    "T04 real-provider adapters not implemented; no automatic fallback."
+  ]
+}

@@ -1,0 +1,17 @@
+:root { font-family: system-ui, sans-serif; color: #172333; background: #f3f5f7; }
+body { margin: 0; }
+main { max-width: 850px; margin: auto; padding: 24px; }
+section { background: white; border: 1px solid #b9c4ce; padding: 20px; margin: 20px 0; }
+h1 { margin-bottom: 12px; }
+h2 { font-size: 1.25rem; margin-top: 0; }
+.notice { background: #fff3cd; padding: 16px; border-left: 4px solid #7b5700; }
+label { display: block; margin-bottom: 8px; }
+select, button { font: inherit; padding: 10px; max-width: 100%; }
+button { margin-right: 12px; }
+button:enabled { cursor: pointer; }
+:focus-visible { outline: 3px solid #154ec1; outline-offset: 3px; }
+a { color: #06459b; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }
+li { margin: 8px 0; }
+p, li { overflow-wrap: anywhere; }
+@media (max-width: 480px) { main { padding: 12px; } section { padding: 12px; } }
