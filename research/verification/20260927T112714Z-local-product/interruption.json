@@ -1,0 +1,8 @@
+{
+  "command": "python3 scripts/validate-preparation.py",
+  "exitCode": 130,
+  "status": "interrupted_duplicate",
+  "reason": "This wrapper duplicated the active full suite and would rerun previously verified browser/replays. Only its owned process tree was stopped before browser/replay steps; primary full suite completed successfully.",
+  "record": "research/verification/20260927T112714Z-local-product/results.json",
+  "browserAndReplay": "NOT RUN this turn; unchanged product flow remains covered at abfa450 by prior receipts."
+}

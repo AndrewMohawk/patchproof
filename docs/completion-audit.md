@@ -118,3 +118,12 @@ authoritative costs and cleanup evidence, verified calibration/protocol acceptan
 real smoke and experiments, human review, independent-machine replay and release
 decisions remain required. The $25 approval does not establish experiment affordability.
 Final-evaluation and hosting allocations are still zero.
+
+Integrated source `7736490` passes **448 tests**, typecheck and frozen contract
+checks. The exact commands and limitations are recorded in
+`research/verification/20260927-live-operator-integration/integration-receipt.json`.
+One inactive project-owned container was found after testing and removed by its
+exact inspected identity; the previously documented Docker late-create cleanup
+race remains an operational limitation. The local browser app still serves its
+previously verified `abfa450` checkout; this operator-only update does not claim a
+new browser or independent-machine replay.

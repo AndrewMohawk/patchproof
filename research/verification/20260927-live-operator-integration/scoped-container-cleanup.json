@@ -1,0 +1,16 @@
+{
+  "purpose": "scoped cleanup of inactive project-owned test container",
+  "before": {
+    "name": "patchproof-check-cbcad667-b0ce-48d2-bbb0-27cd283574ab",
+    "id": "ba36f9674f81237bd57661ae4109c5a99b847cf65c8d50f5c280fdb4ab21aaa7",
+    "status": "created",
+    "createdAt": "2026-09-27T11:27:11.206061236Z",
+    "labels": {
+      "org.patchproof.owned": "true"
+    },
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51"
+  },
+  "removeExitCode": 0,
+  "remainingProjectContainers": [],
+  "origin": "Found after verification; exact test of origin is unconfirmed. Creation predates the interrupted duplicate wrapper."
+}

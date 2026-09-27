@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "integrated-live-operator-local-verification",
+  "observedAt": "2026-09-27T11:29:40.440221+00:00",
+  "sourceCommit": "773649069a8d565d613cbb6dd236a87fc829bbf8",
+  "testedSourceFilesDirty": false,
+  "sourceMapDigest": "sha256:0b9eb8df3deea1338f70451a206c0b5c854900cf5275667ff5edefed9a65e04e",
+  "operationalLockDigest": "sha256:b1702970493b27a23d6b734663cdfe00ff5af9f1b9aab48089a2e1fbf4dc3a6b",
+  "commands": [
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "passed": 448,
+      "failed": 0,
+      "skipped": 0,
+      "log": "research/verification/20260927-live-operator-integration/make-test.log"
+    },
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "research/verification/20260927-live-operator-integration/doctor.log"
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-live-operator-integration/smoke.log"
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-live-operator-integration/pilot.log"
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-live-operator-integration/evaluate.log"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-live-operator-integration/release-check.log"
+    },
+    {
+      "command": "gitleaks git --log-opts='9eb5e5d..HEAD' --redact",
+      "exitCode": 0,
+      "commitsScanned": 10,
+      "leaks": 0
+    },
+    {
+      "command": "git diff --check 9eb5e5d..HEAD -- . ':!*.log'",
+      "exitCode": 0,
+      "note": "Preserved raw tool logs can include trailing blank lines; source whitespace checks exclude logs."
+    }
+  ],
+  "additionalValidation": {
+    "command": "python3 scripts/validate-preparation.py",
+    "exitCode": 130,
+    "status": "interrupted_duplicate",
+    "reason": "This wrapper duplicated the active full suite and would rerun previously verified browser/replays. Only its owned process tree was stopped before browser/replay steps; primary full suite completed successfully.",
+    "record": "research/verification/20260927T112714Z-local-product/results.json",
+    "browserAndReplay": "NOT RUN this turn; unchanged product flow remains covered at abfa450 by prior receipts."
+  },
+  "localService": {
+    "url": "http://127.0.0.1:43171",
+    "sourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+    "pid": 3578232,
+    "cwd": "/tmp/patchproof-handoff-abfa450",
+    "verification": "Listener PID, process cwd and checkout commit verified; GET /tasks and /runs returned 200. This is a read-only availability check, not new browser proof.",
+    "artifact": "research/verification/20260927-live-operator-integration/local-service-read.json"
+  },
+  "cleanup": {
+    "artifact": "research/verification/20260927-live-operator-integration/scoped-container-cleanup.json",
+    "note": "One inactive project-labelled Created container was found after tests and removed by exact inspected identity. Its test of origin is unconfirmed and it predates the duplicate wrapper. No project-labelled containers remained. The previously documented local Docker accepted-create/cleanup race remains an operational limitation."
+  },
+  "providerCalls": 0,
+  "actualNebiusSpendUsd": 0,
+  "approvedCeilingUsd": 25,
+  "competitionReady": false,
+  "benchmarkExecuted": false,
+  "remainingFailures": [
+    "No account access, real smoke, accepted calibration or actual provider billing/cleanup evidence.",
+    "Real pilot/final runs, affordable allocation, human study, independent-machine replay and release decisions remain pending.",
+    "The local Docker late-create cleanup race remains documented; final verification found and removed one inactive owned container."
+  ],
+  "artifacts": {
+    "research/verification/20260927-live-operator-integration/doctor.log": "sha256:9b9590701625f8a4933b5fca602521158d5608bc3617838fa475c62dfa8638db",
+    "research/verification/20260927-live-operator-integration/evaluate.log": "sha256:a687ba892af2514c1491347ec1c086f070355e945bbbccdb241088ccae9a3ac9",
+    "research/verification/20260927-live-operator-integration/local-service-read.json": "sha256:fca670fb6e39236565b674831c578e81e5c313572d7f48d747fa5367bd00f146",
+    "research/verification/20260927-live-operator-integration/make-test-command.json": "sha256:18e80e854c2e842d567519021607ab0f470b46ae6429ff6a64bee52435a20742",
+    "research/verification/20260927-live-operator-integration/make-test.log": "sha256:0e6feab7a887558db8f69e3d828add7af133fcd5337bba1a01360f68d10ce984",
+    "research/verification/20260927-live-operator-integration/pilot.log": "sha256:0d55e61b367c6c8a1410e30882d077543a142bfe7f747e9cd7f86d1bb194fa97",
+    "research/verification/20260927-live-operator-integration/release-check.log": "sha256:a0f038673332a46319796ed2721edc569704fcb4174d958c28847ce7e11619d1",
+    "research/verification/20260927-live-operator-integration/scoped-container-cleanup.json": "sha256:f492bbc7c110f2ee99b8d63799a25bdecbccbb4faf4271f2257dcbab6938ff07",
+    "research/verification/20260927-live-operator-integration/smoke.log": "sha256:8cee2cca9dbded312e0b9c9b8193f94d6f2af7214283987d2a03fb5007485476"
+  }
+}

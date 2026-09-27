@@ -1,0 +1,34 @@
+{
+  "purpose": "read-only check of existing unchanged local app",
+  "servedSourceCommit": "abfa450d645480c5d2cec5ad7776d36079de5532",
+  "browserRerun": false,
+  "routes": [
+    {
+      "route": "tasks",
+      "status": 200,
+      "shape": "dict",
+      "keys": [
+        "schemaVersion",
+        "mode",
+        "competitionReady",
+        "tasks",
+        "limits",
+        "maxApprovedSpendUsd",
+        "realExecutionEnabled",
+        "localRuntime"
+      ],
+      "count": null
+    },
+    {
+      "route": "runs",
+      "status": 200,
+      "shape": "dict",
+      "keys": [
+        "mode",
+        "competitionReady",
+        "runs"
+      ],
+      "count": null
+    }
+  ]
+}
