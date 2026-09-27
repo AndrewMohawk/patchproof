@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "adjudication-accounting-independent-review",
+  "createdAt": "2026-09-27T11:19:43.088634+00:00",
+  "sourceCommit": "7f2d7b6a70989ca25f6b3faf0cc7a75b216fdde2",
+  "scope": "Bounded trusted evaluator review of accounting wrapper and dispatcher usage-callback changes, using invented accounting metadata only.",
+  "status": "bounded-controls-passed",
+  "artifacts": {
+    "workers/evaluator/adjudication-accounting.ts": "sha256:186e9e8b92074d98514dee1549e5cddd101fb8ea5595e7b2ca857e0d054376f6",
+    "workers/evaluator/dispatcher.ts": "sha256:c642d3ca36ea1d16a7a2c736c0c06944a46b6d55bf05006c6945e5ea047a0bb8",
+    "tests/adjudication-accounting-independent.test.ts": "sha256:455ecd616816d904701903226952ecb2742d67682c44e5284efa4e788a88213d",
+    "research/verification/runtime-followup/adjudication-accounting-independent-tests.log": "sha256:cb32fbe98e457e53d862b4e5820104194bcb3c1b3e1eac25031f53b9fa0d34c3",
+    "research/verification/runtime-followup/adjudication-accounting-independent-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/runtime-followup/adjudication-accounting-final-tests.log": "sha256:cda2e27497a438bd15983a4314ba8937dc6653e385acee0574e577a27026f0c1"
+  },
+  "reviewerExecuted": [
+    {
+      "command": "node --test tests/adjudication-accounting-independent.test.ts",
+      "exitCode": 0,
+      "passed": 9,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": "research/verification/runtime-followup/adjudication-accounting-independent-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/adjudication-accounting-independent-typecheck.log"
+    }
+  ],
+  "authorExecutedSeparately": {
+    "passed": 106,
+    "failed": 0,
+    "exitCode": 0,
+    "log": "research/verification/runtime-followup/adjudication-accounting-final-tests.log",
+    "note": "Author combined suite includes these nine independent controls. Reviewer inspected the resulting log; this is not an additional independent 106-test execution."
+  },
+  "findings": [
+    {
+      "origin": "independent source review",
+      "finding": "The composed accounting wrapper reused prospective usage callbacks for an already returned verdict and accepted final observation, potentially discarding a completed measured overrun.",
+      "historicalEvidence": "Source review before correction. No pre-fix runtime reproduction is claimed.",
+      "resolution": "Optional final cumulative accounting callback preserves measured totals and reservation-overrun freeze without authorizing additional work. Subsequent prospective usage is rejected.",
+      "verifiedBy": "Independent composed controls for returned verdict overrun, larger final observation, incomplete final observation, prospective overrun and final callback lifecycle all pass."
+    },
+    {
+      "origin": "author source review, independently controlled",
+      "finding": "Rejected 1001st operation could remain inserted in the in-memory inventory, preventing the failed checkpoint from validating.",
+      "historicalEvidence": "Author finding; no pre-fix runtime reproduction is claimed.",
+      "resolution": "Check handle count before inserting a new operation.",
+      "verifiedBy": "1001st operation is rejected, exactly 1000 earlier handles remain in the failed checkpoint, and the rejected operation is not forwarded."
+    },
+    {
+      "origin": "author source review, independently controlled",
+      "finding": "A failure while persisting the failed checkpoint could replace the original classified error with private sink text.",
+      "historicalEvidence": "Author finding; no pre-fix runtime reproduction is claimed.",
+      "resolution": "Failed-state sink error cannot replace the original safe classified failure.",
+      "verifiedBy": "Injected private sink error does not appear in the thrown error, adjudication and observer are never entered, and classification remains execution_or_setup_failed."
+    }
+  ],
+  "independentControls": [
+    "Completed raw final cost overrun remains in result and ledger charge, with sticky reservation-overrun freeze.",
+    "Larger accepted cumulative observation replaces phase totals without double counting.",
+    "Incomplete final observation leaves final cost and CPU unknown while preserving known charged lower bounds and pending billing.",
+    "Prospective overrun stops before the observer and retains measured lower bounds.",
+    "Final accounting cannot reopen prospective callbacks or mutate a terminal row.",
+    "Retained wrapper callbacks cannot append operations after adjudication quiesces.",
+    "Bad observer checkpoint binding cannot erase completed adjudication cost.",
+    "Rejected 1001st handle leaves valid 1000-handle failed inventory.",
+    "Checkpoint sink failure cannot leak private raw text or start adjudication."
+  ],
+  "evidenceSeparation": "The author separately reproduced and fixed an earlier raw-dispatcher reporting regression (96/97 initial checks). That historical test is recorded in the author receipt and is not claimed as this independent review execution.",
+  "limitations": [
+    "No provider/model calls, candidate execution, actual protected checks, sealed corpus reads or real human results were used. Empty selection maps and live-shaped gates are inert invented test metadata.",
+    "This verifies injected accounting/control behavior, not real USD measurement, billing authenticity, remote cancellation, cleanup, retention or quiescence.",
+    "The trusted transport must call final usage only after all paid work and cleanup are quiescent and must enforce prospective bounds before side effects.",
+    "Checkpoint durability exists only for checkpoints successfully persisted by the injected trusted sink; deliberate sink failure does not prove durable failure recording.",
+    "Late remote usage after a deadline or terminalization requires retained external evidence and explicit accounting reconciliation; callbacks cannot reopen terminal rows.",
+    "Root owns concrete protected transport composition and source/ledger revalidation around accounting waits. That integration was outside this bounded review."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0
+}
