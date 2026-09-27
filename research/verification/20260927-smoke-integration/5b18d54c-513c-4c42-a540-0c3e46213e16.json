@@ -1,0 +1,943 @@
+{
+  "format": "patchproof-evidence-v2",
+  "schemaVersion": "2.1",
+  "mode": "mock",
+  "competitionReady": false,
+  "run": {
+    "schemaVersion": "2.1",
+    "id": "5b18d54c-513c-4c42-a540-0c3e46213e16",
+    "taskId": "stable-unique-01",
+    "variant": "patchproof",
+    "mode": "mock",
+    "competitionReady": false,
+    "notice": "Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.",
+    "phase": "terminal",
+    "terminalStatus": "verified_for_declared_checks",
+    "reason": "declared_local_checks_passed",
+    "createdAt": "2026-09-27T09:39:16.798Z",
+    "finishedAt": "2026-09-27T09:40:15.451Z",
+    "sourceDigest": "sha256:694bd79688a00b1293a74b2f003599ac280cfd6f774a3bff157e4f0a37b0aa24",
+    "policyDigest": "sha256:a252d45ac02dc72d17c88cec4a7f7434b4a3a4db09c64faf4dc25cdce5318209",
+    "runtimeLockDigest": "sha256:125dad2926bfcf9c6872a2a37fd881aaca89dc7ebf78995b3d2bb4c74537df93",
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 24000,
+      "outputTokenLimit": 6000,
+      "wallTimeLimitSeconds": 120,
+      "sandboxCpuSecondsLimit": 60,
+      "maxApprovedSpendUsd": 0
+    },
+    "usage": {
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0,
+      "costIsEstimate": false,
+      "elapsedMs": 58645
+    },
+    "baselineChecks": {
+      "visible": [
+        {
+          "id": "visible-01",
+          "requirementId": "R01",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": [
+            1,
+            2
+          ],
+          "expected": [
+            1,
+            2
+          ],
+          "durationMs": 2817,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1518,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1299,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+        },
+        {
+          "id": "visible-02",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": {
+            "outcome": [],
+            "argsAfter": [
+              []
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [],
+            "argsAfter": [
+              []
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 2926,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1624,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1302,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"}]}"
+        },
+        {
+          "id": "visible-03",
+          "requirementId": "R03",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": [],
+          "expected": {
+            "exception": "TypeError"
+          },
+          "durationMs": 3014,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[],\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1405,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[],\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1609,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "acceptance-01",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": [
+            1,
+            2,
+            3
+          ],
+          "expected": [
+            3,
+            1,
+            2
+          ],
+          "durationMs": 3281,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1642,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":false,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[1,2,3,3]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1639,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":false,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[1,2,3,3]],\\\"kwargsAfter\\\":{}}}\"}]}"
+        },
+        {
+          "id": "acceptance-02",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": {
+            "outcome": [
+              1,
+              2
+            ],
+            "argsAfter": [
+              [
+                1,
+                2,
+                2
+              ]
+            ],
+            "kwargsAfter": {}
+          },
+          "expected": {
+            "outcome": [
+              1,
+              2
+            ],
+            "argsAfter": [
+              [
+                1,
+                2,
+                2
+              ]
+            ],
+            "kwargsAfter": {}
+          },
+          "durationMs": 3240,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1688,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1552,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+        },
+        {
+          "id": "acceptance-03",
+          "requirementId": "R03",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": [],
+          "expected": {
+            "exception": "TypeError"
+          },
+          "durationMs": 2973,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[],\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1387,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[],\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1586,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+        }
+      ]
+    },
+    "candidates": [
+      {
+        "id": 1,
+        "parentId": null,
+        "summary": "SCRIPTED MOCK: try sorted deduplication; independent checks determine its outcome.",
+        "files": {
+          "solution.py": "def unique(values):\n    return sorted(set(values))\n"
+        },
+        "diff": "diff --git a/solution.py b/solution.py\n--- a/solution.py\n+++ b/solution.py\n@@ -1,5 +1,2 @@\n-def unique(values):\n-    if values is None:\n-        return []\n-    values.sort()\n-    return list(set(values))\n+def unique(values):\n+    return sorted(set(values))\n",
+        "visibleChecks": [
+          {
+            "id": "visible-01",
+            "requirementId": "R01",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": [
+              1,
+              2
+            ],
+            "expected": [
+              1,
+              2
+            ],
+            "durationMs": 2951,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1338,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1613,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "visible-02",
+            "requirementId": "R02",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [],
+              "argsAfter": [
+                []
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [],
+              "argsAfter": [
+                []
+              ],
+              "kwargsAfter": {}
+            },
+            "durationMs": 2925,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1422,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1503,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "visible-03",
+            "requirementId": "R03",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "exception": "TypeError"
+            },
+            "expected": {
+              "exception": "TypeError"
+            },
+            "durationMs": 2804,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1622,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1182,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+          }
+        ],
+        "acceptanceChecks": [
+          {
+            "id": "acceptance-01",
+            "requirementId": "R01",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": [
+              1,
+              2,
+              3
+            ],
+            "expected": [
+              3,
+              1,
+              2
+            ],
+            "durationMs": 3028,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1495,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1533,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "acceptance-02",
+            "requirementId": "R02",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                1,
+                2
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  2,
+                  2
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                1,
+                2
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  2,
+                  2
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "durationMs": 2889,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1421,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1468,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "acceptance-03",
+            "requirementId": "R03",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "exception": "TypeError"
+            },
+            "expected": {
+              "exception": "TypeError"
+            },
+            "durationMs": 3046,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1468,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1578,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+          }
+        ],
+        "accepted": false,
+        "rejectionReason": "One or more declared checks failed or were unavailable.",
+        "modelId": null,
+        "providerRequestId": null,
+        "sandboxOperationIds": [
+          "docker:patchproof-check-69e40749-fdff-4f67-9c0b-5955c6bc2afd",
+          "docker:patchproof-check-082f8451-8e3e-48ae-b246-dc15f0788b3a",
+          "docker:patchproof-check-58e91c9c-a214-42d9-8490-f50aa887a334",
+          "docker:patchproof-check-4ce5ce6f-6481-4d58-bfce-fa64a9edb6a3",
+          "docker:patchproof-check-63e641b1-e5ab-4120-9967-c303e8a23650",
+          "docker:patchproof-check-9b24c4a0-ba2d-4387-a554-f0fa89b6f8f3",
+          "docker:patchproof-check-5e528aa9-f2e2-46c7-a028-b949f1b2dc83",
+          "docker:patchproof-check-1c42b211-9f80-4736-ae6a-3b6b5f991a5f",
+          "docker:patchproof-check-6e685a24-dd89-4d6d-9272-e633946cf799",
+          "docker:patchproof-check-46c92218-25b8-4b3a-805e-cf6ef479ca11",
+          "docker:patchproof-check-d0ceec25-3d5d-4f3f-a7f6-8585bbab109f",
+          "docker:patchproof-check-3ed0e905-141a-4313-b99b-e6f02606c100"
+        ],
+        "elapsedMs": 18666,
+        "usage": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "inferenceCalls": 0,
+          "measuredCostUsd": 0
+        }
+      },
+      {
+        "id": 2,
+        "parentId": null,
+        "summary": "SCRIPTED MOCK: preserve first occurrence order and caller input after observed failure.",
+        "files": {
+          "solution.py": "def unique(values):\n    if values is None:\n        raise TypeError(\"values must not be None\")\n    result = []\n    for value in values:\n        if value not in result:\n            result.append(value)\n    return result\n"
+        },
+        "diff": "diff --git a/solution.py b/solution.py\n--- a/solution.py\n+++ b/solution.py\n@@ -1,5 +1,8 @@\n-def unique(values):\n-    if values is None:\n-        return []\n-    values.sort()\n-    return list(set(values))\n+def unique(values):\n+    if values is None:\n+        raise TypeError(\"values must not be None\")\n+    result = []\n+    for value in values:\n+        if value not in result:\n+            result.append(value)\n+    return result\n",
+        "visibleChecks": [
+          {
+            "id": "visible-01",
+            "requirementId": "R01",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": [
+              1,
+              2
+            ],
+            "expected": [
+              1,
+              2
+            ],
+            "durationMs": 3353,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1549,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1804,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "visible-02",
+            "requirementId": "R02",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [],
+              "argsAfter": [
+                []
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [],
+              "argsAfter": [
+                []
+              ],
+              "kwargsAfter": {}
+            },
+            "durationMs": 3058,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1355,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1703,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "visible-03",
+            "requirementId": "R03",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "exception": "TypeError"
+            },
+            "expected": {
+              "exception": "TypeError"
+            },
+            "durationMs": 3057,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1333,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1724,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+          }
+        ],
+        "acceptanceChecks": [
+          {
+            "id": "acceptance-01",
+            "requirementId": "R01",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": [
+              3,
+              1,
+              2
+            ],
+            "expected": [
+              3,
+              1,
+              2
+            ],
+            "durationMs": 3498,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[3,1,2],\"expected\":[3,1,2],\"durationMs\":1532,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[3,1,2],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[3,1,2],\"expected\":[3,1,2],\"durationMs\":1966,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[3,1,2],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "acceptance-02",
+            "requirementId": "R02",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                1,
+                2
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  2,
+                  2
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                1,
+                2
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  2,
+                  2
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "durationMs": 3234,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1652,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1582,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"}]}"
+          },
+          {
+            "id": "acceptance-03",
+            "requirementId": "R03",
+            "status": "pass",
+            "message": "Observed outcome matches the declared check. Repeated observations agree.",
+            "actual": {
+              "exception": "TypeError"
+            },
+            "expected": {
+              "exception": "TypeError"
+            },
+            "durationMs": 3456,
+            "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1921,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1535,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}"
+          }
+        ],
+        "accepted": true,
+        "rejectionReason": null,
+        "modelId": null,
+        "providerRequestId": null,
+        "sandboxOperationIds": [
+          "docker:patchproof-check-239adc87-6f49-43f3-812a-0b1db0f3486e",
+          "docker:patchproof-check-4623fbac-708c-4f74-a0c6-638d6a007b3d",
+          "docker:patchproof-check-b573a6e9-5842-4d82-b059-7eba4ce83d0d",
+          "docker:patchproof-check-14bcf21a-d3c2-4778-93be-e65215ac5c70",
+          "docker:patchproof-check-2f01c6f9-21e3-4583-b9f7-7da5bb796929",
+          "docker:patchproof-check-ea6b8edd-5397-41db-afd9-50e9addd1c9b",
+          "docker:patchproof-check-92ff41ef-d6d3-4da8-b148-b402e197ff05",
+          "docker:patchproof-check-7e79af3b-afdd-4d30-9fd4-0f1fab81bbfd",
+          "docker:patchproof-check-3328364e-7361-4be2-8f28-8ccfeb0143ca",
+          "docker:patchproof-check-13348715-5c5c-479c-8a95-235cb2466b7f",
+          "docker:patchproof-check-36606e35-794f-4081-98ce-c98fe19c3341",
+          "docker:patchproof-check-0faef72b-2d69-4d98-8cd2-205dc7091dd3"
+        ],
+        "elapsedMs": 20710,
+        "usage": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "inferenceCalls": 0,
+          "measuredCostUsd": 0
+        }
+      }
+    ],
+    "selectedCandidateId": 2,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "pass",
+        "checkIds": [
+          "visible-01",
+          "acceptance-01"
+        ]
+      },
+      {
+        "requirementId": "R02",
+        "status": "pass",
+        "checkIds": [
+          "visible-02",
+          "acceptance-02"
+        ]
+      },
+      {
+        "requirementId": "R03",
+        "status": "pass",
+        "checkIds": [
+          "visible-03",
+          "acceptance-03"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-09-27T09:39:16.802Z",
+        "phase": "queued",
+        "message": "Run queued with a fixed shared resource allowance."
+      },
+      {
+        "sequence": 2,
+        "timestamp": "2026-09-27T09:39:16.806Z",
+        "phase": "preflight",
+        "message": "Checking immutable input digests and isolated local runtime."
+      },
+      {
+        "sequence": 3,
+        "timestamp": "2026-09-27T09:39:16.810Z",
+        "phase": "baseline_capture",
+        "message": "Running original source against frozen declared checks."
+      },
+      {
+        "sequence": 4,
+        "timestamp": "2026-09-27T09:39:36.075Z",
+        "phase": "repair",
+        "message": "Requesting scripted candidate 1; no model inference call."
+      },
+      {
+        "sequence": 5,
+        "timestamp": "2026-09-27T09:39:36.087Z",
+        "phase": "check",
+        "message": "Checking candidate 1 in a fresh isolated workspace."
+      },
+      {
+        "sequence": 6,
+        "timestamp": "2026-09-27T09:39:54.741Z",
+        "phase": "repair",
+        "message": "Requesting scripted candidate 2; no model inference call."
+      },
+      {
+        "sequence": 7,
+        "timestamp": "2026-09-27T09:39:54.751Z",
+        "phase": "check",
+        "message": "Checking candidate 2 in a fresh isolated workspace."
+      },
+      {
+        "sequence": 8,
+        "timestamp": "2026-09-27T09:40:15.451Z",
+        "phase": "export",
+        "message": "Preserving source, patch, checks, costs and observed events."
+      },
+      {
+        "sequence": 9,
+        "timestamp": "2026-09-27T09:40:15.455Z",
+        "phase": "terminal",
+        "message": "verified_for_declared_checks: declared_local_checks_passed. Mock model mode remains explicit."
+      }
+    ],
+    "sandboxOperationIds": [
+      "docker:patchproof-check-1cc5c282-22e3-4adf-8c63-970092e3f93d",
+      "docker:patchproof-check-d65a9c25-1fb9-41a6-8291-d4aac325edff",
+      "docker:patchproof-check-e9455a7b-7f32-4968-8b06-583c97de2a23",
+      "docker:patchproof-check-15568211-9037-4df9-8b8f-cbc5509e3c70",
+      "docker:patchproof-check-4324938a-de9b-41cc-a6cc-8dae979f2f0f",
+      "docker:patchproof-check-c8d8b95a-e870-4184-a54e-9a64e9aa1325",
+      "docker:patchproof-check-ff880271-678e-489d-bf5c-7dac36547672",
+      "docker:patchproof-check-d8497a6e-4cad-4aa0-ab48-4970edc88e8b",
+      "docker:patchproof-check-e701f2f7-6e08-40ea-9f8e-6b3a2a065d9f",
+      "docker:patchproof-check-5bfc1d9c-ee52-416d-be95-7b6fdd8c896f",
+      "docker:patchproof-check-170325ad-ed13-4518-8b51-cdb8d4d42127",
+      "docker:patchproof-check-5464f92b-312e-4c61-aa46-68eebaca0d38",
+      "docker:patchproof-check-69e40749-fdff-4f67-9c0b-5955c6bc2afd",
+      "docker:patchproof-check-082f8451-8e3e-48ae-b246-dc15f0788b3a",
+      "docker:patchproof-check-58e91c9c-a214-42d9-8490-f50aa887a334",
+      "docker:patchproof-check-4ce5ce6f-6481-4d58-bfce-fa64a9edb6a3",
+      "docker:patchproof-check-63e641b1-e5ab-4120-9967-c303e8a23650",
+      "docker:patchproof-check-9b24c4a0-ba2d-4387-a554-f0fa89b6f8f3",
+      "docker:patchproof-check-5e528aa9-f2e2-46c7-a028-b949f1b2dc83",
+      "docker:patchproof-check-1c42b211-9f80-4736-ae6a-3b6b5f991a5f",
+      "docker:patchproof-check-6e685a24-dd89-4d6d-9272-e633946cf799",
+      "docker:patchproof-check-46c92218-25b8-4b3a-805e-cf6ef479ca11",
+      "docker:patchproof-check-d0ceec25-3d5d-4f3f-a7f6-8585bbab109f",
+      "docker:patchproof-check-3ed0e905-141a-4313-b99b-e6f02606c100",
+      "docker:patchproof-check-239adc87-6f49-43f3-812a-0b1db0f3486e",
+      "docker:patchproof-check-4623fbac-708c-4f74-a0c6-638d6a007b3d",
+      "docker:patchproof-check-b573a6e9-5842-4d82-b059-7eba4ce83d0d",
+      "docker:patchproof-check-14bcf21a-d3c2-4778-93be-e65215ac5c70",
+      "docker:patchproof-check-2f01c6f9-21e3-4583-b9f7-7da5bb796929",
+      "docker:patchproof-check-ea6b8edd-5397-41db-afd9-50e9addd1c9b",
+      "docker:patchproof-check-92ff41ef-d6d3-4da8-b148-b402e197ff05",
+      "docker:patchproof-check-7e79af3b-afdd-4d30-9fd4-0f1fab81bbfd",
+      "docker:patchproof-check-3328364e-7361-4be2-8f28-8ccfeb0143ca",
+      "docker:patchproof-check-13348715-5c5c-479c-8a95-235cb2466b7f",
+      "docker:patchproof-check-36606e35-794f-4081-98ce-c98fe19c3341",
+      "docker:patchproof-check-0faef72b-2d69-4d98-8cd2-205dc7091dd3"
+    ]
+  },
+  "fixture": {
+    "id": "stable-unique-01",
+    "repoId": "fixture-01",
+    "split": "development",
+    "title": "Stable duplicate removal",
+    "description": "Repair unique(values) so deduplication preserves first occurrence order and caller-owned input. None must raise TypeError.",
+    "requirements": [
+      {
+        "id": "R01",
+        "text": "Return each distinct value once in first-occurrence order, using Python equality."
+      },
+      {
+        "id": "R02",
+        "text": "Do not mutate the input list."
+      },
+      {
+        "id": "R03",
+        "text": "Raise TypeError for None."
+      }
+    ],
+    "files": {
+      "solution.py": "def unique(values):\n    if values is None:\n        return []\n    values.sort()\n    return list(set(values))\n"
+    },
+    "editAllowlist": [
+      "solution.py"
+    ],
+    "entrypoint": "solution.py",
+    "visibleCases": [
+      {
+        "id": "visible-01",
+        "requirementId": "R01",
+        "function": "unique",
+        "args": [
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "visible-02",
+        "requirementId": "R02",
+        "function": "unique",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": true,
+        "expected": []
+      },
+      {
+        "id": "visible-03",
+        "requirementId": "R03",
+        "function": "unique",
+        "args": [
+          null
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expectedException": "TypeError"
+      }
+    ],
+    "acceptanceCases": [
+      {
+        "id": "acceptance-01",
+        "requirementId": "R01",
+        "function": "unique",
+        "args": [
+          [
+            3,
+            1,
+            3,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "id": "acceptance-02",
+        "requirementId": "R02",
+        "function": "unique",
+        "args": [
+          [
+            1,
+            2,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": true,
+        "expected": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "acceptance-03",
+        "requirementId": "R03",
+        "function": "unique",
+        "args": [
+          null
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expectedException": "TypeError"
+      }
+    ],
+    "license": "CC0-1.0",
+    "provenance": "Original PatchProof synthetic fixture, authored 2026-09-27; no third-party code or data."
+  },
+  "runtimeLock": {
+    "schemaVersion": "1.0",
+    "mode": "mock",
+    "observedAt": "2026-09-27T07:29:00Z",
+    "local": {
+      "node": "25.5.0",
+      "npm": "11.8.0",
+      "python": "3.12.3",
+      "architecture": "x64",
+      "platform": "linux"
+    },
+    "model": {
+      "provider": "nebius-token-factory",
+      "baseUrl": "https://api.tokenfactory.nebius.com/v1/",
+      "id": null,
+      "accountVerifiedAt": null,
+      "licenseUrl": null,
+      "modelCardUrl": null,
+      "contextLimit": null,
+      "toolOutputBehavior": null,
+      "inputUsdPerMillionTokens": null,
+      "outputUsdPerMillionTokens": null
+    },
+    "sandbox": {
+      "provider": "nebius-sandboxes",
+      "endpoint": "https://api.tokenfactory.nebius.com/sandboxes/v1",
+      "sdkVersion": null,
+      "imageDigest": null,
+      "architecture": null,
+      "accountVerifiedAt": null,
+      "billingUnit": null,
+      "usdPerBillingUnit": null,
+      "networkControlsVerifiedAt": null,
+      "cancellationVerifiedAt": null
+    },
+    "integrationOperationIds": [],
+    "sources": [
+      "https://docs.tokenfactory.nebius.com/quickstart",
+      "https://docs.tokenfactory.nebius.com/sandboxes/overview",
+      "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/images/list-publicly-available-images",
+      "https://docs.tokenfactory.nebius.com/api-reference/sandboxes/instances/spawn-a-new-container-instance",
+      "https://docs.tokenfactory.nebius.com/sandboxes/cli/tutorial/configuration"
+    ],
+    "localCheckImage": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "localExecution": {
+      "available": true,
+      "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+      "reason": null
+    },
+    "checkProtocol": {
+      "id": "repeat-observations-v1",
+      "repetitions": 2,
+      "disagreement": "needs_review",
+      "budget": "shared-batch-wall-time"
+    },
+    "repairPolicy": "immutable-branches-visible-baseline-v1",
+    "operationalLock": {
+      "schemaVersion": "1.0",
+      "scope": "local-unscored-development",
+      "liveProtocolFrozen": false,
+      "sources": {
+        "Makefile": "sha256:9e4173732c24b51200dd84a4a4b4e7e0e798dcf1209283ee6c73dfb7c1cae288",
+        "apps/api/package.json": "sha256:80b332d02e46e04ed765586bbafecff3c272401f46322b05281526fb5e689d2a",
+        "apps/api/src/application.ts": "sha256:4c405d476f747a4a2b0a093580b69b22eb11745b6b520a587b057bbad320ec8d",
+        "apps/api/src/main.ts": "sha256:456bf38ef04cbebc0850e2996c8dd44b8386fd3709202f0cf8366d999c6dc7fc",
+        "apps/api/src/product-server.ts": "sha256:fb2d95dfb14c00bfd7389dd28920dca76c543683dc4c486ccf24c14f0afef402",
+        "apps/api/src/server.ts": "sha256:41af0db84a59c0ba05ade7044f4a9ac72a37d3209bac0da3d77741cf1e6d3be3",
+        "apps/web/app.js": "sha256:d27f18d0b420e9dbc156c0a3a7410535ece8bc5f8b02a1c87af8e98c7314e61b",
+        "apps/web/index.html": "sha256:a841b1d36ee3b56fb17c74c6da7fe3472ea76464837123995143a520868c8bb4",
+        "apps/web/package.json": "sha256:19cc2e6c80cf33cf26e9fa9547a0066f3b4dab3969400441b86a9ac99892a3d9",
+        "apps/web/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa",
+        "apps/web/verify-browser.ts": "sha256:8e4354a6dab6c75cdd4b944deb010904716c3cbf0a88d6d0e7c6971861be3d16",
+        "budget.json": "sha256:ad8eefa85d0920215a8fe08c91303e20e5c4e4b5237404bcec51826fa207537c",
+        "owner-decisions.json": "sha256:988504839c9b92bb05863aa30b908d591f284b20046470dc11d59c795bc72a7d",
+        "package-lock.json": "sha256:4f4093554c09e019067b6551a87fd45a26051b7bd62bb483a4cc845724fa1f3f",
+        "package.json": "sha256:9ad5cdb20b5b2eaade573968b7e9acbaecc14e38b500230289ef3de23edffa62",
+        "packages/contracts/package.json": "sha256:a1cd30fdc3792fdadb6a41d7493406670afe85006151b5152ab6e3edeec4caa6",
+        "packages/contracts/src/catalogue.ts": "sha256:26cf47e9945d4234402336abe65df1a379179999fc00b2a6a76d6c6cbc22728e",
+        "packages/contracts/src/digest.ts": "sha256:e15d2b8369f25cbdd86674e051e51d3f58dbcd140373b93639746a70dbb7db3d",
+        "packages/contracts/src/index.ts": "sha256:4e477571842142bc7fc2992a0f0975918e151f1a9fb2fba0d16bdf74624ab7c9",
+        "packages/contracts/src/product-validation.ts": "sha256:386d5a706fc0083dc958863553825ecad9e11afcbb7d63f61808acc3cd918499",
+        "packages/contracts/src/product.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+        "packages/contracts/src/providers.ts": "sha256:7792fc50d3ecad452ed7b662fd4abeb1b0d797bb510e4956c280a09824d10e34",
+        "packages/mock/package.json": "sha256:d871e3d88e2d16c05256d0d10c4e4da504dd99e7e258c41cbf35eb34da71db16",
+        "packages/mock/src/bundle.ts": "sha256:f4eb9972c80a269c8a90ff8946a9edc958bd5fcea906ccf45c619eda6941896f",
+        "packages/mock/src/coordinator.ts": "sha256:f64dd36c2a3949d3bb6057a728ed27d50aa623688d6e454e36b79e8e1b2cdf60",
+        "packages/mock/src/store.ts": "sha256:4ba29e8d5cbbb83eaee6fd20bb62e604785fb0cce1f423096852de5f9ebf0a0a",
+        "packages/orchestrator/package.json": "sha256:7fa0910b8d75deebf407e173987a06bea723c6125e99a06dd52d283e29c91b07",
+        "packages/orchestrator/src/budget-ledger.ts": "sha256:34f98745d37333f3a47ebb5e21212597227af56119343b4a4fe486e08ccc1c87",
+        "packages/orchestrator/src/coordinator.ts": "sha256:5b7387fc2f9f1d58859865f1e56ae3919d210996f793cae052d123c6a98fdff3",
+        "packages/orchestrator/src/evidence.ts": "sha256:586e54c1fec7838eba36842e9da3dbbaf28a76a52dc22c45e6d9599b95e2a390",
+        "packages/orchestrator/src/fixtures.ts": "sha256:56c06f9e64d717ee1796bcc707cb9ff2217980ecaee32ec2d263eab5cbeb0c8f",
+        "packages/orchestrator/src/journal.ts": "sha256:a4002e0245bf786eb3e9c620520fa45994bdb1de1a9643d0c058e027a4f7cb46",
+        "packages/orchestrator/src/lease.ts": "sha256:db2992e7b94580fbf3b5c4e6365baa359a0a6a1463570584f4eff86a470c64bc",
+        "packages/orchestrator/src/operational-lock.ts": "sha256:686e1b09c9c656e1c6b56b64eaca97586d0c3092a850334418d23499ea5f77b4",
+        "packages/orchestrator/src/patch.ts": "sha256:9218c57354b10694a0026d60ca09f7d1206bee299252691a311b6274ad0d8473",
+        "packages/orchestrator/src/repeated-checks.ts": "sha256:24c355192db6f539dcd5d5a98306d8c90d815f9099da2ef38c6645a6e17c43dc",
+        "packages/orchestrator/src/trusted-smoke.ts": "sha256:654c89f95ef4b96aeed5034249bea3f3acdc0809b488cf6699b881ea246e0351",
+        "runtime-lock.json": "sha256:51b2ba48c71ee95eb287a45bee7e278f4be8358e2c7c59c215e52f92588db716",
+        "scripts/check-contract-lock.ts": "sha256:ea3b8f8f56ca6625dcc8391c6a9d37c36768e6ac55420c09812779accaaf4454",
+        "scripts/cli.ts": "sha256:007023a3f11368c4fa44d715cfa32e58771e787bbd8495938c3826493bc6405f",
+        "scripts/config.ts": "sha256:0186ba3c580bb62ed81456fc778a253d08fdb8be1bec2a405a6560356b0117c3",
+        "scripts/product-cli.ts": "sha256:29fff5012ecad34e3db45c182ef07cdd5ef43fc1f4835c868b1f4d5ab4381d11",
+        "scripts/release-audit.ts": "sha256:c5e9e0bc8cca15075679a1409ada0572ce43c9a1fb6c751adcfbc416f7e3d467",
+        "scripts/release-files.ts": "sha256:dc6b278a371859c14124b66940cd4a836ee39737f8d61a7ad394041bad4f2762",
+        "scripts/release-packet.ts": "sha256:1d188b7b20b531013925ab908125755c931b07905b022dfc157b27951e4c7a2e",
+        "scripts/release-receipts.ts": "sha256:be9f9c058cd7ec918a164492cea72298f711b1bfbc1eb6923181a6f172f5af02",
+        "scripts/validate-preparation.py": "sha256:ad283708138a06b3190217df513ebdc80c3968e03f3ba7cdb410112de33145e0",
+        "scripts/verify-browser.ts": "sha256:29a09cadeafc2749d2e097427d2decfc1725ea50c6417b300357cb62e8c197e9",
+        "tsconfig.json": "sha256:4d0be16e40406d37fd915af87a0acd0df96b5885b2d14a226abdd07bb658e674",
+        "workers/evaluator/adjudicate.ts": "sha256:7e729532dba0eb72c4062017c75c0057dee4bdea2c8ac2420171994691403684",
+        "workers/evaluator/analysis.ts": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b",
+        "workers/evaluator/cli.ts": "sha256:07174a9f6f234d737785c479416b4226d4cbef4a6e7e220f32a93da3c25cbc18",
+        "workers/evaluator/dispatcher.ts": "sha256:77331e694d59d66fabb33c828d315e0d7744e15ba6ced12996149ea1f21e186b",
+        "workers/evaluator/fixture-validation.ts": "sha256:95bbb211101a7f47be0c3f08bd43670f5070b6766592c40bcd14720b06bc86ad",
+        "workers/evaluator/protocol.ts": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112",
+        "workers/evaluator/reviewer-server.ts": "sha256:541204696d1c523790d7445ab6cbdff4599a2bb2d59fd6277f433b6d86c0fcb1",
+        "workers/evaluator/reviewer-study.ts": "sha256:053b58bd797dfe454911a57bf081b5e14c9556b9fb804adcadd32fb6ffe56a94",
+        "workers/evaluator/reviewer-web/app.js": "sha256:61ce00e6861c850cc61b01839c43add01819faa3d8114cf4f81fece1ae9f10cd",
+        "workers/evaluator/reviewer-web/index.html": "sha256:fce8d7e5cde9ce34a409f3081c0207055a8bde9917d2c097b0b1179f7f6dfaeb",
+        "workers/evaluator/reviewer-web/style.css": "sha256:d0f1db92bceedddf97d0a43c9b4f78a98aec10fc2692fb18a2dc07ce1a633a94",
+        "workers/evaluator/validate-fixtures.ts": "sha256:a4b786fd28d8acde1d27cd7032d890e8bd16275193d923aa9b7e63e5fc7884ff",
+        "workers/evaluator/verify-reviewer-browser.ts": "sha256:615d4dca63182583b5b22889f5fe7b853bde18bb4ee9a4a0b0e2d13ca22a9331",
+        "workers/repair/index.ts": "sha256:d5c223ac696408794eaf2a43b833322162388898077070f0704eff4eb6b000cd",
+        "workers/sandbox/driver.ts": "sha256:176caad54da3dfbf2bef286d6d59746ff565c6be13bbdaa49b79b7d68cb6f768",
+        "workers/sandbox/index.ts": "sha256:ed85aa6452efa53bede6b98d7599b6cb87d7b9f74994d7ddab9edc61cf1797aa",
+        "workers/sandbox/nebius-runner.ts": "sha256:6d2331c66789d819234682ce2b4e78044d42bafa4c7530301e15f5a9d11bd191",
+        "workers/sandbox/nebius-types.ts": "sha256:95181fcd371702db95c6689748cceb0b8cfb810eb0e80303a72b05513f656a55",
+        "workers/sandbox/nebius.ts": "sha256:d1c6861acca2fb9f07342d0af38d092ba28bf4738de45d29e3f2a7d4de679815",
+        "workers/sandbox/process.ts": "sha256:1653666a878d0dfc2ef0ab67f56babcd5f9a49a96656385666387575c2580e4c",
+        "workers/sandbox/reconcile.ts": "sha256:5d084a0fdb885b71810e3bccdd698e15d10a37e88e32eee3955a090826707dc7"
+      },
+      "behavior": {
+        "modelPromptAndRequest": "workers/repair/index.ts",
+        "modelSampling": "provider-defaults-unverified",
+        "modelSeed": null,
+        "determinismClaimed": false,
+        "baseline": "progressive-source-visible-feedback-latest-candidate",
+        "checksOnly": "progressive-source-acceptance-feedback-latest-candidate",
+        "patchproof": "original-source-acceptance-feedback-best-declared-score",
+        "tieBreak": "earliest-candidate",
+        "maximumCandidates": 3,
+        "inferenceAllowance": "one-shared-episode-budget",
+        "finalOracleFeedback": 0,
+        "checkProtocol": "repeat-observations-v1"
+      }
+    }
+  },
+  "files": {
+    "patch.diff": {
+      "content": "diff --git a/solution.py b/solution.py\n--- a/solution.py\n+++ b/solution.py\n@@ -1,5 +1,8 @@\n-def unique(values):\n-    if values is None:\n-        return []\n-    values.sort()\n-    return list(set(values))\n+def unique(values):\n+    if values is None:\n+        raise TypeError(\"values must not be None\")\n+    result = []\n+    for value in values:\n+        if value not in result:\n+            result.append(value)\n+    return result\n",
+      "digest": "sha256:6c42ae327b9f12fd05d9108503cc38d05ed2f7c4b1e9d49ec44b5db6ee58238d"
+    },
+    "commands.json": {
+      "content": "{\n  \"replay\": \"make reproduce RUN=5b18d54c-513c-4c42-a540-0c3e46213e16\",\n  \"isolatedEntrypoint\": \"solution.py\"\n}",
+      "digest": "sha256:261fe66b2afd35f4921f8b5124ae200f7e13d70a36acc526ffb7aefd2bd6a14c"
+    },
+    "coverage.json": {
+      "content": "[\n  {\n    \"requirementId\": \"R01\",\n    \"status\": \"pass\",\n    \"checkIds\": [\n      \"visible-01\",\n      \"acceptance-01\"\n    ]\n  },\n  {\n    \"requirementId\": \"R02\",\n    \"status\": \"pass\",\n    \"checkIds\": [\n      \"visible-02\",\n      \"acceptance-02\"\n    ]\n  },\n  {\n    \"requirementId\": \"R03\",\n    \"status\": \"pass\",\n    \"checkIds\": [\n      \"visible-03\",\n      \"acceptance-03\"\n    ]\n  }\n]",
+      "digest": "sha256:6a5001e08cd282c35109ac01222e1af17bf0f7de3c54abc916f06a5d83cf53ba"
+    },
+    "cost-ledger.json": {
+      "content": "{\n  \"mode\": \"mock\",\n  \"aggregate\": {\n    \"inferenceCalls\": 0,\n    \"inputTokens\": 0,\n    \"outputTokens\": 0,\n    \"sandboxCpuSeconds\": null,\n    \"measuredCostUsd\": 0,\n    \"costIsEstimate\": false,\n    \"elapsedMs\": 58645\n  },\n  \"attempts\": [\n    {\n      \"id\": 1,\n      \"usage\": {\n        \"inputTokens\": 0,\n        \"outputTokens\": 0,\n        \"inferenceCalls\": 0,\n        \"measuredCostUsd\": 0\n      }\n    },\n    {\n      \"id\": 2,\n      \"usage\": {\n        \"inputTokens\": 0,\n        \"outputTokens\": 0,\n        \"inferenceCalls\": 0,\n        \"measuredCostUsd\": 0\n      }\n    }\n  ]\n}",
+      "digest": "sha256:ae5da4c2638f3159fa6dc16eee576f80274f585c5ce55b504cf023da67b1ac15"
+    },
+    "events.json": {
+      "content": "[\n  {\n    \"sequence\": 1,\n    \"timestamp\": \"2026-09-27T09:39:16.802Z\",\n    \"phase\": \"queued\",\n    \"message\": \"Run queued with a fixed shared resource allowance.\"\n  },\n  {\n    \"sequence\": 2,\n    \"timestamp\": \"2026-09-27T09:39:16.806Z\",\n    \"phase\": \"preflight\",\n    \"message\": \"Checking immutable input digests and isolated local runtime.\"\n  },\n  {\n    \"sequence\": 3,\n    \"timestamp\": \"2026-09-27T09:39:16.810Z\",\n    \"phase\": \"baseline_capture\",\n    \"message\": \"Running original source against frozen declared checks.\"\n  },\n  {\n    \"sequence\": 4,\n    \"timestamp\": \"2026-09-27T09:39:36.075Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Requesting scripted candidate 1; no model inference call.\"\n  },\n  {\n    \"sequence\": 5,\n    \"timestamp\": \"2026-09-27T09:39:36.087Z\",\n    \"phase\": \"check\",\n    \"message\": \"Checking candidate 1 in a fresh isolated workspace.\"\n  },\n  {\n    \"sequence\": 6,\n    \"timestamp\": \"2026-09-27T09:39:54.741Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Requesting scripted candidate 2; no model inference call.\"\n  },\n  {\n    \"sequence\": 7,\n    \"timestamp\": \"2026-09-27T09:39:54.751Z\",\n    \"phase\": \"check\",\n    \"message\": \"Checking candidate 2 in a fresh isolated workspace.\"\n  },\n  {\n    \"sequence\": 8,\n    \"timestamp\": \"2026-09-27T09:40:15.451Z\",\n    \"phase\": \"export\",\n    \"message\": \"Preserving source, patch, checks, costs and observed events.\"\n  },\n  {\n    \"sequence\": 9,\n    \"timestamp\": \"2026-09-27T09:40:15.455Z\",\n    \"phase\": \"terminal\",\n    \"message\": \"verified_for_declared_checks: declared_local_checks_passed. Mock model mode remains explicit.\"\n  }\n]",
+      "digest": "sha256:1752f6ebb3d5c7a5bd7ef4e47e4482ccad3f24d213009647e9d4efaf2844d88b"
+    },
+    "candidate-1/visible-01.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1338,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1613,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:6de93b848715edd9f216b1e4df08b70c7a9309acfdf9742ad82306fc94dea5f7"
+    },
+    "candidate-1/visible-02.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1422,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1503,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:1f04f9138f6e146430b5ec8f2033f9c5d0815cc153415da266a402bb6bf0a965"
+    },
+    "candidate-1/visible-03.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1622,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1182,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:1678917dde8de4a5989cba3968f33c0b93f1e6b10985bbc0c62f71e83a945b25"
+    },
+    "candidate-1/acceptance-01.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1495,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":[1,2,3],\"expected\":[3,1,2],\"durationMs\":1533,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2,3],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:df6acdb8a6f71559bfc1f31c5c1166b795b4d82c57d6bce79f8a28ef2dcbb769"
+    },
+    "candidate-1/acceptance-02.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1421,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1468,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:f800afbd40b66bda61e6872c498ba05451c32c8323ef0d1262db8313b6ae236a"
+    },
+    "candidate-1/acceptance-03.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1468,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1578,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:ed859cc4897fed3eb070ee7fbf0ab7787bc6038461ebdd2709fa076cca2ca2c9"
+    },
+    "candidate-2/visible-01.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1549,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[1,2],\"expected\":[1,2],\"durationMs\":1804,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,1,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:40199400ea8a423c4273231b14b7b788c49a58c27392da86889e7d1936671540"
+    },
+    "candidate-2/visible-02.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1355,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[],\"argsAfter\":[[]],\"kwargsAfter\":{}},\"durationMs\":1703,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[],\\\"argsAfter\\\":[[]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:b6da5fb6b9f88826584a5a1fda6380b5fc4b58b4836ab0f5b251b87d172035e6"
+    },
+    "candidate-2/visible-03.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1333,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"visible-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1724,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:2d749d355343902999e1d58b3f25d0284bbd108ed07923a96579c4b5e9d88c9e"
+    },
+    "candidate-2/acceptance-01.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[3,1,2],\"expected\":[3,1,2],\"durationMs\":1532,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[3,1,2],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-01\",\"requirementId\":\"R01\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":[3,1,2],\"expected\":[3,1,2],\"durationMs\":1966,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[3,1,2],\\\"argsAfter\\\":[[3,1,3,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:ee389e16d0c90fae93a756abbf3dd6511af70aab559e220c4c9d93fef67e40ef"
+    },
+    "candidate-2/acceptance-02.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1652,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-02\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"expected\":{\"outcome\":[1,2],\"argsAfter\":[[1,2,2]],\"kwargsAfter\":{}},\"durationMs\":1582,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":[1,2],\\\"argsAfter\\\":[[1,2,2]],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:545319d66cc71e0ba49a4c7b81dc71966dd342bc1ffd2b3ee7df9a563ef5b1d5"
+    },
+    "candidate-2/acceptance-03.log": {
+      "content": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1921,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"},{\"id\":\"acceptance-03\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"TypeError\"},\"expected\":{\"exception\":\"TypeError\"},\"durationMs\":1535,\"log\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"TypeError\\\",\\\"argsAfter\\\":[null],\\\"kwargsAfter\\\":{}}}\"}]}",
+      "digest": "sha256:8735f5e9b09c7e1096ffffeaf65c45323e8a95229996d8a64cd960214b3d5d2c"
+    }
+  },
+  "bundleDigest": "sha256:de1070fdab86d1002bdeb1e7747a29679cf3e06f688f7de569c4bf519d5b4fde"
+}

@@ -156,9 +156,11 @@ mapping here. The public index also provides no uploaded-file deletion endpoint;
 files may remain after disposable execution. Retention and associated charges
 must be covered by the verified record. The runner reserves its verified
 conservative full-batch charge ceiling before side effects and never refunds it
-from API cost values. This allowance is process-local; durable global budget
-reservation, live startup and crash recovery remain unwired gates. Restarting a
-runner is not authorization for a new budget.
+from API cost values. This raw-runner allowance is process-local. The separate
+trusted smoke factory adds a durable aggregate reservation and conditional
+coordinator path; see [trusted smoke boundaries](../../docs/trusted-smoke.md).
+Public API/CLI live selection and automated live crash recovery remain unwired.
+Restarting a runner is not authorization for a new budget.
 
 Reported `consumed_cpu` values are summed only when every submitted operation has
 a terminal measurement; missing or ambiguous observations leave CPU `null`.

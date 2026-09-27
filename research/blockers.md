@@ -15,10 +15,11 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 2. Pin sandbox API/image/architecture and verify supported filesystem, network,
    memory, PID, CPU, cancellation and billing controls. Public HTTP mappings alone
    do not establish these properties.
-3. Connect the conditionally implemented sandbox adapter, durable project budget
-   ledger and trusted experiment dispatcher to a calibrated live coordinator
-   factory. Public product commands still refuse live execution; configuration
-   fields alone do not activate provider calls.
+3. Supply verified model/tokenizer/control proofs and trusted credential suppliers
+   to the implemented smoke factory. It binds the model and sandbox adapters to one
+   durable reservation and at most three proposals. A live operator entry point,
+   accounting/cleanup handoff and calibrated experiment executor remain unfinished;
+   public product commands still refuse live execution.
 4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
    curated real cases, retain real operation IDs and reconcile actual charges.
 

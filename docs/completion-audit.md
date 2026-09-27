@@ -43,3 +43,18 @@ implementation gaps within their documented limits. They do not close live proto
 calibration, bounded provider factory/dispatcher integration, real experiments,
 actual human review, independent-machine replay or public release requirements.
 The operational lock deliberately states that it is local and unscored.
+
+## Further coordinator follow-up
+
+The durable dispatcher now passes 38 author/independent/boundary tests. The trusted
+smoke factory subsequently joined the provider adapters, repeated checks and durable
+spending reservation; the full suite passes 203 tests, and the actual local browser
+flow plus all three fresh patch replays passed. Receipts are under
+`research/verification/20260927-smoke-integration/`. These are local and synthetic
+provider observations, not actual account or scored evidence.
+
+A remaining accounting boundary is explicit: provider adapters retain unknown USD,
+while the dispatcher requires complete runtime billing and measured CPU before
+paid final adjudication. A trusted reconciliation handoff and calibrated executor
+are still required. Access alone does not close those implementation gaps, and a
+terminal episode must never silently reopen when later billing arrives.

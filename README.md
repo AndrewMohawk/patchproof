@@ -106,8 +106,12 @@ The [budget ledger](docs/budget-ledger.md), [reviewer study](docs/reviewer-study
 and [release evidence guide](docs/release-evidence.md) describe the new tools.
 The [trusted dispatcher](docs/experiment-dispatcher.md) preserves full experiment
 accounting; its calibrated live executor and account setup remain unconnected.
+The [trusted smoke factory](docs/trusted-smoke.md) connects the provider adapters
+and budget ledger for an explicitly configured integration run of at most three
+proposals. Its tests use fake transports; actual account verification and a live
+operator entry point remain pending.
 The [completion audit](docs/completion-audit.md) describes remaining integration
-work and distinguish implemented tools from actual provider or human results.
+work and distinguishes implemented tools from actual provider or human results.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
 refers to that original package. `tasks.json` is a living acceptance tracker.
 

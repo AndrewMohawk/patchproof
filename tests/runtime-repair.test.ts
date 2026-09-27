@@ -74,3 +74,40 @@ test('cancelled proposal sends nothing', async () => {
   await assert.rejects(provider.propose(input(), controller.signal), /cancelled/i);
   assert.equal(called, false);
 });
+
+test('operation journal failures prevent initial dispatch and retain completed response identity and usage', async () => {
+  const proposed = { ...input(), remaining: { ...input().remaining, maxApprovedSpendUsd: 1 } };
+  let calls = 0;
+  const options = fakeOptions(async () => { calls++; return completion(); });
+  options.onOperation = () => { throw new Error('SECRET journal implementation detail'); };
+  await assert.rejects(new NebiusRepairProvider(options).propose(proposed, signal()), (error: unknown) =>
+    error instanceof RepairError && error.code === 'operation_journal_error' && error.usage.inferenceCalls === 0 && !error.message.includes('SECRET'));
+  assert.equal(calls, 0);
+  options.onOperation = operation => { if (operation.kind === 'response') throw new Error('SECRET journal implementation detail'); };
+  await assert.rejects(new NebiusRepairProvider(options).propose(proposed, signal()), (error: unknown) =>
+    error instanceof RepairError && error.code === 'operation_journal_error' && error.usage.inferenceCalls === 1 &&
+    error.usage.inputTokens === 100 && error.providerRequestId === 'fake-request-001' && !error.message.includes('SECRET'));
+  assert.equal(calls, 1);
+});
+
+test('cancelled stalled completion body stops promptly and retains attempted-call accounting', async () => {
+  const controller = new AbortController(); let bodyCancelled = false;
+  const options = fakeOptions(async () => new Response(new ReadableStream({
+    start(stream) { stream.enqueue(new TextEncoder().encode('{')); setImmediate(() => controller.abort()); },
+    cancel() { bodyCancelled = true; },
+  })));
+  await assert.rejects(new NebiusRepairProvider(options).propose({ ...input(), remaining: { ...input().remaining, maxApprovedSpendUsd: 1 } }, controller.signal),
+    (error: unknown) => error instanceof RepairError && error.code === 'cancelled' && error.usage.inferenceCalls === 1 && error.usage.measuredCostUsd === null);
+  assert.equal(bodyCancelled, true);
+});
+
+test('malformed completion choices still retain independently valid response identity and token usage', async () => {
+  const observed: string[] = [];
+  const options = fakeOptions(async () => Response.json({ id: 'synthetic-malformed-choices', model: 'nvidia/test-only-fixture',
+    choices: null, usage: { prompt_tokens: 100, completion_tokens: 20 } }));
+  options.onOperation = operation => { if (operation.kind === 'response') observed.push(operation.id); };
+  await assert.rejects(new NebiusRepairProvider(options).propose({ ...input(), remaining: { ...input().remaining, maxApprovedSpendUsd: 1 } }, signal()),
+    (error: unknown) => error instanceof RepairError && error.code === 'invalid_response' && error.usage.inputTokens === 100 &&
+    error.usage.outputTokens === 20 && error.providerRequestId === 'synthetic-malformed-choices');
+  assert.deepEqual(observed, ['synthetic-malformed-choices']);
+});

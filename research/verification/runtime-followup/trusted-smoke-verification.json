@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "trusted-smoke-implementation-verification",
+  "recordedAt": "2026-09-27T09:37:44.410953+00:00",
+  "baseCommit": "c28d44adb80bdd6ce7933f96e6c1445d38edf41e",
+  "workingTreeChangesIncluded": true,
+  "scope": "Synthetic injected transports and trusted local accounting; no live account/provider execution.",
+  "synthetic": true,
+  "sources": {
+    "packages/orchestrator/src/trusted-smoke.ts": "sha256:654c89f95ef4b96aeed5034249bea3f3acdc0809b488cf6699b881ea246e0351",
+    "packages/orchestrator/src/coordinator.ts": "sha256:5b7387fc2f9f1d58859865f1e56ae3919d210996f793cae052d123c6a98fdff3",
+    "workers/repair/index.ts": "sha256:d5c223ac696408794eaf2a43b833322162388898077070f0704eff4eb6b000cd",
+    "tests/trusted-smoke.test.ts": "sha256:0cc9953d1508a748e9e4aaa542247b03198d1fa83b87d65537466326f698263c",
+    "tests/runtime-repair.test.ts": "sha256:3e6dde61cb58b0aa851a7a03a8625fd94be68f8c1b40b51ebc0af85062503984",
+    "docs/trusted-smoke.md": "sha256:84307544e86aea2f4508cca5cd36407b1ee05034162ecf64d079ed472d60bfa6",
+    "docs/budget-ledger.md": "sha256:255a12f0a3b2d9966d924d3d60a81b5a4d63e513167b673c24f5bceff47d49fc",
+    "workers/sandbox/README.md": "sha256:ad9469730dec6a126a83b2c56faa7c846ee39a08613085e13567be28dbedc8bc"
+  },
+  "commands": [
+    {
+      "command": "node --test tests/trusted-smoke.test.ts tests/runtime-repair.test.ts tests/orchestrator.test.ts tests/nebius-runner.test.ts tests/nebius-transport.test.ts tests/budget-ledger.test.ts tests/repeated-checks.test.ts",
+      "exitCode": 0,
+      "tests": 82,
+      "passed": 82,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/trusted-smoke-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/trusted-smoke-typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/trusted-smoke-contract-lock.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "artifacts": {
+    "research/verification/runtime-followup/trusted-smoke-tests.log": "sha256:d9adcfb909c64ce6edaa60c710552b27ba141e1743bbd731c79689d978f6d886",
+    "research/verification/runtime-followup/trusted-smoke-typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/runtime-followup/trusted-smoke-contract-lock.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "independentReview": {
+    "scope": "Captured trusted ledger/runtime reference bindings and source/approval/default gate regressions only.",
+    "reviewer": "product_ui development agent",
+    "command": "node --test --test-name-pattern 'caller property mutation|default coordinator rejects|approval|source change' tests/trusted-smoke.test.ts",
+    "reportedExitCode": 0,
+    "reportedPassed": 7,
+    "evidenceType": "Agent-reported bounded review; not live verification."
+  },
+  "limitations": [
+    "No live provider calls, credentials or measured USD.",
+    "Actual account model/license/card/context/tokenizer/rates/control facts remain externally verified prerequisites.",
+    "Measured CPU may remain null; derived ceiling depends on attested quota/timer/overhead facts.",
+    "No automatic live crash cleanup or restart/resume; unknown remote submission and billing retain holds.",
+    "Public app remains mock; no live CLI wiring or automatic fallback.",
+    "Maximum three smoke proposals; not a calibrated 24-round experiment executor.",
+    "Hashes bind inspected bytes; they do not authenticate external account claims."
+  ],
+  "notRun": [
+    {
+      "scope": "Real sponsor smoke, tokenizer/control probes, billing reconciliation, live experiment",
+      "reason": "Account access and verified controls remain absent; no paid calls authorized in this implementation test task."
+    }
+  ]
+}

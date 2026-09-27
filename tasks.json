@@ -126,13 +126,15 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Conditional Nebius upload/spawn/poll/cancel adapter and documented v1 HTTP mapping have transport/lifecycle tests. Account/model/control evidence, trusted live factory integration and two real billed smoke cases remain open.",
-      "blocked_reason": "Conditional Nebius upload/spawn/poll/cancel adapter and documented v1 HTTP mapping have transport/lifecycle tests. Account/model/control evidence, trusted live factory integration and two real billed smoke cases remain open.",
+      "implementation_note": "Conditional Nebius upload/spawn/poll/cancel adapter and trusted three-proposal smoke factory connect model, repeated checks, source/account gates and one durable budget reservation. Fake-transport lifecycle/accounting tests pass. Live operator wiring, account/model/control evidence and two real billed smoke cases remain open.",
+      "blocked_reason": "Conditional Nebius upload/spawn/poll/cancel adapter and trusted three-proposal smoke factory connect model, repeated checks, source/account gates and one durable budget reservation. Fake-transport lifecycle/accounting tests pass. Live operator wiring, account/model/control evidence and two real billed smoke cases remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-runtime-completion/workflows-receipt.json"
+        "research/verification/20260927-runtime-completion/workflows-receipt.json",
+        "docs/trusted-smoke.md",
+        "research/verification/runtime-followup/trusted-smoke-verification.json"
       ]
     },
     {

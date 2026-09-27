@@ -1,0 +1,21 @@
+{
+  "recordedAt": "2026-09-27T09:41:27.833554+00:00",
+  "commands": [
+    {
+      "command": "make reproduce RUN=ab52d388-48b6-4644-93f8-d8365f33748d",
+      "exitCode": 0,
+      "log": "research/verification/20260927-smoke-integration/replay-ab52d388-48b6-4644-93f8-d8365f33748d.log"
+    },
+    {
+      "command": "make reproduce RUN=6ea56536-29fd-4f8d-b850-68200a2d0328",
+      "exitCode": 0,
+      "log": "research/verification/20260927-smoke-integration/replay-6ea56536-29fd-4f8d-b850-68200a2d0328.log"
+    },
+    {
+      "command": "make reproduce RUN=5b18d54c-513c-4c42-a540-0c3e46213e16",
+      "exitCode": 0,
+      "log": "research/verification/20260927-smoke-integration/replay-5b18d54c-513c-4c42-a540-0c3e46213e16.log"
+    }
+  ],
+  "paidCalls": 0
+}

@@ -10,6 +10,8 @@ import { fixtureDigests, publicTask, validatePaths } from './fixtures.ts';
 import { RunJournal } from './journal.ts';
 import { createPatch } from './patch.ts';
 import { FLAKY_CHECK_MESSAGE } from './repeated-checks.ts';
+import { resolveTrustedSmokeCapability, TrustedSmokeGateError } from './trusted-smoke.ts';
+import type { TrustedSmokeSettings } from './trusted-smoke.ts';
 
 export const LOCAL_LIMITS = LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 24000,
   outputTokenLimit: 6000, wallTimeLimitSeconds: 120, sandboxCpuSecondsLimit: 60, maxApprovedSpendUsd: 0 });
@@ -23,15 +25,18 @@ export class Coordinator {
   readonly #provider: RepairProvider;
   readonly #checks: CheckRunner;
   readonly #verifyRuntime: (() => void) | undefined;
+  readonly #trustedSmoke: TrustedSmokeSettings | null;
   readonly #jobs = new Map<string, { controller: AbortController; promise: Promise<void> }>();
   readonly #listeners = new Map<string, Set<(event: ProductEvent) => void>>();
 
   constructor(options: { fixtures: Fixture[]; runtimeLock: unknown; provider: RepairProvider;
-    checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void }) {
+    checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void; trustedSmokeCapability?: unknown }) {
     this.#fixtures = new Map(options.fixtures.map(fixture => [fixture.id, structuredClone(fixture)]));
     this.#runtimeLock = structuredClone(options.runtimeLock);
     this.#provider = options.provider; this.#checks = options.checks;
     this.#verifyRuntime = options.verifyRuntime;
+    this.#trustedSmoke = resolveTrustedSmokeCapability(options.trustedSmokeCapability);
+    if (options.trustedSmokeCapability !== undefined && !this.#trustedSmoke) throw new ContractError('authorization_required', 'Trusted smoke capability is invalid.', 403);
     this.journal = options.journal; this.store = options.store;
   }
 
@@ -50,7 +55,9 @@ export class Coordinator {
     const request = parsed.data;
     const fixture = this.#fixtures.get(request.taskId);
     if (!fixture) throw new ContractError('unknown_task', 'Select a curated public task.');
-    if (request.mode !== 'mock' || this.#provider.mode !== 'mock') {
+    const trustedLive = request.mode === 'live' && this.#provider.mode === 'live' && this.#trustedSmoke &&
+      request.taskId === this.#trustedSmoke.fixtureId && request.variant === this.#trustedSmoke.variant;
+    if (!trustedLive && (request.mode !== 'mock' || this.#provider.mode !== 'mock')) {
       throw new ContractError('authorization_required', 'Real execution requires verified Nebius account, runtime and budget gates.', 403);
     }
     const fingerprint = digestJson(request);
@@ -61,18 +68,20 @@ export class Coordinator {
     }
     this.#verifyRuntime?.();
     if (this.#jobs.size >= 3) throw new ContractError('capacity_exceeded', 'Three runs are already active.', 429);
-    const id = randomUUID();
+    if (trustedLive) this.#trustedSmoke!.beforeCreate();
+    const id = trustedLive ? this.#trustedSmoke!.episodeId : randomUUID();
     const run: ProductRun = {
       schemaVersion: PRODUCT_CONTRACT_VERSION, id, taskId: fixture.id, variant: request.variant, mode: request.mode,
-      competitionReady: false, notice: 'Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.',
+      competitionReady: false, notice: trustedLive ? 'Trusted sponsor smoke path; at most three proposals. Not a calibrated or scored experiment.' : 'Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.',
       phase: 'queued', terminalStatus: null, reason: null, createdAt: new Date().toISOString(), finishedAt: null,
-      ...fixtureDigests(fixture), runtimeLockDigest: digestJson(this.#runtimeLock), limits: { ...LOCAL_LIMITS },
+      ...fixtureDigests(fixture), runtimeLockDigest: digestJson(this.#runtimeLock), limits: { ...(trustedLive ? this.#trustedSmoke!.limits : LOCAL_LIMITS) },
       usage: { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, sandboxCpuSeconds: 0,
-        measuredCostUsd: 0, costIsEstimate: false, elapsedMs: 0 },
+        measuredCostUsd: trustedLive ? null : 0, costIsEstimate: false, elapsedMs: 0 },
       baselineChecks: null, candidates: [], selectedCandidateId: null,
       coverage: fixture.requirements.map(r => ({ requirementId: r.id, status: 'unverified', checkIds: [] })), events: [], sandboxOperationIds: [],
     };
     this.journal.insert(request.idempotencyKey, fingerprint, run);
+    if (trustedLive) this.#trustedSmoke!.bindEventSink(message => this.#event(run, 'repair', message));
     this.#event(run, 'queued', 'Run queued with a fixed shared resource allowance.');
     const controller = new AbortController();
     const promise = this.#execute(run, structuredClone(fixture), controller).finally(() => this.#jobs.delete(id));
@@ -143,14 +152,16 @@ export class Coordinator {
 
   async #check(run: ProductRun, fixture: Fixture, files: Record<string, string>, signal: AbortSignal) {
     signal.throwIfAborted();
+    this.#trustedSmoke?.validateStep();
     const remainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - Date.parse(run.createdAt)) / 1000);
     if (remainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for another check batch.');
     const result = await this.#checks.run({ files, entrypoint: fixture.entrypoint,
-      cases: [...fixture.visibleCases, ...fixture.acceptanceCases], timeoutSeconds: Math.min(30, remainingSeconds),
+      cases: [...fixture.visibleCases, ...fixture.acceptanceCases], timeoutSeconds: Math.min(this.#trustedSmoke?.maximumCheckBatchSeconds ?? 30, remainingSeconds),
       ownerRunId: run.id, onOperation: id => { run.sandboxOperationIds.push(id); this.journal.save(run); },
     }, signal);
     for (const id of result.operationIds) if (!run.sandboxOperationIds.includes(id)) run.sandboxOperationIds.push(id);
     run.usage.sandboxCpuSeconds = result.cpuSeconds === null || run.usage.sandboxCpuSeconds === null ? null : run.usage.sandboxCpuSeconds + result.cpuSeconds;
+    if (run.mode === 'live') run.usage.measuredCostUsd = result.measuredCostUsd === null || run.usage.measuredCostUsd === null ? null : run.usage.measuredCostUsd + result.measuredCostUsd;
     const expected = [...fixture.visibleCases, ...fixture.acceptanceCases];
     if (result.checks.length !== expected.length || expected.some(check => !result.checks.some(observed => observed.id === check.id && observed.requirementId === check.requirementId))) {
       result.infrastructureError = 'incomplete_check_results';
@@ -168,27 +179,34 @@ export class Coordinator {
     const timer = setTimeout(() => controller.abort(new Error('timeout')), run.limits.wallTimeLimitSeconds * 1000);
     try {
       controller.signal.throwIfAborted();
-      this.#event(run, 'preflight', 'Checking immutable input digests and isolated local runtime.');
+      this.#event(run, 'preflight', run.mode === 'live' ? 'Checking trusted smoke bindings and the reserved aggregate envelope.' : 'Checking immutable input digests and isolated local runtime.');
       const digests = fixtureDigests(fixture, run.schemaVersion);
       if (digests.sourceDigest !== run.sourceDigest || digests.policyDigest !== run.policyDigest) throw new ContractError('digest_mismatch', 'Input changed after scheduling.');
       this.#event(run, 'baseline_capture', 'Running original source against frozen declared checks.');
       const original = await this.#check(run, fixture, fixture.files, controller.signal);
       run.baselineChecks = { visible: original.visible, acceptance: original.acceptance };
-      if (original.result.infrastructureError) throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
+      if (original.result.infrastructureError) {
+        if (this.#trustedSmoke && original.result.infrastructureError.startsWith('trusted_smoke_')) throw new TrustedSmokeGateError(original.result.infrastructureError.slice('trusted_smoke_'.length));
+        throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
+      }
       if (original.result.checks.some(check => check.message === FLAKY_CHECK_MESSAGE)) throw new ContractError('flaky_check', 'Original observations are inconsistent.');
       let files = structuredClone(fixture.files);
       let feedback = run.variant === 'baseline' ? original.visible : [...original.visible, ...original.acceptance];
       for (let attempt = 0; attempt < Math.min(3, run.limits.inferenceCallLimit); attempt++) {
         const candidateStarted = Date.now();
         controller.signal.throwIfAborted();
-        this.#event(run, 'repair', `Requesting scripted candidate ${attempt + 1}; no model inference call.`);
+        const modelRemainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - started) / 1000);
+        if (modelRemainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for inference.');
+        this.#trustedSmoke?.validateStep();
+        this.#event(run, 'repair', run.mode === 'live' ? `Requesting sponsor smoke candidate ${attempt + 1}; all candidates share the reserved envelope.` : `Requesting scripted candidate ${attempt + 1}; no model inference call.`);
         const proposal = ProposalSchema.parse(await this.#provider.propose({ taskId: fixture.id, description: fixture.description,
           requirements: fixture.requirements, files: run.variant === 'patchproof' ? structuredClone(fixture.files) : files,
           editAllowlist: fixture.editAllowlist, visibleCases: fixture.visibleCases,
           feedback: feedback.map(c => ({ requirementId: c.requirementId, status: c.status,
             message: `Observed ${attempt === 0 ? 'on original source' : `on candidate ${attempt}`}; next proposal starts from ${run.variant === 'patchproof' ? 'original source' : 'supplied current source'}. ${c.message}` })), attempt,
-          remaining: { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - attempt,
-            inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens },
+          remaining: { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - (run.mode === 'live' ? run.usage.inferenceCalls : attempt),
+            inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens,
+            wallTimeLimitSeconds: modelRemainingSeconds },
         }, controller.signal));
         run.usage.inferenceCalls += proposal.usage.inferenceCalls;
         run.usage.inputTokens += proposal.usage.inputTokens; run.usage.outputTokens += proposal.usage.outputTokens;
@@ -215,6 +233,7 @@ export class Coordinator {
           candidate.rejectionReason = checked.result.infrastructureError;
           candidate.elapsedMs = Date.now() - candidateStarted;
           this.journal.save(run);
+          if (this.#trustedSmoke && checked.result.infrastructureError.startsWith('trusted_smoke_')) throw new TrustedSmokeGateError(checked.result.infrastructureError.slice('trusted_smoke_'.length));
           throw new ContractError('infrastructure_error', 'Candidate checker infrastructure failure.');
         }
         candidate.accepted = allPass([...checked.visible, ...checked.acceptance]);
@@ -238,30 +257,40 @@ export class Coordinator {
       const selected = run.candidates.find(c => c.id === run.selectedCandidateId);
       run.terminalStatus = selected?.accepted && run.coverage.every(row => row.status === 'pass') ? 'verified_for_declared_checks' :
         selected && [...selected.visibleChecks, ...selected.acceptanceChecks].some(check => check.status === 'error') ? 'needs_review' : 'failed';
-      run.reason = selected?.accepted ? 'declared_local_checks_passed' : 'declared_checks_not_satisfied';
+      run.reason = selected?.accepted ? run.mode === 'live' ? 'declared_sponsor_smoke_checks_passed' : 'declared_local_checks_passed' : 'declared_checks_not_satisfied';
     } catch (error) {
       if (controller.signal.aborted) {
         run.terminalStatus = 'needs_review'; run.reason = controller.signal.reason?.message === 'timeout' ? 'timeout' : 'cancelled';
       } else {
         const providerCode = error && typeof error === 'object' && 'code' in error ? String(error.code) : null;
-        const knownCodes = new Set(['mock_task_unavailable', 'rate_limit', 'timeout', 'missing_key', 'protected_path', 'invalid_candidate', 'budget_exceeded', 'transport_error', 'invalid_response']);
-        run.reason = error instanceof ContractError ? error.code : providerCode && knownCodes.has(providerCode) ? providerCode : 'setup_error';
+        const knownCodes = new Set(['mock_task_unavailable', 'rate_limit', 'timeout', 'missing_key', 'protected_path', 'invalid_candidate', 'budget_exceeded', 'budget_exhausted', 'transport_error', 'invalid_response', 'operation_journal_error', 'model_mismatch', 'incomplete_response']);
+        run.reason = error instanceof TrustedSmokeGateError ? error.gateCode : error instanceof ContractError ? error.code : providerCode && knownCodes.has(providerCode) ? providerCode : 'setup_error';
         run.terminalStatus = ['mock_task_unavailable', 'flaky_check'].includes(run.reason) ? 'needs_review' : 'infrastructure_error';
-        if (error && typeof error === 'object' && 'usage' in error) {
-          const usage = ProposalSchema.shape.usage.safeParse(error.usage);
-          if (usage.success) {
-            run.usage.inferenceCalls += usage.data.inferenceCalls; run.usage.inputTokens += usage.data.inputTokens;
-            run.usage.outputTokens += usage.data.outputTokens;
-            run.usage.measuredCostUsd = this.#provider.mode === 'mock' && usage.data.inferenceCalls === 0 ? 0 :
-              usage.data.measuredCostUsd === null || run.usage.measuredCostUsd === null ? null : run.usage.measuredCostUsd + usage.data.measuredCostUsd;
-          }
+      }
+      if (error && typeof error === 'object' && 'usage' in error) {
+        const usage = ProposalSchema.shape.usage.safeParse(error.usage);
+        if (usage.success) {
+          run.usage.inferenceCalls += usage.data.inferenceCalls; run.usage.inputTokens += usage.data.inputTokens;
+          run.usage.outputTokens += usage.data.outputTokens;
+          run.usage.measuredCostUsd = this.#provider.mode === 'mock' && usage.data.inferenceCalls === 0 ? 0 :
+            usage.data.measuredCostUsd === null || run.usage.measuredCostUsd === null ? null : run.usage.measuredCostUsd + usage.data.measuredCostUsd;
         }
+      }
+      if (error && typeof error === 'object' && 'providerRequestId' in error && typeof error.providerRequestId === 'string' && /^[A-Za-z0-9_.:/-]{1,200}$/.test(error.providerRequestId)) {
+        this.#event(run, 'repair', `Failed inference response ID: ${error.providerRequestId}. Billing remains unreconciled.`);
       }
       this.#coverage(run, fixture);
     } finally {
       clearTimeout(timer); run.finishedAt = new Date().toISOString(); run.usage.elapsedMs = Date.now() - started;
       this.#event(run, 'export', 'Preserving source, patch, checks, costs and observed events.');
-      this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. Mock model mode remains explicit.`, false);
+      this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. ${run.mode === 'mock' ? 'Mock model mode remains explicit.' : 'Smoke only; billing remains unreconciled.'}`, false);
+      if (run.mode === 'live') {
+        try { this.#trustedSmoke!.terminal(run); }
+        catch {
+          run.terminalStatus = 'infrastructure_error'; run.reason = 'accounting_persistence_failed';
+          run.events.at(-1)!.message = 'infrastructure_error: accounting_persistence_failed. Preserve the original reservation; no new paid work.';
+        }
+      }
       try { await this.#publish(run, fixture); }
       catch {
         run.terminalStatus = 'infrastructure_error'; run.reason = 'evidence_publish_failed';

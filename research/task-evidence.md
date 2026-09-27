@@ -183,3 +183,28 @@ are in `runtime-followup/dispatcher-verification.json` and
 including controlled process death; they do not execute candidate code or a
 provider, access sealed fixtures or produce scored model results. The calibrated
 live executor, account attestations and CLI wiring remain separate work.
+
+## Trusted smoke integration and local regression
+
+The trusted three-proposal smoke factory now connects the model adapter, sponsor
+sandbox lifecycle, repeated checks, source/account gates and durable budget ledger.
+One reservation covers the whole episode; unknown charges stay held after failure,
+cancellation or restart. The public app remains mock. Exact source hashes and
+focused synthetic commands are in `runtime-followup/trusted-smoke-verification.json`.
+
+Integrated `make test`: **exit 0, 203 passed, zero failures/skips**. The actual pinned
+Chromium browser flow passed all three variants; their selected patches reproduced
+in fresh containers, including the baseline failure. All browser/replay commands
+exited 0. `make doctor` exited 0; smoke, pilot, evaluate and release-check each
+correctly exited 2 for their remaining gates. Logs, unchanged exports, screenshot
+observations and source bindings are in
+`research/verification/20260927-smoke-integration/integration-receipt.json`.
+
+No live provider calls, measured provider charges, experiment scores or human
+responses were produced. A private operator entry point, 24-call experiment loop,
+calibrated live binding and authoritative billing/cleanup handoff remain open.
+The local factory is not that experiment executor.
+
+The earlier dispatcher commit's staged whitespace check reported one trailing blank
+line in its verbatim npm output log; source whitespace and secret checks passed.
+Raw command logs are preserved, and source whitespace checks exclude `.log` files.
