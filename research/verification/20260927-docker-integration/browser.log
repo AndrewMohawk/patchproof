@@ -1,0 +1,13 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:43171/", waiting until "networkidle"[22m
+
+    at /tmp/patchproof-handoff-875d13c/apps/web/verify-browser.ts:34:14 {
+  name: 'TimeoutError'
+}
+
+Node.js v25.5.0

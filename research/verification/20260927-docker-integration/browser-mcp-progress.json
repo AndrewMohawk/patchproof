@@ -1,0 +1,19 @@
+{
+  "title": "PatchProof — review the evidence",
+  "url": "http://127.0.0.1:43171/#compare",
+  "mockLabel": "Mock model · Local checks",
+  "outcomes": [
+    {
+      "text": "B0 · BaselineOrdinary repairA minimal repair loop with the task requirements and visible test feedback.Checks failedRequirements passing2 / 3Candidates recorded1Elapsed48.0 sProvider cost$0.00Review evidence ↗",
+      "run": "#evidence/e1b16ab9-8fe4-46e7-a6c1-094170d802cb"
+    },
+    {
+      "text": "B1 · Acceptance feedbackChecks onlyThe same repair loop with frozen acceptance checks and their feedback.CheckingRequirements passing0 / 3Candidates recorded1Elapsed0 msProvider cost$0.00Starting checksRepairingCheckingPreparing evidenceReview evidence ↗",
+      "run": "#evidence/1c6cd453-0cb5-4b87-a852-81f9d930d50d"
+    },
+    {
+      "text": "P · Candidate selectionPatchProofAcceptance checks, bounded candidates and an explicit selection record.CheckingRequirements passing0 / 3Candidates recorded1Elapsed0 msProvider cost$0.00Starting checksRepairingCheckingPreparing evidenceReview evidence ↗",
+      "run": "#evidence/2ecff35d-973d-44c4-a9ad-31cc544534ad"
+    }
+  ]
+}

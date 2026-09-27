@@ -1,0 +1,22 @@
+- generic [ref=e643]:
+  - generic [ref=e644]:
+    - generic [ref=e645]:
+      - generic [ref=e646]: MOCK MODEL · LOCAL CHECKS
+      - heading "Stable duplicate removal" [level=2] [ref=e647]
+      - paragraph [ref=e648]: Recorded run · PatchProof · 9/27/2026, 7:45:42 AM
+      - paragraph [ref=e649]: Passes declared checks
+      - paragraph [ref=e650]: The selected candidate satisfies all declared local checks.
+    - link "Download evidence ↓" [ref=e652] [cursor=pointer]:
+      - /url: /runs/2ecff35d-973d-44c4-a9ad-31cc544534ad/evidence
+  - generic [ref=e653]:
+    - generic [ref=e654]:
+      - generic [ref=e655]
+      - generic [ref=e740]
+      - generic [ref=e747]
+    - complementary "Run coverage and provenance" [ref=e790]:
+      - generic [ref=e791]
+      - generic [ref=e816]
+      - generic [ref=e845]
+  - generic [ref=e869]:
+    - strong [ref=e870]: Review boundary
+    - paragraph [ref=e871]: Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.

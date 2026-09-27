@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "apps/web/verify-browser.ts",
+    "http://127.0.0.1:43171",
+    "e1b16ab9-8fe4-46e7-a6c1-094170d802cb,1c6cd453-0cb5-4b87-a852-81f9d930d50d,2ecff35d-973d-44c4-a9ad-31cc544534ad"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+  "runIds": [
+    "e1b16ab9-8fe4-46e7-a6c1-094170d802cb",
+    "1c6cd453-0cb5-4b87-a852-81f9d930d50d",
+    "2ecff35d-973d-44c4-a9ad-31cc544534ad"
+  ],
+  "reason": "Observe exact original UI runs after event streaming finished; no new runs",
+  "finishedAt": "2026-09-27T11:47:43.988533+00:00"
+}

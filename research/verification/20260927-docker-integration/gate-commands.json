@@ -1,0 +1,27 @@
+[
+  {
+    "command": "make doctor",
+    "exitCode": 0,
+    "expectedExitCode": 0
+  },
+  {
+    "command": "make smoke",
+    "exitCode": 2,
+    "expectedExitCode": 2
+  },
+  {
+    "command": "make pilot",
+    "exitCode": 2,
+    "expectedExitCode": 2
+  },
+  {
+    "command": "make evaluate",
+    "exitCode": 2,
+    "expectedExitCode": 2
+  },
+  {
+    "command": "make release-check",
+    "exitCode": 2,
+    "expectedExitCode": 2
+  }
+]

@@ -40,13 +40,26 @@ names and post-call arguments against expected outcomes. Candidate output saying
 Containers use no network, read-only rootfs, no capabilities, no-new-privileges,
 UID/GID 65534, 32 PIDs, 128 MiB memory with no added swap, 0.5 CPU, a five-second
 per-process CPU limit, 64 file descriptors and a bounded 16 MiB tmpfs. The host
-caps output at 128 KiB and enforces the batch wall deadline. Docker `--init`
-keeps Python out of PID 1. The pinned image's `/bin/busybox` (v1.37.0, inspected
-2026-09-27) runs `timeout -s KILL` around the driver, with no more than the batch's
-remaining seconds. This separate timer bounds execution after the container
-starts even if the host watchdog disappears. Cancellation kills
-the Docker client and separately removes its named container; cleanup failures
-remain infrastructure errors and stop the batch before another case can start.
+caps output at 128 KiB and enforces a monotonic batch wall deadline that includes
+image inspection and setup. Creation and execution are separate: the runner
+requires a creation acknowledgement and verifies the immutable ID, exact name,
+image and ownership labels before `start --attach --interactive`. Cancellation
+and the remaining deadline are checked again after that inspection.
+
+Docker `--init` keeps Python out of PID 1. A fixed guest launcher checks the
+original absolute deadline before invoking the driver. It then execs the pinned
+image's `/bin/busybox` (v1.37.0, inspected 2026-09-27) `timeout -s KILL`, capped by
+both the remaining absolute deadline and the allowance recorded at creation.
+An expired delayed start cannot invoke candidate source. The separate guest timer
+bounds execution if the host watchdog disappears.
+
+Cancellation kills the Docker client, then a separate five-second cleanup budget
+inspects the exact owned object, removes its verified immutable ID and confirms
+its absence. Delayed appearance is retried within that budget. Repeated absence
+without an acknowledged or observed creation remains `container_cleanup_unconfirmed`;
+it cannot become successful cleanup. The runner never retries creation or starts
+another case while cleanup is uncertain. Check logs retain the creation
+acknowledgement, immutable ID and cleanup result.
 The coordinator must pass each batch only its remaining aggregate wall allowance.
 Sequential execution plus the 0.5 CPU quota supplies a conservative nominal
 resource envelope, not an exact CPU-seconds counter: scheduler quota periods can
@@ -72,17 +85,25 @@ spawning thread dies. Missing launcher/prctl support or other operating systems
 fail closed. The host executes only this fixed launcher, never candidate Python.
 
 Recovery is not atomic with Docker daemon work: a create request accepted before
-client death can become visible after a recovery listing. Repeat run-scoped
-reconciliation if delayed daemon work is suspected. An already accepted container
-has the independent wall timer once execution starts (at most the runner's
-validated 900-second batch cap; the product coordinator supplies at most 30
-seconds). Daemon queue/start latency is outside that execution bound. No immediate
-or atomic crash-cleanup guarantee is claimed.
+client death can become visible after a recovery listing or bounded cleanup.
+The separate creation step leaves such an object inactive; this runner will not
+later start it. Run-scoped reconciliation may still be required to remove that
+object. An empty recovery listing establishes observed absence, not daemon-request
+quiescence. For an already accepted start, the guest deadline check and timer remain
+independent of the host client. No immediate or atomic crash-cleanup guarantee is
+claimed. Author, independent and integrated receipts are under
+`research/verification/20260927-docker-create-cleanup/`,
+`research/verification/runtime-followup/docker-lifecycle-independent-review.json`
+and `research/verification/20260927-docker-integration/`.
 
 Process-control references: [Linux PR_SET_PDEATHSIG](https://man7.org/linux/man-pages/man2/PR_SET_PDEATHSIG.2const.html)
 (Linux man-pages 6.19, page dated 2026-02-08) and
 [Docker run --init](https://docs.docker.com/reference/cli/docker/container/run/#specify-an-init-process),
 inspected 2026-09-27.
+The separate creation/start interface is documented by
+[Docker container create](https://docs.docker.com/reference/cli/docker/container/create/)
+and [Docker container start](https://docs.docker.com/reference/cli/docker/container/start/),
+inspected 2026-09-27 and exercised with Docker client/daemon 29.8.1.
 CPU quota periods and short-burst caveats are documented in
 [Linux CFS Bandwidth Control](https://docs.kernel.org/scheduler/sched-bwc.html),
 also inspected 2026-09-27.

@@ -1,0 +1,7 @@
+{
+  "command": "docker ps -a --filter label=org.patchproof.owned=true --format ...",
+  "exitCode": 0,
+  "observedContainers": [],
+  "observedAt": "2026-09-27T11:49:51.922898+00:00",
+  "scope": "Observed project-owned containers at this instant; not proof of daemon-request quiescence."
+}

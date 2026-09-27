@@ -137,3 +137,27 @@ exact inspected identity; the previously documented Docker late-create cleanup
 race remains an operational limitation. The local browser app still serves its
 previously verified `abfa450` checkout; this operator-only update does not claim a
 new browser or independent-machine replay.
+
+## Docker lifecycle follow-up
+
+Source `875d13c` separates creation from candidate execution, verifies exact
+ownership before start/removal, and preserves unresolved creation as an error.
+The guest launcher checks the original deadline before invoking candidate source.
+Author tests include an actual late create that remains inactive and is removed;
+independent tests cover cancellation barriers and foreign identity substitution.
+
+Integrated `make test` passed **465 tests**, with typecheck and contract checks.
+The loopback app now serves that pinned source. A real browser launched all three
+local policies; the scripted baseline failed its declared checks and B1/P passed.
+All three exported patches reproduced their recorded verdicts in fresh containers.
+The first auxiliary browser observer timed out waiting for network idle while
+events streamed. Its failure was preserved; the unchanged observer then passed
+all 14 checks on the same original run IDs after they finished. No replacement
+episode or paid call was made. Desktop/mobile screenshots, exports, logs and the
+exact source are recorded in
+`research/verification/20260927-docker-integration/integration-receipt.json`.
+
+No project-owned container remained after verification. Delayed daemon creation
+after owner death can still leave an inactive object requiring scoped recovery;
+an empty listing is not proof that daemon requests have settled. The runtime guide
+retains that limit. Provider, experiment, human and release gates remain open.

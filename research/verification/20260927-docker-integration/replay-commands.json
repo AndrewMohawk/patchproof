@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "make",
+      "reproduce",
+      "RUN=e1b16ab9-8fe4-46e7-a6c1-094170d802cb"
+    ],
+    "exitCode": 0,
+    "log": "reproduce-baseline.log",
+    "runId": "e1b16ab9-8fe4-46e7-a6c1-094170d802cb"
+  },
+  {
+    "command": [
+      "make",
+      "reproduce",
+      "RUN=1c6cd453-0cb5-4b87-a852-81f9d930d50d"
+    ],
+    "exitCode": 0,
+    "log": "reproduce-checks_only.log",
+    "runId": "1c6cd453-0cb5-4b87-a852-81f9d930d50d"
+  },
+  {
+    "command": [
+      "make",
+      "reproduce",
+      "RUN=2ecff35d-973d-44c4-a9ad-31cc544534ad"
+    ],
+    "exitCode": 0,
+    "log": "reproduce-patchproof.log",
+    "runId": "2ecff35d-973d-44c4-a9ad-31cc544534ad"
+  }
+]

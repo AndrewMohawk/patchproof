@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "local-docker-lifecycle-integrated-verification",
+  "observedAt": "2026-09-27T11:49:51.923393+00:00",
+  "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+  "executableSourceDirty": false,
+  "sourceMapDigest": "sha256:8b992258cb6e70576b4c61dd2c4d469b3fe154a598ce27d6dbdf7beb0c4052ac",
+  "operationalLockDigest": "sha256:57ba9ab9f669037c2b1f5991811ac4e67299abcb8b8e912577779f0b63d9beea",
+  "commands": [
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+      "startedAt": "2026-09-27T11:44:18.566689+00:00",
+      "finishedAt": "2026-09-27T11:45:10.570923+00:00",
+      "passed": 465,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "expectedExitCode": 0
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedExitCode": 2
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedExitCode": 2
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedExitCode": 2
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedExitCode": 2
+    },
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=e1b16ab9-8fe4-46e7-a6c1-094170d802cb"
+      ],
+      "exitCode": 0,
+      "log": "reproduce-baseline.log",
+      "runId": "e1b16ab9-8fe4-46e7-a6c1-094170d802cb"
+    },
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=1c6cd453-0cb5-4b87-a852-81f9d930d50d"
+      ],
+      "exitCode": 0,
+      "log": "reproduce-checks_only.log",
+      "runId": "1c6cd453-0cb5-4b87-a852-81f9d930d50d"
+    },
+    {
+      "command": [
+        "make",
+        "reproduce",
+        "RUN=2ecff35d-973d-44c4-a9ad-31cc544534ad"
+      ],
+      "exitCode": 0,
+      "log": "reproduce-patchproof.log",
+      "runId": "2ecff35d-973d-44c4-a9ad-31cc544534ad"
+    },
+    {
+      "command": "gitleaks git --log-opts='7f60d99..HEAD' --redact",
+      "exitCode": 0,
+      "commitsScanned": 4,
+      "leaks": 0
+    }
+  ],
+  "browser": {
+    "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+    "status": "passed",
+    "checks": [
+      "task selection updates requirements",
+      "unsupported tasks cannot launch mock repair",
+      "honest mock labels",
+      "real three-variant execution",
+      "matched resource limits",
+      "candidate rejection and repair",
+      "local operation IDs",
+      "readable diff and check logs",
+      "downloaded evidence identity",
+      "addressed-run reload",
+      "mobile all views",
+      "keyboard focus",
+      "no console errors",
+      "same-origin browser traffic"
+    ],
+    "browserVersion": "145.0.7632.6",
+    "launch": "Playwright MCP on the current pinned loopback app",
+    "originalObserver": {
+      "command": [
+        "node",
+        "apps/web/verify-browser.ts",
+        "http://127.0.0.1:43171",
+        "e1b16ab9-8fe4-46e7-a6c1-094170d802cb,1c6cd453-0cb5-4b87-a852-81f9d930d50d,2ecff35d-973d-44c4-a9ad-31cc544534ad"
+      ],
+      "exitCode": 1,
+      "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+      "runIds": [
+        "e1b16ab9-8fe4-46e7-a6c1-094170d802cb",
+        "1c6cd453-0cb5-4b87-a852-81f9d930d50d",
+        "2ecff35d-973d-44c4-a9ad-31cc544534ad"
+      ],
+      "launch": "Playwright MCP Compare all three button; this observer resumes those exact new runs",
+      "finishedAt": "2026-09-27T11:46:29.006624+00:00"
+    },
+    "resumedObserver": {
+      "command": [
+        "node",
+        "apps/web/verify-browser.ts",
+        "http://127.0.0.1:43171",
+        "e1b16ab9-8fe4-46e7-a6c1-094170d802cb,1c6cd453-0cb5-4b87-a852-81f9d930d50d,2ecff35d-973d-44c4-a9ad-31cc544534ad"
+      ],
+      "exitCode": 0,
+      "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+      "runIds": [
+        "e1b16ab9-8fe4-46e7-a6c1-094170d802cb",
+        "1c6cd453-0cb5-4b87-a852-81f9d930d50d",
+        "2ecff35d-973d-44c4-a9ad-31cc544534ad"
+      ],
+      "reason": "Observe exact original UI runs after event streaming finished; no new runs",
+      "finishedAt": "2026-09-27T11:47:43.988533+00:00"
+    },
+    "replacementRuns": 0,
+    "report": "browser-report.json",
+    "screenshots": "screenshots/",
+    "console": "browser-mcp-console.log",
+    "visualInspection": "Desktop comparison and mobile evidence screenshots inspected."
+  },
+  "runs": [
+    {
+      "id": "e1b16ab9-8fe4-46e7-a6c1-094170d802cb",
+      "variant": "baseline",
+      "status": "failed",
+      "bundleDigest": "sha256:c575536dfe78f1ec87975176a477836a556228fde8a994cc34ba05afafb451a1"
+    },
+    {
+      "id": "1c6cd453-0cb5-4b87-a852-81f9d930d50d",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "bundleDigest": "sha256:fadc856ad1c30373515af4d196155fb74bbcf9626245d69481006ea6dd358fd5"
+    },
+    {
+      "id": "2ecff35d-973d-44c4-a9ad-31cc544534ad",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "bundleDigest": "sha256:614c921ede4d02a3e7ef184537b2bec6f87ac3f6d9554ca579d9e64ee89b966e"
+    }
+  ],
+  "localService": {
+    "url": "http://127.0.0.1:43171",
+    "pid": 956663,
+    "checkout": "/tmp/patchproof-handoff-875d13c",
+    "sourceCommit": "875d13cfc05784ae0f30aac5c31d0edacec03a1a",
+    "stateDirectory": "/home/andrewmohawk/patchproof/.local/product",
+    "mode": "mock",
+    "verification": "Listener PID/cwd verified; actual UI actions, evidence downloads and fresh replay completed."
+  },
+  "externalInterfaces": {
+    "node": "25.5.0",
+    "dockerClient": "29.8.1",
+    "dockerServer": "29.8.1",
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "interfaceSources": "research/verification/20260927-docker-create-cleanup/receipt.json"
+  },
+  "toolObservations": [
+    "A browser evaluation artifact path under /tmp was rejected by the MCP allowed-root check; saved successfully inside the project verification directory. No app/run failure resulted."
+  ],
+  "providerCalls": 0,
+  "actualNebiusSpendUsd": 0,
+  "approvedCeilingUsd": 25,
+  "competitionReady": false,
+  "benchmarkExecuted": false,
+  "remainingFailures": [
+    "No real provider access, smoke, calibration, billing or experiment evidence.",
+    "Human study, independent-machine replay and owner release decisions remain pending.",
+    "Owner death during an accepted create may leave a later inactive object requiring scoped reconciliation. Empty listing alone is not atomic daemon cleanup proof."
+  ],
+  "artifacts": {
+    "browser-command.json": "sha256:99d0066da7b0a08e2ea71aca04e332056c29e24ec4df40fc4d4d8d1c9aed8509",
+    "browser-mcp-console.log": "sha256:8244bba88be0b62a7e4395f5ad8839ee394e16c040dcd709e31a5bdd12a704a7",
+    "browser-mcp-progress.json": "sha256:77be2485294435c828f9fa613b1ba60f2804e38289274067c96313c6e2973b7d",
+    "browser-report.json": "sha256:f1f0e1b54b1678f3656a75a1ce13121ad0265ea65459b7c2002903e7f1c3c287",
+    "browser-resume-command.json": "sha256:a1b86525c5978ea718324053c5588287bbf2f01b920aaf2bd1e9afd070fdce1f",
+    "browser-resume.log": "sha256:f1f0e1b54b1678f3656a75a1ce13121ad0265ea65459b7c2002903e7f1c3c287",
+    "browser.log": "sha256:53cfec1f385ecd4771418d1ecefd5108b0e5f4ff7d5c2df4943426eb1a815c39",
+    "bundles/1c6cd453-0cb5-4b87-a852-81f9d930d50d.json": "sha256:a9b32f6fc3d09549b77c7b9cdfdb7b360221ae04fb56dafa83599ef1fbefc17a",
+    "bundles/2ecff35d-973d-44c4-a9ad-31cc544534ad.json": "sha256:f93ff441020b8c21db463c501080c4cb6282db2a0344f0f84e722312bb0ead73",
+    "bundles/e1b16ab9-8fe4-46e7-a6c1-094170d802cb.json": "sha256:9f9fa0d490a18de30f2cac92208b517fe992269b48369144c344407a679820ca",
+    "container-inventory.json": "sha256:cd255285173615c5d7f8c57829a7f132d40ce7a1e8d2f97e3886023bf948325a",
+    "doctor.log": "sha256:fb06af337c0c39b7caf841d8736ecb427914a13a4eb99bd21ad698387841aa3a",
+    "evaluate.log": "sha256:6937bf867ca2da368761597bd4539dd567bf254c0d5e2cae41a0e14736fb244b",
+    "evidence-mcp-snapshot.md": "sha256:b23845e1730a21da329f56af7659447b9b68a02b17f81147574f649ce9119e21",
+    "exported-runs.json": "sha256:035056e7d71ade8911a39d93cd01ff4c6ddc835aa7592b4ba2ec6c7e73f86101",
+    "gate-commands.json": "sha256:32838cc0b7b6fb18bafc05ca28eed422463127ba513dcdb381a666493033231a",
+    "make-test-command.json": "sha256:a30889467ad492861d7b3c1e28b281ca072bf13de45ca6c2b32ee4ca007ed1bc",
+    "make-test.log": "sha256:d6ac19f7b53194afd50de12dbe033707df2b799231d75b3802d4d318fdac912e",
+    "pilot.log": "sha256:1478253c1af225c9f02a9ee5cd5556efe161ed9681b44591028090d84e72cfeb",
+    "release-check.log": "sha256:8cfb0083e13b934d5342e42a9fbcf8d4b0a2523f11d12bcf7d2b2a8e1507806b",
+    "replay-commands.json": "sha256:744ec65ae0145b8eec030f6ed7412bd37e7a34c6522d1a7c1192ad77075f5d02",
+    "reproduce-baseline.log": "sha256:7175529088a232e9670c61e21639fec1f01caec4e3908fe959a323344a7c97d9",
+    "reproduce-checks_only.log": "sha256:89a6bb279ba7bdd4f0222903f5500c0875ea8b82902798095387e83edaaa73c7",
+    "reproduce-patchproof.log": "sha256:59873553c556bb51058b9385fd957ed43972d73d2c7ea04964562e3edccb8c08",
+    "screenshots/patchproof-compare-mobile.png": "sha256:9396390ef055da74865ead738eca6370702c7608f7bca220eac13749a5ba7408",
+    "screenshots/patchproof-comparison-desktop.png": "sha256:a54a4124519a47751dcaa42116f842e73faee92e1ce6a54184eb74633bbaa3b4",
+    "screenshots/patchproof-evidence-desktop.png": "sha256:878fc8e105644af451b7410373d486f21e44baf9c7ad1e06340fff25ec8ebcba",
+    "screenshots/patchproof-evidence-mobile.png": "sha256:835a864903e200c9f287dafdc556240f0a9354b4a4ce3d3c25c673bfeb62e9f5",
+    "screenshots/patchproof-tasks-desktop.png": "sha256:974aca2f23261813994323ee297f37a99764645d84bf4bdb226f6f3f044d2573",
+    "screenshots/patchproof-tasks-mobile.png": "sha256:5d7fdfbe9ac6d9dd74aeef4efb28fd9f9d1a908733a8c68387e0c8f9a035d03c",
+    "service-switch.json": "sha256:11476d8b6b4d1798dd3b409558b9b1a6f4ca07d91b66242c98fe840690ae5647",
+    "smoke.log": "sha256:4d3d9630fd34e1c9365cb033bc60cd4e91e977010ec328970901061ae90663cd"
+  }
+}
