@@ -1,0 +1,19 @@
+(node:93179) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ composed wrapper retains an already measured verdict overrun instead of hiding its final cost (169.86351ms)
+✔ a larger final accepted observation preserves measured overrun and never counts cumulative values twice (154.41634ms)
+✔ incomplete final observation retains all known charges while final fields remain unknown (148.869892ms)
+✔ prospective usage still stops work and retains measured lower bounds before any final observation (105.005719ms)
+✔ final accounting cannot reopen prospective callbacks or change a terminal row (107.04927ms)
+✔ retained wrapped callbacks cannot append operations after adjudication has quiesced (113.014201ms)
+✔ bad observer binding cannot erase the cost already reported by completed adjudication (104.087181ms)
+✔ the 1001st operation cannot corrupt the retained inventory or hide the failed checkpoint (516.405303ms)
+✔ checkpoint persistence failure cannot escape as private raw error text or start adjudication (37.287597ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1740.004842

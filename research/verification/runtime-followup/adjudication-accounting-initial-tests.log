@@ -1,0 +1,136 @@
+(node:4069348) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ wrapper binds only exact phase metadata and persists intents before forwarding (12.395523ms)
+✔ incomplete billingComplete cannot expose measured totals (2.608823ms)
+✔ incomplete cpuComplete cannot expose measured totals (1.765328ms)
+✔ incomplete inventoryComplete cannot expose measured totals (1.46984ms)
+✔ incomplete cleanupComplete cannot expose measured totals (1.378262ms)
+✔ incomplete retentionFinal cannot expose measured totals (1.18255ms)
+✔ mismatched observation checkpoint fails closed (1.449244ms)
+✔ mismatched observation inventory fails closed (1.512286ms)
+✔ mismatched observation lower-cost fails closed (1.602005ms)
+✔ mismatched observation lower-cpu fails closed (1.740316ms)
+✔ terminal callback failure retains partial handles and cumulative lower bounds without observer (1.322587ms)
+✔ caller cancellation during observation preserves known usage and prevents complete return (1.570558ms)
+✔ deadline bounds an observer that ignores cancellation and stale callbacks are refused (1002.932782ms)
+✔ binding drift refuses callbacks before side effects (0.956652ms)
+✔ dispatcher adds cumulative adjudication once: runtime .10 plus .02 then .03 is .13 (1056.700825ms)
+✔ dispatcher incomplete retains known phase totals and keeps unknown hold (856.445111ms)
+✔ dispatcher throw retains known phase totals and keeps unknown hold (639.927292ms)
+✔ dispatcher cancel retains known phase totals and keeps unknown hold (500.921617ms)
+✔ regressing adjudication cumulative totals reject before erasing durable lower bound (378.405754ms)
+(node:4069349) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent: inconsistent adjudication rejects correct with no checks (279.714061ms)
+✔ independent: inconsistent adjudication rejects correct with a failed check (283.569882ms)
+✔ independent: inconsistent adjudication rejects incorrect with every check passing (238.918903ms)
+✔ independent: inconsistent adjudication rejects incorrect with no checks (250.562973ms)
+✔ independent: inconsistent adjudication rejects correct with an infrastructure error (260.56956ms)
+✔ independent: inconsistent adjudication rejects unverified with completed sealed checks (686.079778ms)
+✔ independent: inconsistent adjudication rejects infrastructure failure without an error (313.479248ms)
+✔ independent: an execution checkpoint cannot alter usage after selection is finalized (386.290133ms)
+✔ independent: transport configuration and callbacks cannot drift after construction (384.840691ms)
+✔ independent: unknown CPU does not erase the last known cumulative lower bound (219.305014ms)
+✔ independent: cancelled work retains its row and rejects subsequent stale callbacks (264.896582ms)
+✔ independent: dispatcher state rejects a symlink parent directory (8.236787ms)
+✔ independent: dispatcher state requires a private parent directory (6.064154ms)
+✔ independent: pre-existing SQLite sidecar symlinks are rejected without touching their targets (7.642919ms)
+✔ independent: the episode deadline is distinct from user cancellation (210.953905ms)
+✔ independent: cancellation holds unknown billing across reopened accounting and prevents another dispatch (395.181897ms)
+✔ independent: live adjudication gets only the remaining aggregate allowance (365.130871ms)
+(node:4069356) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ complete pilot synthetic grid retains all 72 rows and cannot enter scored analysis (8472.369565ms)
+✔ complete final synthetic grid retains all 270 rows and cannot enter scored analysis (26591.670146ms)
+✔ durable selection precedes adjudication, is copied, and duplicate connections never re-execute (147.292053ms)
+✔ plan drift, mode changes and mismatched transport bindings reject existing state (76.06563ms)
+✔ setup failures and exceptions remain terminal rows without artificial correctness (3889.044735ms)
+✔ typed runtime failures keep safe distinct reasons and partial work without adjudication or retry (487.412316ms)
+✔ plain and forged exception classifications never copy unrecognized provider text (107.285942ms)
+✔ cancellation records the active episode and all undispatched rows with no oracle call (916.884391ms)
+✔ invalid or changed selected artifact cannot reach the independent adjudicator (87.383688ms)
+✔ adjudication failure retains operation handles and unknown aggregate usage without feedback or retry (114.503064ms)
+✔ live branch refuses missing gates before injected execution and retains each denominator (1134.071096ms)
+✔ injected live branch receives a durable grant first and charges runtime plus adjudication (230.814747ms)
+✔ incomplete injected billing stays held and blocks later dispatch while retaining rows (1218.34567ms)
+✖ measured adjudication overrun is retained and cannot support matched-budget inference (1122.129086ms)
+✔ checkpoint preserves known partial charges and operation handles when execution throws (176.867585ms)
+✔ dead-owner recovery retains usage and identity and never resumes execution or adjudication (347.540164ms)
+✔ live owners are never stolen by a second dispatcher recovery (100.24208ms)
+✔ constructor snapshots transport mode and prospective bounds instead of following caller mutation (217.760752ms)
+✔ process death after a durable live-control grant retains partial billing and forbids replay (1303.974346ms)
+(node:4069358) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ inherited object names remain numeric terminal reason counts (157.19614ms)
+✔ unverified rows cannot claim completed sealed adjudication (13.853287ms)
+✔ capture uses one SQLite snapshot while a concurrent writer changes metadata and grid (1090.445912ms)
+✔ offline verification needs no dispatcher or source tree and exports no private detail columns (1944.437502ms)
+✔ unknown final billing retains observed lower bounds without enabling comparative claims (125.575566ms)
+✔ partial live metadata keeps cancelled and missing episodes in the primary denominator (129.787048ms)
+✔ readiness cannot be self-authorized, future dated or bound to another transport (17.348648ms)
+✔ consistent file rehashes cannot hide dropped or changed grid identity (158.090929ms)
+(node:4069360) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ read-only capture preserves full grid and active checkpoints without selecting private artifact content (4409.261655ms)
+✔ 72 and 270 synthetic grids retain every row while remaining excluded from scored analysis (299.778052ms)
+✔ partial, cancelled and failed episodes retain planned denominators and known usage lower bounds (79.478817ms)
+✔ invented live-shaped rows reach the existing analyzer only with accepted bound valid readiness (206.190372ms)
+✔ missing readiness, false gates and unstarted live metadata produce no scored report (246.405906ms)
+✔ live partial, unknown and over-budget data keep analyzer comparisons suppressed (191.542278ms)
+✔ capture validation refuses identity, terminal, mode and checkpoint contradictions (49.392187ms)
+✔ capture rejects wrong external bindings, malformed DB positions and oversized fields (2654.081788ms)
+✔ offline verification detects wrong pins, changed bytes, omitted and additional artifacts (92.325346ms)
+✔ rehashing a fabricated summary or dropping a result cannot fool recomputation (188.597963ms)
+✔ exports refuse overwrites, source-tree output, public parents and symlink aliases (121.803498ms)
+✔ offline and database readers refuse symlink or hardlink artifacts without reading targets (2606.119558ms)
+✔ manifest path traversal and duplicate artifact paths are rejected before opening them (109.577906ms)
+(node:4069371) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ an exact decimal first receipt below the known USD lower bound rejects before projection rounding (181.079012ms)
+✔ observer snapshots its original request before polling and cannot be redirected to another phase (245.10921ms)
+✔ no receipt remains wholly unknown even with a recorded empty operation inventory (196.557725ms)
+✔ cumulative revisions replace totals and old accepted duplicates never move the head backwards (164.294623ms)
+✔ a stale second connection cannot replace an accepted CAS head (177.818788ms)
+✔ changed receipt ID content, revision gaps, wrong previous digest and stale head reject (187.029017ms)
+✔ every immutable identity dimension must match the recorded final request (167.405052ms)
+✔ live null model lock, duplicate operations, changed request and unsupported receipt scope reject (493.340885ms)
+✔ exact inventory set is required; missing known handles cannot be self-authorized by context (268.364267ms)
+✔ unknown, non-USD or estimated billing never satisfies measured complete observation (222.805127ms)
+✔ incomplete cleanup, unresolved inventory and continuing retention cannot complete polling (290.691233ms)
+✔ CPU and USD cannot decrease or become unknown across revisions (241.161892ms)
+✔ expired receipts and changed checkpoints retain historical lower bounds without completeness (241.307038ms)
+✔ pre-checkpoint observations and future-issued receipts reject before acceptance (159.57884ms)
+✔ runtime and adjudication remain disjoint cumulative domains and are never summed by the store (192.672189ms)
+✔ read-only reopen preserves accepted history but grants neither recording nor execution (190.416715ms)
+✔ receipt and request data returned to callers cannot mutate durable bindings (172.069585ms)
+✔ private database readers reject missing paths, symlinks, hardlinks and broad permissions (113.870034ms)
+✔ stored body corruption is detected and does not become authoritative projection (138.055933ms)
+✔ exponent and sub-receipt-precision numeric lower bounds never round down to zero (257.532482ms)
+✔ read projection also compares exact decimal amounts before microdollar rounding (116.392112ms)
+ℹ tests 97
+ℹ suites 0
+ℹ pass 96
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47037.9625
+
+✖ failing tests:
+
+test at tests/evaluation-dispatcher.test.ts:198:1
+✖ measured adjudication overrun is retained and cannot support matched-budget inference (1122.129086ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(report.budgetViolations.some(row=>row.dimension==='measuredCostUsd'))
+
+      at TestContext.<anonymous> (file:///tmp/patchproof-adjudication-accounting/tests/evaluation-dispatcher.test.ts:203:64)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

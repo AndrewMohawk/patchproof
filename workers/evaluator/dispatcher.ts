@@ -23,7 +23,7 @@ const ExecutionSchema = z.strictObject({ selectionFinalized:z.literal(true),sele
     if(value.selectedCandidate && value.infrastructureExclusion!==null) ctx.addIssue({code:'custom',message:'Setup failure cannot select an artifact.'});
   });
 export type FinalizedExecution = z.infer<typeof ExecutionSchema>;
-const AdjudicationSchema = z.strictObject({ episodeId:z.string(),taskId:z.string(),selectedCandidateDigest:DigestSchema,
+export const AdjudicationSchema = z.strictObject({ episodeId:z.string(),taskId:z.string(),selectedCandidateDigest:DigestSchema,
   outcome:z.enum(['correct','incorrect','unverified','infrastructure_error']),sealedChecksExecuted:z.boolean(),
   checkCount:z.number().int().nonnegative(),passedCheckCount:z.number().int().nonnegative(),infrastructureError:z.string().nullable(),
   evaluationUsage:z.strictObject({measuredCostUsd:z.number().finite().nonnegative().nullable(),sandboxCpuSeconds:z.number().finite().nonnegative().nullable()}),
@@ -50,6 +50,8 @@ export interface AdjudicationInput {
   episodeId:string;taskId:string;expectedFixtureDigest:string;expectedOracleDigest:string;
   selectedCandidateDigest:string;selectionFinalized:true;files:Record<string,string>;onOperation:(id:string)=>void;
   ownerRunId:string;timeoutSeconds:number;sandboxCpuSecondsLimit:number;maxApprovedSpendUsd:number;
+  onUsage?:(usage:{measuredCostUsd:number|null;sandboxCpuSeconds:number|null})=>void;
+  onFinalUsage?:(usage:{measuredCostUsd:number|null;sandboxCpuSeconds:number|null})=>void;
 }
 export interface DispatcherTransport {
   executionMode:'synthetic'|'live';modelLockDigest:string|null;policyDigest:string;
@@ -157,10 +159,10 @@ export class ExperimentDispatcher {
   #phase(id:string,phase:Phase){this.#transaction(()=>{const row=this.#row(id);if(row.owner_id!==this.#owner||row.phase==='terminal'||row.cancel_requested)throw new DispatchStop('cancelled');this.#db.prepare('UPDATE episodes SET phase=? WHERE episode_id=?').run(phase,id);this.#event(id,phase);});}
   #operations(id:string,ids:string[]){const parsed=z.array(OperationId).max(1000).parse(ids);this.#transaction(()=>{const row=this.#row(id);if(row.owner_id!==this.#owner||row.phase==='terminal')throw new DispatchStop('stale_callback');
     const all=[...new Set([...(JSON.parse(row.operations_json) as string[]),...parsed])];if(all.length>1000)throw new DispatchStop('operation_limit');this.#db.prepare('UPDATE episodes SET operations_json=? WHERE episode_id=?').run(JSON.stringify(all),id);});}
-  #checkpoint(id:string,value:{usage:Usage;operationIds:string[]}){
+  #checkpoint(id:string,value:{usage:Usage;operationIds:string[]},phase:'executing'|'adjudicating'='executing',enforceLimits=true){
     const parsed=z.strictObject({usage:UsageSchema,operationIds:z.array(OperationId).max(1000)}).parse(value);
     this.#transaction(()=>{const row=this.#row(id),previous=UsageSchema.parse(JSON.parse(row.usage_json));
-      if(row.owner_id!==this.#owner||row.phase!=='executing'||row.cancel_requested||this.#controllers.get(id)?.signal.aborted)throw new DispatchStop('stale_callback');
+      if(row.owner_id!==this.#owner||row.phase!==phase||row.cancel_requested||this.#controllers.get(id)?.signal.aborted)throw new DispatchStop('stale_callback');
       for(const key of Object.keys(previous) as (keyof Usage)[])if(previous[key]!==null&&((parsed.usage[key]===null&&previous[key]!>0)||(parsed.usage[key]!==null&&parsed.usage[key]!<previous[key]!)))throw new DispatchStop('usage_regression');
       const operations=[...new Set([...(JSON.parse(row.operations_json) as string[]),...parsed.operationIds])];if(operations.length>1000)throw new DispatchStop('operation_limit');
       this.#db.prepare('UPDATE episodes SET usage_json=?,operations_json=? WHERE episode_id=?').run(JSON.stringify(parsed.usage),JSON.stringify(operations),id);this.#event(id,'usage_checkpoint',{usage:parsed.usage});});
@@ -168,7 +170,7 @@ export class ExperimentDispatcher {
       const reservation=this.#ledger!.get(this.#row(id).dispatch_id);
       this.#ledger!.reconcile({id:reservation.id,actualCostMicros:parsed.usage.measuredCostUsd===null?(reservation.actualCostMicros===null?null:BigInt(reservation.actualCostMicros)):usdToMicros(parsed.usage.measuredCostUsd,'ceil'),complete:false,evidenceDigest:hashJson(parsed)});
     }
-    if(this.#exceeded(this.#episode(id),parsed.usage))throw new DispatchStop('resource_limit');
+    if(enforceLimits&&this.#exceeded(this.#episode(id),parsed.usage))throw new DispatchStop('resource_limit');
   }
   #exceeded(episode:Episode,usage:Usage){return usage.inferenceCalls>episode.limits.inferenceCallLimit||usage.inputTokens>episode.limits.inputTokenLimit||usage.outputTokens>episode.limits.outputTokenLimit||usage.runtimeFeedbackRounds>this.#plan.fixedRuntimeFeedbackRounds||usage.elapsedMs>episode.limits.wallTimeLimitSeconds*1000||(usage.sandboxCpuSeconds!==null&&usage.sandboxCpuSeconds>episode.limits.sandboxCpuSecondsLimit)||(usage.measuredCostUsd!==null&&usage.measuredCostUsd>episode.limits.maxApprovedSpendUsd);}
   #adjudicationAllowance(episode:Episode,execution:FinalizedExecution){
@@ -248,13 +250,28 @@ export class ExperimentDispatcher {
         const allowance=this.#adjudicationAllowance(episode,execution);
         this.#phase(id,'adjudicating');
         const selected=ExecutionSchema.parse(JSON.parse(this.#row(id).execution_json!)).selectedCandidate!;
+        const baseUsage=structuredClone(execution.usage);
+        const phaseUsage:{measuredCostUsd:number|null;sandboxCpuSeconds:number|null}={measuredCostUsd:null,sandboxCpuSeconds:null};
+        let phaseWorkFinalized=false;
+        const onUsage=(value:{measuredCostUsd:number|null;sandboxCpuSeconds:number|null},enforceLimits=true)=>{
+          const parsed=AdjudicationSchema.shape.evaluationUsage.parse(value);
+          for(const key of ['measuredCostUsd','sandboxCpuSeconds'] as const){
+            if(parsed[key]!==null&&phaseUsage[key]!==null&&parsed[key]!<phaseUsage[key]!)throw new DispatchStop('usage_regression');
+            if(parsed[key]!==null)phaseUsage[key]=parsed[key];
+          }
+          const combined={...baseUsage,elapsedMs:Math.max(baseUsage.elapsedMs,Math.max(0,Date.parse(this.#time())-Date.parse(row.started_at!))),
+            measuredCostUsd:baseUsage.measuredCostUsd===null?null:Number(usdToMicros(baseUsage.measuredCostUsd,'ceil')+usdToMicros(phaseUsage.measuredCostUsd??0,'ceil'))/1e6,
+            sandboxCpuSeconds:baseUsage.sandboxCpuSeconds===null?null:baseUsage.sandboxCpuSeconds+(phaseUsage.sandboxCpuSeconds??0)};
+          this.#checkpoint(id,{usage:combined,operationIds:[]},'adjudicating',enforceLimits);
+        };
         const adjudicationSignal=AbortSignal.any([controller.signal,AbortSignal.timeout(allowance.timeoutSeconds*1000)]);
         verdict=AdjudicationSchema.parse(await abortable(this.#transport.adjudicate({episodeId:row.dispatch_id,taskId:episode.taskId,
           expectedFixtureDigest:episode.fixtureDigest,expectedOracleDigest:episode.oracleDigest,selectedCandidateDigest:selected.digest,
-          selectionFinalized:true,files:selected.files,onOperation:operation=>this.#operations(id,[operation]),ownerRunId:row.dispatch_id,...allowance},adjudicationSignal),adjudicationSignal));
+          selectionFinalized:true,files:selected.files,onOperation:operation=>this.#operations(id,[operation]),onUsage:value=>{if(phaseWorkFinalized)throw new DispatchStop('stale_callback');onUsage(value);},onFinalUsage:value=>{phaseWorkFinalized=true;onUsage(value,false);},ownerRunId:row.dispatch_id,...allowance},adjudicationSignal),adjudicationSignal));
         if(verdict.episodeId!==row.dispatch_id||verdict.taskId!==episode.taskId||verdict.selectedCandidateDigest!==selected.digest||verdict.passedCheckCount>verdict.checkCount||
           (['correct','incorrect'].includes(verdict.outcome)&&!verdict.sealedChecksExecuted)||(verdict.outcome==='infrastructure_error'&&verdict.sealedChecksExecuted))throw new DispatchStop('adjudication_binding_failed');
         this.#operations(id,verdict.sandboxOperationIds);
+        onUsage(verdict.evaluationUsage,false);
       }
       const usage={...execution.usage};usage.elapsedMs+=Math.max(0,Date.parse(this.#time())-started);
       usage.elapsedMs=Math.max(usage.elapsedMs,Math.max(0,Date.parse(this.#time())-Date.parse(row.started_at!)));
@@ -264,7 +281,7 @@ export class ExperimentDispatcher {
       const result=this.#result(row,{outcome:verdict?.outcome??(execution.infrastructureExclusion?'infrastructure_error':'unverified'),sealed:verdict?.sealedChecksExecuted??false,
         runtimeApproved:execution.runtimeApproved,exclusion:execution.infrastructureExclusion,usage:{...usage,measuredCostUsd:billingComplete?usage.measuredCostUsd:null},artifactsDigest:hashJson({execution:execution.artifactsDigest,adjudication:verdict?.artifactsDigest??null,planDigest:this.#digest})});
       if(this.#transport.executionMode==='live'){
-        const known=usage.measuredCostUsd??execution.usage.measuredCostUsd,prior=this.#ledger!.get(row.dispatch_id).actualCostMicros;
+        const known=usage.measuredCostUsd??UsageSchema.parse(JSON.parse(this.#row(id).usage_json)).measuredCostUsd,prior=this.#ledger!.get(row.dispatch_id).actualCostMicros;
         this.#ledger!.reconcile({id:row.dispatch_id,actualCostMicros:known===null?(prior===null?null:BigInt(prior)):usdToMicros(known,'ceil'),complete:billingComplete,evidenceDigest:result.artifactsDigest});
       }
       this.#terminal(id,billingComplete?'completed':'billing_incomplete',result);

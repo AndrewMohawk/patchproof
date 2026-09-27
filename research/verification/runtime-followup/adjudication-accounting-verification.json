@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "protected-adjudication-accounting-author-verification",
+  "createdAt": "2026-09-27T11:17:41.100809+00:00",
+  "baseCommit": "51f09407c347bf8e656ba694a2fc16c7d547eedb",
+  "sourceScope": "Trusted aggregate adjudication/accounting metadata and dispatcher checkpoint lifecycle only.",
+  "artifacts": {
+    "workers/evaluator/adjudication-accounting.ts": "sha256:186e9e8b92074d98514dee1549e5cddd101fb8ea5595e7b2ca857e0d054376f6",
+    "workers/evaluator/dispatcher.ts": "sha256:c642d3ca36ea1d16a7a2c736c0c06944a46b6d55bf05006c6945e5ea047a0bb8",
+    "tests/adjudication-accounting.test.ts": "sha256:de2f988d1b1a863dcaee3127d8e1839c96759e7767d421cde5c2e47fcfb4d255",
+    "docs/adjudication-accounting.md": "sha256:b205f67276a3551bca6d0797fce127810a530f1c85ebc94afdaa0445da8ef9fe",
+    "research/verification/runtime-followup/adjudication-accounting-tests.log": "sha256:2a23b1042c7f9e69108eb10790920df40dc77f68bdc3c414d49ca1c02bf178de",
+    "research/verification/runtime-followup/adjudication-accounting-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890",
+    "research/verification/runtime-followup/adjudication-accounting-initial-tests.log": "sha256:be805f5a67507962a4698b5e821bf155b7cc5b1d7503a6e659833c1f701a9aee",
+    "tests/adjudication-accounting-independent.test.ts": "sha256:455ecd616816d904701903226952ecb2742d67682c44e5284efa4e788a88213d",
+    "research/verification/runtime-followup/adjudication-accounting-final-tests.log": "sha256:cda2e27497a438bd15983a4314ba8937dc6653e385acee0574e577a27026f0c1",
+    "research/verification/runtime-followup/adjudication-accounting-independent-tests.log": "sha256:cb32fbe98e457e53d862b4e5820104194bcb3c1b3e1eac25031f53b9fa0d34c3",
+    "research/verification/runtime-followup/adjudication-accounting-independent-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890"
+  },
+  "authorExecuted": [
+    {
+      "command": "node --test tests/adjudication-accounting.test.ts",
+      "exitCode": 0,
+      "passed": 19,
+      "failed": 0,
+      "source": "Earlier focused run; these 19 controls are included in the final combined run below."
+    },
+    {
+      "command": "node --test tests/adjudication-accounting.test.ts tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/phase-accounting.test.ts tests/phase-accounting-independent.test.ts tests/experiment-export.test.ts tests/experiment-export-independent.test.ts",
+      "exitCode": 0,
+      "passed": 97,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/adjudication-accounting-tests.log",
+      "source": "Prior to the two metadata hygiene fixes; historical source test evidence retained."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test tests/adjudication-accounting.test.ts tests/adjudication-accounting-independent.test.ts tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/phase-accounting.test.ts tests/phase-accounting-independent.test.ts tests/experiment-export.test.ts tests/experiment-export-independent.test.ts",
+      "exitCode": 0,
+      "passed": 106,
+      "failed": 0,
+      "source": "Final source snapshot bound by artifact hashes",
+      "log": "research/verification/runtime-followup/adjudication-accounting-final-tests.log"
+    }
+  ],
+  "historicalFindings": [
+    {
+      "finding": "Final returned adjudication usage reused prospective resource-limit handling, discarding a completed measured-overrun verdict.",
+      "initialControl": {
+        "passed": 96,
+        "failed": 1,
+        "exitCode": 1,
+        "log": "research/verification/runtime-followup/adjudication-accounting-initial-tests.log"
+      },
+      "resolution": "Final cumulative accounting retains overrun and sticky freeze without further paid work; prospective checkpoints still enforce limits. Existing overrun analysis control now passes."
+    },
+    {
+      "finding": "Independent source review found the composed wrapper also needed a final-observation path.",
+      "resolution": "Optional onFinalUsage preserves returned/accepted totals; prospective onUsage cannot resume after finalization. Independent executed control recorded separately."
+    },
+    {
+      "finding": "Author source review noticed oversized rejected operation inventory and failed-checkpoint persistence text could escape the wrapper.",
+      "independentReview": "Reviewer agreed and added two metadata-only controls; no pre-fix executed reproduction is claimed.",
+      "resolution": "Limit checked before inventory insertion, and failed-state sink errors cannot replace safe classified failures."
+    }
+  ],
+  "testFixtureCorrection": "Initial five dispatcher fixture tests used an unsupported budget episodeLimits field; corrected invented fixture to existing strict schema before successful run. No product defect claimed for that fixture error.",
+  "initialLogNormalization": {
+    "originalSha256": "8c70af32e2413b16d058959192f3f4a9f7275dd64836d79124baf22b87669c79",
+    "storedSha256": "be805f5a67507962a4698b5e821bf155b7cc5b1d7503a6e659833c1f701a9aee",
+    "change": "Trailing whitespace only; raw original retained outside repository."
+  },
+  "independentReview": "Reviewer executed 9/9 controls and typecheck exit 0; separate neutral receipt pending at commit time. Stable logs and independent tests included.",
+  "limitations": [
+    "No provider calls, candidate execution or sealed corpus reads. Empty artifact maps are inert test metadata.",
+    "Injected callbacks must enforce prospective remote ceilings, record intents and retain raw evidence; wrapper cannot prove remote quiescence or cleanup.",
+    "saveCheckpoint must synchronously persist append-preserving private metadata; concrete sink supplied by operator composition.",
+    "Late post-deadline remote usage cannot rewrite terminal dispatcher state; preserve raw evidence and reconcile explicitly.",
+    "Digests establish integrity, not source execution or billing authenticity.",
+    "Root owns concrete protected transport and source/ledger revalidation after accounting observation."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0
+}
