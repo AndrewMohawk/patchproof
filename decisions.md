@@ -44,10 +44,13 @@ There is no generic source-solution lookup or final oracle callback. B0/B1/P
 share configured aggregate limits; scripted behavior demonstrates plumbing only.
 An API live request is refused. No runtime setting alone activates paid execution.
 
-The provider HTTP adapters implement documented request mappings with injected
-transports and tests. The Nebius check runner deliberately refuses execution
-until account image/isolation/billing requirements are verified. This missing
-live path is remaining implementation work, not a completed integration.
+The provider HTTP adapters, guarded smoke/experiment factories and private
+operators are implemented with injected-transport tests. They refuse real
+execution until account, model, image, isolation and billing requirements are
+verified. The [smoke operator](docs/trusted-smoke-operator.md) and
+[experiment operator](docs/live-experiment-operator.md) document that boundary.
+Fake-transport results do not establish account-specific behavior or completed
+Nebius integration; actual provider validation remains deferred.
 
 ## Evaluation and claims
 

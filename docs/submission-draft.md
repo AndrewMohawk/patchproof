@@ -15,9 +15,9 @@ input data and the empty-input behavior. Three policies use the same initial
 source and configured allowance: visible-test feedback, acceptance-check feedback,
 and bounded candidates against the original source. The current repair responses
 are scripted; the displayed check failures and fresh-container replay are real.
-The [v2 verification record](../research/verification/20260927-corpus-v2-integration/README.md)
+The [current verification record](../research/verification/20260927-completion-audit/README.md)
 binds the current browser screenshots and three successful fresh replays to
-`c335031`. All three policies passed their declared checks in that demonstration;
+`06c584c`. All three policies passed their declared checks in that demonstration;
 it does not establish a PatchProof advantage.
 
 The current v2 first candidate passes only 2/5 visible and 1/4 acceptance checks;
@@ -33,6 +33,26 @@ This demonstrates the workflow, not learned repair performance, sponsor
 integration, branching advantage, production security or general correctness.
 The 60-task suite is original synthetic data. The fixed 72/270 experiment tools
 have not run a scored model episode. No headline improvement percentage is claimed.
+
+## Architecture and originality/reuse
+
+The three-screen loopback app calls a durable coordinator that records shared
+allowances, candidate history and actual check events in SQLite. Scripted proposals
+are checked in fresh local containers; expected values stay in the trusted checker.
+Immutable exports bind source, policy, observations and replay instructions. The
+local app cannot dispatch paid work; separately configured private operators
+retain their account and evidence gates. See the [implementation overview](../README.md#implementation-and-evidence)
+and [runtime guide](../workers/sandbox/README.md).
+
+The workflow and synthetic fixtures were developed with AI assistance; the
+[corpus provenance](../research/corpus-v2/README.md) discloses the authoring process.
+Automated testing and constraint checking are not claimed as new ideas. The B0
+baseline is a native repair loop, not mini-SWE-agent. No mini-SWE-agent, OpenHands,
+Aider or SWE-Gate code/data is vendored; third-party packages and their licenses
+are listed in [the notices](../THIRD_PARTY_NOTICES.md). The [build decisions](../decisions.md)
+and [source ledger](../sources.json) record the project scope and prior work.
+Application licensing remains an owner decision; dependency notices do not grant
+a license to publish this application.
 
 ## Required additions before public submission
 
@@ -72,9 +92,9 @@ This preserves the earlier corpus and executable source. The video filename's
 `v2` means its caption revision, not the independently authored v2 corpus. It is
 historical rehearsal evidence, not a recording of the current catalogue.
 
-A current **28.24-second private v2 walkthrough** observes the three completed
-`c335031` runs. Its captions explicitly identify recorded-run observation, scripted
-proposals and no measured advantage. The raw capture, original captions and
+A recorded **28.24-second private v2 walkthrough** observes the three completed
+`c335031` runs; it does not depict the newer `06c584c` handoff. Its captions identify
+recorded-run observation, scripted proposals and no measured advantage. The raw capture, original captions and
 captioned MP4 remain local under `.local/rehearsal/20260927-corpus-v2-recorded-runs/`;
 [the custody record](../research/verification/20260927-corpus-v2-integration/rehearsal-custody-v2.json)
 binds exact files, duration, source and run identities. This walkthrough created
