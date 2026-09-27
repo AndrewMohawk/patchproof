@@ -94,3 +94,24 @@ test('private evidence reader rejects permissive file modes and request mutation
   const s=setup(t);chmodSync(s.evidencePath,0o644);assert.throws(()=>readPrivateEvidenceBytes(s.evidencePath,{projectRoot:s.projectRoot}));chmodSync(s.evidencePath,0o600);
   const request=s.request(),pending=inspectPrivateEvidence(request);request.configPath=join(s.directory,'missing-secret-path');request.expectedConfigDigest=H;assert.equal((await pending).bundle.run.id,ID);
 });
+
+test('URL-reinterpreted public inventory names cannot redirect reads into an unlisted sibling',async t=>{
+  const s=setup(t),aliasDirectory=join(s.projectRoot,'fixtures','development','%2e%2e');
+  // All files are inert invented metadata. The literal inventoried alias contains no fixture;
+  // the old URL-based loader would instead read fixtures/redirected.json outside either public tree.
+  rmSync(s.fixturePath);mkdirSync(aliasDirectory,{mode:0o700});
+  writeFileSync(join(aliasDirectory,'redirected.json'),'{}');
+  writeFileSync(join(s.projectRoot,'fixtures','redirected.json'),JSON.stringify(s.fixture));
+  const before=s.snapshot();
+  await assert.rejects(inspectPrivateEvidence(s.request()),/evidence_curated_path_invalid/);
+  assert.deepEqual(s.snapshot(),before);assert.equal(existsSync(s.config.outputFile!),false);
+});
+
+test('concurrent metadata exports grant one exclusive output and preserve exact selected bytes',async t=>{
+  const s=setup(t),before=s.snapshot();
+  const results=await Promise.allSettled([exportPrivateEvidence(s.request()),exportPrivateEvidence(s.request())]);
+  assert.equal(results.filter(result=>result.status==='fulfilled').length,1);
+  const rejected=results.find(result=>result.status==='rejected');
+  assert.ok(rejected&&rejected.status==='rejected');assert.equal((rejected.reason as NodeJS.ErrnoException).code,'EEXIST');
+  assert.deepEqual(readFileSync(s.config.outputFile!),s.bytes);assert.deepEqual(s.snapshot(),before);
+});

@@ -47,7 +47,11 @@ function publicFixtureInventory(projectRoot:string){
   canonicalDirectory(projectRoot);const top=join(projectRoot,'fixtures');canonicalDirectory(top);
   const files:Array<{path:string;size:number;ino:number;dev:number;mtime:number;ctime:number}>=[];let count=0,bytes=0;
   function visit(directory:string,depth:number){if(depth>8)stop('evidence_curated_tree_bound');
-    for(const name of readdirSync(directory).sort()){if(++count>256)stop('evidence_curated_tree_bound');const path=join(directory,name),stat=lstatSync(path);
+    for(const name of readdirSync(directory).sort()){if(++count>256)stop('evidence_curated_tree_bound');const path=join(directory,name);
+      // loadFixtures resolves relative names as URLs; forbid any name whose URL interpretation
+      // escapes or differs from the literal path checked here, before the loader opens a file.
+      let loaderPath:string;try{loaderPath=fileURLToPath(new URL(name,pathToFileURL(directory+'/')));}catch{stop('evidence_curated_path_invalid');}
+      if(loaderPath!==path)stop('evidence_curated_path_invalid');const stat=lstatSync(path);
       if(stat.isSymbolicLink())stop('evidence_curated_symlink');if(stat.isDirectory()){visit(path,depth+1);continue;}
       if(!stat.isFile()||stat.nlink!==1||stat.size>1_048_576||(bytes+=stat.size)>MAX_PRIVATE_EVIDENCE_BYTES)stop('evidence_curated_tree_bound');
       files.push({path,size:stat.size,ino:stat.ino,dev:stat.dev,mtime:stat.mtimeMs,ctime:stat.ctimeMs});
@@ -121,7 +125,7 @@ export async function exportPrivateEvidence(raw:PrivateEvidenceRequest){
   return{...result.summary,outputWritten:true as const};
 }
 const safeCodes=new Set(['operator_usage','operator_config_digest_mismatch','operator_path_invalid','operator_path_inside_project','operator_directory_invalid','operator_directory_not_private','operator_file_not_private','operator_database_sidecar_invalid','operator_file_changed_or_oversized',
-  'evidence_read_bound_invalid','evidence_file_changed_or_oversized','evidence_directory_invalid','evidence_curated_tree_bound','evidence_curated_symlink','evidence_invalid_utf8','evidence_run_or_fixture_mismatch','evidence_curated_source_changed','evidence_curated_fixture_unavailable','evidence_curated_fixture_mismatch','evidence_path_collision','evidence_journal_oversized','evidence_journal_not_quiescent','evidence_journal_schema_invalid','evidence_run_unavailable','evidence_unpublished_or_digest_mismatch','evidence_document_oversized','evidence_run_not_terminal','evidence_journal_changed','evidence_journal_binding_mismatch','evidence_output_required','evidence_output_invalid','evidence_output_incomplete']);
+  'evidence_read_bound_invalid','evidence_file_changed_or_oversized','evidence_directory_invalid','evidence_curated_tree_bound','evidence_curated_path_invalid','evidence_curated_symlink','evidence_invalid_utf8','evidence_run_or_fixture_mismatch','evidence_curated_source_changed','evidence_curated_fixture_unavailable','evidence_curated_fixture_mismatch','evidence_path_collision','evidence_journal_oversized','evidence_journal_not_quiescent','evidence_journal_schema_invalid','evidence_run_unavailable','evidence_unpublished_or_digest_mismatch','evidence_document_oversized','evidence_run_not_terminal','evidence_journal_changed','evidence_journal_binding_mismatch','evidence_output_required','evidence_output_invalid','evidence_output_incomplete']);
 export async function runEvidenceOperator(args:string[],projectRoot:string){try{
   const[command,configPath,expectedConfigDigest]=args;if(args.length!==3||(command!=='inspect'&&command!=='export'))stop('operator_usage');
   const request={projectRoot,configPath:configPath!,expectedConfigDigest:expectedConfigDigest!};
