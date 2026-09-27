@@ -3,7 +3,7 @@
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
   "status": "in_progress",
-  "recordedAt": "2026-09-27T13:01:08.553756+00:00",
+  "recordedAt": "2026-09-27T13:11:20.097187+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -16,7 +16,7 @@
       "agent": "/root/corpus_v2_repo01",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
-      "status": "revision-003-review-pending",
+      "status": "runtime-validated",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
@@ -31,19 +31,33 @@
           "revision": "revision-003",
           "submissionDigest": "sha256:2655a75f648a8879a82d7169b8e6107ed372fb6bb75ae15e58803cd96d729f86"
         }
-      ]
+      ],
+      "validation": {
+        "receiptDigest": "sha256:5d40887a3460ffd947f3389baca27875a48fc769f7fc59c96c6ccb2c6604774e",
+        "reportedBy": "/root/fixtures_evaluation",
+        "exitCode": 0,
+        "goldPassed": 5,
+        "startRejected": 5,
+        "repeatStable": 5,
+        "controlsPassed": 7,
+        "infrastructureFailures": 0
+      }
     },
     {
       "slot": "repo02",
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
-      "status": "review_revision_requested",
+      "status": "runtime-validation-in-progress",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:0dbc8ea49b1054d7a5456e9d65932c82c11e37c005483e645d477abfdbc45e94"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:d2ea57f257c2e948d1301e279a92b43b5a2a758b9b1c41da8eeae53472b5180e"
         }
       ]
     },
@@ -52,12 +66,16 @@
       "agent": "/root/corpus_v2_repo03",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo03",
-      "status": "review-pending",
+      "status": "runtime-validation-in-progress",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:491c8755d00e0225979daf8b445c87bd807af47bd2fefb413bd5c73bf017ec8d"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:0d2bc355682532b5bacf78c96fb72493a83dccfa056a554f3e771c4e2842e8db"
         }
       ]
     },
@@ -66,25 +84,60 @@
       "agent": "/root/corpus_v2_repo04",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo04",
-      "status": "review-pending",
+      "status": "revision-002-review-pending",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:0d83904c127ed1781d9e6a9446ed6c9731d15ee829324bc3f15db4ff0abd89df"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:7fef6fea9be38ef113c7dcefd489aa80d9e791d402ad464c35c93756aeb284d2"
         }
       ],
-      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
+      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared.",
+      "contextClarification": "Original provenance incorrectly inferred parent conversation inheritance. Author clarified seeing global agent/tool instructions, user project/environment setup and its direct assignment, but no parent task history. Original statement retained in revision001; corrected in revision002."
     },
     {
       "slot": "repo05",
       "agent": "/root/corpus_v2_repo05",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo05",
+      "status": "static-approved-runtime-pending",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:7965b1b143a1cb2bf6734f8e611617740297d7297289df966f1fdcef78ccb9ae"
+        }
+      ],
+      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
+    },
+    {
+      "slot": "repo06",
+      "agent": "/root/corpus_v2_repo06",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo06",
+      "status": "review_revision_requested",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:fd85c17d7f9c4122f402da7d40b426d8a67e14b41c838d418c755653e6f70276"
+        }
+      ],
+      "genericContractClarification": "JSON number normalization; dedicated requirement cases; no sibling contents or scored outcomes shared."
+    },
+    {
+      "slot": "repo07",
+      "agent": "/root/corpus_v2_repo07",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo07",
       "status": "authoring",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [],
-      "genericContractClarification": "JSON numeric normalization means1 and1.0 are indistinguishable; no sibling contents or scored model outcomes shared."
+      "genericContractClarification": "JSON number normalization, dedicated requirement cases and accurate setup provenance; no sibling content or scored outcomes shared."
     }
   ]
 }
