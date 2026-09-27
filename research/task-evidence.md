@@ -268,3 +268,29 @@ and focused tests accompany them. The exact external runtime remains Node 25.5.0
 and pinned Zod 4.1.12; no new provider interface or dependency was introduced.
 Provider billing authenticity and automatic runtime ingestion remain unverified.
 All inputs in these checks are invented metadata; paid calls and actual spend are 0.
+
+## Immutable experiment metadata and operator export
+
+Commit `82810cc` adds read-only dispatcher metadata capture and immutable aggregate
+export/verification. It preserves all 72/270 planned identities, partial usage,
+unknown final totals and failed/cancelled rows. Synthetic exports never enter the
+live analyzer. The separate CLI pins its private input configuration and the exact
+export manifest; verification needs neither the dispatcher database nor old source.
+All output continues to state that authenticity and past source execution are not
+established by hashes. No candidate contents or sealed definitions are copied.
+
+The author and independent export suite passed 21 tests. Five CLI controls, including
+an actual subprocess, bring the combined command to **26 passed**; typecheck exited 0.
+Independent review caught an entire-lock versus source-map digest mismatch in the
+CLI; it was fixed before integration, with both positive and negative controls.
+Commands, exit codes, source hashes, review scope and logs are in
+`verification/20260927-operator-integration/experiment-export-cli-receipt.json`.
+The underlying independent review preserves its two resolved findings in
+`verification/runtime-followup/experiment-export-independent-review.json`.
+
+Five additional independent accounting CLI controls also pass in the root checkout,
+covering expired approval, historical receipt CPU with newer current charges, missing
+reservations, fresh-journal reset and file collisions. Their receipt is
+`verification/runtime-followup/accounting-cli-independent-review.json`. Existing
+ledger/importer limits and pinned Node/Zod interfaces are unchanged. No provider
+call, real bill, benchmark result or new spending is represented by these tests.

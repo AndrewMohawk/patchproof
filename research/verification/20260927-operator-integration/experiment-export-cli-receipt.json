@@ -1,0 +1,45 @@
+{
+  "kind": "synthetic-experiment-export-cli-validation",
+  "observedAt": "2026-09-27T10:32:19.174072+00:00",
+  "baseCommit": "82810cc7ebd010df0d6d0a12d1315c3577a3ddbc",
+  "sourceWorkingTreeDirty": true,
+  "providerCalls": 0,
+  "actualProviderSpendUsd": 0,
+  "authenticityVerified": false,
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/experiment-export-cli.test.ts",
+        "tests/experiment-export.test.ts",
+        "tests/experiment-export-independent.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-operator-integration/experiment-export-cli-tests.log",
+      "sha256": "1c21435cfea9171b68671a2e5bd658cea4690acc060bdd4177a253e1f24efacf"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-operator-integration/experiment-export-cli-typecheck.log",
+      "sha256": "bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    }
+  ],
+  "independentReview": {
+    "reviewerRole": "evaluation-engineer",
+    "scope": "bounded source review of CLI and private file helper",
+    "finding": "Whole operational lock used where source-map digest required.",
+    "resolution": "Use digestJson(lock.sources); positive current-source test and whole-lock negative control added."
+  },
+  "files": {
+    "scripts/experiment-export-cli.ts": "sha256:a4687e2a494ffaffb6b3fbf6f318ecfc65893f5dcca17e52c641e27c0a74d6a8",
+    "scripts/operator-files.ts": "sha256:d67985b2217e7276abe15cfc5a1fb36730a7eb110667da7564903347c1a8f330",
+    "tests/experiment-export-cli.test.ts": "sha256:80cef7e6a4a8288b17f9fcf3c6eb4e90a325488353634d095bfad419337061dd",
+    "workers/evaluator/experiment-export.ts": "sha256:1a743afb51ba2c0147eb0237f3c7f4ef5112fdbbfafd9ff6c11e8eb006c13e12"
+  }
+}

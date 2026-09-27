@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "bounded-independent-accounting-cli-review",
+  "reviewDate": "2026-09-27",
+  "scope": "Private metadata-only receipt import and expiry recovery; CLI file hygiene, digest/binding checks and output projection.",
+  "sourceDigests": {
+    "scripts/accounting-cli.ts": "sha256:72517ed8e9a8de67a6ba987d0acd656118f9831a519d4d69ee5f8845056b2d35",
+    "scripts/operator-files.ts": "sha256:d67985b2217e7276abe15cfc5a1fb36730a7eb110667da7564903347c1a8f330",
+    "packages/orchestrator/src/accounting-receipts.ts": "sha256:d7f2f6453a953cd981ed2b7f7cddce272d25483567910d3a6a2b49ad0265a173",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:0da1adfc69cdbe9e8922fd73654d795c114328f16813ea4916981a96eab7cfa0",
+    "tests/accounting-cli-independent.test.ts": "sha256:e5211194b3e68668bc3fac502e31b33bd2093758725c22c763a6450cacce618e"
+  },
+  "result": "No new concrete accounting CLI defect found within this bounded source and invented-input review.",
+  "findings": [],
+  "executedByIndependentReviewer": [
+    { "command": "node --test tests/accounting-cli.test.ts", "workingDirectory": "project root", "exitCode": 0, "passed": 8, "failed": 0 },
+    { "command": "node --test tests/accounting-cli-independent.test.ts", "workingDirectory": "isolated temporary review directory with reviewed accounting source links", "exitCode": 0, "passed": 5, "failed": 0 },
+    { "command": "node_modules/.bin/tsc --noEmit --target ES2024 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --allowImportingTsExtensions --verbatimModuleSyntax --erasableSyntaxOnly --skipLibCheck --types node tests/accounting-cli-independent.test.ts", "workingDirectory": "isolated temporary review directory", "exitCode": 0 }
+  ],
+  "independentControls": [
+    "An unchanged expired approval permits recording already-incurred costs without changing approval digest, revision or expiry, removing the expiry freeze, or granting another attempt.",
+    "After a newer revision increases cumulative USD and CPU, duplicate import of the old receipt returns historical revision and CPU separately from the latest durable charge and evidence digest.",
+    "A self-consistent accepted receipt/context naming an absent reservation rejects before journal creation and preserves the existing hold.",
+    "Switching to a fresh journal path cannot reset the ledger's applied receipt history or change its known charge.",
+    "Using an approval JSON input as the journal path rejects before constructor writes; original file bytes and ledger state are preserved."
+  ],
+  "sourceReviewChecks": [
+    "Only import and recover-expired verbs are accepted.",
+    "Explicit independently supplied context and parsed-budget digests are checked before constructing the mutable importer.",
+    "Existing ledger and reservation are checked before importer initialization; immutable reservation bindings must match.",
+    "Private bounded file reads reject workspace paths, symlink ancestors, hardlinks and broad permissions; the helper explicitly does not claim same-UID isolation.",
+    "Output omits raw receipts, operation inventory, approval prose, file paths and exception details.",
+    "No runtime execution, reserve, approval synchronization, markAttempted or provider function is invoked by the CLI."
+  ],
+  "limitations": [
+    "All budgets, receipts, observations and database records were invented test inputs; no provider bill or external identity was authenticated.",
+    "The operator must independently authenticate the receipt, context and accepted digests; consistency hashes alone do not establish authenticity.",
+    "The fresh-journal refusal can leave an unused private importer file because importer construction binds identity; this is not a read-only command.",
+    "Privileged same-UID mutation and restoring both accounting databases from stale backups remain outside file-hygiene guarantees.",
+    "The isolated typecheck initially could not resolve the existing zod dependency through source links; linking the already-installed dependency tree fixed the review environment, with no source or dependency changes.",
+    "No sealed corpus, repair/provider/executor source or candidate execution was used for this review."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "benchmarkExecuted": false,
+  "competitionReady": false
+}

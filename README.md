@@ -8,7 +8,7 @@ not complete.** The three-screen app uses scripted model responses and executes
 real Python checks in isolated local containers. Every API response, screen and
 export identifies mock mode. It makes no claim about model performance.
 
-The owner approved **$25 total**: $5 reserved for smoke and $20 for a pilot.
+The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot.
 Actual provider spending is **$0**. Account access is deferred at the owner's
 request while the local build proceeds. See [decisions](decisions.md),
 [budget](budget.json) and [remaining gates](research/blockers.md).
@@ -109,8 +109,13 @@ accounting; its calibrated live executor and account setup remain unconnected.
 The [synthetic experiment executor](docs/experiment-executor.md) tests up to 24
 revisions across three branches using the same loop as the product. It rejects
 live providers. [Accounting receipts](docs/accounting-reconciliation.md) support
-trusted reconciliation and crash recovery; actual provider billing ingestion and
-operator command wiring remain pending.
+trusted reconciliation and crash recovery. The [private accounting command](docs/accounting-operator.md)
+imports separately reviewed receipts and recovers interrupted imports; actual
+provider billing verification and automatic runtime ingestion remain pending.
+The [aggregate exporter](docs/experiment-export.md) and its
+[private command](docs/experiment-export-operator.md) retain every planned episode
+and verify immutable metadata bundles. Synthetic exports remain unscored; source
+hashes do not establish which code a past dispatcher actually executed.
 The [trusted smoke factory](docs/trusted-smoke.md) connects the provider adapters
 and budget ledger for an explicitly configured integration run of at most three
 proposals. Its tests use fake transports; actual account verification and a live
