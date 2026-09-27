@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "local-invented-metadata-operator-verification",
+  "observedAt": "2026-09-27T11:00:28.537Z",
+  "baseCommit": "9eb5e5d30ba4f8f38ff9302d45c145cd49603a10",
+  "sourceDigests": {
+    "packages/orchestrator/src/phase-accounting.ts": "sha256:865b9e6a6e797614ef256846111228a29b88f70d84ba51c279ad088b41396cf1",
+    "scripts/phase-accounting-cli.ts": "sha256:cf35c8fb1593122527c01c80277c252e80ca7124ce018b93a8b60903a27fcfa7",
+    "tests/phase-accounting-cli.test.ts": "sha256:226a90dfd6acfd00dc5eca073a0fdc3a012cd583fc8e073730dae5390d4600a9"
+  },
+  "commands": [
+    {
+      "command": "node --test tests/phase-accounting-cli.test.ts",
+      "exitCode": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    }
+  ],
+  "providerCalls": 0,
+  "spendUsd": 0,
+  "actualBillingVerified": false,
+  "remainingFailures": [
+    "No provider/account billing evidence or live experiment has been observed."
+  ],
+  "externalInterfaces": "No new provider endpoint or SDK dependency; existing pinned Node SQLite and Zod contracts only."
+}
