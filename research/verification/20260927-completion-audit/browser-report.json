@@ -1,0 +1,98 @@
+{
+  "testedAt": "2026-09-27T15:52:21.107Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:43171",
+  "observation": "new_ui_comparison",
+  "resumeRunIds": [],
+  "runs": [
+    {
+      "id": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "52bca833-3f06-41e9-a578-26c930df734e",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    }
+  ],
+  "selectedTaskId": "stable-unique-01",
+  "unsupportedTaskId": "v2-r01-t02",
+  "rejectedCandidate": {
+    "id": 1,
+    "reason": "One or more declared checks failed or were unavailable.",
+    "nonpassingChecks": [
+      {
+        "id": "u-v-order",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-unicode",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-nested",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-numeric",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      }
+    ]
+  },
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+  "createdIds": [
+    "d521c096-5442-4dd6-897b-fd3965a95ed4",
+    "52bca833-3f06-41e9-a578-26c930df734e",
+    "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c"
+  ],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}

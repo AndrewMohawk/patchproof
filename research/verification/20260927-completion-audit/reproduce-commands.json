@@ -1,0 +1,41 @@
+[
+  {
+    "variant": "baseline",
+    "runId": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+    "argv": [
+      "make",
+      "reproduce",
+      "RUN=d521c096-5442-4dd6-897b-fd3965a95ed4"
+    ],
+    "startedAt": "2026-09-27T15:52:37.223444+00:00",
+    "finishedAt": "2026-09-27T15:53:11.179050+00:00",
+    "exitCode": 0,
+    "log": "reproduce-baseline.log"
+  },
+  {
+    "variant": "checks_only",
+    "runId": "52bca833-3f06-41e9-a578-26c930df734e",
+    "argv": [
+      "make",
+      "reproduce",
+      "RUN=52bca833-3f06-41e9-a578-26c930df734e"
+    ],
+    "startedAt": "2026-09-27T15:53:11.179414+00:00",
+    "finishedAt": "2026-09-27T15:53:42.688298+00:00",
+    "exitCode": 0,
+    "log": "reproduce-checks_only.log"
+  },
+  {
+    "variant": "patchproof",
+    "runId": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+    "argv": [
+      "make",
+      "reproduce",
+      "RUN=a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c"
+    ],
+    "startedAt": "2026-09-27T15:53:42.688974+00:00",
+    "finishedAt": "2026-09-27T15:54:11.654067+00:00",
+    "exitCode": 0,
+    "log": "reproduce-patchproof.log"
+  }
+]

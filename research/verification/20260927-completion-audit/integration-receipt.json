@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "local-completion-integration",
+  "recordedAt": "2026-09-27T15:55:57.009076+00:00",
+  "sourceCommit": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+  "sourceRoot": "/tmp/patchproof-handoff-audit",
+  "sourceFilesVerified": 110,
+  "mode": "mock",
+  "competitionReady": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "approvedProjectCeilingUsd": 25,
+  "tests": {
+    "command": "make test",
+    "exitCode": 0,
+    "passed": 622,
+    "log": "make-test.log",
+    "sourceBinding": "precommit-verification.json"
+  },
+  "browser": {
+    "command": "node /tmp/patchproof-handoff-audit/apps/web/verify-browser.ts http://127.0.0.1:43171",
+    "exitCode": 0,
+    "report": "browser-report.json",
+    "log": "browser.log",
+    "historicalContext": "historical-browser-mcp.json",
+    "screenshots": "screenshots.json",
+    "abstentionView": "abstention-browser-mcp.json"
+  },
+  "runs": [
+    {
+      "id": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+      "taskId": "stable-unique-01",
+      "variant": "baseline",
+      "selection": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "path": "bundles/baseline.json",
+      "bundleDigest": "sha256:6565c9ee7c592d5e34f4e6d4b52ac21efaf7a59f859212d69e7d73028eb5d253",
+      "byteDigest": "sha256:0cb8bdd502fd0b0a832656488df789824aa25c2f49cb0d94a729f527462a719a",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0,
+        "costIsEstimate": false,
+        "elapsedMs": 103623
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      },
+      "candidates": 2,
+      "selectedCandidateId": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54
+    },
+    {
+      "id": "52bca833-3f06-41e9-a578-26c930df734e",
+      "taskId": "stable-unique-01",
+      "variant": "checks_only",
+      "selection": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "path": "bundles/checks_only.json",
+      "bundleDigest": "sha256:13611e9e625d7d7d97f127e838195d720df21cca97c7ccaa90dfda6ba40af1c5",
+      "byteDigest": "sha256:060c6c6ebe800ad523e0d0981293f133b8d4ef43bd30bf4ce76da300afd8416c",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0,
+        "costIsEstimate": false,
+        "elapsedMs": 101872
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      },
+      "candidates": 2,
+      "selectedCandidateId": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54
+    },
+    {
+      "id": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "taskId": "stable-unique-01",
+      "variant": "patchproof",
+      "selection": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "path": "bundles/patchproof.json",
+      "bundleDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+      "byteDigest": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0,
+        "costIsEstimate": false,
+        "elapsedMs": 101269
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      },
+      "candidates": 2,
+      "selectedCandidateId": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54
+    },
+    {
+      "id": "88017a40-ba4c-4cd5-aead-a64465af7f90",
+      "taskId": "v2-r01-t02",
+      "variant": "patchproof",
+      "selection": "abstention",
+      "status": "needs_review",
+      "reason": "mock_task_unavailable",
+      "path": "bundles/abstention.json",
+      "bundleDigest": "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422",
+      "byteDigest": "sha256:b2d3d69f3e4f80ded9201cd57a70954b44408f865ff2fe38f5fb361ef0eecf43",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0,
+        "costIsEstimate": false,
+        "elapsedMs": 51093
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      },
+      "candidates": 0,
+      "selectedCandidateId": null,
+      "operations": 30,
+      "cleanupConfirmed": 30
+    }
+  ],
+  "replays": [
+    {
+      "runId": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+      "selection": "baseline",
+      "status": "reproduced",
+      "exitCode": 0,
+      "checkCount": 9,
+      "executionPerformed": true,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "log": "reproduce-baseline.log"
+    },
+    {
+      "runId": "52bca833-3f06-41e9-a578-26c930df734e",
+      "selection": "checks_only",
+      "status": "reproduced",
+      "exitCode": 0,
+      "checkCount": 9,
+      "executionPerformed": true,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "log": "reproduce-checks_only.log"
+    },
+    {
+      "runId": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "selection": "patchproof",
+      "status": "reproduced",
+      "exitCode": 0,
+      "checkCount": 9,
+      "executionPerformed": true,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "log": "reproduce-patchproof.log"
+    },
+    {
+      "runId": "88017a40-ba4c-4cd5-aead-a64465af7f90",
+      "selection": "abstention",
+      "status": "no_selected_patch",
+      "exitCode": 2,
+      "checkCount": 0,
+      "executionPerformed": false,
+      "operations": 0,
+      "cleanupConfirmed": 0,
+      "log": "reproduce-abstention.log"
+    }
+  ],
+  "containerOperations": 246,
+  "cleanupConfirmed": 246,
+  "remainingOwnedContainers": [],
+  "historicalEvidence": {
+    "before": 20,
+    "unchanged": 20,
+    "reference": "historical-before.json",
+    "currentTotal": 24,
+    "activeRuns": 0
+  },
+  "releasePacket": {
+    "directory": "/home/andrewmohawk/patchproof/artifacts/release-packets/00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+    "packetDigest": "sha256:00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+    "sourceBinding": "current",
+    "selectedBundles": 4,
+    "evidenceStatus": "blocked",
+    "secretScan": "release-scan-receipt.json",
+    "manifest": "packet-manifest.json",
+    "verifyExitCode": 0,
+    "checksumExitCode": 0,
+    "releaseCheckExitCode": 2,
+    "publicationAuthorized": false
+  },
+  "independence": "Same host container replay and AI source/artifact review; not independent-machine or uncoached human validation",
+  "limits": [
+    "Scripted model responses are not a model benchmark or evidence of policy advantage.",
+    "Sandbox CPU consumption is unmeasured; elapsed wall time and operation lifecycle are recorded.",
+    "Provider account, prices, isolation, cancellation and billing remain unverified.",
+    "Live calibrated experiments, uncoached human study, independent-machine replay and owner release decisions remain open."
+  ],
+  "doctor": {
+    "command": "make doctor",
+    "exitCode": 0,
+    "log": "doctor.log",
+    "paidCalls": 0,
+    "realIntegration": "NOT RUN"
+  }
+}

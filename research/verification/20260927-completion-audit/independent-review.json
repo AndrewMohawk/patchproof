@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-public-artifact-review",
+  "reviewedAt": "2026-09-27T16:02:06.589Z",
+  "sourceCommit": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+  "integrationReceipt": {
+    "path": "integration-receipt.json",
+    "byteDigest": "sha256:a7c70511b9e5c508dd6e57196badc4da902590d35daa7514a6f79b3247dc4b77"
+  },
+  "conclusion": "no_material_mismatch_within_reviewed_scope",
+  "blockers": [],
+  "scope": "Read-only public source and artifact consistency review, plus static verification of the local release packet. No runtime, browser, candidate, Docker, provider, scanner or test rerun.",
+  "reviewerIndependence": {
+    "method": "Separate AI agent cross-check of coordinator-authored integration observations",
+    "priorImplementationContribution": "Reviewer implemented coverage classification and supervised the terminal-publication recovery change; this is not an audit independent of all implementation authors.",
+    "independentMachine": false,
+    "humanValidation": false
+  },
+  "checks": [
+    {
+      "name": "public_bundle_run_replay_source_and_cleanup_crosscheck",
+      "command": "node --input-type=module (inline fs/crypto/git-show metadata cross-check)",
+      "exitCode": 0,
+      "assertions": 380,
+      "failures": [],
+      "verified": [
+        "Four public bundle byte and canonical digests, immutable fixture/runtime inputs and embedded artifact hashes",
+        "All 110 recorded operational source files and four changed test files match the reviewed source commit",
+        "Browser report/log and run projections, mock labels, equal limits, two-observation protocol and candidate history",
+        "Three replay logs match selected observed outcomes; abstention replay records no selected patch and no execution",
+        "Exact reconciliation of all 246 distinct retained operation IDs and cleanup records",
+        "Twenty historical baseline metadata records agree with prior public receipts; six screenshot hashes match"
+      ]
+    },
+    {
+      "name": "packet_scan_and_browser_metadata_crosscheck",
+      "command": "node --input-type=module (inline read-only packet/scan/classification metadata cross-check)",
+      "exitCode": 0,
+      "assertions": 24,
+      "failures": [],
+      "verified": [
+        "Canonical packet and scan receipt digests",
+        "Exact four-bundle byte identities across public copies, packet copies and scan scope",
+        "Current source/runtime/protocol classification for all four selected bundles",
+        "Recorded scan log hashes and no-leaks findings; scan was not rerun",
+        "Blocked release state, nine missing external gates, no publication or authenticity claim",
+        "Recorded historical and abstention browser context and zero-error console observations"
+      ]
+    },
+    {
+      "name": "static_packet_verification",
+      "command": "node --input-type=module; import verifyReleasePacket from ./scripts/release-packet.ts; verifyReleasePacket(recorded packet directory, recorded packet digest)",
+      "exitCode": 0,
+      "log": "independent-packet-verification.log",
+      "result": {
+        "status": "consistent",
+        "packetDigest": "sha256:00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+        "authenticityVerified": false,
+        "publicationAuthorized": false
+      }
+    },
+    {
+      "name": "recorded_test_doctor_release_and_handoff_review",
+      "method": "Read-only JSON/log/source inspection; commands below were not rerun",
+      "recordedResults": {
+        "makeTest": {
+          "exitCode": 0,
+          "passed": 622
+        },
+        "doctor": {
+          "exitCode": 0,
+          "realIntegration": "NOT RUN"
+        },
+        "comparisonReplays": {
+          "exitCodes": [
+            0,
+            0,
+            0
+          ]
+        },
+        "abstentionReplay": {
+          "exitCode": 2,
+          "status": "no_selected_patch",
+          "executionPerformed": false
+        },
+        "releaseCheck": {
+          "exitCode": 2,
+          "evidenceStatus": "blocked"
+        },
+        "packetBuildVerifyAndChecksums": {
+          "exitCodes": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ],
+  "observations": {
+    "successfulComparisonRuns": 3,
+    "abstentionRuns": 1,
+    "comparisonOperations": 162,
+    "abstentionInitialCheckOperations": 30,
+    "freshReplayOperations": 54,
+    "totalDistinctRecordedOperations": 246,
+    "recordedCleanupConfirmed": 246,
+    "recordedRemainingOwnedContainers": 0,
+    "sourceFilesVerified": 110,
+    "testSourcesVerified": 4,
+    "perArmLimits": {
+      "maximumProposals": 3,
+      "aggregateWallSeconds": 120,
+      "recordedMockBatchSeconds": 60,
+      "repetitions": 2,
+      "repeatBudget": "shared-batch-wall-time"
+    },
+    "historicalBaselineRecordsCrossChecked": 20,
+    "recordedHistoricalUnchanged": 20,
+    "recordedCurrentTerminalRuns": 24,
+    "packetDigest": "sha256:00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+    "scanReceiptDigest": "sha256:873136925b03fc7006baf7dea16d70514ad4f8c62a47f2365f718f7ba105048a",
+    "packetEvidenceStatus": "blocked",
+    "recordedProviderCalls": 0,
+    "recordedProviderSpendUsd": 0,
+    "competitionReady": false,
+    "publicationAuthorized": false,
+    "authenticityVerified": false
+  },
+  "reviewedArtifacts": [
+    "integration-receipt.json",
+    "precommit-verification.json",
+    "make-test.log",
+    "browser-report.json",
+    "browser.log",
+    "reproduce-commands.json",
+    "reproduce-baseline.log",
+    "reproduce-checks_only.log",
+    "reproduce-patchproof.log",
+    "reproduce-abstention.log",
+    "abstention-observation.json",
+    "abstention-replay.json",
+    "abstention-browser-mcp.json",
+    "historical-browser-mcp.json",
+    "historical-before.json",
+    "handoff-backup.json",
+    "handoff-verification.json",
+    "operation-cleanup.json",
+    "release-commands.json",
+    "packet-manifest.json",
+    "release-scan-receipt.json",
+    "scan-observation.json",
+    "doctor.log",
+    "screenshots.json",
+    "README.md",
+    "bundles/baseline.json",
+    "bundles/checks_only.json",
+    "bundles/patchproof.json",
+    "bundles/abstention.json"
+  ],
+  "limitations": [
+    "This review recomputed consistency and hashes; it does not authenticate external observations or establish the truth of a scanner's undiscovered findings.",
+    "Operation cleanup, empty owned-container listing, browser behavior and command exits are retained observations from the coordinator; no fresh runtime or Docker query was made by this reviewer.",
+    "Historical baseline metadata was compared with prior public receipts. The private live evidence store was not read, so its post-handoff byte preservation remains the coordinator's recorded observation.",
+    "Replays use fresh containers on the same host. They are not independent-machine verification.",
+    "Scripted mock outcomes establish local workflow behavior, not model performance, policy advantage or scored experiment results.",
+    "CPU consumption is unmeasured. Provider account, pricing, isolation, cancellation and billing remain unverified; human review, calibrated experiments and owner release gates remain open.",
+    "No sealed evaluator material, private corpus, credentials or private state was inspected. No provider/network request, scan, candidate execution, Docker operation or test execution occurred during this artifact review."
+  ]
+}

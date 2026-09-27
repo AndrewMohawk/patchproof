@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "1.0",
+  "id": "0070f42d-fe4b-4729-ada9-a60fe59805ea",
+  "gate": "release_secrets",
+  "observedAt": "2026-09-27T15:55:35.083Z",
+  "expiresAt": "2026-09-28T15:55:35.083Z",
+  "bindings": {
+    "sourceDigest": "sha256:a079ae60ce08907c824ba571be14c34e57ea17bdf9da5b8d50b6df7e6251cb12",
+    "runtimeDigest": "sha256:3cd8ee786eadf4a8adec070f1d8cf2b49267fb1d27ed41913006a98187fcbdb5",
+    "protocolDigest": "sha256:b0466c074ae76239ff642286976f3f83e5ec91969fda631f74cf22850a0aa91e",
+    "bundleDigests": [
+      "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+      "sha256:13611e9e625d7d7d97f127e838195d720df21cca97c7ccaa90dfda6ba40af1c5",
+      "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422",
+      "sha256:6565c9ee7c592d5e34f4e6d4b52ac21efaf7a59f859212d69e7d73028eb5d253"
+    ],
+    "runtimeMode": "mock",
+    "liveProtocolFrozen": false
+  },
+  "scope": {
+    "origin": "actual",
+    "execution": "local",
+    "human": "none",
+    "independence": "same_host"
+  },
+  "outcome": "pass",
+  "assertions": [
+    "selected_artifacts_scanned",
+    "scanner_scope_and_findings_reviewed",
+    "no_unresolved_secret_findings"
+  ],
+  "evidence": [
+    {
+      "path": "research/verification/20260927-completion-audit/scan-d521c096-5442-4dd6-897b-fd3965a95ed4.log",
+      "digest": "sha256:e891344f24bf0b4cb37f44fb06634fe44b80915a94139ffd357161e9f988c5fe"
+    },
+    {
+      "path": "research/verification/20260927-completion-audit/scan-52bca833-3f06-41e9-a578-26c930df734e.log",
+      "digest": "sha256:5e8a1cc9f947b28706b0611e127f160eef76563671952c74aa1feab14062d81a"
+    },
+    {
+      "path": "research/verification/20260927-completion-audit/scan-a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c.log",
+      "digest": "sha256:05bb9d875a884e7ff1686a6429e466ef21d4fd022d12baed22a9ec235407d226"
+    },
+    {
+      "path": "research/verification/20260927-completion-audit/scan-88017a40-ba4c-4cd5-aead-a64465af7f90.log",
+      "digest": "sha256:88c4e62740c468b65f3b5a0a302e92e86916567d5a8b98e2b0c257fbe169cd92"
+    }
+  ],
+  "scannedArtifacts": [
+    {
+      "path": "artifacts/d521c096-5442-4dd6-897b-fd3965a95ed4.json",
+      "digest": "sha256:0cb8bdd502fd0b0a832656488df789824aa25c2f49cb0d94a729f527462a719a"
+    },
+    {
+      "path": "artifacts/52bca833-3f06-41e9-a578-26c930df734e.json",
+      "digest": "sha256:060c6c6ebe800ad523e0d0981293f133b8d4ef43bd30bf4ce76da300afd8416c"
+    },
+    {
+      "path": "artifacts/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c.json",
+      "digest": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca"
+    },
+    {
+      "path": "artifacts/88017a40-ba4c-4cd5-aead-a64465af7f90.json",
+      "digest": "sha256:b2d3d69f3e4f80ded9201cd57a70954b44408f865ff2fe38f5fb361ef0eecf43"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/home/andrewmohawk/.local/bin/gitleaks",
+        "dir",
+        "--redact",
+        "--no-banner",
+        "--no-color",
+        "--ignore-gitleaks-allow",
+        "artifacts/d521c096-5442-4dd6-897b-fd3965a95ed4.json"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-completion-audit/scan-d521c096-5442-4dd6-897b-fd3965a95ed4.log",
+        "digest": "sha256:e891344f24bf0b4cb37f44fb06634fe44b80915a94139ffd357161e9f988c5fe"
+      }
+    },
+    {
+      "argv": [
+        "/home/andrewmohawk/.local/bin/gitleaks",
+        "dir",
+        "--redact",
+        "--no-banner",
+        "--no-color",
+        "--ignore-gitleaks-allow",
+        "artifacts/52bca833-3f06-41e9-a578-26c930df734e.json"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-completion-audit/scan-52bca833-3f06-41e9-a578-26c930df734e.log",
+        "digest": "sha256:5e8a1cc9f947b28706b0611e127f160eef76563671952c74aa1feab14062d81a"
+      }
+    },
+    {
+      "argv": [
+        "/home/andrewmohawk/.local/bin/gitleaks",
+        "dir",
+        "--redact",
+        "--no-banner",
+        "--no-color",
+        "--ignore-gitleaks-allow",
+        "artifacts/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c.json"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-completion-audit/scan-a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c.log",
+        "digest": "sha256:05bb9d875a884e7ff1686a6429e466ef21d4fd022d12baed22a9ec235407d226"
+      }
+    },
+    {
+      "argv": [
+        "/home/andrewmohawk/.local/bin/gitleaks",
+        "dir",
+        "--redact",
+        "--no-banner",
+        "--no-color",
+        "--ignore-gitleaks-allow",
+        "artifacts/88017a40-ba4c-4cd5-aead-a64465af7f90.json"
+      ],
+      "exitCode": 0,
+      "output": {
+        "path": "research/verification/20260927-completion-audit/scan-88017a40-ba4c-4cd5-aead-a64465af7f90.log",
+        "digest": "sha256:88c4e62740c468b65f3b5a0a302e92e86916567d5a8b98e2b0c257fbe169cd92"
+      }
+    }
+  ],
+  "receiptDigest": "sha256:873136925b03fc7006baf7dea16d70514ad4f8c62a47f2365f718f7ba105048a"
+}

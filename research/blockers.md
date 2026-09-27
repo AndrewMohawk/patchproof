@@ -8,14 +8,17 @@ actual spending is $0. The private repository and ongoing pushes are authorized.
 The local implementation includes exact-byte smoke export, a read-only recorded
 evidence viewer, separately budgeted replay and accepted live-protocol selection
 for release auditing. Current product contract 2.2 preserves ordinary JSON keys
-without reinterpreting supported historical exports. The combined v2 corpus/UI
-integration at `c335031` passes all 585 tests, type checking and contract locks.
-The actual desktop/mobile browser comparison and all three fresh-container patch
-replays pass. All three scripted policies pass their declared checks; this is
-workflow validation, not measured differentiation. The loopback app serves that
-pinned source, and all 17 prior exports remain unchanged. The stale-fixture test
-failure and initial browser timeout/publication failures are preserved in the
-[integration record](verification/20260927-corpus-v2-integration/README.md).
+without reinterpreting supported historical exports. Current implementation source
+`06c584c` passes all 622 tests, type checking, contract locks, the actual desktop/mobile
+comparison and all three fresh-container patch replays. An unsupported-task run
+honestly abstained. The four selected exports were scanned, packaged and verified
+locally; `release-check` still returns blocked for missing external gates. The
+[integration receipt](verification/20260927-completion-audit/integration-receipt.json)
+records confirmed cleanup for all 246 operations, 20 unchanged historical exports
+and zero active runs. All three scripted policies passed their declared checks;
+this is workflow validation, not measured differentiation. The stale-fixture test
+failure, initial browser timeout/publication failures and `c335031` walkthrough/video
+remain separately preserved in the [prior integration record](verification/20260927-corpus-v2-integration/README.md).
 
 T03's local corpus is complete: twelve independent AI author jobs, separate review
 and fresh contract 2.2 validation cover all 60 tasks. Two infrastructure failures

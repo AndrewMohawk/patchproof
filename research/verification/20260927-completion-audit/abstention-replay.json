@@ -1,0 +1,17 @@
+{
+  "command": [
+    "make",
+    "reproduce",
+    "RUN=88017a40-ba4c-4cd5-aead-a64465af7f90"
+  ],
+  "exitCode": 2,
+  "result": {
+    "status": "no_selected_patch",
+    "mode": "mock",
+    "competitionReady": false,
+    "executionPerformed": false,
+    "bundleDigest": "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422",
+    "authenticityVerified": false
+  },
+  "reason": "Expected abstention, not a successful repair"
+}

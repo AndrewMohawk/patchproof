@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-09-27T15:52:19.842Z",
+  "sourceCommit": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+  "browser": {
+    "content": [
+      {
+        "type": "text",
+        "text": "### Result\n{\n  \"checked\": [\n    {\n      \"runId\": \"35a60dcc-3c9c-4550-b896-359a2a9d4eef\",\n      \"version\": \"2.0\",\n      \"savedTitle\": \"Stable duplicate removal\",\n      \"currentTitle\": \"Retain first occurrences throughout a list\",\n      \"titleDiffers\": true,\n      \"savedRequirementsRendered\": true,\n      \"coverageRows\": 3,\n      \"recordedCoverageRows\": 3,\n      \"bundleDigest\": \"sha256:7c065cb058879198968b2fbc8f5140f90c34388a0a10a3228959379da7eabf87\"\n    },\n    {\n      \"runId\": \"4c8e7ef3-4b99-4474-a111-42b2f255c564\",\n      \"version\": \"2.1\",\n      \"savedTitle\": \"Stable duplicate removal\",\n      \"currentTitle\": \"Retain first occurrences throughout a list\",\n      \"titleDiffers\": true,\n      \"savedRequirementsRendered\": true,\n      \"coverageRows\": 3,\n      \"recordedCoverageRows\": 3,\n      \"bundleDigest\": \"sha256:67565ca5bf84b639d919d4a759838d83a9e6b36a84a6e67108dac57a6c1e9c0f\"\n    }\n  ],\n  \"requests\": \"GET only plus local hash navigation\",\n  \"newRunsCreated\": 0\n}\n### Ran Playwright code\n```js\nawait page.evaluate('async () => { const tasks = (await (await fetch(\\'/tasks\\')).json()).tasks; const payload = await (await fetch(\\'/runs\\')).json(); const runs = Array.isArray(payload) ? payload : payload.runs; const checked=[]; for (const version of [\\'2.0\\',\\'2.1\\']) { const run=runs.find(r=>r.schemaVersion===version && r.phase===\\'terminal\\'); if(!run) throw Error(\\'Missing historical version \\'+version); const bundle=await (await fetch(\\'/runs/\\'+run.id+\\'/evidence\\')).json(); location.hash=\\'#evidence/\\'+run.id; let ready=false; for(let i=0;i<80;i++){ const text=document.querySelector(\\'#evidence\\')?.innerText||\\'\\'; const link=[...document.querySelectorAll(\\'#evidence a\\')].find(a=>a.textContent.includes(\\'Download evidence\\')); if(text.includes(bundle.fixture.title)&&bundle.fixture.requirements.every(r=>text.includes(r.text))&&link?.getAttribute(\\'href\\')===\\'/runs/\\'+run.id+\\'/evidence\\'){ready=true;break;} await new Promise(r=>setTimeout(r,100)); } if(!ready)throw Error(\\'Saved context not rendered for \\'+run.id); const current=tasks.find(t=>t.id===run.taskId); checked.push({runId:run.id,version,savedTitle:bundle.fixture.title,currentTitle:current?.title,titleDiffers:bundle.fixture.title!==current?.title,savedRequirementsRendered:true,coverageRows:document.querySelectorAll(\\'#evidence .coverage-row\\').length,recordedCoverageRows:run.coverage.length,bundleDigest:bundle.bundleDigest}); } return {checked,requests:\\'GET only plus local hash navigation\\',newRunsCreated:0}; }');\n```\n### Page\n- Page URL: http://127.0.0.1:43171/#evidence/4c8e7ef3-4b99-4474-a111-42b2f255c564\n- Page Title: PatchProof — review the evidence"
+      }
+    ]
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "### Result\nTotal messages: 0 (Errors: 0, Warnings: 0)\n"
+      }
+    ]
+  }
+}

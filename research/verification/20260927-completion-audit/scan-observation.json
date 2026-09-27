@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-09-27T15:55:34.143Z",
+  "finishedAt": "2026-09-27T15:55:35.083Z",
+  "scanner": "/home/andrewmohawk/.local/bin/gitleaks",
+  "reportedVersion": "version is set by build process",
+  "scannerDigest": "sha256:c7e48876fbe0885791b520de0fa2bef69854ce7e2ea904563d652e76d4476f8f",
+  "configuration": "Built-in rules; no custom configuration, baseline or ignore file; inline allow comments ignored",
+  "review": "Four explicit original exported JSON files scanned; all exits zero and output reports no leaks. Exact bytes unchanged after scan. No arbitrary directory or ZIP scan.",
+  "limitation": "Bounded scanner observation, not a guarantee of the absence of all secrets or authorization to publish.",
+  "selected": [
+    {
+      "path": "artifacts/d521c096-5442-4dd6-897b-fd3965a95ed4.json",
+      "bundleDigest": "sha256:6565c9ee7c592d5e34f4e6d4b52ac21efaf7a59f859212d69e7d73028eb5d253"
+    },
+    {
+      "path": "artifacts/52bca833-3f06-41e9-a578-26c930df734e.json",
+      "bundleDigest": "sha256:13611e9e625d7d7d97f127e838195d720df21cca97c7ccaa90dfda6ba40af1c5"
+    },
+    {
+      "path": "artifacts/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c.json",
+      "bundleDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364"
+    },
+    {
+      "path": "artifacts/88017a40-ba4c-4cd5-aead-a64465af7f90.json",
+      "bundleDigest": "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422"
+    }
+  ],
+  "receiptDigest": "sha256:873136925b03fc7006baf7dea16d70514ad4f8c62a47f2365f718f7ba105048a"
+}

@@ -1,0 +1,74 @@
+{
+  "startedAt": "2026-09-27T15:54:31.484782+00:00",
+  "request": {
+    "taskId": "v2-r01-t02",
+    "variant": "patchproof",
+    "mode": "mock",
+    "idempotencyKey": "handoff-abstention-3de6a69e-656b-432e-a007-b574cb98ad45"
+  },
+  "createHttpStatus": 201,
+  "initialRun": {
+    "schemaVersion": "2.2",
+    "id": "88017a40-ba4c-4cd5-aead-a64465af7f90",
+    "taskId": "v2-r01-t02",
+    "variant": "patchproof",
+    "mode": "mock",
+    "competitionReady": false,
+    "notice": "Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.",
+    "phase": "queued",
+    "terminalStatus": null,
+    "reason": null,
+    "createdAt": "2026-09-27T15:54:31.357Z",
+    "finishedAt": null,
+    "sourceDigest": "sha256:83cfde7b695762fce2f7b5db03e307d5abcf68a18f36d5e42e5f2ad12a666a99",
+    "policyDigest": "sha256:ad1a0592c97317091c074a5549c969dd1467ea1bae6528bad5735958091fe56e",
+    "runtimeLockDigest": "sha256:14c7c70e5613ddc6817f2378147a0de85cd5b27070f122b2eab58be846cd4d47",
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 24000,
+      "outputTokenLimit": 6000,
+      "wallTimeLimitSeconds": 120,
+      "sandboxCpuSecondsLimit": 60,
+      "maxApprovedSpendUsd": 0
+    },
+    "usage": {
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "sandboxCpuSeconds": 0,
+      "measuredCostUsd": 0,
+      "costIsEstimate": false,
+      "elapsedMs": 0
+    },
+    "baselineChecks": null,
+    "candidates": [],
+    "selectedCandidateId": null,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R02",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R03",
+        "status": "unverified",
+        "checkIds": []
+      }
+    ],
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-09-27T15:54:31.424Z",
+        "phase": "queued",
+        "message": "Run queued with a fixed shared resource allowance."
+      }
+    ],
+    "sandboxOperationIds": []
+  },
+  "polls": []
+}

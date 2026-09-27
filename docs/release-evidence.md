@@ -160,7 +160,12 @@ authored by these tests.
 
 Still separate: actual sponsor smoke/billing, pilot/final results, human study,
 independent-machine replay, current rules and license review, hosted availability,
-and owner publication/entry decisions. This work supplies receipt and packet
-plumbing; it does not establish those observations. The root integration step
-must capture a genuine scan of the final selected exports and preserve the
-matching source checkout before making a real local handoff packet.
+and owner publication/entry decisions. The source `06c584c` integration captured
+an actual scan of four exact public-fixture exports: three successful local runs
+and one honest unsupported-task abstention. The [integration receipt](../research/verification/20260927-completion-audit/integration-receipt.json)
+binds the source checkout, scan, [packet manifest](../research/verification/20260927-completion-audit/packet-manifest.json)
+and command exits. Packet `sha256:00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95`
+was built locally; packet verification and file checksums exited 0, and all four
+bundles have current source bindings. Its evidence status remains `blocked`,
+`release-check` exited 2 for missing external gates, and publication was not
+authorized. This is an actual local handoff packet, not sponsor or release approval.

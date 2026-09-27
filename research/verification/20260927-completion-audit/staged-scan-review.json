@@ -1,0 +1,30 @@
+{
+  "reviewedAt": "2026-09-27T16:03:31.422172+00:00",
+  "initialExitCode": 1,
+  "findings": 2,
+  "classification": "false_positive",
+  "field": "request.idempotencyKey",
+  "generation": "Locally generated handoff-abstention- prefix plus UUID by the coordinator capture; used only for run deduplication",
+  "basis": "The two exact locations repeat the same created request identifier. No account access or secret material was read or used to generate it. Coordinator/journal consume idempotencyKey only for request deduplication.",
+  "exceptionScope": "Two exact file/rule/line fingerprints via explicit --gitleaks-ignore-path; no default repository ignore or rule disabled",
+  "retainedEvidenceBytes": "Original abstention-create.json and abstention-observation.json unchanged",
+  "fingerprints": [
+    "research/verification/20260927-completion-audit/abstention-create.json:generic-api-key:7",
+    "research/verification/20260927-completion-audit/abstention-observation.json:generic-api-key:7"
+  ],
+  "exportScan": "Separate exact-bundle secret scan passed with no exceptions and remains unchanged",
+  "reviewedScan": {
+    "command": [
+      "gitleaks",
+      "git",
+      "--staged",
+      "--redact",
+      "--no-banner",
+      "--no-color",
+      "--gitleaks-ignore-path",
+      "research/verification/20260927-completion-audit/staged-scan-ignore.txt"
+    ],
+    "exitCode": 0,
+    "log": "staged-scan-reviewed.log"
+  }
+}

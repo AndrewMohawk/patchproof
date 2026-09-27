@@ -3,10 +3,12 @@
 This walkthrough demonstrates scripted repair proposals with actual local checks.
 It does not establish model quality or competition readiness.
 
-The current catalogue is the frozen v2 corpus. This is the procedure for its
-handoff. Source `c335031` passes all 585 tests, the actual browser comparison and
-all three fresh-container patch replays; see the
-[integration record](../research/verification/20260927-corpus-v2-integration/README.md).
+The current catalogue is the frozen v2 corpus. Current implementation source
+`06c584c` passes all 622 tests, the actual desktop/mobile browser comparison and
+all three fresh-container patch replays. An unsupported-task run honestly abstained;
+its replay reported no selected patch. The four selected exports were scanned,
+packaged and verified locally, with release gates still blocked; see the
+[integration receipt](../research/verification/20260927-completion-audit/integration-receipt.json).
 Prior source-bound walkthroughs remain historical evidence. Old runs must display
 their saved task context, not the new catalogue's text for a reused task ID.
 

@@ -1,0 +1,12 @@
+node scripts/product-cli.ts reproduce "88017a40-ba4c-4cd5-aead-a64465af7f90"
+(node:4183144) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "status": "no_selected_patch",
+  "mode": "mock",
+  "competitionReady": false,
+  "executionPerformed": false,
+  "bundleDigest": "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422",
+  "authenticityVerified": false
+}
+make: *** [Makefile:17: reproduce] Error 2

@@ -365,3 +365,28 @@ See `verification/20260927-trusted-replay/receipt.json` and
 source/artifact digests, exact limitations and cleanup. `make doctor` exits 0;
 unconfigured smoke/pilot/evaluate/release-check correctly exit 2. No actual
 provider spending, experiment result, human study or public release was created.
+
+## 2026-09-27 — final local completion audit, source 06c584c
+
+Current local status supersedes the prior dated handoff above. The committed
+coordinator and release-binding fixes pass 622 tests, typecheck and contract
+locks. Three new actual browser comparison runs and their fresh container replays
+pass at `06c584c23ac1b620a14ba5e3c68fbdb02199a164`. A fourth curated task abstains
+with no mock proposal; replay correctly exits 2 with no selected patch. All 246
+unique local operations record cleanup, the final owned-container query is empty,
+and all 20 prior export files remain byte-identical. There are 24 terminal runs.
+
+The exact four exports passed a real bounded secret scan. The local packet builds
+and verifies with all four source bindings current; checksums pass. `release-check`
+correctly exits 2 for open external gates. `make doctor` exits 0. The pinned
+loopback application uses this tested source; documentation/evidence commits do
+not change its 110 operational files. No provider call or spending occurred.
+
+See [the audit record](verification/20260927-completion-audit/README.md), its
+machine-readable integration receipt, commands, original red/green logs, byte
+hashes, cleanup records and retained screenshots. Source fixes are committed as
+`06c584c`; this section and the actual integration artifacts accompany the next
+handoff commit. Real provider access/calibration/billing, matched experiments,
+uncoached human review, independent-machine replay and owner release decisions
+remain unverified. These are local mock workflow observations, not comparative
+model results or competition-ready evidence.

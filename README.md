@@ -80,14 +80,22 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Implementation and evidence
 
+Current implementation source `06c584c` passes all **622 tests**, the actual
+desktop/mobile comparison and all three fresh-container patch replays. An
+unsupported-task run honestly abstained with no selected patch. The four selected
+exports were scanned, packaged and verified locally; release approval remains
+blocked. The [integration receipt](research/verification/20260927-completion-audit/integration-receipt.json)
+records those results, confirmed cleanup for all 246 operations and $0 provider spend.
+
 ![Local task picker with explicit mock mode](docs/screenshots/tasks.png)
 
 See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
 [comparison](docs/screenshots/comparison.png) / [evidence](docs/screenshots/evidence.png) screens.
-These screens come from the v2 local comparison at source `c335031`. All three
+These screens come from the v2 local comparison at source `06c584c`. All three
 scripted policies passed their declared checks; this is workflow validation,
-not evidence of a performance advantage. The [verification record](research/verification/20260927-corpus-v2-integration/README.md)
-retains the earlier failed attempt and the current source-bound evidence.
+not evidence of a performance advantage. The [verification record](research/verification/20260927-completion-audit/README.md)
+binds the current results. The [prior integration record](research/verification/20260927-corpus-v2-integration/README.md)
+separately preserves the earlier failures and `c335031` walkthrough/video evidence.
 
 - SQLite journal, coordinator ownership lease, cancellation, scoped restart
   reconciliation and content-addressed evidence persist locally in `.local/product/`.

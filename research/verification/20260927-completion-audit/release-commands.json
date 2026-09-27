@@ -1,0 +1,44 @@
+[
+  {
+    "argv": [
+      "make",
+      "release-check",
+      "INPUT=research/verification/20260927-completion-audit/release-input.json"
+    ],
+    "startedAt": "2026-09-27T15:55:49.070238+00:00",
+    "exitCode": 2,
+    "log": "release-check-final.log",
+    "expectedExitCode": 2
+  },
+  {
+    "argv": [
+      "make",
+      "release-packet",
+      "INPUT=research/verification/20260927-completion-audit/release-input.json"
+    ],
+    "startedAt": "2026-09-27T15:55:49.602662+00:00",
+    "exitCode": 0,
+    "log": "release-packet.log",
+    "expectedExitCode": 0
+  },
+  {
+    "argv": [
+      "make",
+      "verify-packet",
+      "PACKET=artifacts/release-packets/00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+      "DIGEST=sha256:00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95"
+    ],
+    "exitCode": 0,
+    "log": "verify-packet.log"
+  },
+  {
+    "argv": [
+      "sha256sum",
+      "--check",
+      "SHA256SUMS"
+    ],
+    "cwd": "/home/andrewmohawk/patchproof/artifacts/release-packets/00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+    "exitCode": 0,
+    "log": "packet-checksums.log"
+  }
+]

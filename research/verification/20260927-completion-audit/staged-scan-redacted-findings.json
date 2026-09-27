@@ -1,0 +1,42 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 7,
+  "EndLine": 7,
+  "StartColumn": 7,
+  "EndColumn": 80,
+  "Match": "idempotencyKey\": \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "research/verification/20260927-completion-audit/abstention-create.json",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 4.25156,
+  "Author": "",
+  "Email": "",
+  "Date": "0001-01-01T00:00:00Z",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "research/verification/20260927-completion-audit/abstention-create.json:generic-api-key:7"
+ },
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 7,
+  "EndLine": 7,
+  "StartColumn": 7,
+  "EndColumn": 80,
+  "Match": "idempotencyKey\": \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "research/verification/20260927-completion-audit/abstention-observation.json",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 4.25156,
+  "Author": "",
+  "Email": "",
+  "Date": "0001-01-01T00:00:00Z",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "research/verification/20260927-completion-audit/abstention-observation.json:generic-api-key:7"
+ }
+]

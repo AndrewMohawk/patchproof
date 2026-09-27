@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-09-27T15:59:50.918404+00:00",
+  "sourceCommit": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+  "repository": "https://github.com/AndrewMohawk/patchproof",
+  "repositoryVisibility": "private",
+  "operationalFilesMatched": 110,
+  "historicalExportsUnchanged": 20,
+  "runtime": {
+    "pid": 4028527,
+    "sessionId": 84887,
+    "root": "/tmp/patchproof-handoff-audit",
+    "state": "/home/andrewmohawk/patchproof/.local/product",
+    "url": "http://127.0.0.1:43171"
+  },
+  "verification": [
+    "Full make test622exit0 before source commit",
+    "Actual browser3new UI runs exit0",
+    "Three sequential source-bound fresh replays exit0",
+    "Expected unsupported-task abstention replay exit2",
+    "Actual four-export scan and local packet verify/checksums exit0",
+    "Current release-check exit2 with external gates open",
+    "Current make doctor exit0; no paid calls"
+  ],
+  "publicDeployment": false,
+  "entrySubmitted": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0
+}
