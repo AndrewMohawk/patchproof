@@ -1,0 +1,41 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/product-cli.ts",
+      "reproduce",
+      "32443ba1-bd6a-4f8a-82ac-188e001f5cac"
+    ],
+    "exitCode": 2,
+    "variant": "baseline",
+    "runId": "32443ba1-bd6a-4f8a-82ac-188e001f5cac",
+    "seconds": 31.027,
+    "log": "research/verification/20260927-merged-ui-docker/reproduce-baseline.log"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/product-cli.ts",
+      "reproduce",
+      "75bcd0f3-a817-4f42-98bb-9fe7d5a667d4"
+    ],
+    "exitCode": 0,
+    "variant": "checks_only",
+    "runId": "75bcd0f3-a817-4f42-98bb-9fe7d5a667d4",
+    "seconds": 21.622,
+    "log": "research/verification/20260927-merged-ui-docker/reproduce-checks_only.log"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/product-cli.ts",
+      "reproduce",
+      "e2310d8f-1fd5-45ba-addf-6268e0a06a0f"
+    ],
+    "exitCode": 0,
+    "variant": "patchproof",
+    "runId": "e2310d8f-1fd5-45ba-addf-6268e0a06a0f",
+    "seconds": 20.22,
+    "log": "research/verification/20260927-merged-ui-docker/reproduce-patchproof.log"
+  }
+]

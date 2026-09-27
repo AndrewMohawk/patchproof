@@ -1,0 +1,75 @@
+{
+  "sourceCommit": "92a2baf7a6c5282fb376090e40985cb1f1fac21a",
+  "files": {
+    "apps/web/app.js": "sha256:a307772b172f2b0f7cdcbe65f56abf4016bb87f3988aef50232f94e488a8e7f2",
+    "apps/web/index.html": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+    "apps/web/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa",
+    "apps/web/verify-browser.ts": "sha256:bd26ffd0b1c9b59f672139157cf46fb54d336196f47e823f49762fbecf4d5fb6",
+    "scripts/verify-browser.ts": "sha256:29a09cadeafc2749d2e097427d2decfc1725ea50c6417b300357cb62e8c197e9",
+    "scripts/product-cli.ts": "sha256:94c70da39e37fc4432b2090afa15c76ed5ddf9f23d9f8c23f6fc04729871141d",
+    "apps/api/src/application.ts": "sha256:4c405d476f747a4a2b0a093580b69b22eb11745b6b520a587b057bbad320ec8d",
+    "apps/api/src/product-server.ts": "sha256:1a6c02509f6bc485eedcc03329a6c25ef33eed47b5a89e3988fa1be5e8961389",
+    "packages/orchestrator/src/evidence.ts": "sha256:586e54c1fec7838eba36842e9da3dbbaf28a76a52dc22c45e6d9599b95e2a390",
+    "packages/orchestrator/src/repeated-checks.ts": "sha256:24c355192db6f539dcd5d5a98306d8c90d815f9099da2ef38c6645a6e17c43dc",
+    "workers/sandbox/index.ts": "sha256:25bdc0781a0232c77d8c70650b6ec0c097f0d331d1e9adf9a288ade3e802aa50",
+    "workers/sandbox/driver.ts": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8",
+    "workers/sandbox/local-cleanup.ts": "sha256:789f5f727c5ab26ac06b30ac0975ee218b87dfba49779abe5d5888dd56271507",
+    "package-lock.json": "sha256:d86b5655a36e9f3374a55129f275ddae88a1b28f51295e1ae1d5dffa81adaaee"
+  },
+  "node": "v25.5.0",
+  "npm": "11.8.0",
+  "dockerServer": {
+    "Platform": {
+      "Name": "Docker Engine - Community"
+    },
+    "Version": "29.8.1",
+    "ApiVersion": "1.56",
+    "MinAPIVersion": "1.40",
+    "Os": "linux",
+    "Arch": "amd64",
+    "Components": [
+      {
+        "Name": "Engine",
+        "Version": "29.8.1",
+        "Details": {
+          "ApiVersion": "1.56",
+          "Arch": "amd64",
+          "BuildTime": "Tue Sep 15 16:26:01 2026",
+          "Experimental": "false",
+          "GitCommit": "464cd50",
+          "GoVersion": "go1.26.8",
+          "KernelVersion": "6.8.0-138-generic",
+          "MinAPIVersion": "1.40",
+          "Module": "github.com/moby/moby/v2",
+          "ModuleVersion": "v2.0.0+unknown",
+          "Os": "linux"
+        }
+      },
+      {
+        "Name": "containerd",
+        "Version": "v2.2.6",
+        "Details": {
+          "GitCommit": "11ce9d5f3c68c941867e82890e93e815c1304f1b"
+        }
+      },
+      {
+        "Name": "runc",
+        "Version": "1.3.6",
+        "Details": {
+          "GitCommit": "v1.3.6-0-g491b69ba"
+        }
+      },
+      {
+        "Name": "docker-init",
+        "Version": "0.19.0",
+        "Details": {
+          "GitCommit": "de40ad0"
+        }
+      }
+    ],
+    "GitCommit": "464cd50",
+    "GoVersion": "go1.26.8",
+    "KernelVersion": "6.8.0-138-generic",
+    "BuildTime": "2026-09-15T16:26:01.000000000+00:00"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "scripts/product-cli.ts",
+    "reproduce",
+    "32443ba1-bd6a-4f8a-82ac-188e001f5cac"
+  ],
+  "exitCode": 0,
+  "seconds": 20.511,
+  "runId": "32443ba1-bd6a-4f8a-82ac-188e001f5cac",
+  "variant": "baseline",
+  "attempt": 2,
+  "unchangedCommand": true,
+  "sameSourceAndBundle": true,
+  "rootConcurrentTestSuiteFinishedBeforeRetry": true,
+  "concurrencyCausationEstablished": false,
+  "log": "research/verification/20260927-merged-ui-docker/reproduce-baseline-retry-01.log"
+}

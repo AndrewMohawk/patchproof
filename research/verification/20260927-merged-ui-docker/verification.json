@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "merged-ui-local-docker-regression",
+  "recordedAt": "2026-09-27T12:25:57.600241+00:00",
+  "sourceCommit": "92a2baf7a6c5282fb376090e40985cb1f1fac21a",
+  "sourceUnchanged": true,
+  "status": "browser-passed-and-all-bundles-reproduced-with-retained-first-attempt-timeout",
+  "mode": "mock",
+  "competitionReady": false,
+  "taskId": "stable-unique-01",
+  "browser": {
+    "command": "node scripts/verify-browser.ts",
+    "exitCode": 0,
+    "attempts": 1,
+    "checkCount": 14,
+    "report": "product-browser.json",
+    "log": "browser-attempt-01.log",
+    "screenshotsInspected": 6,
+    "requestInterception": false,
+    "dedicatedLoopbackPort": 33697,
+    "state": "task-owned temporary directory created by existing helper, exported before helper cleanup"
+  },
+  "replayFirstAttempts": [
+    {
+      "command": [
+        "node",
+        "scripts/product-cli.ts",
+        "reproduce",
+        "32443ba1-bd6a-4f8a-82ac-188e001f5cac"
+      ],
+      "exitCode": 2,
+      "variant": "baseline",
+      "runId": "32443ba1-bd6a-4f8a-82ac-188e001f5cac",
+      "seconds": 31.027,
+      "log": "research/verification/20260927-merged-ui-docker/reproduce-baseline.log"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/product-cli.ts",
+        "reproduce",
+        "75bcd0f3-a817-4f42-98bb-9fe7d5a667d4"
+      ],
+      "exitCode": 0,
+      "variant": "checks_only",
+      "runId": "75bcd0f3-a817-4f42-98bb-9fe7d5a667d4",
+      "seconds": 21.622,
+      "log": "research/verification/20260927-merged-ui-docker/reproduce-checks_only.log"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/product-cli.ts",
+        "reproduce",
+        "e2310d8f-1fd5-45ba-addf-6268e0a06a0f"
+      ],
+      "exitCode": 0,
+      "variant": "patchproof",
+      "runId": "e2310d8f-1fd5-45ba-addf-6268e0a06a0f",
+      "seconds": 20.22,
+      "log": "research/verification/20260927-merged-ui-docker/reproduce-patchproof.log"
+    }
+  ],
+  "replayRetry": {
+    "command": [
+      "node",
+      "scripts/product-cli.ts",
+      "reproduce",
+      "32443ba1-bd6a-4f8a-82ac-188e001f5cac"
+    ],
+    "exitCode": 0,
+    "seconds": 20.511,
+    "runId": "32443ba1-bd6a-4f8a-82ac-188e001f5cac",
+    "variant": "baseline",
+    "attempt": 2,
+    "unchangedCommand": true,
+    "sameSourceAndBundle": true,
+    "rootConcurrentTestSuiteFinishedBeforeRetry": true,
+    "concurrencyCausationEstablished": false,
+    "log": "research/verification/20260927-merged-ui-docker/reproduce-baseline-retry-01.log"
+  },
+  "replayOutcomes": [
+    {
+      "log": "reproduce-baseline-retry-01.log",
+      "status": "reproduced",
+      "checkCount": 6,
+      "infrastructureError": null,
+      "executionPerformed": true,
+      "isolation": "local_container",
+      "bundleDigest": "sha256:be0b448024443786c5885a3d7cf81c8cbce0cae74a94814973fa0dd75b5c9bab"
+    },
+    {
+      "log": "reproduce-baseline.log",
+      "status": "mismatch_or_infrastructure_error",
+      "checkCount": 6,
+      "infrastructureError": "timeout",
+      "executionPerformed": true,
+      "isolation": "local_container",
+      "bundleDigest": "sha256:be0b448024443786c5885a3d7cf81c8cbce0cae74a94814973fa0dd75b5c9bab"
+    },
+    {
+      "log": "reproduce-checks_only.log",
+      "status": "reproduced",
+      "checkCount": 6,
+      "infrastructureError": null,
+      "executionPerformed": true,
+      "isolation": "local_container",
+      "bundleDigest": "sha256:69a4510545ac89e711e3cde6ced2f93fc6c98e6705615f12ff4b081a9a282206"
+    },
+    {
+      "log": "reproduce-patchproof.log",
+      "status": "reproduced",
+      "checkCount": 6,
+      "infrastructureError": null,
+      "executionPerformed": true,
+      "isolation": "local_container",
+      "bundleDigest": "sha256:912757020105cb2fcdec2f0c55d15a30c2c570b594ad9313472c84ce55e8d2f4"
+    }
+  ],
+  "firstAttemptBatchExitCode": 1,
+  "retainedFailure": {
+    "variant": "baseline",
+    "attempt": 1,
+    "exitCode": 2,
+    "infrastructureError": "timeout",
+    "elapsedSeconds": 31.027,
+    "allowanceSeconds": 30,
+    "observationsBeforeTimeout": 11,
+    "finalObservationTimedOut": true,
+    "cleanupConfirmedForAllReportedOperations": true,
+    "concurrentRootTestSuite": "Root reported overlap with its full suite; no measured causal attribution. Retry waited for root suite completion.",
+    "unchangedRetryPassed": true,
+    "silentRetryOrAllowanceIncrease": false
+  },
+  "integrity": {
+    "verifiedBundles": 3,
+    "operationalLockMatchedCurrentSource": true,
+    "artifact": "evidence-integrity.json",
+    "exitCode": 0
+  },
+  "cleanup": {
+    "artifact": "cleanup-final.json",
+    "exitCode": 0,
+    "recordedOperations": 144,
+    "matchingContainersRemaining": [],
+    "dedicatedListenerStopped": true,
+    "dedicatedProcessStopped": true,
+    "existing43171ServiceSignaled": false
+  },
+  "sourceAndEnvironment": "source-and-environment.json",
+  "browserToolNote": "Preferred shared Playwright MCP was occupied; no shared browser was stopped. Existing helper launched its own local pinned Chromium.",
+  "boundaries": [
+    "Real local Docker observations, with a scripted mock model; no inference or provider calls.",
+    "One public benign curated maintenance fixture only; no sealed corpus, remote target, credential or paid account used.",
+    "This verifies software workflow and declared-check replay, not model quality, competition readiness or human usability.",
+    "Host sandbox CPU remains unmeasured/null in original runs; it was not converted into a measured value.",
+    "Full suite was not executed by this reviewer; root owns its independently recorded suite.",
+    "Original timeout remains a failed first replay attempt even though the unchanged retry passed.",
+    "No production code, current service, fixtures or task statuses changed."
+  ],
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "published": false
+}
