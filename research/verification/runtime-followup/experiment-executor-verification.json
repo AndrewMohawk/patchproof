@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "synthetic-experiment-executor-verification",
+  "recordedAt": "2026-09-27T10:01:46.691184+00:00",
+  "integrationBase": "d575f24",
+  "rootPrerequisiteCommits": [
+    "69b6f65",
+    "110503d"
+  ],
+  "parentCommit": "11189853e5675e3f4804417603f96849015184dc",
+  "scope": "Synthetic-only experiment execute adapter, shared product/smoke loop and private immutable trace storage. No real provider execution or scored result.",
+  "sourceDigests": {
+    "packages/orchestrator/src/coordinator.ts": "sha256:97a74071ca9c7824d05beac5bec66ac9b79075c65196a7638dc5216e8f5a55ef",
+    "packages/orchestrator/src/episode-engine.ts": "sha256:818e909a38dbffdc2c6959cf683dd18910cff37521dc03ff35c35cfc67fe8acd",
+    "packages/orchestrator/src/experiment-executor.ts": "sha256:f889084109da76923afb19a821890de361a0929b67ee923d4bc3595888d8ee6d",
+    "packages/orchestrator/src/experiment-trace-store.ts": "sha256:76296c7f05acb2108c7310e0f76164a629828011aee323deea631ba7405f4874",
+    "tests/experiment-executor.test.ts": "sha256:2b6f7ec769974855f6a04c66a42512f330299a82d32b39eba8e7ec199d479c5b",
+    "tests/experiment-trace-store.test.ts": "sha256:131dde181f62ff199c8090dc9a40ac2f6c43ebadbd915f943bb1aba06bba0dc9",
+    "docs/experiment-executor.md": "sha256:0aa386b52b194798995908596a79e0479aff6f5d3adb5737179326f74b55517a"
+  },
+  "tests": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "passed": 237,
+      "failed": 0,
+      "skipped": 0,
+      "log": "research/verification/runtime-followup/experiment-executor-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/experiment-executor-typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/experiment-executor-contracts.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "artifactDigests": {
+    "research/verification/runtime-followup/experiment-executor-tests.log": "sha256:393475404e754df203f2dfdd0a6200dfc440642ec6cd74d2bf407da4e28fa256",
+    "research/verification/runtime-followup/experiment-executor-typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/runtime-followup/experiment-executor-contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "behavior": {
+    "originalSourceCheckBatches": 0,
+    "maximumCandidateRevisions": 24,
+    "maximumProgressiveBranches": 3,
+    "maximumRawCandidateCheckBatches": 48,
+    "candidateFeedbackRoundPerCompletedRepeatedBatch": 1,
+    "experimentPolicyCalibrated": false,
+    "publicAndSmokeBehaviorPreserved": true,
+    "liveProviderConstructor": false,
+    "newLedgerGrant": false
+  },
+  "notRun": [
+    "Real provider/model/sandbox integration",
+    "Live billing or cleanup reconciliation",
+    "Development-data calibration",
+    "Real pilot or sealed final experiment",
+    "Browser verification of integrated source (root integration task)"
+  ],
+  "limits": [
+    "Only explicitly synthetic runtime dependencies are accepted; markers are not authentication against malicious trusted caller code.",
+    "Reported activity in executor tests is simulated and cannot satisfy live evidence gates.",
+    "Product frozen contracts remain unchanged; experiment traces use a separate format.",
+    "Unknown runtime CPU/USD prevents successful finalization; partial checkpoints remain lower bounds.",
+    "No live executor, CLI wiring, credential lookup, remote cleanup or resumable interrupted claims.",
+    "Exact public fixture bytes bind fixtureDigest; selected files use dispatcher hashJson; trace consistency uses canonical digests.",
+    "Hashes bind bytes and do not establish external fact truth."
+  ]
+}

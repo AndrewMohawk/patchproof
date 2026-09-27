@@ -3,19 +3,18 @@ import { setImmediate as nextTurn } from 'node:timers/promises';
 import { ContractError, LimitsSchema } from '../../contracts/src/index.ts';
 import { PRODUCT_CONTRACT_VERSION, ProductRunRequestSchema } from '../../contracts/src/product.ts';
 import { ProposalSchema } from '../../contracts/src/product-validation.ts';
-import type { CandidateRecord, CheckResult, CheckRunner, Fixture, ProductEvent, ProductRun, RepairProvider, SandboxCheckResult } from '../../contracts/src/product.ts';
+import type { CheckRunner, Fixture, ProductEvent, ProductRun, RepairProvider } from '../../contracts/src/product.ts';
 import { digestJson } from '../../contracts/src/digest.ts';
 import { EvidenceStore, buildEvidence } from './evidence.ts';
-import { fixtureDigests, publicTask, validatePaths } from './fixtures.ts';
+import { fixtureDigests, publicTask } from './fixtures.ts';
 import { RunJournal } from './journal.ts';
-import { createPatch } from './patch.ts';
+import { LOCAL_REPAIR_POLICY, repairInput, RevisionCheckError, runRevisionLoop } from './episode-engine.ts';
 import { FLAKY_CHECK_MESSAGE } from './repeated-checks.ts';
 import { resolveTrustedSmokeCapability, TrustedSmokeGateError } from './trusted-smoke.ts';
 import type { TrustedSmokeSettings } from './trusted-smoke.ts';
 
 export const LOCAL_LIMITS = LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 24000,
   outputTokenLimit: 6000, wallTimeLimitSeconds: 120, sandboxCpuSecondsLimit: 60, maxApprovedSpendUsd: 0 });
-const allPass = (checks: CheckResult[]) => checks.length > 0 && checks.every(check => check.status === 'pass');
 
 export class Coordinator {
   readonly journal: RunJournal;
@@ -190,69 +189,31 @@ export class Coordinator {
         throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
       }
       if (original.result.checks.some(check => check.message === FLAKY_CHECK_MESSAGE)) throw new ContractError('flaky_check', 'Original observations are inconsistent.');
-      let files = structuredClone(fixture.files);
-      let feedback = run.variant === 'baseline' ? original.visible : [...original.visible, ...original.acceptance];
-      for (let attempt = 0; attempt < Math.min(3, run.limits.inferenceCallLimit); attempt++) {
-        const candidateStarted = Date.now();
-        controller.signal.throwIfAborted();
-        const modelRemainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - started) / 1000);
-        if (modelRemainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for inference.');
-        this.#trustedSmoke?.validateStep();
-        this.#event(run, 'repair', run.mode === 'live' ? `Requesting sponsor smoke candidate ${attempt + 1}; all candidates share the reserved envelope.` : `Requesting scripted candidate ${attempt + 1}; no model inference call.`);
-        const proposal = ProposalSchema.parse(await this.#provider.propose({ taskId: fixture.id, description: fixture.description,
-          requirements: fixture.requirements, files: run.variant === 'patchproof' ? structuredClone(fixture.files) : files,
-          editAllowlist: fixture.editAllowlist, visibleCases: fixture.visibleCases,
-          feedback: feedback.map(c => ({ requirementId: c.requirementId, status: c.status,
-            message: `Observed ${attempt === 0 ? 'on original source' : `on candidate ${attempt}`}; next proposal starts from ${run.variant === 'patchproof' ? 'original source' : 'supplied current source'}. ${c.message}` })), attempt,
-          remaining: { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - (run.mode === 'live' ? run.usage.inferenceCalls : attempt),
-            inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens,
-            wallTimeLimitSeconds: modelRemainingSeconds },
-        }, controller.signal));
-        run.usage.inferenceCalls += proposal.usage.inferenceCalls;
-        run.usage.inputTokens += proposal.usage.inputTokens; run.usage.outputTokens += proposal.usage.outputTokens;
-        run.usage.measuredCostUsd = proposal.usage.measuredCostUsd === null || run.usage.measuredCostUsd === null ? null : run.usage.measuredCostUsd + proposal.usage.measuredCostUsd;
-        if (run.usage.inputTokens > run.limits.inputTokenLimit || run.usage.outputTokens > run.limits.outputTokenLimit ||
-            run.usage.inferenceCalls > run.limits.inferenceCallLimit || (run.usage.measuredCostUsd ?? 0) > run.limits.maxApprovedSpendUsd) {
-          throw new ContractError('budget_not_approved', 'Aggregate resource allowance exceeded.');
-        }
-        validatePaths(proposal.files, fixture.editAllowlist);
-        const candidateFiles = { ...(run.variant === 'patchproof' ? fixture.files : files), ...proposal.files };
-        const candidate: CandidateRecord = {
-          id: attempt + 1, parentId: run.variant === 'patchproof' || attempt === 0 ? null : attempt,
-          summary: proposal.summary.slice(0, 2000), files: candidateFiles, diff: createPatch(fixture.files, candidateFiles),
-          visibleChecks: [], acceptanceChecks: [], accepted: false, rejectionReason: null,
-          modelId: proposal.modelId, providerRequestId: proposal.providerRequestId,
-          sandboxOperationIds: [], elapsedMs: 0, usage: proposal.usage,
-        };
-        run.candidates.push(candidate); this.journal.save(run);
-        this.#event(run, 'check', `Checking candidate ${candidate.id} in a fresh isolated workspace.`);
-        const checked = await this.#check(run, fixture, candidateFiles, controller.signal);
-        candidate.visibleChecks = checked.visible; candidate.acceptanceChecks = checked.acceptance;
-        candidate.sandboxOperationIds = checked.result.operationIds;
-        if (checked.result.infrastructureError) {
-          candidate.rejectionReason = checked.result.infrastructureError;
-          candidate.elapsedMs = Date.now() - candidateStarted;
-          this.journal.save(run);
-          if (this.#trustedSmoke && checked.result.infrastructureError.startsWith('trusted_smoke_')) throw new TrustedSmokeGateError(checked.result.infrastructureError.slice('trusted_smoke_'.length));
-          throw new ContractError('infrastructure_error', 'Candidate checker infrastructure failure.');
-        }
-        candidate.accepted = allPass([...checked.visible, ...checked.acceptance]);
-        candidate.rejectionReason = candidate.accepted ? null : 'One or more declared checks failed or were unavailable.';
-        candidate.elapsedMs = Date.now() - candidateStarted;
-        if (checked.result.checks.some(check => check.message === FLAKY_CHECK_MESSAGE)) {
-          candidate.rejectionReason = 'flaky_check';
-          throw new ContractError('flaky_check', 'Candidate observations are inconsistent; no further repair feedback.');
-        }
-        if (run.variant !== 'patchproof') run.selectedCandidateId = candidate.id;
-        else {
-          const previous = run.candidates.find(c => c.id === run.selectedCandidateId);
-          const score = (record: CandidateRecord) => [...record.visibleChecks, ...record.acceptanceChecks].filter(c => c.status === 'pass').length;
-          if (!previous || score(candidate) > score(previous)) run.selectedCandidateId = candidate.id;
-        }
-        files = candidateFiles;
-        feedback = run.variant === 'baseline' ? checked.visible : [...checked.visible, ...checked.acceptance];
-        if (run.variant === 'baseline' ? allPass(checked.visible) : candidate.accepted) break;
-      }
+      await runRevisionLoop({ fixture, variant: run.variant, policy: LOCAL_REPAIR_POLICY,
+        maximumRevisions: Math.min(3, run.limits.inferenceCallLimit), signal: controller.signal,
+        initialFeedback: run.variant === 'baseline' ? original.visible : [...original.visible, ...original.acceptance], revisions: run.candidates,
+        propose: async context => {
+          const modelRemainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - started) / 1000);
+          if (modelRemainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for inference.');
+          this.#trustedSmoke?.validateStep();
+          this.#event(run, 'repair', run.mode === 'live' ? `Requesting sponsor smoke candidate ${context.attempt + 1}; all candidates share the reserved envelope.` : `Requesting scripted candidate ${context.attempt + 1}; no model inference call.`);
+          const proposal = ProposalSchema.parse(await this.#provider.propose(repairInput(fixture, context,
+            { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - (run.mode === 'live' ? run.usage.inferenceCalls : context.attempt),
+              inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens,
+              wallTimeLimitSeconds: modelRemainingSeconds }), controller.signal));
+          run.usage.inferenceCalls += proposal.usage.inferenceCalls;
+          run.usage.inputTokens += proposal.usage.inputTokens; run.usage.outputTokens += proposal.usage.outputTokens;
+          run.usage.measuredCostUsd = proposal.usage.measuredCostUsd === null || run.usage.measuredCostUsd === null ? null : run.usage.measuredCostUsd + proposal.usage.measuredCostUsd;
+          if (run.usage.inputTokens > run.limits.inputTokenLimit || run.usage.outputTokens > run.limits.outputTokenLimit ||
+              run.usage.inferenceCalls > run.limits.inferenceCallLimit || (run.usage.measuredCostUsd ?? 0) > run.limits.maxApprovedSpendUsd) {
+            throw new ContractError('budget_not_approved', 'Aggregate resource allowance exceeded.');
+          }
+          return proposal;
+        },
+        onProposed: candidate => { this.journal.save(run); this.#event(run, 'check', `Checking candidate ${candidate.id} in a fresh isolated workspace.`); },
+        check: candidate => this.#check(run, fixture, candidate.files, controller.signal),
+        onChecked: () => this.journal.save(run), onSelection: id => { run.selectedCandidateId = id; },
+      });
       this.#coverage(run, fixture);
       const selected = run.candidates.find(c => c.id === run.selectedCandidateId);
       run.terminalStatus = selected?.accepted && run.coverage.every(row => row.status === 'pass') ? 'verified_for_declared_checks' :
@@ -264,7 +225,7 @@ export class Coordinator {
       } else {
         const providerCode = error && typeof error === 'object' && 'code' in error ? String(error.code) : null;
         const knownCodes = new Set(['mock_task_unavailable', 'rate_limit', 'timeout', 'missing_key', 'protected_path', 'invalid_candidate', 'budget_exceeded', 'budget_exhausted', 'transport_error', 'invalid_response', 'operation_journal_error', 'model_mismatch', 'incomplete_response']);
-        run.reason = error instanceof TrustedSmokeGateError ? error.gateCode : error instanceof ContractError ? error.code : providerCode && knownCodes.has(providerCode) ? providerCode : 'setup_error';
+        run.reason = error instanceof RevisionCheckError && error.checkCode.startsWith('trusted_smoke_') ? error.checkCode : error instanceof TrustedSmokeGateError ? error.gateCode : error instanceof ContractError ? error.code : providerCode && knownCodes.has(providerCode) ? providerCode : 'setup_error';
         run.terminalStatus = ['mock_task_unavailable', 'flaky_check'].includes(run.reason) ? 'needs_review' : 'infrastructure_error';
       }
       if (error && typeof error === 'object' && 'usage' in error) {
