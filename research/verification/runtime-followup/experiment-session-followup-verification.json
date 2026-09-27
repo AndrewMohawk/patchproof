@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "experiment-session-review-followup",
+  "createdAt": "2026-09-27T11:09:58.883167+00:00",
+  "originalAuthorCommit": "76466b774ab86bf6cfc047eeb53b04ccc9d8f42c",
+  "artifacts": {
+    "workers/evaluator/experiment-session.ts": "sha256:86027726fb3ae2330829204ff0c869ef00891c771ba4a5cb09169fc859dff7cb",
+    "scripts/experiment-session-cli.ts": "sha256:cfbb1e427b4349d3e4b1ca628811ff63f087593d70c8ad4cc3409175111f1f8f",
+    "tests/experiment-session-independent.test.ts": "sha256:6c67a9c84d66d8dd6379d57e5be6c28c8fda50c74c18fc26c17b0c5a62927490",
+    "docs/experiment-session.md": "sha256:bc8dcf0a26d9b7e92dd641a0b50aea5e4dbd10eae2d9bd34bcc0fe86bd2eed11",
+    "research/verification/runtime-followup/experiment-session-final-tests.log": "sha256:c803269e05fc7c07c8bf9ea0af4ead3c65ba57526770a122b3f862ffacd60585",
+    "research/verification/runtime-followup/experiment-session-independent-review.json": "sha256:07b6ea44d8fb7397ccbb4fb4490ac310f425551ca597d1b7f765e67d7f35560f"
+  },
+  "authorExecuted": [
+    {
+      "command": "node --test tests/experiment-session.test.ts tests/experiment-session-independent.test.ts",
+      "exitCode": 0,
+      "passed": 28,
+      "failed": 0
+    }
+  ],
+  "independentReview": "See bound separate receipt, including two reproduced original defects, fixed 11/11 controls and typecheck exit 0.",
+  "originalEvidencePreserved": true,
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0,
+  "logNormalization": {
+    "path": "research/verification/runtime-followup/experiment-session-pre-fix-controls.log",
+    "originalSha256": "0e15d769cd88d959688279156c7656218eb71b4ddf498aa0661d1358ec79e054",
+    "storedSha256": "e6ee9822e85ef21894412e4d5331554519b05030ea82e65c19afaf9789ed3c7b",
+    "change": "Trailing whitespace stripped; assertion evidence unchanged. Original raw log remains in reviewer isolated checkout."
+  }
+}

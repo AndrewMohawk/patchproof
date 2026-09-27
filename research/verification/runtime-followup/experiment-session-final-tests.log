@@ -1,0 +1,40 @@
+(node:4088110) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ async factory boundary cannot redirect a command away from its validated audited episode (2245.10829ms)
+✔ plan files cannot alias future dispatcher sidecars or be destroyed during initialization (46.839626ms)
+✔ config files also cannot alias either journal main file or SQLite sidecars (42.230623ms)
+✔ status and completed-row replay do not invoke factory or current-source hooks (658.149758ms)
+✔ an aborted command after local factory preparation never enters a synthetic executor (679.004332ms)
+✔ factory identity mismatch after construction closes local resources once without entering execution (492.91149ms)
+✔ a stale uninitialized session marker cannot adopt already executed dispatcher state (427.202076ms)
+✔ missing initialized dispatcher and orphan dispatcher both stop before factory creation (778.519346ms)
+✔ public factory projection has no oracle or private path and cannot accept augmented inputs (847.610934ms)
+✔ control commands never construct runtime and preserve all planned entries (1243.222606ms)
+✔ run error after local close failure stays unknown in sanitized CLI output and cannot replay terminal state (749.282966ms)
+(node:4088111) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ status and preflight retain all identities without creating runtime or durable files (35.057429ms)
+✔ reservation projection validates exact public input and returns no oracle or plan object (2209.437006ms)
+✔ run-one is terminal-idempotent and reopened status requires no factory or current source (705.084901ms)
+✔ explicit run-all walks 72 and 270 invented grids once and preserves every identity (16942.664163ms)
+✔ live default-zero authority and missing gates stop before factory construction (11.948285ms)
+✔ injected live metadata transport still obtains the existing ledger grant and cannot replay it (351.903973ms)
+✔ unknown live accounting blocks another factory and keeps the existing hold (271.718975ms)
+✔ pending cancellation and dead-owner recovery never construct runtime or retry episodes (351.1672ms)
+✔ live-owner recovery is conservative and cannot steal an active row (237.468426ms)
+✔ an aborted explicit run-all cancels all remaining planned entries without new execution (878.688816ms)
+✔ config, source, factory and plan mismatches stop before any runtime creation (15.125392ms)
+✔ durable identity rejects changed config and missing initialized DB rather than recreating it (194.371439ms)
+✔ factory setup failure is journaled without inventing terminal rows or automatically retrying (131.805171ms)
+✔ standalone operator status needs no runtime and sanitizes private errors and unsupported commands (475.845823ms)
+✔ private config and database symlinks are rejected before factories run (9.679928ms)
+✔ a close failure cannot claim no execution or rerun an already terminal episode (181.762327ms)
+✔ concurrent explicit commands still invoke one executor and report which invocation ran (231.584974ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23517.170768

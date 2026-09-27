@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "bounded-independent-experiment-session-review",
+  "reviewDate": "2026-09-27",
+  "originalAuthorCommit": "76466b774ab86bf6cfc047eeb53b04ccc9d8f42c",
+  "scope": "Trusted private session configuration, command lifecycle, async request binding, database path hygiene and neutral metadata projection.",
+  "originalModuleDigest": "sha256:c67533569cb1e5be21e60acb61a50899bd9e247c3317e8cb2de118bfffc6d30b",
+  "sourceDigests": {
+    "workers/evaluator/experiment-session.ts": "sha256:86027726fb3ae2330829204ff0c869ef00891c771ba4a5cb09169fc859dff7cb",
+    "scripts/experiment-session-cli.ts": "sha256:cfbb1e427b4349d3e4b1ca628811ff63f087593d70c8ad4cc3409175111f1f8f",
+    "tests/experiment-session-independent.test.ts": "sha256:6c67a9c84d66d8dd6379d57e5be6c28c8fda50c74c18fc26c17b0c5a62927490"
+  },
+  "findings": [
+    {
+      "id": "mutable-command-episode-after-factory-await",
+      "status": "resolved",
+      "independentReproduction": "The original source validated and audited a first planned episode, then dispatched a different planned episode after the caller changed request.episodeId during asynchronous local factory creation.",
+      "fix": "Author snapshots the scalar request fields at command entry before the first await.",
+      "verification": "The same async barrier/mutation control now dispatches the originally requested episode and its command audit agrees."
+    },
+    {
+      "id": "operator-input-collides-with-sqlite-sidecar",
+      "status": "resolved",
+      "independentReproduction": "With an invented plan placed at dispatcherDatabase plus -wal, the original command accepted the configuration, ran its synthetic metadata callback, and SQLite later deleted the temporary plan input.",
+      "fix": "Author rejects config, plan and readiness input paths that equal either database main path or either database's WAL, SHM or rollback-journal sidecar before constructing a database.",
+      "verification": "Six plan-sidecar combinations and eight config main/sidecar combinations reject; all original input bytes remain intact and no runtime factory is constructed."
+    }
+  ],
+  "independentVerification": [
+    { "command": "node --test tests/experiment-session-independent.test.ts", "source": "original author commit in isolated checkout", "exitCode": 1, "passed": 8, "failed": 2 },
+    { "command": "node --test --test-name-pattern='async factory boundary|plan files cannot alias' tests/experiment-session-independent.test.ts", "source": "original author commit", "exitCode": 1, "failed": 2, "log": "research/verification/runtime-followup/experiment-session-pre-fix-controls.log" },
+    { "command": "node --test tests/experiment-session-independent.test.ts", "source": "fixed source at bound digests", "exitCode": 0, "passed": 11, "failed": 0, "log": "research/verification/runtime-followup/experiment-session-independent-tests.log" },
+    { "command": "npm run typecheck", "source": "author checkout with fixed source and independent tests", "exitCode": 0, "log": "research/verification/runtime-followup/experiment-session-independent-typecheck.log" }
+  ],
+  "additionalControls": [
+    "Status and terminal-row replay invoke neither the factory nor the current-source hook.",
+    "Cancellation during local factory preparation prevents entry into the synthetic execution callback and closes local resources.",
+    "A returned transport identity mismatch closes resources once and creates no terminal result or synthetic execution.",
+    "A stale uninitialized session marker cannot adopt dispatcher state containing an executed episode.",
+    "Missing initialized dispatcher state and an orphan dispatcher each reject before another factory is created.",
+    "Factory public projections contain neither the invented oracle identity nor private plan/config paths; augmented or changed inputs cannot obtain a reservation projection.",
+    "Cancel and recover commands use control callbacks and preserve all 72 planned identities.",
+    "A close failure after synthetic execution produces a sanitized unknown execution flag and a terminal episode cannot be replayed."
+  ],
+  "limits": [
+    "All plans, callbacks, state and path collisions were invented within temporary private directories; no real data was deleted.",
+    "Synthetic metadata callbacks returned no candidate. No provider, repair, candidate execution or sealed-corpus content was used.",
+    "The independent session controls do not execute the live transport branch or authenticate a provider, readiness declaration, USD amount or cleanup observation.",
+    "Creation and close of an injected factory must remain local and nonbillable as required by the documented contract; this module cannot enforce arbitrary trusted callback behavior.",
+    "Same-UID tampering and coordinated rollback of both durable databases remain outside consistency guarantees.",
+    "The author's broader session tests and later root integration checks are separate from the independent commands recorded here."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "benchmarkExecuted": false,
+  "competitionReady": false
+}

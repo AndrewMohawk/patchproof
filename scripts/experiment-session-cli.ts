@@ -6,7 +6,7 @@ import {OperatorFileError} from './operator-files.ts';
 
 const commands=['preflight','run-one','run-all','status','cancel','recover'] as const;
 const safeCodes=new Set(['operator_usage','operator_path_invalid','operator_path_inside_project','operator_directory_invalid','operator_directory_not_private','operator_file_not_private','operator_database_sidecar_invalid','operator_file_changed_or_oversized',
-  'session_config_digest_mismatch','session_plan_or_transport_mismatch','orphan_dispatcher_requires_review','session_identity_mismatch','session_dispatcher_state_lost','session_mode_mismatch','live_ledger_required','uncommitted_session_requires_review','readiness_binding_mismatch',
+  'session_path_collision','session_config_digest_mismatch','session_plan_or_transport_mismatch','orphan_dispatcher_requires_review','session_identity_mismatch','session_dispatcher_state_lost','session_mode_mismatch','live_ledger_required','uncommitted_session_requires_review','readiness_binding_mismatch',
   'session_episode_argument_invalid','unplanned_episode','session_not_initialized','current_source_mismatch','runtime_factory_not_installed','runtime_factory_binding_mismatch','new_spending_not_approved','readiness_unavailable','readiness_gates_failed','current_gates_unavailable','current_gates_failed','ledger_not_ready','operator_cancelled_before_start','created_transport_binding_mismatch']);
 const label={kind:'private-experiment-session-operator',authenticityVerified:false,sourceExecutionVerified:false,competitionReady:false} as const;
 /** The standalone CLI deliberately has no live or synthetic runtime factory installed. */

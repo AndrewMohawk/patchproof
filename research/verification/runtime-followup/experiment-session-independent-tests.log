@@ -1,0 +1,21 @@
+(node:4057065) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ async factory boundary cannot redirect a command away from its validated audited episode (426.151689ms)
+✔ plan files cannot alias future dispatcher sidecars or be destroyed during initialization (39.524314ms)
+✔ config files also cannot alias either journal main file or SQLite sidecars (30.954956ms)
+✔ status and completed-row replay do not invoke factory or current-source hooks (247.774684ms)
+✔ an aborted command after local factory preparation never enters a synthetic executor (213.192822ms)
+✔ factory identity mismatch after construction closes local resources once without entering execution (183.608626ms)
+✔ a stale uninitialized session marker cannot adopt already executed dispatcher state (276.681693ms)
+✔ missing initialized dispatcher and orphan dispatcher both stop before factory creation (470.287474ms)
+✔ public factory projection has no oracle or private path and cannot accept augmented inputs (280.663928ms)
+✔ control commands never construct runtime and preserve all planned entries (380.677994ms)
+✔ run error after local close failure stays unknown in sanitized CLI output and cannot replay terminal state (241.277572ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3086.410486

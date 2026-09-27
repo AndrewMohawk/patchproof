@@ -55,6 +55,8 @@ function load(request:ExperimentSessionRequest):Loaded{
   const plan=validatePlan(readPrivateOperatorJson(config.planPath,{projectRoot:request.projectRoot,maximumBytes:1024*1024}));
   if(hashJson(plan)!==config.planDigest||plan.modelLockDigest!==config.modelLockDigest||plan.policyDigest!==config.policyDigest||hashJson({modelLockDigest:config.modelLockDigest,policyDigest:config.policyDigest,adjudicationBounds:config.adjudicationBounds})!==config.transportDigest)fail('session_plan_or_transport_mismatch');
   const journal=config.dispatcherDatabase+'.session.sqlite';
+  const databasePaths=new Set([config.dispatcherDatabase,journal].flatMap(path=>[path,path+'-wal',path+'-shm',path+'-journal']));
+  if([request.configPath,config.planPath,...(config.readiness?[config.readiness.path]:[])].some(path=>databasePaths.has(path)))fail('session_path_collision');
   assertPrivateOperatorPath(config.dispatcherDatabase,request.projectRoot,{allowMissing:true,database:true});assertPrivateOperatorPath(journal,request.projectRoot,{allowMissing:true,database:true});
   return{config,digest,plan,projectRoot:request.projectRoot,journal};
 }
@@ -122,7 +124,8 @@ function audit(loaded:Loaded,command:string,episodeId:string|undefined){const db
   return{finish:(state:'completed'|'failed')=>{if(closed)return;closed=true;try{db.prepare('UPDATE operator_commands SET completed_at=?,status=? WHERE id=?').run(new Date().toISOString(),state,id);}finally{db.close();}}};}
 
 /** Operator command boundary. No automatic factory installation, retry, resume, or ledger approval sync. */
-export async function runExperimentSession(request:ExperimentSessionRequest,dependencies:ExperimentSessionDependencies={}){
+export async function runExperimentSession(requestValue:ExperimentSessionRequest,dependencies:ExperimentSessionDependencies={}){
+  const request={...requestValue};
   const command=z.enum(['preflight','run-one','run-all','status','cancel','recover']).parse(request.command),deps={...dependencies,...(dependencies.factory?{factory:{...dependencies.factory}}:{})},loaded=load(request);
   if((command==='run-one'||command==='cancel')!== (request.episodeId!==undefined))fail('session_episode_argument_invalid');
   if(request.episodeId!==undefined&&!loaded.plan.episodes.some(e=>e.id===request.episodeId))fail('unplanned_episode');

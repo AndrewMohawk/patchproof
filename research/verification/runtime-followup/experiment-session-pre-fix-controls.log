@@ -1,0 +1,54 @@
+(node:4038053) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ async factory boundary cannot redirect a command away from its validated audited episode (298.042774ms)
+✖ plan files cannot alias future dispatcher sidecars or be destroyed during initialization (189.111224ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 774.614142
+
+✖ failing tests:
+
+test at tests/experiment-session-independent.test.ts:44:1
+✖ async factory boundary cannot redirect a command away from its validated audited episode (298.042774ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   'pilot:invented-task-0:patchproof:0'
+  -   'pilot:invented-task-0:baseline:0'
+    ]
+
+      at TestContext.<anonymous> (file:///tmp/patchproof-session-independent-review.TjwJ4N/tests/experiment-session-independent.test.ts:52:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'pilot:invented-task-0:patchproof:0' ],
+    expected: [ 'pilot:invented-task-0:baseline:0' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/experiment-session-independent.test.ts:57:1
+✖ plan files cannot alias future dispatcher sidecars or be destroyed during initialization (189.111224ms)
+  AssertionError [ERR_ASSERTION]: -wal input must survive refusal
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///tmp/patchproof-session-independent-review.TjwJ4N/tests/experiment-session-independent.test.ts:63:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
