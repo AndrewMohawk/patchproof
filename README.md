@@ -55,12 +55,15 @@ another loopback port. Do not expose this local prototype as a public service.
 | `make doctor` | Reports local runtime, fixtures, approval and provider blockers; no paid calls. |
 | `make test` | Type checks, contract locks, unit/HTTP/evaluation tests and real local container lifecycle tests. |
 | `npm run test:browser` | Starts an isolated local app, runs all three policies, checks desktop/mobile flow and exports evidence. Requires installed Playwright Chromium. |
+| `npm run record:rehearsal` | Performs that flow and records a local mock rehearsal, captions and a run-bound claims manifest under `.local/rehearsal/`. Nothing is published. |
 | `npm run run -- stable-unique-01 patchproof` | Runs the same local coordinator from the CLI; stop `make dev` first because one process owns its state. |
 | `make export RUN=<id>` | Exports immutable patch, inputs, locks, logs, coverage, events and cost ledger from the durable journal. |
 | `make reproduce RUN=<id>` | Validates the bundle, applies its patch in a fresh workspace and executes declared checks in fresh pinned containers. |
 | `make smoke` | Exits 2 with actual provider prerequisites; real execution is not wired into this command. |
 | `make pilot` / `make evaluate` | Exit 2; offline plan/analysis tools exist, but no live experiment has run. |
 | `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
+| `make release-packet INPUT=<relative-json>` | Builds a private immutable packet from explicitly selected, scanned exports; receipt requirements are in the release guide. |
+| `make verify-packet PACKET=<path> DIGEST=<sha256>` | Verifies a local packet's exact file set, checksums and embedded evidence. |
 
 Install the pinned browser if needed with `npx playwright install chromium`.
 For a browser download, save the bundle as `artifacts/<run-id>.json` before using
@@ -81,6 +84,13 @@ See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
 - B0 receives visible feedback; B1 receives declared acceptance feedback; P can
   propose up to three candidates against the original snapshot. All policies use
   one shared allowance per episode. No sealed final checks enter the repair loop.
+- Each declared check now runs twice under the same batch deadline. Both
+  observations appear in evidence; disagreement produces `needs_review`.
+  B0/B1 retain the latest candidate; P selects the best declared-check result,
+  with the earliest candidate winning a tie.
+- New exports bind the executable source and configuration. Replay requires the
+  recorded checkout; a running app refuses new runs after those files change.
+  Historical exports keep their original explicitly versioned replay behavior.
 - The suite has 60 original synthetic tasks across 12 fixture repositories,
   split 20/10/30 by repository. Public development/calibration files are here;
   gold and sealed checks stay in the separate evaluator workspace. These are
@@ -92,6 +102,10 @@ See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
 
 See [task evidence](research/task-evidence.md), [evaluation](docs/evaluation.md),
 [operations](docs/operations.md), and [the submission draft](docs/submission-draft.md).
+The [budget ledger](docs/budget-ledger.md), [reviewer study](docs/reviewer-study.md)
+and [release evidence guide](docs/release-evidence.md) describe the new tools.
+The [completion audit](docs/completion-audit.md) describes remaining integration
+work and distinguish implemented tools from actual provider or human results.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
 refers to that original package. `tasks.json` is a living acceptance tracker.
 

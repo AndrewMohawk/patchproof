@@ -1,12 +1,12 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { lstatSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod';
 import { digestBytes, digestJson } from '../../contracts/src/digest.ts';
 import { ContractError } from '../../contracts/src/index.ts';
 import { REPEATED_CHECK_PROTOCOL } from './repeated-checks.ts';
 
-const roots = ['packages/contracts/src', 'packages/orchestrator/src', 'workers', 'apps/api/src', 'apps/web', 'scripts'];
-const topFiles = ['package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json'];
+const roots = ['packages', 'workers', 'apps', 'scripts'];
+const topFiles = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json'];
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const OperationalLockSchema = z.strictObject({
   schemaVersion: z.literal('1.0'), scope: z.literal('local-unscored-development'), liveProtocolFrozen: z.literal(false),
@@ -29,7 +29,10 @@ export function buildOperationalLock(root: string): OperationalLock {
   const files = [...topFiles];
   for (const directory of roots) {
     for (const item of readdirSync(join(root, directory), { recursive: true }) as string[]) {
-      if (/\.(?:ts|js|css|html)$/.test(item)) files.push(`${directory}/${item}`);
+      const path = `${directory}/${item}`;
+      const stat = lstatSync(join(root, path));
+      if (stat.isSymbolicLink()) throw new ContractError('setup_error', 'Operational source trees cannot contain symlinks.');
+      if (stat.isFile() && /\.(?:ts|js|mjs|cjs|css|html|py|sh|json)$/.test(item)) files.push(path);
     }
   }
   return OperationalLockSchema.parse({ schemaVersion: '1.0', scope: 'local-unscored-development', liveProtocolFrozen: false,

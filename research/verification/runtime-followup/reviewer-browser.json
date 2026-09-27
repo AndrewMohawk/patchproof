@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "verifiedAt": "2026-09-27T09:10:56.159Z",
+  "scope": "Synthetic browser verification only; no human study or provider/candidate execution.",
+  "browser": "145.0.7632.6",
+  "status": "passed",
+  "checks": {
+    "fragmentRemoved": true,
+    "syntheticLabelVisible": true,
+    "keyboardOpen": true,
+    "patchMarkupInert": true,
+    "reloadPreservesTimer": true,
+    "mobileHasNoPageOverflow": true,
+    "keyboardSubmissionRecorded": true,
+    "bothPacketPresentationsRendered": true,
+    "submitAndSkipFlowComplete": true,
+    "missingAssignmentsRetained": true,
+    "reloadCreatedNoDuplicateEvents": true,
+    "timeoutRequiresExplicitSkip": true,
+    "timeoutInventsNoAnswer": true,
+    "noConsoleOrRemoteRequests": true
+  },
+  "screenshots": {
+    "desktop": "/tmp/patchproof-reviewer-desktop.png",
+    "mobile": "/tmp/patchproof-reviewer-mobile.png",
+    "timeout": "/tmp/patchproof-reviewer-timeout-mobile.png"
+  },
+  "participantTokensRetained": false,
+  "privateStudyArtifactsRetained": false
+}

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { chromium } from 'playwright';
 import type { ProductEvidence, ProductRun } from '../../packages/contracts/src/product.ts';
 
@@ -7,14 +8,20 @@ import type { ProductEvidence, ProductRun } from '../../packages/contracts/src/p
 // Usage: node apps/web/verify-browser.ts http://127.0.0.1:43171
 const base = (process.argv[2] ?? 'http://127.0.0.1:43171').replace(/\/$/, '');
 assert.ok(/^http:\/\/(?:127\.0\.0\.1|localhost):\d+$/.test(base), 'Browser verification requires a loopback server.');
-const resumeRunIds = process.argv[3]?.split(',') ?? [];
+const resumeRunIds = process.argv[3] ? process.argv[3].split(',') : [];
+const recordingDirectory = process.argv[4];
 assert.ok(resumeRunIds.length === 0 || (resumeRunIds.length === 3 && resumeRunIds.every(id => /^[0-9a-f-]{36}$/.test(id))), 'Resume requires exactly three recorded run IDs.');
 const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
 const errors: string[] = [];
 const requests: string[] = [];
 const createdIds: string[] = [];
+const captions: Array<{ startMs: number; text: string }> = [];
+let recordingStarted = 0;
+const caption = (text: string) => { if (recordingDirectory) captions.push({ startMs: Math.round(performance.now() - recordingStarted), text }); };
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 },
+    ...(recordingDirectory ? { recordVideo: { dir: recordingDirectory, size: { width: 1440, height: 1100 } } } : {}) });
+  recordingStarted = performance.now();
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   page.on('request', request => requests.push(request.url()));
@@ -28,6 +35,8 @@ try {
   assert.equal(await page.title(), 'PatchProof — review the evidence');
   assert.match(await page.locator('.mode-banner').innerText(), /No paid inference or competition-ready evidence/);
   assert.match(await page.locator('.mode-indicator').innerText(), /Mock model · Local checks/);
+  caption('LOCAL REHEARSAL: scripted model, real local container checks. No paid inference or benchmark result.');
+  if (recordingDirectory) await page.waitForTimeout(3500);
   const taskButtons = page.locator('.task-card');
   assert.ok(await taskButtons.count() > 1, 'The UI must display more than one curated task.');
   await page.locator('.task-card[data-task-id="stable-unique-01"]').click();
@@ -41,10 +50,13 @@ try {
   assert.ok(await page.locator('#task-detail .requirements li').count() > 0);
   assert.equal(await page.locator('input[type="text"], textarea, input[type="file"]').count(), 0, 'Demo accepts curated task IDs only.');
   await page.screenshot({ path: '/tmp/patchproof-tasks-desktop.png', fullPage: true });
+  caption('Choose a curated maintenance task and inspect its requirements. Unsupported tasks require a connected model.');
+  if (recordingDirectory) await page.waitForTimeout(3500);
 
   if (resumeRunIds.length) await page.locator('[data-nav="compare"]').click();
   else await page.getByRole('button', { name: 'Compare all three', exact: true }).click();
   await page.locator('#compare-view').waitFor({ state: 'visible' });
+  caption('All three policies share the same allowance. Progress comes from recorded coordinator events and container checks.');
   await page.waitForFunction(() => document.querySelectorAll('.variant-card a').length === 3 &&
     !(document.querySelector('#compare-run') as HTMLButtonElement).disabled &&
     document.querySelectorAll('.variant-card .outcome').length === 3 &&
@@ -75,6 +87,8 @@ try {
   assert.ok(product.candidates.some(candidate => !candidate.accepted), 'The demonstration must retain an actual rejected candidate.');
   assert.ok(product.candidates.some(candidate => candidate.accepted), 'The demonstration task must reach an accepted candidate.');
   assert.ok(product.candidates.flatMap(candidate => candidate.sandboxOperationIds).length > 0, 'Container operations must be recorded.');
+  caption('This scripted example fails the visible-only baseline and passes the other two policies. It does not measure model performance.');
+  if (recordingDirectory) await page.waitForTimeout(5000);
 
   await page.locator('.variant-card.featured a').click();
   await page.getByRole('link', { name: 'Download evidence ↓', exact: true }).waitFor();
@@ -87,6 +101,13 @@ try {
   assert.ok(await page.locator('.diff-line').count() > 0);
   await page.getByText(/Observed result and log/).first().click();
   assert.ok(await page.locator('.check-log').first().isVisible());
+  if (!resumeRunIds.length) {
+    assert.match(await page.locator('.check-log').first().innerText(), /Observation 1/);
+    assert.match(await page.locator('.check-log').first().innerText(), /Observation 2/);
+    assert.match(await page.locator('.check-log').first().innerText(), /Repeat agreement: consistent/);
+  }
+  caption('The rejected patch sorts the input. The evidence preserves its diff and both independent observations of each declared check.');
+  if (recordingDirectory) await page.waitForTimeout(5000);
   await page.screenshot({ path: '/tmp/patchproof-evidence-desktop.png', fullPage: true });
   const [download] = await Promise.all([
     page.waitForEvent('download'), page.getByRole('link', { name: 'Download evidence ↓', exact: true }).click(),
@@ -100,17 +121,21 @@ try {
   assert.equal(evidence.run.id, product.id);
   assert.equal(download.suggestedFilename(), `${product.id}.json`);
   assert.match(evidence.bundleDigest, /^sha256:[a-f0-9]{64}$/);
+  caption('Download the immutable source, selected patch, runtime lock, logs and accounting for a fresh local replay.');
+  if (recordingDirectory) await page.waitForTimeout(3500);
 
   await page.reload({ waitUntil: 'networkidle' });
   await page.getByRole('link', { name: 'Download evidence ↓', exact: true }).waitFor();
   assert.equal(new URL(page.url()).hash, `#evidence/${product.id}`, 'Reload preserves the addressed run.');
   await page.setViewportSize({ width: 390, height: 844 });
+  caption('The same evidence, comparison and task views work on a narrow screen. Provider integration and human review remain pending.');
   for (const view of ['evidence', 'compare', 'tasks']) {
     await page.locator(`[data-nav="${view}"]`).click();
     await page.locator(`#${view}-view`).waitFor({ state: 'visible' });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     assert.equal(overflow, false, `${view} view must not overflow on mobile.`);
     await page.screenshot({ path: `/tmp/patchproof-${view}-mobile.png`, fullPage: true });
+    if (recordingDirectory) await page.waitForTimeout(1500);
   }
   await page.keyboard.press('Tab');
   assert.ok(await page.evaluate(() => document.activeElement !== document.body), 'Keyboard focus must reach an interactive control.');
@@ -125,5 +150,21 @@ try {
   };
   await mkdir('.local/verification', { recursive: true });
   await writeFile('.local/verification/product-browser.json', JSON.stringify(report, null, 2) + '\n');
+  if (recordingDirectory) {
+    const durationMs = Math.round(performance.now() - recordingStarted);
+    const video = page.video();
+    await page.close();
+    assert.ok(video, 'Rehearsal video was not recorded.');
+    await video.saveAs(join(recordingDirectory, 'local-rehearsal.webm'));
+    const stamp = (ms: number) => new Date(ms).toISOString().slice(11, 23).replace('.', ',');
+    const srt = captions.map((row, i) => `${i + 1}\n${stamp(row.startMs)} --> ${stamp(captions[i + 1]?.startMs ?? durationMs)}\n${row.text}\n`).join('\n');
+    await writeFile(join(recordingDirectory, 'captions.srt'), srt, { flag: 'wx' });
+    await writeFile(join(recordingDirectory, 'claims.json'), JSON.stringify({
+      mode: 'mock', classification: 'local-rehearsal', competitionReady: false, durationMs,
+      authenticityVerified: false, inferenceCalls: 0, providerSpendUsd: 0,
+      runIds, bundleDigest: evidence.bundleDigest, operationalLock: (evidence.runtimeLock as { operationalLock?: unknown }).operationalLock,
+      captions, evidenceReport: report, claims: ['Scripted demonstration only.', 'Real local containers.', 'No live provider or human outcome claim.'],
+    }, null, 2) + '\n', { flag: 'wx' });
+  }
   console.log(JSON.stringify(report, null, 2));
 } finally { await browser.close(); }

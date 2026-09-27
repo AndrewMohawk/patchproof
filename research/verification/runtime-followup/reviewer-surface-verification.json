@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "verifiedAt": "2026-09-27T09:14:12.868362+00:00",
+  "scope": "Trusted evaluator loopback review surface. Synthetic protocol/browser inputs only; no actual human study, paid provider calls or candidate execution.",
+  "files": {
+    "workers/evaluator/reviewer-server.ts": "sha256:541204696d1c523790d7445ab6cbdff4599a2bb2d59fd6277f433b6d86c0fcb1",
+    "workers/evaluator/verify-reviewer-browser.ts": "sha256:615d4dca63182583b5b22889f5fe7b853bde18bb4ee9a4a0b0e2d13ca22a9331",
+    "workers/evaluator/reviewer-web/index.html": "sha256:fce8d7e5cde9ce34a409f3081c0207055a8bde9917d2c097b0b1179f7f6dfaeb",
+    "workers/evaluator/reviewer-web/style.css": "sha256:d0f1db92bceedddf97d0a43c9b4f78a98aec10fc2692fb18a2dc07ce1a633a94",
+    "workers/evaluator/reviewer-web/app.js": "sha256:61ce00e6861c850cc61b01839c43add01819faa3d8114cf4f81fece1ae9f10cd",
+    "tests/reviewer-server.test.ts": "sha256:722262687a88efd951d9085965d115bbd0e20df021c76cdc7bff7eae986c9f9a",
+    "docs/reviewer-study.md": "sha256:c0ce7b60d23205835d610f6b5f759d07c0edb13568ba383038e25e3ff0cb5a98"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/reviewer-server.test.ts tests/reviewer-study.test.ts",
+      "exitCode": 0,
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "command": "node workers/evaluator/verify-reviewer-browser.ts",
+      "exitCode": 0,
+      "receipt": ".local/verification/reviewer-browser.json",
+      "browser": "145.0.7632.6",
+      "checksPassed": 14
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "Scoped source/document newline and trailing-whitespace checks",
+      "exitCode": 0
+    }
+  ],
+  "earlierAttempts": [
+    {
+      "command": "Initial reviewer HTTP tests",
+      "status": "one assertion failed",
+      "reason": "The test HTTP client normalized a supplied Host header; raw loopback HTTP now verifies exact Host rejection."
+    },
+    {
+      "command": "Initial typecheck after HTTP test import",
+      "status": "failed",
+      "reason": "TypeScript closure narrowing for validated participant/action values corrected; final typecheck passes."
+    },
+    {
+      "command": "Playwright MCP launch",
+      "status": "unavailable",
+      "reason": "Shared browser profile already owned by another process; left untouched and used isolated pinned local Playwright instead."
+    }
+  ],
+  "privateArtifacts": "Synthetic plans, tokens and response journals stayed in temporary directories outside the repository and were removed. Only neutral test receipt and screenshots remain.",
+  "actualHumanDataCreated": false,
+  "providerSpendUsd": 0,
+  "limitations": [
+    "Tokens identify pseudonymous assignments, not authenticated humans.",
+    "Wall time includes network and interruptions; attention is not measured.",
+    "Separate reviewer packet surface does not establish uncoached usability of the main product app.",
+    "No public/remote binding or deployment was implemented."
+  ]
+}

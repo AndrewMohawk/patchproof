@@ -54,11 +54,31 @@ A skipped action uses `kind: "skipped"` and `reason: "declined"`, `"timeout"` or
 
 If delivery needs to be retried after opening, `packet PRIVATE-PLAN.json EVENTS.jsonl p01 NEW-PACKET.json` reissues the current packet without resetting the timer. Do not erase a delayed or failed opening. Use a technical-issue skip when delivery/recording problems invalidate the exercise and report that attrition.
 
+## Separate local review surface
+
+The dedicated browser surface is `workers/evaluator/reviewer-server.ts`, with isolated assets in `workers/evaluator/reviewer-web/`. It does not change the product app or expose its runs. The operator supplies a previously reviewed private plan and journal using absolute paths outside the source repository. Their directory must be operator-owned and private (mode 0700); existing files must be owned regular files with no group/other access, normally mode 0600. Symlink files and in-repository state are rejected.
+
+```sh
+node workers/evaluator/reviewer-server.ts /absolute/private/study/plan.json /absolute/private/study/events.jsonl 43172
+```
+
+The server binds only `127.0.0.1`, default port 43172. It prints one private assignment link per pseudonymous participant. Give each participant only their assigned link. The token identifies an assignment, not an authenticated person; possession and actual human participation still need the operator's study procedure. Links are not provider credentials and never authorize candidate execution.
+
+The link carries its token in the fragment, which the page removes immediately and retains only in that tab's session storage for reload. Authenticated requests can see only the participant's current neutral packet. There is no answer-key, report, arbitrary-file, arbitrary-code or public-listener API. Patch/source/observation content is rendered as plain text, with external scripts, frames and remote requests disallowed. Do not proxy or expose this loopback collector as a public study service.
+
+Participants choose **Open next task**, then **Accept**, **Reject**, **Needs review**, or an explicit skip. The trusted server records opening and response times directly from those actions. It never trusts a browser-supplied duration. A reload returns the same assignment and original deadline; it does not start another event or permit a revised answer. Request retries are idempotent, while conflicting responses reject. Expiry disables submission and offers a timeout skip; leaving the page simply leaves an unfinished assignment in the report. No automatic human answer is generated.
+
+The display countdown is advisory; the server enforces the deadline. Server wall time still includes request/response latency and interruptions and does not establish visual attention. This dedicated review surface supports the packet exercise; it is not an uncoached usability test of the separate three-screen product app.
+
+Only one server may own a journal at a time. A `.server-lock` file records that ownership. Graceful Ctrl-C releases it after requests finish. After a crash, preserve the journal and inspect the recorded process before manually removing a stale lock. Do not run the CLI recorder against the same journal while the server owns it. Journal events and timing survive restart, but access tokens rotate; the operator must issue fresh participant links. Changing the private plan bytes while the server is running stops API access rather than silently changing an ongoing study.
+
+Generate the private report with the earlier CLI after collection. Do not publish participant tokens, response journals or the answer-bearing plan. No recruitment, participant acquisition, remote hosting or human identity verification is implemented by this local collector.
+
 ## Recorder and metrics
 
 The trusted process timestamps opening and submission. Actions cannot supply elapsed time or correctness. The append-only JSONL journal has a digest chain and records all events under the frozen plan. Duplicate event IDs, repeated openings/submissions, changed plans, backward clock movement, out-of-order assignments and incorrect participant/assignment identities reject. A filesystem lock serializes writers; a crash can leave a lock or partial final line. These block further writes until an operator preserves and investigates the artifact. Never delete a partial row or reset a timer merely to obtain a cleaner result. Hash consistency does not authenticate the recorder or the human participant.
 
-Elapsed time is submission timestamp minus opening timestamp. It includes packet delivery, recorder overhead and interruptions; it is not browser attention time. An operator-mediated CLI study also includes collection delay. Keep that method identical across conditions, or integrate the trusted recorder directly with the chosen review surface before measuring usability. The current product UI is not automatically instrumented by this module.
+Elapsed time is submission timestamp minus opening timestamp. It includes packet delivery, recorder overhead and interruptions; it is not browser attention time. An operator-mediated CLI study also includes collection delay. Keep that method identical across conditions, or integrate the trusted recorder directly with the chosen review surface before measuring usability. The separate browser collector above records its own review actions directly; the main product UI remains uninstrumented.
 
 Reports provide planned/submitted/missing/skipped counts, accuracy with **all planned assignments** in the denominator, a separately labeled completed-only accuracy, completed/correct response times and paired participant summaries. Missing times are `null`, never zero. The comparative mean-time difference is suppressed until every planned response has been submitted, since completed-only times can select for easier tasks. Per-condition descriptive times remain visible with their denominators. Report accuracy and time together; a faster but less accurate condition is not automatically an improvement.
 
@@ -69,3 +89,7 @@ No sample-size power calculation, p-value or population-level interval is implem
 ## Verification
 
 `node --test tests/reviewer-study.test.ts` exercises assignment balance and reproducibility, private-key projection, ordered events, clock/timeout controls, retained missing denominators, synthetic labels, durable journal failure handling and the complete local CLI flow. No participant recruitment or real human data is part of these tests.
+
+The local HTTP tests are `node --test tests/reviewer-server.test.ts tests/reviewer-study.test.ts`. They cover private path/mode checks, scoped token/host/origin restrictions, one-packet projection, restart/reload timing, duplicate responses, timeout/skip behavior and changed/corrupt state.
+
+Run the rendered check with `node workers/evaluator/verify-reviewer-browser.ts`. It creates only synthetic plans/events in a private temporary directory outside the repository, removes them afterward and writes a neutral receipt to `.local/verification/reviewer-browser.json`. Desktop, mobile and timeout screenshots are saved under `/tmp/patchproof-reviewer-*.png`. The check exercises real browser controls, both packet presentations, fragment removal, keyboard interaction, reload timing, literal markup rendering and explicit timeout skips. The receipt retains neither access tokens nor response records. This test is not a human study.

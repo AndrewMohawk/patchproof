@@ -15,8 +15,10 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 2. Pin sandbox API/image/architecture and verify supported filesystem, network,
    memory, PID, CPU, cancellation and billing controls. Public HTTP mappings alone
    do not establish these properties.
-3. Finish the live sandbox checker and coordinator execution path. They currently
-   refuse execution even if configuration fields are filled in.
+3. Connect the conditionally implemented sandbox adapter, durable project budget
+   ledger and trusted experiment dispatcher to a calibrated live coordinator
+   factory. Public product commands still refuse live execution; configuration
+   fields alone do not activate provider calls.
 4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
    curated real cases, retain real operation IDs and reconcile actual charges.
 
@@ -37,6 +39,12 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 The $25 ceiling is not evidence that either experiment is affordable. Final
 experimentation and hosting currently have zero allocation. Any reduced grid
 requires a prospective revised protocol and narrower claims.
+
+Two-observation runtime checks, prospective reviewer-study tools and a source-bound
+local operational lock are now implemented. Their synthetic/unit evidence does
+not replace real reviewer participation or a calibrated live protocol. See the
+completion audit for implementation gaps; do not treat account access alone as
+completion of the submission.
 
 Application license, public source/video, public demo operator and service budget
 through the required judging period remain owner decisions. No terms were

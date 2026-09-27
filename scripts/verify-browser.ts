@@ -11,16 +11,20 @@ const root = new URL('../', import.meta.url);
 const directory = await mkdtemp(join(tmpdir(), 'patchproof-browser-'));
 const app = await createApplication(root, directory);
 const startedAt = new Date().toISOString();
+const recordingDirectory = process.argv.includes('--rehearsal') ? fileURLToPath(new URL(`.local/rehearsal/${startedAt.replace(/[:.]/g, '-')}/`, root)) : undefined;
+if (recordingDirectory) await mkdir(recordingDirectory, { recursive: true, mode: 0o700 });
 let observerPassed = false;
 try {
   app.server.listen(0, '127.0.0.1'); await once(app.server, 'listening');
   const address = app.server.address();
   if (!address || typeof address === 'string') throw new Error('Missing loopback listener.');
   const result = await promisify(execFile)(process.execPath,
-    [fileURLToPath(new URL('apps/web/verify-browser.ts', root)), `http://127.0.0.1:${address.port}`],
-    { cwd: fileURLToPath(root), timeout: 160_000, maxBuffer: 2_000_000 });
+    [fileURLToPath(new URL('apps/web/verify-browser.ts', root)), `http://127.0.0.1:${address.port}`,
+      ...(recordingDirectory ? ['', recordingDirectory] : [])],
+    { cwd: fileURLToPath(root), timeout: recordingDirectory ? 200_000 : 160_000, maxBuffer: 2_000_000 });
   observerPassed = true;
   process.stdout.write(result.stdout);
+  if (recordingDirectory) process.stdout.write(`Local mock rehearsal saved to ${recordingDirectory}\n`);
 } finally {
   let exportsPreserved = false;
   try {

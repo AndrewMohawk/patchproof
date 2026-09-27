@@ -1,6 +1,8 @@
 import { constants } from 'node:fs';
+import { execFile } from 'node:child_process';
 import { lstat, mkdir, open } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import { z } from 'zod';
 import { createApplication } from '../apps/api/src/application.ts';
 import { readConfiguration, readiness } from './config.ts';
@@ -10,13 +12,41 @@ import { EvidenceStore, verifyEvidence, reproduceEvidence } from '../packages/or
 import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
 import { auditRelease } from './release-audit.ts';
-import { verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
+import { buildOperationalLock, verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
+import { buildReleaseBindings, ReleaseDigestSchema, ReleasePathSchema } from './release-receipts.ts';
+import { buildReleasePacket, verifyReleasePacket } from './release-packet.ts';
+import { readReleaseFile } from './release-files.ts';
 
 const root = new URL('../', import.meta.url);
 const [command, argument, variant = 'patchproof'] = process.argv.slice(2);
 const print = (value: unknown) => console.log(JSON.stringify(value, null, 2));
 const stateDirectory = fileURLToPath(new URL('.local/product/', root));
 const label = { mode: 'mock', competitionReady: false };
+const releaseInputSchema = z.strictObject({
+  receiptPaths: z.array(ReleasePathSchema).max(100), trustedReceiptDigests: z.array(ReleaseDigestSchema).max(100),
+  bundles: z.array(z.strictObject({ path: ReleasePathSchema, bundleDigest: ReleaseDigestSchema })).max(20),
+});
+
+async function releaseInput(path: string, config: Awaited<ReturnType<typeof readConfiguration>>) {
+  const directory = fileURLToPath(root);
+  const input = releaseInputSchema.parse(JSON.parse((await readReleaseFile(directory, path, 1_048_576)).toString('utf8')));
+  const operational = buildOperationalLock(directory);
+  const bindings = buildReleaseBindings({ sources: operational.sources, runtime: config.runtime, protocol: operational.behavior,
+    bundleDigests: input.bundles.map(bundle => bundle.bundleDigest), runtimeMode: config.runtime.mode,
+    liveProtocolFrozen: operational.liveProtocolFrozen });
+  const receipts = await Promise.all(input.receiptPaths.map(async receipt => JSON.parse((await readReleaseFile(directory, receipt, 1_048_576)).toString('utf8'))));
+  return { bindings, receipts, trustedReceiptDigests: input.trustedReceiptDigests, bundles: input.bundles };
+}
+
+async function sourceReference() {
+  try {
+    const run = promisify(execFile);
+    const { stdout: commit } = await run('git', ['rev-parse', 'HEAD'], { cwd: fileURLToPath(root) });
+    const { stdout: changes } = await run('git', ['status', '--porcelain', '--untracked-files=normal', '--',
+      'packages', 'workers', 'apps', 'scripts', 'Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json'], { cwd: fileURLToPath(root) });
+    return { sourceCommit: /^[a-f0-9]{40}$/.test(commit.trim()) ? commit.trim() : null, workingTreeDirty: changes.length > 0 };
+  } catch { return { sourceCommit: null, workingTreeDirty: true }; }
+}
 
 async function exportPath(id: string) {
   if (!z.uuid().safeParse(id).success) throw new ContractError('invalid_request', 'RUN must be a run UUID.');
@@ -39,7 +69,21 @@ async function main() {
     return;
   }
   if (command === 'release-check') {
-    print(await auditRelease(root, config)); process.exitCode = 2; return;
+    const result = await auditRelease(root, config, argument ? await releaseInput(argument, config) : undefined);
+    print(result); if (!result.checks.every(check => check.status === 'pass')) process.exitCode = 2; return;
+  }
+  if (command === 'release-packet') {
+    if (!argument) throw new ContractError('invalid_request', 'Provide a repository-relative release input JSON path.');
+    const input = await releaseInput(argument, config);
+    const packet = await buildReleasePacket({ root: fileURLToPath(root), ...input, ...await sourceReference() });
+    print({ ...label, command, status: 'local_preparation', directory: packet.directory, packetDigest: packet.packetDigest,
+      evidenceStatus: packet.manifest.evidenceStatus, paidCalls: packet.paidCalls, published: packet.published });
+    return;
+  }
+  if (command === 'verify-packet') {
+    if (!argument || !/^artifacts\/release-packets\/[a-f0-9]{64}$/.test(argument)) throw new ContractError('invalid_request', 'Provide artifacts/release-packets/<digest> and the expected sha256 digest.');
+    print(await verifyReleasePacket(fileURLToPath(new URL(argument + '/', root)), ReleaseDigestSchema.parse(variant)));
+    return;
   }
   if (['smoke', 'pilot', 'evaluate'].includes(command ?? '')) {
     print({ ...label, command, status: 'blocked', paidCalls: 0, experimentEpisodesExecuted: 0,
@@ -90,11 +134,14 @@ async function main() {
     if (replay.status !== 'reproduced') process.exitCode = 2;
     return;
   }
-  throw new ContractError('invalid_request', 'Use doctor, run, smoke, pilot, evaluate, export, reproduce or release-check.');
+  throw new ContractError('invalid_request', 'Use doctor, run, smoke, pilot, evaluate, export, reproduce, release-check, release-packet or verify-packet.');
 }
 try { await main(); }
 catch (error) {
-  const code = error instanceof ContractError ? error.code : 'setup_error';
-  print({ ...label, status: 'error', error: { code, message: error instanceof ContractError ? error.message : 'Local configuration, runtime or artifact unavailable. Check doctor and active coordinator ownership.' } });
+  const releaseCode = error instanceof Error && /^release_[a-z_]+$/.test(error.message) ? error.message : null;
+  const code = error instanceof ContractError ? error.code : releaseCode ?? 'setup_error';
+  print({ ...label, status: 'error', error: { code, message: error instanceof ContractError ? error.message :
+    releaseCode ? `Release preparation stopped: ${releaseCode}. Inspect release-check and the release evidence guide.` :
+      'Local configuration, runtime or artifact unavailable. Check doctor and active coordinator ownership.' } });
   process.exitCode = 2;
 }

@@ -48,6 +48,12 @@ have not run a scored model episode. No headline improvement percentage is claim
 A local rehearsal must keep the mock banner visible. No sponsor-backed or public
 video has been recorded. A scripted rehearsal cannot satisfy the real demo gate.
 
+A 91-second private local rehearsal now exists under
+`.local/rehearsal/2026-09-27T09-11-44-046Z/`, with WebM, a captioned MP4, SRT
+captions and a manifest tied to the actual displayed runs. It shows scripted
+proposals and real local checks; it does not present sponsor or benchmark results.
+Its hashes and browser/replay verification are in the runtime-completion receipt.
+
 ## Platform feedback draft
 
 Public documentation identifies the inference endpoint and sandbox operation

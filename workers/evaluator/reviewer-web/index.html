@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Patch review exercise</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to review</a>
+  <header class="site-header"><div class="brand-mark" aria-hidden="true">↳</div><div><p class="eyebrow">Local study</p><h1>Patch review exercise</h1></div><span class="private-label">Private assignment</span></header>
+  <main id="main" tabindex="-1">
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+    <section id="access" class="card access-card" hidden>
+      <p class="eyebrow">Your study link</p><h2>Open your assignment</h2>
+      <p>Use the link supplied by the study operator, or enter its study access token below.</p>
+      <form id="access-form"><label for="access-token">Study access token</label><input id="access-token" type="password" autocomplete="off" spellcheck="false" maxlength="64" required><button type="submit">Continue</button></form>
+      <p class="muted">This token identifies a pseudonymous assignment. It does not verify a person's identity.</p>
+    </section>
+    <section id="study" hidden>
+      <div class="study-meta"><p id="notice" class="notice"></p><p id="participant" class="muted"></p></div>
+      <div class="progress-row"><span id="progress-label"></span><progress id="progress" max="1" value="0">0</progress></div>
+      <p id="source-notice" class="source-notice"></p>
+      <section id="ready" class="card welcome-card" hidden><p class="eyebrow">Before you begin</p><h2 id="ready-title">Ready for your next review?</h2><p>Read the request, requirements and patch. Decide whether the patch meets every requirement, or whether more review is needed.</p><p id="allowance"></p><p>The timer starts when you open the task. Reloading keeps the same task and timer. You can skip a task without inventing an answer.</p><button id="open-task" type="button">Open next task</button></section>
+      <section id="active" hidden>
+        <div class="task-heading"><div><p class="eyebrow" id="task-number"></p><h2 id="task-title" tabindex="-1">Review the proposed patch</h2></div><div class="timer"><span>Time remaining</span><strong id="time-remaining" aria-live="off">—</strong></div></div>
+        <div class="review-layout">
+          <div class="review-content">
+            <section class="card"><h3>Request</h3><p id="task-statement" class="preserve"></p><h3>Requirements</h3><ul id="requirements" class="requirements"></ul></section>
+            <section id="source-context-card" class="card" hidden><h3>Source context</h3><pre id="source-context" tabindex="0"></pre></section>
+            <section class="card code-card"><div class="card-title"><h3>Proposed patch</h3><span class="muted">Read-only text</span></div><pre id="patch" tabindex="0"></pre></section>
+            <section id="observations-card" class="card" hidden><h3>Check observations</h3><div id="observations"></div></section>
+          </div>
+          <aside class="decision-panel card"><h3>Your decision</h3><p>Does this patch satisfy every stated requirement?</p><form id="response-form"><fieldset><legend class="sr-only">Select one response</legend><label class="choice"><input type="radio" name="answer" value="accept" required><span><strong>Accept</strong><small>The patch satisfies the requirements.</small></span></label><label class="choice"><input type="radio" name="answer" value="reject"><span><strong>Reject</strong><small>The patch violates a requirement.</small></span></label><label class="choice"><input type="radio" name="answer" value="needs_review"><span><strong>Needs review</strong><small>The supplied information is insufficient.</small></span></label></fieldset><button id="submit-response" type="submit">Record response</button></form><p id="timeout-message" class="timeout-message" hidden>The time allowance ended. Your answer has not been recorded. Choose a timeout skip to continue.</p><details class="skip-controls"><summary>Skip this task</summary><label for="skip-reason">Reason</label><select id="skip-reason"><option value="declined">Prefer not to answer</option><option value="technical_issue">Technical issue</option><option id="timeout-option" value="timeout" disabled>Time allowance ended</option></select><button id="skip-task" class="secondary" type="button">Record skip</button></details><p class="muted small">Responses are final once recorded. No answer key or score is shown during the exercise.</p></aside>
+        </div>
+      </section>
+      <section id="complete" class="card welcome-card" hidden><p class="eyebrow">Exercise finished</p><h2>Thank you for reviewing.</h2><p>Your responses and any skips have been recorded. You can close this page.</p><p class="muted">Completion records participation; it is not a correctness score.</p></section>
+    </section>
+  </main>
+  <footer>Local study collector · No code execution, merging or publishing</footer>
+</body>
+</html>

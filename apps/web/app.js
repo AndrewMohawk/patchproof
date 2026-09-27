@@ -269,6 +269,15 @@ function candidateHistory(run) {
   return panel('Candidate history', 'Decision summaries and executed results, with the actual patch.', wrapper, pill(`${run.candidates.length} CANDIDATE${run.candidates.length === 1 ? '' : 'S'}`, 'neutral'));
 }
 function checkStatus(status) { return pill(status === 'pass' ? 'PASS' : status === 'fail' ? 'FAIL' : status === 'error' ? 'ERROR' : 'UNVERIFIED', status === 'pass' ? '' : status === 'fail' || status === 'error' ? 'fail' : 'warn'); }
+function checkLog(check) {
+  let parsed;
+  try { parsed = JSON.parse(check.log); } catch { /* Older exports contain plain process logs. */ }
+  if (parsed?.protocol === 'repeat-observations-v1' && Array.isArray(parsed.observations)) {
+    return `Expected: ${JSON.stringify(check.expected)}\nCombined result: ${check.status}\nRepeat agreement: ${parsed.stability}\n\n` +
+      parsed.observations.map((observation, index) => `Observation ${index + 1} · ${observation.status}\nObserved: ${JSON.stringify(observation.actual)}\n${observation.message}\n${observation.log || 'No additional log output.'}`).join('\n\n');
+  }
+  return `Expected: ${JSON.stringify(check.expected)}\nObserved: ${JSON.stringify(check.actual)}\n\n${check.log || 'No additional log output.'}`;
+}
 function checksGroup(title, checks) {
   const group = append(el('div', 'checks-group'), el('h3', '', title));
   if (!checks.length) return append(group, el('p', 'empty-small', 'No results recorded.'));
@@ -276,7 +285,7 @@ function checksGroup(title, checks) {
     const row = el('div', 'check-row');
     append(row, append(el('div', 'check-heading'), el('span', 'check-name', `${check.requirementId} · ${check.id}`), checkStatus(check.status)), el('p', '', check.message));
     const details = el('details');
-    append(details, el('summary', '', `Observed result and log · ${duration(check.durationMs)}`), el('pre', 'check-log', `Expected: ${JSON.stringify(check.expected)}\nObserved: ${JSON.stringify(check.actual)}\n\n${check.log || 'No additional log output.'}`));
+    append(details, el('summary', '', `Observed result and log · ${duration(check.durationMs)}`), el('pre', 'check-log', checkLog(check)));
     append(group, append(row, details));
   }
   return group;

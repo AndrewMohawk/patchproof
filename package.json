@@ -21,6 +21,7 @@
     "run": "node scripts/product-cli.ts run",
     "mock-run": "node scripts/cli.ts mock-run",
     "test:browser": "node scripts/verify-browser.ts",
+    "record:rehearsal": "node scripts/verify-browser.ts --rehearsal",
     "check:contracts": "node scripts/check-contract-lock.ts"
   },
   "dependencies": {

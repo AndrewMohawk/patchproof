@@ -126,12 +126,13 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Documented HTTP adapters and real local Docker checker tested. Nebius checker/live coordinator intentionally unavailable until account controls and billing are verified.",
-      "blocked_reason": "Documented HTTP adapters and real local Docker checker tested. Nebius checker/live coordinator intentionally unavailable until account controls and billing are verified.",
+      "implementation_note": "Conditional Nebius upload/spawn/poll/cancel adapter and documented v1 HTTP mapping have transport/lifecycle tests. Account/model/control evidence, trusted live factory integration and two real billed smoke cases remain open.",
+      "blocked_reason": "Conditional Nebius upload/spawn/poll/cancel adapter and documented v1 HTTP mapping have transport/lifecycle tests. Account/model/control evidence, trusted live factory integration and two real billed smoke cases remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     },
     {
@@ -223,11 +224,12 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "At most three local candidates and checks-only ablation share fixed episode limits; no sealed feedback. Real comparative advantage unmeasured.",
+      "implementation_note": "Bounded local proposal/selection policies and equal allowances are implemented. P proposes from immutable original input; B0/B1 retain latest progressive candidate. Repeated-check disagreement abstains. Local protocol is source-bound, not a calibrated live experiment.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     },
     {
@@ -254,11 +256,12 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Durable SQLite events, immutable evidence, tamper checks and fresh local diff replay implemented/tested. CPU measurement explicitly unknown; sponsor billing pending T04.",
+      "implementation_note": "SQLite events, immutable source-bound evidence and repeated fresh-container patch replay are tested. Historical 2.0/2.1 policies remain explicit; CPU measurement and provider billing remain unknown where unmeasured.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     },
     {
@@ -354,12 +357,13 @@
       ],
       "requires_owner_action": false,
       "gate": "G3",
-      "implementation_note": "Fixed 270-episode planner, sealed adjudication boundary and cluster analysis implemented. Zero live final episodes; final budget allocation zero.",
-      "blocked_reason": "Fixed 270-episode planner, sealed adjudication boundary and cluster analysis implemented. Zero live final episodes; final budget allocation zero.",
+      "implementation_note": "Fixed final planner, one-use sealed adjudication, cluster analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated dispatch integration and human results remain pending.",
+      "blocked_reason": "Fixed final planner, one-use sealed adjudication, cluster analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated dispatch integration and human results remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     },
     {
@@ -421,12 +425,13 @@
       ],
       "requires_owner_action": false,
       "gate": "G4",
-      "implementation_note": "Setup guide, honest submission draft, 165-second storyboard and documentation feedback prepared. Sponsor-backed recording and evaluated claims remain unavailable.",
-      "blocked_reason": "Setup guide, honest submission draft, 165-second storyboard and documentation feedback prepared. Sponsor-backed recording and evaluated claims remain unavailable.",
+      "implementation_note": "Private setup/submission draft, screenshots and a 91-second actual local mock rehearsal with captions and run-bound claims are prepared. Sponsor-backed final recording, application license and public source/video remain pending.",
+      "blocked_reason": "Private setup/submission draft, screenshots and a 91-second actual local mock rehearsal with captions and run-bound claims are prepared. Sponsor-backed final recording, application license and public source/video remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     },
     {
@@ -454,12 +459,13 @@
       ],
       "requires_owner_action": true,
       "gate": null,
-      "implementation_note": "Local independent review and evidence prepared. Final license/publication/entry, clean-machine replay and provider/evaluation gates remain open.",
-      "blocked_reason": "Local independent review and evidence prepared. Final license/publication/entry, clean-machine replay and provider/evaluation gates remain open.",
+      "implementation_note": "Evidence-bound release receipts and scan-gated immutable local packets are implemented/tested. Real external receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
+      "blocked_reason": "Evidence-bound release receipts and scan-gated immutable local packets are implemented/tested. Real external receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-runtime-completion/workflows-receipt.json"
       ]
     }
   ],

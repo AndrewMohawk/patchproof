@@ -129,3 +129,25 @@ The durable ledger and evaluator tools still need dispatcher/factory integration
 the operational lock is explicitly local and unscored, not a frozen live protocol.
 Browser verification of repeated observations follows separately. The completion
 audit preserves the earlier gaps and will be supplemented with concrete receipts.
+
+## Reviewer, release and browser follow-up
+
+`research/verification/20260927-runtime-completion/workflows-receipt.json`
+records **150 passing tests**, the actual browser/rehearsal command, three fresh
+container replays (including the failing baseline), exact bundle scans and local
+video/caption hashes. All execution/scan commands exited 0; release-check correctly
+exited 2 for missing external evidence. The source-bound selected bundles and
+per-command logs are retained beside that receipt. No run was replaced after an
+observer failure; this browser attempt passed on its original runs.
+
+The separate reviewer collector passed synthetic rendered browser checks, including
+inert patch text, keyboard input, mobile layout and a timer preserved across reload.
+Neutral receipts under `runtime-followup/` contain no participant tokens, responses
+or sealed material. This is not a human study. Release receipts and packet tooling
+are tested against missing/stale/tampered/synthetic evidence; actual provider,
+study, independent-machine and deployment gates remain unfulfilled.
+
+One initial release receipt test supplied a duplicate trusted digest list and
+failed schema validation before reaching its intended duplicate-receipt check.
+The fixture was corrected to isolate that condition, with duplicate-trust rejection
+retained separately. Its failed log is preserved; the 150-test pass includes the fix.

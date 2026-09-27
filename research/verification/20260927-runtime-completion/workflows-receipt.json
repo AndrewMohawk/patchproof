@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T09:16:57.072916+00:00",
+  "mode": "mock",
+  "competitionReady": false,
+  "providerSpendUsd": 0,
+  "commands": [
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "tests": 150,
+      "failures": 0,
+      "skips": 0,
+      "log": "tests-workflows.log"
+    },
+    {
+      "command": "npm run record:rehearsal",
+      "exitCode": 0,
+      "log": "browser-rehearsal.log"
+    },
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "log": "doctor-followup.log"
+    },
+    {
+      "command": "node scripts/product-cli.ts release-check",
+      "exitCode": 2,
+      "expected": "External release gates remain incomplete.",
+      "log": "release-check-followup.log"
+    }
+  ],
+  "runs": [
+    {
+      "id": "9453ea26-941b-4033-85e4-97ec640af81f",
+      "variant": "baseline",
+      "status": "failed"
+    },
+    {
+      "id": "377b2c34-a093-41be-9051-21d2206c948f",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "1396daa0-3997-4721-a81a-78e2e3da8897",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks"
+    }
+  ],
+  "replays": [
+    {
+      "runId": "9453ea26-941b-4033-85e4-97ec640af81f",
+      "command": "make reproduce RUN=9453ea26-941b-4033-85e4-97ec640af81f",
+      "exitCode": 0,
+      "log": "replay-baseline.log"
+    },
+    {
+      "runId": "377b2c34-a093-41be-9051-21d2206c948f",
+      "command": "make reproduce RUN=377b2c34-a093-41be-9051-21d2206c948f",
+      "exitCode": 0,
+      "log": "replay-checks_only.log"
+    },
+    {
+      "runId": "1396daa0-3997-4721-a81a-78e2e3da8897",
+      "command": "make reproduce RUN=1396daa0-3997-4721-a81a-78e2e3da8897",
+      "exitCode": 0,
+      "log": "replay-patchproof.log"
+    }
+  ],
+  "scans": [
+    {
+      "command": "gitleaks dir artifacts/9453ea26-941b-4033-85e4-97ec640af81f.json --redact --no-banner",
+      "exitCode": 0,
+      "log": "scan-baseline.log"
+    },
+    {
+      "command": "gitleaks dir artifacts/377b2c34-a093-41be-9051-21d2206c948f.json --redact --no-banner",
+      "exitCode": 0,
+      "log": "scan-checks_only.log"
+    },
+    {
+      "command": "gitleaks dir artifacts/1396daa0-3997-4721-a81a-78e2e3da8897.json --redact --no-banner",
+      "exitCode": 0,
+      "log": "scan-patchproof.log"
+    }
+  ],
+  "rehearsal": {
+    "directory": ".local/rehearsal/2026-09-27T09-11-44-046Z",
+    "durationSeconds": 91.36,
+    "published": false,
+    "files": {
+      "local-rehearsal.webm": "sha256:91879ecc7b714993f45eaf26a9d96ad2778bebb8a276654d27078fbd69e13081",
+      "local-rehearsal-captioned.mp4": "sha256:d8a2d7ce234801920fdf6c6e21cedc9c1d208b41bced7fa32e4963644e6e6d09",
+      "captions.srt": "sha256:cde564119d9ee0a383bc4b1280a44798849e21e8209ff7f17fe05bfa4d08173a",
+      "claims.json": "sha256:92eb917ce5791e1bbaf4c21b0312b6048b683a99d512b7931e6330f3f171d870"
+    }
+  },
+  "limits": [
+    "Scripted inference; no scored experiment or provider result.",
+    "Same-host replay, not independent-machine proof.",
+    "Synthetic reviewer browser exercise, not human study data."
+  ]
+}

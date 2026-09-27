@@ -39,6 +39,17 @@ inputs, protected edits, missing image or invalid observations. An abstention ha
 no selected patch to reproduce. A mock run never changes into a real-provider
 result. Selected example bundles are retained beside the local verification logs.
 
+New runs also include an operational source/configuration lock and two observations
+per declared check. Check out the exact recorded source before replaying them.
+Editing executable files while the app runs blocks new jobs until a restart; it
+does not change existing artifacts. Historical bundles retain their original
+single-observation policy. Inconsistent new observations yield `needs_review`.
+
+`npm run record:rehearsal` runs the actual local browser flow and writes a private
+WebM, SRT captions and claims manifest under `.local/rehearsal/`. It preserves
+the three exported runs even if the browser observer fails. This is a local mock
+rehearsal, not the sponsor-backed final video; no recording is uploaded.
+
 ## Provider activation work still required
 
 Obtain project-scoped access outside source, candidate and evaluator workspaces.
@@ -49,16 +60,18 @@ credentials. No local-to-paid automatic fallback exists.
 
 Discover actual account model availability, model license/card/context behavior,
 image/architecture and rate units; fill `runtime-lock.json` with observed facts
-and references. Finish and test the refusing Nebius check runner before wiring
-live coordinator execution. Verify documented isolation controls against the
+and references. The conditional Nebius check runner now has transport/lifecycle
+tests. Wire it through the trusted live coordinator only after verifying its
+required account and control receipt. Verify isolation controls against the
 account, not only fake transports. Retain the request/operation IDs for two
 curated smoke cases, cancellation, timeouts, failed calls and billing records.
 
-Implement durable dollar reservations before concurrent paid scheduling. Reserve
+Use the [durable dollar ledger](budget-ledger.md) before paid scheduling. Reserve
 worst-case input/output/sandbox cost for all branches/retries/setup; actual
 remaining funds must include unresolved reservations. Unknown prices/costs block
-further paid work. The present local coordinator spends zero and is not a paid
-budget-reservation implementation. $5 smoke plus $20 pilot shares one $25 ceiling.
+further paid work. The present product coordinator spends zero; connecting its
+live factory to this tested ledger remains required. $5 smoke plus $20 pilot
+shares one $25 ceiling.
 
 Once G1 is evidenced, freeze a prospective affordable pilot plan. A smaller plan
 needs a named protocol revision before results. Never discard costly or failed

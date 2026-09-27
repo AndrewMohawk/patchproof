@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { digestJson } from '../packages/contracts/src/digest.ts';
@@ -9,7 +9,7 @@ import { buildOperationalLock, verifyOperationalLock } from '../packages/orchest
 test('operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims', async t => {
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-lock-test-')); t.after(() => rm(directory, { recursive: true, force: true }));
   for (const path of ['packages/contracts/src','packages/orchestrator/src','workers/repair','apps/api/src','apps/web','scripts']) await mkdir(join(directory,path), { recursive: true });
-  for (const path of ['package.json','package-lock.json','runtime-lock.json','budget.json','owner-decisions.json']) await writeFile(join(directory,path),'{}\n');
+  for (const path of ['Makefile','tsconfig.json','package.json','package-lock.json','runtime-lock.json','budget.json','owner-decisions.json']) await writeFile(join(directory,path),'{}\n');
   const prompt = join(directory,'workers/repair/index.ts'); await writeFile(prompt,'export const prompt = "original";\n');
   const lock = buildOperationalLock(directory); const digest = digestJson(lock);
   assert.deepEqual(verifyOperationalLock(directory, lock, digest), lock);
@@ -20,6 +20,15 @@ test('operational lock detects changed prompts, newly loaded code, config and un
   await writeFile(join(directory,'workers/repair/new.ts'),'export const added = true;\n');
   assert.throws(() => verifyOperationalLock(directory, lock), /Operational source/);
   await rm(join(directory,'workers/repair/new.ts'));
+  await writeFile(join(directory,'scripts/driver.py'),'print("changed checker")\n');
+  assert.throws(() => verifyOperationalLock(directory, lock), /Operational source/);
+  await rm(join(directory,'scripts/driver.py'));
+  await writeFile(join(directory,'workers/repair/request.json'),'{"temperature":0.1}\n');
+  assert.throws(() => verifyOperationalLock(directory, lock), /Operational source/);
+  await rm(join(directory,'workers/repair/request.json'));
+  await symlink(prompt, join(directory,'workers/repair/linked.ts'));
+  assert.throws(() => buildOperationalLock(directory), /symlinks/);
+  await rm(join(directory,'workers/repair/linked.ts'));
   await writeFile(join(directory,'budget.json'),'{"changed":true}\n');
   assert.throws(() => verifyOperationalLock(directory, lock), /Operational source/);
   await writeFile(join(directory,'budget.json'),'{}\n');
