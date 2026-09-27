@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-trusted-evaluator-dispatcher-review",
+  "recordedAt": "2026-09-27T09:28:36.731Z",
+  "status": "passed-bounded-synthetic-controls",
+  "baseCommit": "2f4a50bec0a83fe2640984a73f0a4aad74aaa530",
+  "sourceDigests": {
+    "workers/evaluator/dispatcher.ts": "sha256:77331e694d59d66fabb33c828d315e0d7744e15ba6ced12996149ea1f21e186b",
+    "workers/evaluator/protocol.ts": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112",
+    "workers/evaluator/analysis.ts": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b",
+    "workers/evaluator/adjudicate.ts": "sha256:7e729532dba0eb72c4062017c75c0057dee4bdea2c8ac2420171994691403684",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:34f98745d37333f3a47ebb5e21212597227af56119343b4a4fe486e08ccc1c87",
+    "tests/dispatcher-independent.test.ts": "sha256:f363a2e91bd38255b4ad4b34e06c2c8278c4c2b403d35a4e6209dbf6f9bd405e",
+    "tests/evaluation-dispatcher.test.ts": "sha256:908d3a52d9f80e22aa6b4f2ea902a2272b0a3fe3fa324d76293738599e931643",
+    "tests/evaluation-boundary.test.ts": "sha256:7432d3bdc76ff98b9ca5c9de73ad050dfe1e9f1cea2cb075a187390ffb0fd201"
+  },
+  "reviewerRole": "Separate trusted evaluator agent; not the dispatcher author. No repair implementation performed.",
+  "scope": [
+    "durable finalized selection before independent adjudication",
+    "all-planned missing and failed episode denominators",
+    "cancellation and dead-owner recovery without automatic retry",
+    "runtime plus adjudication usage and prospective aggregate allowances",
+    "synthetic/live result separation",
+    "durable budget grant, partial-charge retention and unknown billing holds",
+    "private durable state paths and stale callback rejection"
+  ],
+  "executionEvidence": [
+    {
+      "performer": "independent-reviewer",
+      "command": "node --test tests/dispatcher-independent.test.ts",
+      "exitCode": 0,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    {
+      "performer": "independent-reviewer",
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "performer": "dispatcher-author",
+      "independentlyInspectedLog": true,
+      "command": "node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts",
+      "exitCode": 0,
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "artifact": "research/verification/runtime-followup/dispatcher-tests.log",
+      "artifactDigest": "sha256:5f9c0c8aacf1e6f01f768979a2d646705e9c1f8b71ff3c25be8913d44761ca11"
+    }
+  ],
+  "resolvedControls": [
+    {
+      "issue": "Inconsistent aggregate verdicts could claim correctness with no checks or failed checks.",
+      "resolution": "Strict outcome, nonempty scored-check counts, passed counts, infrastructure-error and completion invariants.",
+      "proof": "Seven independent malformed-verdict controls reject while retaining the planned episode."
+    },
+    {
+      "issue": "Durable database opening did not require a private owned parent or reject ancestor/sidecar symlinks.",
+      "resolution": "Owned private final directory; regular owned database and SQLite sidecars; ancestor symlinks rejected.",
+      "proof": "Independent parent-symlink, nonprivate-parent and sidecar-symlink controls pass."
+    },
+    {
+      "issue": "Execution callbacks remained usable after finalized selection, allowing discarded late usage.",
+      "resolution": "Owner, executing phase, cancellation and abort checks precede one atomic usage/operation write.",
+      "proof": "Independent late callback rejection preserves frozen usage and operation handles."
+    },
+    {
+      "issue": "Known CPU usage could become unknown then regress to a lower known value.",
+      "resolution": "Positive known cumulative CPU/cost cannot become null or decrease.",
+      "proof": "Independent 20-to-null-to-1 CPU control terminates without adjudication."
+    },
+    {
+      "issue": "Deadline expiration was reported as user cancellation.",
+      "resolution": "Deadline abort reason is retained as episode_timeout.",
+      "proof": "Independent deterministic timer control distinguishes timeout from cancel."
+    },
+    {
+      "issue": "Caller mutation could change transport settings after binding.",
+      "resolution": "Constructor snapshots transport methods and configuration, including a copied rate-bound object.",
+      "proof": "Independent mode/model/policy/callback mutation control and author nested-bound control pass."
+    }
+  ],
+  "accountingObservations": [
+    "An unknown final bill retains the unused reservation and blocks further paid dispatch; a second ledger connection sees the same partial charge and hold.",
+    "Measured adjudication overrun is retained; ledger freezes further spending and analysis suppresses matched-budget claims.",
+    "All 72 pilot and 270 final planned positions are retained in synthetic grid tests, including unsuccessful rows; those synthetic rows are rejected by scored analysis.",
+    "Finalized selection is persisted and read back before the distinct adjudication callback; executor input has no oracle identity or adjudicator callback."
+  ],
+  "remainingFindingsWithinReviewedControls": [],
+  "proofBoundary": {
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "candidateTasksExecuted": 0,
+    "sealedDataIncluded": false,
+    "actualBenchmarkExecuted": false,
+    "humanStudyResultsCreated": false,
+    "syntheticInputsOnly": true,
+    "liveControlBranch": "Some unit tests exercise accounting/readiness branches using invented approvals and injected inert callbacks. These are unit records, not real-provider evidence; temporary databases are removed.",
+    "limitations": [
+      "This review does not establish a calibrated production experiment executor, verified provider rate ceilings, credentials or real billing.",
+      "Injected trusted transports still attest real execution and usage; interfaces and source digests are not external execution proof.",
+      "External operation cancellation and subsequent billing reconciliation require the trusted provider integration; retaining a handle does not prove remote termination.",
+      "Recovery tests use local process death and PID liveness. PID reuse may conservatively leave a stale episode held rather than recover it.",
+      "These deterministic controls and source review do not establish general fault tolerance or benchmark effectiveness."
+    ]
+  }
+}

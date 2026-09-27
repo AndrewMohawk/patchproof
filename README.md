@@ -104,6 +104,8 @@ See [task evidence](research/task-evidence.md), [evaluation](docs/evaluation.md)
 [operations](docs/operations.md), and [the submission draft](docs/submission-draft.md).
 The [budget ledger](docs/budget-ledger.md), [reviewer study](docs/reviewer-study.md)
 and [release evidence guide](docs/release-evidence.md) describe the new tools.
+The [trusted dispatcher](docs/experiment-dispatcher.md) preserves full experiment
+accounting; its calibrated live executor and account setup remain unconnected.
 The [completion audit](docs/completion-audit.md) describes remaining integration
 work and distinguish implemented tools from actual provider or human results.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`

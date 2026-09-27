@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "observedAt": "2026-09-27T09:28:18.143016+00:00",
+  "scope": "Trusted dispatcher implementation and isolated synthetic/injected-control verification; no real provider, candidate execution or sealed-corpus access.",
+  "files": {
+    "workers/evaluator/dispatcher.ts": "sha256:77331e694d59d66fabb33c828d315e0d7744e15ba6ced12996149ea1f21e186b",
+    "workers/evaluator/adjudicate.ts": "sha256:7e729532dba0eb72c4062017c75c0057dee4bdea2c8ac2420171994691403684",
+    "tests/evaluation-dispatcher.test.ts": "sha256:908d3a52d9f80e22aa6b4f2ea902a2272b0a3fe3fa324d76293738599e931643",
+    "tests/dispatcher-independent.test.ts": "sha256:f363a2e91bd38255b4ad4b34e06c2c8278c4c2b403d35a4e6209dbf6f9bd405e",
+    "tests/evaluation-boundary.test.ts": "sha256:7432d3bdc76ff98b9ca5c9de73ad050dfe1e9f1cea2cb075a187390ffb0fd201",
+    "docs/experiment-dispatcher.md": "sha256:ea4b2fac81c98fb20acd6a63f8832bc7d1558e67e014f319b94579953f49f66a"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts",
+      "exitCode": 0,
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "authorDispatcherTests": 17,
+      "independentDispatcherTests": 17,
+      "adjudicationBoundaryTests": 4,
+      "log": "research/verification/runtime-followup/dispatcher-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/dispatcher-typecheck.log"
+    },
+    {
+      "command": "Explicit newline/trailing-whitespace validation over all six changed dispatcher/boundary/test/documentation files",
+      "exitCode": 0
+    }
+  ],
+  "syntheticGridAccounting": {
+    "pilotEpisodes": 72,
+    "finalEpisodes": 270,
+    "everyPlannedEpisodeRetained": true,
+    "scoredAnalyzerRejectsSyntheticRows": true
+  },
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "scoredModelEvaluationPerformed": false,
+  "limitations": [
+    "Injected callbacks and verification flags in live-control tests are invented unit-test values, not verified provider integrations.",
+    "The calibrated 24-call/900-second executor, trusted live factory and CLI binding are not connected.",
+    "Prospective runner CPU/price/cleanup ceilings require verified provider evidence and runtime enforcement.",
+    "Dead-owner recovery retains operation handles and billing holds; external cancellation/reconciliation remains the trusted runtime responsibility.",
+    "Interruptions retain observed counter lower bounds and null unknown CPU/cost; they cannot establish budget compliance."
+  ]
+}

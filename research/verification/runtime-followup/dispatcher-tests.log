@@ -1,0 +1,50 @@
+(node:1743210) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent: inconsistent adjudication rejects correct with no checks (198.489078ms)
+✔ independent: inconsistent adjudication rejects correct with a failed check (138.728054ms)
+✔ independent: inconsistent adjudication rejects incorrect with every check passing (140.965391ms)
+✔ independent: inconsistent adjudication rejects incorrect with no checks (168.051214ms)
+✔ independent: inconsistent adjudication rejects correct with an infrastructure error (145.955752ms)
+✔ independent: inconsistent adjudication rejects unverified with completed sealed checks (153.061084ms)
+✔ independent: inconsistent adjudication rejects infrastructure failure without an error (156.432827ms)
+✔ independent: an execution checkpoint cannot alter usage after selection is finalized (145.053277ms)
+✔ independent: transport configuration and callbacks cannot drift after construction (143.191799ms)
+✔ independent: unknown CPU does not erase the last known cumulative lower bound (124.820601ms)
+✔ independent: cancelled work retains its row and rejects subsequent stale callbacks (128.674922ms)
+✔ independent: dispatcher state rejects a symlink parent directory (4.558241ms)
+✔ independent: dispatcher state requires a private parent directory (7.854097ms)
+✔ independent: pre-existing SQLite sidecar symlinks are rejected without touching their targets (10.008721ms)
+✔ independent: the episode deadline is distinct from user cancellation (126.105916ms)
+✔ independent: cancellation holds unknown billing across reopened accounting and prevents another dispatch (274.769839ms)
+✔ independent: live adjudication gets only the remaining aggregate allowance (268.706048ms)
+✔ external evaluator paths reject project descendants and symlink aliases (6.27528ms)
+✔ adjudication retains expected values in trusted runner and exports only aggregate verdict (12.823512ms)
+✔ oracle and selected-candidate drift fail before execution (6.549603ms)
+✔ trusted adjudication forwards owner identity, operation intent and remaining timeout (4.838777ms)
+(node:1743212) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ complete pilot synthetic grid retains all 72 rows and cannot enter scored analysis (4307.667686ms)
+✔ complete final synthetic grid retains all 270 rows and cannot enter scored analysis (12789.314219ms)
+✔ durable selection precedes adjudication, is copied, and duplicate connections never re-execute (132.392358ms)
+✔ plan drift, mode changes and mismatched transport bindings reject existing state (59.105459ms)
+✔ setup failures and exceptions remain terminal rows without artificial correctness (2993.035742ms)
+✔ cancellation records the active episode and all undispatched rows with no oracle call (1478.401825ms)
+✔ invalid or changed selected artifact cannot reach the independent adjudicator (82.147139ms)
+✔ adjudication failure retains operation handles and unknown aggregate usage without feedback or retry (110.339812ms)
+✔ live branch refuses missing gates before injected execution and retains each denominator (984.393282ms)
+✔ injected live branch receives a durable grant first and charges runtime plus adjudication (209.30317ms)
+✔ incomplete injected billing stays held and blocks later dispatch while retaining rows (1003.014308ms)
+✔ measured adjudication overrun is retained and cannot support matched-budget inference (1008.047859ms)
+✔ checkpoint preserves known partial charges and operation handles when execution throws (163.807832ms)
+✔ dead-owner recovery retains usage and identity and never resumes execution or adjudication (342.081438ms)
+✔ live owners are never stolen by a second dispatcher recovery (100.99774ms)
+✔ constructor snapshots transport mode and prospective bounds instead of following caller mutation (190.996376ms)
+✔ process death after a durable live-control grant retains partial billing and forbids replay (1270.407844ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27496.59983

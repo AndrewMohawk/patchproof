@@ -164,3 +164,22 @@ recorded source and runtime. This was same-host verification, not independent cu
 The exact source tar remains beside the private rehearsal. `rehearsal-custody.json`
 identifies the preferred captioned v2 video and reviewed frame; the first oversized
 caption rendering was retained rather than silently replaced. No asset was published.
+
+## Durable experiment dispatch
+
+`workers/evaluator/dispatcher.ts` now accounts for the existing 72/270 grids with
+durable episode identities, finalized selections, separate one-use adjudication,
+failure/cancellation/restart rows and budget holds. Remaining CPU/USD/time bounds
+are passed prospectively to the adjudicator. Synthetic records cannot enter the
+live scored analyzer. Author and independent checks resolved verdict consistency,
+private-state paths, retained callbacks, usage regressions, timeout classification
+and changed transport bindings.
+
+Executed `node --test tests/evaluation-dispatcher.test.ts
+tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts`: **exit 0,
+38 passed**. Typecheck also exited 0. Exact source hashes, commands and limitations
+are in `runtime-followup/dispatcher-verification.json` and
+`dispatcher-independent-review.json`. These tests execute invented callbacks,
+including controlled process death; they do not execute candidate code or a
+provider, access sealed fixtures or produce scored model results. The calibrated
+live executor, account attestations and CLI wiring remain separate work.

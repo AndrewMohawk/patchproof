@@ -12,10 +12,13 @@ export async function adjudicateSelectedCandidate(options: {
   projectRoot: string; workspace: string; taskId: string; episodeId: string;
   expectedFixtureDigest: string; expectedOracleDigest: string; selectedCandidateDigest: string;
   selectionFinalized: boolean; files: Record<string,string>; checks: CheckRunner; signal: AbortSignal;
+  timeoutSeconds?: number; ownerRunId?: string; onOperation?: (id: string) => void;
 }) {
   if (!options.selectionFinalized) throw new Error('Sealed adjudication requires a finalized selection.');
   if (!/^[a-z][a-z0-9-]{0,63}$/.test(options.taskId) || !/^[a-zA-Z0-9:_-]{1,200}$/.test(options.episodeId)) throw new Error('Invalid adjudication identity.');
   if (hashJson(options.files) !== options.selectedCandidateDigest) throw new Error('Selected candidate digest changed.');
+  const timeoutSeconds=options.timeoutSeconds??120;
+  if(!Number.isFinite(timeoutSeconds)||timeoutSeconds<1||timeoutSeconds>120)throw new Error('Invalid remaining adjudication timeout.');
   const workspace = await externalWorkspace(options.workspace, options.projectRoot);
   const bytes = await readFile(join(workspace, 'fixtures', `${options.taskId}.json`));
   const digest = 'sha256:' + createHash('sha256').update(bytes).digest('hex');
@@ -41,7 +44,9 @@ export async function adjudicateSelectedCandidate(options: {
   // Reserve once before executing, so a process failure cannot enable oracle retries on another patch.
   await writeFile(episodePath + '.selection', JSON.stringify({ selectedCandidateDigest: options.selectedCandidateDigest, startedAt: new Date().toISOString() }) + '\n', { flag: 'wx', mode: 0o600 });
   const result = await options.checks.run({ files: options.files, entrypoint: fixture.entrypoint,
-    cases, timeoutSeconds: 120 }, options.signal);
+    cases, timeoutSeconds,
+    ...(options.ownerRunId===undefined?{}:{ownerRunId:options.ownerRunId}),
+    ...(options.onOperation===undefined?{}:{onOperation:options.onOperation}) }, options.signal);
   const complete = result.isolation !== 'unavailable' && result.checks.length === cases.length &&
     result.checks.every((c,index) => c.status !== 'error' && c.id === cases[index]!.id && c.requirementId === cases[index]!.requirementId) && !result.infrastructureError;
   const verdict = { episodeId: options.episodeId, taskId: options.taskId, selectedCandidateDigest: options.selectedCandidateDigest,

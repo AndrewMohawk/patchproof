@@ -80,3 +80,21 @@ test('oracle and selected-candidate drift fail before execution', async () => {
     assert.equal(calls,0);
   } finally { await rm(directory,{recursive:true,force:true}); }
 });
+
+test('trusted adjudication forwards owner identity, operation intent and remaining timeout',async()=>{
+  const directory=await workspace(),ownerRunId='8a43d650-7f45-4fd0-8543-187813b1df00',observed:string[]=[];
+  const runner:CheckRunner={async run(input){
+    assert.equal(input.ownerRunId,ownerRunId);assert.equal(input.timeoutSeconds,3);
+    input.onOperation?.('unit:operation-intent');assert.deepEqual(observed,['unit:operation-intent']);
+    return{checks:input.cases.map(c=>({id:c.id,requirementId:c.requirementId,status:'pass',message:'unit-only',actual:42,expected:42,durationMs:1,log:'unit-only'})),
+      isolation:'local_container',operationIds:['unit:operation-intent'],cpuSeconds:1,measuredCostUsd:0,infrastructureError:null};
+  }};
+  const options={projectRoot:resolve('.'),workspace:directory,taskId:fixture.id,episodeId:'unit:forwarding:0',expectedFixtureDigest:digest(fixture),
+    expectedOracleDigest:digest(oracle),selectedCandidateDigest:hashJson(fixture.files),selectionFinalized:true,files:fixture.files,checks:runner,
+    signal:new AbortController().signal,timeoutSeconds:3,ownerRunId,onOperation:(id:string)=>{observed.push(id);}};
+  try{
+    await assert.rejects(adjudicateSelectedCandidate({...options,timeoutSeconds:0}),/remaining adjudication timeout/);
+    await assert.rejects(adjudicateSelectedCandidate({...options,timeoutSeconds:121}),/remaining adjudication timeout/);
+    const verdict=await adjudicateSelectedCandidate(options);assert.equal(verdict.outcome,'correct');assert.deepEqual(observed,['unit:operation-intent']);
+  }finally{await rm(directory,{recursive:true,force:true});}
+});
