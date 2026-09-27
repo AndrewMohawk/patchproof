@@ -1,0 +1,74 @@
+{
+  "format": "patchproof-bounded-independent-review-v1",
+  "observedAt": "2026-09-27T12:21:44.387633+00:00",
+  "origin": "synthetic",
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "sealedCorpusAccess": false,
+  "spendUsd": 0,
+  "authenticityVerified": false,
+  "competitionReady": false,
+  "execution": {
+    "command": "node --test tests/trusted-replay.test.ts tests/trusted-replay-independent.test.ts tests/evidence-archive-independent.test.ts tests/release-protocol.test.ts tests/release-protocol-independent.test.ts",
+    "exitCode": 0,
+    "tests": 23,
+    "passed": 23,
+    "independentlyAuthoredControls": 14,
+    "existingAuthorControls": 9,
+    "typecheckCommand": "npm run typecheck",
+    "typecheckExitCode": 0
+  },
+  "logs": [
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/controls.log",
+      "digest": "sha256:38209eac99c431d782ca3c1c52d6509b090420ab77a6fc6a8c36738fc179b6d9"
+    },
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/typecheck.log",
+      "digest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    }
+  ],
+  "scope": "Bounded source and synthetic metadata/control review; inert transport responses only. No cloud request, model invocation, candidate execution or sealed corpus access.",
+  "review": "release-protocol",
+  "authorCommit": "b3a649c27b838ea328408a170cc7061cfbf33588",
+  "source": [
+    {
+      "path": "scripts/release-protocol.ts",
+      "digest": "sha256:b4acd28b79efd5c57e1a9053d6604af65b4a74360594443a985354a661e278a4"
+    },
+    {
+      "path": "scripts/release-input.ts",
+      "digest": "sha256:480762b6fb5e5e10de843921c893f1977b19ab9884808d902596f7a8241ca5d5"
+    },
+    {
+      "path": "scripts/release-packet.ts",
+      "digest": "sha256:7cb1401559d34a582f68d4735b5838506cf35cb4e812d0eafd26b8a9b1859461"
+    },
+    {
+      "path": "scripts/release-audit.ts",
+      "digest": "sha256:d8fdedf3921df97b58112eb952b3e1c3b0d60d6754654172b14795447a7961ce"
+    }
+  ],
+  "independentTest": [
+    {
+      "path": "tests/release-protocol-independent.test.ts",
+      "digest": "sha256:bc0c13d138b19ac4ac2e6262d9a1ff87d39d94949cd532c273f7e36a1f1fbb95"
+    }
+  ],
+  "independentControls": 3,
+  "existingAuthorControlsIndependentlyExecuted": 4,
+  "verified": [
+    "Explicit accepted proof pins current source map, whole operational lock, runtime and calibrated policy",
+    "A whole-lock digest cannot substitute for source-map digest even if acceptance digest is newly pinned",
+    "A future-dated newly pinned proof fails current release gate",
+    "Matching smoke is compatible_presentation only; altered scope/protocol/model/calibrated flag is historical_or_unbound",
+    "Existing author controls separately confirm trust/source/runtime/model drift, synthetic gate suppression, and input artifact integrity"
+  ],
+  "findings": [],
+  "unresolvedConcreteDefects": [],
+  "remainingLimits": [
+    "No real pilot, experiment or release proof was generated.",
+    "Hashes protect integrity; operator-supplied trust pins do not establish authenticity independently.",
+    "Compatible smoke presentation does not prove experiment execution or calibrated budget compliance."
+  ]
+}

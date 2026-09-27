@@ -1,0 +1,62 @@
+(node:1786967) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ independent replay: exposed envelope cannot mutate fingerprint-bound caps (100.498582ms)
+✖ independent replay: trusted cap reduction during credential read stops POST and keeps hold (124.402449ms)
+✔ independent replay: cancellation after durable intent retains handles and an unknown hold (154.253126ms)
+✔ independent replay: measured CPU overrun is retained and prevents the second batch (104.632167ms)
+✔ independent replay: source revocation after first raw batch blocks additional paid work (89.269576ms)
+✔ independent replay: attempted identity remains blocked across ledger reopen (92.445301ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 975.889702
+
+✖ failing tests:
+
+test at tests/trusted-replay-independent.test.ts:24:1
+✖ independent replay: exposed envelope cannot mutate fingerprint-bound caps (100.498582ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      guestTimeoutSeconds: 30,
+      maximumBatches: 2,
+      maximumCpuSeconds: 30,
+      maximumOperations: 2,
+  +   maximumUploads: 100000,
+  -   maximumUploads: 2,
+      modelCalls: 0,
+      reservedMicros: '100000'
+    }
+  
+      at TestContext.<anonymous> (file:///tmp/patchproof-trusted-replay-review/tests/trusted-replay-independent.test.ts:28:11)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.start (node:internal/test_runner/test:1006:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { maximumBatches: 2, maximumOperations: 2, maximumUploads: 100000, guestTimeoutSeconds: 30, maximumCpuSeconds: 30, reservedMicros: '100000', modelCalls: 0 },
+    expected: { maximumBatches: 2, maximumOperations: 2, maximumUploads: 2, guestTimeoutSeconds: 30, maximumCpuSeconds: 30, reservedMicros: '100000', modelCalls: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/trusted-replay-independent.test.ts:32:1
+✖ independent replay: trusted cap reduction during credential read stops POST and keeps hold (124.402449ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///tmp/patchproof-trusted-replay-review/tests/trusted-replay-independent.test.ts:39:4)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,86 @@
+{
+  "format": "patchproof-bounded-independent-review-v1",
+  "observedAt": "2026-09-27T12:21:44.387633+00:00",
+  "origin": "synthetic",
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "sealedCorpusAccess": false,
+  "spendUsd": 0,
+  "authenticityVerified": false,
+  "competitionReady": false,
+  "execution": {
+    "command": "node --test tests/trusted-replay.test.ts tests/trusted-replay-independent.test.ts tests/evidence-archive-independent.test.ts tests/release-protocol.test.ts tests/release-protocol-independent.test.ts",
+    "exitCode": 0,
+    "tests": 23,
+    "passed": 23,
+    "independentlyAuthoredControls": 14,
+    "existingAuthorControls": 9,
+    "typecheckCommand": "npm run typecheck",
+    "typecheckExitCode": 0
+  },
+  "logs": [
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/controls.log",
+      "digest": "sha256:38209eac99c431d782ca3c1c52d6509b090420ab77a6fc6a8c36738fc179b6d9"
+    },
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/typecheck.log",
+      "digest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    }
+  ],
+  "scope": "Bounded source and synthetic metadata/control review; inert transport responses only. No cloud request, model invocation, candidate execution or sealed corpus access.",
+  "review": "trusted-replay",
+  "source": [
+    {
+      "path": "packages/orchestrator/src/trusted-replay.ts",
+      "digest": "sha256:381f4ab64b88057242edaa421f64cd7c31c1817be61e555987f68ee015d9296c"
+    },
+    {
+      "path": "tests/helpers/replay-data.ts",
+      "digest": "sha256:1e24d3245cec7b0e228ab5816d101445b1f639cbfd96ffbdc266a3d30fb8681e"
+    }
+  ],
+  "independentTest": [
+    {
+      "path": "tests/trusted-replay-independent.test.ts",
+      "digest": "sha256:52846be1c2977209e7843bcf0e2c3f960fdc2e9c3aab6c6d44293b210cdb0379"
+    }
+  ],
+  "independentControls": 7,
+  "findings": [
+    {
+      "id": "mutable-replay-envelope",
+      "initialSourceDigest": "sha256:94c9adcfc3f766e5aca5d1e97abd5c1df1fca831bdeab8fdf8febf66940f87f6",
+      "discovery": "Source review followed by an executed mutation regression. Returned maximumUploads changed from 2 to 100000 without recomputing the fingerprint.",
+      "impact": "Fingerprint-bound reported/enforced cap could mutate through a trusted caller; no spend-cap bypass demonstrated because normal batches/files are separately bounded.",
+      "resolution": "Author froze the envelope at construction. Independent regression passes against final source.",
+      "status": "resolved"
+    }
+  ],
+  "initialRun": {
+    "tests": 6,
+    "passed": 4,
+    "failed": 2,
+    "log": {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/replay-initial.log",
+      "digest": "sha256:9411cc9ccce9d5a900029b35a55a08c8919a6e8f43c4c25eaef8e05fc40a4767"
+    },
+    "interpretation": "One reproduced source defect above. The other failure was a reviewer expectation error: revoked dispatch returns mismatch_or_infrastructure_error instead of rejecting; corrected to verify zero POST calls and retained hold. No budget bypass observed."
+  },
+  "verified": [
+    "Frozen exposed envelope",
+    "Trusted approval reduction denies new POST requests and retains attempted hold",
+    "Post-intent cancellation retains handles and unknown hold",
+    "Measured CPU overrun retained and second batch prevented",
+    "Source revocation after first raw batch denies further work",
+    "Attempted identity remains blocked after ledger reopen",
+    "One-second deadline reaches cooperative transport AbortSignal; unresolved intent remains held"
+  ],
+  "remainingLimits": [
+    "Cancellation test uses a cooperative injected fetch; it does not prove remote cancellation or an uncooperative transport hard deadline.",
+    "Accepted CPU/billing/source proofs are trusted operator inputs; tests do not authenticate them.",
+    "No real provider billing, resource cap, transport, or selected patch replay was observed.",
+    "Final billing remains incomplete and funds held pending explicit reconciliation."
+  ],
+  "unresolvedConcreteDefects": []
+}

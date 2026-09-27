@@ -1,0 +1,80 @@
+{
+  "format": "patchproof-bounded-independent-review-v1",
+  "observedAt": "2026-09-27T12:21:44.387633+00:00",
+  "origin": "synthetic",
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "sealedCorpusAccess": false,
+  "spendUsd": 0,
+  "authenticityVerified": false,
+  "competitionReady": false,
+  "execution": {
+    "command": "node --test tests/trusted-replay.test.ts tests/trusted-replay-independent.test.ts tests/evidence-archive-independent.test.ts tests/release-protocol.test.ts tests/release-protocol-independent.test.ts",
+    "exitCode": 0,
+    "tests": 23,
+    "passed": 23,
+    "independentlyAuthoredControls": 14,
+    "existingAuthorControls": 9,
+    "typecheckCommand": "npm run typecheck",
+    "typecheckExitCode": 0
+  },
+  "logs": [
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/controls.log",
+      "digest": "sha256:38209eac99c431d782ca3c1c52d6509b090420ab77a6fc6a8c36738fc179b6d9"
+    },
+    {
+      "path": "research/verification/runtime-followup/independent-replay-archive-release/typecheck.log",
+      "digest": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    }
+  ],
+  "scope": "Bounded source and synthetic metadata/control review; inert transport responses only. No cloud request, model invocation, candidate execution or sealed corpus access.",
+  "review": "evidence-archive",
+  "authorCommit": "adbbb8bc3865da87fc61b7f626a2432ec2e732b3",
+  "source": [
+    {
+      "path": "apps/api/src/evidence-archive.ts",
+      "digest": "sha256:cc7a57a3216cb7632a10df6d61ed8c453a5599c8a9dd930cc6272821b7fe52d7"
+    },
+    {
+      "path": "scripts/evidence-archive.ts",
+      "digest": "sha256:3bb9e59b1d9f512c993a6eb9695b5272391b072ebaaab497667f1eb859367317"
+    },
+    {
+      "path": "apps/web/app.js",
+      "digest": "sha256:a307772b172f2b0f7cdcbe65f56abf4016bb87f3988aef50232f94e488a8e7f2"
+    },
+    {
+      "path": "apps/web/index.html",
+      "digest": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04"
+    },
+    {
+      "path": "scripts/evidence-operator.ts",
+      "digest": "sha256:bbd39af3e1ce09d4d78e7ca82cb7696396e608649edc5847c01f7c706d7eb058"
+    }
+  ],
+  "independentTest": [
+    {
+      "path": "tests/evidence-archive-independent.test.ts",
+      "digest": "sha256:699ad7e1e350102d4adae4602bf397803e976138648abe4ca1aa6ea420e55faa"
+    }
+  ],
+  "independentControls": 4,
+  "verified": [
+    "Verified in-memory bytes and metadata survive removal of config/current source/input evidence",
+    "Mutation/event/query/unknown-ID routes denied; Host, Origin and cross-site guards enforce scoped loopback surface",
+    "Request handling introduces no private fixture directory writes; public manifest omits private directory",
+    "Current acceptance-policy change rejects historical v2.0 bundle",
+    "Independent config pin required; safe errors do not reflect private path"
+  ],
+  "reviewerCorrections": [
+    "First mixed 15-test execution had two reviewer test-field mistakes (nonexistent manifest.bundles and wrong fixtureFile nesting), corrected without product-source changes.",
+    "Final 23-test run refreshed shared evidence helper to current root bbd39af3; previous passing helper-b1fe run retained separately."
+  ],
+  "findings": [],
+  "unresolvedConcreteDefects": [],
+  "remainingLimits": [
+    "Independent reviewer ran metadata and HTTP controls, not a rendered browser; author browser results remain separate.",
+    "Read-only archive verifies integrity and current curated identity, not provenance or authenticity of recorded live labels."
+  ]
+}
