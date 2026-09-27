@@ -12,31 +12,16 @@ import { EvidenceStore, verifyEvidence, reproduceEvidence } from '../packages/or
 import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
 import { auditRelease } from './release-audit.ts';
-import { buildOperationalLock, verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
-import { buildReleaseBindings, ReleaseDigestSchema, ReleasePathSchema } from './release-receipts.ts';
+import { verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
+import { ReleaseDigestSchema } from './release-receipts.ts';
 import { buildReleasePacket, verifyReleasePacket } from './release-packet.ts';
-import { readReleaseFile } from './release-files.ts';
+import { readReleaseInput } from './release-input.ts';
 
 const root = new URL('../', import.meta.url);
 const [command, argument, variant = 'patchproof'] = process.argv.slice(2);
 const print = (value: unknown) => console.log(JSON.stringify(value, null, 2));
 const stateDirectory = fileURLToPath(new URL('.local/product/', root));
 const label = { mode: 'mock', competitionReady: false };
-const releaseInputSchema = z.strictObject({
-  receiptPaths: z.array(ReleasePathSchema).max(100), trustedReceiptDigests: z.array(ReleaseDigestSchema).max(100),
-  bundles: z.array(z.strictObject({ path: ReleasePathSchema, bundleDigest: ReleaseDigestSchema })).max(20),
-});
-
-async function releaseInput(path: string, config: Awaited<ReturnType<typeof readConfiguration>>) {
-  const directory = fileURLToPath(root);
-  const input = releaseInputSchema.parse(JSON.parse((await readReleaseFile(directory, path, 1_048_576)).toString('utf8')));
-  const operational = buildOperationalLock(directory);
-  const bindings = buildReleaseBindings({ sources: operational.sources, runtime: config.runtime, protocol: operational.behavior,
-    bundleDigests: input.bundles.map(bundle => bundle.bundleDigest), runtimeMode: config.runtime.mode,
-    liveProtocolFrozen: operational.liveProtocolFrozen });
-  const receipts = await Promise.all(input.receiptPaths.map(async receipt => JSON.parse((await readReleaseFile(directory, receipt, 1_048_576)).toString('utf8'))));
-  return { bindings, receipts, trustedReceiptDigests: input.trustedReceiptDigests, bundles: input.bundles };
-}
 
 async function sourceReference() {
   try {
@@ -69,14 +54,14 @@ async function main() {
     return;
   }
   if (command === 'release-check') {
-    const result = await auditRelease(root, config, argument ? await releaseInput(argument, config) : undefined);
+    const result = await auditRelease(root, config, argument ? await readReleaseInput(fileURLToPath(root), argument, config) : undefined);
     print(result); if (!result.checks.every(check => check.status === 'pass')) process.exitCode = 2; return;
   }
   if (command === 'release-packet') {
     if (!argument) throw new ContractError('invalid_request', 'Provide a repository-relative release input JSON path.');
-    const input = await releaseInput(argument, config);
+    const input = await readReleaseInput(fileURLToPath(root), argument, config);
     const packet = await buildReleasePacket({ root: fileURLToPath(root), ...input, ...await sourceReference() });
-    print({ ...label, command, status: 'local_preparation', directory: packet.directory, packetDigest: packet.packetDigest,
+    print({ ...label, mode: input.bindings.runtimeMode, command, status: 'local_preparation', directory: packet.directory, packetDigest: packet.packetDigest,
       evidenceStatus: packet.manifest.evidenceStatus, paidCalls: packet.paidCalls, published: packet.published });
     return;
   }
@@ -118,7 +103,7 @@ async function main() {
           const file = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
           try { verifyEvidence(JSON.parse(await file.readFile('utf8')), digest); } finally { await file.close(); }
         }
-        print({ ...label, command, path: fileURLToPath(path), bundleDigest: digest });
+        print({ ...label, mode: bundle.mode, command, path: fileURLToPath(path), bundleDigest: digest });
       } finally { journal.close(); }
       return;
     }
@@ -126,6 +111,7 @@ async function main() {
     let bundle;
     try { bundle = verifyEvidence(JSON.parse(await file.readFile('utf8'))); } finally { await file.close(); }
     if (bundle.run.id !== argument) throw new ContractError('digest_mismatch', 'Requested run and artifact differ.');
+    if (bundle.mode === 'live') throw new Error('live_replay_configuration_required');
     const lock = bundle.runtimeLock as { localCheckImage?: string; operationalLock?: unknown };
     if (lock.operationalLock) verifyOperationalLock(fileURLToPath(root), lock.operationalLock);
     if (!lock.localCheckImage) throw new ContractError('setup_error', 'Export has no pinned local checker image.');
@@ -139,8 +125,10 @@ async function main() {
 try { await main(); }
 catch (error) {
   const releaseCode = error instanceof Error && /^release_[a-z_]+$/.test(error.message) ? error.message : null;
-  const code = error instanceof ContractError ? error.code : releaseCode ?? 'setup_error';
-  print({ ...label, status: 'error', error: { code, message: error instanceof ContractError ? error.message :
+  const liveReplay = error instanceof Error && error.message === 'live_replay_configuration_required';
+  const code = error instanceof ContractError ? error.code : liveReplay ? 'live_replay_configuration_required' : releaseCode ?? 'setup_error';
+  print({ ...label, ...(liveReplay ? { mode: 'live' } : {}), status: 'error', error: { code, message: error instanceof ContractError ? error.message :
+    liveReplay ? 'Live evidence replay requires the private operator CONFIG; default replay cannot use the local checker.' :
     releaseCode ? `Release preparation stopped: ${releaseCode}. Inspect release-check and the release evidence guide.` :
       'Local configuration, runtime or artifact unavailable. Check doctor and active coordinator ownership.' } });
   process.exitCode = 2;

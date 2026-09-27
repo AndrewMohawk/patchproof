@@ -6,6 +6,7 @@ import { promisify } from 'node:util';
 import { mkdtemp, mkdir, writeFile, readFile, chmod, rm, stat, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { FixtureSchema } from '../packages/contracts/src/product.ts';
 import type { ProductRun } from '../packages/contracts/src/product.ts';
 import { digestBytes, digestJson } from '../packages/contracts/src/digest.ts';
@@ -16,6 +17,8 @@ import { buildReleaseBindings, RELEASE_GATES } from '../scripts/release-receipts
 import { buildReleasePacket, verifyReleasePacket } from '../scripts/release-packet.ts';
 import type { ReleasePacketInput } from '../scripts/release-packet.ts';
 import { readReleaseFile } from '../scripts/release-files.ts';
+import { resolveReleaseBindings } from '../scripts/release-protocol.ts';
+import { syntheticReleaseData, syntheticSmokeLock } from './helpers/release-live-data.ts';
 
 const fixture = FixtureSchema.parse({ id: 'release-unit-fixture', repoId: 'synthetic-unit-only', split: 'development',
   title: 'Synthetic release test', description: 'Unit-only data, never a model evaluation or human observation.',
@@ -23,7 +26,7 @@ const fixture = FixtureSchema.parse({ id: 'release-unit-fixture', repoId: 'synth
   visibleCases: [{ id: 'case-one', requirementId: 'R01', function: 'f', args: [], expected: 2 }], acceptanceCases: [], license: 'CC0-1.0', provenance: 'Original synthetic unit fixture.' });
 
 async function prepare(root: string): Promise<ReleasePacketInput> {
-  await mkdir(join(root, 'artifacts')); await mkdir(join(root, 'research'));
+  await mkdir(join(root, 'artifacts'), { recursive: true }); await mkdir(join(root, 'research'), { recursive: true });
   const sources = { 'unit.ts': digestBytes('synthetic unit source') }, runtime = { mode: 'mock', description: 'synthetic unit runtime' }, protocol = { unitOnly: true };
   const now = new Date();
   const runtimeLock = { ...runtime, operationalLock: { sources, behavior: protocol } };
@@ -56,14 +59,15 @@ async function captureTestScan(input: ReleasePacketInput) {
   // Its receipt covers that unit-test scan only, never a real release/security review or live gate.
   const scanner = 'import{readFileSync}from"node:fs";for(const p of process.argv.slice(2)){if(readFileSync(p,"utf8").includes("PATCHPROOF_SECRET_CANARY"))process.exit(2)}console.log("UNIT CANARY SCAN ONLY: no canary detected")';
   const script = join(input.root, 'unit-scan.mjs'); await writeFile(script, scanner);
-  const argv = [process.execPath, script, ...input.bundles.map(bundle => join(input.root, bundle.path))];
+  const paths = [...input.bundles.map(bundle => bundle.path), ...(input.liveProtocol?.artifact ? [input.liveProtocol.artifact.path] : [])];
+  const argv = [process.execPath, script, ...paths.map(path => join(input.root, path))];
   const result = await promisify(execFile)(argv[0]!, argv.slice(1));
   const output = { path: 'research/unit-scan.log', digest: digestBytes(result.stdout) };
   await writeFile(join(input.root, output.path), result.stdout);
   const body = { schemaVersion: '1.0', id: randomUUID(), gate: 'release_secrets', observedAt: input.now!.toISOString(), expiresAt: new Date(input.now!.getTime() + 60_000).toISOString(),
     bindings: input.bindings, scope: { origin: 'actual', execution: 'local', human: 'none', independence: 'same_host' }, outcome: 'pass',
     assertions: [...RELEASE_GATES.release_secrets.assertions], evidence: [output],
-    scannedArtifacts: await Promise.all(input.bundles.map(async bundle => ({ path: bundle.path, digest: digestBytes(await readFile(join(input.root, bundle.path))) }))),
+    scannedArtifacts: await Promise.all(paths.map(async path => ({ path, digest: digestBytes(await readFile(join(input.root, path))) }))),
     commands: [{ argv, exitCode: 0, output }] };
   const receipt = { ...body, receiptDigest: digestJson(body) };
   input.receipts = [receipt]; input.trustedReceiptDigests = [receipt.receiptDigest];
@@ -128,4 +132,64 @@ test('repository evidence reads reject traversal, symlinks, oversized files and 
     await assert.rejects(readReleaseFile(root, 'value.txt', 2), /size/);
     await mkdir(join(root, 'folder')); await assert.rejects(readReleaseFile(root, 'folder'), /size_or_type/);
   } finally { await cleanup(root); }
+});
+
+test('versioned live protocol packet accepts matching smoke presentation scope only after its metadata is scanned, without granting experiment completion', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'patchproof-release-packet-live-')); let packet: string | undefined;
+  try {
+    const input = await prepare(root), s = await syntheticReleaseData(root), runtime = syntheticSmokeLock(s.document);
+    // These are explicitly invented live-shaped contract bundles, not observations of any provider.
+    for (const selected of input.bundles) {
+      const existing = JSON.parse(await readFile(join(root, selected.path), 'utf8'));
+      const run: ProductRun = { ...existing.run, mode: 'live', runtimeLockDigest: digestJson(runtime) };
+      const bundle = buildEvidence(run, fixture, runtime); selected.bundleDigest = bundle.bundleDigest;
+      await writeFile(join(root, selected.path), JSON.stringify(bundle) + '\n');
+    }
+    input.now = s.now;
+    input.bindings = resolveReleaseBindings({ operational: s.operational, runtime: s.config.runtime,
+      bundleDigests: input.bundles.map(bundle => bundle.bundleDigest), liveProtocol: s.selection, now: s.now }).bindings;
+    await captureTestScan(input);
+    await assert.rejects(buildReleasePacket(input), /live_protocol_required/);
+    input.liveProtocol = s.selection;
+    await assert.rejects(buildReleasePacket(input), /live_protocol_not_scanned/);
+    await captureTestScan(input);
+    const result = await buildReleasePacket(input); packet = result.directory;
+    assert.equal(result.manifest.schemaVersion, '1.1'); assert.equal(result.manifest.evidenceStatus, 'blocked');
+    assert.match(await readFile(join(packet, 'NOTICES.md'), 'utf8'), /Smoke bundles retain their own three-proposal policy/);
+    assert.ok(result.manifest.bundles.every(bundle => bundle.sourceBinding === 'compatible_presentation' && bundle.executionScope === 'trusted-smoke-only'));
+    assert.equal(result.assessment.gates.find(gate => gate.id === 'pilot')?.status, 'missing');
+    assert.equal(result.assessment.gates.find(gate => gate.id === 'sealed_evaluation')?.status, 'missing');
+    assert.equal(result.manifest.competitionReady, false); assert.equal(result.manifest.publicationAuthorized, false);
+    assert.equal((await verifyReleasePacket(packet, result.packetDigest)).status, 'consistent');
+    assert.deepEqual(JSON.parse(await readFile(join(packet, 'live-protocol.json'), 'utf8')), s.document);
+  } finally { await cleanup(root, packet); }
+});
+
+
+test('default CLI refuses live replay before any local checker fallback', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'patchproof-release-live-replay-'));
+  let exported: string | undefined;
+  try {
+    const input = await prepare(root), selected = input.bundles[0]!;
+    const existing = JSON.parse(await readFile(join(root, selected.path), 'utf8'));
+    const runtimeLock = { mode: 'live', scope: 'SYNTHETIC CLI refusal control only', localCheckImage: 'synthetic-never-run' };
+    const run: ProductRun = { ...existing.run, mode: 'live', runtimeLockDigest: digestJson(runtimeLock) };
+    const bundle = buildEvidence(run, fixture, runtimeLock);
+    const directory = fileURLToPath(new URL('../artifacts/', import.meta.url));
+    await mkdir(directory, { recursive: true });
+    exported = join(directory, `${run.id}.json`);
+    await writeFile(exported, JSON.stringify(bundle), { flag: 'wx', mode: 0o600 });
+    const command = promisify(execFile);
+    await assert.rejects(command(process.execPath, [fileURLToPath(new URL('../scripts/product-cli.ts', import.meta.url)), 'reproduce', run.id],
+      { env: { ...process.env, PATH: '/nonexistent-patchproof-test-path' } }), error => {
+      const result = error as Error & { code: number; stdout: string };
+      assert.equal(result.code, 2);
+      const value = JSON.parse(result.stdout);
+      assert.equal(value.mode, 'live'); assert.equal(value.error.code, 'live_replay_configuration_required');
+      return true;
+    });
+  } finally {
+    if (exported) await rm(exported, { force: true });
+    await cleanup(root);
+  }
 });

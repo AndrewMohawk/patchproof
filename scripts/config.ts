@@ -36,7 +36,7 @@ export const BudgetSchema = z.strictObject({
   }
 });
 
-const RuntimeSchema = z.strictObject({
+export const RuntimeSchema = z.strictObject({
   schemaVersion: z.literal('1.0'), mode: z.enum(['mock', 'live']), observedAt: timestamp,
   local: z.strictObject({ node: z.string(), npm: z.string(), python: z.string(), architecture: z.string(), platform: z.string() }),
   model: z.strictObject({

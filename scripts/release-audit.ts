@@ -5,12 +5,14 @@ import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { buildOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 import type { Configuration } from './config.ts';
 import { readiness } from './config.ts';
-import { buildReleaseBindings, validateReleaseReceipts } from './release-receipts.ts';
+import { validateReleaseReceipts } from './release-receipts.ts';
 import type { ReleaseBindings } from './release-receipts.ts';
 import { readReleaseFile } from './release-files.ts';
+import { resolveReleaseBindings } from './release-protocol.ts';
+import type { ReleaseLiveSelection } from './release-protocol.ts';
 
 type Item = { id: string; status: 'pass' | 'blocked' | 'not_run'; detail: string };
-export interface ReleaseAuditEvidence { bindings: ReleaseBindings; receipts: unknown[]; trustedReceiptDigests: string[]; now?: Date; }
+export interface ReleaseAuditEvidence { bindings: ReleaseBindings; receipts: unknown[]; trustedReceiptDigests: string[]; liveProtocol?: ReleaseLiveSelection; now?: Date; }
 
 /** Local inspection only. This command neither runs paid checks nor publishes. */
 export async function auditRelease(root: URL, config: Configuration, evidence?: ReleaseAuditEvidence) {
@@ -30,8 +32,8 @@ export async function auditRelease(root: URL, config: Configuration, evidence?: 
   checks.push({ id: 'hosting_assignment', status: config.owner.demoOperator && config.budget.stages.hosting > 0 ? 'pass' : 'blocked',
     detail: `Operator ${config.owner.demoOperator ?? 'unassigned'}; hosting allocation $${config.budget.stages.hosting}.` });
   const operational = buildOperationalLock(fileURLToPath(root));
-  const current = buildReleaseBindings({ sources: operational.sources, runtime: config.runtime, protocol: operational.behavior,
-    runtimeMode: config.runtime.mode, liveProtocolFrozen: operational.liveProtocolFrozen, bundleDigests: evidence?.bindings.bundleDigests ?? [] });
+  const { bindings: current } = resolveReleaseBindings({ operational, runtime: config.runtime, bundleDigests: evidence?.bindings.bundleDigests ?? [],
+    ...(evidence?.liveProtocol ? { liveProtocol: evidence.liveProtocol } : {}), ...(evidence?.now ? { now: evidence.now } : {}) });
   checks.push({ id: 'release_binding', status: !evidence || digestJson(current) === digestJson(evidence.bindings) ? 'pass' : 'blocked',
     detail: 'Compared release bindings against current source, runtime and operational behavior.' });
   const assessment = await validateReleaseReceipts({ bindings: current, receipts: evidence?.receipts ?? [], trustedReceiptDigests: evidence?.trustedReceiptDigests ?? [],
