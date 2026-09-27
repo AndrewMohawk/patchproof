@@ -8,6 +8,7 @@ import type { ProductEvidence, ProductRun } from '../../packages/contracts/src/p
 // Usage: node apps/web/verify-browser.ts http://127.0.0.1:43171
 const base = (process.argv[2] ?? 'http://127.0.0.1:43171').replace(/\/$/, '');
 assert.ok(/^http:\/\/(?:127\.0\.0\.1|localhost):\d+$/.test(base), 'Browser verification requires a loopback server.');
+const demoTaskId = 'stable-unique-01';
 const resumeRunIds = process.argv[3] ? process.argv[3].split(',') : [];
 const recordingDirectory = process.argv[4];
 assert.ok(resumeRunIds.length === 0 || (resumeRunIds.length === 3 && resumeRunIds.every(id => /^[0-9a-f-]{36}$/.test(id))), 'Resume requires exactly three recorded run IDs.');
@@ -34,22 +35,33 @@ try {
   // Active runs keep their SSE connections open. Wait for rendered task data,
   // not an idle network, so an observer can attach while work is streaming.
   await page.goto(base, { waitUntil: 'domcontentloaded' });
-  await page.locator('.task-card').first().waitFor({ state: 'visible' });
+  const demoTaskCard = page.locator(`.task-card[data-task-id="${demoTaskId}"]`);
+  await demoTaskCard.waitFor({ state: 'visible' });
   assert.equal(await page.title(), 'PatchProof — review the evidence');
   assert.match(await page.locator('.mode-banner').innerText(), /No paid inference or competition-ready evidence/);
   assert.match(await page.locator('.mode-indicator').innerText(), /Mock model · Local checks/);
   caption('LOCAL REHEARSAL: scripted model, real local container checks. No paid inference or benchmark result.');
   if (recordingDirectory) await page.waitForTimeout(3500);
-  const taskButtons = page.locator('.task-card');
-  assert.ok(await taskButtons.count() > 1, 'The UI must display more than one curated task.');
-  await page.locator('.task-card[data-task-id="stable-unique-01"]').click();
-  const firstTask = await page.locator('#task-detail h2').innerText();
-  await taskButtons.nth(1).click();
-  assert.notEqual(await page.locator('#task-detail h2').innerText(), firstTask, 'Task selection must update the detail panel.');
+  assert.ok(await page.locator('.task-card').count() > 1, 'The UI must display more than one curated task.');
+  const catalogueResponse = await page.request.get(`${base}/tasks`);
+  assert.equal(catalogueResponse.status(), 200);
+  const catalogue = await catalogueResponse.json() as { tasks: Array<{ id: string; title: string; mockSupported: boolean }> };
+  const demoTask = catalogue.tasks.find(task => task.id === demoTaskId);
+  const unsupportedTask = catalogue.tasks.find(task => task.id !== demoTaskId && task.mockSupported === false);
+  assert.ok(demoTask?.mockSupported, 'The named demonstration task must support the local scripted model.');
+  assert.ok(unsupportedTask, 'A distinct curated task must require a connected model.');
+  assert.match(unsupportedTask.id, /^[a-zA-Z0-9_-]+$/);
+  const unsupportedTaskCard = page.locator(`.task-card[data-task-id="${unsupportedTask.id}"]`);
+  await demoTaskCard.click();
+  assert.equal(await page.locator('#task-detail h2').innerText(), demoTask.title);
+  await unsupportedTaskCard.click();
+  assert.equal(await page.locator('#task-detail h2').innerText(), unsupportedTask.title, 'Task selection must display the selected task details.');
+  assert.equal(await unsupportedTaskCard.getAttribute('aria-pressed'), 'true');
   assert.ok(await page.getByRole('button', { name: 'Run PatchProof →', exact: true }).isDisabled(), 'Unsupported fixtures must require a connected model.');
   assert.match(await page.locator('#task-detail').innerText(), /Requires connected model/);
-  await taskButtons.first().click();
-  assert.equal(await page.locator('#task-detail h2').innerText(), firstTask);
+  await demoTaskCard.click();
+  assert.equal(await demoTaskCard.getAttribute('aria-pressed'), 'true');
+  assert.equal(await page.locator('#task-detail h2').innerText(), demoTask.title);
   assert.ok(await page.locator('#task-detail .requirements li').count() > 0);
   assert.equal(await page.locator('input[type="text"], textarea, input[type="file"]').count(), 0, 'Demo accepts curated task IDs only.');
   await page.screenshot({ path: '/tmp/patchproof-tasks-desktop.png', fullPage: true });
@@ -75,6 +87,8 @@ try {
   const expectedLimits = comparisonRuns[0]!.limits;
   for (const run of comparisonRuns) {
     assert.equal(run.mode, 'mock'); assert.equal(run.competitionReady, false);
+    assert.equal(run.taskId, demoTaskId); assert.equal(run.phase, 'terminal');
+    assert.ok(run.terminalStatus, 'Every comparison must retain its actual terminal verdict.');
     assert.deepEqual(run.limits, expectedLimits);
     assert.equal(run.sourceDigest, comparisonRuns[0]!.sourceDigest);
     assert.equal(run.policyDigest, comparisonRuns[0]!.policyDigest);
@@ -83,14 +97,19 @@ try {
   await page.getByText('MATCHED CONTEXT', { exact: true }).waitFor();
   await page.screenshot({ path: '/tmp/patchproof-comparison-desktop.png', fullPage: true });
   const product = comparisonRuns.find(run => run.variant === 'patchproof')!;
-  assert.equal(comparisonRuns.find(run => run.variant === 'baseline')?.terminalStatus, 'failed');
-  assert.equal(comparisonRuns.find(run => run.variant === 'checks_only')?.terminalStatus, 'verified_for_declared_checks');
+  const baseline = comparisonRuns.find(run => run.variant === 'baseline')!;
+  const checksOnly = comparisonRuns.find(run => run.variant === 'checks_only')!;
+  assert.ok(baseline, 'The comparison must include the recorded B0 run.');
+  assert.equal(checksOnly.terminalStatus, 'verified_for_declared_checks');
   assert.equal(product.terminalStatus, 'verified_for_declared_checks');
   assert.ok(product.candidates.length > 0, 'The product must record a real candidate.');
-  assert.ok(product.candidates.some(candidate => !candidate.accepted), 'The demonstration must retain an actual rejected candidate.');
+  const rejectedCandidate = product.candidates.find(candidate => !candidate.accepted && candidate.rejectionReason);
+  assert.ok(rejectedCandidate, 'The demonstration must retain an actual rejected candidate and its reason.');
+  const nonpassingChecks = [...rejectedCandidate.visibleChecks, ...rejectedCandidate.acceptanceChecks].filter(check => check.status !== 'pass');
+  assert.ok(nonpassingChecks.length > 0, 'The rejected candidate must retain its nonpassing declared check evidence.');
   assert.ok(product.candidates.some(candidate => candidate.accepted), 'The demonstration task must reach an accepted candidate.');
   assert.ok(product.candidates.flatMap(candidate => candidate.sandboxOperationIds).length > 0, 'Container operations must be recorded.');
-  caption('This scripted example fails the visible-only baseline and passes the other two policies. It does not measure model performance.');
+  caption(`Recorded local verdicts: B0 ${baseline.terminalStatus}; B1 ${checksOnly.terminalStatus}; P ${product.terminalStatus}. This scripted example does not measure model performance.`);
   if (recordingDirectory) await page.waitForTimeout(5000);
 
   await page.locator('.variant-card.featured a').click();
@@ -98,7 +117,7 @@ try {
   assert.match(await page.locator('#evidence').innerText(), /Requirement coverage/);
   assert.match(await page.locator('#evidence').innerText(), /Resource accounting/);
   assert.match(await page.locator('#evidence').innerText(), /Execution journal/);
-  await page.locator('.candidate-tab').first().click();
+  await page.getByRole('button', { name: new RegExp(`^Candidate ${rejectedCandidate.id} · rejected(?: · selected)?$`) }).click();
   assert.match(await page.locator('.candidate-tabs').innerText(), /rejected/);
   assert.ok(await page.locator('.failure-card').count() > 0);
   assert.ok(await page.locator('.diff-line').count() > 0);
@@ -109,7 +128,8 @@ try {
     assert.match(await page.locator('.check-log').first().innerText(), /Observation 2/);
     assert.match(await page.locator('.check-log').first().innerText(), /Repeat agreement: consistent/);
   }
-  caption('The rejected patch sorts the input. The evidence preserves its diff and both independent observations of each declared check.');
+  const rejectionObservations = nonpassingChecks.map(check => `${check.requirementId}: ${check.status}`).join('; ');
+  caption(`Candidate ${rejectedCandidate.id} was rejected. Recorded nonpassing checks: ${rejectionObservations}. The evidence preserves the reason, diff and recorded observations.`);
   if (recordingDirectory) await page.waitForTimeout(5000);
   await page.screenshot({ path: '/tmp/patchproof-evidence-desktop.png', fullPage: true });
   const [download] = await Promise.all([
@@ -146,7 +166,9 @@ try {
   assert.ok(requests.every(url => url.startsWith(`${base}/`)), 'Browser requests stay on the loopback application.');
   const report = {
     testedAt: new Date().toISOString(), status: 'passed', mode: 'mock', competitionReady: false,
-    browserVersion: browser.version(), base, observation: resumeRunIds.length ? 'resumed_existing_ui_runs' : 'new_ui_comparison', resumeRunIds, runs: comparisonRuns.map(run => ({ id: run.id, variant: run.variant, status: run.terminalStatus })),
+    browserVersion: browser.version(), base, observation: resumeRunIds.length ? 'resumed_existing_ui_runs' : 'new_ui_comparison', resumeRunIds, runs: comparisonRuns.map(run => ({ id: run.id, variant: run.variant, status: run.terminalStatus, reason: run.reason })),
+    selectedTaskId: demoTaskId, unsupportedTaskId: unsupportedTask.id,
+    rejectedCandidate: { id: rejectedCandidate.id, reason: rejectedCandidate.rejectionReason, nonpassingChecks: nonpassingChecks.map(check => ({ id: check.id, requirementId: check.requirementId, status: check.status })) },
     checks: ['task selection updates requirements', 'unsupported tasks cannot launch mock repair', 'honest mock labels', 'real three-variant execution', 'matched resource limits', 'candidate rejection and repair', 'local operation IDs', 'readable diff and check logs', 'downloaded evidence identity', 'addressed-run reload', 'mobile all views', 'keyboard focus', 'no console errors', 'same-origin browser traffic'],
     artifactDigest: evidence.bundleDigest, createdIds,
     screenshots: ['/tmp/patchproof-tasks-desktop.png', '/tmp/patchproof-comparison-desktop.png', '/tmp/patchproof-evidence-desktop.png', '/tmp/patchproof-evidence-mobile.png', '/tmp/patchproof-compare-mobile.png', '/tmp/patchproof-tasks-mobile.png'],

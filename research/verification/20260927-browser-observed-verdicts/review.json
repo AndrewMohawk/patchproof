@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "browser-observed-verdict-source-verification",
+  "recordedAt": "2026-09-27T13:54:23.452505+00:00",
+  "baseCommit": "092114ee2e5d8b2970d917f4b6deec15dbdfd216",
+  "branch": "fix/browser-observed-verdicts",
+  "changedSource": "apps/web/verify-browser.ts",
+  "sourceDigest": "sha256:a3e3629c10652e3abafefd36a9114137cba6701186ff1a69661343e2d14615b1",
+  "scope": "Verification/recording correctness only. No UI, fixture or runtime policy changes.",
+  "changes": [
+    "Select stable-unique-01 by explicit task ID; select a distinct unsupported task by catalogue mockSupported metadata and its own ID.",
+    "Verify selected task title and aria-pressed identity without relying on catalogue order or title uniqueness.",
+    "Require terminal matched-context runs but report the actual B0 status without requiring failure.",
+    "Retain B1/P success, accepted and genuinely rejected candidate/check evidence, operation IDs, budgets, download, reload, mobile and keyboard controls.",
+    "Select the actual rejected candidate by recorded candidate ID. Caption actual run verdicts and recorded nonpassing requirement checks; no assumed sorting-only cause or fixed policy advantage.",
+    "Record selected/unsupported task IDs and rejected candidate metadata in the future browser report."
+  ],
+  "verification": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "scope": "Metadata/static checking only; no code execution from browser verifier."
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "scope": "Changed source whitespace."
+    }
+  ],
+  "notRun": [
+    {
+      "command": "node apps/web/verify-browser.ts <loopback>",
+      "status": "NOT RUN",
+      "reason": "Coordinator will run after freshly authored public fixtures are published and evaluator container validation is finished."
+    },
+    {
+      "command": "node scripts/verify-browser.ts --rehearsal",
+      "status": "NOT RUN",
+      "reason": "No browser, container, model or recording run authorized in this bounded follow-up."
+    },
+    {
+      "command": "Mirroring locator unit tests",
+      "status": "NOT RUN",
+      "reason": "Explicitly unnecessary for this locator/recording correction; actual browser validation remains coordinator-owned."
+    }
+  ],
+  "execution": {
+    "browserStarted": false,
+    "containersStarted": 0,
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "paidSpendUsd": 0,
+    "privateEvaluationCorpusRead": false
+  },
+  "limitations": [
+    "Typecheck does not establish locator correctness or actual fixture outcomes; browser validation remains pending.",
+    "Future captions reflect recorded API verdicts for the scripted local comparison, not a model-quality or benchmark claim."
+  ]
+}
