@@ -9,11 +9,13 @@ The local implementation includes exact-byte smoke export, a read-only recorded
 evidence viewer, separately budgeted replay and accepted live-protocol selection
 for release auditing. Current product contract 2.2 preserves ordinary JSON keys
 without reinterpreting supported historical exports. The combined v2 corpus/UI
-integration passes all 573 tests, type checking and contract locks; all 14 actual
-historical exports verified unchanged. The original stale-fixture test failure
-is retained in `verification/20260927-corpus-v2-integration/`.
-The serving app still uses its earlier pinned checkout until corpus integration;
-these checks do not claim a new rendered handoff.
+integration at `c335031` passes all 585 tests, type checking and contract locks.
+The actual desktop/mobile browser comparison and all three fresh-container patch
+replays pass. All three scripted policies pass their declared checks; this is
+workflow validation, not measured differentiation. The loopback app serves that
+pinned source, and all 17 prior exports remain unchanged. The stale-fixture test
+failure and initial browser timeout/publication failures are preserved in the
+[integration record](verification/20260927-corpus-v2-integration/README.md).
 
 T03's local corpus is complete: twelve independent AI author jobs, separate review
 and fresh contract 2.2 validation cover all 60 tasks. Two infrastructure failures

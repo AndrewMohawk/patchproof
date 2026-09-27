@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-09-27T15:34:24.607000+00:00",
+  "sourceCommit": "c3350314c3029c956d641c371120786fd6526ca5",
+  "scope": "Private v2 walkthrough of three previously completed local mock runs; no new repair execution",
+  "recordingCommand": "node /tmp/patchproof-handoff-c335031/apps/web/verify-browser.ts http://127.0.0.1:43171 3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b,6b859d93-e4de-41a4-b816-38dc1cce1a29,a009cb6f-88d9-4621-8e89-ed208e6528b4 /home/andrewmohawk/patchproof/.local/rehearsal/20260927-corpus-v2-recorded-runs",
+  "recordingExitCode": 0,
+  "recordingLog": "recorded-run-rehearsal.log",
+  "recordingDurationMeasuredByObserverMs": 28646,
+  "encodedMedia": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1440,
+        "height": 1100
+      }
+    ],
+    "format": {
+      "duration": "28.240000"
+    }
+  },
+  "newRunsCreated": 0,
+  "terminalRunCountAfter": 20,
+  "renderExitCode": 0,
+  "renderLog": "rehearsal-render.log",
+  "renderTool": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+  "preferredVideo": ".local/rehearsal/20260927-corpus-v2-recorded-runs/local-v2-walkthrough-captioned.mp4",
+  "videoCommittedOrPublished": false,
+  "inferenceCalls": 0,
+  "providerSpendUsd": 0,
+  "competitionReady": false,
+  "runIds": [
+    "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+    "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+    "a009cb6f-88d9-4621-8e89-ed208e6528b4"
+  ],
+  "captionTreatment": "Raw WebM/SRT/claims preserved; separately identified ASS derivative condenses captions, identifies recorded-run observation, and ends at measured media duration.",
+  "visualReview": "Actual comparison frame at10seconds inspected: captions readable; mock banner and all three observed verdicts visible.",
+  "files": {
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/claims.json": "sha256:9803e18f325dcff6d47be31e42d0cd7f782dde81063fd3b4c486328ae960ed6e",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/caption-review.png": "sha256:296598def778925e01ad30b04c6e4f6ce21567f83cc6578ed4955c8cfcd60e87",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/walkthrough-caption-source.json": "sha256:7aa7300b0b9d9531264f803dd02d6989187373e7cc430a3268889f4650013ae8",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/local-rehearsal.webm": "sha256:b26f553cd1f7063bdc9b22789be9810c8f2f08513b4fbdab9eee8f3c51e6d7d3",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/walkthrough-captions.ass": "sha256:beb33726047604d18e99931c8a9c07e620b59e8c46b0f01f99908e477e9674f0",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/local-v2-walkthrough-captioned.mp4": "sha256:33342c55b4fd25b1943d1810c0200cdbd0ea2cc45533fa4ee7fbc554cddebba5",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/a931193f97ec6ec05abe19c8ad6325f7.webm": "sha256:b26f553cd1f7063bdc9b22789be9810c8f2f08513b4fbdab9eee8f3c51e6d7d3",
+    ".local/rehearsal/20260927-corpus-v2-recorded-runs/captions.srt": "sha256:c3bc65c08cf4b85482c417cf5e201260b9cb4778ca93105820136df9210b2491"
+  }
+}

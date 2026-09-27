@@ -7,8 +7,12 @@ gold/start/repeat validation and the immutable v2 freeze are complete, and the
 [reviewer summary](../fixtures/independent-review-summary.json) retains the scope
 and unsuccessful preparation attempts. Production evaluator-account separation
 and human scope review remain open. The original v1 corpus, plans and evidence
-are preserved. The integrated full suite passes all 573 tests, type checking and
-contract locks; updated browser checks and replay remain pending separately.
+are preserved. The integrated full suite at `c335031` passes all 585 tests, type
+checking and contract locks. The actual v2 browser comparison and all three fresh
+container replays pass; all three scripted policies pass their declared checks.
+The [integration record](../research/verification/20260927-corpus-v2-integration/README.md)
+preserves the initial failed attempt and the prospective local timing fix. This
+is workflow validation, with no model-performance or policy-advantage claim.
 Eight-task model-probe
 planning/analysis is implemented and independently tested; real catalog discovery
 and observations await account access.
@@ -29,8 +33,9 @@ and two additional independent metadata controls. All 14 actual historical
 exports retain identical bytes, digests and admitted run data. The
 [migration receipt](../research/verification/20260927-json-contract/integration-receipt.json)
 preserves the failed test-fixture attempt and explicit compatibility limits.
-The loopback app still serves its previously verified `4e0116d` checkout ahead of
-the v2 product handoff; no new rendered handoff is claimed yet. The earlier
+The loopback app now serves pinned source `c335031`. All 17 pre-handoff exports,
+including the three first-attempt v2 failures, retain identical bytes and digests.
+Actual historical 2.0/2.1 and current 2.2 requirements render correctly. The earlier
 [integration receipt](../research/verification/20260927-trusted-replay/receipt.json)
 records private export/archive/replay implementation and its separate source-bound
 Docker/browser checks. Provider paths use invented test inputs; no account

@@ -1,0 +1,32 @@
+[
+  {
+    "runId": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+    "variant": "baseline",
+    "command": "make reproduce RUN=3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+    "cwd": "/tmp/patchproof-handoff-c335031",
+    "exitCode": 0,
+    "log": "replay-baseline-v2.log",
+    "startedAt": "2026-09-27T15:27:50.678989+00:00",
+    "finishedAt": "2026-09-27T15:28:21.626113+00:00"
+  },
+  {
+    "runId": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+    "variant": "checks_only",
+    "command": "make reproduce RUN=6b859d93-e4de-41a4-b816-38dc1cce1a29",
+    "cwd": "/tmp/patchproof-handoff-c335031",
+    "exitCode": 0,
+    "log": "replay-checks_only-v2.log",
+    "startedAt": "2026-09-27T15:28:21.626544+00:00",
+    "finishedAt": "2026-09-27T15:28:52.936522+00:00"
+  },
+  {
+    "runId": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+    "variant": "patchproof",
+    "command": "make reproduce RUN=a009cb6f-88d9-4621-8e89-ed208e6528b4",
+    "cwd": "/tmp/patchproof-handoff-c335031",
+    "exitCode": 0,
+    "log": "replay-patchproof-v2.log",
+    "startedAt": "2026-09-27T15:28:52.937178+00:00",
+    "finishedAt": "2026-09-27T15:29:23.417642+00:00"
+  }
+]

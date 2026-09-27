@@ -1,0 +1,29 @@
+[
+  {
+    "id": "288c0841-877b-402a-9489-9681e1337199",
+    "variant": "baseline",
+    "status": "infrastructure_error",
+    "bundleDigest": "sha256:f44dcf8306bd0a884ff909880143397a8d2e296b2ba3cea4a634c6ae785979cd",
+    "byteDigest": "sha256:10e3eb12b7584897bc509862025c9a272f5a09256b0b3ac024dbeff8c5aa0e5b",
+    "path": "bundles/first-attempt-baseline.json",
+    "sourceCommit": "3cc45df2b854effe6aca727934f02170fb6eb605"
+  },
+  {
+    "id": "f50da9ef-052f-4f02-af08-5f713edb9f05",
+    "variant": "checks_only",
+    "status": "infrastructure_error",
+    "bundleDigest": "sha256:855a8851ef932b4a7e40866b9e6927ce9314ccbeaa38bc2fbb5fad226f912b80",
+    "byteDigest": "sha256:ba31e93a8120a6cb54ed4c715a1fbfd92208b6b7b4798fe22453e445c3141a24",
+    "path": "bundles/first-attempt-checks_only.json",
+    "sourceCommit": "3cc45df2b854effe6aca727934f02170fb6eb605"
+  },
+  {
+    "id": "87737ac6-b7d1-4106-9346-87f015602867",
+    "variant": "patchproof",
+    "status": "infrastructure_error",
+    "bundleDigest": "sha256:04e0e10c041bd0637ddf0df3afa4855ca80e653b45f10c6bf692c4c582403bec",
+    "byteDigest": "sha256:19b913393f2b44ab1692d3dd0324377346648a224a640d326048e1471894683e",
+    "path": "bundles/first-attempt-patchproof.json",
+    "sourceCommit": "3cc45df2b854effe6aca727934f02170fb6eb605"
+  }
+]

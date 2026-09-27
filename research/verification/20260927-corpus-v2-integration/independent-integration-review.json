@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-09-27T15:35:19.415419+00:00",
+  "reviewer": "Separate AI source/artifact reviewer",
+  "reviewedReceiptDigest": "sha256:e08a09bea2596aacdf31d9dd05e5760b84db873d1800ab660e5a61fdfe2b0eb2",
+  "scope": "Read-only source and public artifact metadata; no tests, candidate, runtime, Docker, provider or private reads",
+  "finding": "No material mismatches",
+  "confirmed": [
+    "All six exported bundle byte/canonical/input/artifact digests match",
+    "Successful source lock110files at c335031; preserved failed lock109files at3cc45df",
+    "162 comparison +54 replay +45 preserved failure operations; all261 distinct retained handles record cleanup=true",
+    "Historical14 plus3failures unchanged; current20 includes3new successes",
+    "Browser/export/replay records agree",
+    "Historical integrity/render claims distinct from fresh same-host replay; mock/CPU/provider/advantage limits explicit",
+    "Prehandoff testsDigest hashes tests/orchestrator.test.ts source bytes"
+  ],
+  "separateWordingReview": {
+    "finding": "One stale reviewer-guide statement and broad live timing sentence identified and corrected",
+    "executionPerformed": false
+  }
+}

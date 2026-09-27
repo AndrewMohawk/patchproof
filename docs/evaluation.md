@@ -1,6 +1,6 @@
 # Evaluation protocol and offline tools
 
-The frozen v2 suite, protocol planner, sealed adjudication boundary and statistical analysis are implemented. Local T03 preparation is complete: 12 separately authored repositories and all 60 tasks passed fresh contract 2.2 reviewer runtime validation. The integrated product suite passes all 573 tests; updated browser checks and replay are pending separately. No inference experiment or reviewer-time study has been performed. The $25 owner ceiling is shared by the whole project; draft plans allocate $0 until actual provider access, prices and projected costs have been verified. Planning never spends money.
+The frozen v2 suite, protocol planner, sealed adjudication boundary and statistical analysis are implemented. Local T03 preparation is complete: 12 separately authored repositories and all 60 tasks passed fresh contract 2.2 reviewer runtime validation. The integrated product suite at `c335031` passes all 585 tests; the actual v2 browser comparison and all three fresh-container patch replays pass. All three scripted policies pass their declared checks, which establishes workflow behavior rather than an advantage. See the [integration record](../research/verification/20260927-corpus-v2-integration/README.md). No inference experiment or reviewer-time study has been performed. The $25 owner ceiling is shared by the whole project; draft plans allocate $0 until actual provider access, prices and projected costs have been verified. Planning never spends money.
 
 ## Fixed experiment grids
 

@@ -93,7 +93,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Local v2 corpus preparation is complete: 12 separate clean-context AI authors, 60 independently reviewed tasks, a 20/10/30 repository-disjoint split and fresh contract2.2 gold/start/repeat validation for all 60 tasks. Public fixtures and aggregate provenance are integrated; sealed definitions and gold remain in the external frozen-v2 evaluator workspace. All 51 review findings are resolved; two unsuccessful fresh preparation attempts remain preserved alongside 12 accepted repository preparations. Shared model/host authorship is procedural separation, not human or statistical independence. Original v1 corpus, plans and evidence remain intact. Production evaluator-account separation, human scope review, calibrated live protocol and scored experiments remain open; updated full product test/browser/replay verification is pending separately.",
+      "implementation_note": "Local v2 corpus preparation is complete: 12 separate clean-context AI authors, 60 independently reviewed tasks, a 20/10/30 repository-disjoint split and fresh contract2.2 gold/start/repeat validation for all 60 tasks. Public fixtures and aggregate provenance are integrated; sealed definitions and gold remain in the external frozen-v2 evaluator workspace. All 51 review findings are resolved; two unsuccessful fresh preparation attempts remain preserved alongside 12 accepted repository preparations. Shared model/host authorship is procedural separation, not human or statistical independence. Original v1 corpus, plans and evidence remain intact. Production evaluator-account separation, human scope review, calibrated live protocol and scored experiments remain open; source c335031 passes 585 product tests, the actual v2 browser comparison and all three fresh-container patch replays. This remains unscored local workflow evidence.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -102,7 +102,8 @@
         "fixtures/author-provenance.json",
         "fixtures/split-manifest.json",
         "research/corpus-v2/freeze-publication-receipt.json",
-        "research/corpus-v2/v1-preservation.json"
+        "research/corpus-v2/v1-preservation.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     },
     {
@@ -210,7 +211,8 @@
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-docker-integration/integration-receipt.json"
+        "research/verification/20260927-docker-integration/integration-receipt.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     },
     {
@@ -243,7 +245,8 @@
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-runtime-completion/workflows-receipt.json"
+        "research/verification/20260927-runtime-completion/workflows-receipt.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     },
     {
@@ -279,7 +282,8 @@
         "research/verification/20260927-docker-integration/integration-receipt.json",
         "docs/private-evidence.md",
         "docs/replay-operator.md",
-        "research/verification/20260927-trusted-replay/receipt.json"
+        "research/verification/20260927-trusted-replay/receipt.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     },
     {
@@ -366,7 +370,8 @@
         "research/verification/20260927-merged-ui-docker/verification.json",
         "research/verification/20260927-trusted-replay/receipt.json",
         "docs/uncoached-product-exercise.md",
-        "docs/uncoached-product-observation.json"
+        "docs/uncoached-product-observation.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ],
       "blocked_reason": "UI implementation, local browser flow and synthetic archive controls are verified. Explicit acceptance without coaching has no actual human observation yet; live-provider state validation also awaits access."
     },
@@ -479,13 +484,14 @@
       ],
       "requires_owner_action": false,
       "gate": "G4",
-      "implementation_note": "Private setup/submission draft, screenshots and a 91-second actual local mock rehearsal with captions and run-bound claims are prepared. Sponsor-backed final recording, application license and public source/video remain pending.",
-      "blocked_reason": "Private setup/submission draft, screenshots and a 91-second actual local mock rehearsal with captions and run-bound claims are prepared. Sponsor-backed final recording, application license and public source/video remain pending.",
+      "implementation_note": "Private setup/submission draft and current v2 screenshots are prepared. The historical 91-second v1 rehearsal is preserved; a 28.24-second private v2 walkthrough of completed c335031 runs has captions and a source/run/file custody record, with zero new execution. Sponsor-backed final recording, application license and public source/video remain pending.",
+      "blocked_reason": "Private setup/submission draft and current v2 screenshots are prepared. The historical 91-second v1 rehearsal is preserved; a 28.24-second private v2 walkthrough of completed c335031 runs has captions and a source/run/file custody record, with zero new execution. Sponsor-backed final recording, application license and public source/video remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-runtime-completion/workflows-receipt.json"
+        "research/verification/20260927-runtime-completion/workflows-receipt.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     },
     {
@@ -521,7 +527,8 @@
         "research/blockers.md",
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "research/verification/20260927-release-live-protocol/verification.json",
-        "research/verification/20260927-trusted-replay/receipt.json"
+        "research/verification/20260927-trusted-replay/receipt.json",
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
       ]
     }
   ],

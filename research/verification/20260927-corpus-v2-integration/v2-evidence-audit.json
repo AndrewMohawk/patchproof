@@ -1,0 +1,91 @@
+{
+  "checkedAt": "2026-09-27T15:28:45.586Z",
+  "historicalUnchanged": 17,
+  "historicalVersions": [
+    "2.2",
+    "2.0",
+    "2.1"
+  ],
+  "sourcesVerified": 110,
+  "scope": "Recorded evidence and source integrity only; fresh replays recorded separately",
+  "evidence": [
+    {
+      "id": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:0910b15985fa949e00737fb425b1647a1bc8e4d114d168239050af0e27c894da",
+      "byteDigest": "sha256:2de0ebcce7862551ee8f57fb207291d398c446ac3e64f145bf6cf3e09077be9e",
+      "path": "bundles/baseline.json",
+      "elapsedMs": 108504,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    },
+    {
+      "id": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:a09236457af77249e94fed2987c16b323f2b62c29cc6d991c4bbc939ff8c7106",
+      "byteDigest": "sha256:1502b8cc31795ce962e6ce3f8665b35948bb10a8a24967891bef3eb1e27a5a5f",
+      "path": "bundles/checks_only.json",
+      "elapsedMs": 109269,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    },
+    {
+      "id": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:78a6c4adeda79116ccda34da7d68b88dd585719a8439f4415f68b12e37dcb4c3",
+      "byteDigest": "sha256:d7cd7a406295ce5d3e5b5192b9cbf49fb1f11f0137f096a5debd4a04da4e8b6e",
+      "path": "bundles/patchproof.json",
+      "elapsedMs": 111384,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    }
+  ]
+}

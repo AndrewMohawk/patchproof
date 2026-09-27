@@ -4,7 +4,9 @@ This walkthrough demonstrates scripted repair proposals with actual local checks
 It does not establish model quality or competition readiness.
 
 The current catalogue is the frozen v2 corpus. This is the procedure for its
-handoff; the integrated full suite passes, while updated browser and replay proof is still pending.
+handoff. Source `c335031` passes all 585 tests, the actual browser comparison and
+all three fresh-container patch replays; see the
+[integration record](../research/verification/20260927-corpus-v2-integration/README.md).
 Prior source-bound walkthroughs remain historical evidence. Old runs must display
 their saved task context, not the new catalogue's text for a reused task ID.
 

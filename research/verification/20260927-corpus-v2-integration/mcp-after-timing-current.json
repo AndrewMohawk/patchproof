@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-27T15:28:21.111Z",
+  "sourceCommit": "c335031",
+  "scope": "GET only current evidence render",
+  "render": {
+    "content": [
+      {
+        "type": "text",
+        "text": "### Result\n{\n  \"runId\": \"a009cb6f-88d9-4621-8e89-ed208e6528b4\",\n  \"mode\": \"mock\",\n  \"version\": \"2.2\",\n  \"titleRendered\": true,\n  \"requirementsRendered\": true,\n  \"coverageRows\": 3,\n  \"bundleDigest\": \"sha256:78a6c4adeda79116ccda34da7d68b88dd585719a8439f4415f68b12e37dcb4c3\",\n  \"timingPolicy\": {\n    \"id\": \"local-mock-check-timing-v1\",\n    \"maximumBatchWallSeconds\": 60\n  },\n  \"terminalRuns\": 20,\n  \"activeRuns\": 0,\n  \"newRunsCreated\": 0\n}\n### Ran Playwright code\n```js\nawait page.evaluate('async () => { const id=\\'a009cb6f-88d9-4621-8e89-ed208e6528b4\\'; const bundle=await(await fetch(\\'/runs/\\'+id+\\'/evidence\\')).json(); const text=document.querySelector(\\'#evidence\\').innerText; const runs=(await(await fetch(\\'/runs\\')).json()).runs; return {runId:id,mode:bundle.mode,version:bundle.schemaVersion,titleRendered:text.includes(bundle.fixture.title),requirementsRendered:bundle.fixture.requirements.every(r=>text.includes(r.text)),coverageRows:document.querySelectorAll(\\'#evidence .coverage-row\\').length,bundleDigest:bundle.bundleDigest,timingPolicy:bundle.runtimeLock.localCheckTimingPolicy,terminalRuns:runs.filter(r=>r.phase===\\'terminal\\').length,activeRuns:runs.filter(r=>r.phase!==\\'terminal\\').length,newRunsCreated:0}; }');\n```"
+      }
+    ]
+  }
+}

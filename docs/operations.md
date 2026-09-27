@@ -42,8 +42,12 @@ result. Selected example bundles are retained beside the local verification logs
 New runs also include an operational source/configuration lock and two observations
 per declared check. Check out the exact recorded source before replaying them.
 Editing executable files while the app runs blocks new jobs until a restart; it
-does not change existing artifacts. Historical bundles retain their original
-single-observation policy. Inconsistent new observations yield `needs_review`.
+does not change existing artifacts. Historical bundles retain their recorded
+observation and timing policy. Inconsistent observations yield `needs_review`.
+New local mock locks record a 60-second shared check-batch cap; older locks without
+that policy retain 30 seconds. Every local policy still has the same 120-second
+episode allowance and at most three proposals. Both observations share the batch
+cap. This local timing choice does not increase live experiment allowances.
 
 `npm run record:rehearsal` runs the actual local browser flow and writes a private
 WebM, SRT captions and claims manifest under `.local/rehearsal/`. It preserves

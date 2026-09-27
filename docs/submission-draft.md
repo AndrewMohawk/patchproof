@@ -15,6 +15,10 @@ input data and the empty-input behavior. Three policies use the same initial
 source and configured allowance: visible-test feedback, acceptance-check feedback,
 and bounded candidates against the original source. The current repair responses
 are scripted; the displayed check failures and fresh-container replay are real.
+The [v2 verification record](../research/verification/20260927-corpus-v2-integration/README.md)
+binds the current browser screenshots and three successful fresh replays to
+`c335031`. All three policies passed their declared checks in that demonstration;
+it does not establish a PatchProof advantage.
 
 This demonstrates the workflow, not learned repair performance, sponsor
 integration, branching advantage, production security or general correctness.
@@ -58,6 +62,14 @@ archive and separately recorded hashes are identified by `rehearsal-custody.json
 This preserves the earlier corpus and executable source. The video filename's
 `v2` means its caption revision, not the independently authored v2 corpus. It is
 historical rehearsal evidence, not a recording of the current catalogue.
+
+A current **28.24-second private v2 walkthrough** observes the three completed
+`c335031` runs. Its captions explicitly identify recorded-run observation, scripted
+proposals and no measured advantage. The raw capture, original captions and
+captioned MP4 remain local under `.local/rehearsal/20260927-corpus-v2-recorded-runs/`;
+[the custody record](../research/verification/20260927-corpus-v2-integration/rehearsal-custody-v2.json)
+binds exact files, duration, source and run identities. This walkthrough created
+zero new runs and was not published. Sponsor-backed final recording remains open.
 
 ## Platform feedback draft
 

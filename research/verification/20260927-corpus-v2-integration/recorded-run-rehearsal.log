@@ -1,0 +1,98 @@
+{
+  "testedAt": "2026-09-27T15:31:41.982Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:43171",
+  "observation": "resumed_existing_ui_runs",
+  "resumeRunIds": [
+    "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+    "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+    "a009cb6f-88d9-4621-8e89-ed208e6528b4"
+  ],
+  "runs": [
+    {
+      "id": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    }
+  ],
+  "selectedTaskId": "stable-unique-01",
+  "unsupportedTaskId": "v2-r01-t02",
+  "rejectedCandidate": {
+    "id": 1,
+    "reason": "One or more declared checks failed or were unavailable.",
+    "nonpassingChecks": [
+      {
+        "id": "u-v-order",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-unicode",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-nested",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-numeric",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      }
+    ]
+  },
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:78a6c4adeda79116ccda34da7d68b88dd585719a8439f4415f68b12e37dcb4c3",
+  "createdIds": [],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}

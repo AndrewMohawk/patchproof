@@ -1,0 +1,240 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "local-corpus-v2-product-integration",
+  "recordedAt": "2026-09-27T15:29:59.148451+00:00",
+  "sourceCommit": "c3350314c3029c956d641c371120786fd6526ca5",
+  "sourceRoot": "/tmp/patchproof-handoff-c335031",
+  "repository": "https://github.com/AndrewMohawk/patchproof",
+  "repositoryVisibility": "private",
+  "productContract": "2.2",
+  "mode": "mock",
+  "competitionReady": false,
+  "providerCalls": 0,
+  "providerSpendUsd": 0,
+  "approvedProjectCeilingUsd": 25,
+  "tests": {
+    "command": "make test",
+    "exitCode": 0,
+    "passed": 585,
+    "log": "make-test-timing-publication.log",
+    "sourceBinding": "timing-publication-prehandoff.json",
+    "preHandoffTestsDigestMeaning": "SHA-256 of tests/orchestrator.test.ts source bytes, not the test log"
+  },
+  "browser": {
+    "command": "node /tmp/patchproof-handoff-c335031/apps/web/verify-browser.ts http://127.0.0.1:43171",
+    "exitCode": 0,
+    "log": "browser-after-timing-fix.log",
+    "report": "browser-after-timing-report.json",
+    "consoleErrors": 0,
+    "screenshots": "screenshots.json"
+  },
+  "runs": [
+    {
+      "id": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:0910b15985fa949e00737fb425b1647a1bc8e4d114d168239050af0e27c894da",
+      "byteDigest": "sha256:2de0ebcce7862551ee8f57fb207291d398c446ac3e64f145bf6cf3e09077be9e",
+      "path": "bundles/baseline.json",
+      "elapsedMs": 108504,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    },
+    {
+      "id": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:a09236457af77249e94fed2987c16b323f2b62c29cc6d991c4bbc939ff8c7106",
+      "byteDigest": "sha256:1502b8cc31795ce962e6ce3f8665b35948bb10a8a24967891bef3eb1e27a5a5f",
+      "path": "bundles/checks_only.json",
+      "elapsedMs": 109269,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    },
+    {
+      "id": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "bundleDigest": "sha256:78a6c4adeda79116ccda34da7d68b88dd585719a8439f4415f68b12e37dcb4c3",
+      "byteDigest": "sha256:d7cd7a406295ce5d3e5b5192b9cbf49fb1f11f0137f096a5debd4a04da4e8b6e",
+      "path": "bundles/patchproof.json",
+      "elapsedMs": 111384,
+      "candidates": 2,
+      "operations": 54,
+      "cleanupConfirmed": 54,
+      "selectedCandidateId": 2,
+      "timingPolicy": {
+        "id": "local-mock-check-timing-v1",
+        "maximumBatchWallSeconds": 60
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 24000,
+        "outputTokenLimit": 6000,
+        "wallTimeLimitSeconds": 120,
+        "sandboxCpuSecondsLimit": 60,
+        "maxApprovedSpendUsd": 0
+      }
+    }
+  ],
+  "exports": [
+    {
+      "command": "make export RUN=3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "exitCode": 0,
+      "log": "export-baseline-v2.log"
+    },
+    {
+      "command": "make export RUN=6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "exitCode": 0,
+      "log": "export-checks_only-v2.log"
+    },
+    {
+      "command": "make export RUN=a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "exitCode": 0,
+      "log": "export-patchproof-v2.log"
+    }
+  ],
+  "replays": [
+    {
+      "runId": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "variant": "baseline",
+      "command": "make reproduce RUN=3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "cwd": "/tmp/patchproof-handoff-c335031",
+      "exitCode": 0,
+      "log": "replay-baseline-v2.log",
+      "startedAt": "2026-09-27T15:27:50.678989+00:00",
+      "finishedAt": "2026-09-27T15:28:21.626113+00:00",
+      "status": "reproduced",
+      "checkCount": 9,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "bundleDigest": "sha256:0910b15985fa949e00737fb425b1647a1bc8e4d114d168239050af0e27c894da"
+    },
+    {
+      "runId": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "variant": "checks_only",
+      "command": "make reproduce RUN=6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "cwd": "/tmp/patchproof-handoff-c335031",
+      "exitCode": 0,
+      "log": "replay-checks_only-v2.log",
+      "startedAt": "2026-09-27T15:28:21.626544+00:00",
+      "finishedAt": "2026-09-27T15:28:52.936522+00:00",
+      "status": "reproduced",
+      "checkCount": 9,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "bundleDigest": "sha256:a09236457af77249e94fed2987c16b323f2b62c29cc6d991c4bbc939ff8c7106"
+    },
+    {
+      "runId": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "variant": "patchproof",
+      "command": "make reproduce RUN=a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "cwd": "/tmp/patchproof-handoff-c335031",
+      "exitCode": 0,
+      "log": "replay-patchproof-v2.log",
+      "startedAt": "2026-09-27T15:28:52.937178+00:00",
+      "finishedAt": "2026-09-27T15:29:23.417642+00:00",
+      "status": "reproduced",
+      "checkCount": 9,
+      "operations": 18,
+      "cleanupConfirmed": 18,
+      "bundleDigest": "sha256:78a6c4adeda79116ccda34da7d68b88dd585719a8439f4415f68b12e37dcb4c3"
+    }
+  ],
+  "historicalEvidenceUnchanged": 17,
+  "historicalVersions": [
+    "2.0",
+    "2.1",
+    "2.2"
+  ],
+  "firstAttempt": {
+    "sourceCommit": "3cc45df2b854effe6aca727934f02170fb6eb605",
+    "browserExitCode": 1,
+    "reason": "Original check batches hit shared30-second cap; no candidates generated. Publication race also caused one evidence409.",
+    "bundles": "preserved-first-attempt-bundles.json",
+    "diagnosis": "browser-timeout-diagnosis.json",
+    "originalConsole": "mcp-historical-console.json",
+    "preserved": true
+  },
+  "prospectiveChange": {
+    "recordedMockBatchSeconds": 60,
+    "legacyAndLiveSeconds": 30,
+    "equalEpisodeWallSeconds": 120,
+    "maximumProposals": 3,
+    "repetitions": 2,
+    "repetitionBudget": "shared-batch-wall-time",
+    "newRunsOnly": true,
+    "sealedProtocolChanged": false
+  },
+  "service": {
+    "url": "http://127.0.0.1:43171",
+    "pid": 3491012,
+    "sourceCommit": "c3350314c3029c956d641c371120786fd6526ca5",
+    "terminalRuns": 20,
+    "activeRuns": 0,
+    "stateBackup": "timing-handoff-backup.json"
+  },
+  "cleanup": {
+    "command": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "label=org.patchproof.owned=true",
+      "--format",
+      "{{.ID}} {{.Names}} {{.Status}}"
+    ],
+    "exitCode": 0,
+    "remainingProjectContainers": 0,
+    "comparisonOperations": 162,
+    "comparisonCleanupConfirmed": 162,
+    "freshReplayOperations": 54,
+    "freshReplayCleanupConfirmed": 54
+  },
+  "limitations": [
+    "Scripted model example; not scored inference or evidence of policy advantage",
+    "Local same-host Docker replay; not independent-machine verification",
+    "Sandbox CPU usage unmeasured; configured CPU total is not verified cumulative accounting",
+    "Account/model/credits/rates and real provider integration deferred",
+    "Calibration/pilot/final evaluation, human exercises and release decisions remain open"
+  ],
+  "related": [
+    "mcp-after-timing-historical.json",
+    "mcp-after-timing-current.json",
+    "doctor-after-timing-fix.log",
+    "local-timing-review.json",
+    "publication-barrier-bound-test.log"
+  ],
+  "privateWalkthrough": "rehearsal-custody-v2.json"
+}
