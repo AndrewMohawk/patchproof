@@ -33,6 +33,19 @@ sealed incorrect verdict. Only the four prospectively allowed infrastructure rea
 receive an exclusion. Every failed row remains in the primary denominator and stays
 terminal. Plain exceptions and unrecognized reason strings remain sanitized.
 
-**Remaining wiring:** no calibrated 24-call/900-second experiment executor is connected to this module, no CLI invokes it, and no account/pricing/runner bound is attested here. The current product coordinator and separate smoke path have a three-proposal scope and must not be presented as this experiment executor. A trusted factory still needs to enforce all per-operation limits, pin actual generation behavior, verify the operational lock and account receipts, connect the external adjudicator, perform cleanup/billing reconciliation, and export immutable aggregate rows. Human/operator configuration remains outside candidate control.
+The [synthetic executor](experiment-executor.md) now connects to this interface in
+an invented-input integration test. It shares the product's revision kernel and
+records a separate immutable trace for up to 24 revisions across three branches.
+The [accounting importer](accounting-reconciliation.md) supplies the trusted receipt
+and recovery boundary, including a durable ledger/journal association and revision
+checks. Neither module supplies actual provider evidence.
+
+**Remaining wiring:** no calibrated live 24-call/900-second executor is connected,
+no CLI invokes this dispatcher, and no account/pricing/runner bound is attested here.
+The product coordinator and smoke path remain limited to three proposals. A live
+factory must enforce all per-operation limits, pin actual generation behavior,
+verify source/account bindings, connect the external adjudicator and authoritative
+billing/cleanup ingestion, and export immutable aggregate rows. Human/operator
+configuration remains outside candidate control.
 
 Validation commands are `node --test tests/evaluation-dispatcher.test.ts tests/dispatcher-independent.test.ts tests/evaluation-boundary.test.ts` and `npm run typecheck`. All test task metadata and candidate-shaped strings are invented unit inputs; no sealed corpus or candidate execution is involved.

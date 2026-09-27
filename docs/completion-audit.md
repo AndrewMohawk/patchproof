@@ -58,3 +58,18 @@ while the dispatcher requires complete runtime billing and measured CPU before
 paid final adjudication. A trusted reconciliation handoff and calibrated executor
 are still required. Access alone does not close those implementation gaps, and a
 terminal episode must never silently reopen when later billing arrives.
+
+## Synthetic executor and accounting integration
+
+The shared product loop now also backs a synthetic-only 24-revision executor with
+up to three progressive branches and a separate immutable trace. Trusted accounting
+receipts preserve cumulative amounts and operation history, retain uncertain holds,
+and recover interrupted imports while fencing stale writers. Independent controls
+cover their metadata/accounting boundary; neither tool establishes actual billing.
+
+The integrated source at `93fa291` passes 272 tests, the real local browser flow and
+all three fresh patch replays. See
+`research/verification/20260927-experiment-plumbing/integration-receipt.json`.
+Remaining implementation is the calibrated live factory/session, trusted operator
+commands, authoritative evidence ingestion and aggregate export wiring. The earlier
+external proof gates remain open. No final benchmark result has been observed.

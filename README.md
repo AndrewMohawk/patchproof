@@ -106,6 +106,11 @@ The [budget ledger](docs/budget-ledger.md), [reviewer study](docs/reviewer-study
 and [release evidence guide](docs/release-evidence.md) describe the new tools.
 The [trusted dispatcher](docs/experiment-dispatcher.md) preserves full experiment
 accounting; its calibrated live executor and account setup remain unconnected.
+The [synthetic experiment executor](docs/experiment-executor.md) tests up to 24
+revisions across three branches using the same loop as the product. It rejects
+live providers. [Accounting receipts](docs/accounting-reconciliation.md) support
+trusted reconciliation and crash recovery; actual provider billing ingestion and
+operator command wiring remain pending.
 The [trusted smoke factory](docs/trusted-smoke.md) connects the provider adapters
 and budget ledger for an explicitly configured integration run of at most three
 proposals. Its tests use fake transports; actual account verification and a live

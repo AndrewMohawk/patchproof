@@ -293,14 +293,18 @@
       ],
       "requires_owner_action": false,
       "gate": "G2",
-      "implementation_note": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending.",
-      "blocked_reason": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending.",
+      "implementation_note": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
+      "blocked_reason": "Fixed 72-episode planner/analysis and durable dispatcher with safe failure classification implemented and tested on synthetic inputs. No real pilot episodes or continuation result. Calibrated executor/operator wiring, authoritative accounting, access/prices and G1 remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
         "docs/experiment-dispatcher.md",
-        "research/verification/runtime-followup/dispatcher-failures-verification.json"
+        "research/verification/runtime-followup/dispatcher-failures-verification.json",
+        "docs/experiment-executor.md",
+        "docs/accounting-reconciliation.md",
+        "research/verification/runtime-followup/experiment-executor-verification.json",
+        "research/verification/runtime-followup/accounting-independent-review.json"
       ]
     },
     {
@@ -361,15 +365,19 @@
       ],
       "requires_owner_action": false,
       "gate": "G3",
-      "implementation_note": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending.",
-      "blocked_reason": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending.",
+      "implementation_note": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
+      "blocked_reason": "Fixed final planner, durable dispatcher, one-use sealed adjudication, clustered analysis and blinded reviewer-study CLI/browser collector implemented with synthetic tests. Real final runs, calibrated executor/accounting integration, final budget and human results remain pending. Synthetic 24-revision executor and trusted accounting receipt/recovery APIs are implemented; live factory/session/CLI and authoritative provider evidence remain separate.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "docs/experiment-dispatcher.md",
-        "research/verification/runtime-followup/dispatcher-failures-verification.json"
+        "research/verification/runtime-followup/dispatcher-failures-verification.json",
+        "docs/experiment-executor.md",
+        "docs/accounting-reconciliation.md",
+        "research/verification/runtime-followup/experiment-executor-verification.json",
+        "research/verification/runtime-followup/accounting-independent-review.json"
       ]
     },
     {

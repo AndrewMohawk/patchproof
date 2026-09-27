@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "integrated-experiment-and-accounting-local-verification",
+  "recordedAt": "2026-09-27T10:13:08.434601+00:00",
+  "sourceCommit": "93fa2919ee8ada80c67e28fac3a939b892e66c3a",
+  "testedSourceFilesDirty": false,
+  "sources": {
+    "packages/orchestrator/src/episode-engine.ts": "sha256:818e909a38dbffdc2c6959cf683dd18910cff37521dc03ff35c35cfc67fe8acd",
+    "packages/orchestrator/src/experiment-executor.ts": "sha256:f889084109da76923afb19a821890de361a0929b67ee923d4bc3595888d8ee6d",
+    "packages/orchestrator/src/experiment-trace-store.ts": "sha256:76296c7f05acb2108c7310e0f76164a629828011aee323deea631ba7405f4874",
+    "packages/orchestrator/src/coordinator.ts": "sha256:97a74071ca9c7824d05beac5bec66ac9b79075c65196a7638dc5216e8f5a55ef",
+    "packages/orchestrator/src/accounting-receipts.ts": "sha256:d7f2f6453a953cd981ed2b7f7cddce272d25483567910d3a6a2b49ad0265a173",
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:0da1adfc69cdbe9e8922fd73654d795c114328f16813ea4916981a96eab7cfa0",
+    "workers/evaluator/dispatcher.ts": "sha256:47550448ddf98f50cd65f2071c3030c5f0be8017cc54009261f00ce8e634fbfd"
+  },
+  "commands": [
+    {
+      "command": "make test",
+      "exitCode": 0,
+      "startedAt": "2026-09-27T10:08:59.095719+00:00",
+      "finishedAt": "2026-09-27T10:09:38.621376+00:00",
+      "sourceCommit": "93fa2919ee8ada80c67e28fac3a939b892e66c3a",
+      "log": "research/verification/20260927-experiment-plumbing/make-test.log",
+      "paidCalls": 0
+    },
+    {
+      "command": "npm run test:browser",
+      "exitCode": 0,
+      "startedAt": "2026-09-27T10:09:55.788514+00:00",
+      "finishedAt": "2026-09-27T10:11:02.620794+00:00",
+      "sourceCommit": "93fa2919ee8ada80c67e28fac3a939b892e66c3a",
+      "log": "research/verification/20260927-experiment-plumbing/browser.log",
+      "paidCalls": 0
+    },
+    {
+      "command": "make reproduce RUN=b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d.log"
+    },
+    {
+      "command": "make reproduce RUN=785065b5-2108-4a70-919b-f992b72568d2",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-785065b5-2108-4a70-919b-f992b72568d2.log"
+    },
+    {
+      "command": "make reproduce RUN=50b4f717-f206-48eb-8752-37a81f6b675c",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-50b4f717-f206-48eb-8752-37a81f6b675c.log"
+    },
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/doctor.log"
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/smoke.log"
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/pilot.log"
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/evaluate.log"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/release-check.log"
+    }
+  ],
+  "tests": {
+    "passed": 272,
+    "failed": 0,
+    "skipped": 0
+  },
+  "bundles": [
+    {
+      "path": "research/verification/20260927-experiment-plumbing/b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d.json",
+      "rawBytesDigest": "sha256:a5482459be3495205d82e19a13950eabd8153fee819898d63308da10efefde0c",
+      "bundleDigest": "sha256:731c6ada71fdf317d5727dc4ed44355f1b7bacecd44d15691c289df3e1da5927",
+      "runId": "b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d",
+      "variant": "baseline",
+      "terminalStatus": "failed",
+      "mode": "mock",
+      "runtimeLockDigest": "sha256:8180c078c7e75a549d8f9428131528742ef32a40cfc0a6e52ad49cf17079a4de"
+    },
+    {
+      "path": "research/verification/20260927-experiment-plumbing/785065b5-2108-4a70-919b-f992b72568d2.json",
+      "rawBytesDigest": "sha256:5a911c3cd244c8f8b1871bea6aa08272917e933e53b6d95fbf726a7b30126838",
+      "bundleDigest": "sha256:0de2973371feaf04979ac4fa3797ca36dafa53a6fd63a68ec04bc97bd84525d8",
+      "runId": "785065b5-2108-4a70-919b-f992b72568d2",
+      "variant": "checks_only",
+      "terminalStatus": "verified_for_declared_checks",
+      "mode": "mock",
+      "runtimeLockDigest": "sha256:8180c078c7e75a549d8f9428131528742ef32a40cfc0a6e52ad49cf17079a4de"
+    },
+    {
+      "path": "research/verification/20260927-experiment-plumbing/50b4f717-f206-48eb-8752-37a81f6b675c.json",
+      "rawBytesDigest": "sha256:b7d8a0fde60e3417c7f27236626f873dcb5c3e5d3e9498d8f8a7d00ba0275ed5",
+      "bundleDigest": "sha256:38b2a0f6cbfcfccbfb43de2b2f2b09faa31bdc4a6dc551606392a4baf72d32cd",
+      "runId": "50b4f717-f206-48eb-8752-37a81f6b675c",
+      "variant": "patchproof",
+      "terminalStatus": "verified_for_declared_checks",
+      "mode": "mock",
+      "runtimeLockDigest": "sha256:8180c078c7e75a549d8f9428131528742ef32a40cfc0a6e52ad49cf17079a4de"
+    }
+  ],
+  "artifacts": {
+    "research/verification/20260927-experiment-plumbing/running-app-handoff.json": "sha256:1961e61a0170c501876b2acdb0854c0ba60e093be4cb736342212b8d5e5d8b24",
+    "research/verification/20260927-experiment-plumbing/replay-785065b5-2108-4a70-919b-f992b72568d2.log": "sha256:9ed7ebaaab7b018ba9c6277d910dd2b6fe97672f230c7e01682f456b7fa85ef6",
+    "research/verification/20260927-experiment-plumbing/replay-50b4f717-f206-48eb-8752-37a81f6b675c.log": "sha256:eebc056137103f01fc84b8dbbe2530ac8ca84b79d70c4329203025e8adb9026a",
+    "research/verification/20260927-experiment-plumbing/doctor.log": "sha256:efae396b7e9e4b663f35ae151d6f1f9df6705058f5182695c84b6e6136fa9f09",
+    "research/verification/20260927-experiment-plumbing/50b4f717-f206-48eb-8752-37a81f6b675c.json": "sha256:b7d8a0fde60e3417c7f27236626f873dcb5c3e5d3e9498d8f8a7d00ba0275ed5",
+    "research/verification/20260927-experiment-plumbing/785065b5-2108-4a70-919b-f992b72568d2.json": "sha256:5a911c3cd244c8f8b1871bea6aa08272917e933e53b6d95fbf726a7b30126838",
+    "research/verification/20260927-experiment-plumbing/browser-command.json": "sha256:360c1b355a9c76750a831e6ea55b0cf70dbb16de39301e68eb7ff156d0275548",
+    "research/verification/20260927-experiment-plumbing/release-check.log": "sha256:2a7254a95f4b04e00d7f04a0ccec59405b39d829eeed44d996b4a4642f2375dc",
+    "research/verification/20260927-experiment-plumbing/b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d.json": "sha256:a5482459be3495205d82e19a13950eabd8153fee819898d63308da10efefde0c",
+    "research/verification/20260927-experiment-plumbing/replay-b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d.log": "sha256:3a011a42117e7340afc826f59f87580bcb9969c0e70c7320ff4acb4d1761ec2c",
+    "research/verification/20260927-experiment-plumbing/evidence-mobile.png": "sha256:2212e8ee8515c5d76b363b47561fb611ff19769fbd70c86948a8c181667a83f6",
+    "research/verification/20260927-experiment-plumbing/evaluate.log": "sha256:88aa81a3164227ee2b95550c2770389011255739852ccefb04bfa673fc182504",
+    "research/verification/20260927-experiment-plumbing/pilot.log": "sha256:90a6fda0c92dfd12493ea33bb5f18335ea426059d658387f045101367e6e6a73",
+    "research/verification/20260927-experiment-plumbing/browser.log": "sha256:dad25444b8c20f6ae3bce85979d4ee8bd408a3e702d40dd615756c640595fab0",
+    "research/verification/20260927-experiment-plumbing/smoke.log": "sha256:27d0921f06766b62ebe22247f61cbc5ce4bf7e109a32fd717155f3b8ca4d3425",
+    "research/verification/20260927-experiment-plumbing/make-test-command.json": "sha256:b183f81a3f7a8173349963d5307aafc039c2af733063931c58de502c4c105feb",
+    "research/verification/20260927-experiment-plumbing/evidence-desktop.png": "sha256:b0ae46f55927f3f16e6e79e634bfd16f53f955de8b306f5b048fe43d9a6f4c76",
+    "research/verification/20260927-experiment-plumbing/gates-command.json": "sha256:09d3db4a44e6ebe061e356c4b69d6c105cb4095dffa08c7db0bc9a779707d394",
+    "research/verification/20260927-experiment-plumbing/replay-command.json": "sha256:eed94a132f9c59a1f87dbf66842020bacc9345098bb130c4abfb2c6ac44133d9",
+    "research/verification/20260927-experiment-plumbing/make-test.log": "sha256:2fb77b7ece73e853475c475f292fc655c1fbbb82424f94ab38d6d64e92972847"
+  },
+  "paidCalls": 0,
+  "actualProviderSpendUsd": 0,
+  "limitations": [
+    "Synthetic provider/evaluator/accounting tests are not actual account or billing evidence.",
+    "Browser runs use scripted proposals and real isolated local checks.",
+    "Fresh replays and pinned app handoff ran on the same host.",
+    "Live factory/session/CLI and authoritative billing ingestion are not connected.",
+    "Live calibration, scored experiments, human study, public operation and entry remain NOT RUN.",
+    "Raw command logs retained verbatim; source whitespace checks exclude .log files."
+  ]
+}

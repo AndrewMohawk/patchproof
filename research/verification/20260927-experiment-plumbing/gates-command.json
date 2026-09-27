@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-27T10:11:06.540263+00:00",
+  "commands": [
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/doctor.log"
+    },
+    {
+      "command": "make smoke",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/smoke.log"
+    },
+    {
+      "command": "make pilot",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/pilot.log"
+    },
+    {
+      "command": "make evaluate",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/evaluate.log"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "expectedExitCode": 2,
+      "log": "research/verification/20260927-experiment-plumbing/release-check.log"
+    }
+  ],
+  "paidCalls": 0
+}

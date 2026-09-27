@@ -1,0 +1,63 @@
+
+> patchproof@0.0.1 test:browser
+> node scripts/verify-browser.ts
+
+(node:2849188) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "testedAt": "2026-09-27T10:11:02.476Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:46731",
+  "observation": "new_ui_comparison",
+  "resumeRunIds": [],
+  "runs": [
+    {
+      "id": "b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d",
+      "variant": "baseline",
+      "status": "failed"
+    },
+    {
+      "id": "785065b5-2108-4a70-919b-f992b72568d2",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "50b4f717-f206-48eb-8752-37a81f6b675c",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks"
+    }
+  ],
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:38b2a0f6cbfcfccbfb43de2b2f2b09faa31bdc4a6dc551606392a4baf72d32cd",
+  "createdIds": [
+    "b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d",
+    "785065b5-2108-4a70-919b-f992b72568d2",
+    "50b4f717-f206-48eb-8752-37a81f6b675c"
+  ],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}

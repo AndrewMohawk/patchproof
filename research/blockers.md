@@ -18,7 +18,7 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 3. Supply verified model/tokenizer/control proofs and trusted credential suppliers
    to the implemented smoke factory. It binds the model and sandbox adapters to one
    durable reservation and at most three proposals. A live operator entry point,
-   accounting/cleanup handoff and calibrated experiment executor remain unfinished;
+   provider accounting/cleanup ingestion and calibrated live executor remain unfinished;
    public product commands still refuse live execution.
 4. Reserve costs prospectively within the $5 smoke and $25 aggregate caps, run two
    curated real cases, retain real operation IDs and reconcile actual charges.
@@ -46,6 +46,12 @@ local operational lock are now implemented. Their synthetic/unit evidence does
 not replace real reviewer participation or a calibrated live protocol. See the
 completion audit for implementation gaps; do not treat account access alone as
 completion of the submission.
+
+A synthetic 24-revision executor and trusted accounting receipt importer now exist.
+Their tests cover policy limits, trace retention, cumulative charges, copied journals
+and interrupted receipt recovery. The executor rejects live providers; the importer
+does not obtain or authenticate billing data. Live factory/session configuration,
+operator commands and export wiring still require implementation and verified inputs.
 
 Application license, public source/video, public demo operator and service budget
 through the required judging period remain owner decisions. No terms were

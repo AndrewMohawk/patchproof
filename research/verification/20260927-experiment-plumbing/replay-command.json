@@ -1,0 +1,21 @@
+{
+  "recordedAt": "2026-09-27T10:12:00.526540+00:00",
+  "commands": [
+    {
+      "command": "make reproduce RUN=b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-b1d16e46-7f94-4fea-bc3b-b8d1a31e4f2d.log"
+    },
+    {
+      "command": "make reproduce RUN=785065b5-2108-4a70-919b-f992b72568d2",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-785065b5-2108-4a70-919b-f992b72568d2.log"
+    },
+    {
+      "command": "make reproduce RUN=50b4f717-f206-48eb-8752-37a81f6b675c",
+      "exitCode": 0,
+      "log": "research/verification/20260927-experiment-plumbing/replay-50b4f717-f206-48eb-8752-37a81f6b675c.log"
+    }
+  ],
+  "paidCalls": 0
+}

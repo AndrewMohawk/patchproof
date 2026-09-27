@@ -225,3 +225,28 @@ Chromium page render passed; 30 tasks, explicit mock labels and no console/page
 errors were observed. The source checkout is insulated from ongoing main-branch
 work. `20260927-smoke-integration/running-app-handoff.json` records the session and
 source binding. This is still a same-host local product, not a public deployment.
+
+## Integrated experiment and accounting plumbing
+
+Commits `c604b11` and `93fa291` add the shared repair kernel, synthetic 24-revision
+executor, separate immutable trace format, and trusted cumulative accounting
+receipt import/recovery. The executor rejects live providers; accounting receipts
+check consistency and require independently accepted evidence. They do not obtain
+or authenticate provider observations. The independent accounting receipt preserves
+five historical findings and their bounded fixes, including expired-write recovery
+and stale-history/concurrent-revision controls.
+
+On exact executable source `93fa2919ee8ada80c67e28fac3a939b892e66c3a`, `make test`
+exited 0 with **272 passed, zero failures/skips**. The pinned Chromium browser flow
+passed all three product policies after the shared-loop refactor. All three selected
+patches, including the failing baseline, reproduced in fresh containers with exit 0.
+`make doctor` exited 0; smoke, pilot, evaluate and release-check retained exit 2 for
+their unresolved gates. Command logs, immutable bundles, screenshots, source hashes
+and same-host app handoff are in
+`research/verification/20260927-experiment-plumbing/integration-receipt.json`.
+
+The loopback app is pinned to that tested checkout and preserves all eight prior
+terminal runs. No provider call, paid charge, live experiment, human response or
+public release occurred. A calibrated live factory/session, operator commands,
+authoritative billing/cleanup ingestion and aggregate export integration still
+require work; account access alone does not supply those components.
