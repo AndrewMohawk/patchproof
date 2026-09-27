@@ -1,0 +1,46 @@
+(node:1109573) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "kind": "historical-context-browser-verification",
+  "status": "passed",
+  "testedAt": "2026-09-27T14:10:12.650Z",
+  "scope": "actual app assets with invented read-only HTTP metadata only",
+  "appSourceDigest": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+  "scriptSourceDigest": "sha256:b6aa5ec241d98035c279935e63f69f837ebc37d23821d6b54a45602259bd6c11",
+  "browserVersion": "145.0.7632.6",
+  "checks": [
+    "pending saved context withholds current catalogue title/text and keeps recorded denominator",
+    "same-ID historical picker/title/requirements come only from saved evidence",
+    "immutable historical download bytes are unchanged",
+    "comparison keeps recorded task label and coverage count",
+    "new run with the same ID namespace shows its own distinct saved statement",
+    "archived route, mobile layout and no-execution controls remain intact",
+    "mismatched recorded run or contract version cannot supply task text",
+    "unavailable evidence has an explicit error and a GET-only successful retry",
+    "active runs use catalogue context only when both recorded source/policy pins match",
+    "all fixture HTTP requests stay GET-only, with no SSE or browser script failures"
+  ],
+  "sameTaskId": "archive-example-01",
+  "oldBundleDigest": "sha256:c2a144b7a60aead297106c420e65ee34c022a8e5ac5851576895921f7209363d",
+  "oldBytesDigest": "sha256:8c43a3f9724fc92e43d3df9433f34c393aff3fcdf9af4f3fbcf70c2ab58d2492",
+  "currentBundleDigest": "sha256:c68e36451977043621832f07c626a554cab6cae77e81e160fb120d004f0eda6c",
+  "browserErrors": [],
+  "expectedMissingEvidenceResponse": 404,
+  "consoleMessagesDuringNegativeCases": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "requests": {
+    "total": 47,
+    "mutationCount": 0,
+    "evidenceCount": 12
+  },
+  "candidateExecutions": 0,
+  "providerCalls": 0,
+  "containersStarted": 0,
+  "realHumanResults": false,
+  "screenshots": [
+    "/tmp/patchproof-historical-context-desktop.png",
+    "/tmp/patchproof-historical-context-mobile.png"
+  ]
+}
+command_exit_code: 0

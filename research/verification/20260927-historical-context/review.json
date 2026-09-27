@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "historical-run-context-verification",
+  "recordedAt": "2026-09-27T14:14:54.715413+00:00",
+  "baseCommit": "8503e811fbf5f9f8b82a3c3561d11fcfcc01fbb7",
+  "sourceDigests": {
+    "apps/web/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+    "apps/web/index.html": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+    "apps/web/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa",
+    "scripts/verify-historical-context.ts": "sha256:b6aa5ec241d98035c279935e63f69f837ebc37d23821d6b54a45602259bd6c11",
+    "tests/helpers/archive-fixture.ts": "sha256:52a77f98fe94566d6a62f89a54070a2ec3598b83a74733a997ec12af81f1bfd8"
+  },
+  "scope": "Actual product browser assets against invented GET-only loopback metadata. Historical title and requirement binding only; no real candidate, container, provider, corpus or human exercise.",
+  "behavior": [
+    "Terminal titles, run-picker labels and requirement text use only saved evidence whose run projection, version, mode, task identity and archive pin match the recorded run.",
+    "Evidence integrity remains the existing server responsibility; frontend contains no duplicate canonical digest or historical policy formula.",
+    "Pending or mismatched context retains recorded IDs/statuses and coverage counts, withholds saved text/download and supports GET-only retry.",
+    "Running catalogue context requires matching source and policy pins. Comparison denominators are recorded coverage length, with recorded task titles shown on cards.",
+    "Metadata readiness gates addressed-run fetch, context binding, streams and mutation controls before capability/archival pins arrive."
+  ],
+  "commands": [
+    {
+      "command": "node scripts/verify-historical-context.ts",
+      "attempt": 1,
+      "exitCode": 1,
+      "artifact": "research/verification/20260927-historical-context/browser-first-failure.json",
+      "note": "Original initialization-race failure preserved byte-for-byte as a JSON string; no runtime operation occurred."
+    },
+    {
+      "command": "node scripts/verify-historical-context.ts",
+      "attempt": 2,
+      "exitCode": 0,
+      "checksPassed": 10,
+      "artifact": "research/verification/20260927-historical-context/browser-after-ready-guard.log",
+      "note": "After the metadata-ready guard; source hashes match final files."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "artifact": "research/verification/20260927-historical-context/typecheck.log"
+    },
+    {
+      "command": "node --check apps/web/app.js",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "browser": {
+    "version": "145.0.7632.6",
+    "checks": [
+      "pending saved context withholds current catalogue title/text and keeps recorded denominator",
+      "same-ID historical picker/title/requirements come only from saved evidence",
+      "immutable historical download bytes are unchanged",
+      "comparison keeps recorded task label and coverage count",
+      "new run with the same ID namespace shows its own distinct saved statement",
+      "archived route, mobile layout and no-execution controls remain intact",
+      "mismatched recorded run or contract version cannot supply task text",
+      "unavailable evidence has an explicit error and a GET-only successful retry",
+      "active runs use catalogue context only when both recorded source/policy pins match",
+      "all fixture HTTP requests stay GET-only, with no SSE or browser script failures"
+    ],
+    "requests": {
+      "total": 47,
+      "mutationCount": 0,
+      "evidenceCount": 12
+    },
+    "pageErrors": [],
+    "negativeCaseConsoleMessages": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "expectedMissingEvidenceStatus": 404,
+    "desktopAndMobileVisuallyInspected": true,
+    "report": "research/verification/20260927-historical-context/browser-report.json",
+    "executionMethod": "Repository-pinned standalone Playwright regression with one isolated Chromium instance at a time; existing shared MCP browser session untouched.",
+    "closedAtCompletion": true
+  },
+  "execution": {
+    "candidateExecutions": 0,
+    "containersStarted": 0,
+    "externalProviderCalls": 0,
+    "modelCalls": 0,
+    "paidSpendUsd": 0,
+    "privateEvaluationCorpusRead": false,
+    "humanExercisePerformed": false
+  },
+  "independentReview": {
+    "agent": "/root/json_contract_review",
+    "scope": "Coordinator-relayed read-only source review only; no separate browser execution.",
+    "result": "No blocker reported: terminal catalogue fallback absent, stored coverage retained, stale response guards and archive readiness gates present.",
+    "optionalCasesNotExecuted": [
+      "Delayed evidence response after selection or recorded projection changes.",
+      "Isolated archive pin mismatch.",
+      "Isolated active source mismatch (active policy mismatch and both-pin match executed)."
+    ]
+  },
+  "coordinatorPreflight": {
+    "reportedTerminalRunsMatched": 14,
+    "description": "Coordinator reports all actual terminal run projections and saved requirement ID/count mappings matched their saved bundles over GET only.",
+    "artifactInIntegrationWorkspace": "research/corpus-v2/historical-ui-context-preflight.json",
+    "attribution": "Coordinator run, not performed by this implementation agent; final actual-history rendered handoff remains separate."
+  },
+  "limitations": [
+    "Synthetic saved bundles exercise 2.1 and 2.2 metadata; actual historical 2.0/2.1 rendering with the new public corpus remains a separate coordinator check.",
+    "No complete project suite or Docker browser comparison was run.",
+    "Backend immutable evidence verification is trusted; UI identity checks do not authenticate provider activity or prove algorithmic correctness."
+  ],
+  "artifacts": {
+    "research/verification/20260927-historical-context/browser-after-ready-guard.log": "sha256:3714ef7991d92c249e8795909909daf07a5efc10251be5886b8222ce574bf523",
+    "research/verification/20260927-historical-context/browser-first-failure.json": "sha256:b9ffe43b97333a34f3fa9f07ace91a053d4571cdc28bd27f4c9fb54c9c5ed3dd",
+    "research/verification/20260927-historical-context/browser-report.json": "sha256:3f17ccbfec26dd24c602638c91f8339a94526c51d8065b616081bf5a4b98345f",
+    "research/verification/20260927-historical-context/desktop.png": "sha256:a2255bd7e3ee4950f4ce00f2051c40751c55a5a003cb090626274ff1a0e99a9d",
+    "research/verification/20260927-historical-context/first-attempt-source.json": "sha256:d63a0b9cdccdbad80f97fab000bb5bbaed73c5646dbf65ef685c41d9e26c0ce0",
+    "research/verification/20260927-historical-context/metadata-ready-guard.patch": "sha256:9e3e006afe04059912300d193edbfde2647ac7792141ca57d75e6ca3828e8598",
+    "research/verification/20260927-historical-context/mobile.png": "sha256:c51fb8d3f790aecb3489b3c011a4ca8a19995b988a65bfb4675cd7f10b2f04d4",
+    "research/verification/20260927-historical-context/typecheck.log": "sha256:0b91b95610dfcf7e4d39dd5cb35e37365770b26c0dfc5ec9b44bd1dd8336a6b6",
+    "research/verification/20260927-historical-context/README.md": "sha256:d2383e4ae0be8f7ed30a627765a19f3d8b99f1fa25f0cb85c29fa9034242a946"
+  }
+}

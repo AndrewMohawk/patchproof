@@ -1,0 +1,58 @@
+--- before/apps/web/app.js
++++ after/apps/web/app.js
+@@ -8,7 +8,7 @@
+ const outcomes = {
+   verified_for_declared_checks: 'Passes declared checks', needs_review: 'Needs review', failed: 'Checks failed', infrastructure_error: 'Execution error',
+ };
+-const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), meta: {}, busy: false };
++const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), meta: {}, ready: false, busy: false };
+ const streams = new Map();
+ const refreshing = new Set();
+ let pollTimer;
+@@ -34,8 +34,8 @@
+ function currentTask() { return taskFor(state.taskId); }
+ function mockSupported(task) { return task?.mockSupported === true; }
+ function isArchive() { return state.meta.mode === 'archive'; }
+-function canCreate() { return !isArchive() && state.meta.capabilities?.createRuns !== false; }
+-function canCancel() { return !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
++function canCreate() { return state.ready && !isArchive() && state.meta.capabilities?.createRuns !== false; }
++function canCancel() { return state.ready && !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
+ function modeLabel(run) {
+   if (isArchive()) return run.mode === 'live' ? 'RECORDED LIVE · READ ONLY' : 'RECORDED MOCK · READ ONLY';
+   return run.mode === 'mock' ? 'MOCK MODEL · LOCAL CHECKS' : run.phase === 'terminal' ? 'RECORDED LIVE' : 'LIVE PROVIDER';
+@@ -77,7 +77,7 @@
+   return run.phase === 'terminal' ? 'Saved task statement unavailable or mismatched. Requirement text is withheld.' : 'Task statement unavailable for these recorded inputs.';
+ }
+ async function loadRunContext(run, retry = false) {
+-  if (run.phase !== 'terminal') return;
++  if (!state.ready || run.phase !== 'terminal') return;
+   const previous = state.contexts.get(run.id);
+   if (!retry && previous && sameJson(previous.run, run)) return;
+   const context = { run: structuredClone(run), status: 'loading', fixture: null };
+@@ -141,7 +141,7 @@
+   if (view === 'compare') renderComparison();
+   if (view === 'evidence') {
+     renderRunPicker(); renderEvidence();
+-    if (state.runId && !state.runs.has(state.runId)) refreshRun(state.runId).catch(showError);
++    if (state.ready && state.runId && !state.runs.has(state.runId)) refreshRun(state.runId).catch(showError);
+   }
+ }
+ function chooseTask(id) {
+@@ -225,7 +225,7 @@
+   if (pollTimer && ![...state.runs.values()].some(item => item.phase !== 'terminal')) { clearInterval(pollTimer); pollTimer = undefined; }
+ }
+ function watchRun(id) {
+-  if (isArchive() || state.meta.capabilities?.streamEvents === false) return;
++  if (!state.ready || isArchive() || state.meta.capabilities?.streamEvents === false) return;
+   if (streams.has(id)) return;
+   const stream = new EventSource(`/runs/${encodeURIComponent(id)}/events`); streams.set(id, stream);
+   const onEvent = () => refreshRun(id).catch(showError);
+@@ -471,7 +471,7 @@
+ route();
+ try {
+   const [meta, history] = await Promise.all([request('/tasks'), request('/runs')]);
+-  state.meta = meta; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
++  state.meta = meta; state.ready = true; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
+   renderMode();
+   for (const run of history.runs) storeRun(run);
+   renderTasks(); renderTaskDetail(); renderTaskPicker(); renderRunPicker(); renderComparison(); renderEvidence(); route();

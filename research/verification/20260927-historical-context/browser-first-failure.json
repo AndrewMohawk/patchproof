@@ -1,0 +1,12 @@
+{
+  "command": "node scripts/verify-historical-context.ts",
+  "exitCode": 1,
+  "sourceDigests": {
+    "apps/web/app.js": "sha256:3678251c3a5ca133f64e3feed9ab0cf96e3aa7eb3df70294f806f96e29d35d95",
+    "scripts/verify-historical-context.ts": "sha256:b6aa5ec241d98035c279935e63f69f837ebc37d23821d6b54a45602259bd6c11"
+  },
+  "capturedOutputDigest": "sha256:bc46b2395b710c9b9ea7b03c971b15014a419ea8f7aab27df7f8c36a6e36741f",
+  "stdoutStderr": "(node:1077725) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   '/runs/20c2b911-84c5-4084-be16-66d0808640d8/events',\n+   '/runs/20c2b911-84c5-4084-be16-66d0808640d8/events'\n+ ]\n- []\n\n    at file:///tmp/patchproof-historical-run-context/scripts/verify-historical-context.ts:171:44 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [\n    '/runs/20c2b911-84c5-4084-be16-66d0808640d8/events',\n    '/runs/20c2b911-84c5-4084-be16-66d0808640d8/events'\n  ],\n  expected: [],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v25.5.0\n",
+  "finding": "Addressed active run was fetched before capability metadata, opening two GET event streams despite streamEvents:false. No mutation or execution happened.",
+  "resolvedBy": "Metadata-ready guards before addressed refresh, context loading, streams and mutation controls. Exact source transition retained in metadata-ready-guard.patch."
+}

@@ -8,7 +8,7 @@ const phaseNames = { queued: 'Queued', preflight: 'Preflight', baseline_capture:
 const outcomes = {
   verified_for_declared_checks: 'Passes declared checks', needs_review: 'Needs review', failed: 'Checks failed', infrastructure_error: 'Execution error',
 };
-const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), meta: {}, busy: false };
+const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), meta: {}, ready: false, busy: false };
 const streams = new Map();
 const refreshing = new Set();
 let pollTimer;
@@ -34,8 +34,8 @@ function taskFor(id) { return state.tasks.find(task => task.id === id); }
 function currentTask() { return taskFor(state.taskId); }
 function mockSupported(task) { return task?.mockSupported === true; }
 function isArchive() { return state.meta.mode === 'archive'; }
-function canCreate() { return !isArchive() && state.meta.capabilities?.createRuns !== false; }
-function canCancel() { return !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
+function canCreate() { return state.ready && !isArchive() && state.meta.capabilities?.createRuns !== false; }
+function canCancel() { return state.ready && !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
 function modeLabel(run) {
   if (isArchive()) return run.mode === 'live' ? 'RECORDED LIVE · READ ONLY' : 'RECORDED MOCK · READ ONLY';
   return run.mode === 'mock' ? 'MOCK MODEL · LOCAL CHECKS' : run.phase === 'terminal' ? 'RECORDED LIVE' : 'LIVE PROVIDER';
@@ -51,7 +51,59 @@ function renderMode() {
     : 'These local runs demonstrate the workflow using scripted model responses. Their results are not a model benchmark or evidence that one repair approach performs better. Sealed evaluation and sponsor integration remain separate gates.';
 }
 function runsForTask() { return [...state.runs.values()].filter(run => run.taskId === state.taskId).sort((a, b) => b.createdAt.localeCompare(a.createdAt)); }
-function runName(run) { return `${taskFor(run.taskId)?.title ?? run.taskId} · ${variants[run.variant]?.name ?? run.variant}${isArchive() ? ` · recorded ${run.mode}` : ''} · ${time(run.createdAt)}`; }
+function runName(run) { return `${runTitle(run)} · ${variants[run.variant]?.name ?? run.variant}${isArchive() ? ` · recorded ${run.mode}` : ''} · ${time(run.createdAt)}`; }
+
+// The server validates immutable evidence. The UI binds its saved task projection to
+// this exact run, independently of a catalogue that may reuse the same task ID.
+function sameJson(left, right) {
+  if (left === right) return true;
+  if (!left || !right || typeof left !== 'object' || typeof right !== 'object' || Array.isArray(left) !== Array.isArray(right)) return false;
+  const keys = Object.keys(left);
+  return keys.length === Object.keys(right).length && keys.every(key => Object.hasOwn(right, key) && sameJson(left[key], right[key]));
+}
+function runContext(run) {
+  if (run.phase === 'terminal') {
+    const context = state.contexts.get(run.id);
+    return context && sameJson(context.run, run) ? context : { status: 'loading', fixture: null };
+  }
+  const task = taskFor(run.taskId);
+  return task && task.sourceDigest === run.sourceDigest && task.policyDigest === run.policyDigest
+    ? { status: 'ready', fixture: task } : { status: 'unavailable', fixture: null };
+}
+function runTitle(run) { return runContext(run).fixture?.title ?? run.taskId; }
+function contextMessage(run, context) {
+  if (context.status === 'ready') return run.phase === 'terminal' ? 'Task statement saved with this run.' : 'Task statement matches the recorded inputs.';
+  if (context.status === 'loading') return 'Loading the saved task statement…';
+  return run.phase === 'terminal' ? 'Saved task statement unavailable or mismatched. Requirement text is withheld.' : 'Task statement unavailable for these recorded inputs.';
+}
+async function loadRunContext(run, retry = false) {
+  if (!state.ready || run.phase !== 'terminal') return;
+  const previous = state.contexts.get(run.id);
+  if (!retry && previous && sameJson(previous.run, run)) return;
+  const context = { run: structuredClone(run), status: 'loading', fixture: null };
+  state.contexts.set(run.id, context);
+  if (retry && state.runId === run.id) renderEvidence();
+  try {
+    const bundle = await request(`/runs/${encodeURIComponent(run.id)}/evidence`);
+    const fixture = bundle.fixture;
+    const archivePin = state.meta.bundles?.find(entry => entry.runId === run.id)?.bundleDigest;
+    if (bundle.format !== 'patchproof-evidence-v2' || bundle.schemaVersion !== run.schemaVersion || bundle.mode !== run.mode ||
+        bundle.competitionReady !== false || !sameJson(bundle.run, run) || fixture?.id !== run.taskId ||
+        typeof fixture.title !== 'string' || !Array.isArray(fixture.requirements) ||
+        fixture.requirements.some(row => typeof row.id !== 'string' || typeof row.text !== 'string') ||
+        new Set(fixture.requirements.map(row => row.id)).size !== fixture.requirements.length ||
+        fixture.requirements.length !== run.coverage.length || run.coverage.some(row => !fixture.requirements.some(item => item.id === row.requirementId)) ||
+        (isArchive() && archivePin !== bundle.bundleDigest)) throw new Error('Saved task context does not match this run.');
+    // Retain only detached display data. Do not relabel it from later catalogue responses.
+    context.fixture = Object.freeze({ id: fixture.id, title: fixture.title,
+      requirements: Object.freeze(fixture.requirements.map(row => Object.freeze({ id: row.id, text: row.text }))) });
+    context.status = 'ready';
+  } catch { context.status = 'error'; }
+  if (state.contexts.get(run.id) !== context || !sameJson(state.runs.get(run.id), context.run)) return;
+  renderRunPicker(); renderComparison();
+  if (state.runId === run.id) renderEvidence();
+}
+
 function selectedCandidate(run) { return run.candidates.find(candidate => candidate.id === run.selectedCandidateId); }
 function outcome(run) { return outcomes[run.terminalStatus] ?? phaseNames[run.phase] ?? run.phase; }
 function outcomeClass(run) { return run.terminalStatus === 'failed' || run.terminalStatus === 'infrastructure_error' ? 'fail' : run.terminalStatus === 'needs_review' ? 'warn' : ''; }
@@ -89,7 +141,7 @@ function route() {
   if (view === 'compare') renderComparison();
   if (view === 'evidence') {
     renderRunPicker(); renderEvidence();
-    if (state.runId && !state.runs.has(state.runId)) refreshRun(state.runId).catch(showError);
+    if (state.ready && state.runId && !state.runs.has(state.runId)) refreshRun(state.runId).catch(showError);
   }
 }
 function chooseTask(id) {
@@ -165,14 +217,15 @@ function storeRun(run) {
   const previous = state.runs.get(run.id);
   state.runs.set(run.id, run);
   if (run.phase === 'terminal') {
+    void loadRunContext(run);
     streams.get(run.id)?.close(); streams.delete(run.id);
     if (previous && previous.phase !== 'terminal') announce(`${variants[run.variant].name}: ${outcome(run)}.`);
-  } else watchRun(run.id);
+  } else { state.contexts.delete(run.id); watchRun(run.id); }
   if (!pollTimer && [...state.runs.values()].some(item => item.phase !== 'terminal')) pollTimer = setInterval(pollActiveRuns, 2000);
   if (pollTimer && ![...state.runs.values()].some(item => item.phase !== 'terminal')) { clearInterval(pollTimer); pollTimer = undefined; }
 }
 function watchRun(id) {
-  if (isArchive() || state.meta.capabilities?.streamEvents === false) return;
+  if (!state.ready || isArchive() || state.meta.capabilities?.streamEvents === false) return;
   if (streams.has(id)) return;
   const stream = new EventSource(`/runs/${encodeURIComponent(id)}/events`); streams.set(id, stream);
   const onEvent = () => refreshRun(id).catch(showError);
@@ -205,7 +258,7 @@ function progress(run) {
   for (const phase of ['baseline_capture', 'repair', 'check', 'export']) append(box, el('span', `step${phase === run.phase ? ' current' : ''}`, phaseNames[phase]));
   return box;
 }
-function coverageText(run) { return `${run.coverage.filter(row => row.status === 'pass').length} / ${taskFor(run.taskId)?.requirements.length ?? run.coverage.length}`; }
+function coverageText(run) { return `${run.coverage.filter(row => row.status === 'pass').length} / ${run.coverage.length}`; }
 function matchedContext(runs) {
   if (runs.length < 3) return { matched: false, message: isArchive() ? 'The archive needs all three approaches to compare their source, policy and resource limits.' : 'Run all three approaches to compare their source, policy and resource limits.' };
   const signature = run => JSON.stringify([run.schemaVersion, run.sourceDigest, run.policyDigest, run.runtimeLockDigest, run.mode, Object.entries(run.limits).sort()]);
@@ -223,6 +276,7 @@ function renderComparison() {
     append(card, el('p', 'variant-kicker', variant.label), el('h2', '', variant.name), el('p', 'variant-description', variant.description));
     if (run) {
       if (isArchive()) append(card, pill(modeLabel(run), 'neutral'));
+      append(card, el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded task' : 'Task'}: ${runTitle(run)}`));
       append(card, el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)),
         metrics([['Requirements passing', coverageText(run)], ['Candidates recorded', run.candidates.length], ['Elapsed', duration(run.usage.elapsedMs)], ['Provider cost', money(run.usage.measuredCostUsd)]]),
         run.phase !== 'terminal' && progress(run), link('Review evidence ↗', `#evidence/${run.id}`, 'button'));
@@ -326,15 +380,18 @@ function checksGroup(title, checks) {
   return group;
 }
 function coveragePanel(run) {
-  const requirements = taskFor(run.taskId)?.requirements ?? [];
+  const context = runContext(run);
+  const requirements = context.fixture?.requirements ?? [];
   const list = el('ul', 'coverage-list');
-  for (const requirement of requirements) {
-    const row = run.coverage.find(item => item.requirementId === requirement.id);
-    append(list, append(el('li', 'coverage-row'), append(el('div', 'coverage-row-header'), el('span', 'requirement-id', requirement.id), checkStatus(row?.status ?? 'unverified')), el('p', '', requirement.text), el('p', 'check-ids', row?.checkIds.length ? row.checkIds.join(' · ') : 'No supporting checks recorded')));
+  for (const row of run.coverage) {
+    const requirement = requirements.find(item => item.id === row.requirementId);
+    const text = requirement?.text ?? (context.status === 'loading' ? 'Loading saved requirement text…' : 'Requirement text unavailable.');
+    append(list, append(el('li', 'coverage-row'), append(el('div', 'coverage-row-header'), el('span', 'requirement-id', row.requirementId), checkStatus(row.status)), el('p', '', text), el('p', 'check-ids', row.checkIds.length ? row.checkIds.join(' · ') : 'No supporting checks recorded')));
   }
-  if (!requirements.length) append(list, el('li', 'empty-small', 'Task requirements are unavailable.'));
+  if (!run.coverage.length) append(list, el('li', 'empty-small', 'No requirement coverage recorded.'));
   return panel('Requirement coverage', run.selectedCandidateId === null ? 'Coverage of the run; no candidate selected.' : `Final selection: candidate ${run.selectedCandidateId}.`, list, el('span', 'coverage-count', coverageText(run)));
 }
+
 function eventPanel(run) {
   const list = el('ol', 'event-list');
   for (const event of run.events) append(list, append(el('li'), el('time', 'event-time', time(event.timestamp)), append(el('div', 'event-message'), el('span', 'event-phase', phaseNames[event.phase] ?? event.phase), el('span', '', event.message))));
@@ -384,13 +441,17 @@ function renderEvidence() {
   if (!run) {
     byId('evidence').replaceChildren(empty(state.runId ? 'Loading this run…' : 'Your evidence starts with a run.', state.runId ? 'Fetching the recorded state from the coordinator.' : 'Choose a curated task and run one approach, or start a comparison to review all three.', state.runId ? null : 'Choose a task →', '#tasks')); return;
   }
+  const context = runContext(run);
   const summary = el('section', 'panel run-summary'); const intro = el('div');
-  append(intro, pill(modeLabel(run)), el('h2', '', taskFor(run.taskId)?.title ?? run.taskId), el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded run' : 'In progress'} · ${variants[run.variant]?.name ?? run.variant} · ${new Date(run.createdAt).toLocaleString()}`), el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)), run.reason && el('p', 'run-reason', humanReason(run.reason)));
+  summary.dataset.contextState = context.status;
+  append(intro, pill(modeLabel(run)), el('h2', '', runTitle(run)), el('p', 'run-meta', contextMessage(run, context)), el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded run' : 'In progress'} · ${variants[run.variant]?.name ?? run.variant} · ${new Date(run.createdAt).toLocaleString()}`), el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)), run.reason && el('p', 'run-reason', humanReason(run.reason)));
   if (run.phase !== 'terminal') append(intro, progress(run), el('p', 'stream-note', 'Displaying recorded execution events. This page reconnects to the same run if the stream drops.'));
   const actions = el('div', 'actions');
-  if (run.phase === 'terminal') {
+  if (run.phase === 'terminal' && context.status === 'ready') {
     const download = link('Download evidence ↓', `/runs/${encodeURIComponent(run.id)}/evidence`, 'button primary'); download.download = `${run.id}.json`; append(actions, download);
-  } else if (canCancel()) { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
+  } else if (run.phase === 'terminal' && context.status === 'error') {
+    actions.append(button('Retry saved task context', () => loadRunContext(state.runs.get(run.id), true), 'button'));
+  } else if (run.phase !== 'terminal' && canCancel()) { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
   append(summary, intro, actions);
   const columns = el('div', 'evidence-grid'); const primary = el('div'); const secondary = el('aside'); secondary.setAttribute('aria-label', 'Run coverage and provenance');
   append(primary, candidateHistory(run));
@@ -410,7 +471,7 @@ window.addEventListener('pagehide', () => { for (const stream of streams.values(
 route();
 try {
   const [meta, history] = await Promise.all([request('/tasks'), request('/runs')]);
-  state.meta = meta; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
+  state.meta = meta; state.ready = true; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
   renderMode();
   for (const run of history.runs) storeRun(run);
   renderTasks(); renderTaskDetail(); renderTaskPicker(); renderRunPicker(); renderComparison(); renderEvidence(); route();
