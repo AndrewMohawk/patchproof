@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "docker-lifecycle-independent-review",
+  "createdAt": "2026-09-27T11:42:28.114877+00:00",
+  "baseCommit": "7f60d99806e2d8c61869374986a62be2b28f9b8d",
+  "scope": "Bounded independent local Docker creation, ownership, cancellation, deadline and cleanup review. All executed process replies are invented metadata.",
+  "status": "bounded-controls-passed",
+  "newConcreteDefectsFound": 0,
+  "artifacts": {
+    "workers/sandbox/index.ts": "sha256:25bdc0781a0232c77d8c70650b6ec0c097f0d331d1e9adf9a288ade3e802aa50",
+    "workers/sandbox/driver.ts": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8",
+    "workers/sandbox/local-cleanup.ts": "sha256:789f5f727c5ab26ac06b30ac0975ee218b87dfba49779abe5d5888dd56271507",
+    "tests/docker-lifecycle-independent.test.ts": "sha256:d066d36a45fb2a418e03714636c0ac23e429d872e90acc91f710c608164b20f7",
+    "research/verification/runtime-followup/docker-lifecycle-independent-tests.log": "sha256:c047f0e4cb00f3b2bb5fd2d9270be6e84a0f8493cf61b0ddf7b7fdaab07d8c07",
+    "research/verification/runtime-followup/docker-lifecycle-independent-typecheck.log": "sha256:1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890"
+  },
+  "reviewerExecuted": [
+    {
+      "command": "node --test tests/docker-lifecycle-independent.test.ts",
+      "exitCode": 0,
+      "reportedTests": 10,
+      "topLevelTests": 4,
+      "identitySubtests": 6,
+      "passed": 10,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": "research/verification/runtime-followup/docker-lifecycle-independent-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/docker-lifecycle-independent-typecheck.log"
+    }
+  ],
+  "independentControls": [
+    {
+      "name": "Cancellation during ownership inspection after acknowledged create",
+      "observed": "No start command; exact immutable ID removed; cancellation-independent cleanup confirmed; both planned cases remain errors and only one create occurs."
+    },
+    {
+      "name": "Monotonic deadline expires inside ownership inspection",
+      "observed": "No start command; cleanup gets its own positive bounded timeout; immutable ID removed; batch remains timeout/error with one create."
+    },
+    {
+      "name": "Cleanup identity substitution matrix",
+      "variants": [
+        "immutable container ID",
+        "container name",
+        "image digest",
+        "owned label",
+        "operation label",
+        "run owner label"
+      ],
+      "observed": "Each mismatch rejects removal, preserves cleanup-unconfirmed evidence and prevents the next case from creating a container."
+    },
+    {
+      "name": "Name reuse between inspection and removal",
+      "observed": "Removal and followup inspection retain the original verified immutable ID, so a replacement object with the same name is never selected for removal."
+    }
+  ],
+  "sourceReview": [
+    "Create is a distinct non-executing request. Only a full acknowledged ID plus exact ID/name/image/ownership inspection permits start.",
+    "Cancellation and monotonic deadline are checked after ownership inspection, before start.",
+    "Unacknowledged creation is never retried or started; absence alone does not confirm cleanup until creation has been acknowledged or a matching owned object has been observed.",
+    "Cleanup does not inherit the aborted execution signal and removes verified immutable IDs rather than names.",
+    "Unknown cleanup leaves an infrastructure failure and stops remaining cases.",
+    "Guest launcher retains the original absolute wall deadline and a relative cap; actual guest execution was not part of this independent review."
+  ],
+  "authorEvidenceSeparation": "The runtime author owns delayed daemon-create after initial absence, unacknowledged-create and actual Docker/guest/parent-death tests. Those tests were not independently executed here and are not included in the ten-test count.",
+  "fixtureCorrection": "Initial typecheck identified only a missing required assertArgsUnchanged field in the new invented FunctionCase. The fixture was corrected to false before final validation; no product defect is claimed.",
+  "limitations": [
+    "No real Docker daemon, containers, candidate code, model/provider API, credentials, sealed corpus, or externally billed resource was used by this independent review.",
+    "Injected process responses establish deterministic state-transition behavior, not Docker daemon atomicity, actual cleanup latency, hardware isolation, or provider readiness.",
+    "Existing run-ID recovery listing can show current absence but cannot establish that an unacknowledged pre-crash create request will never appear later. This residual boundary was independently noted by the root and reviewer; no atomic daemon quiescence claim is made. The split lifecycle prevents that late object from being started by the failed operation.",
+    "The cleanup wait is bounded. An object created after that wait may remain inert and require later operator reconciliation; cleanup-unconfirmed remains an infrastructure failure.",
+    "Same-UID trusted-process interference and whole-daemon guarantees are outside this review. Source digests bind reviewed bytes, not the authenticity of external daemon behavior."
+  ],
+  "actualDockerCalls": 0,
+  "candidateExecutions": 0,
+  "providerCalls": 0,
+  "spendUsd": 0
+}

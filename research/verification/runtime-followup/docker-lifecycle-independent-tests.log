@@ -1,0 +1,21 @@
+(node:827072) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (127.784561ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (105.406479ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (6.606279ms)
+  ✔ name (2.951905ms)
+  ✔ image (2.585732ms)
+  ✔ ownedLabel (2.252174ms)
+  ✔ operationLabel (2.363297ms)
+  ✔ ownerLabel (1.970219ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (20.76732ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (102.804229ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 622.232385
