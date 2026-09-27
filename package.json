@@ -25,6 +25,7 @@
     "check:contracts": "node scripts/check-contract-lock.ts"
   },
   "dependencies": {
+    "@huggingface/tokenizers": "0.2.0",
     "zod": "4.1.12"
   },
   "devDependencies": {

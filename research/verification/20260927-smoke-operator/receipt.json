@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T10:34:24.278Z",
+  "scope": "local-synthetic-operator-tests",
+  "actualProviderCalls": 0,
+  "actualSpendUsd": 0,
+  "baseCommit": "f748c32",
+  "prerequisiteCommit": "8ab5a2a",
+  "prerequisiteLocalCherryPick": "31b2559",
+  "commands": [
+    {
+      "command": "node --test tests/smoke-operator.test.ts tests/smoke-tokenizer.test.ts tests/smoke-operator-sessions.test.ts tests/trusted-smoke.test.ts tests/runtime-repair.test.ts tests/accounting-cli.test.ts tests/budget-ledger.test.ts",
+      "exitCode": 0,
+      "passed": 82,
+      "failed": 0,
+      "log": "research/verification/20260927-smoke-operator/tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/20260927-smoke-operator/typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/20260927-smoke-operator/contracts.log"
+    }
+  ],
+  "testedSources": {
+    "package.json": "sha256:dc3df27902932f572c3588830fb595143b94b8a430614a8bb43d724058f703ba",
+    "package-lock.json": "sha256:d86b5655a36e9f3374a55129f275ddae88a1b28f51295e1ae1d5dffa81adaaee",
+    "scripts/smoke-operator.ts": "sha256:4cfdea166ef108b4c83b70360be85d709d77a16b16e7b7613dda2f388f516b40",
+    "packages/orchestrator/src/smoke-operator-sessions.ts": "sha256:9cef96cccc0308688749325fdcbd2a5de3f58026c04c48bc2753abd8f9886b3a",
+    "packages/orchestrator/src/smoke-tokenizer.ts": "sha256:a34091ead0b328945fcfa32aa0be6c11660c5b131e2759e3e32d99eb63cc0d01",
+    "packages/orchestrator/src/smoke-tokenizer-worker.ts": "sha256:2a5c438440f8a5ee3c74ed2b05a672499784c6190a0a590d6a821726bc46b7cb",
+    "tests/smoke-operator.test.ts": "sha256:8d1dd44166d391d8af791591f90998b63d2422037d37b3341d829fc0e6a3a386",
+    "tests/smoke-tokenizer.test.ts": "sha256:f63cae26aec3d53bac5f835267236d96b10e3aef06e0e4742d1a36ca730e3d0a",
+    "tests/smoke-operator-sessions.test.ts": "sha256:83598111597cb541ce980cd260038bdabe3da96c8111b25ddd110bc8e6b6bf5e",
+    "tests/helpers/smoke-operator-data.ts": "sha256:a53869426a3c57652e7fe0680bc0c708acc5e619ce83e92ecef24a8c61ee541b"
+  },
+  "artifacts": {
+    "research/verification/20260927-smoke-operator/tests.log": "sha256:8ff4294ab62fbad5546847675e31e418d6b48068b328d2bce01d10a73dda97d1",
+    "research/verification/20260927-smoke-operator/typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260927-smoke-operator/contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "dependency": {
+    "package": "@huggingface/tokenizers",
+    "version": "0.2.0",
+    "license": "Apache-2.0",
+    "integrity": "sha512-LidMHe1FpcSYH4vcSjXooda34pC0M8m1gmDOv7SQi6Iv+ib1zX7J3sHBCC9/3FPCkn2k1b55FneVqMRxrr99pg=="
+  },
+  "officialDocumentation": [
+    {
+      "url": "https://github.com/huggingface/tokenizers.js",
+      "retrievedDate": "2026-09-27",
+      "publicationDate": null,
+      "verified": "Local Tokenizer construction and encode API; documented regex compatibility limits."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/huggingface/tokenizers.js/main/package.json",
+      "retrievedDate": "2026-09-27",
+      "publicationDate": null,
+      "verified": "Package name, version 0.2.0, Apache-2.0 license."
+    }
+  ],
+  "notRun": [
+    {
+      "check": "live account/model/tokenizer/cancellation/billing",
+      "reason": "No credentials, account-verified artifacts or complete project episode ceilings are available."
+    },
+    {
+      "check": "full repository integration suite and browser",
+      "reason": "Parent coordinator runs these after integration; this task changed no browser code."
+    }
+  ],
+  "limitations": [
+    "Test account attestations, model identifiers and tokenizer vocabulary are invented controls, not account evidence.",
+    "No calibrated 24-round experiment or matched performance claim.",
+    "One designated project ledger is required; alternate files do not confer another budget.",
+    "Session metadata is bounded and names the full private run journal; unresolved intents and billing require independent account-side reconciliation.",
+    "Tokenizer vectors do not establish universal engine/template equivalence; attested conservative compatibility remains required.",
+    "No automatic crash takeover, restart dispatch or unknown-operation cancellation mapping."
+  ]
+}

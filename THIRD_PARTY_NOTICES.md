@@ -7,6 +7,7 @@ are disabled. No SWE-Gate, mini-SWE-agent, OpenHands or Aider code/data is vendo
 
 | Package | Version | License | Upstream |
 |---|---|---|---|
+| @huggingface/tokenizers | 0.2.0 | Apache-2.0 | <https://github.com/huggingface/tokenizers.js> |
 | Zod | 4.1.12 | MIT | <https://github.com/colinhacks/zod> |
 | TypeScript | 5.9.3 | Apache-2.0 | <https://github.com/microsoft/TypeScript> |
 | @types/node | 25.5.0 | MIT | <https://github.com/DefinitelyTyped/DefinitelyTyped> |

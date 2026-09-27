@@ -4,8 +4,10 @@
 `packages/orchestrator/src/trusted-smoke.ts` joins the existing model and sandbox
 adapters, repeated checks, coordinator and durable budget ledger. It is callable
 only from trusted local control-plane code with explicit dependencies. The public
-application remains mock; no browser field, live CLI command or automatic fallback
-enables this factory. No real account record or credentials are included.
+application remains mock; no browser field or automatic fallback enables this
+factory. The [private operator CLI](trusted-smoke-operator.md) requires an explicit
+external configuration and every factory gate before its start command can dispatch.
+No real account record or credentials are included.
 
 The smoke policy allows at most three proposals. It reserves two independent
 check repetitions for the original and each of three possible candidates: eight
