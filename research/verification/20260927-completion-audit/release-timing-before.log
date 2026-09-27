@@ -1,0 +1,60 @@
+✖ packet requires scanned selected bytes, copies verified success/failure bundles and remains local blocked preparation (218.004285ms)
+✔ changed bundle bytes after scan and selected digest substitution fail closed (79.02271ms)
+✔ historical source references remain explicitly blocked and tampered evidence cannot be packaged (240.065733ms)
+✔ repository evidence reads reject traversal, symlinks, oversized files and directories (4.310871ms)
+✔ versioned live protocol packet accepts matching smoke presentation scope only after its metadata is scanned, without granting experiment completion (295.840287ms)
+✔ default CLI refuses live replay before any local checker fallback (378.266584ms)
+✖ recorded local timing metadata preserves matching mock release identity without modifying exports (4.011109ms)
+✔ unknown or malformed local timing cannot be discarded to manufacture a current release binding (0.627606ms)
+✔ default release bindings stay local and supplied calibrated proof explicitly selects a distinct frozen protocol (23.003224ms)
+✔ missing trust, stale proofs and changed source/runtime/model/calibration fail closed (11.223794ms)
+✔ CLI input and audit share live selection; receipts cannot select it and synthetic scope still blocks actual gates (23.009194ms)
+✔ matching smoke retains its own presentation policy while mock, historical and mismatched pins never become current experiment execution (6.415651ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 10
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1517.989535
+
+✖ failing tests:
+
+test at tests/release-packet.test.ts:81:1
+✖ packet requires scanned selected bytes, copies verified success/failure bundles and remains local blocked preparation (218.004285ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(result.manifest.bundles.every(bundle => bundle.mode === 'mock' && bundle.sourceBinding === 'current'))
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/release-packet.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/release-protocol.test.ts:16:1
+✖ recorded local timing metadata preserves matching mock release identity without modifying exports (4.011109ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'historical_or_unbound'
+  - 'current'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/release-protocol.test.ts:23:12)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.start (node:internal/test_runner/test:1006:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'historical_or_unbound',
+    expected: 'current',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -19,17 +19,18 @@ import type { ReleasePacketInput } from '../scripts/release-packet.ts';
 import { readReleaseFile } from '../scripts/release-files.ts';
 import { resolveReleaseBindings } from '../scripts/release-protocol.ts';
 import { syntheticReleaseData, syntheticSmokeLock } from './helpers/release-live-data.ts';
+import { LOCAL_MOCK_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 
 const fixture = FixtureSchema.parse({ id: 'release-unit-fixture', repoId: 'synthetic-unit-only', split: 'development',
   title: 'Synthetic release test', description: 'Unit-only data, never a model evaluation or human observation.',
   requirements: [{ id: 'R01', text: 'Return two.' }], files: { 'solution.py': 'def f(): return 1\n' }, editAllowlist: ['solution.py'], entrypoint: 'solution.py',
   visibleCases: [{ id: 'case-one', requirementId: 'R01', function: 'f', args: [], expected: 2 }], acceptanceCases: [], license: 'CC0-1.0', provenance: 'Original synthetic unit fixture.' });
 
-async function prepare(root: string): Promise<ReleasePacketInput> {
+async function prepare(root: string, runtimeMetadata: Record<string, unknown> = {}): Promise<ReleasePacketInput> {
   await mkdir(join(root, 'artifacts'), { recursive: true }); await mkdir(join(root, 'research'), { recursive: true });
   const sources = { 'unit.ts': digestBytes('synthetic unit source') }, runtime = { mode: 'mock', description: 'synthetic unit runtime' }, protocol = { unitOnly: true };
   const now = new Date();
-  const runtimeLock = { ...runtime, operationalLock: { sources, behavior: protocol } };
+  const runtimeLock = { ...runtime, ...runtimeMetadata, operationalLock: { sources, behavior: protocol } };
   const bundles = [];
   for (const success of [true, false]) {
     const files = { 'solution.py': `def f(): return ${success ? 2 : 0}\n` };
@@ -80,7 +81,7 @@ async function cleanup(root: string, packet?: string) {
 test('packet requires scanned selected bytes, copies verified success/failure bundles and remains local blocked preparation', async () => {
   const root = await mkdtemp(join(tmpdir(), 'patchproof-release-packet-')); let packet: string | undefined;
   try {
-    const input = await prepare(root);
+    const input = await prepare(root, { localCheckTimingPolicy: LOCAL_MOCK_CHECK_TIMING_POLICY });
     await assert.rejects(buildReleasePacket(input), /release_bundle_scan_required/);
     await captureTestScan(input);
     const result = await buildReleasePacket(input); packet = result.directory;

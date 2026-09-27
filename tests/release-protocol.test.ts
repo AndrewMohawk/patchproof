@@ -9,8 +9,37 @@ import { buildOperationalLock } from '../packages/orchestrator/src/operational-l
 import { auditRelease } from '../scripts/release-audit.ts';
 import { readReleaseInput } from '../scripts/release-input.ts';
 import { resolveReleaseBindings, classifyReleaseBundle } from '../scripts/release-protocol.ts';
-import { RELEASE_GATES, validateReleaseReceipts } from '../scripts/release-receipts.ts';
+import { buildReleaseBindings, RELEASE_GATES, validateReleaseReceipts } from '../scripts/release-receipts.ts';
+import { LOCAL_MOCK_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 import { syntheticReleaseData, syntheticSmokeLock } from './helpers/release-live-data.ts';
+
+test('recorded local timing metadata preserves matching mock release identity without modifying exports', () => {
+  const runtime = { mode: 'mock', fixture: 'invented release metadata' };
+  const operationalLock = { sources: { 'unit.ts': digestBytes('inert source') }, behavior: { unitOnly: true } };
+  const bindings = buildReleaseBindings({ sources: operationalLock.sources, runtime, protocol: operationalLock.behavior,
+    bundleDigests: [], runtimeMode: 'mock', liveProtocolFrozen: false });
+  for (const metadata of [{}, { localCheckTimingPolicy: LOCAL_MOCK_CHECK_TIMING_POLICY }]) {
+    const lock = { ...runtime, ...metadata, operationalLock }, original = JSON.stringify(lock);
+    assert.equal(classifyReleaseBundle(lock, 'mock', bindings, null), 'current');
+    assert.equal(JSON.stringify(lock), original);
+    assert.equal(classifyReleaseBundle(lock, 'live', bindings, null), 'historical_or_unbound');
+    for (const field of ['sourceDigest', 'runtimeDigest', 'protocolDigest'] as const) {
+      assert.equal(classifyReleaseBundle(lock, 'mock', { ...bindings, [field]: digestBytes('different') }, null), 'historical_or_unbound');
+    }
+  }
+});
+
+test('unknown or malformed local timing cannot be discarded to manufacture a current release binding', () => {
+  const runtime = { mode: 'mock' };
+  const operationalLock = { sources: { 'unit.ts': digestBytes('inert source') }, behavior: { unitOnly: true } };
+  const bindings = buildReleaseBindings({ sources: operationalLock.sources, runtime, protocol: operationalLock.behavior,
+    bundleDigests: [], runtimeMode: 'mock', liveProtocolFrozen: false });
+  for (const policy of [null, {}, '60', { ...LOCAL_MOCK_CHECK_TIMING_POLICY, id: 'unknown' },
+    { ...LOCAL_MOCK_CHECK_TIMING_POLICY, maximumBatchWallSeconds: 61 }, { ...LOCAL_MOCK_CHECK_TIMING_POLICY, extra: true }]) {
+    assert.equal(classifyReleaseBundle({ ...runtime, operationalLock, localCheckTimingPolicy: policy }, 'mock', bindings, null), 'historical_or_unbound');
+  }
+  assert.equal(classifyReleaseBundle({ ...runtime, operationalLock, anotherUnrecognizedPolicy: {} }, 'mock', bindings, null), 'historical_or_unbound');
+});
 
 test('default release bindings stay local and supplied calibrated proof explicitly selects a distinct frozen protocol', async t => {
   const s = await syntheticReleaseData(); t.after(() => rm(s.root, { recursive: true, force: true }));

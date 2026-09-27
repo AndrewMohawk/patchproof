@@ -1,0 +1,39 @@
+(node:3918208) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ coordinator preserves protected helpers, publishes coherent evidence, and replays actual diff (215.281377ms)
+✔ infrastructure errors retain partial checks and operation IDs in evidence (176.534938ms)
+✔ publication failure cannot leave an approval in the final journal event (143.354257ms)
+▶ terminal evidence reads wait for that publication and retain failure when publication rejects
+  ✔ published (147.867028ms)
+  ✔ failed (123.531833ms)
+  ✔ timeout (118.639379ms)
+✔ terminal evidence reads wait for that publication and retain failure when publication rejects (392.116164ms)
+✔ restart recovery reconciles run-owned handles before recording interruption (142.979997ms)
+✔ recovery with a changed runtime preserves old bindings without serving stale or fabricated evidence (104.325674ms)
+✔ recovery checker failure records an infrastructure error without blocking startup (139.323518ms)
+✔ coordinator lease refuses a second live owner and releases its own lease (4.418571ms)
+✔ diff replay reconstructs added files and exact missing final newlines (28.208039ms)
+✔ current evidence binds all task metadata and never guesses a legacy digest after mismatch (199.946699ms)
+(node:3918209) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ restart completes either terminal publication window without changing observations or running work
+  ✔ mock: terminal written before bundle (122.992764ms)
+  ✔ mock: bundle written before digest (88.149029ms)
+  ✔ live: terminal written before bundle (115.159656ms)
+  ✔ live: bundle written before digest (92.331307ms)
+✔ restart completes either terminal publication window without changing observations or running work (421.60741ms)
+▶ pending publication with incompatible bindings stays unavailable and preserves historical bytes
+  ✔ runtime (89.454365ms)
+  ✔ source (75.404874ms)
+  ✔ policy (91.260874ms)
+  ✔ contract (87.039387ms)
+✔ pending publication with incompatible bindings stays unavailable and preserves historical bytes (345.466567ms)
+✔ publication recovery failure remains unapproved and can later export that failure without rerunning (119.892367ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1836.943861

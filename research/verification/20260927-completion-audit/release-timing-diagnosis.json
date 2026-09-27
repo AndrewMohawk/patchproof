@@ -1,0 +1,16 @@
+{
+  "kind": "release-timing-policy-compatibility-diagnosis",
+  "sourceCommit": "97e90fe5918f9eae9f7c681291cf936055f30c0a",
+  "runId": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+  "actualClassification": "historical_or_unbound",
+  "expectedClassification": "current",
+  "operationalSourcesMatch": true,
+  "recordedTimingPolicy": {
+    "id": "local-mock-check-timing-v1",
+    "maximumBatchWallSeconds": 60
+  },
+  "diagnosticProjectionWithoutPolicy": "current",
+  "projectionDoesNotModifyExport": true,
+  "candidateExecutions": 0,
+  "providerCalls": 0
+}

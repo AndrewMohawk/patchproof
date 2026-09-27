@@ -1,0 +1,40 @@
+(node:3927707) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ coverage classification: uncovered requirement with passing checks
+  ✔ baseline (103.710619ms)
+  ✔ checks_only (61.230862ms)
+  ✔ patchproof (59.285251ms)
+✔ coverage classification: uncovered requirement with passing checks (225.937784ms)
+▶ coverage classification: uncovered requirement with a known check failure
+  ✔ baseline (79.174205ms)
+  ✔ checks_only (96.553197ms)
+  ✔ patchproof (75.017641ms)
+✔ coverage classification: uncovered requirement with a known check failure (251.621333ms)
+▶ coverage classification: all requirements covered and passing
+  ✔ baseline (54.065359ms)
+  ✔ checks_only (58.033449ms)
+  ✔ patchproof (85.511337ms)
+✔ coverage classification: all requirements covered and passing (198.510557ms)
+▶ coverage classification: all requirements covered with a known check failure
+  ✔ baseline (87.552668ms)
+  ✔ checks_only (92.835542ms)
+  ✔ patchproof (77.026879ms)
+✔ coverage classification: all requirements covered with a known check failure (258.139654ms)
+▶ coverage classification: a declared check cannot verify its requirement
+  ✔ baseline (90.377799ms)
+  ✔ checks_only (85.380028ms)
+  ✔ patchproof (74.723623ms)
+✔ coverage classification: a declared check cannot verify its requirement (251.262262ms)
+▶ coverage classification: no requirement has an executable check
+  ✔ baseline (47.935733ms)
+  ✔ checks_only (38.498424ms)
+  ✔ patchproof (48.458045ms)
+✔ coverage classification: no requirement has an executable check (139.394256ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1629.246742

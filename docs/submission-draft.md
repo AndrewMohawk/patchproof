@@ -20,6 +20,15 @@ binds the current browser screenshots and three successful fresh replays to
 `c335031`. All three policies passed their declared checks in that demonstration;
 it does not establish a PatchProof advantage.
 
+The current v2 first candidate passes only 2/5 visible and 1/4 acceptance checks;
+it demonstrates rejection and repair, not a visible-tests-pass/contract-fail
+contrast. That contrast is preserved in the
+[historical v1 PatchProof bundle](../research/verification/20260927-merged-ui-docker/evidence/e2310d8f-1fd5-45ba-addf-6268e0a06a0f.json):
+its first candidate passes 3/3 visible checks but only 2/3 acceptance checks.
+The [source-bound receipt](../research/verification/20260927-merged-ui-docker/verification.json)
+records that scripted-model, real-local-check example at `92a2baf`. Demonstrating
+the same contrast with genuine provider output remains pending.
+
 This demonstrates the workflow, not learned repair performance, sponsor
 integration, branching advantage, production security or general correctness.
 The 60-task suite is original synthetic data. The fixed 72/270 experiment tools

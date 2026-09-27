@@ -1,0 +1,30 @@
+{
+  "scope": "Metadata classification only; no replay or candidate execution",
+  "testedClassifierDigest": "sha256:bf653eb9428810db6b3e5a8fba51732f5603a25b4a4f30cf5b90652a722bf21b",
+  "rows": [
+    {
+      "id": "3cb4b6cd-6bdb-4b0b-878a-ad19a45c0e6b",
+      "variant": "baseline",
+      "byteDigest": "sha256:2de0ebcce7862551ee8f57fb207291d398c446ac3e64f145bf6cf3e09077be9e",
+      "matchingRecordedSource": "current",
+      "differentCurrentWorkingSource": "historical_or_unbound",
+      "exportUnchanged": true
+    },
+    {
+      "id": "6b859d93-e4de-41a4-b816-38dc1cce1a29",
+      "variant": "checks_only",
+      "byteDigest": "sha256:1502b8cc31795ce962e6ce3f8665b35948bb10a8a24967891bef3eb1e27a5a5f",
+      "matchingRecordedSource": "current",
+      "differentCurrentWorkingSource": "historical_or_unbound",
+      "exportUnchanged": true
+    },
+    {
+      "id": "a009cb6f-88d9-4621-8e89-ed208e6528b4",
+      "variant": "patchproof",
+      "byteDigest": "sha256:d7cd7a406295ce5d3e5b5192b9cbf49fb1f11f0137f096a5debd4a04da4e8b6e",
+      "matchingRecordedSource": "current",
+      "differentCurrentWorkingSource": "historical_or_unbound",
+      "exportUnchanged": true
+    }
+  ]
+}

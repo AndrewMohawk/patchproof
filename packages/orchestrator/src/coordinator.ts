@@ -119,13 +119,17 @@ export class Coordinator {
     await this.settled(); this.journal.close();
   }
   async recover() {
-    const interrupted = this.list().filter(run => run.phase !== 'terminal');
+    const incompatibleRecovery = new Set(['recovery_contract_changed', 'recovery_runtime_changed', 'recovery_inputs_changed']);
+    const pending = this.list().filter(run => run.phase !== 'terminal' ||
+      (!this.journal.evidenceDigest(run.id) && !incompatibleRecovery.has(run.reason ?? '')));
+    const interrupted = pending.filter(run => run.phase !== 'terminal');
     let cleanup: { remainingOperationIds: string[]; error: string | null } | null = null;
     if (interrupted.length && this.#checks.reconcile) {
       try { cleanup = await this.#checks.reconcile(interrupted.map(run => run.id)); }
       catch { cleanup = { remainingOperationIds: [], error: 'restart_cleanup_failed' }; }
     }
-    for (const run of interrupted) {
+    for (const run of pending) {
+      const terminal = run.phase === 'terminal';
       const fixture = this.#fixtures.get(run.taskId);
       const contractChanged = run.schemaVersion !== PRODUCT_CONTRACT_VERSION;
       const runtimeChanged = run.runtimeLockDigest !== digestJson(this.#runtimeLock);
@@ -133,14 +137,20 @@ export class Coordinator {
         (fixtureDigests(fixture, run.schemaVersion).sourceDigest !== run.sourceDigest || fixtureDigests(fixture, run.schemaVersion).policyDigest !== run.policyDigest));
       const compatible = !contractChanged && !runtimeChanged && !fixtureChanged;
       const cleanupConfirmed = cleanup && !cleanup.error && !cleanup.remainingOperationIds.length;
-      run.terminalStatus = compatible ? 'infrastructure_error' : 'needs_review';
-      run.reason = contractChanged ? 'recovery_contract_changed' : runtimeChanged ? 'recovery_runtime_changed' : fixtureChanged ? 'recovery_inputs_changed' :
-        cleanupConfirmed ? 'interrupted_by_restart' : 'restart_cleanup_unverified';
-      run.finishedAt = new Date().toISOString();
-      this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. Cleanup ${cleanupConfirmed ? 'confirmed' : 'unverified'}; no retry or inferred success.`, false);
-      // Old bundles remain immutable historical files, never the current terminal record.
-      this.journal.save(run, null);
+      if (!terminal || !compatible) {
+        run.terminalStatus = compatible ? 'infrastructure_error' : 'needs_review';
+        run.reason = contractChanged ? 'recovery_contract_changed' : runtimeChanged ? 'recovery_runtime_changed' : fixtureChanged ? 'recovery_inputs_changed' :
+          cleanupConfirmed ? 'interrupted_by_restart' : 'restart_cleanup_unverified';
+        if (!terminal) run.finishedAt = new Date().toISOString();
+        this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. ${terminal ? 'No execution or evidence publication.' :
+          `Cleanup ${cleanupConfirmed ? 'confirmed' : 'unverified'}; no retry or inferred success.`}`, false);
+        // Old bundles remain immutable historical files, never the current terminal record.
+        this.journal.save(run, null);
+      }
       if (compatible && fixture) {
+        // A terminal record with no digest may have stopped on either side of the
+        // bundle write. Rebuild the exact recorded bundle; put verifies an existing
+        // immutable file. No candidate, cleanup, accounting or provider job is resumed.
         try { await this.#publish(run, fixture); }
         catch {
           run.terminalStatus = 'infrastructure_error'; run.reason = 'evidence_publish_failed';
@@ -195,6 +205,10 @@ export class Coordinator {
       this.#event(run, 'preflight', run.mode === 'live' ? 'Checking trusted smoke bindings and the reserved aggregate envelope.' : 'Checking immutable input digests and isolated local runtime.');
       const digests = fixtureDigests(fixture, run.schemaVersion);
       if (digests.sourceDigest !== run.sourceDigest || digests.policyDigest !== run.policyDigest) throw new ContractError('digest_mismatch', 'Input changed after scheduling.');
+      if (!fixture.visibleCases.length && !fixture.acceptanceCases.length) {
+        run.terminalStatus = 'needs_review'; run.reason = 'no_declared_checks';
+        return;
+      }
       this.#event(run, 'baseline_capture', 'Running original source against frozen declared checks.');
       const original = await this.#check(run, fixture, fixture.files, controller.signal);
       run.baselineChecks = { visible: original.visible, acceptance: original.acceptance };
@@ -230,9 +244,12 @@ export class Coordinator {
       });
       this.#coverage(run, fixture);
       const selected = run.candidates.find(c => c.id === run.selectedCandidateId);
+      const requirementsUnverified = run.coverage.some(row => row.status === 'unverified');
       run.terminalStatus = selected?.accepted && run.coverage.every(row => row.status === 'pass') ? 'verified_for_declared_checks' :
-        selected && [...selected.visibleChecks, ...selected.acceptanceChecks].some(check => check.status === 'error') ? 'needs_review' : 'failed';
-      run.reason = selected?.accepted ? run.mode === 'live' ? 'declared_sponsor_smoke_checks_passed' : 'declared_local_checks_passed' : 'declared_checks_not_satisfied';
+        requirementsUnverified ? 'needs_review' : 'failed';
+      run.reason = run.terminalStatus === 'verified_for_declared_checks' ?
+        run.mode === 'live' ? 'declared_sponsor_smoke_checks_passed' : 'declared_local_checks_passed' :
+        requirementsUnverified ? 'declared_requirements_unverified' : 'declared_checks_not_satisfied';
     } catch (error) {
       if (controller.signal.aborted) {
         run.terminalStatus = 'needs_review'; run.reason = controller.signal.reason?.message === 'timeout' ? 'timeout' : 'cancelled';
@@ -286,6 +303,9 @@ export class Coordinator {
   }
   async #publish(run: ProductRun, fixture: Fixture) {
     const bundle = buildEvidence(run, fixture, this.#runtimeLock);
+    // Persist any final accounting failure before the asynchronous bundle write so
+    // restart publication uses the same terminal record, never an earlier approval.
+    this.journal.save(run);
     await this.store.put(bundle); this.journal.save(run, bundle.bundleDigest);
   }
 }

@@ -3,6 +3,7 @@ import { digestJson } from '../packages/contracts/src/digest.ts';
 import { buildLiveExperimentPolicy, LiveExperimentAcceptanceSchema, LiveExperimentSettingsSchema } from '../packages/orchestrator/src/live-experiment-policy.ts';
 import type { OperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 import { REPEATED_CHECK_PROTOCOL } from '../packages/orchestrator/src/repeated-checks.ts';
+import { resolveCheckBatchSeconds } from '../packages/orchestrator/src/local-check-timing.ts';
 import { hashJson } from '../workers/evaluator/protocol.ts';
 import { RuntimeSchema } from './config.ts';
 import type { Configuration } from './config.ts';
@@ -79,8 +80,17 @@ export function classifyReleaseBundle(runtimeValue: unknown, mode: 'mock' | 'liv
       runtime.checkProtocol !== undefined && digestJson(runtime.checkProtocol) === digestJson(REPEATED_CHECK_PROTOCOL);
     return matches ? 'compatible_presentation' as const : 'historical_or_unbound' as const;
   }
+  // New local mock locks record their batch timing separately from the base
+  // runtime configuration. Normalize only the supported policy; unknown fields
+  // and policies must not be silently discarded to claim a current binding.
+  if (Object.hasOwn(runtime, 'localCheckTimingPolicy')) {
+    if (mode !== 'mock') return 'historical_or_unbound' as const;
+    try { resolveCheckBatchSeconds(mode, runtime); }
+    catch { return 'historical_or_unbound' as const; }
+  }
   const operational = runtime.operationalLock as { sources?: unknown; behavior?: unknown } | undefined;
-  const { localCheckImage: _image, localExecution: _execution, checkProtocol: _checks, repairPolicy: _repair, operationalLock: _lock, ...baseRuntime } = runtime;
+  const { localCheckImage: _image, localExecution: _execution, checkProtocol: _checks, repairPolicy: _repair,
+    localCheckTimingPolicy: _timing, operationalLock: _lock, ...baseRuntime } = runtime;
   return operational?.sources !== undefined && operational.behavior !== undefined && digestJson(operational.sources) === bindings.sourceDigest &&
     digestJson(operational.behavior) === bindings.protocolDigest && digestJson(baseRuntime) === bindings.runtimeDigest && mode === bindings.runtimeMode ?
     'current' as const : 'historical_or_unbound' as const;

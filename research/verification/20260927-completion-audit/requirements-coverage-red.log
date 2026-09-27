@@ -1,0 +1,297 @@
+(node:3888348) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ coverage classification: uncovered requirement with passing checks
+  ✖ baseline (171.337409ms)
+  ✖ checks_only (266.780903ms)
+  ✖ patchproof (292.837958ms)
+✖ coverage classification: uncovered requirement with passing checks (734.774117ms)
+▶ coverage classification: uncovered requirement with a known check failure
+  ✖ baseline (337.425674ms)
+  ✖ checks_only (433.90268ms)
+  ✖ patchproof (278.827413ms)
+✖ coverage classification: uncovered requirement with a known check failure (1051.769935ms)
+▶ coverage classification: all requirements covered and passing
+  ✔ baseline (255.326185ms)
+  ✔ checks_only (187.376331ms)
+  ✔ patchproof (228.318622ms)
+✔ coverage classification: all requirements covered and passing (672.165298ms)
+▶ coverage classification: all requirements covered with a known check failure
+  ✔ baseline (303.123713ms)
+  ✔ checks_only (1673.331907ms)
+  ✔ patchproof (758.625409ms)
+✔ coverage classification: all requirements covered with a known check failure (2736.101495ms)
+▶ coverage classification: a declared check cannot verify its requirement
+  ✖ baseline (547.269422ms)
+  ✖ checks_only (283.047345ms)
+  ✖ patchproof (218.605061ms)
+✖ coverage classification: a declared check cannot verify its requirement (1050.391952ms)
+▶ coverage classification: no requirement has an executable check
+  ✖ baseline (223.15459ms)
+  ✖ checks_only (234.657936ms)
+  ✖ patchproof (206.60927ms)
+✖ coverage classification: no requirement has an executable check (665.831419ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 8
+ℹ fail 16
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7207.456157
+
+✖ failing tests:
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ baseline (171.337409ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ checks_only (266.780903ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ patchproof (292.837958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ baseline (337.425674ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ checks_only (433.90268ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ patchproof (278.827413ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ baseline (547.269422ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'declared_checks_not_satisfied'
+  - 'declared_requirements_unverified'
+              ^
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:64:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'declared_checks_not_satisfied',
+    expected: 'declared_requirements_unverified',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ checks_only (283.047345ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'declared_checks_not_satisfied'
+  - 'declared_requirements_unverified'
+              ^
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:64:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'declared_checks_not_satisfied',
+    expected: 'declared_requirements_unverified',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ patchproof (218.605061ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'declared_checks_not_satisfied'
+  - 'declared_requirements_unverified'
+              ^
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:64:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'declared_checks_not_satisfied',
+    expected: 'declared_requirements_unverified',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ baseline (223.15459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'infrastructure_error'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ checks_only (234.657936ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'infrastructure_error'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/requirements-coverage.test.ts:31:15
+✖ patchproof (206.60927ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'infrastructure_error'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:63:18)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/requirements-coverage.test.ts:31:7)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

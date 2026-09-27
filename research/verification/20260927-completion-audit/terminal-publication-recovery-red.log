@@ -1,0 +1,180 @@
+(node:3906235) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ restart completes either terminal publication window without changing observations or running work
+  ✖ mock: terminal written before bundle (93.781319ms)
+  ✖ mock: bundle written before digest (92.095629ms)
+  ✖ live: terminal written before bundle (73.782018ms)
+  ✖ live: bundle written before digest (85.995818ms)
+✖ restart completes either terminal publication window without changing observations or running work (349.628019ms)
+▶ pending publication with incompatible bindings stays unavailable and preserves historical bytes
+  ✖ runtime (98.012921ms)
+  ✖ source (106.170105ms)
+  ✖ policy (77.581574ms)
+  ✖ contract (96.026918ms)
+✖ pending publication with incompatible bindings stays unavailable and preserves historical bytes (380.338853ms)
+✖ publication recovery failure remains unapproved and can later export that failure without rerunning (93.468829ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 0
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1129.908238
+
+✖ failing tests:
+
+test at tests/terminal-publication-recovery.test.ts:65:13
+✖ mock: terminal written before bundle (93.781319ms)
+  Error: Evidence is not available yet.
+      at Coordinator.evidence (file:///home/andrewmohawk/patchproof/packages/orchestrator/src/coordinator.ts:61:24)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:72:42)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:65:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    code: 'evidence_not_ready',
+    httpStatus: 409
+  }
+
+test at tests/terminal-publication-recovery.test.ts:65:13
+✖ mock: bundle written before digest (92.095629ms)
+  Error: Evidence is not available yet.
+      at Coordinator.evidence (file:///home/andrewmohawk/patchproof/packages/orchestrator/src/coordinator.ts:61:24)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:72:42)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:65:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    code: 'evidence_not_ready',
+    httpStatus: 409
+  }
+
+test at tests/terminal-publication-recovery.test.ts:65:13
+✖ live: terminal written before bundle (73.782018ms)
+  Error: Evidence is not available yet.
+      at Coordinator.evidence (file:///home/andrewmohawk/patchproof/packages/orchestrator/src/coordinator.ts:61:24)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:72:42)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:65:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    code: 'evidence_not_ready',
+    httpStatus: 409
+  }
+
+test at tests/terminal-publication-recovery.test.ts:65:13
+✖ live: bundle written before digest (85.995818ms)
+  Error: Evidence is not available yet.
+      at Coordinator.evidence (file:///home/andrewmohawk/patchproof/packages/orchestrator/src/coordinator.ts:61:24)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:72:42)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:65:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    code: 'evidence_not_ready',
+    httpStatus: 409
+  }
+
+test at tests/terminal-publication-recovery.test.ts:87:86
+✖ runtime (98.012921ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified_for_declared_checks'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:98:14)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:87:78)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified_for_declared_checks',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/terminal-publication-recovery.test.ts:87:86
+✖ source (106.170105ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified_for_declared_checks'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:98:14)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:87:78)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified_for_declared_checks',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/terminal-publication-recovery.test.ts:87:86
+✖ policy (77.581574ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified_for_declared_checks'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:98:14)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:87:78)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified_for_declared_checks',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/terminal-publication-recovery.test.ts:87:86
+✖ contract (96.026918ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified_for_declared_checks'
+  - 'needs_review'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:98:14)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:87:78)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified_for_declared_checks',
+    expected: 'needs_review',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/terminal-publication-recovery.test.ts:112:1
+✖ publication recovery failure remains unapproved and can later export that failure without rerunning (93.468829ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified_for_declared_checks'
+  - 'infrastructure_error'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/terminal-publication-recovery.test.ts:118:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified_for_declared_checks',
+    expected: 'infrastructure_error',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
