@@ -4,6 +4,14 @@ The suite, protocol planner, sealed adjudication boundary and statistical analys
 
 ## Fixed experiment grids
 
+The prerequisite [eight-task model probe](model-probe.md) has a separate offline
+planner/analyzer with one fixed baseline procedure across candidate models. Its
+catalog and real observations remain unavailable. The original v1 corpus is
+preserved while a prospective v2 is being independently authored in twelve fresh
+AI contexts; v1's shared authoring process does not meet the full independent
+repository authorship requirement. T03 remains in progress until review,
+execution and integration of v2 finish.
+
 The pilot selects the first three task IDs in lexical order from each of four development repositories: 12 tasks × baseline/PatchProof × three repetitions = 72 episodes. The final grid includes every final task: 30 tasks × baseline/checks-only/PatchProof × three repetitions = 270 episodes. Selection is based only on the frozen task manifest, before result access.
 
 All arms receive identical task statements, requirements, model lock, source, token caps, inference-call caps, wall-time caps, CPU caps and dollar reservations. The v1 proposal fixes 24 calls and 900 wall seconds. Draft input/output limits are 64,000/16,000 tokens and require development-only calibration before freezing. Branches and retries share the episode allowance. The ordinary baseline receives visible-test feedback; checks-only and PatchProof receive the same independently controlled runtime acceptance feedback. This information difference is the declared B0/B1 ablation. The maximum feedback-round allowance is identical, and final oracle feedback is always zero during repair.

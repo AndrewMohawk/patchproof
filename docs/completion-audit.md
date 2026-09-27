@@ -1,6 +1,15 @@
 # Completion audit — local implementation versus external proof
 
-Current coordinator status: the local product, guarded live factory/session,
+Current coordinator status: a fresh PRD audit reopened two local requirements:
+independent authorship of all twelve fixture repositories, and the eight-task
+model-selection probe. The original v1 corpus is preserved while separate fresh
+AI author jobs prepare v2 under independent review. Probe planning/analysis is
+being added; real catalog discovery and observations await account access.
+T10's uncoached human acceptance also remains unverified despite successful
+automated browser checks. These are current gaps, distinct from the historical
+implementation review below.
+
+The local product, guarded live factory/session,
 protected adjudication, accounting intake, reviewer tools and release-packet
 tooling are implemented. The implementation gaps in the original review below
 are historical; subsequent source-bound verification sections record their

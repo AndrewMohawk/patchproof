@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "coordinator-author-launch-record",
+  "corpusVersion": "v2",
+  "status": "in_progress",
+  "recordedAt": "2026-09-27T12:49:32.956440+00:00",
+  "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
+  "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
+  "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
+  "originalCorpusPreserved": true,
+  "scoredModelRuns": 0,
+  "providerSpendUsd": 0,
+  "jobs": [
+    {
+      "slot": "repo01",
+      "agent": "/root/corpus_v2_repo01",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
+      "status": "review_revision_requested",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:1cf967741411d3736291164692c1e763df4e7106457225cbb28ced54723249fc"
+        }
+      ]
+    },
+    {
+      "slot": "repo02",
+      "agent": "/root/corpus_v2_repo02",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
+      "status": "authoring",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": []
+    }
+  ]
+}

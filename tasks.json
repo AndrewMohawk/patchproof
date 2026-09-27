@@ -72,7 +72,7 @@
       "id": "T03",
       "title": "Author independently reviewed fixture suite and split",
       "owner_role": "evaluation engineer",
-      "status": "complete",
+      "status": "in_progress",
       "depends_on": [
         "T02"
       ],
@@ -93,7 +93,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "60 original synthetic tasks across 12 repositories, separate evaluator workspace, all gold/start/repeat checks pass; independent review: 25 findings resolved. Root-safe receipts bind final manifest. Human review and production OS account separation remain separate release limitations.",
+      "implementation_note": "Original 60-task synthetic v1 corpus and oracle checks remain preserved. Full PRD independent-authorship requirement is not met by that shared authoring process. Prospective v2 uses 12 clean-context author jobs, one repo each, separate review and immutable author provenance; authoring/review/validation and integration are in progress. No scored model experiment has run.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -327,7 +327,7 @@
       "id": "T10",
       "title": "Build task, comparison and evidence UI",
       "owner_role": "product engineer",
-      "status": "complete",
+      "status": "blocked",
       "depends_on": [
         "T02",
         "T09"
@@ -348,7 +348,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Three-screen loopback product plus read-only curated archive with recorded live/mock labels, exact evidence downloads and no execution route. Real local browser/container flow and synthetic archive browser controls pass. Built before pilot by owner instruction; actual provider-state validation and uncoached human exercise remain pending.",
+      "implementation_note": "Three-screen local product and read-only recorded archive are implemented and tested. Prior complete status described code only and overstated the uncoached human acceptance criterion; that evidence is pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -357,7 +357,8 @@
         "docs/evidence-archive.md",
         "research/verification/20260927-merged-ui-docker/verification.json",
         "research/verification/20260927-trusted-replay/receipt.json"
-      ]
+      ],
+      "blocked_reason": "UI implementation, local browser flow and synthetic archive controls are verified. Explicit acceptance without coaching has no actual human observation yet; live-provider state validation also awaits access."
     },
     {
       "id": "T11",
@@ -514,7 +515,7 @@
       ]
     }
   ],
-  "execution_as_of": "2026-09-27T12:27:43.706492+00:00",
+  "execution_as_of": "2026-09-27T12:49:32.956954+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {
