@@ -5,6 +5,7 @@ import type { CheckRunner, CheckResult, SandboxCheckResult } from '../../package
 import type { NebiusSandboxTransport } from './nebius.ts';
 import { SandboxTransportError, SandboxVerificationSchema, terminalOperation, decodeStream, waitForPoll } from './nebius-types.ts';
 import type { SandboxOperation, SandboxVerification } from './nebius-types.ts';
+import { usdToMicros } from '../../packages/orchestrator/src/budget-ledger.ts';
 
 export interface NebiusSandboxRunnerOptions {
   transport: NebiusSandboxTransport;
@@ -22,7 +23,7 @@ export class NebiusSandboxCheckRunner implements CheckRunner {
   readonly #options: NebiusSandboxRunnerOptions | undefined;
   readonly #pollMs: number;
   readonly #cleanupMs: number;
-  #reservedUsd = 0;
+  #reservedMicros = 0n;
   constructor(options?: NebiusSandboxRunnerOptions) {
     this.#options = options && { ...options, verification: structuredClone(options.verification) };
     this.#pollMs = options?.pollIntervalMs ?? 250;
@@ -84,11 +85,13 @@ export class NebiusSandboxCheckRunner implements CheckRunner {
         cases.data.some(c => !/^[A-Za-z][A-Za-z0-9_]*$/.test(c.function) || Buffer.byteLength(JSON.stringify({ function: c.function, args: c.args, kwargs: c.kwargs })) > 131_072)) return unavailable('invalid_candidate_input');
     const input = { ...original, files: { ...original.files }, cases: cases.data };
     if (Date.parse(receipt.validUntil) <= Date.now() + input.timeoutSeconds * 1000 + this.#cleanupMs) return unavailable('sandbox_verification_expires_during_batch');
-    const charge = receipt.billing.conservativeBatchChargeCeilingUsd;
-    if (this.#reservedUsd + charge > this.#options!.maxApprovedSpendUsd) return unavailable('sandbox_budget_reservation_unavailable');
+    let charge: bigint, allowance: bigint;
+    try { charge = usdToMicros(receipt.billing.conservativeBatchChargeCeilingUsd, 'ceil'); allowance = usdToMicros(this.#options!.maxApprovedSpendUsd); }
+    catch { return unavailable('sandbox_budget_reservation_unavailable'); }
+    if (this.#reservedMicros + charge > allowance) return unavailable('sandbox_budget_reservation_unavailable');
     // Reserve synchronously before any await or external side effect. The durable budget owner must
     // supply a fresh allowance per process; this adapter is deliberately not wired to live startup.
-    this.#reservedUsd += charge;
+    this.#reservedMicros += charge;
     const deadline = Date.now() + Math.floor(input.timeoutSeconds * 1000);
     const bounded = AbortSignal.any([signal, AbortSignal.timeout(Math.floor(input.timeoutSeconds * 1000))]);
     const operationIds: string[] = [], checks: CheckResult[] = [];

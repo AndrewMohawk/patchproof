@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0",
+  "recordedAt": "2026-09-27T11:08:56.224Z",
+  "baseCommit": "9eb5e5d30ba4f8f38ff9302d45c145cd49603a10",
+  "scope": "synthetic-injected-transports-and-local-regression-tests",
+  "actualProviderCalls": 0,
+  "actualSpendUsd": 0,
+  "benchmarkExecuted": false,
+  "commands": [
+    {
+      "command": "node --test tests/live-experiment.test.ts tests/experiment-executor.test.ts tests/experiment-trace-store.test.ts tests/trusted-smoke.test.ts tests/runtime-repair.test.ts tests/nebius-runner.test.ts tests/orchestrator.test.ts tests/repair-policy.test.ts",
+      "exitCode": 0,
+      "passed": 92,
+      "failed": 0,
+      "log": "research/verification/20260927-live-experiment/tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-experiment/typecheck.log"
+    },
+    {
+      "command": "npm run check:contracts",
+      "exitCode": 0,
+      "log": "research/verification/20260927-live-experiment/contracts.log"
+    }
+  ],
+  "sources": {
+    "packages/orchestrator/src/experiment-executor.ts": "sha256:2dcb9b99d23ac1eda6944c0e5774f9bf7874c20c274cd356fe3842dee9fd4f85",
+    "packages/orchestrator/src/experiment-executor-core.ts": "sha256:00c0a77ca4c10ebd242b376e51bddec2acbe8b5436d48edec47749de95762568",
+    "packages/orchestrator/src/experiment-policy.ts": "sha256:02a74573852fc24085739477df2d0aed10fe5d8b6e3512b7b63a5b4d91257357",
+    "packages/orchestrator/src/live-experiment.ts": "sha256:a5ee1ba0a208b09cf1131445364513bbaf694ff6a42a59e22e1c0b7f9f3b132f",
+    "packages/orchestrator/src/live-experiment-policy.ts": "sha256:a568fb990dc71f02a800cc83201b2ea7f57687f75da8769225db2a7bf93b8955",
+    "workers/sandbox/nebius-runner.ts": "sha256:8aba0a3a96b9c280133832e4d3c34ed06430234586050bc1a11fb3de4785d699",
+    "tests/live-experiment.test.ts": "sha256:fef63e6023e30cc74aa7feaef3401a47ed78acb57c25d23863320b7c02836cea"
+  },
+  "typeOnlyPrerequisite": {
+    "path": "packages/orchestrator/src/phase-accounting.ts",
+    "sha256": "sha256:5ee140ca2db8100a28a974ed3530428c7fbb79dd285012275cc4b0454d04afab",
+    "owner": "parent coordinator",
+    "status": "Copied for typecheck; intentionally excluded from this task commit. Parent integrates its independently tested module."
+  },
+  "artifacts": {
+    "research/verification/20260927-live-experiment/tests.log": "sha256:81455715bbfc3c82974259471e56867580c03984a12076e8eafdd056d832f01a",
+    "research/verification/20260927-live-experiment/typecheck.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260927-live-experiment/contracts.log": "sha256:de96bf6bdfa2c16e44efc35945060cec3a30ebdaa93c917c623c00f4f359db97"
+  },
+  "externalInterfaces": {
+    "model": "Existing NebiusRepairProvider documented chat completion mapping, unchanged.",
+    "sandbox": "Existing Nebius sandbox /v1 HTTP mapping, unchanged; batch ceiling arithmetic now exact microdollars.",
+    "addedDependencies": []
+  },
+  "remainingGates": [
+    "Actual independently accepted development calibration and immutable live policy/model/source bindings.",
+    "Real model/account/license/context/tokenizer/rate verification and complete approved episode limits.",
+    "Real sandbox equivalent controls, overhead, cancellation, retention and billing evidence.",
+    "Actual accepted runtime/adjudication phase receipts and whole-episode reconciliation; quotes and unspecified-unit API cost are not measured USD."
+  ],
+  "notRun": [
+    {
+      "check": "Real provider/model/sandbox/accounting/benchmark execution",
+      "reason": "No account access, accepted real proofs, or credentials available; no paid call was authorized by these tests."
+    },
+    {
+      "check": "Parent private session CLI and protected adjudication integration",
+      "reason": "Independent parent/evaluator modules are outside this task; parent performs integrated validation after merge."
+    }
+  ],
+  "assurance": [
+    "All proof records, accounts, fixture bytes, provider responses and accounting observations in this test file are explicitly invented synthetic controls.",
+    "No sealed fixture, gold patch or evaluator oracle was read; no candidate Python was executed by these tests.",
+    "Dispatcher remains sole durable grant owner; executor and phase observer do not reserve, markAttempted, reconcile, release or cancel ledger grants.",
+    "Unknown accounting prevents FinalizedExecution and preserves the hold; live runtime traces alone never claim benchmarkExecuted."
+  ]
+}

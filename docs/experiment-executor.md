@@ -57,7 +57,9 @@ dispatcher result, never inferred from runtime approval.
 
 The constructor rejects a live model provider, a runtime without a synthetic marker,
 or a checker without a synthetic marker. It supplies no credentials, network
-transport, live factory, CLI path or fallback. Injected synthetic dependencies are
+transport, CLI path or fallback. A separate [guarded live factory](live-experiment-runtime.md)
+constructs the real adapters only behind accepted protocol/account/control and
+dispatcher-grant gates; this synthetic constructor cannot issue that authority. Injected synthetic dependencies are
 trusted local code; a caller falsely labeling arbitrary code synthetic is outside
 this marker check's assurance. No real provider integration was performed.
 
@@ -106,7 +108,7 @@ The executor connects to the public dispatcher interface in a synthetic integrat
 test; independent adjudication there is an invented aggregate response, not an oracle
 execution. Existing product/smoke regressions verify the shared-loop refactor.
 
-Real execution remains **NOT RUN**. A live adapter still requires development-data
+Real execution remains **NOT RUN**. The separately implemented live factory still requires actual development-data
 calibration, exact model/license/context/tokenizer/sampling verification, real account
 controls, a prospective full-episode cost/CPU/wall envelope including adjudication,
 durable grant verification, actual billing reconciliation and verified cleanup.
