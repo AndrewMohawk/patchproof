@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "patchproof-experiment-session-author-verification",
+  "createdAt": "2026-09-27T11:00:46.317666+00:00",
+  "baseCommit": "9eb5e5d30ba4f8f38ff9302d45c145cd49603a10",
+  "sourceScope": "trusted operator session metadata and injected inert transports",
+  "artifacts": [
+    {
+      "path": "workers/evaluator/experiment-session.ts",
+      "sha256": "c67533569cb1e5be21e60acb61a50899bd9e247c3317e8cb2de118bfffc6d30b"
+    },
+    {
+      "path": "scripts/experiment-session-cli.ts",
+      "sha256": "7afa207e6d0d1596134d78f9e8c0f813438847da7e72082c6bb25b7b42b85997"
+    },
+    {
+      "path": "tests/experiment-session.test.ts",
+      "sha256": "21fe5239398719e60c9ed9ab24785c6fa3ed64de4a0997d5b220e8bbb7f4ada7"
+    },
+    {
+      "path": "docs/experiment-session.md",
+      "sha256": "03caec53e629705ca3f1afddd9053a1783d0959056cace773b497dda6c9830bb"
+    },
+    {
+      "path": "research/verification/runtime-followup/experiment-session-tests.log",
+      "sha256": "61a71049b0a62b9c6a786d4970cab4deddc52ea470428874789f6b899b7b6fdf"
+    },
+    {
+      "path": "research/verification/runtime-followup/experiment-session-typecheck.log",
+      "sha256": "1806e2301038141d9460d9e7178f2c34bfbb664ac87360ce13cc6ce0e9903890"
+    }
+  ],
+  "executedChecks": [
+    {
+      "command": "node --test tests/experiment-session.test.ts",
+      "exitCode": 0,
+      "passed": 17,
+      "failed": 0,
+      "log": "research/verification/runtime-followup/experiment-session-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "research/verification/runtime-followup/experiment-session-typecheck.log"
+    }
+  ],
+  "independentReview": {
+    "status": "pending",
+    "scope": "Separate metadata and lifecycle review requested; this receipt records author controls only."
+  },
+  "authorHardening": [
+    "Run-command failures report executionPerformed as unknown; durable state may already include dispatch.",
+    "Teardown failure is audited without reopening terminal work and teardown is attempted once.",
+    "Concurrent commands report which invocation entered the executor; one durable claim remains the dispatcher responsibility."
+  ],
+  "limitations": [
+    "No actual provider or candidate execution; no corpus or sealed contents read.",
+    "Injected factory creation and close must have no paid side effects; remote work belongs inside bounded callbacks.",
+    "The standalone CLI installs no runtime factory, credentials, ledger approval, or current readiness evidence.",
+    "Concrete provider factory and authoritative phase-accounting integration remain separate work.",
+    "Interrupted malformed journal metadata requires explicit operator review.",
+    "Hashes establish integrity, not source execution authenticity."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "spendUsd": 0
+}
