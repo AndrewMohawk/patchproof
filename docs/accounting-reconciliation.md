@@ -1,6 +1,6 @@
 # Trusted accounting receipt import
 
-`packages/orchestrator/src/accounting-receipts.ts` imports an operator-reviewed cumulative accounting receipt into the existing `BudgetLedger`. It has no provider, cleanup, retry, dispatch or credential callbacks. This module does not fetch billing evidence, establish its authenticity, grant account access or run an episode. Live billing verification and the CLI/runtime call site remain integration work.
+`packages/orchestrator/src/accounting-receipts.ts` imports an operator-reviewed cumulative accounting receipt into the existing `BudgetLedger`. It has no provider, cleanup, retry, dispatch or credential callbacks. This module does not fetch billing evidence, establish its authenticity, grant account access or run an episode. The [private operator command](accounting-operator.md) now supplies explicit receipt import and expired-write recovery. Live billing verification and automatic runtime ingestion remain integration work.
 
 The receipt binds the reservation ID, episode ID, immutable reservation fingerprint, stage, reserved microdollars, source digest and frozen experiment-plan digest. Pilot/evaluation receipts require a plan digest. Operation records bind each intent to its remote operation ID or an evidenced `confirmed_not_created` outcome. An unknown/lost intent remains unresolved. Cleanup has a separate observation digest. Strict schemas exclude candidate files, checks, outputs and arbitrary extra fields; callers must also keep sensitive content out of identifiers and digest inputs.
 

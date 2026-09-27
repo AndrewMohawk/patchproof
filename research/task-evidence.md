@@ -250,3 +250,21 @@ terminal runs. No provider call, paid charge, live experiment, human response or
 public release occurred. A calibrated live factory/session, operator commands,
 authoritative billing/cleanup ingestion and aggregate export integration still
 require work; account access alone does not supply those components.
+
+## Private accounting operator
+
+The explicit `import` and `recover-expired` commands now connect reviewed metadata
+to the durable accounting importer. Inputs require private external paths and a
+separately supplied context digest; the command refuses missing/empty ledgers and
+missing reservations before journal initialization. It never reserves, grants a
+dispatch, changes approval, obtains credentials or reopens an episode. Eight new
+controls include actual CLI subprocess output, unknown holds and expired prepared
+recovery. The combined accounting/ledger suite passed **66 tests**, and typecheck
+exited 0. Source hashes, commands, exit codes and logs are in
+`verification/20260927-operator-integration/accounting-operator-receipt.json`.
+
+Changed source: `scripts/accounting-cli.ts`, `scripts/operator-files.ts`; documentation
+and focused tests accompany them. The exact external runtime remains Node 25.5.0
+and pinned Zod 4.1.12; no new provider interface or dependency was introduced.
+Provider billing authenticity and automatic runtime ingestion remain unverified.
+All inputs in these checks are invented metadata; paid calls and actual spend are 0.

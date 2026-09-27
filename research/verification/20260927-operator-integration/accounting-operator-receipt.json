@@ -1,0 +1,39 @@
+{
+  "kind": "synthetic-accounting-operator-validation",
+  "observedAt": "2026-09-27T10:24:27.503638+00:00",
+  "baseCommit": "f748c3211b494f67572760944bf2761b9a125caa",
+  "sourceWorkingTreeDirty": true,
+  "providerCalls": 0,
+  "actualProviderSpendUsd": 0,
+  "authenticityVerified": false,
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/accounting-cli.test.ts",
+        "tests/accounting-receipts.test.ts",
+        "tests/accounting-receipts-independent.test.ts",
+        "tests/budget-ledger.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-operator-integration/accounting-operator-tests.log",
+      "sha256": "e80e748fba2639f2edf816d79ce14210d0d75eeaf64e39a152e1a7a1ee3c000b"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "research/verification/20260927-operator-integration/accounting-operator-typecheck.log",
+      "sha256": "bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71"
+    }
+  ],
+  "files": {
+    "scripts/accounting-cli.ts": "sha256:72517ed8e9a8de67a6ba987d0acd656118f9831a519d4d69ee5f8845056b2d35",
+    "scripts/operator-files.ts": "sha256:d67985b2217e7276abe15cfc5a1fb36730a7eb110667da7564903347c1a8f330",
+    "tests/accounting-cli.test.ts": "sha256:b9fa617d9bfadabafa5dc577c2a14799f4345bf97f52ad350651b1a3c413b654"
+  }
+}
