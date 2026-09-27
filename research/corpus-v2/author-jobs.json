@@ -3,7 +3,7 @@
   "kind": "coordinator-author-launch-record",
   "corpusVersion": "v2",
   "status": "in_progress",
-  "recordedAt": "2026-09-27T12:49:32.956440+00:00",
+  "recordedAt": "2026-09-27T12:54:59.178320+00:00",
   "basis": "Coordinator record of actual collaboration.spawn_agent calls. Not an independently authenticated platform audit.",
   "sharedInstructions": "/home/andrewmohawk/patchproof-evaluation-v2/shared/author-instructions.md",
   "isolation": "Separate fresh AI contexts with identical shared contract; same host and OS identity. Procedural authoring boundary, not OS isolation or independent human/model populations.",
@@ -16,12 +16,16 @@
       "agent": "/root/corpus_v2_repo01",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo01",
-      "status": "review_revision_requested",
+      "status": "revision-002-review-pending",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": [
         {
           "revision": "revision-001",
           "submissionDigest": "sha256:1cf967741411d3736291164692c1e763df4e7106457225cbb28ced54723249fc"
+        },
+        {
+          "revision": "revision-002",
+          "submissionDigest": "sha256:5682aeb3b0cdec351ebb12546155e76a268334b2b300b4bb6e3686ca3be0a8cd"
         }
       ]
     },
@@ -30,6 +34,29 @@
       "agent": "/root/corpus_v2_repo02",
       "forkTurns": "none",
       "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo02",
+      "status": "review-pending",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": [
+        {
+          "revision": "revision-001",
+          "submissionDigest": "sha256:0dbc8ea49b1054d7a5456e9d65932c82c11e37c005483e645d477abfdbc45e94"
+        }
+      ]
+    },
+    {
+      "slot": "repo03",
+      "agent": "/root/corpus_v2_repo03",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo03",
+      "status": "authoring",
+      "launchTool": "collaboration.spawn_agent",
+      "submittedRevisions": []
+    },
+    {
+      "slot": "repo04",
+      "agent": "/root/corpus_v2_repo04",
+      "forkTurns": "none",
+      "workspace": "/home/andrewmohawk/patchproof-evaluation-v2/authors/repo04",
       "status": "authoring",
       "launchTool": "collaboration.spawn_agent",
       "submittedRevisions": []

@@ -13,6 +13,14 @@ replay timeout are linked in `verification/20260927-trusted-replay/receipt.json`
 Live-protocol test documents and fake provider observations are synthetic only.
 These paths are ready for future verified inputs; they do not close the gates below.
 
+A subsequent PRD audit reopened T03: the original v1 suite was independently
+reviewed but came from one authoring process. Twelve fresh AI author jobs are now
+preparing a prospective v2 under separate review; original evidence remains
+preserved. The eight-task model-probe planner/analyzer has been added in `3f5735d`:
+the full suite passed 545 tests, and 19 author/independent probe controls passed
+after integration. Its real catalog and observations are still NOT RUN. See
+`verification/20260927-model-probe/receipt.json` and the independent receipt.
+
 ## Provider integration (T01/T04, G0/G1)
 
 Access has been deliberately deferred. When supplied through an approved file or
@@ -38,10 +46,10 @@ provisioner outside the repository, candidate workspaces and logs, the next work
 | Task/gate | Implemented locally | Still required |
 |---|---|---|
 | T02 | Typed contracts, version locks, tests, workspace | Live provider contract verification. |
-| T03 | 60 authored synthetic tasks; separate evaluator; gold/start/repeat validation and independent review | Scored-experiment protocol freeze and production evaluator account separation. |
+| T03 | Preserved v1 corpus/evidence; prospective v2 independent author jobs and separate reviewer | Finish twelve independently authored repositories, corrections, runtime validation and integration; protocol freeze and production evaluator account separation. |
 | T05–T08 | Three bounded policies, protected checks, durable journal, export and fresh local replay | Live matched usage, sponsor cancellation and billing reconciliation. |
 | T09/G2 | Fixed 72-episode planner, bounded live factory, private dispatcher and analysis | Actual calibrated/account proofs, real pilot, affordable price projection and written continuation decision. |
-| T10 | Task/comparison/evidence views; real local checks and browser flow | Live-provider state validation and uncoached reviewer exercise. |
+| T10 | Task/comparison/evidence views; real local checks and browser flow; neutral exercise protocol and blank sheet | Live-provider state validation and actual uncoached human exercise. |
 | T11/G3 | Fixed 270-episode planner, private dispatch, protected phase-accounted adjudication and clustered analysis | Authorized final budget, real final runs, ablations and reviewer study. |
 | T12 | Local lifecycle tests and operations runbook | Public deployment authorization, hardened operator boundary and funded judge access. |
 | T13/G4 | Setup guide, honest draft/storyboard/platform feedback | Sponsor-backed runs, final recording and public licensed source. |

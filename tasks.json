@@ -126,7 +126,7 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open.",
+      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN.",
       "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open.",
       "evidence": [
         "research/task-evidence.md",
@@ -137,7 +137,10 @@
         "research/verification/runtime-followup/trusted-smoke-verification.json",
         "docs/trusted-smoke-operator.md",
         "research/verification/20260927-smoke-operator/receipt.json",
-        "research/verification/20260927-docker-integration/integration-receipt.json"
+        "research/verification/20260927-docker-integration/integration-receipt.json",
+        "docs/model-probe.md",
+        "research/verification/20260927-model-probe/receipt.json",
+        "research/verification/20260927-model-probe-independent/review.json"
       ]
     },
     {
@@ -356,7 +359,9 @@
         "research/verification/20260927-docker-integration/integration-receipt.json",
         "docs/evidence-archive.md",
         "research/verification/20260927-merged-ui-docker/verification.json",
-        "research/verification/20260927-trusted-replay/receipt.json"
+        "research/verification/20260927-trusted-replay/receipt.json",
+        "docs/uncoached-product-exercise.md",
+        "docs/uncoached-product-observation.json"
       ],
       "blocked_reason": "UI implementation, local browser flow and synthetic archive controls are verified. Explicit acceptance without coaching has no actual human observation yet; live-provider state validation also awaits access."
     },
@@ -515,7 +520,7 @@
       ]
     }
   ],
-  "execution_as_of": "2026-09-27T12:49:32.956954+00:00",
+  "execution_as_of": "2026-09-27T12:54:59.178795+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {
