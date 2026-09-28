@@ -38,7 +38,7 @@ let releaseOld: () => void = () => {};
 const oldGate = new Promise<void>(resolve => { releaseOld = resolve; });
 const methods: string[] = [], evidenceRequests: string[] = [], unexpectedRequests: string[] = [];
 const assetEntries = await Promise.all([
-  ['/', 'index.html', 'text/html'], ['/app.js', 'app.js', 'text/javascript'], ['/walkthrough.js', 'walkthrough.js', 'text/javascript'], ['/style.css', 'style.css', 'text/css'],
+  ['/', 'index.html', 'text/html'], ['/app.js', 'app.js', 'text/javascript'], ['/walkthrough.js', 'walkthrough.js', 'text/javascript'], ['/diff-view.js', 'diff-view.js', 'text/javascript'], ['/style.css', 'style.css', 'text/css'],
 ].map(async ([path, file, type]) => [path!, { bytes: await readFile(new URL(`../apps/web/${file}`, import.meta.url)), type: type! }] as const));
 const assets = new Map(assetEntries);
 const activeRun = (matches: boolean): ProductRun => ({ ...structuredClone(currentRun), phase: 'check', terminalStatus: null,

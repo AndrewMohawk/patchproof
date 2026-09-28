@@ -1,0 +1,1147 @@
+{
+  "schemaVersion": "1.0",
+  "corpusId": "owned-public-development-v3",
+  "purpose": "curated product demonstrations and public development; not a scored experiment",
+  "license": "CC0-1.0",
+  "authoredAt": "2026-09-28",
+  "originalCorpusPreserved": true,
+  "taskCount": 10,
+  "totalChecks": 220,
+  "visibleChecks": 50,
+  "referenceRepairsIncluded": false,
+  "tasks": [
+    {
+      "id": "v3-config-overlay",
+      "entrypoint": "config_overlay.py",
+      "sourceLines": 79,
+      "helperFunctions": 6,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 15,
+      "referencePassed": 22,
+      "fixtureSha256": "a7663ad187e6768787893538a2bb24b4963094967276963935dc6afb9a710664",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-config-overlay-nested-list",
+          "passed": false,
+          "outcome": {
+            "config": {
+              "service": {
+                "host": "api",
+                "timeout": 45
+              },
+              "regions": [
+                "us",
+                "eu"
+              ]
+            },
+            "changed": [
+              "regions",
+              "service"
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-config-overlay-null-data",
+          "passed": false,
+          "outcome": {
+            "config": {},
+            "changed": [
+              "note"
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-config-overlay-reverted",
+          "passed": true,
+          "outcome": {
+            "config": {
+              "a": 1
+            },
+            "changed": []
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-config-overlay-types",
+          "passed": true,
+          "outcome": {
+            "config": {
+              "enabled": 1
+            },
+            "changed": [
+              "enabled"
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-config-overlay-invalid-layer",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 4
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 3
+        }
+      ],
+      "sourceDigest": "sha256:796e09f3c5730d87c5c480ece50618e8fe9ffddd676ab65d750ca59a3a242294",
+      "policyDigest": "sha256:2fad0915b9b443e0ec42cc32e6ba3a011c3fae66f9bada300470a6a9d3cd2c2d"
+    },
+    {
+      "id": "v3-cursor-pagination",
+      "entrypoint": "cursor_pagination.py",
+      "sourceLines": 63,
+      "helperFunctions": 6,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 16,
+      "referencePassed": 22,
+      "fixtureSha256": "dab3c3151551a5f3a5316af6742eb7612c57e49ab8381e6f65cd7bad06309958",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "passed": true,
+          "outcome": {
+            "items": [
+              {
+                "id": "a",
+                "updated": 5,
+                "deleted": false,
+                "label": "A"
+              },
+              {
+                "id": "b",
+                "updated": 5,
+                "deleted": false,
+                "label": "B"
+              }
+            ],
+            "nextCursor": [
+              5,
+              "b"
+            ],
+            "hasMore": true
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "passed": false,
+          "outcome": {
+            "items": [
+              {
+                "id": "b",
+                "updated": 5,
+                "deleted": false,
+                "label": "B"
+              },
+              {
+                "id": "c",
+                "updated": 3,
+                "deleted": false,
+                "label": "C"
+              }
+            ],
+            "nextCursor": [
+              3,
+              "c"
+            ],
+            "hasMore": true
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "passed": false,
+          "outcome": {
+            "items": [
+              {
+                "id": "a",
+                "updated": 1,
+                "deleted": false,
+                "label": "A"
+              }
+            ],
+            "nextCursor": null,
+            "hasMore": false
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "passed": false,
+          "outcome": {
+            "items": [
+              {
+                "id": "a",
+                "updated": 5,
+                "deleted": false,
+                "label": "A"
+              },
+              {
+                "id": "b",
+                "updated": 5,
+                "deleted": false,
+                "label": "B"
+              }
+            ],
+            "nextCursor": [
+              5,
+              "b"
+            ],
+            "hasMore": true
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 4,
+          "rejectedByChecks": 2
+        }
+      ],
+      "sourceDigest": "sha256:626e73754e2ae3a503bbb64d4bb43e38b7bcc5e591b07d6ac655e9a7855c7f5b",
+      "policyDigest": "sha256:cf4d0ec5af3c9c3fa120cdaf1fd42fe70cf86228ce424a4fd70d2205b9c25de1"
+    },
+    {
+      "id": "v3-inventory-reservation",
+      "entrypoint": "inventory_reservation.py",
+      "sourceLines": 65,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 18,
+      "referencePassed": 22,
+      "fixtureSha256": "b9500ad1d63559b0ecc9256a54a0fedaed2f7b8614c4e9cd632557ea9ea01c92",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-inventory-reservation-priority",
+          "passed": false,
+          "outcome": {
+            "orders": [
+              {
+                "id": "low",
+                "reserved": true,
+                "shortages": {}
+              },
+              {
+                "id": "high",
+                "reserved": false,
+                "shortages": {
+                  "a": 1
+                }
+              }
+            ],
+            "available": {
+              "a": 1
+            }
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-inventory-reservation-atomic",
+          "passed": false,
+          "outcome": {
+            "orders": [
+              {
+                "id": "first",
+                "reserved": false,
+                "shortages": {
+                  "b": 1
+                }
+              },
+              {
+                "id": "second",
+                "reserved": false,
+                "shortages": {
+                  "a": 2
+                }
+              }
+            ],
+            "available": {
+              "a": 1,
+              "b": 0
+            }
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-inventory-reservation-duplicate-lines",
+          "passed": false,
+          "outcome": {
+            "orders": [
+              {
+                "id": "x",
+                "reserved": true,
+                "shortages": {}
+              }
+            ],
+            "available": {
+              "a": 1
+            }
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-inventory-reservation-empty-order",
+          "passed": true,
+          "outcome": {
+            "orders": [
+              {
+                "id": "empty",
+                "reserved": true,
+                "shortages": {}
+              }
+            ],
+            "available": {
+              "a": 0
+            }
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-inventory-reservation-bool-quantity",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 1
+        }
+      ],
+      "sourceDigest": "sha256:dea54afa5fcb956b7ded696f887d0746f31c56f31ccad16e4305fe9024fa76ff",
+      "policyDigest": "sha256:58e9398abbbb00f1760c3b257b868bcacc47b5f590b7a039e67d64217b1cca40"
+    },
+    {
+      "id": "v3-invoice-allocation",
+      "entrypoint": "invoice_allocation.py",
+      "sourceLines": 63,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 13,
+      "referencePassed": 22,
+      "fixtureSha256": "fdd2192d8de1d2926de4aecbd35d5c9e25a10a7cd639e372c7b7e73044ba92e1",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-invoice-allocation-discount-before-tax",
+          "passed": false,
+          "outcome": {
+            "lines": [
+              {
+                "id": "service",
+                "subtotal": 1000,
+                "discount": 200,
+                "tax": 100,
+                "total": 900
+              },
+              {
+                "id": "book",
+                "subtotal": 500,
+                "discount": 100,
+                "tax": 0,
+                "total": 400
+              }
+            ],
+            "subtotal": 1500,
+            "discount": 300,
+            "tax": 100,
+            "total": 1300
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-invoice-allocation-remainder-tie",
+          "passed": false,
+          "outcome": {
+            "lines": [
+              {
+                "id": "b",
+                "subtotal": 100,
+                "discount": 1,
+                "tax": 0,
+                "total": 99
+              },
+              {
+                "id": "a",
+                "subtotal": 100,
+                "discount": 0,
+                "tax": 0,
+                "total": 100
+              }
+            ],
+            "subtotal": 200,
+            "discount": 1,
+            "tax": 0,
+            "total": 199
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-invoice-allocation-half-cent",
+          "passed": false,
+          "outcome": {
+            "lines": [
+              {
+                "id": "a",
+                "subtotal": 1,
+                "discount": 0,
+                "tax": 0,
+                "total": 1
+              }
+            ],
+            "subtotal": 1,
+            "discount": 0,
+            "tax": 0,
+            "total": 1
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-invoice-allocation-empty",
+          "passed": true,
+          "outcome": {
+            "lines": [],
+            "subtotal": 0,
+            "discount": 0,
+            "tax": 0,
+            "total": 0
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-invoice-allocation-discount-too-large",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 5
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 2
+        }
+      ],
+      "sourceDigest": "sha256:14bb1c44c20bcc04209208e7a93d587c5da1e0768d17cc3ecb9e9e9ecb08800a",
+      "policyDigest": "sha256:a93ad27da8cbdf0b76957fe99c64ad29c4b061b3a36cd99c68bbb6bd6714570d"
+    },
+    {
+      "id": "v3-ttl-cache",
+      "entrypoint": "ttl_cache.py",
+      "sourceLines": 74,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 16,
+      "referencePassed": 22,
+      "fixtureSha256": "56084a0f4cf26242b3a621afd031d8559825ccd8b3e483cbd9284fc526ee2207",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-ttl-cache-expiry-boundary",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "stored": true
+              },
+              {
+                "hit": true,
+                "value": 1
+              }
+            ],
+            "entries": [
+              {
+                "key": "a",
+                "value": 1,
+                "expires": 5
+              }
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-ttl-cache-read-recency",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "stored": true
+              },
+              {
+                "stored": true
+              },
+              {
+                "hit": true,
+                "value": 1
+              },
+              {
+                "stored": true
+              },
+              {
+                "hit": true,
+                "value": 2
+              }
+            ],
+            "entries": [
+              {
+                "key": "b",
+                "value": 2,
+                "expires": null
+              },
+              {
+                "key": "c",
+                "value": 3,
+                "expires": null
+              }
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-ttl-cache-replace-no-eviction",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "stored": true
+              },
+              {
+                "stored": true
+              },
+              {
+                "stored": true
+              }
+            ],
+            "entries": [
+              {
+                "key": "b",
+                "value": 3,
+                "expires": null
+              }
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-ttl-cache-null-hit",
+          "passed": true,
+          "outcome": {
+            "results": [
+              {
+                "stored": true
+              },
+              {
+                "hit": true,
+                "value": null
+              }
+            ],
+            "entries": [
+              {
+                "key": "a",
+                "value": null,
+                "expires": null
+              }
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-ttl-cache-backward-time",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 4
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 1
+        }
+      ],
+      "sourceDigest": "sha256:7a77bebeb80e81fab003d0f392a66d1693c6ee413990d448da65389b7fdf2044",
+      "policyDigest": "sha256:bf704d283eeed52023d2b1bd7640541cb443f1bbb19afd48aadac5213803233a"
+    },
+    {
+      "id": "v3-weekly-schedule",
+      "entrypoint": "weekly_schedule.py",
+      "sourceLines": 70,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 15,
+      "referencePassed": 22,
+      "fixtureSha256": "4e329aa55987e8e76ad50e10c6ab99361211f6b76a4900e3e71fdfb8f8f1da8e",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-weekly-schedule-overnight",
+          "passed": false,
+          "outcome": [
+            {
+              "resource": "room",
+              "day": 0,
+              "start": 1380,
+              "end": 1440
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-weekly-schedule-adjacent",
+          "passed": false,
+          "outcome": [
+            {
+              "resource": "room",
+              "day": 0,
+              "start": 60,
+              "end": 120
+            },
+            {
+              "resource": "room",
+              "day": 0,
+              "start": 120,
+              "end": 180
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-weekly-schedule-split-blackout",
+          "passed": false,
+          "outcome": [
+            {
+              "resource": "room",
+              "day": 0,
+              "start": 60,
+              "end": 120
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-weekly-schedule-week-wrap",
+          "passed": false,
+          "outcome": [
+            {
+              "resource": "room",
+              "day": 6,
+              "start": 1380,
+              "end": 1440
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-weekly-schedule-bool-day",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 3
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 3
+        }
+      ],
+      "sourceDigest": "sha256:7fc5a8685f97082e78f9d7b31722f82fb79a9fa4a2ba30324aa92fc0eed2b9fe",
+      "policyDigest": "sha256:b1773a652066d1149fa63a5ccf1f837075f9d3b8470a57818728f543e36dd5af"
+    },
+    {
+      "id": "v3-manifest-merge",
+      "entrypoint": "manifest_merge.py",
+      "sourceLines": 65,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 14,
+      "referencePassed": 22,
+      "fixtureSha256": "621d4dfd6198d731432be43a433941b37c78475b52836e9ac5962857447dce56",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-manifest-merge-mixed-plan",
+          "passed": false,
+          "outcome": {
+            "remove": [
+              "stale"
+            ],
+            "move": [
+              {
+                "from": "old/logo",
+                "to": "new/logo"
+              }
+            ],
+            "write": [
+              {
+                "path": "fresh",
+                "size": 7
+              }
+            ],
+            "downloadBytes": 22
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-manifest-merge-same-label-size-change",
+          "passed": false,
+          "outcome": {
+            "remove": [],
+            "move": [
+              {
+                "from": "a",
+                "to": "b"
+              }
+            ],
+            "write": [],
+            "downloadBytes": 20
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-manifest-merge-deterministic-pairing",
+          "passed": false,
+          "outcome": {
+            "remove": [],
+            "move": [
+              {
+                "from": "z",
+                "to": "c"
+              },
+              {
+                "from": "a",
+                "to": "d"
+              }
+            ],
+            "write": [],
+            "downloadBytes": 20
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-manifest-merge-canonical",
+          "passed": false,
+          "outcome": {
+            "remove": [],
+            "move": [],
+            "write": [],
+            "downloadBytes": 10
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-manifest-merge-duplicate-canonical",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 7
+        }
+      ],
+      "sourceDigest": "sha256:0ed3322573546a02b745551eb308b3f7cd32577a283e01e928dfa8ae1bb82044",
+      "policyDigest": "sha256:3d9e98f1174d6123ed9b2962c5969be5d56f6a6d2a6781c6c7fcb151fac2b23e"
+    },
+    {
+      "id": "v3-event-fold",
+      "entrypoint": "event_fold.py",
+      "sourceLines": 79,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 17,
+      "referencePassed": 22,
+      "fixtureSha256": "14cce06b71c935db2142ada0c40398172425d79d6451b4de335f2dc3644975b9",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-event-fold-out-of-order",
+          "passed": false,
+          "outcome": [
+            {
+              "id": "a",
+              "title": "Alpha",
+              "labels": [],
+              "version": 0
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-event-fold-remove-add-order",
+          "passed": false,
+          "outcome": [
+            {
+              "id": "a",
+              "title": "Alpha",
+              "labels": [
+                "a",
+                "b",
+                "c"
+              ],
+              "version": 1
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-event-fold-duplicate-delivery",
+          "passed": true,
+          "outcome": [
+            {
+              "id": "a",
+              "title": "Beta",
+              "labels": [],
+              "version": 1
+            }
+          ],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-event-fold-deleted-update-ignored",
+          "passed": true,
+          "outcome": [],
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-event-fold-conflicting-id",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 2
+        }
+      ],
+      "sourceDigest": "sha256:712582e826a239e6bdd019b01edd63acb324ea5bf6f2f0c6aebd72ab479a7b36",
+      "policyDigest": "sha256:7a52ee4647964156903ab59ee8120356a78927b89d09234eae42b176c69b6065"
+    },
+    {
+      "id": "v3-retry-batches",
+      "entrypoint": "retry_batches.py",
+      "sourceLines": 66,
+      "helperFunctions": 6,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 17,
+      "referencePassed": 22,
+      "fixtureSha256": "15b9a8a2003a03eb8460a7b0887f2b4817b006f97dd8d105a2b719c30b701135",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-retry-batches-first-fit",
+          "passed": false,
+          "outcome": {
+            "batches": [
+              {
+                "ids": [
+                  "a"
+                ],
+                "weight": 6
+              },
+              {
+                "ids": [
+                  "b",
+                  "c"
+                ],
+                "weight": 10
+              }
+            ],
+            "deferred": []
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-retry-batches-ready-boundary",
+          "passed": false,
+          "outcome": {
+            "batches": [],
+            "deferred": [
+              {
+                "id": "a",
+                "reason": "not_ready"
+              }
+            ]
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-retry-batches-attempt-boundary",
+          "passed": false,
+          "outcome": {
+            "batches": [
+              {
+                "ids": [
+                  "a"
+                ],
+                "weight": 4
+              }
+            ],
+            "deferred": []
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-retry-batches-group-exclusion",
+          "passed": false,
+          "outcome": {
+            "batches": [
+              {
+                "ids": [
+                  "a"
+                ],
+                "weight": 4
+              },
+              {
+                "ids": [
+                  "b",
+                  "c"
+                ],
+                "weight": 6
+              }
+            ],
+            "deferred": []
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-retry-batches-bool-capacity",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 2
+        }
+      ],
+      "sourceDigest": "sha256:82653108ced91f4a6d6ab8755506dc661dbcb913285e1005acd5d480a5462400",
+      "policyDigest": "sha256:e61e3a1c9e4fd38360133c552a91490e263b7a7515a76546206411a8d8c17037"
+    },
+    {
+      "id": "v3-search-ranking",
+      "entrypoint": "search_ranking.py",
+      "sourceLines": 60,
+      "helperFunctions": 5,
+      "requirements": 5,
+      "checks": 22,
+      "visibleChecks": 5,
+      "baselinePassed": 18,
+      "referencePassed": 22,
+      "fixtureSha256": "7793508dccefaa3e4426ae80f6b1cac7a8403cf941e05256b9ec8d9a0c924f88",
+      "baselineVisibleObservations": [
+        {
+          "id": "v3-search-ranking-all-query-words",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "id": "a",
+                "title": "Red apple",
+                "score": 11
+              },
+              {
+                "id": "b",
+                "title": "Red pear",
+                "score": 3
+              }
+            ],
+            "total": 2
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-search-ranking-repeated-query",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "id": "a",
+                "title": "red",
+                "score": 6
+              }
+            ],
+            "total": 1
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-search-ranking-total-before-limit",
+          "passed": false,
+          "outcome": {
+            "results": [
+              {
+                "id": "a",
+                "title": "Red",
+                "score": 8
+              }
+            ],
+            "total": 1
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-search-ranking-across-fields",
+          "passed": true,
+          "outcome": {
+            "results": [
+              {
+                "id": "a",
+                "title": "Red",
+                "score": 4
+              }
+            ],
+            "total": 1
+          },
+          "argsUnchanged": true
+        },
+        {
+          "id": "v3-search-ranking-bool-limit",
+          "passed": true,
+          "outcome": {
+            "exception": "ValueError"
+          },
+          "argsUnchanged": true
+        }
+      ],
+      "isolatedDefectControls": [
+        {
+          "index": 1,
+          "rejectedByChecks": 1
+        },
+        {
+          "index": 2,
+          "rejectedByChecks": 2
+        },
+        {
+          "index": 3,
+          "rejectedByChecks": 1
+        }
+      ],
+      "sourceDigest": "sha256:917982ba2584d33f2839dd7d51d54d77e201f83bd814b5c17f698c54b9db923b",
+      "policyDigest": "sha256:72370d0845b038b15790fbef311bcbb7a57d0676122342550cd4b0699c42fa31"
+    }
+  ]
+}

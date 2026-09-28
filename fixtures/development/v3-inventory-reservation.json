@@ -1,0 +1,798 @@
+{
+  "id": "v3-inventory-reservation",
+  "repoId": "owned-v3-inventory-reservation",
+  "split": "development",
+  "title": "Partial reservations consume stock even when an order is rejected",
+  "description": "A warehouse preview reserves complete orders in priority order. Duplicate lines for the same SKU must be combined, rejected orders must consume nothing, and the response must retain the caller’s order. The current plan violates these rules when items compete for scarce stock.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Process orders by descending priority, using input order to break equal-priority ties. Return order outcomes in original input order, each with id, reserved and shortages."
+    },
+    {
+      "id": "R02",
+      "text": "Combine repeated item lines by exact SKU before checking inventory. An order is reserved only when all combined quantities are available. Unknown SKUs have zero availability. Empty orders reserve successfully."
+    },
+    {
+      "id": "R03",
+      "text": "Rejected orders consume no stock. Report shortages as requested minus available only for deficient SKUs at that order’s turn. Accepted orders deduct all requested quantities exactly once. Return all original stock keys, including zero quantities."
+    },
+    {
+      "id": "R04",
+      "text": "Stock is a map of nonempty string SKU to nonnegative plain integer quantity. Orders have exactly id, priority, items; unique nonempty string ids, nonnegative plain integer priorities, and item lists. Items have exactly sku and quantity, with nonempty string sku and positive plain integer quantity. Invalid input raises ValueError before any reservation."
+    },
+    {
+      "id": "R05",
+      "text": "Do not mutate stock, orders, nested item lists or dictionaries on success or failure. All arithmetic is exact integer arithmetic."
+    }
+  ],
+  "files": {
+    "inventory_reservation.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\n\n\ndef _count(value, minimum=0):\n    return type(value) is int and value >= minimum\n\n\ndef _validate(stock, orders):\n    if type(stock) is not dict or type(orders) is not list:\n        raise ValueError(\"expected stock map and order list\")\n    for sku, quantity in stock.items():\n        if type(sku) is not str or not sku or not _count(quantity):\n            raise ValueError(\"invalid stock item\")\n    ids = set()\n    for order in orders:\n        if type(order) is not dict or set(order) != {\"id\", \"priority\", \"items\"}:\n            raise ValueError(\"invalid order fields\")\n        if type(order[\"id\"]) is not str or not order[\"id\"] or order[\"id\"] in ids:\n            raise ValueError(\"order ids must be unique nonempty strings\")\n        ids.add(order[\"id\"])\n        if not _count(order[\"priority\"]) or type(order[\"items\"]) is not list:\n            raise ValueError(\"invalid priority or item list\")\n        for item in order[\"items\"]:\n            if type(item) is not dict or set(item) != {\"sku\", \"quantity\"}:\n                raise ValueError(\"invalid requested item\")\n            if type(item[\"sku\"]) is not str or not item[\"sku\"] or not _count(item[\"quantity\"], 1):\n                raise ValueError(\"invalid requested quantity\")\n\n\ndef _requested(items):\n    totals = {}\n    for item in items:\n        sku = item[\"sku\"]\n        totals[sku] = item[\"quantity\"]\n    return totals\n\n\ndef _shortages(available, requested):\n    return {sku: quantity - available.get(sku, 0)\n            for sku, quantity in sorted(requested.items())\n            if quantity > available.get(sku, 0)}\n\n\ndef reserve_orders(stock, orders):\n    \"\"\"Reserve whole orders by priority, preserving the caller's display order.\"\"\"\n    _validate(stock, orders)\n    available = deepcopy(stock)\n    outcomes = {}\n    processing = sorted(orders, key=lambda order: order[\"priority\"])\n    for order in processing:\n        requested = _requested(order[\"items\"])\n        shortages = _shortages(available, requested)\n        accepted = not shortages\n        for sku, quantity in requested.items():\n            if quantity <= available.get(sku, 0):\n                available[sku] = available.get(sku, 0) - quantity\n        outcomes[order[\"id\"]] = {\n            \"id\": order[\"id\"], \"reserved\": accepted, \"shortages\": shortages,\n        }\n    return {\n        \"orders\": [outcomes[order[\"id\"]] for order in orders],\n        \"available\": available,\n    }\n"
+  },
+  "editAllowlist": [
+    "inventory_reservation.py"
+  ],
+  "entrypoint": "inventory_reservation.py",
+  "visibleCases": [
+    {
+      "id": "v3-inventory-reservation-priority",
+      "requirementId": "R01",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 3
+        },
+        [
+          {
+            "id": "low",
+            "priority": 1,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "id": "high",
+            "priority": 3,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "low",
+            "reserved": false,
+            "shortages": {
+              "a": 1
+            }
+          },
+          {
+            "id": "high",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-atomic",
+      "requirementId": "R03",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 3,
+          "b": 0
+        },
+        [
+          {
+            "id": "first",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              },
+              {
+                "sku": "b",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "id": "second",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 3
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "first",
+            "reserved": false,
+            "shortages": {
+              "b": 1
+            }
+          },
+          {
+            "id": "second",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 0,
+          "b": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-duplicate-lines",
+      "requirementId": "R02",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 3
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              },
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": false,
+            "shortages": {
+              "a": 1
+            }
+          }
+        ],
+        "available": {
+          "a": 3
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-empty-order",
+      "requirementId": "R02",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 0
+        },
+        [
+          {
+            "id": "empty",
+            "priority": 0,
+            "items": []
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "empty",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-bool-quantity",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": true
+        },
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-inventory-reservation-tie-input",
+      "requirementId": "R01",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 2
+        },
+        [
+          {
+            "id": "z",
+            "priority": 1,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "id": "a",
+            "priority": 1,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "z",
+            "reserved": true,
+            "shortages": {}
+          },
+          {
+            "id": "a",
+            "reserved": false,
+            "shortages": {
+              "a": 1
+            }
+          }
+        ],
+        "available": {
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-display-order",
+      "requirementId": "R01",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 8
+        },
+        [
+          {
+            "id": "l",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "id": "h",
+            "priority": 9,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "l",
+            "reserved": true,
+            "shortages": {}
+          },
+          {
+            "id": "h",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 5
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-unknown-sku",
+      "requirementId": "R02",
+      "function": "reserve_orders",
+      "args": [
+        {},
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "new",
+                "quantity": 2
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": false,
+            "shortages": {
+              "new": 2
+            }
+          }
+        ],
+        "available": {}
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-aggregate-fit",
+      "requirementId": "R02",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 5
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              },
+              {
+                "sku": "a",
+                "quantity": 3
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-multiple-short",
+      "requirementId": "R03",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 1,
+          "b": 2
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "b",
+                "quantity": 5
+              },
+              {
+                "sku": "a",
+                "quantity": 3
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": false,
+            "shortages": {
+              "a": 2,
+              "b": 3
+            }
+          }
+        ],
+        "available": {
+          "a": 1,
+          "b": 2
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-zero-keys",
+      "requirementId": "R03",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 0,
+          "b": 3
+        },
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [],
+        "available": {
+          "a": 0,
+          "b": 3
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-all-exhausted",
+      "requirementId": "R03",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 3
+        },
+        [
+          {
+            "id": "one",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "id": "two",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "id": "three",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "one",
+            "reserved": true,
+            "shortages": {}
+          },
+          {
+            "id": "two",
+            "reserved": true,
+            "shortages": {}
+          },
+          {
+            "id": "three",
+            "reserved": false,
+            "shortages": {
+              "a": 1
+            }
+          }
+        ],
+        "available": {
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-case-sensitive",
+      "requirementId": "R05",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "A": 3,
+          "a": 1
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "A",
+                "quantity": 2
+              },
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "A": 1,
+          "a": 0
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-large-integer",
+      "requirementId": "R05",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 1000000000
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 999999999
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "orders": [
+          {
+            "id": "x",
+            "reserved": true,
+            "shortages": {}
+          }
+        ],
+        "available": {
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v3-inventory-reservation-duplicate-id",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {},
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": []
+          },
+          {
+            "id": "x",
+            "priority": 0,
+            "items": []
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-negative-stock",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": -1
+        },
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-zero-request",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 2
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 0
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-float-priority",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {},
+        [
+          {
+            "id": "x",
+            "priority": 1.5,
+            "items": []
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-item-extra",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 1
+        },
+        [
+          {
+            "id": "x",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1,
+                "note": "x"
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-null-orders",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {},
+        null
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-late-invalid",
+      "requirementId": "R05",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "a": 3
+        },
+        [
+          {
+            "id": "ok",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": 1
+              }
+            ]
+          },
+          {
+            "id": "bad",
+            "priority": 0,
+            "items": [
+              {
+                "sku": "a",
+                "quantity": false
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-inventory-reservation-empty-sku",
+      "requirementId": "R04",
+      "function": "reserve_orders",
+      "args": [
+        {
+          "": 1
+        },
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

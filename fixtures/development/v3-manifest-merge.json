@@ -1,0 +1,728 @@
+{
+  "id": "v3-manifest-merge",
+  "repoId": "owned-v3-manifest-merge",
+  "split": "development",
+  "title": "Asset sync misidentifies renames and overstates downloads",
+  "description": "An offline asset planner compares two logical manifests and chooses unchanged files, moves, downloads and removals. Existing code treats digest labels as sufficient for rename matching, pairs duplicate content inconsistently and charges download bytes for assets that are already reusable. Repair its deterministic plan; it must never access the filesystem.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Canonicalize each relative path by removing empty and dot components. Reject absolute paths, parent components, empty canonical paths and duplicate canonical paths within either manifest. Returned paths are canonical; comparisons are case-sensitive."
+    },
+    {
+      "id": "R02",
+      "text": "Content matches only when both digest label and size match. Paths present in both snapshots are reserved first: unchanged content produces no action; changed content produces a write at that path and is never used as a rename source or destination."
+    },
+    {
+      "id": "R03",
+      "text": "For remaining new-only destinations in lexical order, pair each with the lexically first still-unmatched old-only path having equal content. Each old path can be moved once. Remaining old-only paths are removals; unmatched destinations and changed common paths are writes."
+    },
+    {
+      "id": "R04",
+      "text": "Return {remove,move,write,downloadBytes}. remove and write are sorted by path, move by destination; each move has from/to and each write has path/size. downloadBytes sums only writes, so moves and unchanged assets cost zero bytes."
+    },
+    {
+      "id": "R05",
+      "text": "Manifests are lists of objects with exactly path,digest,size: relative path string, nonempty string digest label, nonnegative plain integer size. Invalid input raises ValueError. Preserve all input data and perform no file or network operations."
+    }
+  ],
+  "files": {
+    "manifest_merge.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\ndef _canonical(path):\n    if type(path) is not str or not path or path.startswith(\"/\"):\n        raise ValueError(\"expected a relative asset name\")\n    parts = path.split(\"/\")\n    if \"..\" in parts:\n        raise ValueError(\"parent components are not asset names\")\n    clean = [part for part in parts if part not in (\"\", \".\")]\n    if not clean:\n        raise ValueError(\"empty canonical asset name\")\n    return \"/\".join(clean)\n\n\ndef _snapshot(entries):\n    if type(entries) is not list:\n        raise ValueError(\"manifest must be a list\")\n    result = {}\n    for entry in entries:\n        if type(entry) is not dict or set(entry) != {\"path\", \"digest\", \"size\"}:\n            raise ValueError(\"invalid manifest fields\")\n        path = _canonical(entry[\"path\"])\n        if path in result:\n            raise ValueError(\"duplicate canonical asset path\")\n        if type(entry[\"digest\"]) is not str or not entry[\"digest\"]:\n            raise ValueError(\"invalid content digest label\")\n        if type(entry[\"size\"]) is not int or entry[\"size\"] < 0:\n            raise ValueError(\"invalid asset size\")\n        result[path] = {\"digest\": entry[\"digest\"], \"size\": entry[\"size\"]}\n    return result\n\n\ndef _same_content(left, right):\n    return left[\"digest\"] == right[\"digest\"]\n\n\ndef _moves(local, desired, old_paths, new_paths):\n    moves = []\n    remaining_old = set(old_paths)\n    remaining_new = set(new_paths)\n    for destination in sorted(new_paths):\n        matches = [path for path in local if path in remaining_old\n                   and _same_content(local[path], desired[destination])]\n        if not matches:\n            continue\n        source = matches[0]\n        moves.append({\"from\": source, \"to\": destination})\n        remaining_old.remove(source)\n        remaining_new.remove(destination)\n    return moves, remaining_old, remaining_new\n\n\ndef plan_assets(local_entries, desired_entries):\n    \"\"\"Plan a deterministic asset sync without reading or writing any files.\"\"\"\n    local = _snapshot(local_entries)\n    desired = _snapshot(desired_entries)\n    common = set(local) & set(desired)\n    changed = {path for path in common if not _same_content(local[path], desired[path])}\n    moves, removed, added = _moves(local, desired,\n                                  set(local) - common, set(desired) - common)\n    writes = [{\"path\": path, \"size\": desired[path][\"size\"]}\n              for path in sorted(changed | added)]\n    download_bytes = sum(item[\"size\"] for item in desired.values())\n    return {\"remove\": sorted(removed), \"move\": moves, \"write\": writes,\n            \"downloadBytes\": download_bytes}\n"
+  },
+  "editAllowlist": [
+    "manifest_merge.py"
+  ],
+  "entrypoint": "manifest_merge.py",
+  "visibleCases": [
+    {
+      "id": "v3-manifest-merge-mixed-plan",
+      "requirementId": "R04",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "old/logo",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "keep",
+            "digest": "k",
+            "size": 5
+          },
+          {
+            "path": "stale",
+            "digest": "s",
+            "size": 2
+          }
+        ],
+        [
+          {
+            "path": "new/logo",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "keep",
+            "digest": "k",
+            "size": 5
+          },
+          {
+            "path": "fresh",
+            "digest": "f",
+            "size": 7
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [
+          "stale"
+        ],
+        "move": [
+          {
+            "from": "old/logo",
+            "to": "new/logo"
+          }
+        ],
+        "write": [
+          {
+            "path": "fresh",
+            "size": 7
+          }
+        ],
+        "downloadBytes": 7
+      }
+    },
+    {
+      "id": "v3-manifest-merge-same-label-size-change",
+      "requirementId": "R02",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "b",
+            "digest": "x",
+            "size": 20
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [
+          "a"
+        ],
+        "move": [],
+        "write": [
+          {
+            "path": "b",
+            "size": 20
+          }
+        ],
+        "downloadBytes": 20
+      }
+    },
+    {
+      "id": "v3-manifest-merge-deterministic-pairing",
+      "requirementId": "R03",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "z",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "d",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "c",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [
+          {
+            "from": "a",
+            "to": "c"
+          },
+          {
+            "from": "z",
+            "to": "d"
+          }
+        ],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-canonical",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a//./b",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "a/b",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-duplicate-canonical",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a/b",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "a//b",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-manifest-merge-unchanged",
+      "requirementId": "R04",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-changed-common",
+      "requirementId": "R02",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "old",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "a",
+            "digest": "new",
+            "size": 12
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [],
+        "write": [
+          {
+            "path": "a",
+            "size": 12
+          }
+        ],
+        "downloadBytes": 12
+      }
+    },
+    {
+      "id": "v3-manifest-merge-common-reserved",
+      "requirementId": "R02",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "old",
+            "size": 10
+          },
+          {
+            "path": "b",
+            "digest": "new",
+            "size": 20
+          }
+        ],
+        [
+          {
+            "path": "a",
+            "digest": "new",
+            "size": 20
+          },
+          {
+            "path": "c",
+            "digest": "old",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [
+          "b"
+        ],
+        "move": [],
+        "write": [
+          {
+            "path": "a",
+            "size": 20
+          },
+          {
+            "path": "c",
+            "size": 10
+          }
+        ],
+        "downloadBytes": 30
+      }
+    },
+    {
+      "id": "v3-manifest-merge-one-source-once",
+      "requirementId": "R03",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "b",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "c",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [
+          {
+            "from": "a",
+            "to": "b"
+          }
+        ],
+        "write": [
+          {
+            "path": "c",
+            "size": 10
+          }
+        ],
+        "downloadBytes": 10
+      }
+    },
+    {
+      "id": "v3-manifest-merge-extra-source",
+      "requirementId": "R03",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "b",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "c",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [
+          "b"
+        ],
+        "move": [
+          {
+            "from": "a",
+            "to": "c"
+          }
+        ],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-sorted-writes",
+      "requirementId": "R04",
+      "function": "plan_assets",
+      "args": [
+        [],
+        [
+          {
+            "path": "z",
+            "digest": "z",
+            "size": 2
+          },
+          {
+            "path": "a",
+            "digest": "a",
+            "size": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [],
+        "write": [
+          {
+            "path": "a",
+            "size": 3
+          },
+          {
+            "path": "z",
+            "size": 2
+          }
+        ],
+        "downloadBytes": 5
+      }
+    },
+    {
+      "id": "v3-manifest-merge-sorted-removals",
+      "requirementId": "R04",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "z",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [
+          "a",
+          "z"
+        ],
+        "move": [],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-zero-byte",
+      "requirementId": "R04",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "path": "b",
+            "digest": "x",
+            "size": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [
+          {
+            "from": "a",
+            "to": "b"
+          }
+        ],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-case-sensitive",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "A",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [
+          {
+            "from": "A",
+            "to": "a"
+          }
+        ],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-empty",
+      "requirementId": "R05",
+      "function": "plan_assets",
+      "args": [
+        [],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "remove": [],
+        "move": [],
+        "write": [],
+        "downloadBytes": 0
+      }
+    },
+    {
+      "id": "v3-manifest-merge-absolute-path",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "/a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-parent-path",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a/../b",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-empty-path",
+      "requirementId": "R01",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "./",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-bool-size",
+      "requirementId": "R05",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": true
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-empty-digest",
+      "requirementId": "R05",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "",
+            "size": 1
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-extra-field",
+      "requirementId": "R05",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10,
+            "mode": 1
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-manifest-merge-late-invalid",
+      "requirementId": "R05",
+      "function": "plan_assets",
+      "args": [
+        [
+          {
+            "path": "a",
+            "digest": "x",
+            "size": 10
+          }
+        ],
+        [
+          {
+            "path": "b",
+            "digest": "x",
+            "size": 10
+          },
+          {
+            "path": "c",
+            "digest": "x",
+            "size": -1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

@@ -9,7 +9,7 @@ import type { ProductEvent } from '../../../packages/contracts/src/product.ts';
 import { PRODUCT_CONTRACT_VERSION } from '../../../packages/contracts/src/product.ts';
 import { guardRequest, jsonBody, sendJson } from './server.ts';
 
-const assets = new Map([['/', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/walkthrough.js', ['walkthrough.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']]]);
+const assets = new Map([['/', ['index.html', 'text/html']], ['/app.js', ['app.js', 'text/javascript']], ['/walkthrough.js', ['walkthrough.js', 'text/javascript']], ['/diff-view.js', ['diff-view.js', 'text/javascript']], ['/style.css', ['style.css', 'text/css']]]);
 const runRoute = /^\/runs\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:\/(events|cancel|evidence))?$/;
 
 const LiveMetadataSchema = z.strictObject({

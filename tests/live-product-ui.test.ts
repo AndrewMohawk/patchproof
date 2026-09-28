@@ -38,6 +38,7 @@ async function fixtureServer(options: { singleflight?: boolean } = {}) {
     execution, runtimeLockDigest: one.run.runtimeLockDigest, maxApprovedSpendUsd: 25, limits: one.run.limits,
     availability: { enabled: true, reason: null as string | null, remainingRuns: 2 },
     tasks: [one, two].map(b => ({ id: b.fixture.id, title: b.fixture.title, description: b.fixture.description, requirements: b.fixture.requirements,
+      files: { ...b.fixture.files }, entrypoint: b.fixture.entrypoint, editAllowlist: b.fixture.editAllowlist, examples: structuredClone(b.fixture.visibleCases),
       repoId: b.fixture.repoId, split: b.fixture.split, sourceDigest: b.run.sourceDigest, policyDigest: b.run.policyDigest, mockSupported: false, executionSupported: true })) };
   const syncAvailability = () => {
     if (!options.singleflight || meta.mode !== 'live') return;
@@ -46,7 +47,7 @@ async function fixtureServer(options: { singleflight?: boolean } = {}) {
     meta.realExecutionEnabled = !active; meta.capabilities.createRuns = !active;
   };
   const assets = new Map<string, Buffer>();
-  for (const [path, file] of [['/', 'index.html'], ['/app.js', 'app.js'], ['/walkthrough.js', 'walkthrough.js'], ['/style.css', 'style.css']] as const) assets.set(path, await readFile(new URL('../apps/web/' + file, import.meta.url)));
+  for (const [path, file] of [['/', 'index.html'], ['/app.js', 'app.js'], ['/walkthrough.js', 'walkthrough.js'], ['/diff-view.js', 'diff-view.js'], ['/style.css', 'style.css']] as const) assets.set(path, await readFile(new URL('../apps/web/' + file, import.meta.url)));
   const server = createServer(async (req, res) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'");
     const path = req.url!;
@@ -73,7 +74,7 @@ async function fixtureServer(options: { singleflight?: boolean } = {}) {
       if (match[2] === 'events') { streams.set(id, res); res.writeHead(200, { 'Content-Type': 'text/event-stream' }); res.flushHeaders(); return; }
       json(match[2] === 'evidence' ? bundles.get(id) : runs.get(id)); return;
     }
-    res.writeHead(404); json({ error: { message: 'Synthetic endpoint not provided.' } });
+    res.statusCode = 404; json({ error: { message: 'Synthetic endpoint not provided.' } });
   });
   server.listen(0, '127.0.0.1'); await once(server, 'listening'); const address = server.address(); assert.ok(address && typeof address !== 'string');
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
@@ -421,4 +422,51 @@ test('first visit explains the review task without starting work or fabricating 
       assert.equal(f.requests.length, 0); assert.deepEqual(f.errors, []);
     } finally { await f.close(); }
   }
+});
+
+
+test('repair briefing shows actual source, explicit public goals and the full workflow on desktop and mobile', async t => {
+  const f = await fixtureServer(); t.after(f.close); const { page } = f;
+  const task = f.meta.tasks[0]!;
+  // Synthetic transport data only: this test does not execute these source files or claim repair results.
+  task.files['helper.py'] = '# Synthetic context file for keyboard navigation.\ndef normalize(value):\n    return value\n';
+  task.examples = [{ id: 'public-goal', requirementId: 'R01', function: 'identity', args: [null, true, 'false null'], kwargs: { value: ['x', 'y'] }, assertArgsUnchanged: true, expected: ['false null', null, false] },
+    { id: 'public-exception', requirementId: 'R01', function: 'identity', args: [null], kwargs: {}, assertArgsUnchanged: false, expectedException: 'TypeError' }];
+  await page.goto(f.base + '/#tasks');
+  await page.locator('.source-code').waitFor();
+  assert.match(await page.locator('.source-code').innerText(), /# inert original input/);
+  assert.match(await page.locator('.source-note').innerText(), /model may edit this file/);
+  assert.match(await page.locator('.task-example-section').innerText(), /required result is a goal/);
+  assert.match(await page.locator('.example-value').first().innerText(), /None,[\s\S]*True,[\s\S]*"false null"/);
+  assert.match(await page.locator('.example-value.expected').innerText(), /\["false null", None, False\]/);
+  assert.match(await page.locator('.input-preservation').innerText(), /input must remain unchanged/);
+  assert.equal(await page.locator('.source-file[aria-selected="true"]').innerText(), 'solution.py');
+  await page.locator('.source-file[aria-selected="true"]').focus(); await page.keyboard.press('ArrowRight');
+  assert.equal(await page.locator('.source-file[aria-selected="true"]').innerText(), 'helper.py');
+  assert.match(await page.locator('.source-code').innerText(), /def normalize/);
+  assert.match(await page.locator('.source-note').innerText(), /model may not edit it/);
+  await page.selectOption('#task-example', '1');
+  assert.match(await page.locator('.example-value.expected').innerText(), /Required exception\s+TypeError/);
+  assert.equal(await page.locator('.input-preservation').count(), 0);
+  await page.getByRole('link', { name: 'Generate patch ↓', exact: true }).click();
+  assert.equal(new URL(page.url()).hash, '#tasks');
+  const startBox = await page.getByRole('button', { name: 'Generate patch', exact: true }).boundingBox();
+  assert.ok(startBox && startBox.y >= 0 && startBox.y < 1100, 'Briefing action scrolls to the real generate control.');
+  await page.locator('[data-nav="how-it-works"]').click();
+  await page.locator('#how-heading').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('[data-nav="how-it-works"]').getAttribute('aria-current'), 'page');
+  assert.equal(await page.locator('.workflow-map li').count(), 5);
+  assert.match(await page.locator('.how-runtime').innerText(), /Nebius Token Factory[\s\S]*Local Docker checks/);
+  assert.match(await page.locator('#how-it-works-view').innerText(), /check definitions and expected results are controlled by the application/);
+  assert.match(await page.locator('#how-it-works-view').innerText(), /without asking the model to generate the patch again/);
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.locator('[data-nav="tasks"]').click();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, `Task briefing must fit ${width}px.`);
+    await page.locator('[data-nav="how-it-works"]').click();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, `How it works must fit ${width}px.`);
+    assert.equal(await page.locator('[data-nav="how-it-works"]').isVisible(), true);
+  }
+  assert.equal(f.requests.length, 0, 'Reading the brief and help page must not start a repair.');
+  assert.deepEqual(f.errors, []);
 });

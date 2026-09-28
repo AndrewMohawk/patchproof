@@ -99,7 +99,7 @@ test('all variants share exact limits, repeated-check cap and no more than three
   }
   assert.equal(h.observed.requests.length, 9); assert.equal(h.observed.checks.length, 24);
   for (const call of h.observed.requests) {
-    assert.equal(call.body.model, LIVE_MODEL); assert.equal(call.body.max_tokens, 2000); assert.equal(call.body.max_completion_tokens, 2000);
+    assert.equal(call.body.model, LIVE_MODEL); assert.equal(call.body.max_tokens, 4000); assert.equal(call.body.max_completion_tokens, 4000);
     assert.equal(call.body.n, 1); assert.equal(call.body.stream, false); assert.equal(call.body.store, false);
     assert.deepEqual(call.body.chat_template_kwargs, { enable_thinking: false });
   }
@@ -114,7 +114,7 @@ test('all variants share exact limits, repeated-check cap and no more than three
 });
 
 test('reported per-request input and output overruns cannot become covered exposure', async t => {
-  for (const [name, usage] of [['input', { prompt_tokens: 262145, completion_tokens: 32 }], ['output', { prompt_tokens: 24, completion_tokens: 2001 }]] as const) {
+  for (const [name, usage] of [['input', { prompt_tokens: 262145, completion_tokens: 32 }], ['output', { prompt_tokens: 24, completion_tokens: 4001 }]] as const) {
     await t.test(name, async sub => {
       const h = await setup(sub); h.hooks.fetch = () => response('def f(): return 2\n', usage);
       const done = await h.run('overrun-' + name); assert.equal(done.reason, 'budget_exceeded');

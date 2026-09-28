@@ -1,0 +1,589 @@
+{
+  "id": "v3-config-overlay",
+  "repoId": "owned-v3-config-overlay",
+  "split": "development",
+  "title": "Configuration overlays lose explicit nulls and retain removed list entries",
+  "description": "A deployment preview applies several configuration layers, then reports exactly which setting paths changed. The current implementation confuses an explicit null value with removal, extends lists that should be replaced, and reports parent objects instead of precise nested changes. Repair the existing merge_config API and its helpers together.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Apply layers from left to right. Objects merge recursively; scalars and lists replace existing values; a list never appends to an earlier list. An object replacing a scalar begins from an empty object."
+    },
+    {
+      "id": "R02",
+      "text": "Only the exact patch object {\"$delete\": true} deletes a key. An explicit null is ordinary data. Deleting an absent key is a no-op; deletion directives are allowed only as nested patch values, not as a whole layer, inside lists, or in the base configuration."
+    },
+    {
+      "id": "R03",
+      "text": "Return {config, changed}. changed is the lexically ordered list of dotted paths whose final value differs from base. Recurse when both values are objects; report an added/deleted whole object at its parent path. List replacement is one path, and type changes count (true differs from 1). Reverted changes disappear."
+    },
+    {
+      "id": "R04",
+      "text": "Validate all layers before merging. Base and each layer must be objects; layers must be a list. Keys must be nonempty strings without dots and must not start with $. Values may be objects, lists, null, strings, plain integers or booleans. Invalid input raises ValueError."
+    },
+    {
+      "id": "R05",
+      "text": "Never mutate base, layers, or any nested lists and objects, including when validation fails."
+    }
+  ],
+  "files": {
+    "config_overlay.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\n\n\ndef _deletion(value):\n    return type(value) is dict and set(value) == {\"$delete\"} and value[\"$delete\"] is True\n\n\ndef _same(left, right):\n    if type(left) is not type(right):\n        return False\n    if type(left) is dict:\n        return set(left) == set(right) and all(_same(left[key], right[key]) for key in left)\n    if type(left) is list:\n        return len(left) == len(right) and all(_same(a, b) for a, b in zip(left, right))\n    return left == right\n\n\ndef _validate(value, path=(), patch=False):\n    if type(value) is dict:\n        if patch and _deletion(value):\n            return\n        for key, child in value.items():\n            if type(key) is not str or not key or \".\" in key or key.startswith(\"$\"):\n                raise ValueError(\"configuration keys must be nonempty simple names\")\n            _validate(child, path + (key,), patch)\n    elif type(value) is list:\n        for child in value:\n            _validate(child, path, False)\n    elif value is not None and type(value) not in (str, int, bool):\n        raise ValueError(\"unsupported configuration value\")\n\n\ndef _overlay(base, patch):\n    result = deepcopy(base)\n    for key, incoming in patch.items():\n        if incoming is None or _deletion(incoming):\n            result.pop(key, None)\n        elif type(incoming) is dict:\n            previous = result.get(key)\n            result[key] = _overlay(previous if type(previous) is dict else {}, incoming)\n        elif type(incoming) is list:\n            result[key] = deepcopy(result.get(key, [])) + deepcopy(incoming) if type(result.get(key)) is list else deepcopy(incoming)\n        else:\n            result[key] = incoming\n    return result\n\n\ndef _changes(before, after, prefix=()):\n    changed = []\n    for key in sorted(set(before) | set(after)):\n        path = prefix + (key,)\n        if key not in before or key not in after:\n            changed.append(\".\".join(path))\n            continue\n        left, right = before[key], after[key]\n        if type(left) is dict and type(right) is dict:\n            if left != right:\n                changed.append(\".\".join(path))\n        elif not _same(left, right):\n            changed.append(\".\".join(path))\n    return sorted(changed)\n\n\ndef merge_config(base, layers):\n    \"\"\"Apply ordered overlays and report paths changed from the original.\"\"\"\n    if type(base) is not dict or type(layers) is not list:\n        raise ValueError(\"expected a base object and a list of overlays\")\n    _validate(base)\n    for layer in layers:\n        if type(layer) is not dict or _deletion(layer):\n            raise ValueError(\"every overlay must be an object, not a root deletion marker\")\n        _validate(layer, patch=True)\n    merged = deepcopy(base)\n    for layer in layers:\n        merged = _overlay(merged, layer)\n    changed = _changes(base, merged)\n    return {\"config\": merged, \"changed\": changed}\n"
+  },
+  "editAllowlist": [
+    "config_overlay.py"
+  ],
+  "entrypoint": "config_overlay.py",
+  "visibleCases": [
+    {
+      "id": "v3-config-overlay-nested-list",
+      "requirementId": "R01",
+      "function": "merge_config",
+      "args": [
+        {
+          "service": {
+            "host": "api",
+            "timeout": 30
+          },
+          "regions": [
+            "us"
+          ]
+        },
+        [
+          {
+            "service": {
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "service": {
+            "host": "api",
+            "timeout": 45
+          },
+          "regions": [
+            "eu"
+          ]
+        },
+        "changed": [
+          "regions",
+          "service.timeout"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-null-data",
+      "requirementId": "R02",
+      "function": "merge_config",
+      "args": [
+        {
+          "note": "old"
+        },
+        [
+          {
+            "note": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "note": null
+        },
+        "changed": [
+          "note"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-reverted",
+      "requirementId": "R03",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": 1
+        },
+        [
+          {
+            "a": 2
+          },
+          {
+            "a": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": 1
+        },
+        "changed": []
+      }
+    },
+    {
+      "id": "v3-config-overlay-types",
+      "requirementId": "R03",
+      "function": "merge_config",
+      "args": [
+        {
+          "enabled": true
+        },
+        [
+          {
+            "enabled": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "enabled": 1
+        },
+        "changed": [
+          "enabled"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-invalid-layer",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          []
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-config-overlay-added-object",
+      "requirementId": "R03",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "new": {
+              "x": 1
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "new": {
+            "x": 1
+          }
+        },
+        "changed": [
+          "new"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-delete-object",
+      "requirementId": "R02",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": {
+            "x": 1
+          }
+        },
+        [
+          {
+            "a": {
+              "$delete": true
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {},
+        "changed": [
+          "a"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-nested-delete",
+      "requirementId": "R02",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": {
+            "x": 1,
+            "y": 2
+          }
+        },
+        [
+          {
+            "a": {
+              "x": {
+                "$delete": true
+              }
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": {
+            "y": 2
+          }
+        },
+        "changed": [
+          "a.x"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-missing-delete",
+      "requirementId": "R02",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "missing": {
+              "$delete": true
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {},
+        "changed": []
+      }
+    },
+    {
+      "id": "v3-config-overlay-empty-list",
+      "requirementId": "R01",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": [
+            1,
+            2
+          ]
+        },
+        [
+          {
+            "a": []
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": []
+        },
+        "changed": [
+          "a"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-scalar-object",
+      "requirementId": "R01",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": 1
+        },
+        [
+          {
+            "a": {
+              "x": 2
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": {
+            "x": 2
+          }
+        },
+        "changed": [
+          "a"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-list-type-change",
+      "requirementId": "R03",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": [
+            true
+          ]
+        },
+        [
+          {
+            "a": [
+              1
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": [
+            1
+          ]
+        },
+        "changed": [
+          "a"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-path-order",
+      "requirementId": "R03",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": {
+            "x": 1
+          },
+          "a!": 1
+        },
+        [
+          {
+            "a": {
+              "x": 2
+            },
+            "a!": 2
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": {
+            "x": 2
+          },
+          "a!": 2
+        },
+        "changed": [
+          "a!",
+          "a.x"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-nested-list-copy",
+      "requirementId": "R05",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": [
+            {
+              "x": 1
+            }
+          ]
+        },
+        [
+          {
+            "a": [
+              {
+                "x": 2
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "config": {
+          "a": [
+            {
+              "x": 2
+            }
+          ]
+        },
+        "changed": [
+          "a"
+        ]
+      }
+    },
+    {
+      "id": "v3-config-overlay-numeric-delete",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "a": {
+              "$delete": 1
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-root-delete",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "$delete": true
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-dot-key",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "a.b": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-bad-directive",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "a": {
+              "$delete": false
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-base-directive",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": {
+            "$delete": true
+          }
+        },
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-list-directive",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "a": [
+              {
+                "$delete": true
+              }
+            ]
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-late-invalid",
+      "requirementId": "R05",
+      "function": "merge_config",
+      "args": [
+        {
+          "a": {
+            "x": 1
+          }
+        },
+        [
+          {
+            "a": {
+              "x": 2
+            }
+          },
+          {
+            "": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-config-overlay-float",
+      "requirementId": "R04",
+      "function": "merge_config",
+      "args": [
+        {},
+        [
+          {
+            "x": 1.5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

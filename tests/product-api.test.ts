@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createApplication } from '../apps/api/src/application.ts';
 import { verifyEvidence } from '../packages/orchestrator/src/evidence.ts';
+import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 
 test('product HTTP refuses arbitrary/live requests and durably exports an actual cancellation', async t => {
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-product-http-'));
@@ -19,8 +20,8 @@ test('product HTTP refuses arbitrary/live requests and durably exports an actual
   const tasks = await (await fetch(base + '/tasks')).json();
   assert.equal(tasks.realExecutionEnabled, false); assert.equal(tasks.competitionReady, false);
   assert.equal(tasks.maxApprovedSpendUsd, 25);
-  assert.equal(tasks.tasks.length, 30);
-  assert.ok(tasks.tasks.every((item: Record<string, unknown>) => !('acceptanceCases' in item) && !('files' in item)));
+  assert.equal(tasks.tasks.length, (await loadFixtures(new URL('../', import.meta.url))).length);
+  assert.ok(tasks.tasks.every((item: Record<string, unknown>) => !('acceptanceCases' in item) && 'files' in item && 'examples' in item));
   for (const [body, expectedStatus, expectedCode] of [
     [{ ...request, mode: 'live' }, 403, 'authorization_required'],
     [{ ...request, taskId: 'not-curated' }, 400, 'unknown_task'],

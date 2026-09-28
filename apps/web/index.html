@@ -16,6 +16,7 @@
     <nav aria-label="Main navigation">
       <a href="#story/bug" data-nav="story">Walkthrough</a>
       <a href="#tasks" data-nav="tasks">Try a repair</a>
+      <a href="#how-it-works" data-nav="how-it-works">How it works</a>
       <a href="#runs" data-nav="runs">Runs</a>
       <a id="demo-link" href="/demo/" hidden>Watch demo</a>
     </nav>
@@ -39,7 +40,7 @@
     </section>
     <section id="tasks-view" class="view" aria-labelledby="tasks-heading" hidden>
       <div class="page-heading"><h1 id="tasks-heading">Try a repair</h1><a class="text-link" href="#runs">View past runs</a></div>
-      <p id="workspace-intro" class="page-description">Choose a small Python bug. Generate patch asks the live model for a repair, then checks it against the requirements. You review the change; nothing is merged.</p>
+      <p id="workspace-intro" class="page-description">Choose a maintenance task. Read the starting code and required behavior, then generate a patch and inspect the evidence.</p>
       <div class="mobile-task-picker"><label for="mobile-task">Choose an example</label><select id="mobile-task"><option>Loading examples…</option></select></div>
       <div class="workspace-grid">
         <aside class="task-panel" aria-label="Example picker">
@@ -49,6 +50,74 @@
         </aside>
         <div id="task-detail" class="detail-panel" aria-live="polite"><div class="empty-state"><h2>Loading the selected example…</h2></div></div>
       </div>
+    </section>
+    <section id="how-it-works-view" class="view how-page" aria-labelledby="how-heading" hidden>
+      <div class="how-intro">
+        <p class="eyebrow">The repair workflow</p>
+        <h1 id="how-heading">How does PatchProof work?</h1>
+        <p>An AI-generated patch is a proposal. PatchProof connects that proposal to the original code, the behavior you asked for, and executable checks, so you can decide whether to use it.</p>
+        <div class="actions"><a class="button primary" href="#tasks">Try a repair</a><a class="text-link" href="#story/bug">Follow a recorded repair</a></div>
+      </div>
+      <ol class="workflow-map" aria-label="Repair workflow">
+        <li><span>01</span><strong>Choose a task</strong><small>Code + requirements</small></li>
+        <li><span>02</span><strong>Generate a patch</strong><small>Model proposes changes</small></li>
+        <li><span>03</span><strong>Run fixed checks</strong><small>Expected vs. observed</small></li>
+        <li><span>04</span><strong>Keep the evidence</strong><small>Every attempt stays visible</small></li>
+        <li><span>05</span><strong>You review</strong><small>Inspect, download, decide</small></li>
+      </ol>
+      <div class="how-content">
+        <section class="how-section">
+          <p class="eyebrow">Start with a clear contract</p><h2>What are we repairing?</h2>
+          <p>In <a href="#tasks">Try a repair</a>, each task is a curated Python project snapshot with a maintenance request, its starting files, examples, and explicit requirements. The examples show the required behavior. The source viewer shows the exact code the repair starts from.</p>
+          <p>Requirements cover both the requested fix and behavior that must keep working, such as ordering, error handling, or leaving the caller's data unchanged. File labels show which source files the model may change.</p>
+          <p>This public app accepts the listed task IDs. It does not accept repository URLs, code uploads, or shell commands.</p>
+        </section>
+        <section class="how-section">
+          <p class="eyebrow">A real request, a bounded attempt</p><h2>What happens when I generate a patch?</h2>
+          <p>First, the coordinator checks the run allowance and executes checks on the starting code. It then sends the maintenance request, allowed source, public examples, and requirements to the model. The model returns proposed file changes and a short summary.</p>
+          <p>The coordinator applies those changes only to the allowed files and runs the checks again. Progress comes from recorded events: starting checks, repairing, checking, and preparing evidence. The model's explanation is shown separately from what the checks actually observed.</p>
+          <div class="how-runtime"><h3>This workspace</h3><p id="how-runtime-description">Loading the configured model and check runtime…</p><p id="how-runtime-model" class="fine-print"></p></div>
+        </section>
+        <section class="how-section">
+          <p class="eyebrow">Checks the repair cannot rewrite</p><h2>Who decides whether the change passed?</h2>
+          <p>The check definitions and expected results are controlled by the application, outside the model's editable source. Each check calls the code with a specified input and compares the observed outcome with the requirement. Additional checks can exercise compatibility cases beyond the task's public examples.</p>
+          <p>Here, “independent” means the proposed code does not control its check definitions or the recorded verdict. It does not mean a second model votes on the patch. The check runner records outputs, exceptions, logs, and operation IDs.</p>
+          <p>When an attempt fails, feedback can guide another attempt within the same run limits. PatchProof retains the best checked attempt and preserves the others for review. A failed or interrupted run remains in the history.</p>
+        </section>
+        <section class="how-section">
+          <p class="eyebrow">Know what the result means</p><h2>A passing check is evidence with a scope.</h2>
+          <dl class="outcome-guide">
+            <div><dt>All listed checks passed</dt><dd>The selected patch passed the declared checks. A human still reviews whether the change should be used.</dd></div>
+            <div><dt>Checks failed</dt><dd>The run did not produce an accepted patch. Open the failed checks to see the expected and observed results.</dd></div>
+            <div><dt>Needs review</dt><dd>The evidence is incomplete or the run stopped. Do not treat the retained patch as verified.</dd></div>
+            <div><dt>Execution error</dt><dd>A problem in execution prevented a normal decision. Review the recorded activity and partial results.</dd></div>
+          </dl>
+          <p>Passing a finite set of checks does not establish correctness for every possible input. There is no automatic merge or deployment of the generated patch.</p>
+        </section>
+        <section class="how-section">
+          <p class="eyebrow">Review the work, not just a badge</p><h2>What can I inspect in a run?</h2>
+          <div class="review-guide">
+            <article><h3>Patch</h3><p>See exactly which lines changed. Switch attempts to review both rejected proposals and the retained patch.</p></article>
+            <article><h3>Checks</h3><p>Connect requirements to checks, inspect expected and observed values, and compare with checks on the starting code.</p></article>
+            <article><h3>Activity</h3><p>Follow recorded coordinator events. This is an execution history, not the model's private reasoning.</p></article>
+            <article><h3>Run details</h3><p>Inspect model and runtime identifiers, resource usage, source digests, and instructions to reproduce the checks.</p></article>
+          </div>
+          <p><strong>Download evidence</strong> saves the original inputs, candidate changes, check results, logs, and accounting in one bundle. With the recorded source checkout and runtime, a maintainer can run the replay command shown in Run details. Replay executes fresh checks without asking the model to generate the patch again.</p>
+          <p>The walkthrough and video explain saved real runs. Browsing them does not start a new model call; <strong>Generate patch</strong> starts a new run.</p>
+        </section>
+        <section class="how-section">
+          <p class="eyebrow">Compare approaches fairly</p><h2>Why are there three repair approaches?</h2>
+          <div class="approach-guide">
+            <article><h3>Standard repair</h3><p>Uses the task's public checks to guide revisions.</p></article>
+            <article><h3>Repair with extra checks</h3><p>Also uses additional checks to guide revisions.</p></article>
+            <article><h3>PatchProof</h3><p>Uses additional checks and keeps the best checked attempt, instead of assuming the latest attempt is best.</p></article>
+          </div>
+          <p>The comparison view checks whether the runs used the same source, policy, runtime, and resource limits. It shows total usage across attempts, including unsuccessful work. Provider cost estimates are labeled; unknown billing and CPU values stay unmeasured.</p>
+          <p>These curated demonstrations explain the workflow. A few successful examples do not establish a benchmark advantage over another approach.</p>
+          <a class="text-link" href="#compare">Open the comparison view</a>
+        </section>
+      </div>
+      <div class="how-end"><h2>Start with the code. Finish with a decision.</h2><p>Choose a task, understand its goal, and inspect what the model actually changed.</p><a class="button primary" href="#tasks">Choose a maintenance task</a></div>
     </section>
     <section id="runs-view" class="view" aria-labelledby="runs-heading" hidden>
       <div class="page-heading"><h1 id="runs-heading">Runs</h1><a class="button" href="#tasks">Choose an example</a></div>

@@ -14,9 +14,9 @@ import type { EvidenceStore } from './evidence.ts';
 export const LIVE_MODEL = 'nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B';
 export const LIVE_EXECUTION = Object.freeze({ modelProvider: 'nebius-token-factory', checkBackend: 'local_container', modelId: LIVE_MODEL });
 export const LIVE_LIMITS = Object.freeze(LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 786432,
-  outputTokenLimit: 6000, wallTimeLimitSeconds: 300, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 0.1 }));
+  outputTokenLimit: 12000, wallTimeLimitSeconds: 300, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 0.1 }));
 export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.06, outputUsdPerMillionTokens: 0.24,
-  requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 2000,
+  requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
   inputAccounting: 'full-model-context-conservative-ceiling-per-request', actualBilling: 'unknown-full-reservation-held',
   verifiedAt: '2026-09-28T00:01:53.113Z', validUntil: '2026-10-01T00:00:00Z' });
 export interface LiveLocalSettings {

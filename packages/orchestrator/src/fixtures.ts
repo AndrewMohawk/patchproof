@@ -59,6 +59,7 @@ export async function loadFixtures(root: URL): Promise<Fixture[]> {
 }
 
 export function publicTask(fixture: Fixture) {
-  const { id, repoId, split, title, description, requirements } = fixture;
-  return { id, repoId, split, title, description, requirements, mockSupported: id === 'stable-unique-01', ...fixtureDigests(fixture) };
+  const { id, repoId, split, title, description, requirements, files, entrypoint, editAllowlist } = fixture;
+  return { id, repoId, split, title, description, requirements, files, entrypoint, editAllowlist,
+    examples: structuredClone(fixture.visibleCases), mockSupported: id === 'stable-unique-01', ...fixtureDigests(fixture) };
 }

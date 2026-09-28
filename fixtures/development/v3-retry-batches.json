@@ -1,0 +1,783 @@
+{
+  "id": "v3-retry-batches",
+  "repoId": "owned-v3-retry-batches",
+  "split": "development",
+  "title": "Retry batches miss ready jobs and ignore reusable space in earlier batches",
+  "description": "A worker preview packs ready retries into batches with a weight limit and mutually exclusive groups. Existing code mishandles readiness and attempt boundaries and uses the newest batch even when an older one has suitable room. Repair the scheduling pipeline while retaining deterministic input-order fairness.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Validate all jobs first. A job is eligible when attempts<max_attempts, readyAt<=now, and weight<=capacity. Deferred reasons have precedence attempts_exhausted, then not_ready, then too_large; return deferred jobs in input order."
+    },
+    {
+      "id": "R02",
+      "text": "Process eligible jobs in input order. Put each in the first existing batch that has enough remaining capacity and no job in the same non-null group. If none fits, append a new batch. Null groups are unconstrained and may share a batch."
+    },
+    {
+      "id": "R03",
+      "text": "Return {batches,deferred}; batches contain ids in insertion order and summed weight, in batch creation order. Each eligible job appears exactly once. Never exceed capacity or place two same non-null groups together."
+    },
+    {
+      "id": "R04",
+      "text": "Jobs is a list with unique nonempty string ids. Every job has exactly id,group,weight,attempts,readyAt; group is null or nonempty string, weight positive plain integer, attempts/readyAt nonnegative plain integers. now is a nonnegative plain integer, capacity a plain integer1..1000, max_attempts a plain integer1..100. Invalid input raises ValueError even for ineligible jobs."
+    },
+    {
+      "id": "R05",
+      "text": "Do not change job order or mutate any input object. Planning is a pure preview and must not increment attempts, execute jobs, or wait for future timestamps."
+    }
+  ],
+  "files": {
+    "retry_batches.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\ndef _count(value, minimum=0):\n    return type(value) is int and value >= minimum\n\n\ndef _validate(jobs, now, capacity, max_attempts):\n    if type(jobs) is not list or not _count(now):\n        raise ValueError(\"invalid jobs or timestamp\")\n    if not _count(capacity, 1) or capacity > 1000:\n        raise ValueError(\"invalid batch capacity\")\n    if not _count(max_attempts, 1) or max_attempts > 100:\n        raise ValueError(\"invalid attempt limit\")\n    ids = set()\n    for job in jobs:\n        if type(job) is not dict or set(job) != {\"id\", \"group\", \"weight\", \"attempts\", \"readyAt\"}:\n            raise ValueError(\"invalid job fields\")\n        if type(job[\"id\"]) is not str or not job[\"id\"] or job[\"id\"] in ids:\n            raise ValueError(\"job ids must be unique nonempty strings\")\n        ids.add(job[\"id\"])\n        if job[\"group\"] is not None and (type(job[\"group\"]) is not str or not job[\"group\"]):\n            raise ValueError(\"invalid exclusion group\")\n        if not _count(job[\"weight\"], 1) or not _count(job[\"attempts\"]) or not _count(job[\"readyAt\"]):\n            raise ValueError(\"invalid job counters\")\n\n\ndef _deferred_reason(job, now, capacity, max_attempts):\n    if job[\"attempts\"] > max_attempts:\n        return \"attempts_exhausted\"\n    if job[\"readyAt\"] >= now:\n        return \"not_ready\"\n    if job[\"weight\"] > capacity:\n        return \"too_large\"\n    return None\n\n\ndef _fits(batch, job, capacity):\n    if batch[\"weight\"] + job[\"weight\"] > capacity:\n        return False\n    return job[\"group\"] is None or job[\"group\"] not in batch[\"groups\"]\n\n\ndef _append(batch, job):\n    batch[\"ids\"].append(job[\"id\"])\n    batch[\"weight\"] += job[\"weight\"]\n    if job[\"group\"] is not None:\n        batch[\"groups\"].add(job[\"group\"])\n\n\ndef plan_batches(jobs, now, capacity, max_attempts):\n    \"\"\"Pack ready retries without exceeding weight or running group peers together.\"\"\"\n    _validate(jobs, now, capacity, max_attempts)\n    batches = []\n    deferred = []\n    for job in jobs:\n        reason = _deferred_reason(job, now, capacity, max_attempts)\n        if reason is not None:\n            deferred.append({\"id\": job[\"id\"], \"reason\": reason})\n            continue\n        target = next((batch for batch in batches[-1:] if _fits(batch, job, capacity)), None)\n        if target is None:\n            target = {\"ids\": [], \"weight\": 0, \"groups\": set()}\n            batches.append(target)\n        _append(target, job)\n    return {\"batches\": [{\"ids\": batch[\"ids\"], \"weight\": batch[\"weight\"]} for batch in batches],\n            \"deferred\": deferred}\n"
+  },
+  "editAllowlist": [
+    "retry_batches.py"
+  ],
+  "entrypoint": "retry_batches.py",
+  "visibleCases": [
+    {
+      "id": "v3-retry-batches-first-fit",
+      "requirementId": "R02",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": "one",
+            "weight": 6,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": "two",
+            "weight": 6,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "c",
+            "group": "three",
+            "weight": 4,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a",
+              "c"
+            ],
+            "weight": 10
+          },
+          {
+            "ids": [
+              "b"
+            ],
+            "weight": 6
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-ready-boundary",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 4,
+            "attempts": 0,
+            "readyAt": 3
+          }
+        ],
+        3,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a"
+            ],
+            "weight": 4
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-attempt-boundary",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 4,
+            "attempts": 3,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [],
+        "deferred": [
+          {
+            "id": "a",
+            "reason": "attempts_exhausted"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-retry-batches-group-exclusion",
+      "requirementId": "R02",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": "same",
+            "weight": 4,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": "same",
+            "weight": 3,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "c",
+            "group": "other",
+            "weight": 3,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a",
+              "c"
+            ],
+            "weight": 7
+          },
+          {
+            "ids": [
+              "b"
+            ],
+            "weight": 3
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-bool-capacity",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [],
+        0,
+        true,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-retry-batches-null-group",
+      "requirementId": "R02",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 6,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": null,
+            "weight": 4,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a",
+              "b"
+            ],
+            "weight": 10
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-exact-capacity",
+      "requirementId": "R03",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 10,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a"
+            ],
+            "weight": 10
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-overweight",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 11,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [],
+        "deferred": [
+          {
+            "id": "a",
+            "reason": "too_large"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-retry-batches-future",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 4,
+            "attempts": 0,
+            "readyAt": 2
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [],
+        "deferred": [
+          {
+            "id": "a",
+            "reason": "not_ready"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-retry-batches-reason-priority",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 20,
+            "attempts": 3,
+            "readyAt": 2
+          },
+          {
+            "id": "b",
+            "group": null,
+            "weight": 20,
+            "attempts": 0,
+            "readyAt": 2
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [],
+        "deferred": [
+          {
+            "id": "a",
+            "reason": "attempts_exhausted"
+          },
+          {
+            "id": "b",
+            "reason": "not_ready"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-retry-batches-eligible-after-deferred",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "later",
+            "group": null,
+            "weight": 2,
+            "attempts": 0,
+            "readyAt": 5
+          },
+          {
+            "id": "now",
+            "group": null,
+            "weight": 2,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "done",
+            "group": null,
+            "weight": 2,
+            "attempts": 5,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "now"
+            ],
+            "weight": 2
+          }
+        ],
+        "deferred": [
+          {
+            "id": "later",
+            "reason": "not_ready"
+          },
+          {
+            "id": "done",
+            "reason": "attempts_exhausted"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-retry-batches-all-groups",
+      "requirementId": "R03",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": "x",
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": "x",
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "c",
+            "group": "x",
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a"
+            ],
+            "weight": 1
+          },
+          {
+            "ids": [
+              "b"
+            ],
+            "weight": 1
+          },
+          {
+            "ids": [
+              "c"
+            ],
+            "weight": 1
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-last-allowed-attempt",
+      "requirementId": "R01",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 2,
+            "attempts": 2,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a"
+            ],
+            "weight": 2
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-empty",
+      "requirementId": "R05",
+      "function": "plan_batches",
+      "args": [
+        [],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-capacity-one",
+      "requirementId": "R03",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        1,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a"
+            ],
+            "weight": 1
+          },
+          {
+            "ids": [
+              "b"
+            ],
+            "weight": 1
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-group-case-sensitive",
+      "requirementId": "R02",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": "A",
+            "weight": 2,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": "a",
+            "weight": 2,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "batches": [
+          {
+            "ids": [
+              "a",
+              "b"
+            ],
+            "weight": 4
+          }
+        ],
+        "deferred": []
+      }
+    },
+    {
+      "id": "v3-retry-batches-duplicate-id",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-retry-batches-negative-attempt",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": -1,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-retry-batches-float-ready",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0.5
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-retry-batches-invalid-ineligible",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 99,
+            "readyAt": 0,
+            "extra": 1
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-retry-batches-zero-attempt-limit",
+      "requirementId": "R04",
+      "function": "plan_batches",
+      "args": [
+        [],
+        1,
+        10,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-retry-batches-late-invalid",
+      "requirementId": "R05",
+      "function": "plan_batches",
+      "args": [
+        [
+          {
+            "id": "a",
+            "group": null,
+            "weight": 1,
+            "attempts": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "b",
+            "group": null,
+            "weight": 0,
+            "attempts": 0,
+            "readyAt": 0
+          }
+        ],
+        1,
+        10,
+        3
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

@@ -1,0 +1,707 @@
+{
+  "id": "v3-search-ranking",
+  "repoId": "owned-v3-search-ranking",
+  "split": "development",
+  "title": "Search results ignore required words and inflate repeated query terms",
+  "description": "A help-center search ranks exact normalized words across titles, bodies and tags. Current results can match only one word of a multiword query, count repeated query terms several times and report the truncated page size as the total. Repair matching, scoring and pagination metadata together.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Normalize text using Unicode casefold and tokenize maximal runs of Unicode alphanumeric characters (including non-ASCII numeric characters); underscores and punctuation split words. Every distinct query word must appear in the union of a record’s title/body/tag words. Match whole words, not substrings. An empty token query matches every record."
+    },
+    {
+      "id": "R02",
+      "text": "For each distinct query word, award3 points if present in title,1 if present in body and2 if present in any tag, at most once per field category. Add5 when the complete normalized query token sequence occurs contiguously in title; retain repeated words for this phrase check. Empty query gets no phrase bonus."
+    },
+    {
+      "id": "R03",
+      "text": "Sort by score descending, then the original title casefolded ascending, then exact id ascending. Return {results,total}; each result has id,title,score. Limit results to limit while total counts all matching records before truncation."
+    },
+    {
+      "id": "R04",
+      "text": "Records is a list of objects with exactly id,title,body,tags. Ids are unique nonempty strings, title/body strings, tags a list of strings (empty allowed). Query is a string and limit a plain integer1..50. Validate all records, including nonmatching records; invalid input raises ValueError."
+    },
+    {
+      "id": "R05",
+      "text": "Preserve caller records and nested tag lists. Repeated document words or tags must not inflate scores, and returned titles retain their original spelling."
+    }
+  ],
+  "files": {
+    "search_ranking.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nimport re\n\n\ndef _tokens(text):\n    return re.findall(r\"[^\\W_]+\", text.casefold(), flags=re.UNICODE)\n\n\ndef _validate(records, query, limit):\n    if type(records) is not list or type(query) is not str:\n        raise ValueError(\"invalid records or query\")\n    if type(limit) is not int or not 1 <= limit <= 50:\n        raise ValueError(\"invalid result limit\")\n    ids = set()\n    for record in records:\n        if type(record) is not dict or set(record) != {\"id\", \"title\", \"body\", \"tags\"}:\n            raise ValueError(\"invalid record fields\")\n        if type(record[\"id\"]) is not str or not record[\"id\"] or record[\"id\"] in ids:\n            raise ValueError(\"record ids must be unique nonempty strings\")\n        ids.add(record[\"id\"])\n        if type(record[\"title\"]) is not str or type(record[\"body\"]) is not str:\n            raise ValueError(\"title and body must be strings\")\n        if type(record[\"tags\"]) is not list or any(type(tag) is not str for tag in record[\"tags\"]):\n            raise ValueError(\"tags must be a list of strings\")\n\n\ndef _contains_phrase(tokens, phrase):\n    if not phrase:\n        return False\n    length = len(phrase)\n    return any(tokens[index:index + length] == phrase\n               for index in range(len(tokens) - length + 1))\n\n\ndef _score(record, query_tokens):\n    title_tokens = _tokens(record[\"title\"])\n    title = set(title_tokens)\n    body = set(_tokens(record[\"body\"]))\n    tags = set(token for tag in record[\"tags\"] for token in _tokens(tag))\n    terms = set(query_tokens)\n    if terms and not terms & (title | body | tags):\n        return None\n    score = sum(3 * (term in title) + (term in body) + 2 * (term in tags) for term in query_tokens)\n    if _contains_phrase(title_tokens, query_tokens):\n        score += 5\n    return score\n\n\ndef search_records(records, query, limit):\n    \"\"\"Rank exact normalized words across fields without frequency inflation.\"\"\"\n    _validate(records, query, limit)\n    query_tokens = _tokens(query)\n    matched = []\n    for record in records:\n        score = _score(record, query_tokens)\n        if score is not None:\n            matched.append({\"id\": record[\"id\"], \"title\": record[\"title\"], \"score\": score})\n    matched.sort(key=lambda item: (-item[\"score\"], item[\"title\"].casefold(), item[\"id\"]))\n    return {\"results\": matched[:limit], \"total\": len(matched[:limit])}\n"
+  },
+  "editAllowlist": [
+    "search_ranking.py"
+  ],
+  "entrypoint": "search_ranking.py",
+  "visibleCases": [
+    {
+      "id": "v3-search-ranking-all-query-words",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Red apple",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "Red pear",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red apple",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Red apple",
+            "score": 11
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-repeated-query",
+      "requirementId": "R02",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "red",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "red",
+            "score": 3
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-total-before-limit",
+      "requirementId": "R03",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Red",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "Red",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "c",
+            "title": "Red",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red",
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Red",
+            "score": 8
+          }
+        ],
+        "total": 3
+      }
+    },
+    {
+      "id": "v3-search-ranking-across-fields",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Red",
+            "body": "apple",
+            "tags": []
+          }
+        ],
+        "red apple",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Red",
+            "score": 4
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-bool-limit",
+      "requirementId": "R04",
+      "function": "search_records",
+      "args": [
+        [],
+        "q",
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-search-ranking-whole-word",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Pineapple",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "Apple",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "apple",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "b",
+            "title": "Apple",
+            "score": 8
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-punctuation",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "red_apple-pie",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "RED apple",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "red_apple-pie",
+            "score": 11
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-unicode-casefold",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Straße",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "STRASSE",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Straße",
+            "score": 8
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-field-weights",
+      "requirementId": "R02",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Red",
+            "body": "red red",
+            "tags": [
+              "red",
+              "RED"
+            ]
+          }
+        ],
+        "red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Red",
+            "score": 11
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-phrase-order",
+      "requirementId": "R02",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "apple red",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "red apple",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red apple",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "b",
+            "title": "red apple",
+            "score": 11
+          },
+          {
+            "id": "a",
+            "title": "apple red",
+            "score": 6
+          }
+        ],
+        "total": 2
+      }
+    },
+    {
+      "id": "v3-search-ranking-repeated-phrase",
+      "requirementId": "R02",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "red red",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "red",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "red red",
+            "score": 8
+          },
+          {
+            "id": "b",
+            "title": "red",
+            "score": 3
+          }
+        ],
+        "total": 2
+      }
+    },
+    {
+      "id": "v3-search-ranking-empty-query",
+      "requirementId": "R03",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "b",
+            "title": "Z",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "a",
+            "title": "a",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "!!!",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "a",
+            "score": 0
+          },
+          {
+            "id": "b",
+            "title": "Z",
+            "score": 0
+          }
+        ],
+        "total": 2
+      }
+    },
+    {
+      "id": "v3-search-ranking-title-id-ties",
+      "requirementId": "R03",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "z",
+            "title": "Alpha",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "alpha",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "a",
+            "title": "Alpha",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "alpha",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Alpha",
+            "score": 8
+          },
+          {
+            "id": "b",
+            "title": "alpha",
+            "score": 8
+          },
+          {
+            "id": "z",
+            "title": "Alpha",
+            "score": 8
+          }
+        ],
+        "total": 3
+      }
+    },
+    {
+      "id": "v3-search-ranking-tags-only",
+      "requirementId": "R02",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "",
+            "body": "",
+            "tags": [
+              "urgent red",
+              "red"
+            ]
+          }
+        ],
+        "urgent red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "",
+            "score": 4
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-unicode-number",
+      "requirementId": "R01",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Version ½",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "Version 1",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "½",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "id": "a",
+            "title": "Version ½",
+            "score": 8
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": "v3-search-ranking-no-match",
+      "requirementId": "R03",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Blue",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [],
+        "total": 0
+      }
+    },
+    {
+      "id": "v3-search-ranking-empty-records",
+      "requirementId": "R05",
+      "function": "search_records",
+      "args": [
+        [],
+        "",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [],
+        "total": 0
+      }
+    },
+    {
+      "id": "v3-search-ranking-duplicate-id",
+      "requirementId": "R04",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "a",
+            "title": "",
+            "body": "",
+            "tags": []
+          }
+        ],
+        "",
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-search-ranking-nonmatch-invalid",
+      "requirementId": "R04",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "red",
+            "body": "",
+            "tags": []
+          },
+          {
+            "id": "b",
+            "title": "blue",
+            "body": "",
+            "tags": [
+              3
+            ]
+          }
+        ],
+        "red",
+        10
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-search-ranking-extra-field",
+      "requirementId": "R04",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "",
+            "body": "",
+            "tags": [],
+            "rank": 1
+          }
+        ],
+        "",
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-search-ranking-null-query",
+      "requirementId": "R04",
+      "function": "search_records",
+      "args": [
+        [],
+        null,
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-search-ranking-late-invalid",
+      "requirementId": "R05",
+      "function": "search_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "title": "Red",
+            "body": "",
+            "tags": [
+              "x"
+            ]
+          },
+          {
+            "id": "b",
+            "title": "",
+            "body": null,
+            "tags": []
+          }
+        ],
+        "red",
+        1
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

@@ -26,7 +26,7 @@ test('archive serves exact pinned live and historical mock bytes with explicit r
   assert.equal(tasks.mode, 'archive'); assert.equal(tasks.realExecutionEnabled, false); assert.equal(tasks.authenticityVerified, false);
   assert.deepEqual(tasks.capabilities, { createRuns: false, cancelRuns: false, replay: false, streamEvents: false });
   assert.deepEqual(tasks.recordedModes, ['live', 'mock']); assert.equal(tasks.tasks.length, 1);
-  assert.ok(!('files' in tasks.tasks[0]) && !('acceptanceCases' in tasks.tasks[0]));
+  assert.ok('files' in tasks.tasks[0] && 'examples' in tasks.tasks[0] && !('acceptanceCases' in tasks.tasks[0]));
   assert.ok(!JSON.stringify(tasks).includes(fixture.directory));
   const history = await (await fetch(app.base + '/runs')).json(); assert.equal(history.runs.length, 2);
   for (const [i, bundle] of fixture.bundles.entries()) {

@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:43565",
+  "mode": "mock",
+  "taskCount": 6,
+  "observations": [
+    {
+      "task": "v3-config-overlay",
+      "files": 1,
+      "examples": 5
+    },
+    {
+      "task": "v3-cursor-pagination",
+      "files": 1,
+      "examples": 5
+    },
+    {
+      "task": "v3-inventory-reservation",
+      "files": 1,
+      "examples": 5
+    },
+    {
+      "task": "v3-invoice-allocation",
+      "files": 1,
+      "examples": 5
+    },
+    {
+      "task": "v3-ttl-cache",
+      "files": 1,
+      "examples": 5
+    },
+    {
+      "task": "v3-weekly-schedule",
+      "files": 1,
+      "examples": 5
+    }
+  ],
+  "widths": [
+    1440,
+    390,
+    320
+  ],
+  "browserErrors": [],
+  "blockedRequests": [],
+  "generatedRuns": 0
+}

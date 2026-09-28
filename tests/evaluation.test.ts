@@ -71,7 +71,9 @@ test('independent author and reviewer execution receipts bind the current immuta
 test('public fixture bytes match immutable manifest and each check maps to a requirement', async () => {
   for (const split of ['development', 'calibration']) {
     const directory = new URL(`../fixtures/${split}/`, import.meta.url);
-    const paths = (await readdir(directory)).filter(file => file.endsWith('.json'));
+    // The original experimental split remains frozen. New public development
+    // scenarios have their own versioned manifest and are never scored by it.
+    const paths = (await readdir(directory)).filter(file => file.endsWith('.json') && !file.startsWith('v3-'));
     assert.equal(paths.length, split === 'development' ? 20 : 10);
     for (const path of paths) {
       const bytes = await readFile(new URL(path, directory));

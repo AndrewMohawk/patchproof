@@ -1,0 +1,813 @@
+{
+  "id": "v3-event-fold",
+  "repoId": "owned-v3-event-fold",
+  "split": "development",
+  "title": "Out-of-order updates and retried events produce a stale materialized view",
+  "description": "A dashboard rebuilds its cards from an event log that can arrive out of order and include duplicate deliveries. The materializer must validate and deduplicate first, apply deterministic revision order, preserve label order and honor deletion/recreation. Repair the fold without dropping legitimate later updates.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Validate every event before folding. Deduplicate identical repeated eventId values; a repeated eventId with any conflicting content raises ValueError. Apply unique events by sequence ascending, then eventId lexical order for ties, independent of input order."
+    },
+    {
+      "id": "R02",
+      "text": "Create replaces the entity with its title and ordered unique labels. Rename changes title only. Labels removes every named label, then appends new labels in add-list order with duplicates suppressed; a label present in both remove and add is removed and appended again. Every applied active update sets version to its sequence."
+    },
+    {
+      "id": "R03",
+      "text": "Delete removes the entity. Rename and labels events for an inactive entity are ignored; only create can reactivate it. Return active entities sorted by exact entity id, each with id,title,labels,version."
+    },
+    {
+      "id": "R04",
+      "text": "Events are a list of objects with exactly eventId,entity,sequence,kind,data. Ids are nonempty strings; sequence is a nonnegative plain integer. Create data has exactly title (string), labels (list of nonempty strings); rename has title; labels has add/remove lists of nonempty strings; delete has empty data. Invalid input raises ValueError."
+    },
+    {
+      "id": "R05",
+      "text": "Preserve every input event and nested payload. Handle empty streams, duplicate labels, empty titles and equal-sequence ties deterministically."
+    }
+  ],
+  "files": {
+    "event_fold.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\nimport json\n\n\ndef _labels(value):\n    return type(value) is list and all(type(item) is str and item for item in value)\n\n\ndef _validate(events):\n    if type(events) is not list:\n        raise ValueError(\"events must be a list\")\n    seen = {}\n    unique = []\n    for event in events:\n        if type(event) is not dict or set(event) != {\"eventId\", \"entity\", \"sequence\", \"kind\", \"data\"}:\n            raise ValueError(\"invalid event fields\")\n        if any(type(event[key]) is not str or not event[key] for key in (\"eventId\", \"entity\")):\n            raise ValueError(\"invalid event identity\")\n        if type(event[\"sequence\"]) is not int or event[\"sequence\"] < 0:\n            raise ValueError(\"invalid sequence\")\n        kind, data = event[\"kind\"], event[\"data\"]\n        if type(data) is not dict:\n            raise ValueError(\"invalid event data\")\n        if kind == \"create\":\n            valid = set(data) == {\"title\", \"labels\"} and type(data[\"title\"]) is str and _labels(data[\"labels\"])\n        elif kind == \"rename\":\n            valid = set(data) == {\"title\"} and type(data[\"title\"]) is str\n        elif kind == \"labels\":\n            valid = set(data) == {\"add\", \"remove\"} and _labels(data[\"add\"]) and _labels(data[\"remove\"])\n        elif kind == \"delete\":\n            valid = not data\n        else:\n            valid = False\n        if not valid:\n            raise ValueError(\"invalid event kind or payload\")\n        encoded = json.dumps(event, sort_keys=True, separators=(\",\", \":\"))\n        if event[\"eventId\"] in seen:\n            if seen[event[\"eventId\"]] != encoded:\n                raise ValueError(\"conflicting repeated event id\")\n            continue\n        seen[event[\"eventId\"]] = encoded\n        unique.append(event)\n    return unique\n\n\ndef _ordered_unique(items):\n    return sorted(set(items))\n\n\ndef _apply(state, event):\n    kind, data = event[\"kind\"], event[\"data\"]\n    if kind == \"delete\":\n        return None\n    if kind == \"create\":\n        return {\"id\": event[\"entity\"], \"title\": data[\"title\"],\n                \"labels\": _ordered_unique(data[\"labels\"]), \"version\": event[\"sequence\"]}\n    if state is None:\n        return None\n    updated = deepcopy(state)\n    if kind == \"rename\":\n        updated[\"title\"] = data[\"title\"]\n    else:\n        retained = list(updated[\"labels\"])\n        updated[\"labels\"] = _ordered_unique(retained + data[\"add\"])\n    updated[\"version\"] = event[\"sequence\"]\n    return updated\n\n\ndef fold_events(events):\n    \"\"\"Build a reproducible materialized view from retried out-of-order events.\"\"\"\n    unique = _validate(events)\n    ordered = unique\n    states = {}\n    for event in ordered:\n        entity = event[\"entity\"]\n        states[entity] = _apply(states.get(entity), event)\n    return [states[key] for key in sorted(states) if states[key] is not None]\n"
+  },
+  "editAllowlist": [
+    "event_fold.py"
+  ],
+  "entrypoint": "event_fold.py",
+  "visibleCases": [
+    {
+      "id": "v3-event-fold-out-of-order",
+      "requirementId": "R01",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "r",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          },
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Beta",
+          "labels": [],
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-remove-add-order",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "b",
+                "a"
+              ]
+            }
+          },
+          {
+            "eventId": "l",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "labels",
+            "data": {
+              "add": [
+                "c",
+                "b"
+              ],
+              "remove": [
+                "b"
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [
+            "a",
+            "c",
+            "b"
+          ],
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-duplicate-delivery",
+      "requirementId": "R01",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "r",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          },
+          {
+            "eventId": "r",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Beta",
+          "labels": [],
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-deleted-update-ignored",
+      "requirementId": "R03",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "d",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "delete",
+            "data": {}
+          },
+          {
+            "eventId": "r",
+            "entity": "a",
+            "sequence": 2,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-event-fold-conflicting-id",
+      "requirementId": "R01",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Changed",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-event-fold-create-label-order",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "z",
+                "a",
+                "z",
+                "b"
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [
+            "z",
+            "a",
+            "b"
+          ],
+          "version": 0
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-remove-all-occurrences",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "a",
+                "b",
+                "a"
+              ]
+            }
+          },
+          {
+            "eventId": "l",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "labels",
+            "data": {
+              "add": [],
+              "remove": [
+                "a"
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [
+            "b"
+          ],
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-append-unique",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "a"
+              ]
+            }
+          },
+          {
+            "eventId": "l",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "labels",
+            "data": {
+              "add": [
+                "b",
+                "b",
+                "a",
+                "c"
+              ],
+              "remove": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [
+            "a",
+            "b",
+            "c"
+          ],
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-equal-sequence",
+      "requirementId": "R01",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "z",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          },
+          {
+            "eventId": "a",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Beta",
+          "labels": [],
+          "version": 0
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-recreation",
+      "requirementId": "R03",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "d",
+            "entity": "a",
+            "sequence": 2,
+            "kind": "delete",
+            "data": {}
+          },
+          {
+            "eventId": "c2",
+            "entity": "a",
+            "sequence": 3,
+            "kind": "create",
+            "data": {
+              "title": "Again",
+              "labels": [
+                "new"
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Again",
+          "labels": [
+            "new"
+          ],
+          "version": 3
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-inactive-labels",
+      "requirementId": "R03",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "l",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "labels",
+            "data": {
+              "add": [],
+              "remove": []
+            }
+          },
+          {
+            "eventId": "r",
+            "entity": "a",
+            "sequence": 1,
+            "kind": "rename",
+            "data": {
+              "title": "Beta"
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-event-fold-sorted-entities",
+      "requirementId": "R03",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "b",
+            "entity": "z",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "a",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [],
+          "version": 0
+        },
+        {
+          "id": "z",
+          "title": "Alpha",
+          "labels": [],
+          "version": 0
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-create-replaces",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "old"
+              ]
+            }
+          },
+          {
+            "eventId": "next",
+            "entity": "a",
+            "sequence": 2,
+            "kind": "create",
+            "data": {
+              "title": "Next",
+              "labels": [
+                "new"
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Next",
+          "labels": [
+            "new"
+          ],
+          "version": 2
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-empty-title",
+      "requirementId": "R05",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "",
+          "labels": [],
+          "version": 0
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-empty",
+      "requirementId": "R05",
+      "function": "fold_events",
+      "args": [
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-event-fold-no-op-version",
+      "requirementId": "R02",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          },
+          {
+            "eventId": "l",
+            "entity": "a",
+            "sequence": 3,
+            "kind": "labels",
+            "data": {
+              "add": [],
+              "remove": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "id": "a",
+          "title": "Alpha",
+          "labels": [],
+          "version": 3
+        }
+      ]
+    },
+    {
+      "id": "v3-event-fold-bool-sequence",
+      "requirementId": "R04",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": true,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-event-fold-unknown-kind",
+      "requirementId": "R04",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "x",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "unknown",
+            "data": {}
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-event-fold-bad-label",
+      "requirementId": "R04",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                ""
+              ]
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-event-fold-extra-data",
+      "requirementId": "R04",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "x",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "delete",
+            "data": {
+              "extra": 1
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-event-fold-extra-field",
+      "requirementId": "R04",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": []
+            },
+            "extra": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-event-fold-late-invalid",
+      "requirementId": "R05",
+      "function": "fold_events",
+      "args": [
+        [
+          {
+            "eventId": "c",
+            "entity": "a",
+            "sequence": 0,
+            "kind": "create",
+            "data": {
+              "title": "Alpha",
+              "labels": [
+                "a"
+              ]
+            }
+          },
+          {
+            "eventId": "z",
+            "entity": "b",
+            "sequence": 1,
+            "kind": "rename",
+            "data": {
+              "title": null
+            }
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

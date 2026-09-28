@@ -1,0 +1,905 @@
+{
+  "id": "v3-ttl-cache",
+  "repoId": "owned-v3-ttl-cache",
+  "split": "development",
+  "title": "Cache expiry and LRU eviction disagree during timestamped activity",
+  "description": "A small cache simulator is used to preview client-side caching behavior. Entries currently survive their expiry boundary, successful reads fail to refresh recency, and replacing an existing key may evict unrelated data. Repair these interacting policies while preserving explicit null values and deterministic replay.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Replay operations in order, expiring every entry whose absolute expiry is less than or equal to the current operation timestamp before executing that operation. A put expires at at+ttl; null ttl means no expiry. ttl zero removes an existing key and returns {stored:false}. Reads never extend expiry."
+    },
+    {
+      "id": "R02",
+      "text": "Put and successful get update least-recently-used order using operation order, even when timestamps are equal. Inserting a new key into a full cache evicts exactly the least recently used live key. Updating an existing key does not evict another key."
+    },
+    {
+      "id": "R03",
+      "text": "Return {results, entries}. Put returns {stored:boolean}; get returns {hit:boolean,value}, with null for a miss and hit:true for a stored null; delete returns {deleted:boolean}. entries is oldest-to-newest LRU order, each with key,value,expires; expire only at operation times, not after replay."
+    },
+    {
+      "id": "R04",
+      "text": "Capacity is a plain integer 1..20. Operations is a list; timestamps are nonnegative plain integers in nondecreasing order, keys nonempty strings. Get/delete have exactly op,at,key; put also has value,ttl. ttl is null or a nonnegative plain integer. Invalid input raises ValueError before replay."
+    },
+    {
+      "id": "R05",
+      "text": "Preserve operations and all nested JSON values. Return copied cached values so replay performs no mutation of caller-owned data."
+    }
+  ],
+  "files": {
+    "ttl_cache.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\n\n\ndef _nonnegative(value):\n    return type(value) is int and value >= 0\n\n\ndef _validate(capacity, operations):\n    if type(capacity) is not int or not 1 <= capacity <= 20 or type(operations) is not list:\n        raise ValueError(\"invalid cache capacity or operations\")\n    previous_time = 0\n    for operation in operations:\n        if type(operation) is not dict or operation.get(\"op\") not in (\"get\", \"put\", \"delete\"):\n            raise ValueError(\"invalid cache operation\")\n        required = {\"op\", \"at\", \"key\"}\n        if operation[\"op\"] == \"put\":\n            required |= {\"value\", \"ttl\"}\n        if set(operation) != required:\n            raise ValueError(\"invalid operation fields\")\n        if type(operation[\"key\"]) is not str or not operation[\"key\"]:\n            raise ValueError(\"invalid cache key\")\n        if not _nonnegative(operation[\"at\"]) or operation[\"at\"] < previous_time:\n            raise ValueError(\"timestamps must be nondecreasing integers\")\n        previous_time = operation[\"at\"]\n        if operation[\"op\"] == \"put\" and operation[\"ttl\"] is not None and not _nonnegative(operation[\"ttl\"]):\n            raise ValueError(\"invalid ttl\")\n\n\ndef _expire(entries, now):\n    expired = [key for key, item in entries.items()\n               if item[\"expires\"] is not None and item[\"expires\"] < now]\n    for key in expired:\n        del entries[key]\n\n\ndef _store(entries, capacity, operation, sequence):\n    key = operation[\"key\"]\n    expires = None if operation[\"ttl\"] is None else operation[\"at\"] + operation[\"ttl\"]\n    if expires is not None and expires <= operation[\"at\"]:\n        entries.pop(key, None)\n        return {\"stored\": False}\n    if len(entries) >= capacity:\n        oldest = min(entries, key=lambda name: entries[name][\"touched\"])\n        del entries[oldest]\n    entries[key] = {\"value\": deepcopy(operation[\"value\"]),\n                    \"expires\": expires, \"touched\": sequence}\n    return {\"stored\": True}\n\n\ndef replay_cache(capacity, operations):\n    \"\"\"Replay timestamped cache activity with absolute expiry and LRU eviction.\"\"\"\n    _validate(capacity, operations)\n    entries = {}\n    results = []\n    for sequence, operation in enumerate(operations):\n        _expire(entries, operation[\"at\"])\n        key = operation[\"key\"]\n        if operation[\"op\"] == \"put\":\n            result = _store(entries, capacity, operation, sequence)\n        elif operation[\"op\"] == \"delete\":\n            result = {\"deleted\": key in entries}\n            entries.pop(key, None)\n        elif key not in entries:\n            result = {\"hit\": False, \"value\": None}\n        else:\n            entries[key][\"touched\"] = entries[key][\"touched\"]\n            result = {\"hit\": True, \"value\": deepcopy(entries[key][\"value\"])}\n        results.append(result)\n    ordered = sorted(entries, key=lambda key: entries[key][\"touched\"])\n    snapshot = [{\"key\": key, \"value\": deepcopy(entries[key][\"value\"]),\n                 \"expires\": entries[key][\"expires\"]} for key in ordered]\n    return {\"results\": results, \"entries\": snapshot}\n"
+  },
+  "editAllowlist": [
+    "ttl_cache.py"
+  ],
+  "entrypoint": "ttl_cache.py",
+  "visibleCases": [
+    {
+      "id": "v3-ttl-cache-expiry-boundary",
+      "requirementId": "R01",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": 5
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "hit": false,
+            "value": null
+          }
+        ],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-read-recency",
+      "requirementId": "R02",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 0
+          },
+          {
+            "op": "put",
+            "key": "c",
+            "value": 3,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "b",
+            "at": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "hit": true,
+            "value": 1
+          },
+          {
+            "stored": true
+          },
+          {
+            "hit": false,
+            "value": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 1,
+            "expires": null
+          },
+          {
+            "key": "c",
+            "value": 3,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-replace-no-eviction",
+      "requirementId": "R02",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 3,
+            "at": 0,
+            "ttl": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 1,
+            "expires": null
+          },
+          {
+            "key": "b",
+            "value": 3,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-null-hit",
+      "requirementId": "R03",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": null,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "hit": true,
+            "value": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": null,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-backward-time",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 2,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-ttl-cache-read-no-renew",
+      "requirementId": "R01",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": 5
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 4
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "hit": true,
+            "value": 1
+          },
+          {
+            "hit": false,
+            "value": null
+          }
+        ],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-zero-ttl-removes",
+      "requirementId": "R01",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "a",
+            "value": 2,
+            "at": 0,
+            "ttl": 0
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": false
+          },
+          {
+            "hit": false,
+            "value": null
+          }
+        ],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-zero-ttl-new",
+      "requirementId": "R01",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": false
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 1,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-expired-before-insert",
+      "requirementId": "R02",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": 1
+          },
+          {
+            "op": "put",
+            "key": "c",
+            "value": 3,
+            "at": 1,
+            "ttl": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 1,
+            "expires": null
+          },
+          {
+            "key": "c",
+            "value": 3,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-delete-expired",
+      "requirementId": "R03",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": 1
+          },
+          {
+            "op": "delete",
+            "key": "a",
+            "at": 1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "deleted": false
+          }
+        ],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-delete-live",
+      "requirementId": "R03",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "delete",
+            "key": "a",
+            "at": 0
+          },
+          {
+            "op": "delete",
+            "key": "a",
+            "at": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "deleted": true
+          },
+          {
+            "deleted": false
+          }
+        ],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-replace-recency",
+      "requirementId": "R02",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "a",
+            "value": 3,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "c",
+            "value": 4,
+            "at": 0,
+            "ttl": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 3,
+            "expires": null
+          },
+          {
+            "key": "c",
+            "value": 4,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-miss-no-recency",
+      "requirementId": "R02",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 2,
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "missing",
+            "at": 0
+          },
+          {
+            "op": "put",
+            "key": "c",
+            "value": 3,
+            "at": 0,
+            "ttl": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "stored": true
+          },
+          {
+            "hit": false,
+            "value": null
+          },
+          {
+            "stored": true
+          }
+        ],
+        "entries": [
+          {
+            "key": "b",
+            "value": 2,
+            "expires": null
+          },
+          {
+            "key": "c",
+            "value": 3,
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-nested-value",
+      "requirementId": "R05",
+      "function": "replay_cache",
+      "args": [
+        2,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": {
+              "list": [
+                null,
+                1
+              ]
+            },
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "get",
+            "key": "a",
+            "at": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          },
+          {
+            "hit": true,
+            "value": {
+              "list": [
+                null,
+                1
+              ]
+            }
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": {
+              "list": [
+                null,
+                1
+              ]
+            },
+            "expires": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-final-no-time-advance",
+      "requirementId": "R03",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 2,
+            "ttl": 3
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [
+          {
+            "stored": true
+          }
+        ],
+        "entries": [
+          {
+            "key": "a",
+            "value": 1,
+            "expires": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3-ttl-cache-empty",
+      "requirementId": "R03",
+      "function": "replay_cache",
+      "args": [
+        2,
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "results": [],
+        "entries": []
+      }
+    },
+    {
+      "id": "v3-ttl-cache-bool-capacity",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        true,
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-ttl-cache-negative-ttl",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 1,
+            "at": 0,
+            "ttl": -1
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-ttl-cache-extra-field",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "get",
+            "key": "a",
+            "at": 0,
+            "ttl": 0
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-ttl-cache-float-time",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "get",
+            "key": "a",
+            "at": 1.5
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-ttl-cache-unknown-op",
+      "requirementId": "R04",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "tick",
+            "at": 0,
+            "key": "a"
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-ttl-cache-late-invalid",
+      "requirementId": "R05",
+      "function": "replay_cache",
+      "args": [
+        1,
+        [
+          {
+            "op": "put",
+            "key": "a",
+            "value": [
+              1
+            ],
+            "at": 0,
+            "ttl": null
+          },
+          {
+            "op": "put",
+            "key": "",
+            "value": 2,
+            "at": 0,
+            "ttl": null
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

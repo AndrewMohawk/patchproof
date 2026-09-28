@@ -9,7 +9,7 @@ import { cloneJsonData } from '../../contracts/src/json-data.ts';
 import { ProductEvidenceSchema } from '../../contracts/src/product-validation.ts';
 import type { CheckRunner, Fixture, ProductEvidence, ProductRun } from '../../contracts/src/product.ts';
 import { fixtureDigests, validatePaths } from './fixtures.ts';
-import { applyPatch, createPatch } from './patch.ts';
+import { applyPatch, createPatch, createLegacyPatch } from './patch.ts';
 import { runnerForFrozenProtocol } from './repeated-checks.ts';
 import { isDeepStrictEqual } from 'node:util';
 import { resolveCheckBatchSeconds } from './local-check-timing.ts';
@@ -66,7 +66,7 @@ export function verifyEvidence(value: unknown, trustedDigest?: string): ProductE
     validatePaths(candidate.files);
     validatePaths(Object.fromEntries(Object.entries(candidate.files).filter(([path, content]) => fixture.files[path] !== content)), fixture.editAllowlist);
     if (Object.keys(fixture.files).some(path => !(path in candidate.files))) throw new ContractError('digest_mismatch', 'Original source omitted from candidate.');
-    if (candidate.diff !== createPatch(fixture.files, candidate.files)) throw new ContractError('digest_mismatch', 'Diff/source mismatch.');
+    if (candidate.diff !== createLegacyPatch(fixture.files, candidate.files) && candidate.diff !== createPatch(fixture.files, candidate.files)) throw new ContractError('digest_mismatch', 'Diff/source mismatch.');
     const declared = [...fixture.visibleCases, ...fixture.acceptanceCases];
     const checked = [...candidate.visibleChecks, ...candidate.acceptanceChecks];
     const complete = checked.length === declared.length && declared.every(c => checked.some(result => result.id === c.id && result.requirementId === c.requirementId));

@@ -1,4 +1,5 @@
 import { projectStory, renderStory } from './walkthrough.js';
+import { renderDiff } from './diff-view.js';
 const byId = id => document.getElementById(id);
 const variants = {
   baseline: { name: 'Standard repair', label: 'Task checks', description: 'Uses the task checks to guide patch revisions.' },
@@ -112,7 +113,7 @@ const phaseNames = { queued: 'Queued', preflight: 'Preflight', baseline_capture:
 const outcomes = {
   verified_for_declared_checks: 'All listed checks passed', needs_review: 'Needs review', failed: 'Checks failed', infrastructure_error: 'Execution error',
 };
-const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), ownedRunIds: new Set(), meta: {}, ready: false, busy: false, comparison: null, resultTabs: new Map(), taskQuery: '' };
+const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), ownedRunIds: new Set(), meta: {}, ready: false, busy: false, comparison: null, resultTabs: new Map(), taskQuery: '', taskFiles: new Map(), taskExamples: new Map() };
 const streams = new Map();
 const refreshing = new Set();
 let pollTimer;
@@ -157,7 +158,12 @@ function modeLabel(run) {
   return run.mode === 'mock' ? 'Mock model · Local checks' : run.phase === 'terminal' ? 'Recorded live' : 'Live model';
 }
 function renderMode() {
-  byId('workspace-intro').textContent = isArchive() ? 'Choose a task and inspect its saved patches and checks. This archive cannot start new repairs.' : isLive() ? 'Choose a small Python bug. Generate patch asks the live model for a repair, then checks it against the requirements. You review the change; nothing is merged.' : 'Choose a small Python bug. Generate patch uses a scripted response, runs local checks, and opens the result for review. No live model is called.';
+  byId('workspace-intro').textContent = isArchive() ? 'Choose a task and inspect its saved patches and checks. This archive cannot start new repairs.' : isLive() ? 'Choose a maintenance task and inspect its code and goal. Generate patch asks the live model for a change, then runs the checks. You review the result before using it.' : 'Choose a maintenance task. Read the starting code and required behavior, then try a scripted repair with local checks. This workspace does not call a live model.';
+  byId('how-runtime-description').textContent = isArchive()
+    ? 'This is a read-only archive. Each saved run retains its original model and runtime labels. No new code or model calls execute while you browse.'
+    : isLive() ? `Nebius Token Factory supplies live model inference. ${checkBackendLabel(state.meta.execution?.checkBackend)} execute the code and checks in isolated workspaces.`
+      : 'This workspace uses scripted mock model responses and local checks. Mock results demonstrate the interface and do not measure model performance.';
+  byId('how-runtime-model').textContent = isLive() ? `Model: ${state.meta.execution?.modelId ?? 'Not recorded'}. The run records the model, runtime and source versions used.` : '';
   byId('demo-link').hidden = !isLive();
   byId('footer-demo-link').hidden = !isLive();
   byId('mode-indicator').textContent = isArchive() ? 'Read-only archive' : isLive() ? 'Live model' : 'Mock model';
@@ -260,9 +266,9 @@ function empty(title, description, actionText, href) {
 }
 function route() {
   const [rawView, id] = location.hash.slice(1).split('/');
-  const view = ['story', 'tasks', 'runs', 'compare', 'evidence'].includes(rawView) ? rawView : 'story';
+  const view = ['story', 'tasks', 'how-it-works', 'runs', 'compare', 'evidence'].includes(rawView) ? rawView : 'story';
   if (id && view === 'evidence') state.runId = id;
-  for (const name of ['story', 'tasks', 'runs', 'compare', 'evidence']) byId(`${name}-view`).hidden = name !== view;
+  for (const name of ['story', 'tasks', 'how-it-works', 'runs', 'compare', 'evidence']) byId(`${name}-view`).hidden = name !== view;
   document.querySelectorAll('[data-nav]').forEach(node => {
     if (node.dataset.nav === (view === 'evidence' ? 'runs' : view)) node.setAttribute('aria-current', 'page'); else node.removeAttribute('aria-current');
   });
@@ -288,7 +294,8 @@ function renderTasks() {
   byId('task-list').replaceChildren(...tasks.map(task => {
     const node = button('', () => chooseTask(task.id), 'task-card');
     node.setAttribute('aria-pressed', String(task.id === state.taskId)); node.dataset.taskId = task.id;
-    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `${task.repoId ?? task.id} · ${task.requirements.length} requirements`));
+    const fileCount = Object.keys(task.files ?? {}).length;
+    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `Python${fileCount ? ` · ${fileCount} ${fileCount === 1 ? 'file' : 'files'}` : ''} · ${task.requirements.length} requirements`));
     return node;
   }));
   if (!tasks.length) byId('task-list').append(el('p', 'empty-small', state.tasks.length ? 'No examples match. Try another search.' : 'No examples are available.'));
@@ -301,6 +308,97 @@ function renderTaskPicker() {
   byId('compare-run').textContent = isLive() ? `Run all three · ${money((state.meta.limits?.maxApprovedSpendUsd ?? 0) * 3)} maximum` : 'Run all three';
 }
 function disclosure(title, ...children) { return append(el('details', 'disclosure'), el('summary', '', title), ...children); }
+function pythonValue(value, indent = 0) {
+  if (value === null) return 'None';
+  if (value === true) return 'True';
+  if (value === false) return 'False';
+  if (Array.isArray(value)) {
+    const parts = value.map(item => pythonValue(item, indent + 2));
+    const compact = `[${parts.join(', ')}]`;
+    return compact.length < 72 && !compact.includes('\n') ? compact : `[\n${' '.repeat(indent + 2)}${parts.join(`,\n${' '.repeat(indent + 2)}`)}\n${' '.repeat(indent)}]`;
+  }
+  if (value && typeof value === 'object') {
+    const parts = Object.entries(value).map(([key, item]) => `${JSON.stringify(key)}: ${pythonValue(item, indent + 2)}`);
+    const compact = `{${parts.join(', ')}}`;
+    return compact.length < 72 && !compact.includes('\n') ? compact : `{\n${' '.repeat(indent + 2)}${parts.join(`,\n${' '.repeat(indent + 2)}`)}\n${' '.repeat(indent)}}`;
+  }
+  return JSON.stringify(value) ?? 'Not provided';
+}
+function taskCode(task) {
+  const files = task.files && typeof task.files === 'object' ? Object.entries(task.files).filter(([, source]) => typeof source === 'string') : [];
+  const section = el('section', 'task-code-section');
+  append(section, el('h3', '', 'The code we have'), el('p', 'section-description', 'This is the starting snapshot. The model must repair the behavior below while preserving the rest of the contract.'));
+  if (!files.length) return append(section, el('p', 'empty-small', 'The starting source was not included in this catalogue. The task requirements remain available below.'));
+  let selected = state.taskFiles.get(task.id) ?? task.entrypoint ?? files[0][0];
+  if (!Object.hasOwn(task.files, selected)) selected = files[0][0];
+  const shell = el('div', 'source-browser');
+  const tabs = el('div', 'source-files'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Starting source files');
+  const code = el('pre', 'source-code'); code.tabIndex = 0; code.id = 'task-source-panel'; code.setAttribute('role', 'tabpanel');
+  const fileNote = el('p', 'source-note');
+  const functionPicker = el('select'); functionPicker.id = 'task-source-function';
+  const functionLabel = el('label', '', 'Jump to'); functionLabel.htmlFor = functionPicker.id;
+  const functionRow = append(el('div', 'source-function-picker'), functionLabel, functionPicker);
+  const jump = () => { code.scrollTop = Number(functionPicker.value) * parseFloat(getComputedStyle(code).lineHeight); };
+  functionPicker.addEventListener('change', jump);
+  const show = path => {
+    state.taskFiles.set(task.id, path);
+    for (const tab of tabs.children) { const active = tab.dataset.file === path; tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1; }
+    code.setAttribute('aria-label', `Starting code in ${path}`); code.setAttribute('aria-labelledby', [...tabs.children].find(tab => tab.dataset.file === path).id);
+    const source = task.files[path]; const lines = source.split('\n'); if (source.endsWith('\n')) lines.pop();
+    code.replaceChildren(append(el('code'), ...lines.map((text, index) => {
+      const number = el('span', 'source-line-number', index + 1); number.setAttribute('aria-hidden', 'true');
+      return append(el('span', 'source-line'), number, el('span', 'source-line-text', text || ' '));
+    })));
+    const functions = lines.map((line, index) => ({ name: /^def ([A-Za-z_][A-Za-z0-9_]*)\(/.exec(line)?.[1], index })).filter(item => item.name);
+    functionPicker.replaceChildren(new Option('Start of file', '0'), ...functions.map(item => new Option(`${item.name}()`, String(item.index))));
+    const entry = functions.find(item => item.name === task.examples?.[state.taskExamples.get(task.id) ?? 0]?.function);
+    functionPicker.value = String(entry?.index ?? 0); functionRow.hidden = !functions.length;
+    requestAnimationFrame(jump);
+    fileNote.textContent = `${lines.length} lines · ${task.editAllowlist?.includes(path) ? 'The model may edit this file.' : 'Context file. The model may not edit it.'} Read-only preview.`;
+  };
+  files.forEach(([path], index) => {
+    const tab = button(path, () => show(path), 'source-file'); tab.id = `task-source-tab-${index}`; tab.dataset.file = path;
+    tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', code.id);
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? files.length - 1 : (index + (event.key === 'ArrowLeft' ? -1 : 1) + files.length) % files.length;
+      show(files[next][0]); tabs.children[next].focus();
+    }); tabs.append(tab);
+  });
+  show(selected);
+  append(shell, tabs, functionRow, code, fileNote); return append(section, shell);
+}
+function taskExamples(task) {
+  const examples = Array.isArray(task.examples) ? task.examples.filter(example => typeof example.function === 'string' && Array.isArray(example.args)) : [];
+  const section = el('section', 'task-example-section');
+  append(section, el('h3', '', 'What the repaired code should do'), el('p', 'section-description', 'These examples are part of the public task specification. The required result is a goal; generate a patch to see an observed result.'));
+  if (!examples.length) return append(section, el('p', 'empty-small', 'No public input/output examples were included in this catalogue. Use the requirements below to review the intended behavior.'));
+  const picker = el('select'); picker.id = 'task-example';
+  const labels = new Map(task.requirements.map(requirement => [requirement.id, requirement.text]));
+  examples.forEach((example, index) => {
+    const title = example.id?.startsWith(`${task.id}-`) ? example.id.slice(task.id.length + 1) : example.id ?? `Example ${index + 1}`;
+    const readable = title.replaceAll('-', ' ').replaceAll('_', ' ');
+    const option = new Option(`${index + 1}. ${readable.charAt(0).toUpperCase() + readable.slice(1)} · ${example.requirementId}`, String(index));
+    option.title = example.id; picker.append(option);
+  });
+  const saved = state.taskExamples.get(task.id) ?? 0; picker.value = String(saved < examples.length ? saved : 0);
+  const selection = append(el('div', 'example-picker'), el('label', '', 'Public example'), picker); selection.firstChild.htmlFor = picker.id;
+  const preview = el('div');
+  const show = () => {
+    const example = examples[Number(picker.value)]; state.taskExamples.set(task.id, Number(picker.value));
+    const args = [...example.args.map(value => pythonValue(value)), ...Object.entries(example.kwargs ?? {}).map(([key, value]) => `${key}=${pythonValue(value)}`)];
+    const call = `${example.function}(\n${args.map(value => '  ' + value.replaceAll('\n', '\n  ')).join(',\n')}\n)`;
+    const expectedException = example.expectedException ?? example.expectError;
+    const cards = el('div', 'task-example-values');
+    append(cards, append(el('div', 'example-value'), el('h4', '', 'Call with this input'), append(el('pre'), el('code', '', args.length ? call : `${example.function}()`))),
+      append(el('div', 'example-value expected'), el('h4', '', expectedException ? 'Required exception' : 'Required return value'), append(el('pre'), el('code', '', expectedException ?? pythonValue(example.expected)))));
+    preview.replaceChildren(cards,
+      el('p', 'example-requirement', `${example.requirementId} · ${labels.get(example.requirementId) ?? 'See the full requirements below.'}`),
+      ...(example.assertArgsUnchanged ? [el('p', 'input-preservation', 'Also checked: the caller’s input must remain unchanged.')] : []));
+  };
+  picker.addEventListener('change', show); show(); return append(section, selection, preview);
+}
 function renderTaskDetail() {
   const task = currentTask(); if (!task) return;
   const requirements = el('ol', 'requirements');
@@ -309,23 +407,30 @@ function renderTaskDetail() {
   const start = button('Generate patch', () => launch(['patchproof']), 'button primary');
   start.disabled = !canCreate() || state.busy || !taskSupported(task);
   const actions = append(el('div', 'task-actions actions'), !isArchive() && start, latest && link('Latest result', `#evidence/${latest.id}`, 'button'), link('Compare approaches', '#compare'));
-  const sentences = task.description.match(/[^.!?]+[.!?]+(?:\s|$)/g) ?? [task.description];
   const savedCopy = taskCopy[task.id];
-  const brief = savedCopy?.sourceDigest === task.sourceDigest && savedCopy?.policyDigest === task.policyDigest ? savedCopy.summary : sentences.find(sentence => !/^\s*(Repair|Restore)\b/.test(sentence) && /\b(refactor|shortcut|optimization|off-by-one|wrong|unexpectedly|loses|drops|current|repeated page marks)\b/i.test(sentence))?.trim() ?? sentences[0].trim();
+  const brief = savedCopy?.sourceDigest === task.sourceDigest && savedCopy?.policyDigest === task.policyDigest ? savedCopy.summary : task.description;
   const allowance = el('div', 'allowance');
   append(allowance, el('p', '', isArchive() ? 'Read only. This workspace cannot start repairs.' : isLive()
     ? `${money(limits?.maxApprovedSpendUsd)} maximum per run. Project ceiling: ${money(state.meta.maxApprovedSpendUsd)}. ${Number.isInteger(state.meta.availability?.remainingRuns) ? `${state.meta.availability.remainingRuns} runs remain in the current allowance.` : ''}`
     : 'Mock model · Local checks. $0 provider spend. No paid inference.'),
     isLive() && el('p', 'model-name', `Model: ${state.meta.execution?.modelId ?? 'Not recorded'}. ${checkBackendLabel(state.meta.execution?.checkBackend)}.`),
     limits && el('p', '', `${limits.inferenceCallLimit} model calls · ${count(limits.inputTokenLimit)} input / ${count(limits.outputTokenLimit)} output tokens · ${limits.wallTimeLimitSeconds} s elapsed · ${limits.sandboxCpuSecondsLimit} s CPU allowance. Unmeasured CPU is not treated as zero.`));
-  byId('task-detail').replaceChildren(...[
-    append(el('div', 'task-intro'), el('p', 'eyebrow', task.repoId ?? 'Python example'), el('h2', '', task.title), el('p', 'task-description', brief)),
-    actions,
+  const contract = disclosure('Full requirements', el('p', 'task-description', task.description), requirements);
+  contract.classList.add('task-contract');
+  const launchSection = append(el('section', 'task-launch'), el('h3', '', isArchive() ? 'Review a saved repair' : 'Generate a repair and review the evidence'),
+    el('p', 'section-description', isArchive() ? 'Open a recorded run to inspect its patch, check results, and evidence.' : 'PatchProof checks the starting code, asks the model for a change, and tests the proposal against this contract. You will get a diff, check results, and every recorded attempt.'), actions,
     el('p', 'fine-print run-cost', isArchive() ? 'Saved results only.' : isLive() ? `${money(limits?.maxApprovedSpendUsd)} maximum · Up to ${limits?.wallTimeLimitSeconds ?? 300} seconds · Review before applying` : 'Scripted mock response · No model charge'),
     !isArchive() && (!canCreate() || !taskSupported(task)) && el('p', 'availability-note', state.meta.availability?.reason ?? (isLive() ? 'New runs are unavailable for this task. Saved results are still available.' : 'This example needs a connected model. Scripted repair is unavailable.')),
-    disclosure('Full requirements', el('p', 'task-description', task.description), requirements),
-    disclosure('Run limits', allowance),
-  ].filter(Boolean));
+    disclosure('Run limits', allowance));
+  byId('task-detail').replaceChildren(
+    append(el('div', 'task-intro'), el('p', 'eyebrow', `Python maintenance · ${task.requirements.length} requirements`), el('h2', '', task.title), el('p', 'task-description', brief)),
+    append(el('div', 'task-jump-links'), link('Starting code', '#task-starting-code'), link('Required behavior', '#task-required-behavior'), link('Generate patch ↓', '#task-generate')),
+    append(el('div', 'task-briefing'), taskCode(task), taskExamples(task)), contract, launchSection);
+  // Within-page links preserve the app route and work with a keyboard.
+  for (const [linkIndex, target] of [[0, '.task-code-section'], [1, '.task-example-section'], [2, '.task-launch']]) {
+    const node = byId('task-detail').querySelectorAll('.task-jump-links a')[linkIndex];
+    node.addEventListener('click', event => { event.preventDefault(); const section = byId('task-detail').querySelector(target); section.scrollIntoView({ behavior: 'instant', block: 'start' }); const heading = section.querySelector('h3'); heading.tabIndex = -1; heading.focus({ preventScroll: true }); });
+  }
 }
 function renderHistory() {
   const node = byId('run-history'); if (!node) return;
@@ -543,9 +648,7 @@ function candidateHistory(run) {
   const wrapper = el('div');
   append(wrapper, el('h2', '', `Patch from attempt ${candidate.id}`), el('p', 'fine-print', candidate.accepted ? 'Passes the listed checks. Review the change before applying it.' : 'This attempt is not approved. Review the failed checks before using it.'));
   if (candidate.diff) {
-    const diff = el('pre', 'diff'); diff.tabIndex = 0; diff.setAttribute('aria-label', `Patch for attempt ${candidate.id}`); const code = el('code');
-    for (const line of candidate.diff.split('\n')) append(code, el('span', `diff-line${line.startsWith('+++') || line.startsWith('---') || line.startsWith('@@') || line.startsWith('diff ') ? ' heading' : line.startsWith('+') ? ' add' : line.startsWith('-') ? ' remove' : ''}`, line || ' '));
-    diff.append(code); wrapper.append(diff);
+    wrapper.append(renderDiff(candidate.diff, `Patch for attempt ${candidate.id}`));
   } else wrapper.append(el('p', 'no-diff', 'No source changes in this attempt.'));
   append(wrapper, disclosure('Model summary', el('p', 'candidate-description', candidate.summary), el('p', 'fine-print', 'Written by the model. The check results determine whether the patch passed.')));
   return wrapper;
@@ -698,6 +801,11 @@ byId('compare-run').addEventListener('click', () => launch(Object.keys(variants)
 byId('evidence-run').addEventListener('change', event => { state.runId = event.target.value; location.hash = `evidence/${state.runId}`; renderEvidence(); });
 window.addEventListener('hashchange', () => {
   route();
+  if (['#tasks', '#how-it-works', '#runs', '#compare'].includes(location.hash)) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const heading = document.querySelector('.view:not([hidden]) h1');
+    if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+  }
   if (location.hash.startsWith('#story/')) {
     window.scrollTo({ top: 0, behavior: 'instant' });
     const heading = document.querySelector('#story .story-heading');

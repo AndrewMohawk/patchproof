@@ -1,0 +1,709 @@
+{
+  "id": "v3-weekly-schedule",
+  "repoId": "owned-v3-weekly-schedule",
+  "split": "development",
+  "title": "Overnight availability and maintenance blackouts leave incorrect booking windows",
+  "description": "A booking preview normalizes weekly resource availability and subtracts scheduled maintenance. The current implementation drops the morning portion of overnight slots, leaves adjacent intervals fragmented, and loses a valid interval when a blackout splits a larger slot. Repair the normalization and subtraction pipeline.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Windows use day 0..6 and minute boundaries 0..1440. Treat intervals as [start,end). If end<start, split across midnight onto (day+1) modulo7; equal endpoints mean an empty interval. Apply the same expansion to availability and blackouts."
+    },
+    {
+      "id": "R02",
+      "text": "For each exact resource and weekday, merge overlapping or adjacent availability windows, and merge blackouts before subtraction. Resources and days must remain independent."
+    },
+    {
+      "id": "R03",
+      "text": "Subtract every blackout from availability, preserving both sides when one blackout splits a slot. Touching endpoints do not overlap. Return nonempty windows sorted by resource ascending, day ascending, then start ascending, with exactly resource,day,start,end."
+    },
+    {
+      "id": "R04",
+      "text": "Slots and blackouts must be lists of objects with exactly resource,day,start,end. Resource is a nonempty string; day is a plain integer0..6; start/end are plain integers0..1440. Invalid input raises ValueError, including invalid blackouts when no slots exist."
+    },
+    {
+      "id": "R05",
+      "text": "Do not mutate slots, blackouts, or nested window objects. Duplicate windows are harmless and must not produce duplicate output."
+    }
+  ],
+  "files": {
+    "weekly_schedule.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\ndef _validate(windows):\n    if type(windows) is not list:\n        raise ValueError(\"windows must be a list\")\n    for window in windows:\n        if type(window) is not dict or set(window) != {\"resource\", \"day\", \"start\", \"end\"}:\n            raise ValueError(\"invalid window fields\")\n        if type(window[\"resource\"]) is not str or not window[\"resource\"]:\n            raise ValueError(\"invalid resource\")\n        if type(window[\"day\"]) is not int or not 0 <= window[\"day\"] <= 6:\n            raise ValueError(\"invalid weekday\")\n        for key in (\"start\", \"end\"):\n            if type(window[key]) is not int or not 0 <= window[key] <= 1440:\n                raise ValueError(\"invalid minute boundary\")\n\n\ndef _expand(windows):\n    grouped = {}\n    for window in windows:\n        day, start, end = window[\"day\"], window[\"start\"], window[\"end\"]\n        if start == end:\n            continue\n        pieces = [(day, start, end)] if start < end else [\n            (day, start, 1440)]\n        for piece_day, left, right in pieces:\n            if left < right:\n                grouped.setdefault((window[\"resource\"], piece_day), []).append((left, right))\n    return grouped\n\n\ndef _merge(intervals):\n    merged = []\n    for start, end in sorted(intervals):\n        if merged and start < merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged\n\n\ndef _subtract(intervals, blocked):\n    result = intervals\n    for block_start, block_end in blocked:\n        remaining = []\n        for start, end in result:\n            if block_end <= start or block_start >= end:\n                remaining.append([start, end])\n                continue\n            if start < block_start:\n                remaining.append([start, block_start])\n            elif block_end < end:\n                remaining.append([block_end, end])\n        result = remaining\n    return result\n\n\ndef available_windows(slots, blackouts):\n    \"\"\"Normalize recurring weekly availability and remove maintenance windows.\"\"\"\n    _validate(slots)\n    _validate(blackouts)\n    available = _expand(slots)\n    unavailable = _expand(blackouts)\n    result = []\n    for resource, day in sorted(available):\n        periods = _merge(available[(resource, day)])\n        blocks = _merge(unavailable.get((resource, day), []))\n        for start, end in _subtract(periods, blocks):\n            result.append({\"resource\": resource, \"day\": day, \"start\": start, \"end\": end})\n    return result\n"
+  },
+  "editAllowlist": [
+    "weekly_schedule.py"
+  ],
+  "entrypoint": "weekly_schedule.py",
+  "visibleCases": [
+    {
+      "id": "v3-weekly-schedule-overnight",
+      "requirementId": "R01",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 1380,
+            "end": 60
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 1380,
+          "end": 1440
+        },
+        {
+          "resource": "room",
+          "day": 1,
+          "start": 0,
+          "end": 60
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-adjacent",
+      "requirementId": "R02",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 60,
+            "end": 120
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 120,
+            "end": 180
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 60,
+          "end": 180
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-split-blackout",
+      "requirementId": "R03",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 60,
+            "end": 240
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 120,
+            "end": 180
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 60,
+          "end": 120
+        },
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 180,
+          "end": 240
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-week-wrap",
+      "requirementId": "R01",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 6,
+            "start": 1380,
+            "end": 30
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 0,
+          "end": 30
+        },
+        {
+          "resource": "room",
+          "day": 6,
+          "start": 1380,
+          "end": 1440
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-bool-day",
+      "requirementId": "R04",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": true,
+            "start": 0,
+            "end": 60
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-weekly-schedule-overlap",
+      "requirementId": "R02",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 100,
+            "end": 200
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 150,
+            "end": 250
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 100,
+          "end": 250
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-nested-slot",
+      "requirementId": "R02",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 100,
+            "end": 300
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 150,
+            "end": 200
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 100,
+          "end": 300
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-two-cuts",
+      "requirementId": "R03",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 300
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 50,
+            "end": 100
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 150,
+            "end": 200
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 0,
+          "end": 50
+        },
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 100,
+          "end": 150
+        },
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 200,
+          "end": 300
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-covered",
+      "requirementId": "R03",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 100,
+            "end": 200
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 300
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-weekly-schedule-touching-blocks",
+      "requirementId": "R03",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 100,
+            "end": 200
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 100
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 200,
+            "end": 300
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 100,
+          "end": 200
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-overnight-blackout",
+      "requirementId": "R03",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 1300,
+            "end": 100
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 1380,
+            "end": 60
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 1300,
+          "end": 1380
+        },
+        {
+          "resource": "room",
+          "day": 1,
+          "start": 60,
+          "end": 100
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-resource-separation",
+      "requirementId": "R02",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "b",
+            "day": 0,
+            "start": 0,
+            "end": 100
+          },
+          {
+            "resource": "a",
+            "day": 0,
+            "start": 0,
+            "end": 100
+          }
+        ],
+        [
+          {
+            "resource": "a",
+            "day": 0,
+            "start": 20,
+            "end": 80
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "a",
+          "day": 0,
+          "start": 0,
+          "end": 20
+        },
+        {
+          "resource": "a",
+          "day": 0,
+          "start": 80,
+          "end": 100
+        },
+        {
+          "resource": "b",
+          "day": 0,
+          "start": 0,
+          "end": 100
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-day-separation",
+      "requirementId": "R02",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 1,
+            "start": 0,
+            "end": 100
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 100
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 100
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 1,
+          "start": 0,
+          "end": 100
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-zero-length",
+      "requirementId": "R01",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 60,
+            "end": 60
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 0
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-weekly-schedule-full-day",
+      "requirementId": "R01",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 1440
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 0,
+          "end": 1440
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-duplicate-input",
+      "requirementId": "R05",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 10,
+            "end": 20
+          },
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 10,
+            "end": 20
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": [
+        {
+          "resource": "room",
+          "day": 0,
+          "start": 10,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "id": "v3-weekly-schedule-empty",
+      "requirementId": "R05",
+      "function": "available_windows",
+      "args": [
+        [],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": []
+    },
+    {
+      "id": "v3-weekly-schedule-bad-empty-blackout",
+      "requirementId": "R04",
+      "function": "available_windows",
+      "args": [
+        [],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 1441
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-weekly-schedule-negative-minute",
+      "requirementId": "R04",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": -1,
+            "end": 60
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-weekly-schedule-float-day",
+      "requirementId": "R04",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 1.5,
+            "start": 0,
+            "end": 60
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-weekly-schedule-extra-field",
+      "requirementId": "R04",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 0,
+            "end": 60,
+            "note": "x"
+          }
+        ],
+        []
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-weekly-schedule-late-invalid",
+      "requirementId": "R05",
+      "function": "available_windows",
+      "args": [
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 60,
+            "end": 180
+          }
+        ],
+        [
+          {
+            "resource": "room",
+            "day": 0,
+            "start": 80,
+            "end": 90
+          },
+          {
+            "resource": "room",
+            "day": 7,
+            "start": 0,
+            "end": 10
+          }
+        ]
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

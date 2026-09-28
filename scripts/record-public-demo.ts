@@ -17,7 +17,7 @@ const usage = 'node scripts/record-public-demo.ts https://patchproof.andrewmohaw
 const origin = 'https://patchproof.andrewmohawk.xyz';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runPath = /^\/runs\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?:\/(?:events|evidence))?$/;
-const readPaths = new Set(['/', '/app.js', '/walkthrough.js', '/style.css', '/favicon.ico', '/healthz', '/tasks', '/runs']);
+const readPaths = new Set(['/', '/app.js', '/walkthrough.js', '/diff-view.js', '/style.css', '/favicon.ico', '/healthz', '/tasks', '/runs']);
 const variantNames = { baseline: 'Standard repair', checks_only: 'Repair with extra checks', patchproof: 'PatchProof' };
 const signature = (run: ProductRun) => digestJson({ taskId: run.taskId, schemaVersion: run.schemaVersion,
   sourceDigest: run.sourceDigest, policyDigest: run.policyDigest, runtimeLockDigest: run.runtimeLockDigest, mode: run.mode, limits: run.limits });

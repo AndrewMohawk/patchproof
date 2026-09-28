@@ -1,0 +1,806 @@
+{
+  "id": "v3-invoice-allocation",
+  "repoId": "owned-v3-invoice-allocation",
+  "split": "development",
+  "title": "Basket discounts and line tax disagree by several cents",
+  "description": "A quote service distributes an order-wide discount across taxable and exempt invoice lines. The current implementation loses the required remainder ordering and calculates tax before discount, so its line totals can disagree with the promised pricing rules. Repair the allocation and tax helpers without changing the public result shape.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Each line subtotal is quantity times unitCents. Allocate discount_cents proportionally to these subtotals using integer floors, then give one remaining cent per line in order of descending fractional remainder, breaking ties by exact line id ascending. Preserve input line order in the returned lines."
+    },
+    {
+      "id": "R02",
+      "text": "Compute tax separately for each taxable line after its allocated discount: round net cents times tax_bps / 10000 to nearest integer, with exact half cents rounded up. Exempt lines have zero tax. Never use floating point for money."
+    },
+    {
+      "id": "R03",
+      "text": "Return lines containing id, subtotal, discount, tax and total, plus invoice subtotal, discount, tax and total. Invoice tax sums rounded line taxes; each line total is subtotal minus discount plus tax. Zero-price and empty invoices with zero discount are valid."
+    },
+    {
+      "id": "R04",
+      "text": "Lines have exactly id, quantity, unitCents and taxable: unique nonempty string ids, positive plain integer quantity, nonnegative plain integer unitCents, boolean taxable. discount_cents is a nonnegative plain integer no greater than subtotal; tax_bps is a plain integer 0..10000. Invalid input raises ValueError."
+    },
+    {
+      "id": "R05",
+      "text": "Do not mutate the lines list or any line object. Identical mathematical inputs must return identical results even with large integer amounts."
+    }
+  ],
+  "files": {
+    "invoice_allocation.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\n\n\ndef _money(value):\n    return type(value) is int and value >= 0\n\n\ndef _validate(lines, discount, tax_bps):\n    if type(lines) is not list or not _money(discount) or not _money(tax_bps) or tax_bps > 10000:\n        raise ValueError(\"invalid invoice arguments\")\n    ids = set()\n    for line in lines:\n        if type(line) is not dict or set(line) != {\"id\", \"quantity\", \"unitCents\", \"taxable\"}:\n            raise ValueError(\"invalid line fields\")\n        if type(line[\"id\"]) is not str or not line[\"id\"] or line[\"id\"] in ids:\n            raise ValueError(\"line ids must be unique nonempty strings\")\n        ids.add(line[\"id\"])\n        if not _money(line[\"quantity\"]) or line[\"quantity\"] == 0 or not _money(line[\"unitCents\"]):\n            raise ValueError(\"invalid line amount\")\n        if type(line[\"taxable\"]) is not bool:\n            raise ValueError(\"taxable must be boolean\")\n\n\ndef _allocate(lines, subtotals, discount):\n    total = sum(subtotals)\n    if total == 0:\n        return [0 for _ in lines]\n    allocated = [discount * amount // total for amount in subtotals]\n    remaining = discount - sum(allocated)\n    ranked = sorted(range(len(lines)), key=lambda index: (\n        -(discount * subtotals[index] % total), index))\n    for index in ranked[:remaining]:\n        allocated[index] += 1\n    return allocated\n\n\ndef _tax(net, taxable, tax_bps):\n    if not taxable:\n        return 0\n    return (net * tax_bps) // 10000\n\n\ndef price_invoice(lines, discount_cents, tax_bps):\n    \"\"\"Allocate a basket discount deterministically before line-level tax.\"\"\"\n    _validate(lines, discount_cents, tax_bps)\n    subtotals = [line[\"quantity\"] * line[\"unitCents\"] for line in lines]\n    subtotal = sum(subtotals)\n    if discount_cents > subtotal:\n        raise ValueError(\"discount exceeds invoice subtotal\")\n    allocations = _allocate(lines, subtotals, discount_cents)\n    priced = []\n    for index, line in enumerate(lines):\n        net = subtotals[index] - allocations[index]\n        tax = _tax(subtotals[index], line[\"taxable\"], tax_bps)\n        priced.append({\n            \"id\": line[\"id\"], \"subtotal\": subtotals[index],\n            \"discount\": allocations[index], \"tax\": tax, \"total\": net + tax,\n        })\n    taxes = sum(line[\"tax\"] for line in priced)\n    return {\"lines\": priced, \"subtotal\": subtotal, \"discount\": discount_cents,\n            \"tax\": taxes, \"total\": subtotal - discount_cents + taxes}\n"
+  },
+  "editAllowlist": [
+    "invoice_allocation.py"
+  ],
+  "entrypoint": "invoice_allocation.py",
+  "visibleCases": [
+    {
+      "id": "v3-invoice-allocation-discount-before-tax",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "service",
+            "quantity": 1,
+            "unitCents": 1000,
+            "taxable": true
+          },
+          {
+            "id": "book",
+            "quantity": 1,
+            "unitCents": 500,
+            "taxable": false
+          }
+        ],
+        300,
+        1000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "service",
+            "subtotal": 1000,
+            "discount": 200,
+            "tax": 80,
+            "total": 880
+          },
+          {
+            "id": "book",
+            "subtotal": 500,
+            "discount": 100,
+            "tax": 0,
+            "total": 400
+          }
+        ],
+        "subtotal": 1500,
+        "discount": 300,
+        "tax": 80,
+        "total": 1280
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-remainder-tie",
+      "requirementId": "R01",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          },
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          }
+        ],
+        1,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "b",
+            "subtotal": 100,
+            "discount": 0,
+            "tax": 0,
+            "total": 100
+          },
+          {
+            "id": "a",
+            "subtotal": 100,
+            "discount": 1,
+            "tax": 0,
+            "total": 99
+          }
+        ],
+        "subtotal": 200,
+        "discount": 1,
+        "tax": 0,
+        "total": 199
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-half-cent",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          }
+        ],
+        0,
+        5000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 1,
+            "discount": 0,
+            "tax": 1,
+            "total": 2
+          }
+        ],
+        "subtotal": 1,
+        "discount": 0,
+        "tax": 1,
+        "total": 2
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-empty",
+      "requirementId": "R03",
+      "function": "price_invoice",
+      "args": [
+        [],
+        0,
+        1000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [],
+        "subtotal": 0,
+        "discount": 0,
+        "tax": 0,
+        "total": 0
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-discount-too-large",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          }
+        ],
+        2,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-invoice-allocation-uneven-remainder",
+      "requirementId": "R01",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 200,
+            "taxable": true
+          },
+          {
+            "id": "c",
+            "quantity": 1,
+            "unitCents": 300,
+            "taxable": true
+          }
+        ],
+        5,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 100,
+            "discount": 1,
+            "tax": 0,
+            "total": 99
+          },
+          {
+            "id": "b",
+            "subtotal": 200,
+            "discount": 2,
+            "tax": 0,
+            "total": 198
+          },
+          {
+            "id": "c",
+            "subtotal": 300,
+            "discount": 2,
+            "tax": 0,
+            "total": 298
+          }
+        ],
+        "subtotal": 600,
+        "discount": 5,
+        "tax": 0,
+        "total": 595
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-two-leftover",
+      "requirementId": "R01",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "z",
+            "quantity": 1,
+            "unitCents": 10,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 10,
+            "taxable": true
+          },
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 10,
+            "taxable": true
+          }
+        ],
+        2,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "z",
+            "subtotal": 10,
+            "discount": 0,
+            "tax": 0,
+            "total": 10
+          },
+          {
+            "id": "b",
+            "subtotal": 10,
+            "discount": 1,
+            "tax": 0,
+            "total": 9
+          },
+          {
+            "id": "a",
+            "subtotal": 10,
+            "discount": 1,
+            "tax": 0,
+            "total": 9
+          }
+        ],
+        "subtotal": 30,
+        "discount": 2,
+        "tax": 0,
+        "total": 28
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-quantity",
+      "requirementId": "R03",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 3,
+            "unitCents": 125,
+            "taxable": true
+          }
+        ],
+        25,
+        800
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 375,
+            "discount": 25,
+            "tax": 28,
+            "total": 378
+          }
+        ],
+        "subtotal": 375,
+        "discount": 25,
+        "tax": 28,
+        "total": 378
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-full-discount",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 50,
+            "taxable": true
+          }
+        ],
+        150,
+        1000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 100,
+            "discount": 100,
+            "tax": 0,
+            "total": 0
+          },
+          {
+            "id": "b",
+            "subtotal": 50,
+            "discount": 50,
+            "tax": 0,
+            "total": 0
+          }
+        ],
+        "subtotal": 150,
+        "discount": 150,
+        "tax": 0,
+        "total": 0
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-line-rounding",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          }
+        ],
+        0,
+        5000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 1,
+            "discount": 0,
+            "tax": 1,
+            "total": 2
+          },
+          {
+            "id": "b",
+            "subtotal": 1,
+            "discount": 0,
+            "tax": 1,
+            "total": 2
+          }
+        ],
+        "subtotal": 2,
+        "discount": 0,
+        "tax": 2,
+        "total": 4
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-zero-price",
+      "requirementId": "R03",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "free",
+            "quantity": 1,
+            "unitCents": 0,
+            "taxable": true
+          },
+          {
+            "id": "paid",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          }
+        ],
+        5,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "free",
+            "subtotal": 0,
+            "discount": 0,
+            "tax": 0,
+            "total": 0
+          },
+          {
+            "id": "paid",
+            "subtotal": 100,
+            "discount": 5,
+            "tax": 0,
+            "total": 95
+          }
+        ],
+        "subtotal": 100,
+        "discount": 5,
+        "tax": 0,
+        "total": 95
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-all-zero",
+      "requirementId": "R03",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 0,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": 0,
+            "taxable": true
+          }
+        ],
+        0,
+        5000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 0,
+            "discount": 0,
+            "tax": 0,
+            "total": 0
+          },
+          {
+            "id": "b",
+            "subtotal": 0,
+            "discount": 0,
+            "tax": 0,
+            "total": 0
+          }
+        ],
+        "subtotal": 0,
+        "discount": 0,
+        "tax": 0,
+        "total": 0
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-maximum-tax",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 80,
+            "taxable": true
+          }
+        ],
+        20,
+        10000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 80,
+            "discount": 20,
+            "tax": 60,
+            "total": 120
+          }
+        ],
+        "subtotal": 80,
+        "discount": 20,
+        "tax": 60,
+        "total": 120
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-large-money",
+      "requirementId": "R05",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1000000000001,
+            "taxable": true
+          }
+        ],
+        1,
+        10000
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 1000000000001,
+            "discount": 1,
+            "tax": 1000000000000,
+            "total": 2000000000000
+          }
+        ],
+        "subtotal": 1000000000001,
+        "discount": 1,
+        "tax": 1000000000000,
+        "total": 2000000000000
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-exempt",
+      "requirementId": "R02",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 99,
+            "taxable": false
+          }
+        ],
+        1,
+        9999
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expected": {
+        "lines": [
+          {
+            "id": "a",
+            "subtotal": 99,
+            "discount": 1,
+            "tax": 0,
+            "total": 98
+          }
+        ],
+        "subtotal": 99,
+        "discount": 1,
+        "tax": 0,
+        "total": 98
+      }
+    },
+    {
+      "id": "v3-invoice-allocation-bool-discount",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          }
+        ],
+        true,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-float-cents",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1.5,
+            "taxable": true
+          }
+        ],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-duplicate-id",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          },
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 2,
+            "taxable": true
+          }
+        ],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-zero-quantity",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 0,
+            "unitCents": 2,
+            "taxable": true
+          }
+        ],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-bad-tax",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true
+          }
+        ],
+        0,
+        10001
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-extra-field",
+      "requirementId": "R04",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 1,
+            "taxable": true,
+            "note": "x"
+          }
+        ],
+        0,
+        0
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-invoice-allocation-late-invalid",
+      "requirementId": "R05",
+      "function": "price_invoice",
+      "args": [
+        [
+          {
+            "id": "a",
+            "quantity": 1,
+            "unitCents": 100,
+            "taxable": true
+          },
+          {
+            "id": "b",
+            "quantity": 1,
+            "unitCents": -1,
+            "taxable": true
+          }
+        ],
+        0,
+        500
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

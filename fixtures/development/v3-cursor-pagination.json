@@ -1,0 +1,744 @@
+{
+  "id": "v3-cursor-pagination",
+  "repoId": "owned-v3-cursor-pagination",
+  "split": "development",
+  "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+  "description": "An activity browser reads a stream containing multiple revisions per record. The page builder must pick the latest revision before sorting and applying a stable cursor. Repairs must coordinate duplicate resolution, deletion handling and page metadata so users do not see stale or repeated rows.",
+  "requirements": [
+    {
+      "id": "R01",
+      "text": "Validate every input row, then retain the greatest updated revision for each exact id. Equal revisions use the last row in input order. A latest revision marked deleted removes that id, even if an older live revision exists."
+    },
+    {
+      "id": "R02",
+      "text": "Sort surviving rows by updated descending then id ascending. A cursor [updated,id] resumes strictly after that sort position, even if that exact row no longer exists. An absent cursor starts at the beginning."
+    },
+    {
+      "id": "R03",
+      "text": "Return {items, nextCursor, hasMore}. items contains at most limit complete surviving records; hasMore is true only when another surviving row remains after the page. nextCursor is the last displayed [updated,id] only when hasMore is true, otherwise null."
+    },
+    {
+      "id": "R04",
+      "text": "Records must be a list of objects with exactly id, updated, deleted and label: nonempty string id, nonnegative plain integer updated, boolean deleted, string label. limit is a plain integer 1..50. Cursor is null or a two-item list containing a nonnegative plain integer and nonempty string. Invalid input raises ValueError, including invalid obsolete or deleted revisions."
+    },
+    {
+      "id": "R05",
+      "text": "Never mutate the record list, individual records, or cursor, including when validation fails. Preserve labels and the full surviving record fields."
+    }
+  ],
+  "files": {
+    "cursor_pagination.py": "\"\"\"Original PatchProof maintenance fixture. SPDX-License-Identifier: CC0-1.0.\"\"\"\n\nfrom copy import deepcopy\n\n\ndef _integer(value, minimum=0):\n    return type(value) is int and value >= minimum\n\n\ndef _validate_records(records):\n    if type(records) is not list:\n        raise ValueError(\"records must be a list\")\n    for row in records:\n        if type(row) is not dict or set(row) != {\"id\", \"updated\", \"deleted\", \"label\"}:\n            raise ValueError(\"invalid record fields\")\n        if type(row[\"id\"]) is not str or not row[\"id\"]:\n            raise ValueError(\"invalid record id\")\n        if not _integer(row[\"updated\"]) or type(row[\"deleted\"]) is not bool:\n            raise ValueError(\"invalid record revision\")\n        if type(row[\"label\"]) is not str:\n            raise ValueError(\"invalid record label\")\n\n\ndef _latest(records):\n    latest = {}\n    for row in records:\n        previous = latest.get(row[\"id\"])\n        if previous is None or row[\"updated\"] > previous[\"updated\"]:\n            if not row[\"deleted\"]:\n                latest[row[\"id\"]] = row\n    return [row for row in latest.values() if not row[\"deleted\"]]\n\n\ndef _sort_key(row):\n    return (-row[\"updated\"], row[\"id\"])\n\n\ndef _after_cursor(rows, cursor):\n    if cursor is None:\n        return rows\n    boundary = (-cursor[0], cursor[1])\n    return [row for row in rows if _sort_key(row) >= boundary]\n\n\ndef page_records(records, limit, cursor=None):\n    \"\"\"Read a stable page from a revision stream without resurrecting deletions.\"\"\"\n    _validate_records(records)\n    if not _integer(limit, 1) or limit > 50:\n        raise ValueError(\"limit must be between one and fifty\")\n    if cursor is not None:\n        if (type(cursor) is not list or len(cursor) != 2\n                or not _integer(cursor[0])\n                or type(cursor[1]) is not str or not cursor[1]):\n            raise ValueError(\"cursor must be [updated, id]\")\n    rows = sorted(_latest(records), key=_sort_key)\n    remaining = _after_cursor(rows, cursor)\n    page = remaining[:limit]\n    has_more = len(page) == limit\n    next_cursor = None\n    if has_more and page:\n        last = page[-1]\n        next_cursor = [last[\"updated\"], last[\"id\"]]\n    return {\"items\": deepcopy(page), \"nextCursor\": next_cursor, \"hasMore\": has_more}\n"
+  },
+  "editAllowlist": [
+    "cursor_pagination.py"
+  ],
+  "entrypoint": "cursor_pagination.py",
+  "visibleCases": [
+    {
+      "id": "v3-cursor-pagination-first-page",
+      "requirementId": "R01",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          },
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        2
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          }
+        ],
+        "nextCursor": [
+          5,
+          "b"
+        ],
+        "hasMore": true
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-next-page",
+      "requirementId": "R02",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        2
+      ],
+      "kwargs": {
+        "cursor": [
+          5,
+          "b"
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-deleted-latest",
+      "requirementId": "R01",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 1,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": true,
+            "label": "A"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-exact-full-page",
+      "requirementId": "R03",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          }
+        ],
+        2
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-invalid-limit",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [],
+        true
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "acceptanceCases": [
+    {
+      "id": "v3-cursor-pagination-equal-revision",
+      "requirementId": "R01",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": false,
+            "label": "old"
+          },
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": false,
+            "label": "new"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": false,
+            "label": "new"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-out-of-order",
+      "requirementId": "R01",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 9,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 9,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-resurrection",
+      "requirementId": "R01",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": true,
+            "label": "A"
+          },
+          {
+            "id": "a",
+            "updated": 3,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 3,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-tie-cursor",
+      "requirementId": "R02",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        1
+      ],
+      "kwargs": {
+        "cursor": [
+          5,
+          "a"
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          }
+        ],
+        "nextCursor": [
+          5,
+          "b"
+        ],
+        "hasMore": true
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-missing-cursor",
+      "requirementId": "R02",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": [
+          4,
+          "missing"
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-past-end",
+      "requirementId": "R02",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "updated": 5,
+            "deleted": false,
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "updated": 3,
+            "deleted": false,
+            "label": "C"
+          }
+        ],
+        5
+      ],
+      "kwargs": {
+        "cursor": [
+          0,
+          "z"
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-empty",
+      "requirementId": "R03",
+      "function": "page_records",
+      "args": [
+        [],
+        2
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-all-deleted",
+      "requirementId": "R03",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "x",
+            "updated": 1,
+            "deleted": true,
+            "label": "X"
+          },
+          {
+            "id": "y",
+            "updated": 2,
+            "deleted": true,
+            "label": "Y"
+          }
+        ],
+        1
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-labels",
+      "requirementId": "R05",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 1,
+            "deleted": false,
+            "label": ""
+          },
+          {
+            "id": "b",
+            "updated": 2,
+            "deleted": false,
+            "label": "résumé"
+          }
+        ],
+        3
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "b",
+            "updated": 2,
+            "deleted": false,
+            "label": "résumé"
+          },
+          {
+            "id": "a",
+            "updated": 1,
+            "deleted": false,
+            "label": ""
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-zero-revision",
+      "requirementId": "R03",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 0,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        1
+      ],
+      "kwargs": {
+        "cursor": null
+      },
+      "assertArgsUnchanged": true,
+      "expected": {
+        "items": [
+          {
+            "id": "a",
+            "updated": 0,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        "nextCursor": null,
+        "hasMore": false
+      }
+    },
+    {
+      "id": "v3-cursor-pagination-obsolete-invalid",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 1,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "a",
+            "updated": 0,
+            "deleted": false,
+            "label": 5
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-extra-field",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A",
+            "extra": 1
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-float-revision",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 1.5,
+            "deleted": false,
+            "label": "A"
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-cursor-bool",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [],
+        2
+      ],
+      "kwargs": {
+        "cursor": [
+          true,
+          "a"
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-cursor-shape",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [],
+        2
+      ],
+      "kwargs": {
+        "cursor": [
+          "a",
+          5
+        ]
+      },
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-invalid-deleted",
+      "requirementId": "R04",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 2,
+            "deleted": 1,
+            "label": "A"
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    },
+    {
+      "id": "v3-cursor-pagination-late-invalid",
+      "requirementId": "R05",
+      "function": "page_records",
+      "args": [
+        [
+          {
+            "id": "a",
+            "updated": 5,
+            "deleted": false,
+            "label": "A"
+          },
+          {
+            "id": "b"
+          }
+        ],
+        2
+      ],
+      "kwargs": {},
+      "assertArgsUnchanged": true,
+      "expectedException": "ValueError"
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original project-owned AI authorship, public-development corpus v3, 2026-09-28. CC0-1.0. Reference validation in separate author workspace; no benchmark or independent review claim."
+}

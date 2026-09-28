@@ -65,7 +65,7 @@ test('real loopback HTTP flow: catalogue → mock record → events → typed ev
   // until metadata loads, it must remain neutral with execution disabled.
   assert.match(shell, /Connecting…/);
   assert.match(shell, /id="compare-run"[^>]*disabled/);
-  for (const path of ['/app.js', '/walkthrough.js', '/style.css']) assert.equal((await fetch(`${base}${path}`)).status, 200);
+  for (const path of ['/app.js', '/walkthrough.js', '/diff-view.js', '/style.css']) assert.equal((await fetch(`${base}${path}`)).status, 200);
 
   const deniedCases: Array<[Response, number, string]> = [
     [await post('/runs', { ...request, mode: 'live' }), 403, 'authorization_required'],
