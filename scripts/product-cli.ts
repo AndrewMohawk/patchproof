@@ -112,8 +112,11 @@ async function main() {
     let bundle;
     try { bundle = verifyEvidence(JSON.parse(await file.readFile('utf8'))); } finally { await file.close(); }
     if (bundle.run.id !== argument) throw new ContractError('digest_mismatch', 'Requested run and artifact differ.');
-    if (bundle.mode === 'live') throw new Error('live_replay_configuration_required');
-    const lock = bundle.runtimeLock as { localCheckImage?: string; operationalLock?: unknown };
+    const lock = bundle.runtimeLock as { scope?: string; execution?: {checkBackend?: string}; localCheckImage?: string; operationalLock?: unknown };
+    if (bundle.mode === 'live' && !(lock.scope === 'public-curated-development-demo' &&
+      lock.execution && typeof lock.execution === 'object' && !Array.isArray(lock.execution) && lock.execution.checkBackend === 'local_container')) {
+      throw new Error('live_replay_configuration_required');
+    }
     if (lock.operationalLock) verifyOperationalLock(fileURLToPath(root), lock.operationalLock);
     if (!lock.localCheckImage) throw new ContractError('setup_error', 'Export has no pinned local checker image.');
     const replayTimeoutMs = (resolveCheckBatchSeconds(bundle.mode, bundle.runtimeLock) + 5) * 1000;

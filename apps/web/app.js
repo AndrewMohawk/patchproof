@@ -8,7 +8,7 @@ const phaseNames = { queued: 'Queued', preflight: 'Preflight', baseline_capture:
 const outcomes = {
   verified_for_declared_checks: 'Passes declared checks', needs_review: 'Needs review', failed: 'Checks failed', infrastructure_error: 'Execution error',
 };
-const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), meta: {}, ready: false, busy: false };
+const state = { tasks: [], runs: new Map(), taskId: '', runId: '', candidateIds: new Map(), contexts: new Map(), ownedRunIds: new Set(), meta: {}, ready: false, busy: false, comparison: null };
 const streams = new Map();
 const refreshing = new Set();
 let pollTimer;
@@ -26,32 +26,50 @@ function button(text, handler, className = 'button') {
   node.type = 'button'; node.addEventListener('click', handler); return node;
 }
 function pill(text, kind = '') { return el('span', `pill ${kind}`, text); }
-function money(value) { return value === null || value === undefined ? 'Not measured' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: value > 0 && value < .01 ? 4 : 2 }).format(value); }
+function money(value) { return value === null || value === undefined ? 'Not measured' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: value > 0 && value < .01 ? 8 : 2 }).format(value); }
 function duration(ms) { return ms === null || ms === undefined ? 'Not measured' : ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(1)} s`; }
 function count(value) { return new Intl.NumberFormat('en-US').format(value ?? 0); }
 function time(value) { return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }); }
 function taskFor(id) { return state.tasks.find(task => task.id === id); }
 function currentTask() { return taskFor(state.taskId); }
 function mockSupported(task) { return task?.mockSupported === true; }
+function isLive() { return state.meta.mode === 'live'; }
+function taskSupported(task) { return isLive() ? task?.executionSupported === true : mockSupported(task); }
+function checkBackendLabel(backend) {
+  return backend === 'local_container' ? 'Local Docker checks' : backend === 'nebius_sandbox' ? 'Nebius Sandbox checks' : 'Check runtime not recorded';
+}
+function runtimeFor(run) {
+  if (run.phase === 'terminal') return runContext(run).execution;
+  return run.mode === state.meta.mode && run.runtimeLockDigest === state.meta.runtimeLockDigest ? state.meta.execution : undefined;
+}
+function providerCost(run) {
+  return `${money(run.usage.measuredCostUsd)}${run.usage.measuredCostUsd !== null && run.usage.costIsEstimate ? ' (estimate)' : ''}`;
+}
 function isArchive() { return state.meta.mode === 'archive'; }
-function canCreate() { return state.ready && !isArchive() && state.meta.capabilities?.createRuns !== false; }
-function canCancel() { return state.ready && !isArchive() && state.meta.capabilities?.cancelRuns !== false; }
+function canCreate() { return state.ready && !isArchive() && state.meta.capabilities?.createRuns === true && (state.meta.mode === 'mock' || isLive() && state.meta.realExecutionEnabled === true); }
+function canCancel(run) { return state.ready && !isArchive() && state.meta.capabilities?.cancelRuns === true && (!isLive() || state.ownedRunIds.has(run?.id)); }
 function modeLabel(run) {
   if (isArchive()) return run.mode === 'live' ? 'RECORDED LIVE · READ ONLY' : 'RECORDED MOCK · READ ONLY';
-  return run.mode === 'mock' ? 'MOCK MODEL · LOCAL CHECKS' : run.phase === 'terminal' ? 'RECORDED LIVE' : 'LIVE PROVIDER';
+  if (run.mode === 'mock') return 'MOCK MODEL · LOCAL CHECKS';
+  const backend = runtimeFor(run)?.checkBackend;
+  return `${run.phase === 'terminal' ? 'RECORDED LIVE' : 'LIVE MODEL'}${backend ? ` · ${checkBackendLabel(backend).toUpperCase()}` : ''}`;
 }
 function renderMode() {
-  byId('mode-indicator').textContent = isArchive() ? 'Recorded evidence · Read only' : 'Mock model · Local checks';
-  byId('mode-label').textContent = isArchive() ? 'EVIDENCE ARCHIVE' : 'LOCAL WORKSPACE';
+  byId('demo-link').hidden = !isLive();
+  byId('demo-link').parentElement.classList.toggle('with-demo', isLive());
+  byId('mode-indicator').textContent = isArchive() ? 'Recorded evidence · Read only' : isLive() ? `Live model · ${checkBackendLabel(state.meta.execution?.checkBackend)}` : 'Mock model · Local checks';
+  byId('mode-label').textContent = isArchive() ? 'EVIDENCE ARCHIVE' : isLive() ? 'LIVE WORKSPACE' : 'LOCAL WORKSPACE';
   byId('mode-description').textContent = isArchive()
     ? 'Recorded runs, verified against pinned bundle digests and approved public fixtures. Viewing does not execute work or authenticate provider and billing claims.'
-    : 'Scripted model responses. Checks execute in local containers. No paid inference or competition-ready evidence.';
+    : isLive() ? `A connected model proposes patches. ${checkBackendLabel(state.meta.execution?.checkBackend)} test the changes. Review the patch and evidence before applying it.`
+      : 'Scripted model responses. Checks execute in local containers. No paid inference or competition-ready evidence.';
   byId('comparison-notice').textContent = isArchive()
     ? 'This view compares the supplied recorded runs. Source modes remain visible; mock and live records are never a matched comparison. No new runs or checks execute here. A few recorded runs do not establish a benchmark result.'
-    : 'These local runs demonstrate the workflow using scripted model responses. Their results are not a model benchmark or evidence that one repair approach performs better. Sealed evaluation and sponsor integration remain separate gates.';
+    : isLive() ? 'Compare saved patches, declared check results and resource usage. Matching inputs and limits are shown below; a few runs do not establish a benchmark advantage.'
+      : 'These local runs demonstrate the workflow using scripted model responses. Their results are not a model benchmark or evidence that one repair approach performs better. Sealed evaluation and sponsor integration remain separate gates.';
 }
 function runsForTask() { return [...state.runs.values()].filter(run => run.taskId === state.taskId).sort((a, b) => b.createdAt.localeCompare(a.createdAt)); }
-function runName(run) { return `${runTitle(run)} · ${variants[run.variant]?.name ?? run.variant}${isArchive() ? ` · recorded ${run.mode}` : ''} · ${time(run.createdAt)}`; }
+function runName(run) { return `${runTitle(run)} · ${variants[run.variant]?.name ?? run.variant}${run.phase === 'terminal' ? ` · recorded ${run.mode}` : ` · ${run.mode}`} · ${time(run.createdAt)}`; }
 
 // The server validates immutable evidence. The UI binds its saved task projection to
 // this exact run, independently of a catalogue that may reuse the same task ID.
@@ -97,6 +115,13 @@ async function loadRunContext(run, retry = false) {
     // Retain only detached display data. Do not relabel it from later catalogue responses.
     context.fixture = Object.freeze({ id: fixture.id, title: fixture.title,
       requirements: Object.freeze(fixture.requirements.map(row => Object.freeze({ id: row.id, text: row.text }))) });
+    const execution = bundle.runtimeLock?.execution;
+    context.execution = execution && typeof execution === 'object' ? Object.freeze({
+      modelProvider: typeof execution.modelProvider === 'string' ? execution.modelProvider : null,
+      modelId: typeof execution.modelId === 'string' ? execution.modelId : null,
+      checkBackend: ['local_container', 'nebius_sandbox'].includes(execution.checkBackend) ? execution.checkBackend : null,
+    }) : bundle.runtimeLock?.localExecution?.available === true && typeof bundle.runtimeLock?.localCheckImage === 'string'
+      ? Object.freeze({ checkBackend: 'local_container', modelProvider: null, modelId: null }) : undefined;
     context.status = 'ready';
   } catch { context.status = 'error'; }
   if (state.contexts.get(run.id) !== context || !sameJson(state.runs.get(run.id), context.run)) return;
@@ -118,7 +143,7 @@ function showError(error) {
   box.replaceChildren(el('span', '', error instanceof Error ? error.message : 'The request could not be completed.'), button('Dismiss', clearError, ''));
 }
 async function request(path, options = {}) {
-  const response = await fetch(path, { ...options, signal: AbortSignal.timeout(20000) });
+  const response = await fetch(path, { ...options, signal: options.signal ?? AbortSignal.timeout(20000) });
   const body = await response.json();
   if (!response.ok) throw new Error(body.error?.message ?? `Request failed (${response.status}).`);
   return body;
@@ -156,7 +181,7 @@ function renderTasks() {
     const node = button('', () => chooseTask(task.id), 'task-card');
     node.setAttribute('aria-pressed', String(task.id === state.taskId));
     node.dataset.taskId = task.id;
-    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `${task.requirements.length} requirements · ${isArchive() ? 'Recorded evidence available' : mockSupported(task) ? 'Local demo ready' : 'Connected model required'}`));
+    append(node, el('span', 'task-title', task.title), el('span', 'task-meta', `${task.requirements.length} requirements · ${isArchive() ? 'Recorded evidence available' : isLive() ? taskSupported(task) ? canCreate() ? 'Live repair available' : 'New runs paused' : 'Not available for new runs' : mockSupported(task) ? 'Local demo ready' : 'Connected model required'}`));
     if (task.id === state.taskId) append(node, el('span', 'selection-mark', '✓'));
     return node;
   }));
@@ -164,7 +189,7 @@ function renderTasks() {
 }
 function renderTaskPicker() {
   byId('compare-task').replaceChildren(...state.tasks.map(task => new Option(task.title, task.id, false, task.id === state.taskId)));
-  byId('compare-run').disabled = !canCreate() || state.busy || !mockSupported(currentTask());
+  byId('compare-run').disabled = !canCreate() || state.busy || !taskSupported(currentTask());
   byId('compare-run').hidden = !canCreate();
 }
 function renderTaskDetail() {
@@ -183,14 +208,23 @@ function renderTaskDetail() {
     );
     return;
   }
-  append(allowance, append(el('div', 'allowance-title'), el('span', '', mockSupported(task) ? 'Mock model · Local checks' : 'Requires connected model'), el('span', '', '$0 provider spend')),
-    el('p', '', `Project ceiling: ${money(state.meta.maxApprovedSpendUsd ?? state.meta.allowance?.maxApprovedSpendUsd ?? 25)}. Paid execution is unavailable in this local build.`));
-  if (!mockSupported(task)) append(allowance, el('p', '', 'This fixture is ready for connected model development. Scripted local repair is available only for the stable-unique demonstration task.'));
   const limits = state.meta.limits;
-  append(allowance, el('p', '', limits ? `Identical per-run limits: ${limits.inferenceCallLimit} model calls · ${count(limits.inputTokenLimit)} input / ${count(limits.outputTokenLimit)} output tokens · ${limits.wallTimeLimitSeconds} s elapsed. CPU usage is not measured; ${limits.sandboxCpuSecondsLimit} s is the configured allowance, not a verified cumulative limit.` : 'Per-run resource limits are fixed by the coordinator and included in every run record.'));
+  if (isLive()) {
+    append(allowance, append(el('div', 'allowance-title'), el('span', '', `Live model · ${checkBackendLabel(state.meta.execution?.checkBackend)}`),
+      el('span', '', `${money(limits?.maxApprovedSpendUsd)} per-run limit`)),
+      el('p', '', `Project ceiling: ${money(state.meta.maxApprovedSpendUsd)}. Charges are recorded when available; estimates are labeled.`));
+    if (state.meta.execution?.modelId) append(allowance, el('p', 'model-name', `Model: ${state.meta.execution.modelId}`));
+    if (Number.isInteger(state.meta.availability?.remainingRuns)) append(allowance, el('p', '', `${count(state.meta.availability.remainingRuns)} run${state.meta.availability.remainingRuns === 1 ? '' : 's'} remaining in the current allowance.`));
+    if (!taskSupported(task) || !canCreate()) append(allowance, el('p', '', state.meta.availability?.reason ?? 'New runs are unavailable for this task. Existing evidence remains available to review.'));
+  } else {
+    append(allowance, append(el('div', 'allowance-title'), el('span', '', mockSupported(task) ? 'Mock model · Local checks' : 'Requires connected model'), el('span', '', '$0 provider spend')),
+      el('p', '', `Project ceiling: ${money(state.meta.maxApprovedSpendUsd ?? state.meta.allowance?.maxApprovedSpendUsd ?? 25)}. Paid execution is unavailable in this local build.`));
+    if (!mockSupported(task)) append(allowance, el('p', '', 'This fixture is ready for connected model development. Scripted local repair is available only for the stable-unique demonstration task.'));
+  }
+  append(allowance, el('p', '', limits ? `Identical per-run limits: ${limits.inferenceCallLimit} model calls · ${count(limits.inputTokenLimit)} input / ${count(limits.outputTokenLimit)} output tokens · ${limits.wallTimeLimitSeconds} s elapsed. CPU allowance: ${limits.sandboxCpuSecondsLimit} s; unmeasured usage is never treated as zero.` : 'Per-run resource limits are fixed by the coordinator and included in every run record.'));
   const start = button('Run PatchProof →', () => launch(['patchproof']), 'button primary');
   const compare = button('Compare all three', () => launch(Object.keys(variants)), 'button');
-  start.disabled = compare.disabled = !canCreate() || state.busy || !mockSupported(task);
+  start.disabled = compare.disabled = !canCreate() || state.busy || !taskSupported(task);
   byId('task-detail').replaceChildren(
     append(el('div', 'detail-top'), pill('PYTHON MAINTENANCE'), el('span', 'quiet', task.repoId ?? task.id)),
     el('h2', '', task.title), el('p', 'task-description', task.description),
@@ -199,19 +233,57 @@ function renderTaskDetail() {
   );
 }
 async function launch(selectedVariants) {
-  if (!canCreate() || state.busy || !mockSupported(currentTask())) return;
-  const taskId = state.taskId;
+  if (!canCreate() || state.busy || !taskSupported(currentTask())) return;
+  const taskId = state.taskId, mode = state.meta.mode;
+  const sequential = isLive() && selectedVariants.length > 1;
   state.busy = true; clearError(); renderTaskDetail(); renderTaskPicker();
   try {
-    for (const variant of selectedVariants) {
-      const run = await request('/runs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ taskId, variant, mode: 'mock', idempotencyKey: crypto.randomUUID() }) });
+    for (const [index, variant] of selectedVariants.entries()) {
+      if (sequential) {
+        if (!canCreate()) throw new Error(`Comparison stopped before ${variants[variant].name}. ${state.meta.availability?.reason ?? 'New runs are unavailable.'}`);
+        state.comparison = { index: index + 1, total: selectedVariants.length, variant }; renderComparison();
+      }
+      const run = await request('/runs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ taskId, variant, mode, idempotencyKey: crypto.randomUUID() }) });
       storeRun(run); state.runId = run.id;
       if (selectedVariants.length === 1) location.hash = `evidence/${run.id}`;
       else location.hash = 'compare';
+      if (isLive()) {
+        const history = await request('/runs');
+        state.ownedRunIds = new Set(history.ownedRunIds ?? []);
+        if (history.availability) applyAvailability(history.availability);
+      }
+      if (sequential) {
+        const completed = await waitForComparisonRun(run.id);
+        const usable = completed.terminalStatus === 'verified_for_declared_checks' ||
+          completed.terminalStatus === 'failed' && completed.reason === 'declared_checks_not_satisfied';
+        if (!usable || /cancel|timeout/.test(completed.reason ?? '')) {
+          throw new Error(`Comparison stopped after ${variants[variant].name}: ${completed.reason ? humanReason(completed.reason) : outcome(completed)} No later approach was started.`);
+        }
+      }
     }
-    announce(`${selectedVariants.length === 1 ? 'Run' : 'Comparison'} started. Execution events will appear as they arrive.`);
+    if (sequential) announce('Comparison finished. All three recorded approaches are available for review.');
+    else announce(`${selectedVariants.length === 1 ? 'Run' : 'Comparison'} started. Execution events will appear as they arrive.`);
   } catch (error) { showError(error); }
-  finally { state.busy = false; renderTaskDetail(); renderTaskPicker(); renderComparison(); renderRunPicker(); renderEvidence(); }
+  finally { state.busy = false; state.comparison = null; renderTaskDetail(); renderTaskPicker(); renderComparison(); renderRunPicker(); renderEvidence(); }
+}
+async function waitForComparisonRun(id) {
+  const deadline = performance.now() + 330000, signal = AbortSignal.timeout(330000);
+  try {
+    while (performance.now() < deadline) {
+      await refreshRun(id, signal);
+      const run = state.runs.get(id);
+      if (run?.phase === 'terminal') {
+        // A concurrent SSE refresh may have stored terminal before its metadata request finishes.
+        const meta = await request('/tasks', { signal });
+        if (meta.mode !== state.meta.mode || meta.runtimeLockDigest !== state.meta.runtimeLockDigest) throw new Error('The workspace changed. Reload before starting another approach.');
+        if (meta.availability) applyAvailability(meta.availability);
+        renderTasks(); renderTaskDetail(); renderTaskPicker();
+        return run;
+      }
+      await new Promise(done => setTimeout(done, Math.max(0, Math.min(500, deadline - performance.now()))));
+    }
+  } catch (error) { if (!signal.aborted) throw error; }
+  throw new Error('Comparison stopped waiting for the active run after 330 seconds. Review or cancel that run; no later approach was started.');
 }
 function storeRun(run) {
   const previous = state.runs.get(run.id);
@@ -236,11 +308,21 @@ function watchRun(id) {
     refreshRun(id).catch(() => { /* Polling retries the same run; it never starts another. */ });
   };
 }
-async function refreshRun(id) {
+function applyAvailability(availability) {
+  state.meta.availability = availability;
+  state.meta.capabilities.createRuns = availability.enabled === true;
+  state.meta.realExecutionEnabled = availability.enabled === true;
+}
+async function refreshRun(id, signal) {
   if (refreshing.has(id)) return;
   refreshing.add(id);
   try {
-    const run = await request(`/runs/${encodeURIComponent(id)}`); storeRun(run);
+    const run = await request(`/runs/${encodeURIComponent(id)}`, { signal }); storeRun(run);
+    if (isLive() && run.phase === 'terminal') {
+      const meta = await request('/tasks', { signal });
+      if (meta.availability) applyAvailability(meta.availability);
+      renderTasks(); renderTaskDetail(); renderTaskPicker();
+    }
     renderComparison(); renderRunPicker();
     if (state.runId === id) renderEvidence();
   } finally { refreshing.delete(id); }
@@ -270,24 +352,28 @@ function renderComparison() {
   const latest = Object.keys(variants).map(variant => runs.find(run => run.variant === variant));
   const match = matchedContext(latest.filter(Boolean));
   const context = append(el('div', 'comparison-context'), pill(match.matched ? 'MATCHED CONTEXT' : 'COMPARISON CONTEXT', match.matched ? '' : 'neutral'), el('span', '', match.message));
+  if (state.comparison) {
+    const pending = el('p', 'stream-note', `Live comparison · approach ${state.comparison.index} of ${state.comparison.total}: ${variants[state.comparison.variant].name}. Waiting for its recorded completion before starting another approach.`);
+    pending.setAttribute('role', 'status'); context.append(pending);
+  }
   const cards = el('div', 'variant-grid');
   Object.entries(variants).forEach(([key, variant], index) => {
     const run = latest[index]; const card = el('article', `variant-card${key === 'patchproof' ? ' featured' : ''}`);
     append(card, el('p', 'variant-kicker', variant.label), el('h2', '', variant.name), el('p', 'variant-description', variant.description));
     if (run) {
-      if (isArchive()) append(card, pill(modeLabel(run), 'neutral'));
+      append(card, pill(modeLabel(run), 'neutral'));
       append(card, el('p', 'run-meta', `${run.phase === 'terminal' ? 'Recorded task' : 'Task'}: ${runTitle(run)}`));
       append(card, el('p', `outcome ${outcomeClass(run)}${run.phase !== 'terminal' ? ' busy-indicator' : ''}`, outcome(run)),
-        metrics([['Requirements passing', coverageText(run)], ['Candidates recorded', run.candidates.length], ['Elapsed', duration(run.usage.elapsedMs)], ['Provider cost', money(run.usage.measuredCostUsd)]]),
+        metrics([['Requirements passing', coverageText(run)], ['Candidates recorded', run.candidates.length], ['Elapsed', duration(run.usage.elapsedMs)], ['Provider cost', providerCost(run)]]),
         run.phase !== 'terminal' && progress(run), link('Review evidence ↗', `#evidence/${run.id}`, 'button'));
     } else {
       if (!canCreate()) {
-        append(card, el('p', 'empty-small', 'No recorded run for this approach in the archive.'));
+        append(card, el('p', 'empty-small', isArchive() ? 'No recorded run for this approach in the archive.' : 'No recorded run for this approach. New runs are unavailable.'));
         cards.append(card); return;
       }
       const start = button('Run this approach →', () => launch([key]), 'button');
-      start.disabled = state.busy || !mockSupported(currentTask());
-      append(card, el('p', 'empty-small', mockSupported(currentTask()) ? 'No run for this task yet.' : 'Requires a connected model. Local scripted repair is unavailable for this task.'), start);
+      start.disabled = state.busy || !taskSupported(currentTask());
+      append(card, el('p', 'empty-small', taskSupported(currentTask()) ? 'No run for this task yet.' : isLive() ? 'New runs are unavailable for this task.' : 'Requires a connected model. Local scripted repair is unavailable for this task.'), start);
     }
     cards.append(card);
   });
@@ -319,7 +405,7 @@ function renderComparison() {
     tbody.append(row);
   }
   append(table, tbody); tableWrap.append(table);
-  byId('comparison').replaceChildren(context, cards, el('p', 'table-scroll-hint', 'Scroll the table → to compare every approach.'), tableWrap, el('p', 'fine-print', isArchive() ? 'Recorded usage / limit. Unknown values remain unmeasured. Mock counters describe scripted operations; an archive digest does not authenticate live-provider measurements.' : 'Usage / limit. Mock model counters describe scripted operations; they are not measurements of real model inference.'));
+  byId('comparison').replaceChildren(context, cards, el('p', 'table-scroll-hint', 'Scroll the table → to compare every approach.'), tableWrap, el('p', 'fine-print', isArchive() ? 'Recorded usage / limit. Unknown values remain unmeasured. Mock counters describe scripted operations; an archive digest does not authenticate live-provider measurements.' : isLive() ? 'Recorded usage / limit. Estimates are labeled; unknown cost and CPU stay unmeasured. Older mock runs retain their own mode labels.' : 'Usage / limit. Mock model counters describe scripted operations; they are not measurements of real model inference.'));
 }
 function renderRunPicker() {
   const picker = byId('evidence-run');
@@ -400,14 +486,14 @@ function eventPanel(run) {
 function accountingPanel(run) {
   const body = el('div', 'panel-body');
   append(body, metrics([
-    ['Provider cost', `${money(run.usage.measuredCostUsd)}${run.usage.costIsEstimate ? ' (estimate)' : ''}`],
+    ['Provider cost', providerCost(run)],
     ['Per-run spend limit', money(run.limits.maxApprovedSpendUsd)],
     ['Model operations / limit', `${count(run.usage.inferenceCalls)} / ${count(run.limits.inferenceCallLimit)}`],
     ['Input tokens / limit', `${count(run.usage.inputTokens)} / ${count(run.limits.inputTokenLimit)}`],
     ['Output tokens / limit', `${count(run.usage.outputTokens)} / ${count(run.limits.outputTokenLimit)}`],
     ['Elapsed / limit', `${duration(run.usage.elapsedMs)} / ${run.limits.wallTimeLimitSeconds} s`],
     ['Sandbox CPU / limit', `${run.usage.sandboxCpuSeconds === null ? 'Not measured' : `${run.usage.sandboxCpuSeconds.toFixed(2)} s`} / ${run.limits.sandboxCpuSecondsLimit} s`],
-  ], 'accounting'), el('p', 'fine-print', run.mode === 'mock' ? 'Model operations and token counts come from scripted responses. No paid inference was performed. Local electricity and hardware cost are not billed or measured here.' : 'Provider cost is measured only when billing data is available.'));
+  ], 'accounting'), el('p', 'fine-print', run.mode === 'mock' ? 'Model operations and token counts come from scripted responses. No paid inference was performed. Local electricity and hardware cost are not billed or measured here.' : 'Estimated provider cost is labeled separately from measured billing. Unknown charges and CPU stay unmeasured; local electricity and hardware costs are not included.'));
   return panel('Resource accounting', 'Every candidate contributes to the same allowance.', body);
 }
 function provenancePanel(run) {
@@ -420,6 +506,11 @@ function provenancePanel(run) {
     if (entry) append(list, el('dt', '', 'Pinned archive bundle'), el('dd', '', entry.bundleDigest));
     append(list, el('dt', '', 'Archive verification'), el('dd', '', 'Integrity and approved public fixture match verified at load. Provider and billing authenticity not established.'));
   }
+  if (run.mode === 'live') {
+    const runtime = runtimeFor(run);
+    append(list, el('dt', '', 'Check runtime'), el('dd', '', checkBackendLabel(runtime?.checkBackend)));
+    if (runtime?.modelProvider === 'nebius-token-factory') append(list, el('dt', '', 'Model service'), el('dd', '', 'Nebius Token Factory'));
+  }
   append(body, list);
   if (run.phase === 'terminal' && run.mode === 'live') {
     append(body, el('p', 'fine-print', 'Replay of recorded live evidence is a separate operator action requiring an approved private configuration and its digest. This viewer does not execute checks.'),
@@ -429,7 +520,7 @@ function provenancePanel(run) {
   return panel('Reproducibility', 'Immutable inputs and trace references.', body);
 }
 async function cancelRun(id, control) {
-  if (!canCancel()) return;
+  if (!canCancel(state.runs.get(id))) return;
   control.disabled = true;
   try {
     const run = await request(`/runs/${encodeURIComponent(id)}/cancel`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
@@ -451,7 +542,7 @@ function renderEvidence() {
     const download = link('Download evidence ↓', `/runs/${encodeURIComponent(run.id)}/evidence`, 'button primary'); download.download = `${run.id}.json`; append(actions, download);
   } else if (run.phase === 'terminal' && context.status === 'error') {
     actions.append(button('Retry saved task context', () => loadRunContext(state.runs.get(run.id), true), 'button'));
-  } else if (run.phase !== 'terminal' && canCancel()) { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
+  } else if (run.phase !== 'terminal' && canCancel(run)) { const cancel = button('Cancel run', () => cancelRun(run.id, cancel)); actions.append(cancel); }
   append(summary, intro, actions);
   const columns = el('div', 'evidence-grid'); const primary = el('div'); const secondary = el('aside'); secondary.setAttribute('aria-label', 'Run coverage and provenance');
   append(primary, candidateHistory(run));
@@ -471,7 +562,8 @@ window.addEventListener('pagehide', () => { for (const stream of streams.values(
 route();
 try {
   const [meta, history] = await Promise.all([request('/tasks'), request('/runs')]);
-  state.meta = meta; state.ready = true; state.tasks = [...meta.tasks].sort((a, b) => Number(mockSupported(b)) - Number(mockSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
+  state.meta = meta; state.ready = true; state.tasks = [...meta.tasks].sort((a, b) => Number(taskSupported(b)) - Number(taskSupported(a))); state.taskId = state.tasks[0]?.id ?? '';
+  state.ownedRunIds = new Set(history.ownedRunIds ?? []);
   renderMode();
   for (const run of history.runs) storeRun(run);
   renderTasks(); renderTaskDetail(); renderTaskPicker(); renderRunPicker(); renderComparison(); renderEvidence(); route();

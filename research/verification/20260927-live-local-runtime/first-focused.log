@@ -1,0 +1,51 @@
+(node:2830923) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (536.33692ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (188.570707ms)
+✔ all variants share exact limits, repeated-check cap and no more than three bounded requests (882.59766ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (187.348392ms)
+  ✔ output (194.692754ms)
+✔ reported per-request input and output overruns cannot become covered exposure (384.157659ms)
+✖ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (121.722464ms)
+✔ source drift after baseline prevents credential resolution and dispatch (169.748869ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (206.274871ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (212.348687ms)
+  ✔ header (235.97719ms)
+  ✔ candidate (175.060763ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (626.522004ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3457.012412
+
+✖ failing tests:
+
+test at tests/live-local-runtime.test.ts:126:1
+✖ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (121.722464ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /curated/. Input:
+  
+  'Error: Invalid run request.'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-local-runtime.test.ts:131:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Invalid run request.
+        at Coordinator.create (file:///home/andrewmohawk/patchproof/packages/orchestrator/src/coordinator.ts:72:32)
+        at file:///home/andrewmohawk/patchproof/tests/live-local-runtime.test.ts:131:37
+        at getActual (node:assert:586:5)
+        at strict.throws (node:assert:734:24)
+        at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-local-runtime.test.ts:131:10)
+        at async Test.run (node:internal/test_runner/test:1116:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:786:7),
+    expected: /curated/,
+    operator: 'throws',
+    diff: 'simple'
+  }

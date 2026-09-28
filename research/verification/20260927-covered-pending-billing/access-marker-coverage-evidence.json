@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "access-marker-coverage-evidence",
+  "inputByteDigests": {
+    "model-access-intent.json": "sha256:4719689a6fd3e252974f6f0b0154daa9b29466b2566c87e914cb48bba294b815",
+    "model-access-result.json": "sha256:dfdb3998a33d7d0bde1afbb9d8122e1fc469754ddb46dec3309adbb26b4b1043",
+    "models-discovery.json": "sha256:4366eb181afe70885417fe628f3e5e843cba8fceb5bd247afe03f79042335de1",
+    "ledger-designation.json": "sha256:fc0c110f145d48301bd9cc9bdd211d7ef2cdb8328f73b8dffd901a0aac24f522"
+  },
+  "pricingEvidence": {
+    "catalogReceiptByteDigest": "sha256:4366eb181afe70885417fe628f3e5e843cba8fceb5bd247afe03f79042335de1",
+    "catalogResponseByteDigest": "sha256:b1ac7092a111be6648ca0b4842c78dfc84344ba8a2ccea72941cad2036b90ab8",
+    "parsedCatalogBodyDigest": "sha256:c16895379285d668083f2374979e6e121908ccd8395a2ee869b66b77f257afaa",
+    "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "contextLimit": 262144,
+    "observedCatalogPricing": {
+      "prompt": "0.00000006",
+      "completion": "0.00000024",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0"
+    },
+    "officialSourceReceiptByteDigest": "sha256:bb63a85e7c57aee7a80d52694959f3cb3a5c92e2e981dab455490b14c5ba1183",
+    "inputUsdPerMillionTokens": 0.06,
+    "outputUsdPerMillionTokens": 0.24,
+    "units": "Catalog per-token units match retained official per-million rates; not an invoice."
+  },
+  "closureEvidence": {
+    "kind": "reviewed-closed-access-marker-response",
+    "intentByteDigest": "sha256:4719689a6fd3e252974f6f0b0154daa9b29466b2566c87e914cb48bba294b815",
+    "resultByteDigest": "sha256:dfdb3998a33d7d0bde1afbb9d8122e1fc469754ddb46dec3309adbb26b4b1043",
+    "executedScriptDigest": "sha256:b8843112a807eb134dd7a5c708c90c261e8a61e5631c670662ad3d271bb811e5",
+    "publicResultByteDigest": "sha256:2b5d49ab129c331da1ad646961af984c0f1f46d7ecc37f33a705cec59d8cd8e2",
+    "request": {
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Return exactly PATCHPROOF_OK."
+        }
+      ],
+      "max_tokens": 32,
+      "max_completion_tokens": 32,
+      "n": 1,
+      "stream": false,
+      "store": false,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "responseByteDigest": "sha256:dcd5919f1766a1d27693fce747fd01110bbb67f8cb1f0fd2e80f9140f65af3bb",
+    "usage": {
+      "prompt_tokens": 24,
+      "completion_tokens": 6,
+      "total_tokens": 30
+    },
+    "startedAt": "2026-09-28T00:09:19.179Z",
+    "finishedAt": "2026-09-28T00:09:19.748Z",
+    "httpStatus": 200,
+    "finishReason": "stop",
+    "inferenceRequests": 1,
+    "retries": 0,
+    "otherBillableOperations": 0,
+    "providerRequestId": "8093aa0f443c1d0a2a1140ea1cd67a27",
+    "completionId": "chatcmpl-31ae8794-c6c1-4e80-b3c9-f5f2a9c7cade",
+    "evidenceBoundary": "The reviewed script completed the bounded HTTP body read and recorded success. Raw provider response was not retained; this proof uses the exact unchanged trusted operator receipt, not independent provider authentication."
+  },
+  "actualCostUsd": null,
+  "authoritativeBillingReconciled": false,
+  "heldMicros": "100000",
+  "secretsRead": false,
+  "providerCalls": 0
+}

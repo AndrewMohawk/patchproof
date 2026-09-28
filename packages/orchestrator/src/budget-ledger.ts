@@ -20,6 +20,36 @@ const ReserveSchema = z.strictObject({ id: identifier, episodeId: identifier, st
   amountMicros: microdollars.refine(value => value > 0n, 'A positive bounded reservation is required.'), fingerprint: digest });
 const ReconcileSchema = z.strictObject({ id: identifier, actualCostMicros: microdollars.nullable(),
   complete: z.boolean(), evidenceDigest: digest, expectedEvidenceDigest:digest.nullable().optional(),expectedAccountingReceiptDigest:digest.optional() }).refine(value => !value.complete || value.actualCostMicros !== null, 'Complete billing requires a measured cost, including explicit zero.');
+const integerString = z.string().regex(/^(0|[1-9][0-9]{0,18})$/).refine(value => BigInt(value) <= MAX_SQL_INTEGER);
+const TokenCount = z.number().int().nonnegative().safe();
+const PendingBillingPolicy = z.enum(['block-all', 'allow-covered-inference']);
+const COVERAGE_EVENT = 'closed_inference_exposure_covered';
+
+/** Trusted control-plane attestation, not a provider bill. The caller must independently
+ * establish request caps, locked prices, complete successful-response inventory and closure.
+ * Hashes bind those records; this ledger validates arithmetic and bindings, not authenticity. */
+export const PendingInferenceCoverageSchema = z.strictObject({
+  schemaVersion: z.literal('1.0'), kind: z.literal('closed-token-factory-inference-v1'),
+  reservationId: identifier, episodeId: identifier, reservationFingerprint: digest, stage: z.enum(STAGES),
+  reservedMicros: integerString, evidenceDigest: digest, sourceDigest: digest,
+  pricingEvidenceDigest: digest, closureEvidenceDigest: digest, closedAt: z.iso.datetime(),
+  endpoint: z.literal('https://api.tokenfactory.nebius.com/v1/chat/completions'),
+  modelId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,199}$/),
+  inputMicrosPerMillionTokens: integerString, outputMicrosPerMillionTokens: integerString, requestFeeMicros: integerString,
+  dispatchClosed: z.literal(true), inventoryComplete: z.literal(true), otherBillableOperations: z.literal(0),
+  requests: z.array(z.strictObject({ intentId: identifier, requestDigest: digest, responseDigest: digest, usageDigest: digest,
+    inputTokenCeiling: TokenCount.positive(), outputTokenCeiling: TokenCount.positive(),
+    observedInputTokens: TokenCount, observedOutputTokens: TokenCount,
+  }).refine(value => value.observedInputTokens <= value.inputTokenCeiling && value.observedOutputTokens <= value.outputTokenCeiling,
+    'Observed tokens exceed the attested request ceiling.')).min(1).max(24),
+}).refine(value => new Set(value.requests.map(request => request.intentId)).size === value.requests.length,
+  'Every dispatched request needs a unique intent; repeated request bodies still count separately.');
+export type PendingInferenceCoverage = z.infer<typeof PendingInferenceCoverageSchema>;
+function inferenceMaximumCostMicros(proof: PendingInferenceCoverage): bigint {
+  return proof.requests.reduce((sum, request) => sum + BigInt(proof.requestFeeMicros) +
+    (BigInt(request.inputTokenCeiling) * BigInt(proof.inputMicrosPerMillionTokens) +
+      BigInt(request.outputTokenCeiling) * BigInt(proof.outputMicrosPerMillionTokens) + 999_999n) / 1_000_000n, 0n);
+}
 
 export class BudgetLedgerError extends Error {
   readonly code: string;
@@ -140,19 +170,22 @@ export interface ReservationView {
   reconciliationComplete: boolean; evidenceDigest: string | null; createdAt: string; updatedAt: string;
 }
 interface Totals { charged: bigint; held: bigint; committed: bigint; }
-interface Accounting { total: Totals; stages: Record<BudgetStage,Totals>; pending: number; count: number; }
+interface Accounting { total: Totals; stages: Record<BudgetStage,Totals>; pending: number; coveredPending: number; count: number; }
 export interface BudgetSnapshot {
   currency: 'USD'; unit: 'microdollar'; approvalRevision: number; approvalDigest: string;
   connectionApprovalCurrent: boolean; approvalExpiresAt: string | null; frozen: boolean; freezeReasons: string[];
   approvedMicros: string; chargedMicros: string; heldMicros: string; committedMicros: string; availableMicros: string;
   pendingBillingCount: number; reservationCount: number; verifiedCreditsAppliedMicros: '0';
+  pendingBillingPolicy: z.infer<typeof PendingBillingPolicy>; coveredPendingBillingCount: number; blockingPendingBillingCount: number;
   stages: Record<BudgetStage,{ approvedMicros:string; chargedMicros:string; heldMicros:string; committedMicros:string; availableMicros:string }>;
 }
 
 /** Trusted control-plane ledger only. A reservation is an entire episode's aggregate ceiling.
  * Dispatch only when markAttempted().dispatchGranted is true; never infer permission from a read
  * or an idempotent reserve response. This module makes no provider calls or credit assumptions.
- * Unknown billing blocks other dispatches. Cancellation retains holds until explicit reconciliation.
+ * Unknown billing blocks other dispatches by default. Explicitly opted-in connections may continue
+ * past closed inference whose full unknown exposure remains held and has a trusted bounded proof.
+ * Cancellation retains holds until explicit reconciliation.
  * Overrun freezes are sticky; this API deliberately has no automatic thaw or refund operation.
  * syncApproval is an explicit trusted-coordinator CAS, not automatic timestamp-based permission.
  * Provider/entitlement attestations and token/CPU limits must also be checked by the caller. */
@@ -161,8 +194,11 @@ export class BudgetLedger {
   readonly #now: () => Date;
   #revision = 0;
   #approvalDigest: string;
+  readonly #pendingBillingPolicy: z.infer<typeof PendingBillingPolicy>;
 
-  constructor(options: { filename: string; budget: unknown; now?: () => Date; existingOnly?: boolean }) {
+  constructor(options: { filename: string; budget: unknown; now?: () => Date; existingOnly?: boolean;
+    pendingBillingPolicy?: z.infer<typeof PendingBillingPolicy> }) {
+    this.#pendingBillingPolicy = PendingBillingPolicy.parse(options.pendingBillingPolicy ?? 'block-all');
     const configured = policy(options.budget);
     const identity = options.existingOnly ? existingFile(options.filename) : null;
     if (!options.existingOnly) prepareFile(options.filename);
@@ -244,17 +280,38 @@ export class BudgetLedger {
       state:row.state as ReservationView['state'],attemptedAt:row.attempted_at as string|null,reconciliationComplete:complete,
       evidenceDigest:row.evidence_digest as string|null,createdAt:String(row.created_at),updatedAt:String(row.updated_at) };
   }
+  #coverageMatches(proof: PendingInferenceCoverage, row: Row, meta: Meta): boolean {
+    return row.state === 'attempted' && row.attempted_at !== null && row.actual_micros === null && row.reconciliation_complete === 0n &&
+      proof.reservationId === row.id && proof.episodeId === row.episode_id && proof.reservationFingerprint === row.fingerprint &&
+      proof.stage === row.stage && BigInt(proof.reservedMicros) === row.amount_micros && proof.evidenceDigest === row.evidence_digest &&
+      Date.parse(proof.closedAt) >= Date.parse(String(row.attempted_at)) && Date.parse(proof.closedAt) <= Date.parse(this.#timestamp()) &&
+      proof.requests.length <= meta.policy.budget.episodeLimits.inferenceCallLimit && inferenceMaximumCostMicros(proof) <= (row.amount_micros as bigint);
+  }
+  #covered(row: Row, latest: Row | undefined, meta: Meta): boolean {
+    if (latest?.kind !== COVERAGE_EVENT) return false;
+    try {
+      const stored = z.strictObject({ proof: PendingInferenceCoverageSchema, proofDigest: digest, maximumCostMicros: integerString }).parse(JSON.parse(String(latest.payload)));
+      return stored.proofDigest === fingerprint(stored.proof) && stored.maximumCostMicros === String(inferenceMaximumCostMicros(stored.proof)) &&
+        this.#coverageMatches(stored.proof, row, meta);
+    } catch { return false; }
+  }
   #accounting(): Accounting {
     const rows = this.#rows('SELECT * FROM budget_reservations');
+    const latestEvents = new Map(this.#rows('SELECT * FROM budget_events WHERE sequence IN (SELECT MAX(sequence) FROM budget_events WHERE reservation_id IS NOT NULL GROUP BY reservation_id)')
+      .map(row => [String(row.reservation_id), row]));
+    const meta = this.#meta();
     const total: Totals = { charged:0n,held:0n,committed:0n };
     const stages = Object.fromEntries(STAGES.map(stage=>[stage,{ charged:0n,held:0n,committed:0n }])) as Record<BudgetStage,Totals>;
-    let pending = 0;
+    let pending = 0, coveredPending = 0;
     for (const row of rows) {
       const view = this.#view(row), charged = BigInt(view.actualCostMicros??'0'), held = BigInt(view.heldMicros), committed = charged+held;
       for (const bucket of [total,stages[view.stage]]) { bucket.charged+=charged;bucket.held+=held;bucket.committed+=committed; }
-      if ((view.attemptedAt!==null || view.evidenceDigest!==null) && !view.reconciliationComplete) pending++;
+      if ((view.attemptedAt!==null || view.evidenceDigest!==null) && !view.reconciliationComplete) {
+        pending++;
+        if (this.#covered(row, latestEvents.get(view.id), meta)) coveredPending++;
+      }
     }
-    return { total,stages,pending,count:rows.length };
+    return { total,stages,pending,coveredPending,count:rows.length };
   }
   #reasons(meta: Meta, accounting: Accounting): string[] {
     const reasons: string[] = [], approval = meta.policy.budget.ownerApproval, now = Date.parse(this.#timestamp());
@@ -266,7 +323,7 @@ export class BudgetLedger {
     }
     if (meta.revision!==this.#revision || meta.digest!==this.#approvalDigest) reasons.push('approval_changed');
     if (accounting.total.committed>meta.policy.total || STAGES.some(stage=>accounting.stages[stage].committed>meta.policy.stages[stage])) reasons.push('approved_cap_below_commitment');
-    if (accounting.pending) reasons.push('billing_pending');
+    if (accounting.pending > (this.#pendingBillingPolicy === 'allow-covered-inference' ? accounting.coveredPending : 0)) reasons.push('billing_pending');
     return reasons;
   }
   #assertReady(meta: Meta, accounting: Accounting) {
@@ -345,6 +402,29 @@ export class BudgetLedger {
     });
   }
 
+  /** This never reconciles cost or releases money. The first proof is immutable; a later
+   * reservation event (including prepared accounting) makes it stale. No automatic re-cover
+   * or thaw is permitted. Transport ambiguity and non-inference exposure remain blocking. */
+  coverPendingInference(value: unknown): { created: boolean; proofDigest: string; maximumCostMicros: string; reservation: ReservationView } {
+    if (this.#pendingBillingPolicy !== 'allow-covered-inference') fail('covered_inference_disabled', 'This connection retains the default pending-billing block.');
+    const proof = PendingInferenceCoverageSchema.parse(value), proofDigest = fingerprint(proof), maximumCostMicros = String(inferenceMaximumCostMicros(proof));
+    return this.#transaction(() => {
+      const meta = this.#meta(), reasons = this.#reasons(meta, this.#accounting()).filter(reason => reason !== 'billing_pending');
+      if (reasons.length) fail(reasons[0]!, `Inference coverage blocked: ${reasons.join(', ')}.`);
+      const row = this.#reservation(proof.reservationId);
+      if (!this.#coverageMatches(proof, row, meta)) fail('inference_coverage_mismatch', 'Coverage requires the exact attempted unknown-cost reservation, current evidence and a fully held sufficient bound.');
+      const latest = this.#row('SELECT * FROM budget_events WHERE reservation_id=? ORDER BY sequence DESC LIMIT 1', proof.reservationId);
+      const previous = this.#row('SELECT * FROM budget_events WHERE kind=? AND reservation_id=? ORDER BY sequence DESC LIMIT 1', COVERAGE_EVENT, proof.reservationId);
+      if (previous) {
+        if (!this.#covered(row, latest, meta) || JSON.parse(String(previous.payload)).proofDigest !== proofDigest) fail('inference_coverage_conflict', 'Existing coverage is immutable or stale; retain the hold and use authoritative reconciliation.');
+        return { created: false, proofDigest, maximumCostMicros, reservation: this.#view(row) };
+      }
+      if (latest?.kind !== 'billing_incomplete') fail('inference_coverage_mismatch', 'Coverage cannot bypass a newer prepared accounting receipt or other reservation event.');
+      this.#event(COVERAGE_EVENT, proof.reservationId, { proof, proofDigest, maximumCostMicros });
+      return { created: true, proofDigest, maximumCostMicros, reservation: this.#view(row) };
+    });
+  }
+
   /** Invoke only from the serialized trusted coordinator after reloading owner-authorized config.
    * Equal timestamps do not prove newer authority. Workers must never auto-sync cached config. */
   syncApproval(value: unknown, options: { expectedRevision: number }): BudgetSnapshot {
@@ -405,6 +485,8 @@ export class BudgetLedger {
         approvalExpiresAt:meta.policy.budget.ownerApproval?.expiresAt??null,frozen:reasons.length>0,freezeReasons:reasons,
         approvedMicros:String(meta.policy.total),chargedMicros:String(accounting.total.charged),heldMicros:String(accounting.total.held),committedMicros:String(accounting.total.committed),
         availableMicros:remaining(meta.policy.total,accounting.total.committed),pendingBillingCount:accounting.pending,reservationCount:accounting.count,verifiedCreditsAppliedMicros:'0',
+        pendingBillingPolicy:this.#pendingBillingPolicy,coveredPendingBillingCount:accounting.coveredPending,
+        blockingPendingBillingCount:accounting.pending-(this.#pendingBillingPolicy==='allow-covered-inference'?accounting.coveredPending:0),
         stages:Object.fromEntries(STAGES.map(stage=>[stage,{ approvedMicros:String(meta.policy.stages[stage]),chargedMicros:String(accounting.stages[stage].charged),
           heldMicros:String(accounting.stages[stage].held),committedMicros:String(accounting.stages[stage].committed),availableMicros:remaining(meta.policy.stages[stage],accounting.stages[stage].committed) }])) as BudgetSnapshot['stages'] };
     });

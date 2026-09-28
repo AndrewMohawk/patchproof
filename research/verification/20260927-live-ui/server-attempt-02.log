@@ -1,0 +1,113 @@
+TAP version 13
+# (node:2730044) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: default product server remains mock with loopback guard and existing cancellation behavior
+not ok 1 - default product server remains mock with loopback guard and existing cancellation behavior
+  ---
+  duration_ms: 41.700651
+  type: 'test'
+  location: '/home/andrewmohawk/patchproof/tests/live-product-server.test.ts:50:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 403
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 403
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:54:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1116:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards
+not ok 2 - live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards
+  ---
+  duration_ms: 11.839925
+  type: 'test'
+  location: '/home/andrewmohawk/patchproof/tests/live-product-server.test.ts:59:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:62:96)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1116:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: opaque browser ownership protects live cancellation without changing public run or evidence access
+not ok 3 - opaque browser ownership protects live cancellation without changing public run or evidence access
+  ---
+  duration_ms: 16.140236
+  type: 'test'
+  location: '/home/andrewmohawk/patchproof/tests/live-product-server.test.ts:73:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(header)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    cookie (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:45:61)
+    TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:76:92)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1116:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: a process restart never grants an old or replayed cookie ownership of retained public history
+not ok 4 - a process restart never grants an old or replayed cookie ownership of retained public history
+  ---
+  duration_ms: 6.31293
+  type: 'test'
+  location: '/home/andrewmohawk/patchproof/tests/live-product-server.test.ts:96:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(header)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    cookie (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:45:61)
+    TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/live-product-server.test.ts:98:123)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1116:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+  ...
+# Subtest: invalid live host/runtime metadata is refused before serving or coordinator work
+ok 5 - invalid live host/runtime metadata is refused before serving or coordinator work
+  ---
+  duration_ms: 3.517004
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 1
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 459.65431

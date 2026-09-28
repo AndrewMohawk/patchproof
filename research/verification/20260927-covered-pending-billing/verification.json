@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "covered-pending-inference-ledger-verification",
+  "scope": "Synthetic metadata ledger controls only; no credentials, operator ledger, providers or candidate execution",
+  "status": "passed",
+  "files": {
+    "packages/orchestrator/src/budget-ledger.ts": "sha256:ea7df88dc7e39152ab606ed5b523a52c32439a9674e089899db25bc30dd5eb91",
+    "tests/budget-covered-inference.test.ts": "sha256:25bbb352ff9764320d3e1067a8b746c37e000a3254f780dff673291da134ccab"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/budget-covered-inference.test.ts",
+      "stage": "before implementation",
+      "exitCode": 1,
+      "log": "first-red.log",
+      "preserved": true
+    },
+    {
+      "command": "node --test tests/budget-covered-inference.test.ts tests/budget-ledger.test.ts tests/budget-ledger-existing.test.ts tests/accounting-receipts.test.ts",
+      "exitCode": 0,
+      "passed": 63,
+      "failed": 0,
+      "log": "final-focused-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "final-typecheck.log"
+    },
+    {
+      "command": "git diff --check -- packages/orchestrator/src/budget-ledger.ts tests/budget-covered-inference.test.ts",
+      "exitCode": 0
+    }
+  ],
+  "contract": {
+    "default": "block-all",
+    "optIn": "allow-covered-inference",
+    "coverageMethod": "coverPendingInference",
+    "coverageSchema": "PendingInferenceCoverageSchema",
+    "actualCost": "Remains null and incomplete; no bill or refund inferred.",
+    "hold": "Entire reservation remains committed against unchanged project and stage caps.",
+    "proof": "Trusted closed successful-response inventory; exact reservation/evidence bindings, unique request intents, source/pricing/closure and request/response/usage digests, observed tokens within request ceilings, integer upward-rounded maximum cost within full reservation.",
+    "persistence": "Append-only immutable coverage event in existing schema; latest reservation event must be billing_incomplete before first coverage. Later reservation/accounting events invalidate coverage; no automatic re-cover.",
+    "snapshot": "pendingBillingCount remains all unresolved reservations; coveredPendingBillingCount and blockingPendingBillingCount distinguish coverage only for explicitly opted-in connections.",
+    "limitations": "Hashes bind but do not authenticate provider evidence; trusted caller must establish actual request closure and valid published rates/caps. Transport ambiguity and other billable resources cannot use this proof."
+  },
+  "examples": {
+    "markerFullContextInputAndOutputCeilingMicros": "78644",
+    "threeRequestsFullContextInputAnd2000OutputCeilingMicros": "48627",
+    "heldPerExampleMicros": "100000"
+  },
+  "productionLedgerAccessed": false,
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "runtimeOrApiConsumersChanged": false,
+  "committed": false
+}

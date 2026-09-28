@@ -1,0 +1,25 @@
+(node:2621045) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ live UI uses enabled curated IDs and live requests, real event phases, runtime pins and explicit cost labels (776.808435ms)
+✔ live capabilities and task availability fail closed while old mock mode remains usable (1172.686945ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2610.795156
+
+✖ failing tests:
+
+test at tests/live-product-ui.test.ts:77:1
+✖ live UI uses enabled curated IDs and live requests, real event phases, runtime pins and explicit cost labels (776.808435ms)
+  locator.waitFor: Error: strict mode violation: getByText('LIVE MODEL · LOCAL DOCKER CHECKS', { exact: true }) resolved to 2 elements:
+      1) <span class="pill neutral">LIVE MODEL · LOCAL DOCKER CHECKS</span> aka getByLabel('Compare the approaches.').getByText('LIVE MODEL · LOCAL DOCKER')
+      2) <span class="pill ">LIVE MODEL · LOCAL DOCKER CHECKS</span> aka getByLabel('Review the evidence.').getByText('LIVE MODEL · LOCAL DOCKER')
+  
+  Call log:
+  [2m  - waiting for getByText('LIVE MODEL · LOCAL DOCKER CHECKS', { exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/home/andrewmohawk/patchproof/tests/live-product-ui.test.ts:88:77)

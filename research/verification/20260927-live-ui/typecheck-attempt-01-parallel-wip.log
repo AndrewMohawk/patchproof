@@ -1,0 +1,28 @@
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+tests/budget-covered-inference.test.ts(30,7): error TS2353: Object literal may only specify known properties, and 'pendingBillingPolicy' does not exist in type '{ filename: string; budget: unknown; now?: () => Date; existingOnly?: boolean; }'.
+tests/budget-covered-inference.test.ts(44,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(46,57): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(50,90): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(51,34): error TS2551: Property 'blockingPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(53,62): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(55,90): error TS2551: Property 'blockingPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(58,92): error TS2551: Property 'blockingPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(60,24): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(62,35): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(66,91): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(90,55): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(91,80): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(96,91): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(98,34): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(99,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(103,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(112,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(114,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(115,37): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(116,34): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?
+tests/budget-covered-inference.test.ts(118,30): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(122,91): error TS2339: Property 'coverPendingInference' does not exist on type 'BudgetLedger'.
+tests/budget-covered-inference.test.ts(125,34): error TS2551: Property 'coveredPendingBillingCount' does not exist on type 'BudgetSnapshot'. Did you mean 'pendingBillingCount'?

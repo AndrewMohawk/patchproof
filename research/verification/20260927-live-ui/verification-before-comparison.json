@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "live-mode-product-interface-verification",
+  "status": "focused_passed",
+  "sourceFiles": {
+    "apps/web/app.js": "sha256:ddec9c6dd68c1999bfd2a57f3e8b9d914fb1719338a774e8d6cde4eb2b5e3cc1",
+    "apps/web/index.html": "sha256:44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+    "apps/web/style.css": "sha256:9915af845e241ece3144ddd403c856da9176d16880e9823475655bcfcd5b2b6d",
+    "apps/api/src/product-server.ts": "sha256:f6e429fcf943181c1ca72759f14c20ef40e3d388444a0a8132ffde8dcda21708",
+    "tests/live-product-ui.test.ts": "sha256:ded93dc229a2be8843b74741703e33378463910c48f88a9943b2bd719b9c4b28",
+    "tests/live-product-server.test.ts": "sha256:8458208ffae4c09e510be4df227611251dbdbd4a7ed5c20ed109e0e621db661f"
+  },
+  "scope": "Rendered browser and HTTP checks with invented metadata and a fake coordinator only. No model, Docker, candidate, credential, private evaluator, deployment or recording work.",
+  "commands": [
+    {
+      "command": "node --check apps/web/app.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test tests/live-product-ui.test.ts tests/live-product-server.test.ts",
+      "exitCode": 0,
+      "passed": 8,
+      "log": "final-focused-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 2,
+      "log": "final-typecheck.log",
+      "limitation": "Only concurrent root-owned tests/live-local-runtime.test.ts:48 exact-optional onOperation:undefined error; no diagnostics in the six owned files. Full clean integration typecheck remains root responsibility."
+    }
+  ],
+  "coverage": [
+    "Live requests use the configured mode and enabled curated task IDs; two invented task IDs exercised.",
+    "SSE phase changes drive displayed progress; no simulated progress timer.",
+    "Admitted evidence runtime locks identify local Docker checks independently of real model mode; mock history retains mode labels.",
+    "Unknown provider cost remains Not measured; estimates remain labeled in comparison and evidence down to eight decimal places.",
+    "320px and390px browser widths and keyboard focus; live-only Watch demo navigation link.",
+    "HTTP health/tasks/history/errors use explicit live metadata; default mock behavior and loopback guard preserved.",
+    "Configured public hosts require matching HTTPS Origin, refuse cross-site and do not trust X-Forwarded-Host.",
+    "Only an opaque Secure, HttpOnly, SameSite=Strict, host-scoped browser session can cancel its newly created live run.",
+    "Foreign idempotent reuse, replayed cookie, duplicate cookie and restart never transfer cancellation ownership; GET evidence remains public.",
+    "Dynamic availability pauses only new runs, preserves history/cancellation, shows remaining run count/reason, and fails closed on callback failure."
+  ],
+  "preservedAttempts": [
+    {
+      "log": "browser-attempt-01.log",
+      "result": "One selector ambiguity: live mode badge appears in comparison and evidence; scoped test selector corrected without UI logic change."
+    },
+    {
+      "log": "combined-attempt-01.log",
+      "result": "HTTP test defaults and native-fetch Host normalization produced four fixture failures. A failed-test cleanup gap left its test-only listener open; owned test child was terminated. No application daemon was stopped."
+    },
+    {
+      "log": "server-attempt-02.log",
+      "result": "Preserved original raw assertions identifying native-fetch Host normalization. Replaced only test transport with node:http to send intended proxy Host."
+    },
+    {
+      "log": "combined-attempt-03.log",
+      "result": "Seven controls passed before requested availability/demo additions."
+    },
+    {
+      "log": "typecheck-attempt-01-parallel-wip.log",
+      "result": "Parallel budget-ledger interface work was incomplete. No owned UI diagnostics."
+    }
+  ],
+  "externalLimits": [
+    "Actual Token Factory plus local Docker repair and final public FQDN/video require separately observed root integration.",
+    "No claim of Nebius Sandboxes execution or model performance is established by these controls.",
+    "Session ownership is process-local; after restart retained history is public but old session tokens cannot cancel it.",
+    "Public Host/Origin tests emulate a local TLS reverse proxy; actual TLS deployment was not tested here."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "credentialsRead": false,
+  "privateEvaluatorRead": false,
+  "newRecordings": 0,
+  "published": false
+}

@@ -8,10 +8,19 @@ export const LOCAL_MOCK_CHECK_TIMING_POLICY = Object.freeze({
   id: 'local-mock-check-timing-v1', maximumBatchWallSeconds: 60,
 });
 
+export const LIVE_LOCAL_CHECK_TIMING_POLICY = Object.freeze({ id: 'live-local-check-timing-v1', maximumBatchWallSeconds: 60 });
+
 export function resolveCheckBatchSeconds(mode: 'mock' | 'live', runtimeLock: unknown): 30 | 60 {
   let lock;
   try { lock = cloneJsonData(runtimeLock); }
   catch { throw new ContractError('setup_error', 'Invalid recorded check timing policy.'); }
+  if (lock && typeof lock === 'object' && !Array.isArray(lock) && Object.hasOwn(lock, 'liveLocalCheckTimingPolicy')) {
+    if (mode !== 'live' || !isDeepStrictEqual(lock.liveLocalCheckTimingPolicy, LIVE_LOCAL_CHECK_TIMING_POLICY) ||
+      !lock.execution || typeof lock.execution !== 'object' || Array.isArray(lock.execution) || lock.execution.checkBackend !== 'local_container') {
+      throw new ContractError('setup_error', 'Unsupported recorded live local check timing policy.');
+    }
+    return 60;
+  }
   if (lock === null || typeof lock !== 'object' || Array.isArray(lock) || !Object.hasOwn(lock, 'localCheckTimingPolicy')) return 30;
   if (!isDeepStrictEqual(lock.localCheckTimingPolicy, LOCAL_MOCK_CHECK_TIMING_POLICY)) {
     throw new ContractError('setup_error', 'Unsupported recorded check timing policy.');

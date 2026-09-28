@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "live-local-runtime-synthetic-review",
+  "status": "passed",
+  "scope": "Benign invented maintenance fixture; real coordinator and HTTP adapter with in-memory fake transport and synthetic check results",
+  "sourceHashes": {
+    "packages/orchestrator/src/live-local.ts": "sha256:06ea27424f34f2263df697b8ce554d820cacd160a7f6559b3d09d63c8061f068",
+    "tests/live-local-runtime.test.ts": "sha256:c4f830ac32a6b3302c9383ee2a72d5f86a03d50d3714291ff646cc23e92989f1",
+    "workers/repair/index.ts": "sha256:689cc1ecec99377a9d85d4d1028bdcf9776e67a3894379de44613eb876239868",
+    "packages/orchestrator/src/coordinator.ts": "sha256:7da8d9ca34da77e3160cf98cf769e3504d43919fd34d68fbf66c6168e3a5dee0",
+    "packages/orchestrator/src/local-check-timing.ts": "sha256:d35168997165fb9272895bf3f4c4104c8686b58364988e2de21842a90e9d317a",
+    "apps/api/src/live-application.ts": "sha256:07f9a67fd0c35a4d762d3a92f4c7333399195af6ca554e5c506b6714aa838728",
+    "apps/api/src/live-main.ts": "sha256:c662d20b2cfe9dea88352d0114c901cc3e61df21066ae4bb0871785857d4c8da"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/live-local-runtime.test.ts",
+      "exitCode": 1,
+      "log": "first-focused.log",
+      "reason": "12 of13 passed; one test used a too-short idempotency key and hit request validation before unknown-task validation. Test input corrected; original log preserved."
+    },
+    {
+      "command": "node --test --test-name-pattern='allowances are frozen' tests/live-local-runtime.test.ts",
+      "exitCode": 1,
+      "log": "limits-red.log",
+      "reason": "Confirmed exported mutable limits could change the hard request allowance. Fixed with Object.freeze."
+    },
+    {
+      "command": "node --test tests/live-local-runtime.test.ts tests/runtime-repair.test.ts tests/local-check-timing.test.ts tests/orchestrator.test.ts",
+      "exitCode": 0,
+      "passed": 43,
+      "failed": 0,
+      "log": "final-focused-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "final-typecheck.log"
+    }
+  ],
+  "newControls": [
+    "success with actualCost null, full100000-micro hold and covered sequential continuation",
+    "ambiguous transport counted once, no retry, full hold remains blocking",
+    "all three variants use identical aggregate limits and at most three requests, 2000 output tokens each",
+    "both repeated observations share one60-second batch cap with identical inputs",
+    "reported input/output ceiling overruns are rejected before covered closure",
+    "forged capability, unknown task, nondevelopment fixture, unsupported timing and source drift refuse dispatch",
+    "cancellation after dispatch keeps unknown exposure held; simultaneous admission refused",
+    "actual credential echoes withheld from response IDs, transport IDs, candidate bytes, events and accounting revisions",
+    "hard limits reject post-construction mutation"
+  ],
+  "productionChangesByReviewer": [
+    "live-local.ts: freeze exported LIVE_LIMITS",
+    "live-local.ts: fsync immutable accounting revisions and parent directory before returning"
+  ],
+  "coordinatedFindingsResolvedByRoot": [
+    "repair adapter excludes raw/decoded credential echoes and filters transport IDs",
+    "repair adapter enforces attested per-request input ceiling",
+    "receipt journal exceptions retain usage and response identity"
+  ],
+  "limitations": [
+    "No real provider requests, credentials, private operator ledger, Docker, candidate interpreter, network or sealed evaluator inputs accessed in this review.",
+    "Application startup/private Unix socket/FQDN deployment paths received source review only; root handles actual integration.",
+    "File fsync ordering reviewed in source; no physical power-loss experiment performed.",
+    "Reviewer implemented two narrow live-local corrections and synthetic controls, so this is not independent external certification."
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "privateInputsRead": false,
+  "committed": false,
+  "blockers": []
+}

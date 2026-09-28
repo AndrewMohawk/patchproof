@@ -12,6 +12,8 @@ import { LOCAL_REPAIR_POLICY, repairInput, RevisionCheckError, runRevisionLoop }
 import { FLAKY_CHECK_MESSAGE } from './repeated-checks.ts';
 import { resolveTrustedSmokeCapability, TrustedSmokeGateError } from './trusted-smoke.ts';
 import type { TrustedSmokeSettings } from './trusted-smoke.ts';
+import { resolveLiveLocalCapability } from './live-local.ts';
+import type { LiveLocalSettings } from './live-local.ts';
 import { resolveCheckBatchSeconds } from './local-check-timing.ts';
 
 export const LOCAL_LIMITS = LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 24000,
@@ -26,12 +28,13 @@ export class Coordinator {
   readonly #checks: CheckRunner;
   readonly #verifyRuntime: (() => void) | undefined;
   readonly #trustedSmoke: TrustedSmokeSettings | null;
+  readonly #liveLocal: LiveLocalSettings | null;
   readonly #checkBatchSeconds: 30 | 60;
   readonly #jobs = new Map<string, { controller: AbortController; promise: Promise<void> }>();
   readonly #listeners = new Map<string, Set<(event: ProductEvent) => void>>();
 
   constructor(options: { fixtures: Fixture[]; runtimeLock: unknown; provider: RepairProvider;
-    checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void; trustedSmokeCapability?: unknown }) {
+    checks: CheckRunner; journal: RunJournal; store: EvidenceStore; verifyRuntime?: () => void; trustedSmokeCapability?: unknown; liveLocalCapability?: unknown }) {
     this.#fixtures = new Map(options.fixtures.map(fixture => [fixture.id, structuredClone(fixture)]));
     this.#checkBatchSeconds = resolveCheckBatchSeconds(options.provider.mode, options.runtimeLock);
     this.#runtimeLock = structuredClone(options.runtimeLock);
@@ -39,6 +42,8 @@ export class Coordinator {
     this.#verifyRuntime = options.verifyRuntime;
     this.#trustedSmoke = resolveTrustedSmokeCapability(options.trustedSmokeCapability);
     if (options.trustedSmokeCapability !== undefined && !this.#trustedSmoke) throw new ContractError('authorization_required', 'Trusted smoke capability is invalid.', 403);
+    this.#liveLocal = resolveLiveLocalCapability(options.liveLocalCapability);
+    if (options.liveLocalCapability !== undefined && !this.#liveLocal) throw new ContractError('authorization_required', 'Live local capability is invalid.', 403);
     this.journal = options.journal; this.store = options.store;
   }
 
@@ -70,7 +75,8 @@ export class Coordinator {
     if (!fixture) throw new ContractError('unknown_task', 'Select a curated public task.');
     const trustedLive = request.mode === 'live' && this.#provider.mode === 'live' && this.#trustedSmoke &&
       request.taskId === this.#trustedSmoke.fixtureId && request.variant === this.#trustedSmoke.variant;
-    if (!trustedLive && (request.mode !== 'mock' || this.#provider.mode !== 'mock')) {
+    const localLive = request.mode === 'live' && this.#provider.mode === 'live' && this.#liveLocal;
+    if (!trustedLive && !localLive && (request.mode !== 'mock' || this.#provider.mode !== 'mock')) {
       throw new ContractError('authorization_required', 'Real execution requires verified Nebius account, runtime and budget gates.', 403);
     }
     const fingerprint = digestJson(request);
@@ -80,20 +86,23 @@ export class Coordinator {
       return { run: this.get(prior.id), reused: true };
     }
     this.#verifyRuntime?.();
+    if (localLive && this.#jobs.size) throw new ContractError('capacity_exceeded', 'A live run is already active. Try again when it finishes.', 429);
     if (this.#jobs.size >= 3) throw new ContractError('capacity_exceeded', 'Three runs are already active.', 429);
     if (trustedLive) this.#trustedSmoke!.beforeCreate();
     const id = trustedLive ? this.#trustedSmoke!.episodeId : randomUUID();
+    if (localLive) this.#liveLocal!.beforeCreate(id, fingerprint);
     const run: ProductRun = {
       schemaVersion: PRODUCT_CONTRACT_VERSION, id, taskId: fixture.id, variant: request.variant, mode: request.mode,
-      competitionReady: false, notice: trustedLive ? 'Trusted sponsor smoke path; at most three proposals. Not a calibrated or scored experiment.' : 'Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.',
+      competitionReady: false, notice: localLive ? 'Real NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.' : trustedLive ? 'Trusted sponsor smoke path; at most three proposals. Not a calibrated or scored experiment.' : 'Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.',
       phase: 'queued', terminalStatus: null, reason: null, createdAt: new Date().toISOString(), finishedAt: null,
-      ...fixtureDigests(fixture), runtimeLockDigest: digestJson(this.#runtimeLock), limits: { ...(trustedLive ? this.#trustedSmoke!.limits : LOCAL_LIMITS) },
+      ...fixtureDigests(fixture), runtimeLockDigest: digestJson(this.#runtimeLock), limits: { ...(localLive ? this.#liveLocal!.limits : trustedLive ? this.#trustedSmoke!.limits : LOCAL_LIMITS) },
       usage: { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, sandboxCpuSeconds: 0,
-        measuredCostUsd: trustedLive ? null : 0, costIsEstimate: false, elapsedMs: 0 },
+        measuredCostUsd: (trustedLive || localLive) ? null : 0, costIsEstimate: false, elapsedMs: 0 },
       baselineChecks: null, candidates: [], selectedCandidateId: null,
       coverage: fixture.requirements.map(r => ({ requirementId: r.id, status: 'unverified', checkIds: [] })), events: [], sandboxOperationIds: [],
     };
     this.journal.insert(request.idempotencyKey, fingerprint, run);
+    if (localLive) this.#liveLocal!.bindEventSink(message => this.#event(run, 'repair', message));
     if (trustedLive) this.#trustedSmoke!.bindEventSink(message => this.#event(run, 'repair', message));
     this.#event(run, 'queued', 'Run queued with a fixed shared resource allowance.');
     const controller = new AbortController();
@@ -176,6 +185,7 @@ export class Coordinator {
   async #check(run: ProductRun, fixture: Fixture, files: Record<string, string>, signal: AbortSignal) {
     signal.throwIfAborted();
     this.#trustedSmoke?.validateStep();
+    this.#liveLocal?.validateStep();
     const remainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - Date.parse(run.createdAt)) / 1000);
     if (remainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for another check batch.');
     const result = await this.#checks.run({ files, entrypoint: fixture.entrypoint,
@@ -202,7 +212,7 @@ export class Coordinator {
     const timer = setTimeout(() => controller.abort(new Error('timeout')), run.limits.wallTimeLimitSeconds * 1000);
     try {
       controller.signal.throwIfAborted();
-      this.#event(run, 'preflight', run.mode === 'live' ? 'Checking trusted smoke bindings and the reserved aggregate envelope.' : 'Checking immutable input digests and isolated local runtime.');
+      this.#event(run, 'preflight', run.mode === 'live' ? 'Checking live runtime bindings and the reserved aggregate allowance.' : 'Checking immutable input digests and isolated local runtime.');
       const digests = fixtureDigests(fixture, run.schemaVersion);
       if (digests.sourceDigest !== run.sourceDigest || digests.policyDigest !== run.policyDigest) throw new ContractError('digest_mismatch', 'Input changed after scheduling.');
       if (!fixture.visibleCases.length && !fixture.acceptanceCases.length) {
@@ -224,7 +234,8 @@ export class Coordinator {
           const modelRemainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - started) / 1000);
           if (modelRemainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for inference.');
           this.#trustedSmoke?.validateStep();
-          this.#event(run, 'repair', run.mode === 'live' ? `Requesting sponsor smoke candidate ${context.attempt + 1}; all candidates share the reserved envelope.` : `Requesting scripted candidate ${context.attempt + 1}; no model inference call.`);
+          this.#liveLocal?.validateStep();
+          this.#event(run, 'repair', run.mode === 'live' ? `Requesting NVIDIA model candidate ${context.attempt + 1}; all candidates share the reserved envelope.` : `Requesting scripted candidate ${context.attempt + 1}; no model inference call.`);
           const proposal = ProposalSchema.parse(await this.#provider.propose(repairInput(fixture, context,
             { ...run.limits, inferenceCallLimit: run.limits.inferenceCallLimit - (run.mode === 'live' ? run.usage.inferenceCalls : context.attempt),
               inputTokenLimit: run.limits.inputTokenLimit - run.usage.inputTokens, outputTokenLimit: run.limits.outputTokenLimit - run.usage.outputTokens,
@@ -248,7 +259,7 @@ export class Coordinator {
       run.terminalStatus = selected?.accepted && run.coverage.every(row => row.status === 'pass') ? 'verified_for_declared_checks' :
         requirementsUnverified ? 'needs_review' : 'failed';
       run.reason = run.terminalStatus === 'verified_for_declared_checks' ?
-        run.mode === 'live' ? 'declared_sponsor_smoke_checks_passed' : 'declared_local_checks_passed' :
+        run.mode === 'live' ? (this.#liveLocal ? 'declared_local_checks_passed' : 'declared_sponsor_smoke_checks_passed') : 'declared_local_checks_passed' :
         requirementsUnverified ? 'declared_requirements_unverified' : 'declared_checks_not_satisfied';
     } catch (error) {
       if (controller.signal.aborted) {
@@ -275,9 +286,9 @@ export class Coordinator {
     } finally {
       clearTimeout(timer); run.finishedAt = new Date().toISOString(); run.usage.elapsedMs = Date.now() - started;
       this.#event(run, 'export', 'Preserving source, patch, checks, costs and observed events.');
-      this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. ${run.mode === 'mock' ? 'Mock model mode remains explicit.' : 'Smoke only; billing remains unreconciled.'}`, false);
+      this.#event(run, 'terminal', `${run.terminalStatus}: ${run.reason}. ${run.mode === 'mock' ? 'Mock model mode remains explicit.' : 'Real inference; provider billing remains unreconciled.'}`, false);
       if (run.mode === 'live') {
-        try { this.#trustedSmoke!.terminal(run); }
+        try { if (this.#liveLocal) this.#liveLocal.terminal(run); else this.#trustedSmoke!.terminal(run); }
         catch {
           run.terminalStatus = 'infrastructure_error'; run.reason = 'accounting_persistence_failed';
           run.events.at(-1)!.message = 'infrastructure_error: accounting_persistence_failed. Preserve the original reservation; no new paid work.';

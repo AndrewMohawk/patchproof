@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "closed-token-factory-inference-v1",
+  "reservationId": "token-factory-access-20260927-01",
+  "episodeId": "token-factory-access-20260927-01",
+  "reservationFingerprint": "sha256:f2de6c963e76fab5b6e73538d93d04014d1d0a7d25e76649b141b775d8920df9",
+  "stage": "smoke",
+  "reservedMicros": "100000",
+  "evidenceDigest": "sha256:3a8eb1b545ef5a97b6b68cae7fd37f5d55b115dd315d6e27934287f8d042864e",
+  "sourceDigest": "sha256:b8843112a807eb134dd7a5c708c90c261e8a61e5631c670662ad3d271bb811e5",
+  "pricingEvidenceDigest": "sha256:e4c6e99cbca54a016fd8781d5e3ae044807c33c2180f4cb2262d9e042b1bd851",
+  "closureEvidenceDigest": "sha256:1179876aab17409d9ade03f1e15c87992de235dd902753a191bc54300d6ac813",
+  "closedAt": "2026-09-28T00:09:19.748Z",
+  "endpoint": "https://api.tokenfactory.nebius.com/v1/chat/completions",
+  "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "inputMicrosPerMillionTokens": "60000",
+  "outputMicrosPerMillionTokens": "240000",
+  "requestFeeMicros": "0",
+  "dispatchClosed": true,
+  "inventoryComplete": true,
+  "otherBillableOperations": 0,
+  "requests": [
+    {
+      "intentId": "token-factory-access-20260927-01:request-1",
+      "requestDigest": "sha256:c69678cb0bfc2fe3185cd5d62454fa12da4b348c999e79a749a0c38beae06865",
+      "responseDigest": "sha256:dcd5919f1766a1d27693fce747fd01110bbb67f8cb1f0fd2e80f9140f65af3bb",
+      "usageDigest": "sha256:f171dd0803f3dc94bf6edb6a865b9d268ce755b853616b8349a35548afa56793",
+      "inputTokenCeiling": 262144,
+      "outputTokenCeiling": 262144,
+      "observedInputTokens": 24,
+      "observedOutputTokens": 6
+    }
+  ]
+}

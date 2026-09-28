@@ -97,3 +97,13 @@ durable project ledger pending authoritative billing. Do not replace that ledger
 to evade its unresolved-cost hold. The successful control is neither a repair
 episode nor model selection. Public hosting, source/video publication and entry
 remain separate owner release decisions.
+
+## 2026-09-28 — Real public demo on the owner's FQDN
+
+The owner explicitly requested a real implementation and deployment on andrewmohawk.xyz, including an accessible recording. This authorizes this app/video deployment on the existing homelab. It does not authorize public source licensing, competition entry, or new spending above $25. `owner-decisions.json` records public demo authorization.
+
+Use actual Token Factory Nano inference with independently controlled local Docker checks for this public development demo. The account's successful model call and model catalog are preserved in `research/verification/20260927-account-access/`. Nebius Sandboxes project access and execution controls remain unresolved; this deployment must not claim that backend or completion of the Coding and Agentic Engineering track requirement. The existing sponsor adapter and its gates remain unchanged.
+
+The default ledger policy still blocks unknown billing. This trusted runtime explicitly opts into covered closed inference: retain the full allowance for every unresolved charge, bind complete request/response inventories and conservative rate/token caps, and permit subsequent work only if prior exposure remains fully covered. The original marker reservation is preserved. This is not invoice reconciliation or a reset of the budget.
+
+All three repair variants use the same fixed live allowances. The actual baseline runs first, and results—including unsuccessful attempts—remain visible. No superiority claim follows from this small unscored demonstration. Public release uses a pinned source checkout, a private Unix socket, rate-limited fixed routes, and a frontend with no host execution credentials.

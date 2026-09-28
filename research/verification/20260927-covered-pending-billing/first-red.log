@@ -1,0 +1,86 @@
+(node:2611385) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (99.291314ms)
+✖ covered reservations still consume every global and stage microdollar (63.239746ms)
+✖ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (68.041081ms)
+✖ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (58.804167ms)
+✖ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (82.1578ms)
+✖ preparing an accounting receipt invalidates coverage even before reconciliation (75.901525ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 666.072446
+
+✖ failing tests:
+
+test at tests/budget-covered-inference.test.ts:42:1
+✖ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (99.291314ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  TypeError: ledger.coverPendingInference is not a function
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:44:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: ledger.coverPendingInference is not a function
+        at file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:44:30
+        at getActual (node:assert:586:5)
+        at strict.throws (node:assert:734:24)
+        at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:44:10)
+        at async Test.run (node:internal/test_runner/test:1116:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/budget-covered-inference.test.ts:65:1
+✖ covered reservations still consume every global and stage microdollar (63.239746ms)
+  TypeError: ledger.coverPendingInference is not a function
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:66:91)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+
+test at tests/budget-covered-inference.test.ts:75:1
+✖ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (68.041081ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 0
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:91:56)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/budget-covered-inference.test.ts:95:1
+✖ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (58.804167ms)
+  TypeError: ledger.coverPendingInference is not a function
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:96:91)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+
+test at tests/budget-covered-inference.test.ts:109:1
+✖ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (82.1578ms)
+  TypeError: ledger.coverPendingInference is not a function
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:115:37)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7)
+
+test at tests/budget-covered-inference.test.ts:121:1
+✖ preparing an accounting receipt invalidates coverage even before reconciliation (75.901525ms)
+  TypeError: ledger.coverPendingInference is not a function
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/budget-covered-inference.test.ts:122:91)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7)

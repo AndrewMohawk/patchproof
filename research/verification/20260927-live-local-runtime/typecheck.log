@@ -1,0 +1,7 @@
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+tests/live-local-runtime.test.ts(47,51): error TS2379: Argument of type '{ onOperation: undefined; files: Record<string, string>; entrypoint: string; cases: FunctionCase[]; timeoutSeconds: number; contractVersion?: ProductContractVersion; ownerRunId?: string; }' is not assignable to parameter of type '{ files: Record<string, string>; entrypoint: string; cases: { id: string; requirementId: string; function: string; args: (string | number | boolean | JsonData[] | { [key: string]: JsonData; } | null)[]; kwargs: Record<...>; assertArgsUnchanged: boolean; expected?: string | ... 5 more ... | undefined; expectedExcepti...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'onOperation' are incompatible.
+    Type 'undefined' is not assignable to type '(id: string) => void'.

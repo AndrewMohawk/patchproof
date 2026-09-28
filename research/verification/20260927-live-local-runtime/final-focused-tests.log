@@ -1,0 +1,60 @@
+(node:2874861) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (945.462391ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (352.606268ms)
+✔ all variants share exact limits, repeated-check cap and no more than three bounded requests (1449.460394ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (220.728587ms)
+  ✔ output (240.855474ms)
+✔ reported per-request input and output overruns cannot become covered exposure (463.039702ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (115.002107ms)
+✔ live hard allowances are frozen against mutation after factory construction (283.655335ms)
+✔ source drift after baseline prevents credential resolution and dispatch (184.373856ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (246.922384ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (238.812072ms)
+  ✔ header (258.802505ms)
+  ✔ candidate (211.983284ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (711.947631ms)
+(node:2874867) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ only the exact recorded local policy increases mock timing; live and absent policy stay historical (2.734025ms)
+✔ all three mock arms keep equal 60-second batches, three proposals and the unchanged aggregate allowance (770.167629ms)
+✔ remaining aggregate deadline shrinks later batches and prevents a third proposal at 120 seconds (197.548323ms)
+✔ legacy coordinator locks retain 30-second batches without rewriting historical policy (255.339364ms)
+✔ malformed policy prevents coordinator construction before checker or proposal entry (71.926751ms)
+✔ historical2.0/2.1/2.2 replays retain30, new mock policy uses60, and live replay never increases (316.164347ms)
+✔ recorded repeats share one accepted mock60 or historical30 budget (83.333453ms)
+✔ unknown replay policy fails before any runner entry, even when hashes are internally consistent (10.551411ms)
+(node:2874872) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ coordinator preserves protected helpers, publishes coherent evidence, and replays actual diff (343.525043ms)
+✔ infrastructure errors retain partial checks and operation IDs in evidence (256.239787ms)
+✔ publication failure cannot leave an approval in the final journal event (173.005325ms)
+▶ terminal evidence reads wait for that publication and retain failure when publication rejects
+  ✔ published (185.911384ms)
+  ✔ failed (180.298268ms)
+  ✔ timeout (215.39371ms)
+✔ terminal evidence reads wait for that publication and retain failure when publication rejects (583.798212ms)
+✔ restart recovery reconciles run-owned handles before recording interruption (246.335966ms)
+✔ recovery with a changed runtime preserves old bindings without serving stale or fabricated evidence (247.441504ms)
+✔ recovery checker failure records an infrastructure error without blocking startup (252.170008ms)
+✔ coordinator lease refuses a second live owner and releases its own lease (3.271176ms)
+✔ diff replay reconstructs added files and exact missing final newlines (24.890748ms)
+✔ current evidence binds all task metadata and never guesses a legacy digest after mismatch (303.840855ms)
+✔ scripted mock is task bounded and uses the same attempt/feedback rule for every caller (2.460493ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.943641ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (36.760646ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (2.663879ms)
+✔ cancelled proposal sends nothing (0.372912ms)
+✔ operation journal failures prevent initial dispatch and retain completed response identity and usage (1.587777ms)
+✔ cancelled stalled completion body stops promptly and retains attempted-call accounting (6.443923ms)
+✔ malformed completion choices still retain independently valid response identity and token usage (2.045997ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5104.157

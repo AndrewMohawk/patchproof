@@ -3,25 +3,32 @@
 A local maintenance workflow that checks candidate patches against independently
 controlled requirements and exports a patch with replayable evidence.
 
-**Working local product; real Nebius integration and competition evaluation are
-not complete.** The three-screen app uses scripted model responses and executes
-real Python checks in isolated local containers. Every active local run identifies
-mock mode. A separate read-only archive labels recorded live and mock evidence
-without enabling execution. It makes no claim about model performance.
+The live application connects NVIDIA Nemotron on **Nebius Token Factory** to
+independently controlled checks in isolated local Docker containers. It accepts
+curated maintenance task IDs and exports the patch, requirement checks, request
+IDs, usage and immutable runtime evidence. The historical local development mode
+still uses explicitly labeled scripted responses.
 
-New evidence uses product contract **2.2**, which preserves ordinary JSON mapping
-keys throughout checking and export. Supported historical 2.0/2.1 bundles retain
-their original bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
+**Public app:** https://patchproof.andrewmohawk.xyz/
 
-The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot.
-Authenticated model discovery and one bounded NVIDIA inference access check now
-pass. That call reports 24 input and 6 output tokens: **$0.00000288 estimated**
-from published rates, with actual billing unverified and **$0.10 held** in the
-shared ledger. Sandbox discovery requires the owner's project ID; no sponsor
-sandbox or model-generated repair has run. See the [access receipt](research/verification/20260927-account-access/README.md), [decisions](decisions.md),
-[budget](budget.json) and [remaining gates](research/blockers.md).
+**Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-## Run
+See the [live deployment guide](docs/live-demo.md) for the exact runtime,
+accounting boundaries and operator setup. Nebius-hosted Sandboxes and the sealed
+competition evaluation remain separate gates; this is an unscored development
+demo, not a measured performance claim.
+
+New evidence uses product contract **2.2**, preserving ordinary JSON mapping keys
+throughout checking and export. Historical 2.0/2.1 bundles retain their original
+bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
+
+The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. A live
+demo run reserves $0.10. Actual invoice costs remain unknown and full reservations
+stay held; displayed token-based costs are explicitly estimates. See
+[decisions](decisions.md), [budget](budget.json), and the
+[account access receipt](research/verification/20260927-account-access/README.md).
+
+## Local development (scripted model)
 
 Requirements: Linux, Node **25.5.0**, npm **11.8.0**, Git, `/usr/bin/python3`
 and a local Docker daemon accessible to the operator. Candidate code executes
@@ -53,9 +60,9 @@ starting the checker:
 docker pull --platform linux/amd64 python@sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f
 ```
 
-The API binds to loopback, accepts curated task IDs, and has no upload, arbitrary
+The development API binds to loopback, accepts curated task IDs, and has no upload, arbitrary
 command, remote URL, merge or publishing route. Set `PATCHPROOF_PORT` to choose
-another loopback port. Do not expose this local prototype as a public service.
+another loopback port. Use the separately configured live Unix-socket application for public hosting.
 
 ## Commands
 
@@ -67,7 +74,7 @@ another loopback port. Do not expose this local prototype as a public service.
 | `npm run record:rehearsal` | Performs that flow and records a local mock rehearsal, captions and a run-bound claims manifest under `.local/rehearsal/`. Nothing is published. |
 | `npm run run -- stable-unique-01 patchproof` | Runs the same local coordinator from the CLI; stop `make dev` first because one process owns its state. |
 | `make export RUN=<id>` | Exports local mock evidence. With private `CONFIG` and `CONFIG_DIGEST`, verifies and exports exact completed smoke evidence. |
-| `make reproduce RUN=<id>` | Replays local mock evidence in fresh pinned containers. Recorded live evidence requires private `CONFIG` and `CONFIG_DIGEST` plus a new approved replay reservation. |
+| `make reproduce RUN=<id>` | Replays local evidence in fresh pinned containers. Real-inference/local-check bundles use their exact source checkout and image; sponsor-Sandbox replay requires private `CONFIG` and `CONFIG_DIGEST`. |
 | `make smoke` | Exits 2 without configuration. `make smoke CONFIG=<absolute-private-json>` invokes the guarded operator; verified account, tokenizer, control and budget inputs are required. |
 | `make pilot` / `make evaluate` | Exit 2 without configuration. Explicit private session/runtime configs invoke the guarded experiment operator; see its guide below. No live experiment has run. |
 | `make release-check` | Audits local contract/dependency pins, public fixtures and release prerequisites; exits 2 while the real release gates remain open. |
