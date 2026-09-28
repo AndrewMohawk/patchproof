@@ -1,0 +1,10 @@
+{
+  "scenes": [
+    {
+      "id": "09-failure-checks",
+      "title": "17 of 22 checks pass. Five still fail.",
+      "annotation": "Required changed paths: regions, service.timeout. Observed: regions, service. A correct value alone is not enough.",
+      "narration": "Seventeen of twenty-two checks passed. This configuration is now correct, but its change report still says service instead of service dot timeout. Five checks remain failed."
+    }
+  ]
+}

@@ -1,0 +1,1405 @@
+{
+  "checkedAt": "2026-09-28T05:24:56.976Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "requestedRelease": "b663723",
+  "access": "GET only; no paid calls or run cancellation",
+  "taskCount": 10,
+  "initialAvailability": {
+    "enabled": false,
+    "reason": "A live run is in progress. You can follow its evidence.",
+    "remainingRuns": 40
+  },
+  "initialRuns": [
+    {
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "taskId": "v3-config-overlay",
+      "phase": "check",
+      "status": null
+    },
+    {
+      "id": "42eb21c5-c816-4642-9a5f-e1c99d00f516",
+      "taskId": "v2-r02-t03",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "5b356c42-8848-4e78-bce7-94800f63eebf",
+      "taskId": "v2-r03-t02",
+      "phase": "terminal",
+      "status": "failed"
+    },
+    {
+      "id": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "97808518-b836-41a9-961e-8e5f466dc032",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "id": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "failed"
+    },
+    {
+      "id": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "taskId": "stable-unique-01",
+      "phase": "terminal",
+      "status": "needs_review"
+    }
+  ],
+  "assets": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "3d39c3ca565dc54d3f16fccfd8a789db85599ad9760b06cf3b21f94754d32142"
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "sha256": "b8889d3926a45e82f58d7ff798db5f3a3287ac6b066b9bf7ad40ec7a2428d588"
+    },
+    {
+      "path": "/walkthrough.js",
+      "status": 200,
+      "sha256": "17a2be8b1f736bdf29ca0ed336329e762ba0834647c6a112cce5e2f23ef687c9"
+    },
+    {
+      "path": "/diff-view.js",
+      "status": 200,
+      "sha256": "04f5dc9367f6bf30907afc6e4ed5c9a683f38d0d21e80c9700384ee94ae26b9e"
+    },
+    {
+      "path": "/style.css",
+      "status": 200,
+      "sha256": "b750ba79e032b8b5b64279b409a2e0962f15e4ecae44d3d7cd415cc90ce3c807"
+    }
+  ],
+  "tasks": [
+    {
+      "width": 1440,
+      "id": "v3-config-overlay",
+      "file": "config_overlay.py",
+      "lineCount": 79,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-config-overlay-nested-list",
+          "function": "merge_config",
+          "callLength": 154,
+          "goalLength": 145
+        },
+        {
+          "id": "v3-config-overlay-null-data",
+          "function": "merge_config",
+          "callLength": 74,
+          "goalLength": 69
+        },
+        {
+          "id": "v3-config-overlay-reverted",
+          "function": "merge_config",
+          "callLength": 71,
+          "goalLength": 57
+        },
+        {
+          "id": "v3-config-overlay-types",
+          "function": "merge_config",
+          "callLength": 76,
+          "goalLength": 72
+        },
+        {
+          "id": "v3-config-overlay-invalid-layer",
+          "function": "merge_config",
+          "callLength": 49,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-cursor-pagination",
+      "file": "cursor_pagination.py",
+      "lineCount": 63,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "function": "page_records",
+          "callLength": 252,
+          "goalLength": 212
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "function": "page_records",
+          "callLength": 256,
+          "goalLength": 138
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "function": "page_records",
+          "callLength": 188,
+          "goalLength": 73
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "function": "page_records",
+          "callLength": 189,
+          "goalLength": 209
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "function": "page_records",
+          "callLength": 49,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-inventory-reservation",
+      "file": "inventory_reservation.py",
+      "lineCount": 65,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-inventory-reservation-priority",
+          "function": "reserve_orders",
+          "callLength": 206,
+          "goalLength": 183
+        },
+        {
+          "id": "v3-inventory-reservation-atomic",
+          "function": "reserve_orders",
+          "callLength": 271,
+          "goalLength": 195
+        },
+        {
+          "id": "v3-inventory-reservation-duplicate-lines",
+          "function": "reserve_orders",
+          "callLength": 182,
+          "goalLength": 118
+        },
+        {
+          "id": "v3-inventory-reservation-empty-order",
+          "function": "reserve_orders",
+          "callLength": 98,
+          "goalLength": 115
+        },
+        {
+          "id": "v3-inventory-reservation-bool-quantity",
+          "function": "reserve_orders",
+          "callLength": 58,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-invoice-allocation",
+      "file": "invoice_allocation.py",
+      "lineCount": 63,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-invoice-allocation-discount-before-tax",
+          "function": "price_invoice",
+          "callLength": 204,
+          "goalLength": 343
+        },
+        {
+          "id": "v3-invoice-allocation-remainder-tie",
+          "function": "price_invoice",
+          "callLength": 188,
+          "goalLength": 250
+        },
+        {
+          "id": "v3-invoice-allocation-half-cent",
+          "function": "price_invoice",
+          "callLength": 114,
+          "goalLength": 162
+        },
+        {
+          "id": "v3-invoice-allocation-empty",
+          "function": "price_invoice",
+          "callLength": 55,
+          "goalLength": 87
+        },
+        {
+          "id": "v3-invoice-allocation-discount-too-large",
+          "function": "price_invoice",
+          "callLength": 111,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-ttl-cache",
+      "file": "ttl_cache.py",
+      "lineCount": 74,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-ttl-cache-expiry-boundary",
+          "function": "replay_cache",
+          "callLength": 150,
+          "goalLength": 105
+        },
+        {
+          "id": "v3-ttl-cache-read-recency",
+          "function": "replay_cache",
+          "callLength": 323,
+          "goalLength": 288
+        },
+        {
+          "id": "v3-ttl-cache-replace-no-eviction",
+          "function": "replay_cache",
+          "callLength": 243,
+          "goalLength": 206
+        },
+        {
+          "id": "v3-ttl-cache-null-hit",
+          "function": "replay_cache",
+          "callLength": 156,
+          "goalLength": 148
+        },
+        {
+          "id": "v3-ttl-cache-backward-time",
+          "function": "replay_cache",
+          "callLength": 153,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-weekly-schedule",
+      "file": "weekly_schedule.py",
+      "lineCount": 70,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-weekly-schedule-overnight",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-adjacent",
+          "function": "available_windows",
+          "callLength": 177,
+          "goalLength": 79
+        },
+        {
+          "id": "v3-weekly-schedule-split-blackout",
+          "function": "available_windows",
+          "callLength": 163,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-week-wrap",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-bool-day",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-manifest-merge",
+      "file": "manifest_merge.py",
+      "lineCount": 65,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-manifest-merge-mixed-plan",
+          "function": "plan_assets",
+          "callLength": 350,
+          "goalLength": 164
+        },
+        {
+          "id": "v3-manifest-merge-same-label-size-change",
+          "function": "plan_assets",
+          "callLength": 126,
+          "goalLength": 120
+        },
+        {
+          "id": "v3-manifest-merge-deterministic-pairing",
+          "function": "plan_assets",
+          "callLength": 234,
+          "goalLength": 141
+        },
+        {
+          "id": "v3-manifest-merge-canonical",
+          "function": "plan_assets",
+          "callLength": 133,
+          "goalLength": 81
+        },
+        {
+          "id": "v3-manifest-merge-duplicate-canonical",
+          "function": "plan_assets",
+          "callLength": 145,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-event-fold",
+      "file": "event_fold.py",
+      "lineCount": 79,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-event-fold-out-of-order",
+          "function": "fold_events",
+          "callLength": 323,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-event-fold-remove-add-order",
+          "function": "fold_events",
+          "callLength": 350,
+          "goalLength": 98
+        },
+        {
+          "id": "v3-event-fold-duplicate-delivery",
+          "function": "fold_events",
+          "callLength": 456,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-event-fold-deleted-update-ignored",
+          "function": "fold_events",
+          "callLength": 441,
+          "goalLength": 24
+        },
+        {
+          "id": "v3-event-fold-conflicting-id",
+          "function": "fold_events",
+          "callLength": 340,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-retry-batches",
+      "file": "retry_batches.py",
+      "lineCount": 66,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-retry-batches-first-fit",
+          "function": "plan_batches",
+          "callLength": 286,
+          "goalLength": 121
+        },
+        {
+          "id": "v3-retry-batches-ready-boundary",
+          "function": "plan_batches",
+          "callLength": 125,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-retry-batches-attempt-boundary",
+          "function": "plan_batches",
+          "callLength": 125,
+          "goalLength": 102
+        },
+        {
+          "id": "v3-retry-batches-group-exclusion",
+          "function": "plan_batches",
+          "callLength": 288,
+          "goalLength": 120
+        },
+        {
+          "id": "v3-retry-batches-bool-capacity",
+          "function": "plan_batches",
+          "callLength": 59,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "id": "v3-search-ranking",
+      "file": "search_ranking.py",
+      "lineCount": 60,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-search-ranking-all-query-words",
+          "function": "search_records",
+          "callLength": 191,
+          "goalLength": 101
+        },
+        {
+          "id": "v3-search-ranking-repeated-query",
+          "function": "search_records",
+          "callLength": 113,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-total-before-limit",
+          "function": "search_records",
+          "callLength": 230,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-across-fields",
+          "function": "search_records",
+          "callLength": 120,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-bool-limit",
+          "function": "search_records",
+          "callLength": 58,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-config-overlay",
+      "file": "config_overlay.py",
+      "lineCount": 79,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-config-overlay-nested-list",
+          "function": "merge_config",
+          "callLength": 154,
+          "goalLength": 145
+        },
+        {
+          "id": "v3-config-overlay-null-data",
+          "function": "merge_config",
+          "callLength": 74,
+          "goalLength": 69
+        },
+        {
+          "id": "v3-config-overlay-reverted",
+          "function": "merge_config",
+          "callLength": 71,
+          "goalLength": 57
+        },
+        {
+          "id": "v3-config-overlay-types",
+          "function": "merge_config",
+          "callLength": 76,
+          "goalLength": 72
+        },
+        {
+          "id": "v3-config-overlay-invalid-layer",
+          "function": "merge_config",
+          "callLength": 49,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-cursor-pagination",
+      "file": "cursor_pagination.py",
+      "lineCount": 63,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "function": "page_records",
+          "callLength": 252,
+          "goalLength": 212
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "function": "page_records",
+          "callLength": 256,
+          "goalLength": 138
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "function": "page_records",
+          "callLength": 188,
+          "goalLength": 73
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "function": "page_records",
+          "callLength": 189,
+          "goalLength": 209
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "function": "page_records",
+          "callLength": 49,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-inventory-reservation",
+      "file": "inventory_reservation.py",
+      "lineCount": 65,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-inventory-reservation-priority",
+          "function": "reserve_orders",
+          "callLength": 206,
+          "goalLength": 183
+        },
+        {
+          "id": "v3-inventory-reservation-atomic",
+          "function": "reserve_orders",
+          "callLength": 271,
+          "goalLength": 195
+        },
+        {
+          "id": "v3-inventory-reservation-duplicate-lines",
+          "function": "reserve_orders",
+          "callLength": 182,
+          "goalLength": 118
+        },
+        {
+          "id": "v3-inventory-reservation-empty-order",
+          "function": "reserve_orders",
+          "callLength": 98,
+          "goalLength": 115
+        },
+        {
+          "id": "v3-inventory-reservation-bool-quantity",
+          "function": "reserve_orders",
+          "callLength": 58,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-invoice-allocation",
+      "file": "invoice_allocation.py",
+      "lineCount": 63,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-invoice-allocation-discount-before-tax",
+          "function": "price_invoice",
+          "callLength": 204,
+          "goalLength": 343
+        },
+        {
+          "id": "v3-invoice-allocation-remainder-tie",
+          "function": "price_invoice",
+          "callLength": 188,
+          "goalLength": 250
+        },
+        {
+          "id": "v3-invoice-allocation-half-cent",
+          "function": "price_invoice",
+          "callLength": 114,
+          "goalLength": 162
+        },
+        {
+          "id": "v3-invoice-allocation-empty",
+          "function": "price_invoice",
+          "callLength": 55,
+          "goalLength": 87
+        },
+        {
+          "id": "v3-invoice-allocation-discount-too-large",
+          "function": "price_invoice",
+          "callLength": 111,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-ttl-cache",
+      "file": "ttl_cache.py",
+      "lineCount": 74,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-ttl-cache-expiry-boundary",
+          "function": "replay_cache",
+          "callLength": 150,
+          "goalLength": 105
+        },
+        {
+          "id": "v3-ttl-cache-read-recency",
+          "function": "replay_cache",
+          "callLength": 323,
+          "goalLength": 288
+        },
+        {
+          "id": "v3-ttl-cache-replace-no-eviction",
+          "function": "replay_cache",
+          "callLength": 243,
+          "goalLength": 206
+        },
+        {
+          "id": "v3-ttl-cache-null-hit",
+          "function": "replay_cache",
+          "callLength": 156,
+          "goalLength": 148
+        },
+        {
+          "id": "v3-ttl-cache-backward-time",
+          "function": "replay_cache",
+          "callLength": 153,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-weekly-schedule",
+      "file": "weekly_schedule.py",
+      "lineCount": 70,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-weekly-schedule-overnight",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-adjacent",
+          "function": "available_windows",
+          "callLength": 177,
+          "goalLength": 79
+        },
+        {
+          "id": "v3-weekly-schedule-split-blackout",
+          "function": "available_windows",
+          "callLength": 163,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-week-wrap",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 143
+        },
+        {
+          "id": "v3-weekly-schedule-bool-day",
+          "function": "available_windows",
+          "callLength": 108,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-manifest-merge",
+      "file": "manifest_merge.py",
+      "lineCount": 65,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-manifest-merge-mixed-plan",
+          "function": "plan_assets",
+          "callLength": 350,
+          "goalLength": 164
+        },
+        {
+          "id": "v3-manifest-merge-same-label-size-change",
+          "function": "plan_assets",
+          "callLength": 126,
+          "goalLength": 120
+        },
+        {
+          "id": "v3-manifest-merge-deterministic-pairing",
+          "function": "plan_assets",
+          "callLength": 234,
+          "goalLength": 141
+        },
+        {
+          "id": "v3-manifest-merge-canonical",
+          "function": "plan_assets",
+          "callLength": 133,
+          "goalLength": 81
+        },
+        {
+          "id": "v3-manifest-merge-duplicate-canonical",
+          "function": "plan_assets",
+          "callLength": 145,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-event-fold",
+      "file": "event_fold.py",
+      "lineCount": 79,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-event-fold-out-of-order",
+          "function": "fold_events",
+          "callLength": 323,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-event-fold-remove-add-order",
+          "function": "fold_events",
+          "callLength": 350,
+          "goalLength": 98
+        },
+        {
+          "id": "v3-event-fold-duplicate-delivery",
+          "function": "fold_events",
+          "callLength": 456,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-event-fold-deleted-update-ignored",
+          "function": "fold_events",
+          "callLength": 441,
+          "goalLength": 24
+        },
+        {
+          "id": "v3-event-fold-conflicting-id",
+          "function": "fold_events",
+          "callLength": 340,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-retry-batches",
+      "file": "retry_batches.py",
+      "lineCount": 66,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-retry-batches-first-fit",
+          "function": "plan_batches",
+          "callLength": 286,
+          "goalLength": 121
+        },
+        {
+          "id": "v3-retry-batches-ready-boundary",
+          "function": "plan_batches",
+          "callLength": 125,
+          "goalLength": 80
+        },
+        {
+          "id": "v3-retry-batches-attempt-boundary",
+          "function": "plan_batches",
+          "callLength": 125,
+          "goalLength": 102
+        },
+        {
+          "id": "v3-retry-batches-group-exclusion",
+          "function": "plan_batches",
+          "callLength": 288,
+          "goalLength": 120
+        },
+        {
+          "id": "v3-retry-batches-bool-capacity",
+          "function": "plan_batches",
+          "callLength": 59,
+          "goalLength": 29
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "id": "v3-search-ranking",
+      "file": "search_ranking.py",
+      "lineCount": 60,
+      "exactSource": true,
+      "exampleCount": 5,
+      "examples": [
+        {
+          "id": "v3-search-ranking-all-query-words",
+          "function": "search_records",
+          "callLength": 191,
+          "goalLength": 101
+        },
+        {
+          "id": "v3-search-ranking-repeated-query",
+          "function": "search_records",
+          "callLength": 113,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-total-before-limit",
+          "function": "search_records",
+          "callLength": 230,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-across-fields",
+          "function": "search_records",
+          "callLength": 120,
+          "goalLength": 88
+        },
+        {
+          "id": "v3-search-ranking-bool-limit",
+          "function": "search_records",
+          "callLength": 58,
+          "goalLength": 29
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "width": 1440,
+      "name": "tasks-inspected",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-tasks-inspected.png"
+    },
+    {
+      "width": 1440,
+      "name": "how-inspected",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-how-inspected.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-decision.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-failed-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-failed-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-failed-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-public-review/1440-story-failed-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "tasks-inspected",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-tasks-inspected.png"
+    },
+    {
+      "width": 390,
+      "name": "how-inspected",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-how-inspected.png"
+    },
+    {
+      "width": 390,
+      "name": "story-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "story-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "story-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "story-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-failed-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-failed-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-failed-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-public-review/390-story-failed-decision.png"
+    }
+  ],
+  "story": [
+    {
+      "width": 1440,
+      "route": "bug",
+      "heading": "Separated duplicates survive the original filter.",
+      "values": [
+        "{\"Argument 1\":[\"elm\",\"ash\",\"elm\",\"birch\"]}",
+        "[\"elm\",\"ash\",\"elm\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1105.328125,
+        "width": 159.671875,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 68,
+        "right": 206.09375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "patch",
+      "heading": "The proposal checks every item already retained.",
+      "values": [
+        "[\"elm\",\"ash\",\"elm\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1147.203125,
+        "width": 197.6875,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 216.484375,
+        "right": 301.578125,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "checks",
+      "heading": "9 of 9 checks passed for this proposal.",
+      "values": [
+        "{\"Argument 1\":[\"elm\",\"ash\",\"elm\",\"birch\"]}",
+        "[\"elm\",\"ash\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1244.765625,
+        "width": 227.515625,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 317.046875,
+        "right": 442.484375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "decision",
+      "heading": "The listed checks pass. Review the patch before using it.",
+      "values": [],
+      "primary": {
+        "x": 68,
+        "y": 918.28125,
+        "width": 211.203125,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 453.40625,
+        "right": 577.671875,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "failed-bug",
+      "heading": "Existing empty worksheet cells must survive a transpose.",
+      "values": [
+        "{\"Argument 1\":[[1,null],[2,3]],\"fill (keyword)\":9}",
+        "[[1,2],[9,3]]",
+        "[[1,2],[null,3]]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1146.109375,
+        "width": 159.671875,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 68,
+        "right": 206.09375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "failed-patch",
+      "heading": "This proposal still confuses a null cell with a missing cell.",
+      "values": [
+        "[[1,2],[9,3]]",
+        "[[1,2],[9,3]]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1492.484375,
+        "width": 197.6875,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 216.484375,
+        "right": 301.578125,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "failed-checks",
+      "heading": "11 of 13 checks passed for this proposal.",
+      "values": [
+        "{\"Argument 1\":[[1,null],[2,3]],\"fill (keyword)\":9}",
+        "[[1,2],[null,3]]",
+        "[[1,2],[9,3]]"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1334.953125,
+        "width": 227.515625,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 317.046875,
+        "right": 442.484375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 1440,
+      "route": "failed-decision",
+      "heading": "The run did not produce an accepted repair.",
+      "values": [],
+      "primary": {
+        "x": 68,
+        "y": 1115.453125,
+        "width": 218.203125,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 453.40625,
+        "right": 577.671875,
+        "barLeft": 68,
+        "barRight": 1188,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "bug",
+      "heading": "Separated duplicates survive the original filter.",
+      "values": [
+        "{\"Argument 1\":[\"elm\",\"ash\",\"elm\",\"birch\"]}",
+        "[\"elm\",\"ash\",\"elm\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 145.203125,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "patch",
+      "heading": "The proposal checks every item already retained.",
+      "values": [
+        "[\"elm\",\"ash\",\"elm\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 149.5625,
+        "right": 229.234375,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "checks",
+      "heading": "9 of 9 checks passed for this proposal.",
+      "values": [
+        "{\"Argument 1\":[\"elm\",\"ash\",\"elm\",\"birch\"]}",
+        "[\"elm\",\"ash\",\"birch\"]",
+        "[\"elm\",\"ash\",\"birch\"]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 238.3125,
+        "right": 355.6875,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "decision",
+      "heading": "The listed checks pass. Review the patch before using it.",
+      "values": [],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 360.53125,
+        "right": 476.8125,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": false
+      }
+    },
+    {
+      "width": 390,
+      "route": "failed-bug",
+      "heading": "Existing empty worksheet cells must survive a transpose.",
+      "values": [
+        "{\"Argument 1\":[[1,null],[2,3]],\"fill (keyword)\":9}",
+        "[[1,2],[9,3]]",
+        "[[1,2],[null,3]]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 145.203125,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "failed-patch",
+      "heading": "This proposal still confuses a null cell with a missing cell.",
+      "values": [
+        "[[1,2],[9,3]]",
+        "[[1,2],[9,3]]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 149.5625,
+        "right": 229.234375,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "failed-checks",
+      "heading": "11 of 13 checks passed for this proposal.",
+      "values": [
+        "{\"Argument 1\":[[1,null],[2,3]],\"fill (keyword)\":9}",
+        "[[1,2],[null,3]]",
+        "[[1,2],[9,3]]"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 238.3125,
+        "right": 355.6875,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": true
+      }
+    },
+    {
+      "width": 390,
+      "route": "failed-decision",
+      "heading": "The run did not produce an accepted repair.",
+      "values": [],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 360.53125,
+        "right": 476.8125,
+        "barLeft": 16,
+        "barRight": 374,
+        "fullyVisible": false
+      }
+    }
+  ],
+  "diff": {
+    "functionDefinitionIsContext": true,
+    "definitionGutters": [
+      "2",
+      "1"
+    ],
+    "foldExpansion": {
+      "before": 187,
+      "after": 191
+    }
+  },
+  "errors": [],
+  "blocked": [],
+  "failedAttempts": [
+    "1 · retained11/13 passed · 2 failedNot acceptedOne or more declared checks failed or were unavailable.",
+    "20/13 passed · 13 errorsNot acceptedOne or more declared checks failed or were unavailable.",
+    "30/13 passed · 13 errorsNot acceptedOne or more declared checks failed or were unavailable."
+  ],
+  "status": "functional-checks-passed",
+  "finishedAt": "2026-09-28T05:25:07.356Z"
+}

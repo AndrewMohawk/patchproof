@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-28T05:55:47.171246+00:00",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "model": {
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container",
+    "modelId": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "limits": {
+    "inferenceCallLimit": 3,
+    "inputTokenLimit": 786432,
+    "outputTokenLimit": 12000,
+    "wallTimeLimitSeconds": 600,
+    "sandboxCpuSecondsLimit": 900,
+    "maxApprovedSpendUsd": 0.25
+  },
+  "availability": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 13
+  },
+  "taskIds": [
+    "v3-config-overlay",
+    "v3-cursor-pagination",
+    "v3-inventory-reservation",
+    "v3-invoice-allocation",
+    "v3-ttl-cache",
+    "v3-weekly-schedule",
+    "v3-manifest-merge",
+    "v3-event-fold",
+    "v3-retry-batches",
+    "v3-search-ranking"
+  ],
+  "publicRuns": 12,
+  "activeRuns": [],
+  "reservations": [
+    {
+      "stage": "smoke",
+      "state": "attempted",
+      "count": 13,
+      "reservedMicros": 1600000,
+      "actualKnownMicros": null
+    }
+  ],
+  "actualBilling": "unknown; full unresolved holds retained",
+  "paidRequests": 0
+}

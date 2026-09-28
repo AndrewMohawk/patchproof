@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-28T05:22:29.639Z",
+  "taskId": "v3-config-overlay",
+  "variant": "patchproof",
+  "mode": "live",
+  "maximumRunCostUsd": 0.1,
+  "ownerApprovedProjectCeilingUsd": 25,
+  "limits": {
+    "inferenceCallLimit": 3,
+    "inputTokenLimit": 786432,
+    "outputTokenLimit": 12000,
+    "wallTimeLimitSeconds": 300,
+    "sandboxCpuSecondsLimit": 900,
+    "maxApprovedSpendUsd": 0.1
+  }
+}

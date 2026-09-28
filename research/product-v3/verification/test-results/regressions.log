@@ -1,0 +1,69 @@
+(node:691292) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ manifest has 60 distinct tasks in 12 disjoint five-task repositories (2.173498ms)
+✔ independent author and reviewer execution receipts bind the current immutable manifest (5.94434ms)
+✔ public fixture bytes match immutable manifest and each check maps to a requirement (142.438073ms)
+✔ stable unique mutation check rejects changed arguments even with the correct return (2.635787ms)
+✔ prospective plans contain balanced 72/270 grids and identical aggregate budgets (28.124867ms)
+✔ planning rejects cross-split repositories, incomplete groups and overspending (5.273668ms)
+✔ resource access, price, integration and independent oracle gates fail closed (2.328182ms)
+✔ execution gate runtime validation requires every boolean and remaining budget (24.015484ms)
+✔ execution gate runtime validation rejects nonfinite, negative and nonnumeric budgets (14.548856ms)
+✔ execution gate runtime validation rejects truthy substitutes and unknown fields (4.200206ms)
+✔ fully verified runtime gates with sufficient finite budget admit the unchanged plan (2.105124ms)
+✔ all failed and infrastructure episodes remain in primary denominator (54.635999ms)
+✔ false approvals show observed denominator and unresolved approvals separately (43.764747ms)
+✔ incomplete results suppress inferential claims and retain missing planned episodes (17.682452ms)
+✔ budget violation cannot support matched-budget inference (17.81142ms)
+✔ unknown billing or CPU usage cannot establish matched-budget advantage (17.685839ms)
+✔ incorrect oracles, duplicate results and model drift are rejected (19.586848ms)
+✔ paired bootstrap resamples repository clusters, preserving matched repetitions (5.602062ms)
+✔ pilot gate aggregates majority by task and final gate simplifies equal checks-only performance (364.376681ms)
+✔ any protocol change after final results is exploratory and preserves original report (0.322236ms)
+(node:691293) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ archive serves exact pinned live and historical mock bytes with explicit read-only capabilities (108.588255ms)
+✔ opened archive snapshots survive later evidence, configuration, fixture and caller metadata changes (39.006464ms)
+✔ all mutation and active event routes reject without creating files or disclosing operator paths (60.931287ms)
+✔ wrong config, bundle and run pins reject before serving any archive (15.947732ms)
+✔ tampered body and rehashed unapproved fixture content both reject (31.372256ms)
+▶ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive
+  ✔ unknown_task (20.684395ms)
+  ✔ final_split (15.72951ms)
+  ✔ experiment_trace (5.04544ms)
+  ✔ candidate_only (14.129317ms)
+  ✔ nonterminal (12.992043ms)
+✔ unapproved task, final split, non-product artifacts and nonterminal records never enter the archive (70.655981ms)
+▶ private regular external files are required; links, broad permissions, URLs and oversized inputs reject
+  ✔ symlink (5.605633ms)
+  ✔ hardlink (4.113906ms)
+  ✔ permissions (4.829547ms)
+  ✔ inside_project (3.510117ms)
+  ✔ url (4.989642ms)
+  ✔ oversized (34.557051ms)
+✔ private regular external files are required; links, broad permissions, URLs and oversized inputs reject (58.731396ms)
+✔ configuration is bounded, strict and unambiguous; source changes before startup reject (18.242331ms)
+✔ a one-line repair preserves unchanged function context and replays exactly (34.604572ms)
+✔ historical whole-file patches display equal lines as context without changing source evidence (0.693191ms)
+✔ newline-only changes stay visible and Unicode, added files and separated hunks replay (109.82977ms)
+(node:691294) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ public task projection exposes starting code and visible examples only (136.229633ms)
+✔ legacy and contextual patches both verify, preserve their bytes, and reject source mismatch (76.073922ms)
+(node:691295) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ product HTTP refuses arbitrary/live requests and durably exports an actual cancellation (739.206332ms)
+✔ packet requires scanned selected bytes, copies verified success/failure bundles and remains local blocked preparation (326.459157ms)
+✔ changed bundle bytes after scan and selected digest substitution fail closed (62.656476ms)
+✔ historical source references remain explicitly blocked and tampered evidence cannot be packaged (241.015897ms)
+✔ repository evidence reads reject traversal, symlinks, oversized files and directories (5.634126ms)
+✔ versioned live protocol packet accepts matching smoke presentation scope only after its metadata is scanned, without granting experiment completion (314.712907ms)
+✔ default CLI refuses live replay before any local checker fallback (375.978356ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1643.53728

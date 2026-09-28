@@ -13,25 +13,46 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-Start with the walkthrough: inspect a concrete bug, its actual AI patch and
-check results, then decide what to review before using the change. **Try a repair**
-opens the live curated task workspace. The 2-minute 15-second captioned video
-includes a failed repair and an opened check record; [presenter notes](research/judge-experience/presenter-notes.md) support the live demonstration.
+Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
+public v3 Python maintenance tasks. Each task shows the starting source, the
+behavior to repair, five requirements, and five selectable input/expected-output
+examples. The tasks cover configuration overlays, cursor pagination, inventory,
+invoices, caches, schedules, manifests, event processing, retry batches, and search.
+They are original synthetic examples with interacting rules, not a benchmark of
+production repositories.
 
-See the [live deployment guide](docs/live-demo.md) for the exact runtime,
-accounting boundaries and operator setup. Nebius-hosted Sandboxes and the sealed
-competition evaluation remain separate gates; this is an unscored development
-demo, not a measured performance claim.
+**How it works** explains the model, protected checks, evidence, and the reviewer’s
+role. Successful and failed walkthroughs both use four stages: **The bug → AI
+patch → Check results → Your decision**. Patches use a GitHub-style diff with file
+headers, original/proposed line numbers, and expandable unchanged context. Failed
+attempts remain inspectable. Nothing is merged automatically.
+
+The [product v3 record](research/product-v3/README.md) is the index for this upgrade.
+The ten-task interface has been [reviewed on the public app](research/product-v3/public-review/review.md).
+The successful walkthrough follows a real Super pagination repair: the original
+passed 16 of 22 checks, the proposed repair passed all 22, and a fresh same-host
+replay reproduced the result. The complete configuration failure shows why
+17 passing checks did not establish a completed fix. Earlier failed trials remain
+visible. The 149.76-second recording includes on-screen annotations, local
+Chatterbox narration, a transcript, and direct links to both saved examples.
+
+See the [live deployment guide](docs/live-demo.md) for runtime and accounting
+boundaries. Nebius-hosted Sandboxes and the sealed competition evaluation remain
+separate gates. This is an unscored development demo, not a measured performance
+claim.
 
 New evidence uses product contract **2.2**, preserving ordinary JSON mapping keys
 throughout checking and export. Historical 2.0/2.1 bundles retain their original
 bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
-The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. A live
-demo run reserves $0.10. Actual invoice costs remain unknown and full reservations
-stay held; displayed token-based costs are explicitly estimates. See
-[decisions](decisions.md), [budget](budget.json), and the
-[account access receipt](research/verification/20260927-account-access/README.md).
+The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. The
+current v3 configuration uses `nvidia/nemotron-3-super-120b-a12b` on Token
+Factory, with a **$0.25 hold per run**, at most **three model calls**, **12,000 total
+output tokens**, and **600 seconds**. The [public runtime check](research/product-v3/public-review/mobile-fixes.json)
+confirms these limits; older saved runs retain their own recorded allowances. Actual invoice costs remain unknown and reservations stay
+held; displayed token-based costs are estimates. See the [model discovery
+receipt](research/product-v3/model-discovery.json), [decisions](decisions.md),
+[budget](budget.json), and [account access receipt](research/verification/20260927-account-access/README.md).
 
 ## Local development (scripted model)
 
@@ -50,8 +71,9 @@ make dev
 Open **http://127.0.0.1:43171/#tasks**. Select **Retain first occurrences throughout a list**
 (`stable-unique-01`), compare the three
 policies, inspect a rejected candidate's actual check output, and download its
-evidence. The scripted example supports this one task. Another 29 public tasks
-are inspectable and clearly require a connected model to launch.
+evidence. The scripted provider supports this one task. Other fixtures may be inspected,
+but generating their patches requires a connected model. The public live
+service has its own allowlist of ten v3 tasks.
 
 `make doctor` makes no paid calls. If the pinned local checker image is absent,
 it reports the blocker; there is no automatic image pull or provider fallback.
@@ -95,39 +117,44 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Live deployment and evidence
 
-The public service runs immutable release `b32499432acd3a2b6b8f04658554b2e2984b4bdc`.
-All **680 tests** passed before deployment. The service also executes a real
-container readiness check under its production permissions before accepting work.
-The public and lab routes, Cloudflare access, desktop/mobile interface, and
-health monitoring have been verified. The [deployment record](research/verification/20260928-live-deployment/)
-preserves exact source pins, actual model operations, failed attempts, checks,
-browser recordings and independent reviews.
+The public application performs real Token Factory inference and checks candidate
+Python code in isolated local Docker containers. Every run records its exact
+model, source, allowance, observations, and evidence digest. Earlier runs retain
+their original runtime locks when the interface or model configuration changes.
 
-The redesigned interface uses Examples/Runs navigation, direct task descriptions,
-and separate Patch/Checks/Activity/Run details views. Three UX/UI/copy agents
-discussed the design; independent copy and public browser reviews passed. See
-the [redesign evidence](research/interface-redesign/README.md).
+Use the [product v3 record](research/product-v3/README.md) for the final deployment,
+run, replay, and recording receipts. Public UI inspection
+has verified the ten-task catalogue, source and example controls, How it works,
+both four-stage walkthroughs, and the context diff at desktop and mobile sizes.
+That inspection starts no model calls; the separate actual-run and replay
+receipts establish the recorded pagination outcome.
 
-The captioned **64-second public video** reviews saved real results in the new
-interface, including an unsuccessful repair. It makes no new model calls.
-Desktop/mobile playback through Cloudflare, seeking and downloads are verified.
-The previous actual-creation recording remains preserved privately.
-The final three-approach example passed all nine declared checks, and fresh replay
-reproduced every selected result. A second task failed and remains visible; these
-examples do not establish general repair reliability.
+Historical evidence remains available:
 
-The live model is `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. All 20 development
-tasks are available. The three approaches share the same model, immutable task
-and declared check policy, and aggregate resource limits. These are development
-demonstrations; they do not replace the planned scored pilot or sealed evaluation.
+- The [original live deployment record](research/verification/20260928-live-deployment/)
+  preserves real Nano operations, unsuccessful attempts, matched development
+  examples, fresh-container replays, and recordings. The list example passed its
+  nine declared checks; a separate worksheet repair failed. These examples do not
+  establish general repair reliability or a performance advantage.
+- The [interface redesign record](research/interface-redesign/README.md) preserves
+  the earlier workbench design, independent reviews, public browser verification,
+  and its recording custody.
+- The [judge walkthrough record](research/judge-experience/README.md) preserves the
+  later explanatory walkthrough and its captioned recording. Its
+  [presenter notes](research/judge-experience/presenter-notes.md) describe that
+  historical demonstration; current recording evidence is in the v3 record.
+
+Release IDs, test totals, video durations, and playback observations belong to
+those dated receipts. They are not claims about whichever release or video is
+currently served. The scored pilot and sealed evaluation have not been completed.
 
 ## Historical local validation
 
 Core workflow verification at source `06c584c` passes all **622 tests**, the actual
 desktop/mobile comparison and all three fresh-container patch replays. An
 unsupported-task run honestly abstained with no selected patch. The four selected
-exports were scanned, packaged and verified locally; release approval remains
-blocked. The [integration receipt](research/verification/20260927-completion-audit/integration-receipt.json)
+exports were scanned, packaged and verified locally; this did not satisfy the
+competition release gates. The [integration receipt](research/verification/20260927-completion-audit/integration-receipt.json)
 records those results, confirmed cleanup for all 246 operations and $0 provider spend.
 
 The later archive recorder at `4574e74` passes **628 tests**, type checking and
@@ -149,7 +176,7 @@ See the [reviewer walkthrough](docs/reviewer-guide.md) and recorded
 These screens come from the v2 local comparison at source `06c584c`. All three
 scripted policies passed their declared checks; this is workflow validation,
 not evidence of a performance advantage. The [verification record](research/verification/20260927-completion-audit/README.md)
-binds the current results. The [prior integration record](research/verification/20260927-corpus-v2-integration/README.md)
+binds those historical results. The [prior integration record](research/verification/20260927-corpus-v2-integration/README.md)
 separately preserves the earlier failures and `c335031` walkthrough/video evidence.
 
 - SQLite journal, coordinator ownership lease, cancellation, scoped restart
@@ -164,7 +191,7 @@ separately preserves the earlier failures and `c335031` walkthrough/video eviden
 - New exports bind the executable source and configuration. Replay requires the
   recorded checkout; a running app refuses new runs after those files change.
   Historical exports keep their original explicitly versioned replay behavior.
-- The current v2 suite has 60 original synthetic tasks from 12 fresh AI author
+- The historical v2 evaluation suite has 60 original synthetic tasks from 12 fresh AI author
   contexts, independently reviewed and validated, split 20/10/30 by repository.
   [Provenance and preparation history](research/corpus-v2/README.md) preserve the
   two infrastructure failures and reviewed reruns. Public development/calibration files are here;

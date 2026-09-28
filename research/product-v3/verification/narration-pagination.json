@@ -1,0 +1,16 @@
+{
+  "scenes": [
+    {
+      "id": "03-success-bug",
+      "title": "Pagination repair: stop repeating records",
+      "annotation": "After cursor [5, b], the next page should contain only c, with no next cursor and no more pages.",
+      "narration": "An activity browser pages through revised records. After cursor B, the next page should contain only C. The original helper repeats B and incorrectly claims another page exists."
+    },
+    {
+      "id": "04-success-patch",
+      "title": "Review the proposal across cooperating helpers",
+      "annotation": "Coordinate latest revisions, deletions, strict cursor boundaries, and last-page metadata. Unchanged lines stay readable context.",
+      "narration": "The proposal coordinates three fixes: choose the latest revision before filtering deletions, resume strictly after the cursor, and calculate whether more records remain. Review the changed lines alongside preserved context."
+    }
+  ]
+}

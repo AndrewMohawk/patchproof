@@ -1,0 +1,67 @@
+{
+  "status": "observed",
+  "startedAt": "2026-09-28T05:28:52.857Z",
+  "finishedAt": "2026-09-28T05:32:14.547Z",
+  "taskId": "v3-cursor-pagination",
+  "runId": "da14a99c-68ad-4229-9f07-8c2e023bfbeb",
+  "terminalStatus": "infrastructure_error",
+  "reason": "protected_path",
+  "bundleDigest": "sha256:bb81341bc39323b3d96e8ae8c420e684cb7e8b65a48e7951e8ae9d452f5674eb",
+  "baseline": {
+    "pass": 16,
+    "fail": 6,
+    "error": 0
+  },
+  "attempts": [
+    {
+      "id": 1,
+      "accepted": false,
+      "pass": 16,
+      "fail": 6,
+      "error": 0
+    }
+  ],
+  "usage": {
+    "inferenceCalls": 2,
+    "inputTokens": 7510,
+    "outputTokens": 1603,
+    "sandboxCpuSeconds": null,
+    "measuredCostUsd": 0.00083532,
+    "costIsEstimate": true,
+    "elapsedMs": 197106
+  },
+  "observations": [
+    {
+      "at": "2026-09-28T05:28:54.852Z",
+      "phase": "queued",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:28:56.910Z",
+      "phase": "baseline_capture",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:30:21.844Z",
+      "phase": "repair",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:30:30.157Z",
+      "phase": "check",
+      "candidates": 1
+    },
+    {
+      "at": "2026-09-28T05:32:02.488Z",
+      "phase": "repair",
+      "candidates": 1
+    }
+  ],
+  "errors": [],
+  "posts": [
+    {
+      "method": "POST",
+      "url": "https://patchproof.andrewmohawk.xyz/runs"
+    }
+  ]
+}

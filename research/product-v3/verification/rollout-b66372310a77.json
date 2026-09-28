@@ -1,0 +1,25 @@
+{
+  "deployedAt": "2026-09-28T05:21:00.854183+00:00",
+  "releaseCommit": "b66372310a77132387ce7d0a9004523ea4d9648d",
+  "sourceDigest": "sha256:1345e3971f832b403f39b712dccfc09bd02d14273d973a22247a45630d05dca9",
+  "previousRelease": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "tasks": [
+    "v3-config-overlay",
+    "v3-cursor-pagination",
+    "v3-inventory-reservation",
+    "v3-invoice-allocation",
+    "v3-ttl-cache",
+    "v3-weekly-schedule",
+    "v3-manifest-merge",
+    "v3-event-fold",
+    "v3-retry-batches",
+    "v3-search-ranking"
+  ],
+  "paidRequests": 0
+}

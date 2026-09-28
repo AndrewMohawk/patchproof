@@ -1,0 +1,96 @@
+{
+  "status": "observed",
+  "startedAt": "2026-09-28T05:40:09.582Z",
+  "finishedAt": "2026-09-28T05:46:28.759Z",
+  "taskId": "v3-cursor-pagination",
+  "runId": "d5cbe221-1220-4f55-8e79-36eccfab5b17",
+  "terminalStatus": "failed",
+  "reason": "declared_checks_not_satisfied",
+  "bundleDigest": "sha256:6179999f35d8c37089a4e5bf37f7c57a484f926da33a139f7949197ffd2e968c",
+  "baseline": {
+    "pass": 16,
+    "fail": 6,
+    "error": 0
+  },
+  "attempts": [
+    {
+      "id": 1,
+      "accepted": false,
+      "pass": 21,
+      "fail": 1,
+      "error": 0
+    },
+    {
+      "id": 2,
+      "accepted": false,
+      "pass": 21,
+      "fail": 1,
+      "error": 0
+    },
+    {
+      "id": 3,
+      "accepted": false,
+      "pass": 21,
+      "fail": 1,
+      "error": 0
+    }
+  ],
+  "usage": {
+    "inferenceCalls": 3,
+    "inputTokens": 11333,
+    "outputTokens": 2248,
+    "sandboxCpuSeconds": null,
+    "measuredCostUsd": 0.0054231,
+    "costIsEstimate": true,
+    "elapsedMs": 373838
+  },
+  "observations": [
+    {
+      "at": "2026-09-28T05:40:11.358Z",
+      "phase": "queued",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:40:13.444Z",
+      "phase": "baseline_capture",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:41:43.643Z",
+      "phase": "repair",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:41:47.786Z",
+      "phase": "check",
+      "candidates": 1
+    },
+    {
+      "at": "2026-09-28T05:43:16.919Z",
+      "phase": "repair",
+      "candidates": 1
+    },
+    {
+      "at": "2026-09-28T05:43:21.081Z",
+      "phase": "check",
+      "candidates": 2
+    },
+    {
+      "at": "2026-09-28T05:44:51.899Z",
+      "phase": "repair",
+      "candidates": 2
+    },
+    {
+      "at": "2026-09-28T05:44:56.051Z",
+      "phase": "check",
+      "candidates": 3
+    }
+  ],
+  "errors": [],
+  "posts": [
+    {
+      "method": "POST",
+      "url": "https://patchproof.andrewmohawk.xyz/runs"
+    }
+  ]
+}

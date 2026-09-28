@@ -1,0 +1,2581 @@
+{
+  "checkedAt": "2026-09-28T05:54:12.216Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "coordinatorRelease": "c6b2b421a9faa3049391997ce93082f68ecf37af",
+  "scope": "GET-only public UI/evidence inspection; no creation, cancellation, replay, or video verification",
+  "assets": [
+    {
+      "path": "/",
+      "sha256": "3d39c3ca565dc54d3f16fccfd8a789db85599ad9760b06cf3b21f94754d32142",
+      "bytes": 12786,
+      "localSourceMatch": true
+    },
+    {
+      "path": "/app.js",
+      "sha256": "672115e62c45f6a7b636b1679883485e80d5212e5f350658e51651c575961fd5",
+      "bytes": 68463,
+      "localSourceMatch": true
+    },
+    {
+      "path": "/walkthrough.js",
+      "sha256": "41c12e2e2960311c4dd8d0c7fd8d844f4f3ddcc0e384fc7a7b1802f31821bf57",
+      "bytes": 21484,
+      "localSourceMatch": true
+    },
+    {
+      "path": "/diff-view.js",
+      "sha256": "04f5dc9367f6bf30907afc6e4ed5c9a683f38d0d21e80c9700384ee94ae26b9e",
+      "bytes": 6604,
+      "localSourceMatch": true
+    },
+    {
+      "path": "/style.css",
+      "sha256": "b750ba79e032b8b5b64279b409a2e0962f15e4ecae44d3d7cd415cc90ce3c807",
+      "bytes": 50247,
+      "localSourceMatch": true
+    }
+  ],
+  "runs": [
+    {
+      "kind": "success",
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "bundleDigest": "sha256:c38760acc78dc0b70289020eabc43a4600b43a3c351f66eb691bb47fd1fb6476",
+      "byteSha256": "3390ffbc815181745c95486991694eb1326c261e7be4dc57f743ad8ac11e2a5d",
+      "bytes": 324198,
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "terminalStatus": "verified_for_declared_checks",
+      "baseline": {
+        "pass": 16,
+        "fail": 6
+      },
+      "attempts": [
+        {
+          "id": 1,
+          "accepted": true,
+          "retained": true,
+          "checks": {
+            "pass": 22
+          },
+          "rejectionReason": null
+        }
+      ],
+      "example": {
+        "id": "v3-cursor-pagination-next-page",
+        "before": {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        "expected": {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        },
+        "after": {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      }
+    },
+    {
+      "kind": "failure",
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "bundleDigest": "sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd",
+      "byteSha256": "b682aed210fc1b3d2492838001d1d451b6331643b55fe4831b726c71c8af2790",
+      "bytes": 358212,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "terminalStatus": "infrastructure_error",
+      "baseline": {
+        "fail": 7,
+        "pass": 15
+      },
+      "attempts": [
+        {
+          "id": 1,
+          "accepted": false,
+          "retained": true,
+          "checks": {
+            "fail": 5,
+            "pass": 17
+          },
+          "rejectionReason": "One or more declared checks failed or were unavailable."
+        },
+        {
+          "id": 2,
+          "accepted": false,
+          "retained": false,
+          "checks": {
+            "error": 22
+          },
+          "rejectionReason": "timeout"
+        }
+      ],
+      "example": {
+        "id": "v3-config-overlay-nested-list",
+        "before": {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        "expected": {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        },
+        "after": {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      }
+    }
+  ],
+  "layouts": [
+    {
+      "width": 1440,
+      "name": "first-viewport",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-first-viewport.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-decision.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-decision.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-failed-bug",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-failed-bug.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-failed-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-failed-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-failed-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-failed-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "story-failed-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-decision.png"
+    },
+    {
+      "width": 1440,
+      "name": "viewport-failed-decision",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-viewport-failed-decision.png"
+    },
+    {
+      "width": 1440,
+      "name": "pagination-briefing",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-pagination-briefing.png"
+    },
+    {
+      "width": 1440,
+      "name": "pagination-first-viewport",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-pagination-first-viewport.png"
+    },
+    {
+      "width": 1440,
+      "name": "how",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-how.png"
+    },
+    {
+      "width": 1440,
+      "name": "how-first-viewport",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-how-first-viewport.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-success-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-success-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-success-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-success-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-success-activity",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-success-activity.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-success-run-details",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-success-run-details.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-success-opened-check",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-success-opened-check.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-failure-patch",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-failure-patch.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-failure-checks",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-failure-checks.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-failure-activity",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-failure-activity.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-failure-run-details",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-failure-run-details.png"
+    },
+    {
+      "width": 1440,
+      "name": "evidence-failure-opened-check",
+      "documentWidth": 1440,
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-evidence-failure-opened-check.png"
+    },
+    {
+      "width": 390,
+      "name": "first-viewport",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-first-viewport.png"
+    },
+    {
+      "width": 390,
+      "name": "story-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "story-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "story-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "story-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-failed-bug",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-failed-bug.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-failed-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-failed-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-failed-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-failed-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "story-failed-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "viewport-failed-decision",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-viewport-failed-decision.png"
+    },
+    {
+      "width": 390,
+      "name": "pagination-briefing",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-pagination-briefing.png"
+    },
+    {
+      "width": 390,
+      "name": "pagination-first-viewport",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-pagination-first-viewport.png"
+    },
+    {
+      "width": 390,
+      "name": "how",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-how.png"
+    },
+    {
+      "width": 390,
+      "name": "how-first-viewport",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-how-first-viewport.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-success-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-success-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-success-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-success-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-success-activity",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-success-activity.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-success-run-details",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-success-run-details.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-success-opened-check",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-success-opened-check.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-failure-patch",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-failure-patch.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-failure-checks",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-failure-checks.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-failure-activity",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-failure-activity.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-failure-run-details",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-failure-run-details.png"
+    },
+    {
+      "width": 390,
+      "name": "evidence-failure-opened-check",
+      "documentWidth": 390,
+      "screenshot": "/tmp/patchproof-v3-final-public/390-evidence-failure-opened-check.png"
+    },
+    {
+      "width": 320,
+      "name": "first-viewport",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-first-viewport.png"
+    },
+    {
+      "width": 320,
+      "name": "story-bug",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-bug.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-bug",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-bug.png"
+    },
+    {
+      "width": 320,
+      "name": "story-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "story-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "story-decision",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-decision.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-decision",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-decision.png"
+    },
+    {
+      "width": 320,
+      "name": "story-failed-bug",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-bug.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-failed-bug",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-failed-bug.png"
+    },
+    {
+      "width": 320,
+      "name": "story-failed-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-failed-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-failed-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "story-failed-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-failed-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-failed-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "story-failed-decision",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-decision.png"
+    },
+    {
+      "width": 320,
+      "name": "viewport-failed-decision",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-viewport-failed-decision.png"
+    },
+    {
+      "width": 320,
+      "name": "pagination-briefing",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-pagination-briefing.png"
+    },
+    {
+      "width": 320,
+      "name": "pagination-first-viewport",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-pagination-first-viewport.png"
+    },
+    {
+      "width": 320,
+      "name": "how",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-how.png"
+    },
+    {
+      "width": 320,
+      "name": "how-first-viewport",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-how-first-viewport.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-success-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-success-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-success-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-success-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-success-activity",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-success-activity.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-success-run-details",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-success-run-details.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-success-opened-check",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-success-opened-check.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-failure-patch",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-failure-patch.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-failure-checks",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-failure-checks.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-failure-activity",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-failure-activity.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-failure-run-details",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-failure-run-details.png"
+    },
+    {
+      "width": 320,
+      "name": "evidence-failure-opened-check",
+      "documentWidth": 320,
+      "screenshot": "/tmp/patchproof-v3-final-public/320-evidence-failure-opened-check.png"
+    }
+  ],
+  "stories": [
+    {
+      "width": 1440,
+      "kind": "success",
+      "route": "bug",
+      "heading": "The next page repeats a record, and deleted revisions can reappear.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 68,
+        "right": 206.09375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 68,
+        "y": 1355.140625,
+        "width": 159.671875,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-bug.png"
+    },
+    {
+      "width": 1440,
+      "kind": "success",
+      "route": "patch",
+      "heading": "Three coordinated changes fix revision selection, cursor boundaries, and page metadata.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 216.484375,
+        "right": 301.578125,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "diff": {
+        "headers": [
+          "cursor_pagination.py+7 −6"
+        ],
+        "hunks": [
+          "@@ -24,10 +24,11 @@",
+          "@@ -39,7 +40,7 @@",
+          "@@ -55,7 +56,7 @@"
+        ],
+        "contextLines": 18,
+        "gutters": 62
+      },
+      "primary": {
+        "x": 68,
+        "y": 1810.078125,
+        "width": 197.6875,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-patch.png"
+    },
+    {
+      "width": 1440,
+      "kind": "success",
+      "route": "checks",
+      "heading": "22 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 317.046875,
+        "right": 442.484375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "requirementResults": [
+        "Before 3/5 → after 5/5 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 7/7 → after 7/7 passed",
+        "Before 2/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1477.34375,
+        "width": 227.515625,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-checks.png"
+    },
+    {
+      "width": 1440,
+      "kind": "success",
+      "route": "decision",
+      "heading": "The listed checks pass. Review the patch before using it.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 453.40625,
+        "right": 577.671875,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained22/22 passedChecks passed"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 918.28125,
+        "width": 211.203125,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-decision.png"
+    },
+    {
+      "width": 1440,
+      "kind": "failure",
+      "route": "failed-bug",
+      "heading": "A configuration update applies the wrong values and reports the wrong changes.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 68,
+        "right": 206.09375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 68,
+        "y": 1482.40625,
+        "width": 159.671875,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-bug.png"
+    },
+    {
+      "width": 1440,
+      "kind": "failure",
+      "route": "failed-patch",
+      "heading": "The values improve, but the change report and deletion rules still fail.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 216.484375,
+        "right": 301.578125,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "diff": {
+        "headers": [
+          "config_overlay.py+43 −32"
+        ],
+        "hunks": [
+          "@@ -1,79 +1,90 @@"
+        ],
+        "contextLines": 47,
+        "gutters": 244
+      },
+      "primary": {
+        "x": 68,
+        "y": 1786.078125,
+        "width": 197.6875,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-patch.png"
+    },
+    {
+      "width": 1440,
+      "kind": "failure",
+      "route": "failed-checks",
+      "heading": "17 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 317.046875,
+        "right": 442.484375,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "requirementResults": [
+        "Before 1/3 → after 2/3 passed",
+        "Before 2/4 → after 1/4 passed",
+        "Before 3/5 → after 4/5 passed",
+        "Before 8/8 → after 8/8 passed",
+        "Before 1/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1477.34375,
+        "width": 227.515625,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-checks.png"
+    },
+    {
+      "width": 1440,
+      "kind": "failure",
+      "route": "failed-decision",
+      "heading": "The run did not produce an accepted repair.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 453.40625,
+        "right": 577.671875,
+        "barLeft": 68,
+        "barRight": 1188,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained17/22 passed · 5 failedNot acceptedOne or more declared checks failed or were unavailable.",
+        "20/22 passed · 22 errorsNot acceptedtimeout"
+      ],
+      "primary": {
+        "x": 68,
+        "y": 1154.390625,
+        "width": 218.203125,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/1440-story-failed-decision.png"
+    },
+    {
+      "width": 390,
+      "kind": "success",
+      "route": "bug",
+      "heading": "The next page repeats a record, and deleted revisions can reappear.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 145.203125,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-bug.png"
+    },
+    {
+      "width": 390,
+      "kind": "success",
+      "route": "patch",
+      "heading": "Three coordinated changes fix revision selection, cursor boundaries, and page metadata.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 149.5625,
+        "right": 229.234375,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "diff": {
+        "headers": [
+          "cursor_pagination.py+7 −6"
+        ],
+        "hunks": [
+          "@@ -24,10 +24,11 @@",
+          "@@ -39,7 +40,7 @@",
+          "@@ -55,7 +56,7 @@"
+        ],
+        "contextLines": 18,
+        "gutters": 62
+      },
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-patch.png"
+    },
+    {
+      "width": 390,
+      "kind": "success",
+      "route": "checks",
+      "heading": "22 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 136.3125,
+        "right": 253.6875,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "requirementResults": [
+        "Before 3/5 → after 5/5 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 7/7 → after 7/7 passed",
+        "Before 2/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-checks.png"
+    },
+    {
+      "width": 390,
+      "kind": "success",
+      "route": "decision",
+      "heading": "The listed checks pass. Review the patch before using it.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 257.53125,
+        "right": 373.8125,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained22/22 passedChecks passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-decision.png"
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "route": "failed-bug",
+      "heading": "A configuration update applies the wrong values and reports the wrong changes.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 145.203125,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-bug.png"
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "route": "failed-patch",
+      "heading": "The values improve, but the change report and deletion rules still fail.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 149.5625,
+        "right": 229.234375,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "diff": {
+        "headers": [
+          "config_overlay.py+43 −32"
+        ],
+        "hunks": [
+          "@@ -1,79 +1,90 @@"
+        ],
+        "contextLines": 47,
+        "gutters": 244
+      },
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-patch.png"
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "route": "failed-checks",
+      "heading": "17 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 136.3125,
+        "right": 253.6875,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "requirementResults": [
+        "Before 1/3 → after 2/3 passed",
+        "Before 2/4 → after 1/4 passed",
+        "Before 3/5 → after 4/5 passed",
+        "Before 8/8 → after 8/8 passed",
+        "Before 1/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-checks.png"
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "route": "failed-decision",
+      "heading": "The run did not produce an accepted repair.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 257.53125,
+        "right": 373.8125,
+        "barLeft": 16,
+        "barRight": 374,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained17/22 passed · 5 failedNot acceptedOne or more declared checks failed or were unavailable.",
+        "20/22 passed · 22 errorsNot acceptedtimeout"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/390-story-failed-decision.png"
+    },
+    {
+      "width": 320,
+      "kind": "success",
+      "route": "bug",
+      "heading": "The next page repeats a record, and deleted revisions can reappear.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 140.6875,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-bug.png"
+    },
+    {
+      "width": 320,
+      "kind": "success",
+      "route": "patch",
+      "heading": "Three coordinated changes fix revision selection, cursor boundaries, and page metadata.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 120.515625,
+        "right": 197.421875,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "items": [
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": [
+            3,
+            "c"
+          ],
+          "hasMore": true
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "diff": {
+        "headers": [
+          "cursor_pagination.py+7 −6"
+        ],
+        "hunks": [
+          "@@ -24,10 +24,11 @@",
+          "@@ -39,7 +40,7 @@",
+          "@@ -55,7 +56,7 @@"
+        ],
+        "contextLines": 18,
+        "gutters": 62
+      },
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-patch.png"
+    },
+    {
+      "width": 320,
+      "kind": "success",
+      "route": "checks",
+      "heading": "22 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 102.828125,
+        "right": 216.109375,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "Record revisions": [
+            {
+              "id": "a",
+              "updated": 5,
+              "deleted": false,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "updated": 5,
+              "deleted": false,
+              "label": "B"
+            },
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "Page size": 2,
+          "cursor (keyword)": [
+            5,
+            "b"
+          ]
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        },
+        {
+          "items": [
+            {
+              "id": "c",
+              "updated": 3,
+              "deleted": false,
+              "label": "C"
+            }
+          ],
+          "nextCursor": null,
+          "hasMore": false
+        }
+      ],
+      "requirementResults": [
+        "Before 3/5 → after 5/5 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 2/4 → after 4/4 passed",
+        "Before 7/7 → after 7/7 passed",
+        "Before 2/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-checks.png"
+    },
+    {
+      "width": 320,
+      "kind": "success",
+      "route": "decision",
+      "heading": "The listed checks pass. Review the patch before using it.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 191.40625,
+        "right": 303.625,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained22/22 passedChecks passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-decision.png"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "route": "failed-bug",
+      "heading": "A configuration update applies the wrong values and reports the wrong changes.",
+      "currentStep": {
+        "text": "1. The bug & goal",
+        "left": 16,
+        "right": 140.6875,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        }
+      ],
+      "fullSourceMatches": true,
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-bug.png"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "route": "failed-patch",
+      "heading": "The values improve, but the change report and deletion rules still fail.",
+      "currentStep": {
+        "text": "2. AI patch",
+        "left": 120.515625,
+        "right": 197.421875,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "us",
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "diff": {
+        "headers": [
+          "config_overlay.py+43 −32"
+        ],
+        "hunks": [
+          "@@ -1,79 +1,90 @@"
+        ],
+        "contextLines": 47,
+        "gutters": 244
+      },
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-patch.png"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "route": "failed-checks",
+      "heading": "17 of 22 checks passed for this proposal.",
+      "currentStep": {
+        "text": "3. Check results",
+        "left": 102.828125,
+        "right": 216.109375,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [
+        {
+          "Base configuration": {
+            "service": {
+              "host": "api",
+              "timeout": 30
+            },
+            "regions": [
+              "us"
+            ]
+          },
+          "Override layers": [
+            {
+              "service": {
+                "timeout": 45
+              },
+              "regions": [
+                "eu"
+              ]
+            }
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service.timeout"
+          ]
+        },
+        {
+          "config": {
+            "service": {
+              "host": "api",
+              "timeout": 45
+            },
+            "regions": [
+              "eu"
+            ]
+          },
+          "changed": [
+            "regions",
+            "service"
+          ]
+        }
+      ],
+      "requirementResults": [
+        "Before 1/3 → after 2/3 passed",
+        "Before 2/4 → after 1/4 passed",
+        "Before 3/5 → after 4/5 passed",
+        "Before 8/8 → after 8/8 passed",
+        "Before 1/2 → after 2/2 passed"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-checks.png"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "route": "failed-decision",
+      "heading": "The run did not produce an accepted repair.",
+      "currentStep": {
+        "text": "4. Your decision",
+        "left": 191.40625,
+        "right": 303.625,
+        "barLeft": 16,
+        "barRight": 304,
+        "visible": true
+      },
+      "values": [],
+      "attemptRows": [
+        "1 · retained17/22 passed · 5 failedNot acceptedOne or more declared checks failed or were unavailable.",
+        "20/22 passed · 22 errorsNot acceptedtimeout"
+      ],
+      "primary": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "screenshot": "/tmp/patchproof-v3-final-public/320-story-failed-decision.png"
+    }
+  ],
+  "tasks": [
+    {
+      "width": 1440,
+      "id": "v3-cursor-pagination",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "intro": "An activity browser reads a stream containing multiple revisions per record. The page builder must pick the latest revision before sorting and applying a stable cursor. Repairs must coordinate duplicate resolution, deletion handling and page metadata so users do not see stale or repeated rows.",
+      "sourceLines": 63,
+      "examples": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": [5, \"b\"],\n  \"hasMore\": True\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}\n  ],\n  2,\n  cursor=[5, \"b\"]\n)",
+          "goal": "Required return value\n{\n  \"items\": [{\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 1, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"a\", \"updated\": 2, \"deleted\": True, \"label\": \"A\"}\n  ],\n  5,\n  cursor=None\n)",
+          "goal": "Required return value\n{\"items\": [], \"nextCursor\": None, \"hasMore\": False}"
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "call": "Call with this input\npage_records(\n  [],\n  True\n)",
+          "goal": "Required exception\nValueError"
+        }
+      ],
+      "action": {
+        "x": 392,
+        "y": 1383.59375,
+        "width": 151.921875,
+        "height": 44
+      }
+    },
+    {
+      "width": 390,
+      "id": "v3-cursor-pagination",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "intro": "An activity browser reads a stream containing multiple revisions per record. The page builder must pick the latest revision before sorting and applying a stable cursor. Repairs must coordinate duplicate resolution, deletion handling and page metadata so users do not see stale or repeated rows.",
+      "sourceLines": 63,
+      "examples": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": [5, \"b\"],\n  \"hasMore\": True\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}\n  ],\n  2,\n  cursor=[5, \"b\"]\n)",
+          "goal": "Required return value\n{\n  \"items\": [{\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 1, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"a\", \"updated\": 2, \"deleted\": True, \"label\": \"A\"}\n  ],\n  5,\n  cursor=None\n)",
+          "goal": "Required return value\n{\"items\": [], \"nextCursor\": None, \"hasMore\": False}"
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "call": "Call with this input\npage_records(\n  [],\n  True\n)",
+          "goal": "Required exception\nValueError"
+        }
+      ],
+      "action": {
+        "x": 16,
+        "y": 763,
+        "width": 358,
+        "height": 44
+      }
+    },
+    {
+      "width": 320,
+      "id": "v3-cursor-pagination",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "intro": "An activity browser reads a stream containing multiple revisions per record. The page builder must pick the latest revision before sorting and applying a stable cursor. Repairs must coordinate duplicate resolution, deletion handling and page metadata so users do not see stale or repeated rows.",
+      "sourceLines": 63,
+      "examples": [
+        {
+          "id": "v3-cursor-pagination-first-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": [5, \"b\"],\n  \"hasMore\": True\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-next-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"},\n    {\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}\n  ],\n  2,\n  cursor=[5, \"b\"]\n)",
+          "goal": "Required return value\n{\n  \"items\": [{\"id\": \"c\", \"updated\": 3, \"deleted\": False, \"label\": \"C\"}],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-deleted-latest",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 1, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"a\", \"updated\": 2, \"deleted\": True, \"label\": \"A\"}\n  ],\n  5,\n  cursor=None\n)",
+          "goal": "Required return value\n{\"items\": [], \"nextCursor\": None, \"hasMore\": False}"
+        },
+        {
+          "id": "v3-cursor-pagination-exact-full-page",
+          "call": "Call with this input\npage_records(\n  [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  2,\n  cursor=None\n)",
+          "goal": "Required return value\n{\n  \"items\": [\n    {\"id\": \"a\", \"updated\": 5, \"deleted\": False, \"label\": \"A\"},\n    {\"id\": \"b\", \"updated\": 5, \"deleted\": False, \"label\": \"B\"}\n  ],\n  \"nextCursor\": None,\n  \"hasMore\": False\n}"
+        },
+        {
+          "id": "v3-cursor-pagination-invalid-limit",
+          "call": "Call with this input\npage_records(\n  [],\n  True\n)",
+          "goal": "Required exception\nValueError"
+        }
+      ],
+      "action": {
+        "x": 16,
+        "y": 763,
+        "width": 288,
+        "height": 44
+      }
+    }
+  ],
+  "how": [
+    {
+      "width": 1440,
+      "steps": [
+        "01Choose a taskCode + requirements",
+        "02Generate a patchModel proposes changes",
+        "03Run fixed checksExpected vs. observed",
+        "04Keep the evidenceEvery attempt stays visible",
+        "05You reviewInspect, download, decide"
+      ],
+      "sections": 6,
+      "runtime": "Nebius Token Factory supplies live model inference. Local Docker checks execute the code and checks in isolated workspaces.",
+      "model": "Model: nvidia/nemotron-3-super-120b-a12b. The run records the model, runtime and source versions used."
+    },
+    {
+      "width": 390,
+      "steps": [
+        "01Choose a taskCode + requirements",
+        "02Generate a patchModel proposes changes",
+        "03Run fixed checksExpected vs. observed",
+        "04Keep the evidenceEvery attempt stays visible",
+        "05You reviewInspect, download, decide"
+      ],
+      "sections": 6,
+      "runtime": "Nebius Token Factory supplies live model inference. Local Docker checks execute the code and checks in isolated workspaces.",
+      "model": "Model: nvidia/nemotron-3-super-120b-a12b. The run records the model, runtime and source versions used."
+    },
+    {
+      "width": 320,
+      "steps": [
+        "01Choose a taskCode + requirements",
+        "02Generate a patchModel proposes changes",
+        "03Run fixed checksExpected vs. observed",
+        "04Keep the evidenceEvery attempt stays visible",
+        "05You reviewInspect, download, decide"
+      ],
+      "sections": 6,
+      "runtime": "Nebius Token Factory supplies live model inference. Local Docker checks execute the code and checks in isolated workspaces.",
+      "model": "Model: nvidia/nemotron-3-super-120b-a12b. The run records the model, runtime and source versions used."
+    }
+  ],
+  "evidence": [
+    {
+      "width": 1440,
+      "kind": "success",
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "counts": "Attempt 1: 22 checks passed · 0 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-cursor-pagination-next-page"
+    },
+    {
+      "width": 1440,
+      "kind": "failure",
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "title": "Configuration overlays lose explicit nulls and retain removed list entries",
+      "counts": "Attempt 1: 17 checks passed · 5 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-config-overlay-nested-list"
+    },
+    {
+      "width": 390,
+      "kind": "success",
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "counts": "Attempt 1: 22 checks passed · 0 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-cursor-pagination-next-page"
+    },
+    {
+      "width": 390,
+      "kind": "failure",
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "title": "Configuration overlays lose explicit nulls and retain removed list entries",
+      "counts": "Attempt 1: 17 checks passed · 5 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-config-overlay-nested-list"
+    },
+    {
+      "width": 320,
+      "kind": "success",
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "title": "Revision pagination resurrects deleted records and repeats page boundaries",
+      "counts": "Attempt 1: 22 checks passed · 0 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-cursor-pagination-next-page"
+    },
+    {
+      "width": 320,
+      "kind": "failure",
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "title": "Configuration overlays lose explicit nulls and retain removed list entries",
+      "counts": "Attempt 1: 17 checks passed · 5 failed · 0 errors",
+      "tabs": [
+        "Patch",
+        "Checks",
+        "Activity",
+        "Run details"
+      ],
+      "openedExactCheck": "v3-config-overlay-nested-list"
+    }
+  ],
+  "downloads": [
+    {
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "suggestedFilename": "4b031998-ae91-4316-aacd-607cfff91f72.json",
+      "bytes": 324198,
+      "sha256": "3390ffbc815181745c95486991694eb1326c261e7be4dc57f743ad8ac11e2a5d",
+      "matchesFetchedBytes": true,
+      "bundleDigest": "sha256:c38760acc78dc0b70289020eabc43a4600b43a3c351f66eb691bb47fd1fb6476"
+    },
+    {
+      "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+      "suggestedFilename": "9d3cd90e-94e2-4787-b294-5caa577b40e1.json",
+      "bytes": 358212,
+      "sha256": "b682aed210fc1b3d2492838001d1d451b6331643b55fe4831b726c71c8af2790",
+      "matchesFetchedBytes": true,
+      "bundleDigest": "sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd"
+    }
+  ],
+  "navigation": [
+    {
+      "width": 1440,
+      "scrollY": 0,
+      "focusedHeading": true
+    },
+    {
+      "width": 390,
+      "scrollY": 0,
+      "focusedHeading": true
+    },
+    {
+      "width": 320,
+      "scrollY": 0,
+      "focusedHeading": true
+    }
+  ],
+  "errors": [],
+  "blocked": [],
+  "liveMetadata": {
+    "taskCount": 10,
+    "execution": {
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 786432,
+      "outputTokenLimit": 12000,
+      "wallTimeLimitSeconds": 600,
+      "sandboxCpuSecondsLimit": 900,
+      "maxApprovedSpendUsd": 0.25
+    },
+    "availability": {
+      "enabled": true,
+      "reason": null,
+      "remainingRuns": 13
+    }
+  },
+  "status": "passed",
+  "finishedAt": "2026-09-28T05:54:37.921Z"
+}

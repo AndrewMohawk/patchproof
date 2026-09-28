@@ -1,0 +1,3 @@
+# Preserve receipted stdout and HTTP wire bytes, including intentional CRLF.
+verification/**/*.log -text -whitespace
+verification/**/*.headers -text -whitespace

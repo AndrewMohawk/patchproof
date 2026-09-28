@@ -1,0 +1,28 @@
+{
+  "scenes": [
+    {
+      "id": "07-failure-bug",
+      "title": "Failed repair: configuration overlays",
+      "annotation": "Apply layers in order: replace region lists and report the exact nested settings changed.",
+      "narration": "This configuration helper combines deployment settings. Lists must be replaced, and the change report must identify precise nested paths. The original code wrongly appends regions and reports only the parent setting."
+    },
+    {
+      "id": "08-failure-patch",
+      "title": "The proposal improves one part of the behavior",
+      "annotation": "Region replacement improves, but the change report still returns service instead of service.timeout.",
+      "narration": "The patch now replaces the regions list. But the change-reporting helper still records its parent object. The diff shows the edits beside unchanged context and original line numbers."
+    },
+    {
+      "id": "09-failure-checks",
+      "title": "17 of 22 checks pass. Five still fail.",
+      "annotation": "Required changed paths: regions, service.timeout. Observed: regions, service. A correct value alone is not enough.",
+      "narration": "Only seventeen of twenty-two checks passed. The proposed values are correct here, but the report still says service instead of service dot timeout. Five checks remain failed."
+    },
+    {
+      "id": "10-failure-decision",
+      "title": "Functional failures, followed by a timed-out attempt",
+      "annotation": "Attempt 1: five functional failures. Attempt 2: verification timed out. No accepted repair; the execution error stays visible.",
+      "narration": "A later attempt hit the five-minute time limit before its checks could finish. The result is an execution error, with no accepted repair. Earlier failures remain visible."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-28T06:01:06.555894+00:00",
+  "sourceRelease": "c6b2b421a9faa3049391997ce93082f68ecf37af",
+  "frontendImage": "sha256:033f72c1f7debd4a6456e131aa8c5925114d1510a0a8248f837ae9d086b81405",
+  "frontendHealthy": true,
+  "readOnly": true,
+  "user": "101:1000",
+  "hostPortBindings": {},
+  "assets": [
+    {
+      "path": "demo/index.html",
+      "sha256": "a44e3ef10a166a619e0338d6f57a4afee08fd279c8a017b66bda98c5a6e7962f"
+    },
+    {
+      "path": "demo/style.css",
+      "sha256": "571bd515ef84807b963c60cd584c3810d31aece5346bc9986afbc4540bc70fc8"
+    },
+    {
+      "path": "config/nginx.conf",
+      "sha256": "3c93511042f4ebb3612c18ccf9bc51d81897bba39d3dc2e49949ca4188b948e8"
+    }
+  ],
+  "gatus": [
+    "2026/09/28 01:58:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=true; errors=0; duration=2ms",
+    "2026/09/28 01:59:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=true; errors=0; duration=3ms",
+    "2026/09/28 02:00:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=true; errors=0; duration=2ms"
+  ],
+  "paidCalls": 0,
+  "commands": [
+    {
+      "command": "docker compose config --quiet; docker compose up -d --build",
+      "directory": "/mnt/raid1-sata-16tb/homelab_backup/docker/patchproof",
+      "exitCode": 0
+    }
+  ],
+  "preparationIssue": "Initial Compose invocation from the project checkout returned no configuration file (exit1) without changing runtime; corrected to the service directory before successful deployment.",
+  "frontendSourceCommit": "2f19b8e4784ad201760d5925135a5894cf5cf1b1",
+  "frontendSourceScope": "Isolated homelab worktree, committed locally; not pushed.",
+  "transcriptBrowserCheck": {
+    "expanded": true,
+    "chapters": 11,
+    "correctVersionedVideoSource": true,
+    "links": [
+      "fixed repair",
+      "failed repair",
+      "try a repair",
+      "how it works",
+      "download video"
+    ]
+  }
+}

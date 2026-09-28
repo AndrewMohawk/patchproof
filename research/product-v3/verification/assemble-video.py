@@ -1,7 +1,7 @@
 """Add aligned synthetic narration and persistent annotations to real UI video.
 
-No UI frames are substituted, cut, or sped up. Audio starts at each recorded
-scene's narrationStartMs; captions describe the same scene below the browser.
+Only the initial browser loading interval is trimmed. No presented UI scene is
+substituted, cut, or sped up. Audio and captions share the recorded timeline.
 """
 import hashlib
 import json
@@ -21,10 +21,13 @@ assert report['status'] == 'passed'
 assert report['responseSubstitution'] is False and report['paidRequests'] == 0
 assert all(r['allowed'] and r['method'] == 'GET' for r in report['requests'])
 assert all(item['unchanged'] for item in report['evidenceCustody'])
+assert report['assets'] and all(item['unchanged'] for item in report['assets'])
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 assert sha(report['videoPath']) == report['videoSha256']
 segments = {s['id']: s for s in narration['segments']}
 assert set(segments) == {s['id'] for s in report['scenes']}
+offset = report['scenes'][0]['startMs']
+assert 0 <= offset < 30000
 
 
 def stamp(ms):
@@ -52,7 +55,7 @@ Style: Context,DejaVu Sans,15,&H00BDC7D7,&H00FFFFFF,&H00000000,&H00000000,0,0,0,
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 '''
-end = report['scenes'][-1]['endMs']
+end = report['scenes'][-1]['endMs'] - offset
 header += f'Dialogue: 0,0:00:00.00,{stamp(end)},Context,,0,0,0,,Saved real repairs | Local Chatterbox synthetic narration | No new model calls in this recording\n'
 transcript = []
 inputs, filters, audio_labels = [], [], []
@@ -61,19 +64,19 @@ for index, scene in enumerate(report['scenes'], 1):
     assert sha(segment['audioPath']) == segment['audioSha256']
     assert scene['narrationStartMs'] + segment['durationSeconds'] * 1000 <= scene['endMs']
     title = f'{index:02d} / {len(report["scenes"]):02d}  {scene["title"]}'
-    header += f'Dialogue: 1,{stamp(scene["startMs"])},{stamp(scene["endMs"])},Title,,0,0,0,,{caption(title, maximum=1)}\n'
-    header += f'Dialogue: 1,{stamp(scene["startMs"])},{stamp(scene["endMs"])},Caption,,0,0,0,,{caption(scene["annotation"])}\n'
-    transcript.append({'startMs': scene['narrationStartMs'], 'endMs': scene['narrationStartMs'] + round(segment['durationSeconds'] * 1000),
+    header += f'Dialogue: 1,{stamp(scene["startMs"]-offset)},{stamp(scene["endMs"]-offset)},Title,,0,0,0,,{caption(title, maximum=1)}\n'
+    header += f'Dialogue: 1,{stamp(scene["startMs"]-offset)},{stamp(scene["endMs"]-offset)},Caption,,0,0,0,,{caption(scene["annotation"])}\n'
+    transcript.append({'startMs': scene['narrationStartMs']-offset, 'endMs': scene['narrationStartMs']-offset + round(segment['durationSeconds'] * 1000),
                        'title': scene['title'], 'text': segment['narration']})
     inputs.extend(['-i', segment['audioPath']])
-    filters.append(f'[{index}:a]adelay={scene["narrationStartMs"]}:all=1[a{index}]')
+    filters.append(f'[{index}:a]adelay={scene["narrationStartMs"]-offset}:all=1[a{index}]')
     audio_labels.append(f'[a{index}]')
 filters.append(''.join(audio_labels) + f'amix=inputs={len(audio_labels)}:normalize=0,apad[audio]')
 captions = root / 'annotations.ass'
 captions.write_text(header)
 captions.chmod(0o600)
 output = root / 'patchproof-product-v3.mp4'
-command = ['ffmpeg', '-v', 'warning', '-n', '-i', report['videoPath'], *inputs,
+command = ['ffmpeg', '-v', 'warning', '-n', '-ss', f'{offset / 1000:.3f}', '-i', report['videoPath'], *inputs,
            '-filter_complex', ';'.join(filters), '-map', '0:v', '-map', '[audio]',
            '-vf', f'pad=1440:1200:0:0:color=0x14202f,ass={captions}',
            '-c:v', 'libx264', '-preset', 'fast', '-crf', '21', '-pix_fmt', 'yuv420p',
@@ -85,7 +88,7 @@ probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_ent
 assert 40 < float(probe['format']['duration']) < 180, 'The challenge video must remain under three minutes'
 assert any(s['codec_name'] == 'aac' for s in probe['streams'])
 receipt = {'recordingReport': str(root / 'capture-report.json'), 'narrationIndex': str(root / 'narration-index.json'),
-           'rawVideoSha256': report['videoSha256'], 'editing': {'cuts': False, 'speedChanges': False,
+           'rawVideoSha256': report['videoSha256'], 'editing': {'trimmedInitialLoadingMs': offset, 'sceneCuts': False, 'speedChanges': False,
            'added': '200px annotation strip below original 1440x1000 browser capture and aligned local synthetic narration'},
            'outputPath': str(output), 'outputSha256': sha(output), 'bytes': output.stat().st_size, 'media': probe,
            'transcript': transcript, 'command': command}

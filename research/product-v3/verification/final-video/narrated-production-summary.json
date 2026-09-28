@@ -1,0 +1,290 @@
+{
+  "checkedAt": "2026-09-28T05:59:41.425151+00:00",
+  "status": "passed",
+  "sourceCommit": "c6b2b421a9faa3049391997ce93082f68ecf37af",
+  "manifestSha256": "6ec37d7034435f1d77ee0915f92da0b1273b602b6a98ae2a8ec42255a1f9ca27",
+  "capture": {
+    "origin": "https://patchproof.andrewmohawk.xyz",
+    "startedAt": "2026-09-28T05:54:44.683Z",
+    "finishedAt": "2026-09-28T05:57:22.531Z",
+    "browserVersion": "145.0.7632.6",
+    "sceneCount": 11,
+    "requestCount": 19,
+    "allRequestsGet": true,
+    "paidRequests": 0,
+    "responseSubstitution": false,
+    "errors": [],
+    "assets": [
+      {
+        "path": "/",
+        "sha256": "3d39c3ca565dc54d3f16fccfd8a789db85599ad9760b06cf3b21f94754d32142",
+        "unchanged": true
+      },
+      {
+        "path": "/app.js",
+        "sha256": "672115e62c45f6a7b636b1679883485e80d5212e5f350658e51651c575961fd5",
+        "unchanged": true
+      },
+      {
+        "path": "/walkthrough.js",
+        "sha256": "41c12e2e2960311c4dd8d0c7fd8d844f4f3ddcc0e384fc7a7b1802f31821bf57",
+        "unchanged": true
+      },
+      {
+        "path": "/diff-view.js",
+        "sha256": "04f5dc9367f6bf30907afc6e4ed5c9a683f38d0d21e80c9700384ee94ae26b9e",
+        "unchanged": true
+      },
+      {
+        "path": "/style.css",
+        "sha256": "b750ba79e032b8b5b64279b409a2e0962f15e4ecae44d3d7cd415cc90ce3c807",
+        "unchanged": true
+      }
+    ],
+    "evidenceCustody": [
+      {
+        "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+        "digest": "sha256:c38760acc78dc0b70289020eabc43a4600b43a3c351f66eb691bb47fd1fb6476",
+        "unchanged": true,
+        "sha256": "3390ffbc815181745c95486991694eb1326c261e7be4dc57f743ad8ac11e2a5d"
+      },
+      {
+        "id": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+        "digest": "sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd",
+        "unchanged": true,
+        "sha256": "b682aed210fc1b3d2492838001d1d451b6331643b55fe4831b726c71c8af2790"
+      }
+    ],
+    "download": {
+      "id": "4b031998-ae91-4316-aacd-607cfff91f72",
+      "filename": "4b031998-ae91-4316-aacd-607cfff91f72.json",
+      "bytes": 324198,
+      "sha256": "3390ffbc815181745c95486991694eb1326c261e7be4dc57f743ad8ac11e2a5d"
+    },
+    "concurrentAddedRunIds": []
+  },
+  "video": {
+    "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01/patchproof-product-v3.mp4",
+    "sha256": "4c6db3f173bf9935ba7ba9e2eb35a5aedbddd6e9310aeb00e39eafadceafd75c",
+    "bytes": 8374601,
+    "media": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1200
+        },
+        {
+          "codec_name": "aac",
+          "sample_rate": "24000",
+          "channels": 1
+        }
+      ],
+      "format": {
+        "duration": "149.760000"
+      }
+    },
+    "editing": {
+      "trimmedInitialLoadingMs": 1269,
+      "sceneCuts": false,
+      "speedChanges": false,
+      "added": "200px annotation strip below original 1440x1000 browser capture and aligned local synthetic narration"
+    },
+    "spokenWordCount": 342,
+    "syntheticNarration": true,
+    "voiceSource": "Existing generic IVR female reference via local Chatterbox Turbo (CPU)"
+  },
+  "verification": {
+    "audio": {
+      "videoSha256": "4c6db3f173bf9935ba7ba9e2eb35a5aedbddd6e9310aeb00e39eafadceafd75c",
+      "durationSeconds": 149.76,
+      "decodedAudioSampleRate": 24000,
+      "decodedAudioSeconds": 149.76,
+      "clippedSampleCount": 0,
+      "maximumAbsoluteAmplitude": 24662,
+      "sceneAudioChecks": [
+        {
+          "id": "01-start",
+          "passed": true,
+          "audioCorrelation": 0.999955,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 371,
+          "transcriptChecked": true
+        },
+        {
+          "id": "02-how",
+          "passed": true,
+          "audioCorrelation": 0.999894,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 13783,
+          "transcriptChecked": true
+        },
+        {
+          "id": "03-success-bug",
+          "passed": true,
+          "audioCorrelation": 0.99996,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 28534,
+          "transcriptChecked": true
+        },
+        {
+          "id": "04-success-patch",
+          "passed": true,
+          "audioCorrelation": 0.999944,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 40794,
+          "transcriptChecked": true
+        },
+        {
+          "id": "05-success-checks",
+          "passed": true,
+          "audioCorrelation": 0.999883,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 54232,
+          "transcriptChecked": true
+        },
+        {
+          "id": "06-success-decision",
+          "passed": true,
+          "audioCorrelation": 0.999931,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 69637,
+          "transcriptChecked": true
+        },
+        {
+          "id": "07-failure-bug",
+          "passed": true,
+          "audioCorrelation": 0.999958,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 83429,
+          "transcriptChecked": true
+        },
+        {
+          "id": "08-failure-patch",
+          "passed": true,
+          "audioCorrelation": 0.999795,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 98760,
+          "transcriptChecked": true
+        },
+        {
+          "id": "09-failure-checks",
+          "passed": true,
+          "audioCorrelation": 0.999903,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 110395,
+          "transcriptChecked": true
+        },
+        {
+          "id": "10-failure-decision",
+          "passed": true,
+          "audioCorrelation": 0.999941,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 122875,
+          "transcriptChecked": true
+        },
+        {
+          "id": "11-evidence",
+          "passed": true,
+          "audioCorrelation": 0.99993,
+          "bestOffsetMilliseconds": 0,
+          "narrationStartMs": 134955,
+          "transcriptChecked": true
+        }
+      ],
+      "passed": true
+    },
+    "visual": "Agent inspected all 11 exported final-video frames. Captions are readable; the third success diff hunk, exact failed changed paths, and distinct timeout outcome are visible.",
+    "remainingFailures": [],
+    "tests": [
+      {
+        "command": "node research/product-v3/verification/capture-video.mjs research/product-v3/verification/demo-manifest.json PRIVATE_OUTPUT",
+        "exitCode": 0
+      },
+      {
+        "command": "python3 research/product-v3/verification/assemble-video.py PRIVATE_OUTPUT",
+        "exitCode": 0
+      },
+      {
+        "command": "python3 research/product-v3/verification/verify-narrated-video.py PRIVATE_OUTPUT",
+        "exitCode": 0
+      },
+      {
+        "command": "python3 -m py_compile narration/assembly/verification scripts; node --check capture-video.mjs",
+        "exitCode": 0
+      }
+    ]
+  },
+  "chapters": [
+    {
+      "startMs": 371,
+      "endMs": 12371,
+      "title": "Start with the code and the goal",
+      "text": "Patch Proof checks AI code repairs before you use them. Choose a maintenance task. Read the starting source alongside its requirements and concrete examples. These are the actual files and behavior the model will work with."
+    },
+    {
+      "startMs": 13783,
+      "endMs": 27143,
+      "title": "A real model proposes. Fixed checks decide.",
+      "text": "Generate patch makes a real request through Nebius Token Factory. An isolated local Docker runner checks the code against fixed expected results. The model can edit allowed source files, but it cannot rewrite those checks."
+    },
+    {
+      "startMs": 28534,
+      "endMs": 39374,
+      "title": "Pagination repair: stop repeating records",
+      "text": "An activity browser pages through revised records. After cursor B, the next page should contain only C. The original helper repeats B and incorrectly claims another page exists."
+    },
+    {
+      "startMs": 40794,
+      "endMs": 52794,
+      "title": "Review the proposal across cooperating helpers",
+      "text": "The proposal coordinates three fixes: choose the latest revision before filtering deletions, resume strictly after the cursor, and calculate whether more records remain. Review the changed lines alongside preserved context."
+    },
+    {
+      "startMs": 54232,
+      "endMs": 68192,
+      "title": "From 16 of 22 to all 22 checks passing",
+      "text": "The starting code passed sixteen of twenty-two checks. This proposal passes all twenty-two. The next page contains only C, with no next cursor. Checks also cover revisions, validation, and preserving the original inputs."
+    },
+    {
+      "startMs": 69637,
+      "endMs": 82037,
+      "title": "A passing result still needs your review",
+      "text": "All the declared checks now pass. You still inspect the change before using it. Passing these cases does not prove correctness for every possible input. Patch Proof does not merge the patch automatically."
+    },
+    {
+      "startMs": 83429,
+      "endMs": 97229,
+      "title": "Failed repair: configuration overlays",
+      "text": "This configuration helper combines deployment settings. Lists must be replaced, and the change report must identify precise nested paths. The original code wrongly appends regions and reports only the parent setting."
+    },
+    {
+      "startMs": 98760,
+      "endMs": 108920,
+      "title": "The proposal improves one part of the behavior",
+      "text": "The patch now replaces the regions list. But the change-reporting helper still records its parent object. The diff shows the edits beside unchanged context and original line numbers."
+    },
+    {
+      "startMs": 110395,
+      "endMs": 121435,
+      "title": "17 of 22 checks pass. Five still fail.",
+      "text": "Seventeen of twenty-two checks passed. This configuration is now correct, but its change report still says service instead of service dot timeout. Five checks remain failed."
+    },
+    {
+      "startMs": 122875,
+      "endMs": 133235,
+      "title": "Functional failures, followed by a timed-out attempt",
+      "text": "A later attempt hit the five-minute time limit before its checks could finish. The result is an execution error, with no accepted repair. Earlier failures remain visible."
+    },
+    {
+      "startMs": 134955,
+      "endMs": 148795,
+      "title": "Take the evidence into your review",
+      "text": "Download the evidence to keep the starting source, proposals, recorded results, logs, and accounting together. These walkthroughs show saved real runs. To make a new attempt, return to Try a repair and select Generate patch."
+    }
+  ],
+  "artifactDirectory": "/home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01",
+  "reviewFrames": "/home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01/review-frames",
+  "publication": "Handled separately by coordinator; no publication operation performed by recording agent."
+}

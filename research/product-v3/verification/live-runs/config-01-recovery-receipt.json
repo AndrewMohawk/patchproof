@@ -1,0 +1,69 @@
+{
+  "status": "observed",
+  "startedAt": "2026-09-28T05:23:43.641Z",
+  "finishedAt": "2026-09-28T05:27:34.016Z",
+  "taskId": "v3-config-overlay",
+  "runId": "9d3cd90e-94e2-4787-b294-5caa577b40e1",
+  "terminalStatus": "infrastructure_error",
+  "reason": "infrastructure_error",
+  "bundleDigest": "sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd",
+  "baseline": {
+    "pass": 15,
+    "fail": 7,
+    "error": 0
+  },
+  "attempts": [
+    {
+      "id": 1,
+      "accepted": false,
+      "pass": 17,
+      "fail": 5,
+      "error": 0
+    },
+    {
+      "id": 2,
+      "accepted": false,
+      "pass": 0,
+      "fail": 0,
+      "error": 22
+    }
+  ],
+  "usage": {
+    "inferenceCalls": 2,
+    "inputTokens": 6333,
+    "outputTokens": 1714,
+    "sandboxCpuSeconds": null,
+    "measuredCostUsd": 0.00079134,
+    "costIsEstimate": true,
+    "elapsedMs": 299658
+  },
+  "observations": [
+    {
+      "at": "2026-09-28T05:23:44.190Z",
+      "phase": "baseline_capture",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:24:11.153Z",
+      "phase": "repair",
+      "candidates": 0
+    },
+    {
+      "at": "2026-09-28T05:24:40.190Z",
+      "phase": "check",
+      "candidates": 1
+    },
+    {
+      "at": "2026-09-28T05:26:21.413Z",
+      "phase": "repair",
+      "candidates": 1
+    },
+    {
+      "at": "2026-09-28T05:26:38.268Z",
+      "phase": "check",
+      "candidates": 2
+    }
+  ],
+  "errors": [],
+  "posts": []
+}

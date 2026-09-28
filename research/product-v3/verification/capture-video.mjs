@@ -76,6 +76,15 @@ try {
     assert.ok(action.selector || (action.role && action.name));
     return action.selector ? page.locator(action.selector) : page.getByRole(action.role, { name: action.name, exact: true });
   };
+  const readStable = async action => {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try { return await action(); }
+      catch (error) {
+        if (attempt === 2 || !/not attached|detached/i.test(String(error))) throw error;
+        await page.waitForTimeout(250);
+      }
+    }
+  };
   for (const scene of manifest.scenes) {
     assert.match(scene.id, /^[a-z0-9-]+$/);
     const segment = audio.get(scene.id);
@@ -88,7 +97,20 @@ try {
           break;
         case 'click': await target(action).click(); break;
         case 'wait': await target(action).waitFor({ state: 'visible' }); break;
-        case 'scroll': await target(action).scrollIntoViewIfNeeded(); break;
+        case 'scroll': await readStable(() => target(action).scrollIntoViewIfNeeded()); break;
+        case 'scroll-by':
+          assert.ok(Number.isInteger(action.y) && Math.abs(action.y) <= 800);
+          await readStable(() => target(action).evaluate((element, y) => { element.scrollTop += y; }, action.y));
+          break;
+        case 'press':
+          assert.ok(['PageDown', 'Home', 'End'].includes(action.key));
+          await target(action).press(action.key);
+          break;
+        case 'select':
+          assert.equal(await target(action).evaluate(element => element.tagName), 'SELECT');
+          assert.equal(typeof action.label, 'string');
+          await target(action).selectOption({ label: action.label });
+          break;
         case 'top': await page.evaluate(() => window.scrollTo(0, 0)); break;
         case 'contains': assert.ok((await target(action).innerText()).includes(action.text), `Missing expected scene text: ${action.text}`); break;
         case 'download': {
@@ -111,14 +133,28 @@ try {
     await page.screenshot({ path: join(output, `${scene.id}.png`) });
     await chmod(join(output, `${scene.id}.png`), 0o600);
     const narrationStartMs = Math.round(performance.now() - start) + 200;
-    await page.waitForTimeout(segment.durationSeconds * 1000 + 1000);
+    const scrolls = [];
+    let previousScroll = 0;
+    for (const scroll of scene.scrolls ?? []) {
+      assert.ok(scroll.afterSeconds > previousScroll && scroll.afterSeconds < segment.durationSeconds);
+      assert.ok(Number.isInteger(scroll.y) && Math.abs(scroll.y) <= 800);
+      await page.waitForTimeout(Math.max(0, narrationStartMs + scroll.afterSeconds * 1000 - (performance.now() - start)));
+      await readStable(() => target(scroll).evaluate((element, y) => { element.scrollTop += y; }, scroll.y));
+      scrolls.push({ ...scroll, atMs: Math.round(performance.now() - start) });
+      previousScroll = scroll.afterSeconds;
+    }
+    await page.waitForTimeout(Math.max(0, narrationStartMs + segment.durationSeconds * 1000 + 800 - (performance.now() - start)));
     report.scenes.push({ id: scene.id, title: scene.title, annotation: scene.annotation,
-      startMs, narrationStartMs, endMs: Math.round(performance.now() - start), url: page.url() });
+      startMs, narrationStartMs, endMs: Math.round(performance.now() - start), url: page.url(), scrolls });
   }
   // Public visitors may create other runs during capture. The shown immutable
   // evidence must remain byte-identical; unrelated additions are recorded.
   const after = JSON.parse(await get('/runs'));
   await save('runs-after.json', after);
+  for (const asset of report.assets) {
+    asset.unchanged = sha(await get(asset.path)) === asset.sha256;
+    assert.ok(asset.unchanged, `Deployed asset changed during capture: ${asset.path}`);
+  }
   for (const pin of manifest.evidence) {
     const bytes = await get(`/runs/${pin.id}/evidence`);
     const unchanged = sha(bytes) === sha(pinnedBytes.get(pin.id));

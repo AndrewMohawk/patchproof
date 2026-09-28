@@ -1,0 +1,34 @@
+{
+  "scenes": [
+    {
+      "id": "01-start",
+      "title": "Start with the code and the goal",
+      "annotation": "Choose a maintenance task. Read the starting source, requirements, and concrete examples before generating a patch.",
+      "narration": "Patch Proof checks AI code repairs before you use them. Choose a maintenance task. Read the starting source alongside its requirements and concrete examples. These are the actual files and behavior the model will work with."
+    },
+    {
+      "id": "02-how",
+      "title": "A real model proposes. Fixed checks decide.",
+      "annotation": "Nebius Token Factory generates a proposal. Isolated local Docker checks compare its behavior with fixed expected results.",
+      "narration": "Generate patch makes a real request through Nebius Token Factory. An isolated local Docker runner checks the code against fixed expected results. The model can edit allowed source files, but it cannot rewrite those checks."
+    },
+    {
+      "id": "06-success-decision",
+      "title": "A passing result still needs your review",
+      "annotation": "Passing the declared checks supports a review decision. It does not prove every possible input, and nothing merges automatically.",
+      "narration": "All the declared checks now pass. You still inspect the change before using it. Passing these cases does not prove correctness for every possible input. Patch Proof does not merge the patch automatically."
+    },
+    {
+      "id": "10-failure-decision",
+      "title": "A failed repair remains a complete record",
+      "annotation": "No accepted repair. Inspect every attempt and its results; a partial pass does not become a successful repair.",
+      "narration": "This run did not produce an accepted repair. The full attempt history stays visible, including unsuccessful work. A partial pass is not a completed fix. You can inspect exactly why the run stopped."
+    },
+    {
+      "id": "11-evidence",
+      "title": "Take the evidence into your review",
+      "annotation": "Download the starting source, proposals, results, logs, and accounting. These are saved real runs; watching does not call the model.",
+      "narration": "Download the evidence to keep the starting source, proposals, recorded results, logs, and accounting together. These walkthroughs show saved real runs. To make a new attempt, return to Try a repair and select Generate patch."
+    }
+  ]
+}
