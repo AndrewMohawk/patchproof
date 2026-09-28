@@ -36,6 +36,10 @@ The API serves only `GET /tasks`, `GET /runs`, `GET /runs/:id` and `GET /runs/:i
 
 Replay is a separate operator action. Recorded live evidence needs the current private replay configuration and its digest; the archive does not present the historical bare replay command as sufficient authorization. No viewing action triggers a check, model call, merge, publication or upload. Provider access, real-provider proof and any public deployment remain separate requirements.
 
+For a video of explicitly selected existing runs, use the separate
+[archive recorder](archive-recording.md). It observes this read-only surface and
+preserves run/bundle/video custody without launching the mock rehearsal helper.
+
 Verification uses invented unit bundles only:
 
 ```sh

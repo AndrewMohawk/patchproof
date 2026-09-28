@@ -7,7 +7,9 @@ commits. `AndrewMohawk/patchproof` was created privately. The owner confirmed
 eligibility/conflict review, contribution rights and AI-assisted development,
 then approved **$25 total**. The coordinator reserves $5 for smoke and $20 for
 pilot, with zero allocation for final evaluation or hosting. No expiry was
-specified; credits and prices remain unverified. Actual provider spending is $0.
+specified; credits remain unverified. NVIDIA token rates were checked during
+account discovery. One marker call has a $0.00000288 usage-priced estimate;
+actual billing is unverified, with $0.10 held pending reconciliation.
 
 When asked for scoped provider access, the owner instructed: **“just build the
 whole thing and we can get that afterwards.”** This explicitly supersedes the
@@ -15,7 +17,8 @@ original sequencing restriction for local implementation: fixtures, runtime,
 repair policies and the full UI may be built before account access and G2.
 It does not pass G0/G1/G2, authorize spending beyond the cap, or make mock results
 competition evidence. `owner-decisions.json` records this exception. No repeated
-access approval is needed; access is deliberately deferred.
+spending approval is needed within the existing ceiling. The owner later supplied
+Token Factory access, as recorded below.
 
 Private repository creation and pushes are authorized. Public source/video,
 public hosting, event entry, accepting terms and auto-merge remain unauthorized.
