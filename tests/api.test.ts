@@ -63,7 +63,7 @@ test('real loopback HTTP flow: catalogue → mock record → events → typed ev
   const shell = await page.text();
   // The same shell supports live/mock archives. Rendered mode comes from /tasks;
   // until metadata loads, it must remain neutral with execution disabled.
-  assert.match(shell, /Loading workspace…/);
+  assert.match(shell, /Connecting…/);
   assert.match(shell, /id="compare-run"[^>]*disabled/);
   for (const path of ['/app.js', '/style.css']) assert.equal((await fetch(`${base}${path}`)).status, 200);
 

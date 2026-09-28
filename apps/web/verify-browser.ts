@@ -1,13 +1,22 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { chromium } from 'playwright';
+import { chromium, type Page } from 'playwright';
 import type { ProductEvidence, ProductRun } from '../../packages/contracts/src/product.ts';
 
 // Exercises the actual running API and container checks, with no intercepted responses.
 // Usage: node apps/web/verify-browser.ts http://127.0.0.1:43171
 const base = (process.argv[2] ?? 'http://127.0.0.1:43171').replace(/\/$/, '');
 assert.ok(/^http:\/\/(?:127\.0\.0\.1|localhost):\d+$/.test(base), 'Browser verification requires a loopback server.');
+const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+async function showFullRequirements(page: Page) {
+  const disclosure = page.locator('#task-detail details').filter({ has: page.locator('summary').filter({ hasText: /^Full requirements$/ }) });
+  if (!await disclosure.evaluate(element => (element as HTMLDetailsElement).open)) await disclosure.locator('summary').click();
+}
+async function openRunTab(page: Page, name: 'Patch' | 'Checks' | 'Activity' | 'Run details') {
+  const tab = page.getByRole('tab', { name, exact: true }); await tab.click();
+  assert.equal(await tab.getAttribute('aria-selected'), 'true');
+}
 const demoTaskId = 'stable-unique-01';
 const resumeRunIds = process.argv[3] ? process.argv[3].split(',') : [];
 const recordingDirectory = process.argv[4];
@@ -37,9 +46,11 @@ try {
   await page.goto(base, { waitUntil: 'domcontentloaded' });
   const demoTaskCard = page.locator(`.task-card[data-task-id="${demoTaskId}"]`);
   await demoTaskCard.waitFor({ state: 'visible' });
-  assert.equal(await page.title(), 'PatchProof — review the evidence');
-  assert.match(await page.locator('.mode-banner').innerText(), /No paid inference or competition-ready evidence/);
-  assert.match(await page.locator('.mode-indicator').innerText(), /Mock model · Local checks/);
+  assert.equal(await page.title(), 'PatchProof');
+  await page.locator('.workspace-status summary').click();
+  assert.match(await page.locator('#mode-description').innerText(), /scripted|mock/i);
+  assert.match(await page.locator('#mode-indicator').innerText(), /Mock model/);
+  await page.locator('.workspace-status summary').click();
   caption('LOCAL REHEARSAL: scripted model, real local container checks. No paid inference or benchmark result.');
   if (recordingDirectory) await page.waitForTimeout(3500);
   assert.ok(await page.locator('.task-card').count() > 1, 'The UI must display more than one curated task.');
@@ -53,23 +64,27 @@ try {
   assert.match(unsupportedTask.id, /^[a-zA-Z0-9_-]+$/);
   const unsupportedTaskCard = page.locator(`.task-card[data-task-id="${unsupportedTask.id}"]`);
   await demoTaskCard.click();
-  assert.equal(await page.locator('#task-detail h2').innerText(), demoTask.title);
+  await showFullRequirements(page);
+  assert.match(await page.locator('#task-detail').innerText(), new RegExp(escapeRegex(demoTask.title)));
   await unsupportedTaskCard.click();
-  assert.equal(await page.locator('#task-detail h2').innerText(), unsupportedTask.title, 'Task selection must display the selected task details.');
+  await showFullRequirements(page);
+  assert.match(await page.locator('#task-detail').innerText(), new RegExp(escapeRegex(unsupportedTask.title)), 'Task selection must retain the exact task statement.');
   assert.equal(await unsupportedTaskCard.getAttribute('aria-pressed'), 'true');
-  assert.ok(await page.getByRole('button', { name: 'Run PatchProof →', exact: true }).isDisabled(), 'Unsupported fixtures must require a connected model.');
-  assert.match(await page.locator('#task-detail').innerText(), /Requires connected model/);
+  assert.ok(await page.getByRole('button', { name: 'Generate patch', exact: true }).isDisabled(), 'Unsupported fixtures must require a connected model.');
+  assert.match(await page.locator('#task-detail').innerText(), /needs a connected model/);
   await demoTaskCard.click();
   assert.equal(await demoTaskCard.getAttribute('aria-pressed'), 'true');
-  assert.equal(await page.locator('#task-detail h2').innerText(), demoTask.title);
+  await showFullRequirements(page);
+  assert.match(await page.locator('#task-detail').innerText(), new RegExp(escapeRegex(demoTask.title)));
   assert.ok(await page.locator('#task-detail .requirements li').count() > 0);
-  assert.equal(await page.locator('input[type="text"], textarea, input[type="file"]').count(), 0, 'Demo accepts curated task IDs only.');
+  assert.equal(await page.locator('textarea, input[type="file"]').count(), 0, 'Demo has no source or repository upload control.');
+  assert.equal(await page.locator('#task-search').count(), 1, 'Search filters curated examples only.');
   await page.screenshot({ path: '/tmp/patchproof-tasks-desktop.png', fullPage: true });
   caption('Choose a curated maintenance task and inspect its requirements. Unsupported tasks require a connected model.');
   if (recordingDirectory) await page.waitForTimeout(3500);
 
-  if (resumeRunIds.length) await page.locator('[data-nav="compare"]').click();
-  else await page.getByRole('button', { name: 'Compare all three', exact: true }).click();
+  await page.getByRole('link', { name: 'Compare approaches', exact: true }).click();
+  if (!resumeRunIds.length) await page.locator('#compare-run').click();
   await page.locator('#compare-view').waitFor({ state: 'visible' });
   caption('All three policies share the same allowance. Progress comes from recorded coordinator events and container checks.');
   // Observe cleanup/publication after the fixed 120-second execution deadline;
@@ -96,7 +111,7 @@ try {
     assert.equal(run.policyDigest, comparisonRuns[0]!.policyDigest);
     assert.notEqual(run.terminalStatus, 'infrastructure_error', run.reason ?? 'Container execution failed.');
   }
-  await page.getByText('MATCHED CONTEXT', { exact: true }).waitFor();
+  await page.locator('.comparison-context').filter({ hasText: /Same inputs and limits/ }).waitFor();
   await page.screenshot({ path: '/tmp/patchproof-comparison-desktop.png', fullPage: true });
   const product = comparisonRuns.find(run => run.variant === 'patchproof')!;
   const baseline = comparisonRuns.find(run => run.variant === 'baseline')!;
@@ -107,6 +122,7 @@ try {
   assert.ok(product.candidates.length > 0, 'The product must record a real candidate.');
   const rejectedCandidate = product.candidates.find(candidate => !candidate.accepted && candidate.rejectionReason);
   assert.ok(rejectedCandidate, 'The demonstration must retain an actual rejected candidate and its reason.');
+  assert.ok(rejectedCandidate.rejectionReason);
   const nonpassingChecks = [...rejectedCandidate.visibleChecks, ...rejectedCandidate.acceptanceChecks].filter(check => check.status !== 'pass');
   assert.ok(nonpassingChecks.length > 0, 'The rejected candidate must retain its nonpassing declared check evidence.');
   assert.ok(product.candidates.some(candidate => candidate.accepted), 'The demonstration task must reach an accepted candidate.');
@@ -115,14 +131,23 @@ try {
   if (recordingDirectory) await page.waitForTimeout(5000);
 
   await page.locator('.variant-card.featured a').click();
-  await page.getByRole('link', { name: 'Download evidence ↓', exact: true }).waitFor();
-  assert.match(await page.locator('#evidence').innerText(), /Requirement coverage/);
-  assert.match(await page.locator('#evidence').innerText(), /Resource accounting/);
-  assert.match(await page.locator('#evidence').innerText(), /Execution journal/);
-  await page.getByRole('button', { name: new RegExp(`^Candidate ${rejectedCandidate.id} · rejected(?: · selected)?$`) }).click();
-  assert.match(await page.locator('.candidate-tabs').innerText(), /rejected/);
-  assert.ok(await page.locator('.failure-card').count() > 0);
+  await page.getByRole('link', { name: 'Download evidence', exact: true }).waitFor();
+  await openRunTab(page, 'Checks');
+  await page.getByText('Requirements checked', { exact: true }).click();
+  assert.ok(await page.locator('.coverage-list').isVisible());
+  await openRunTab(page, 'Run details');
+  assert.ok(await page.locator('.accounting').isVisible());
+  await openRunTab(page, 'Activity');
+  assert.ok(await page.locator('.event-list').isVisible());
+  await openRunTab(page, 'Patch');
+  await page.getByRole('button', { name: new RegExp(`^Attempt ${rejectedCandidate.id} · Failed`) }).click();
+  assert.match(await page.locator('.candidate-tabs').innerText(), /Failed/);
+  assert.match(await page.locator('.candidate-tabs').innerText(), /Failed/);
   assert.ok(await page.locator('.diff-line').count() > 0);
+  await openRunTab(page, 'Checks');
+  assert.ok(await page.locator('.check-values').count() > 0, 'Rejected attempt retains expected and observed failure values.');
+  await page.getByText('Attempt decision', { exact: true }).click();
+  assert.ok((await page.locator('[data-panel="checks"]').innerText()).includes(rejectedCandidate.rejectionReason), 'The exact recorded rejection reason remains inspectable.');
   await page.getByText(/Observed result and log/).first().click();
   assert.ok(await page.locator('.check-log').first().isVisible());
   if (!resumeRunIds.length) {
@@ -135,7 +160,7 @@ try {
   if (recordingDirectory) await page.waitForTimeout(5000);
   await page.screenshot({ path: '/tmp/patchproof-evidence-desktop.png', fullPage: true });
   const [download] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('link', { name: 'Download evidence ↓', exact: true }).click(),
+    page.waitForEvent('download'), page.getByRole('link', { name: 'Download evidence', exact: true }).click(),
   ]);
   const stream = await download.createReadStream();
   const chunks: Buffer[] = [];
@@ -150,20 +175,21 @@ try {
   if (recordingDirectory) await page.waitForTimeout(3500);
 
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await page.getByRole('link', { name: 'Download evidence ↓', exact: true }).waitFor();
+  await page.getByRole('link', { name: 'Download evidence', exact: true }).waitFor();
   assert.equal(new URL(page.url()).hash, `#evidence/${product.id}`, 'Reload preserves the addressed run.');
   await page.setViewportSize({ width: 390, height: 844 });
   caption('The same evidence, comparison and task views work on a narrow screen. Provider integration and human review remain pending.');
-  for (const view of ['evidence', 'compare', 'tasks']) {
-    await page.locator(`[data-nav="${view}"]`).click();
+  for (const view of ['evidence', 'compare', 'runs', 'tasks']) {
+    await page.evaluate(next => { location.hash = next; }, view);
     await page.locator(`#${view}-view`).waitFor({ state: 'visible' });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     assert.equal(overflow, false, `${view} view must not overflow on mobile.`);
     await page.screenshot({ path: `/tmp/patchproof-${view}-mobile.png`, fullPage: true });
     if (recordingDirectory) await page.waitForTimeout(1500);
   }
+  await page.locator('#mobile-task').focus();
   await page.keyboard.press('Tab');
-  assert.ok(await page.evaluate(() => document.activeElement !== document.body), 'Keyboard focus must reach an interactive control.');
+  assert.equal(await page.getByRole('button', { name: 'Generate patch', exact: true }).evaluate(element => element === document.activeElement), true, 'Tab from the mobile example picker must reach Generate patch.');
   assert.deepEqual(errors, []);
   assert.ok(requests.every(url => url.startsWith(`${base}/`)), 'Browser requests stay on the loopback application.');
   const report = {
@@ -171,9 +197,9 @@ try {
     browserVersion: browser.version(), base, observation: resumeRunIds.length ? 'resumed_existing_ui_runs' : 'new_ui_comparison', resumeRunIds, runs: comparisonRuns.map(run => ({ id: run.id, variant: run.variant, status: run.terminalStatus, reason: run.reason })),
     selectedTaskId: demoTaskId, unsupportedTaskId: unsupportedTask.id,
     rejectedCandidate: { id: rejectedCandidate.id, reason: rejectedCandidate.rejectionReason, nonpassingChecks: nonpassingChecks.map(check => ({ id: check.id, requirementId: check.requirementId, status: check.status })) },
-    checks: ['task selection updates requirements', 'unsupported tasks cannot launch mock repair', 'honest mock labels', 'real three-variant execution', 'matched resource limits', 'candidate rejection and repair', 'local operation IDs', 'readable diff and check logs', 'downloaded evidence identity', 'addressed-run reload', 'mobile all views', 'keyboard focus', 'no console errors', 'same-origin browser traffic'],
+    checks: ['task selection updates requirements', 'unsupported tasks cannot launch mock repair', 'honest mock labels', 'real three-variant execution', 'matched resource limits', 'candidate rejection and repair', 'local operation IDs', 'readable diff and check logs', 'downloaded evidence identity', 'addressed-run reload', 'mobile all views including run history', 'result tab navigation', 'keyboard focus', 'no console errors', 'same-origin browser traffic'],
     artifactDigest: evidence.bundleDigest, createdIds,
-    screenshots: ['/tmp/patchproof-tasks-desktop.png', '/tmp/patchproof-comparison-desktop.png', '/tmp/patchproof-evidence-desktop.png', '/tmp/patchproof-evidence-mobile.png', '/tmp/patchproof-compare-mobile.png', '/tmp/patchproof-tasks-mobile.png'],
+    screenshots: ['/tmp/patchproof-tasks-desktop.png', '/tmp/patchproof-comparison-desktop.png', '/tmp/patchproof-evidence-desktop.png', '/tmp/patchproof-evidence-mobile.png', '/tmp/patchproof-compare-mobile.png', '/tmp/patchproof-runs-mobile.png', '/tmp/patchproof-tasks-mobile.png'],
   };
   await mkdir('.local/verification', { recursive: true });
   await writeFile('.local/verification/product-browser.json', JSON.stringify(report, null, 2) + '\n');

@@ -18,7 +18,7 @@ const origin = 'https://patchproof.andrewmohawk.xyz';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runPath = /^\/runs\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?:\/(?:events|evidence))?$/;
 const readPaths = new Set(['/', '/app.js', '/style.css', '/favicon.ico', '/healthz', '/tasks', '/runs']);
-const variantNames = { baseline: 'Ordinary repair', checks_only: 'Checks only', patchproof: 'PatchProof' };
+const variantNames = { baseline: 'Standard repair', checks_only: 'Repair with extra checks', patchproof: 'PatchProof' };
 const signature = (run: ProductRun) => digestJson({ taskId: run.taskId, schemaVersion: run.schemaVersion,
   sourceDigest: run.sourceDigest, policyDigest: run.policyDigest, runtimeLockDigest: run.runtimeLockDigest, mode: run.mode, limits: run.limits });
 const timestamp = (ms: number) => new Date(Math.max(0, Math.round(ms))).toISOString().slice(11, 23).replace('.', ',');
@@ -183,11 +183,11 @@ async function main() {
     await page.screenshot({ path: join(output, '01-task.png'), fullPage: true });
     await page.waitForTimeout(1500);
     if (variant !== 'patchproof') {
-      await page.locator('[data-nav="compare"]').click(); await page.locator('#compare-task').selectOption(taskId);
+      await page.getByRole('link', { name: 'Compare approaches', exact: true }).click(); await page.locator('#compare-task').selectOption(taskId);
     }
-    const control = variant === 'patchproof' ? page.getByRole('button', { name: 'Run PatchProof →', exact: true }) :
+    const control = variant === 'patchproof' ? page.getByRole('button', { name: 'Generate patch', exact: true }) :
       page.locator('.variant-card').filter({ has: page.getByRole('heading', { name: variantNames[variant], exact: true }) })
-        .getByRole('button', { name: 'Run this approach →', exact: true });
+        .getByRole('button', { name: 'Run this approach', exact: true });
     assert.equal(await control.count(), 1, 'The real UI has no single-run button for this variant; no request was submitted.');
     assert.equal(await control.isEnabled(), true, 'The real UI does not currently allow this run.');
     const [creation] = await Promise.all([page.waitForResponse(response => response.url() === `${origin}/runs` && response.request().method() === 'POST', { timeout: 30_000 }), control.click()]);
@@ -214,21 +214,25 @@ async function main() {
     caption(`Recorded outcome: ${run.terminalStatus}. ${run.candidates.length} candidates; ${run.usage.inferenceCalls} model operations. No benchmark advantage is inferred.`);
     await page.screenshot({ path: join(output, '02-terminal.png'), fullPage: true });
     for (const candidate of run.candidates) {
-      await page.getByRole('button', { name: new RegExp(`^Candidate ${candidate.id} ·`) }).click();
-      const patch = page.locator('.diff').first();
+      await page.getByRole('button', { name: new RegExp(`^Attempt ${candidate.id} ·`) }).click();
+      await page.getByRole('tab', { name: 'Patch', exact: true }).click();
+      const patch = page.locator('[data-panel="patch"] .diff');
       if (await patch.count()) await patch.scrollIntoViewIfNeeded();
       caption(`Candidate ${candidate.id}: ${candidate.accepted ? 'passed declared checks' : candidate.rejectionReason ?? 'not accepted'}.`);
       await page.screenshot({ path: join(output, `candidate-${candidate.id}-patch.png`), fullPage: false });
-      const logs = page.getByText(/^Observed result and log ·/).first();
+      await page.getByRole('tab', { name: 'Checks', exact: true }).click();
+      const logs = page.locator('[data-panel="checks"]').getByText(/^Observed result and log ·/).first();
       if (await logs.count()) { await logs.click(); await logs.scrollIntoViewIfNeeded(); await page.screenshot({ path: join(output, `candidate-${candidate.id}-log.png`), fullPage: false }); }
       await page.waitForTimeout(1500);
     }
+    await page.getByRole('tab', { name: 'Activity', exact: true }).click();
     await page.getByRole('heading', { name: 'Execution journal', exact: true }).scrollIntoViewIfNeeded();
     await page.screenshot({ path: join(output, '03-journal.png'), fullPage: false });
-    await page.getByRole('heading', { name: 'Resource accounting', exact: true }).scrollIntoViewIfNeeded();
+    await page.getByRole('tab', { name: 'Run details', exact: true }).click();
+    await page.getByRole('heading', { name: 'Cost and limits', exact: true }).scrollIntoViewIfNeeded();
     caption(`Provider cost: ${run.usage.measuredCostUsd === null ? 'unmeasured' : `${run.usage.measuredCostUsd} USD${run.usage.costIsEstimate ? ', estimated' : ', recorded'}`}. Sandbox CPU: ${run.usage.sandboxCpuSeconds === null ? 'unmeasured' : `${run.usage.sandboxCpuSeconds} seconds`}.`);
     await page.screenshot({ path: join(output, '04-accounting.png'), fullPage: false }); await page.waitForTimeout(2000);
-    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('link', { name: 'Download evidence ↓', exact: true }).click()]);
+    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('link', { name: 'Download evidence', exact: true }).click()]);
     assert.equal(download.suggestedFilename(), `${run.id}.json`);
     const downloadPath = await download.path(); assert.ok(downloadPath, await download.failure() ?? 'Evidence download unavailable.');
     await preserveEvidence(run, await readFile(downloadPath));
@@ -242,7 +246,7 @@ async function main() {
     await save('comparison.json', { createdRunId: run.id, matchingExistingRunIds: matching.map(item => item.id),
       missingVariants: Object.keys(variantNames).filter(key => key !== variant && !matching.some(item => item.variant === key)),
       criterion: 'Same task, schema, mode, source, policy, runtime lock and every resource limit.', benchmarkClaim: false });
-    await page.locator('[data-nav="compare"]').click(); await page.locator('#compare-task').selectOption(taskId);
+    await page.getByRole('link', { name: 'Compare approaches', exact: true }).click(); await page.locator('#compare-task').selectOption(taskId);
     caption(`${matching.length + 1} recorded approach${matching.length ? 'es' : ''} match these inputs and limits. Missing approaches remain explicit. No additional run is started.`);
     await page.screenshot({ path: join(output, '05-comparison.png'), fullPage: true }); await page.waitForTimeout(2500);
     assert.equal(allowedPosts, 1); observerComplete = true;

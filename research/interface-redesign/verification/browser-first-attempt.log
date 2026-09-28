@@ -1,0 +1,58 @@
+
+> patchproof@0.0.1 test:browser
+> node scripts/verify-browser.ts
+
+(node:1701717) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/errors:998
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /home/andrewmohawk/.nvm/versions/node/v25.5.0/bin/node /home/andrewmohawk/patchproof/apps/web/verify-browser.ts http://127.0.0.1:46179
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Keyboard focus must reach an interactive control.
+    at file:///home/andrewmohawk/patchproof/apps/web/verify-browser.ts:191:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v25.5.0
+
+    at genericNodeError (node:internal/errors:998:15)
+    at wrappedFn (node:internal/errors:543:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:20)
+    at maybeClose (node:internal/child_process:1084:16)
+    at Socket.<anonymous> (node:internal/child_process:456:11)
+    at Socket.emit (node:events:508:20)
+    at Pipe.<anonymous> (node:net:346:12) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '/home/andrewmohawk/.nvm/versions/node/v25.5.0/bin/node /home/andrewmohawk/patchproof/apps/web/verify-browser.ts http://127.0.0.1:46179',
+  stdout: '',
+  stderr: 'node:internal/modules/run_main:107\n' +
+    '    triggerUncaughtException(\n' +
+    '    ^\n' +
+    '\n' +
+    'AssertionError [ERR_ASSERTION]: Keyboard focus must reach an interactive control.\n' +
+    '    at file:///home/andrewmohawk/patchproof/apps/web/verify-browser.ts:191:10 {\n' +
+    '  generatedMessage: false,\n' +
+    "  code: 'ERR_ASSERTION',\n" +
+    '  actual: false,\n' +
+    '  expected: true,\n' +
+    "  operator: '==',\n" +
+    "  diff: 'simple'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v25.5.0\n'
+}
+
+Node.js v25.5.0

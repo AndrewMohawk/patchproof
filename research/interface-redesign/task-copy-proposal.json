@@ -1,0 +1,185 @@
+{
+  "purpose": "Hand-authored display copy proposal. Expected behavior illustrations from the public task contract, not executed results. Exact original title, description and requirements remain available.",
+  "tasks": [
+    {
+      "id": "stable-unique-01",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "originalTitle": "Retain first occurrences throughout a list",
+      "title": "Remove repeated list items",
+      "summary": "The function misses duplicates that are separated by other items. Keep the first copy of each item, in order.",
+      "expectedBehavior": "unique([1, 2, 1]) → [1, 2]"
+    },
+    {
+      "id": "v2-r01-t02",
+      "sourceDigest": "sha256:83cfde7b695762fce2f7b5db03e307d5abcf68a18f36d5e42e5f2ad12a666a99",
+      "policyDigest": "sha256:ad1a0592c97317091c074a5549c969dd1467ea1bae6528bad5735958091fe56e",
+      "originalTitle": "Preserve a final partial list block",
+      "title": "Keep the last short batch",
+      "summary": "Splitting a list into batches currently drops the last batch when it is short. Keep every item.",
+      "expectedBehavior": "blocks([1, 2, 3], 2) → [[1, 2], [3]]"
+    },
+    {
+      "id": "v2-r01-t03",
+      "sourceDigest": "sha256:1fad6b6f83b12af44d0e015692443f2764ef376d85280e3ffb7f5327127503fe",
+      "policyDigest": "sha256:82c84b2cee8f4d70393ce18cfe08fc58c8890e918d60f6dc4423b937b3d34868",
+      "originalTitle": "Honor signed cyclic list shifts",
+      "title": "Rotate lists in both directions",
+      "summary": "Negative shifts currently rotate the wrong way. Positive shifts should move right; negative shifts should move left.",
+      "expectedBehavior": "rotate([1, 2, 3], -1) → [2, 3, 1]"
+    },
+    {
+      "id": "v2-r01-t04",
+      "sourceDigest": "sha256:00ad1365467e0ae65fe324fea7038af4e63ceadb76f8a5823093322557eb327a",
+      "policyDigest": "sha256:b00cbf39f7aba4fba9e008f45818e7f120ada567e447bce4914a7598c873ff62",
+      "originalTitle": "Keep unpaired values during list weaving",
+      "title": "Keep leftover items when combining lists",
+      "summary": "Alternating between two lists currently loses items from the longer list. Append those leftover items in order.",
+      "expectedBehavior": "interleave([1, 2], [3]) → [1, 3, 2]"
+    },
+    {
+      "id": "v2-r01-t05",
+      "sourceDigest": "sha256:477dc47cf8d16a9945ec979f71e600911b6d939f866743f3a5703cf441455d91",
+      "policyDigest": "sha256:e0dbcdd813e27b5a0450fb2bec53a4f0109125f33934042748966f8b246df339",
+      "originalTitle": "Count adjacent list runs independently",
+      "title": "Count consecutive repeats separately",
+      "summary": "The function combines matching items even when they are separated. Count each consecutive group on its own.",
+      "expectedBehavior": "runs([1, 1, 2, 1]) → [{\"value\":1,\"count\":2},{\"value\":2,\"count\":1},{\"value\":1,\"count\":1}]"
+    },
+    {
+      "id": "v2-r02-t01",
+      "sourceDigest": "sha256:2f783fc7146371ffacb570b1937785fd1c8af9348edbb321362a8247c2a54b09",
+      "policyDigest": "sha256:3c54e159224f0646a88c1db8c6013a1f93653e39dba919a5bec7d4051febb321",
+      "originalTitle": "Repeated page marks fragment contiguous reading runs",
+      "title": "Ignore duplicate page marks",
+      "summary": "Repeated page marks split reading ranges incorrectly. Sort the distinct pages and group consecutive numbers.",
+      "expectedBehavior": "page_runs([1, 2, 2, 3]) → [[1, 3]]"
+    },
+    {
+      "id": "v2-r02-t02",
+      "sourceDigest": "sha256:d680ab4236cfbb7bb345013ced309308a694235db0b1cb555fe740f78db2a776",
+      "policyDigest": "sha256:00d5fd806061b43b8e060741ea10c87a63378b5e889c89a66b176c789919fa9a",
+      "originalTitle": "Exact-capacity sessions split too early",
+      "title": "Fill reading sessions to the limit",
+      "summary": "Chapters that exactly fill a reading session are split too early. Keep them together when their total equals the limit.",
+      "expectedBehavior": "chapter_sessions([3, 2], 5) → [[3, 2]]"
+    },
+    {
+      "id": "v2-r02-t03",
+      "sourceDigest": "sha256:31bbec94d8747beec54710684392ae0095a27c817389f2934610abe9893aaca0",
+      "policyDigest": "sha256:848f710ef2ffbd75acdfaa3dd6b780d101d4a1f729a6b082d43e7ab1e6eb2afe",
+      "originalTitle": "Chapter boundary pages resolve to the wrong chapter",
+      "title": "Keep a chapter’s last page in that chapter",
+      "summary": "Looking up the last page of a chapter gives the wrong chapter. Both page and chapter numbers start at one.",
+      "expectedBehavior": "locate_page([3, 4], 3) → {\"chapter\":1,\"page\":3}"
+    },
+    {
+      "id": "v2-r02-t04",
+      "sourceDigest": "sha256:4f40690adb9c7696e736414971357d0cc636f3aac412c83ee583d7a668310673",
+      "policyDigest": "sha256:848ff01ec02c2cea164ccae55ad509a2d13b59fcb8aa7aba8da77815711349da",
+      "originalTitle": "Later reading sessions replace earlier page totals",
+      "title": "Add every reading session to the total",
+      "summary": "A later reading session replaces a book’s earlier total. Add all its sessions and keep books in first-seen order.",
+      "expectedBehavior": "reading_totals([{\"book\":\"A\",\"pages\":2},{\"book\":\"A\",\"pages\":3}]) → [{\"book\":\"A\",\"pages\":5}]"
+    },
+    {
+      "id": "v2-r02-t05",
+      "sourceDigest": "sha256:c928620e20a4f0e9727068e82f9a5dcba8a7d280bb09de13efc00c8cd1ce8279",
+      "policyDigest": "sha256:9430601bad31e34fb5885b72f0374a64e07e4a9128349e6ea72ea9d8c71825b1",
+      "originalTitle": "Half-percent progress ties round down unexpectedly",
+      "title": "Round half-percent progress upward",
+      "summary": "Progress at an exact half percent uses the wrong rounding rule. Round halfway values upward.",
+      "expectedBehavior": "reading_percentage(1, 8) → 13"
+    },
+    {
+      "id": "v2-r03-t01",
+      "sourceDigest": "sha256:048c6fafc72c46a39d0c010480689363fef99db0973b0a83ba5513eb4c3afc0e",
+      "policyDigest": "sha256:4c6739355a9da6ce70ee7a5f02b291af509bd36147e01bafb4588186625cdeb2",
+      "originalTitle": "Retain fill-down history across blank worksheet spans",
+      "title": "Fill blank cells from earlier rows",
+      "summary": "Blank rows and missing cells erase the remembered value of a column. Keep that value for later blank cells.",
+      "expectedBehavior": "fill_down([[5], [], [null]]) → [[5], [], [5]]"
+    },
+    {
+      "id": "v2-r03-t02",
+      "sourceDigest": "sha256:fadeaa7547f295fb8c022469c6276ceb2f65496bb8bce17043703edf8797aa82",
+      "policyDigest": "sha256:8e0c36a17027968bd9933e586da61b19fdb7c3e53e510c453a4997d07cde2f21",
+      "originalTitle": "Keep explicit empty cells during worksheet transposition",
+      "title": "Preserve empty cells when swapping rows and columns",
+      "summary": "The transpose function replaces existing null cells with padding. Use padding only where a cell is missing.",
+      "expectedBehavior": "transpose([[1, null], [2, 3]], fill=9) → [[1, 2], [null, 3]]"
+    },
+    {
+      "id": "v2-r03-t03",
+      "sourceDigest": "sha256:5f05d5a856fadb9be4c8889d446cedd77b578cf9c5527665eed1b5f84390ee76",
+      "policyDigest": "sha256:a6d63ba20e850d2e66f379057d6480694726a57852bcba640043d50c04abdbd5",
+      "originalTitle": "Include the final complete worksheet window",
+      "title": "Include a window ending at the last row",
+      "summary": "The function drops a complete window that ends exactly at the worksheet boundary. Include it; omit only incomplete windows.",
+      "expectedBehavior": "row_windows([[1], [2]], 2) → [[[1], [2]]]"
+    },
+    {
+      "id": "v2-r03-t04",
+      "sourceDigest": "sha256:52d976a2c599cba09df6fa0ef7f210325e5ddb369f50bdc6549ace41814e3b5d",
+      "policyDigest": "sha256:0c522be1197f041ee10df16f9cf59cc759f20dba6622502ff04922991e18bff4",
+      "originalTitle": "Count zero-valued worksheet cells as populated",
+      "title": "Count zero as a populated cell",
+      "summary": "Column counts ignore zero-valued cells. Count every integer, including zero and negative values.",
+      "expectedBehavior": "column_summary([[0], [null], [2]]) → [{\"sum\":2,\"count\":2}]"
+    },
+    {
+      "id": "v2-r03-t05",
+      "sourceDigest": "sha256:9c17822fc8e8b8b8c982337f84dac822c4fe75f1b6b2686abb4dea6988ca8886",
+      "policyDigest": "sha256:685910bc721f5e8b703193cea2733b355f7bf96c29cb0366a242c8148d035486",
+      "originalTitle": "Limit worksheet row deduplication to consecutive runs",
+      "title": "Remove only neighboring duplicate rows",
+      "summary": "The function removes later rows that match an earlier row. Collapse consecutive duplicates; keep separated repeats.",
+      "expectedBehavior": "collapse_rows([[1], [1], [2], [1]]) → [[1], [2], [1]]"
+    },
+    {
+      "id": "v2-r04-t01",
+      "sourceDigest": "sha256:c4ec4248c6ba54f8c8087fb02bb6e16682afa7f56861a96fb57dd55a2f66c86b",
+      "policyDigest": "sha256:7eb2b849bb7f5fcb2434c8a1e7baa5400ad3c653a9856e25a955152433802302",
+      "originalTitle": "Restore adjacency-aware band coalescing",
+      "title": "Merge only neighboring bands of the same color",
+      "summary": "Combining colored bands currently moves separated colors together. Merge adjacent matches and preserve the pattern’s order.",
+      "expectedBehavior": "red(2), red(3), blue(1), red(2) → red(5), blue(1), red(2)"
+    },
+    {
+      "id": "v2-r04-t02",
+      "sourceDigest": "sha256:55ed96cc1039af5c62f209b2c79fa969b54beb7654f9e75ed5512ff42790bd3c",
+      "policyDigest": "sha256:400abe478bb1ab83f86b19a2dcc679ceba889fe3e0bc46506825ee66e31b3427",
+      "originalTitle": "Restore partial-band span extraction",
+      "title": "Keep partial bands at a cut edge",
+      "summary": "Cutting out a ribbon span loses bands that overlap either edge. Keep the overlapping part of each band.",
+      "expectedBehavior": "slice_span([{\"color\":\"red\",\"length\":5}], 1, 4) → [{\"color\":\"red\",\"length\":3}]"
+    },
+    {
+      "id": "v2-r04-t03",
+      "sourceDigest": "sha256:545c7a1b59aa25df51f0da2ed6582c91b778edf3366f96a07addd6fb75e9888e",
+      "policyDigest": "sha256:625d9e0a554cb079d9f098309ae3d94a2612c31e82640e896a8c1365e566efca",
+      "originalTitle": "Restore whole-pattern tile order",
+      "title": "Repeat the whole ribbon pattern",
+      "summary": "The repeat function duplicates each band separately. Repeat the full sequence instead.",
+      "expectedBehavior": "red(2), blue(1), repeated twice → red(2), blue(1), red(2), blue(1)"
+    },
+    {
+      "id": "v2-r04-t04",
+      "sourceDigest": "sha256:af3019596bfc204c74ab584c322a505fa2351ab4987973e36ba21a12d4d3f799",
+      "policyDigest": "sha256:114bba4fb519c453d589b613307d505c40b803a24411bbd677c9760822f58516",
+      "originalTitle": "Restore first-use order in material totals",
+      "title": "List material totals in first-used order",
+      "summary": "Color totals are sorted alphabetically. Keep the order in which each color first appears in the pattern.",
+      "expectedBehavior": "blue(2), red(1), blue(3) → blue(5), red(1)"
+    },
+    {
+      "id": "v2-r04-t05",
+      "sourceDigest": "sha256:edb946fa470fd9010715159ce5193b49c8f689db5ad59579d8b5bed993adb1f5",
+      "policyDigest": "sha256:256f6510c71f88ba8b089c9867df1c20d5e16a5b8dff0362318790ae7e68f330",
+      "originalTitle": "Restore material-distance ribbon rotation",
+      "title": "Rotate ribbon by distance, not band count",
+      "summary": "The rotation function counts bands instead of material units. Move the start by the given distance, splitting a band if needed.",
+      "expectedBehavior": "rotate([{\"color\":\"red\",\"length\":3},{\"color\":\"blue\",\"length\":2}], 1) → red(2), blue(2), red(1)"
+    }
+  ]
+}

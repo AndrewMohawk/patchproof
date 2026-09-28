@@ -1,0 +1,74 @@
+{
+  "measures": [
+    {
+      "label": "desktop",
+      "view": "examples",
+      "button": {
+        "x": 392,
+        "y": 300.0625,
+        "width": 151.921875,
+        "height": 44
+      },
+      "overflow": {
+        "client": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "label": "desktop",
+      "view": "failed",
+      "overflow": {
+        "client": 1440,
+        "scroll": 1440
+      },
+      "tab": "Checks"
+    },
+    {
+      "label": "mobile",
+      "view": "examples",
+      "button": {
+        "x": 16,
+        "y": 478.5,
+        "width": 228.203125,
+        "height": 44
+      },
+      "overflow": {
+        "client": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "label": "mobile",
+      "view": "failed",
+      "overflow": {
+        "client": 390,
+        "scroll": 928
+      },
+      "tab": "Checks"
+    },
+    {
+      "label": "small",
+      "view": "examples",
+      "button": {
+        "x": 16,
+        "y": 490.90625,
+        "width": 158.203125,
+        "height": 44
+      },
+      "overflow": {
+        "client": 320,
+        "scroll": 320
+      }
+    },
+    {
+      "label": "small",
+      "view": "failed",
+      "overflow": {
+        "client": 320,
+        "scroll": 928
+      },
+      "tab": "Checks"
+    }
+  ],
+  "errors": []
+}

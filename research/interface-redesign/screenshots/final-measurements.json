@@ -1,0 +1,692 @@
+{
+  "source": "Current UI with unchanged real public GET API responses through local preview",
+  "paidRequests": 0,
+  "blockedRequests": [],
+  "errors": [],
+  "measurements": [
+    {
+      "label": "desktop",
+      "view": "examples",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false,
+      "action": {
+        "x": 392,
+        "y": 266.734375,
+        "width": 151.921875,
+        "height": 44
+      }
+    },
+    {
+      "label": "desktop",
+      "view": "runs",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "desktop",
+      "view": "failed",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false,
+      "selectedTab": "Checks"
+    },
+    {
+      "label": "desktop",
+      "view": "failed-patch",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "desktop",
+      "view": "failed-details",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "desktop",
+      "view": "success",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false,
+      "selectedTab": "Patch"
+    },
+    {
+      "label": "desktop",
+      "view": "success-patch",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "desktop",
+      "view": "success-details",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "desktop",
+      "view": "compare",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "examples",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false,
+      "action": {
+        "x": 16,
+        "y": 445.609375,
+        "width": 228.203125,
+        "height": 44
+      }
+    },
+    {
+      "label": "mobile390",
+      "view": "all-example-actions",
+      "count": 20,
+      "highestActionBottom": 517.484375,
+      "actions": [
+        {
+          "id": "stable-unique-01",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t02",
+          "bottom": 468.015625,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t03",
+          "bottom": 461.734375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t04",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t05",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t01",
+          "bottom": 517.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t02",
+          "bottom": 511.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t03",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t04",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t05",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t01",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t02",
+          "bottom": 517.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t03",
+          "bottom": 511.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t04",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t05",
+          "bottom": 517.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t01",
+          "bottom": 511.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t02",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t03",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t04",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t05",
+          "bottom": 489.609375,
+          "height": 44,
+          "overflow": false
+        }
+      ]
+    },
+    {
+      "label": "mobile390",
+      "view": "runs",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "failed",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false,
+      "selectedTab": "Run details"
+    },
+    {
+      "label": "mobile390",
+      "view": "failed-patch",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "failed-details",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "success",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false,
+      "selectedTab": "Run details"
+    },
+    {
+      "label": "mobile390",
+      "view": "success-patch",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "success-details",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile390",
+      "view": "compare",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "examples",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false,
+      "action": {
+        "x": 16,
+        "y": 435.609375,
+        "width": 158.203125,
+        "height": 44
+      }
+    },
+    {
+      "label": "mobile320",
+      "view": "all-example-actions",
+      "count": 20,
+      "highestActionBottom": 529.078125,
+      "actions": [
+        {
+          "id": "stable-unique-01",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t02",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t03",
+          "bottom": 501.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t04",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r01-t05",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t01",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t02",
+          "bottom": 501.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t03",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t04",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r02-t05",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t01",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t02",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t03",
+          "bottom": 529.078125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t04",
+          "bottom": 507.484375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r03-t05",
+          "bottom": 529.078125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t01",
+          "bottom": 501.203125,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t02",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t03",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t04",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        },
+        {
+          "id": "v2-r04-t05",
+          "bottom": 479.609375,
+          "height": 44,
+          "overflow": false
+        }
+      ]
+    },
+    {
+      "label": "mobile320",
+      "view": "runs",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "failed",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false,
+      "selectedTab": "Run details"
+    },
+    {
+      "label": "mobile320",
+      "view": "failed-patch",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "failed-details",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "success",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false,
+      "selectedTab": "Run details"
+    },
+    {
+      "label": "mobile320",
+      "view": "success-patch",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "success-details",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    },
+    {
+      "label": "mobile320",
+      "view": "compare",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": false
+    }
+  ],
+  "interactions": {
+    "searchCount": 5,
+    "selectedAfterSearch": "Retain fill-down history across blank worksheet spans\nowned-v2-r03 · 3 requirements",
+    "keyboardTab": "Checks",
+    "focus": {
+      "role": "tab",
+      "outline": "solid",
+      "outlineWidth": "3px"
+    }
+  },
+  "recordedRuns": {
+    "success": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "failed": "5b356c42-8848-4e78-bce7-94800f63eebf"
+  },
+  "explicitMobileChecks": [
+    {
+      "viewport": 390,
+      "documentWidth": 390,
+      "selectedTab": "Checks",
+      "codeBlocks": [
+        {
+          "clientWidth": 356,
+          "scrollWidth": 356
+        },
+        {
+          "clientWidth": 356,
+          "scrollWidth": 356
+        },
+        {
+          "clientWidth": 356,
+          "scrollWidth": 356
+        },
+        {
+          "clientWidth": 356,
+          "scrollWidth": 356
+        }
+      ]
+    },
+    {
+      "viewport": 320,
+      "documentWidth": 320,
+      "selectedTab": "Checks",
+      "codeBlocks": [
+        {
+          "clientWidth": 286,
+          "scrollWidth": 286
+        },
+        {
+          "clientWidth": 286,
+          "scrollWidth": 286
+        },
+        {
+          "clientWidth": 286,
+          "scrollWidth": 286
+        },
+        {
+          "clientWidth": 286,
+          "scrollWidth": 286
+        }
+      ]
+    }
+  ],
+  "touchTargets": [
+    {
+      "width": 390,
+      "nav a": [
+        {
+          "text": "Examples",
+          "height": 44
+        },
+        {
+          "text": "Runs",
+          "height": 44
+        },
+        {
+          "text": "Watch demo",
+          "height": 44
+        }
+      ],
+      ".candidate-tab": [
+        {
+          "text": "Attempt 1 · Failed · Kept for review",
+          "height": 44
+        },
+        {
+          "text": "Attempt 2 · Check error",
+          "height": 44
+        },
+        {
+          "text": "Attempt 3 · Check error",
+          "height": 44
+        }
+      ],
+      ".result-tabs button": [
+        {
+          "text": "Patch",
+          "height": 48.0625
+        },
+        {
+          "text": "Checks",
+          "height": 48.0625
+        },
+        {
+          "text": "Activity",
+          "height": 48.0625
+        },
+        {
+          "text": "Run details",
+          "height": 48.0625
+        }
+      ],
+      "select": [
+        {
+          "text": "Keep explicit empty cells during worksheet tr",
+          "height": 42
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "nav a": [
+        {
+          "text": "Examples",
+          "height": 44
+        },
+        {
+          "text": "Runs",
+          "height": 44
+        },
+        {
+          "text": "Watch demo",
+          "height": 44
+        }
+      ],
+      ".candidate-tab": [
+        {
+          "text": "Attempt 1 · Failed · Kept for review",
+          "height": 44
+        },
+        {
+          "text": "Attempt 2 · Check error",
+          "height": 44
+        },
+        {
+          "text": "Attempt 3 · Check error",
+          "height": 44
+        }
+      ],
+      ".result-tabs button": [
+        {
+          "text": "Patch",
+          "height": 48
+        },
+        {
+          "text": "Checks",
+          "height": 48
+        },
+        {
+          "text": "Activity",
+          "height": 48
+        },
+        {
+          "text": "Run details",
+          "height": 48
+        }
+      ],
+      "select": [
+        {
+          "text": "Keep explicit empty cells during worksheet tr",
+          "height": 42
+        }
+      ]
+    }
+  ],
+  "finalActionMeasurements": [
+    {
+      "width": 1440,
+      "button": {
+        "x": 392,
+        "y": 266.734375,
+        "width": 151.921875,
+        "height": 44
+      },
+      "viewportHeight": 900,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "button": {
+        "x": 16,
+        "y": 469.203125,
+        "width": 228.203125,
+        "height": 44
+      },
+      "viewportHeight": 844,
+      "overflow": false,
+      "maximumActionBottom": 541.078125,
+      "taskCount": 20,
+      "selectHeight": 44
+    },
+    {
+      "width": 320,
+      "button": {
+        "x": 16,
+        "y": 461.203125,
+        "width": 158.203125,
+        "height": 44
+      },
+      "viewportHeight": 844,
+      "overflow": false,
+      "maximumActionBottom": 554.671875,
+      "taskCount": 20,
+      "selectHeight": 44
+    }
+  ]
+}

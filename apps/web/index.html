@@ -4,48 +4,60 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Review maintenance patches through explicit requirements, independent executable checks and reproducible evidence.">
-  <title>PatchProof — review the evidence</title>
+  <meta name="description" content="Generate a maintenance patch, inspect the changes, and review the checks that ran.">
+  <title>PatchProof</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="app-header">
-    <a class="brand" href="#tasks" aria-label="PatchProof home"><span class="brand-icon" aria-hidden="true">P<span>✓</span></span><span>Patch<span class="brand-accent">Proof</span></span></a>
+    <a class="brand" href="#tasks" aria-label="PatchProof home">PatchProof</a>
     <nav aria-label="Main navigation">
-      <a href="#tasks" data-nav="tasks"><span class="nav-number">01</span> Tasks</a>
-      <a href="#compare" data-nav="compare"><span class="nav-number">02</span> Compare</a>
-      <a href="#evidence" data-nav="evidence"><span class="nav-number">03</span> Evidence</a>
-      <a id="demo-link" href="/demo/" hidden>Watch demo ↗</a>
+      <a href="#tasks" data-nav="tasks">Examples</a>
+      <a href="#runs" data-nav="runs">Runs</a>
+      <a id="demo-link" href="/demo/" hidden>Watch demo</a>
     </nav>
-    <div id="mode-indicator" class="mode-indicator">Loading workspace…</div>
+    <details class="workspace-status">
+      <summary><span id="mode-indicator">Connecting…</span></summary>
+      <div class="workspace-status-body">
+        <strong id="mode-label">Workspace</strong>
+        <p id="mode-description">Loading service status.</p>
+      </div>
+    </details>
   </header>
-  <div class="mode-banner"><span id="mode-label" class="label">WORKSPACE</span><span id="mode-description">Loading recorded capabilities…</span></div>
   <div id="error" class="error-banner" role="alert" hidden></div>
   <p id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
   <main id="main" tabindex="-1">
     <section id="tasks-view" class="view" aria-labelledby="tasks-heading">
-      <div class="page-heading"><div><p class="eyebrow">A patch is the beginning.</p><h1 id="tasks-heading">The evidence makes it reviewable.</h1><p class="lead">Choose a maintenance task. Follow the repair. See exactly which requirements the checks support.</p></div><div class="heading-mark" aria-hidden="true">{<span>✓</span>}</div></div>
+      <div class="page-heading"><h1 id="tasks-heading">Examples</h1><a class="text-link" href="#runs">View past runs</a></div>
+      <div class="mobile-task-picker"><label for="mobile-task">Choose an example</label><select id="mobile-task"><option>Loading examples…</option></select></div>
       <div class="workspace-grid">
-        <div class="task-panel"><div class="section-heading"><h2>Choose a task</h2><span id="task-count" class="quiet">Loading…</span></div><p class="section-description">Owned Python fixtures with explicit maintenance requirements.</p><div id="task-list" class="task-list" aria-label="Curated maintenance tasks"><p class="empty-small">Loading curated tasks…</p></div></div>
-        <div id="task-detail" class="detail-panel" aria-live="polite"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h2>Your next review starts here</h2><p>The task statement and requirements will appear when the catalogue is ready.</p></div></div>
+        <aside class="task-panel" aria-label="Example picker">
+          <div class="section-heading"><h2>Python examples</h2><span id="task-count" class="quiet">Loading…</span></div>
+          <div class="task-search-field"><label class="visually-hidden" for="task-search">Search examples</label><input id="task-search" type="search" placeholder="Search examples" autocomplete="off" spellcheck="false"></div>
+          <div id="task-list" class="task-list" aria-label="Maintenance examples"><p class="empty-small">Loading examples…</p></div>
+        </aside>
+        <div id="task-detail" class="detail-panel" aria-live="polite"><div class="empty-state"><h2>Loading the selected example…</h2></div></div>
       </div>
-      <div class="process-strip" aria-label="Review workflow"><div><span>01</span><strong>Declare the contract</strong><p>Readable requirements, fixed before the run.</p></div><div><span>02</span><strong>Check each candidate</strong><p>Execution results attached to the actual change.</p></div><div><span>03</span><strong>Leave a replayable record</strong><p>The diff, checks and accounting in one export.</p></div></div>
+    </section>
+    <section id="runs-view" class="view" aria-labelledby="runs-heading" hidden>
+      <div class="page-heading"><h1 id="runs-heading">Runs</h1><a class="button" href="#tasks">Choose an example</a></div>
+      <div id="run-history" class="run-history"><p class="empty-small">Loading past runs…</p></div>
     </section>
     <section id="compare-view" class="view" aria-labelledby="compare-heading" hidden>
-      <div class="page-heading compact"><div><p class="eyebrow">Same task. Same resource limits.</p><h1 id="compare-heading">Compare the approaches.</h1><p class="lead">Inspect ordinary repair, acceptance feedback and candidate selection side by side.</p></div></div>
-      <div class="toolbar"><div><label for="compare-task">Maintenance task</label><select id="compare-task"></select></div><button id="compare-run" class="button primary" disabled>Run comparison <span aria-hidden="true">→</span></button></div>
+      <div class="page-heading"><div><a class="back-link" href="#tasks">Back to examples</a><h1 id="compare-heading">Compare approaches</h1></div></div>
+      <div class="toolbar"><div><label for="compare-task">Example</label><select id="compare-task"></select></div><button id="compare-run" class="button primary" disabled>Run all three</button></div>
       <div id="comparison" class="comparison"></div>
-      <div class="callout"><strong>What this comparison can tell you</strong><p id="comparison-notice">A comparison depends on matching recorded inputs and resource limits.</p></div>
+      <p id="comparison-notice" class="comparison-notice">A comparison needs matching inputs and resource limits.</p>
     </section>
     <section id="evidence-view" class="view" aria-labelledby="evidence-heading" hidden>
-      <div class="page-heading compact"><div><p class="eyebrow">A decision you can inspect.</p><h1 id="evidence-heading">Review the evidence.</h1><p class="lead">Follow the candidate history, inspect the change and trace each result to its requirement.</p></div></div>
-      <div class="toolbar"><div class="run-picker"><label for="evidence-run">Run</label><select id="evidence-run"><option value="">No runs yet</option></select></div><a class="text-link" href="#compare">Compare approaches <span aria-hidden="true">↗</span></a></div>
+      <div class="page-heading review-page-heading"><div><a class="back-link" href="#runs">All runs</a><h1 id="evidence-heading">Run review</h1></div><a class="text-link" href="#compare">Compare approaches</a></div>
+      <details class="run-switcher"><summary>Switch run</summary><div class="run-picker"><label class="visually-hidden" for="evidence-run">Run</label><select id="evidence-run"><option value="">No runs yet</option></select></div></details>
       <div id="evidence"></div>
     </section>
   </main>
-  <footer><span>PatchProof <span class="footer-dot">·</span> Decisions backed by executable checks.</span><span>Declared checks are evidence, not a correctness guarantee.</span></footer>
-  <noscript><p class="error-banner">JavaScript is required to select tasks and review runs.</p></noscript>
+  <footer><span>PatchProof</span><a id="footer-demo-link" href="/demo/" hidden>Demo recording</a></footer>
+  <noscript><p class="error-banner">JavaScript is required to select examples and review runs.</p></noscript>
 </body>
 </html>

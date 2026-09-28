@@ -1,0 +1,241 @@
+{
+  "at": "2026-09-28T03:05:37.947Z",
+  "origin": "http://127.0.0.1:43179",
+  "sourceHashes": {
+    "app.js": "98bdaa70a2fc04b3c16f9945053b480fb9da12540f80174e0b29232109504299",
+    "index.html": "b94c1f9202c957d72066a204078006b1550b96ecefdfd47b99797f6ec219bfbc",
+    "style.css": "73e19c6f475b85ef63047b8ee93b8a53ae6955193ae5d2c707e0e743cc4a2809"
+  },
+  "checks": [
+    {
+      "name": "No false home text",
+      "pass": true
+    },
+    {
+      "name": "Concrete first-task problem",
+      "pass": true
+    },
+    {
+      "name": "Concrete transpose problem",
+      "pass": true
+    },
+    {
+      "name": "Latest result includes failed run",
+      "pass": true
+    },
+    {
+      "name": "Failure retained honestly",
+      "pass": true
+    },
+    {
+      "name": "Comparison retains reviewed task",
+      "pass": true
+    },
+    {
+      "name": "Methods use plain descriptions",
+      "pass": true
+    },
+    {
+      "name": "Estimate cost labeled",
+      "pass": true
+    },
+    {
+      "name": "Scoped success and actual patch first",
+      "pass": true
+    },
+    {
+      "name": "Local replay excludes model inference",
+      "pass": true
+    },
+    {
+      "name": "Incomplete result plain and not failed",
+      "pass": true
+    },
+    {
+      "name": "All seven historical runs visible",
+      "pass": true
+    },
+    {
+      "name": "No horizontal document overflow",
+      "pass": true
+    },
+    {
+      "name": "No browser errors or non-GET requests",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "blocked": [],
+  "views": [
+    {
+      "name": "home",
+      "url": "http://127.0.0.1:43179/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nExamples\nView past runs\nPython examples\n20 of 20\nSearch examples\nRetain first occurrences throughout a list\nowned-v2-r01 · 3 requirements\nPreserve a final partial list block\nowned-v2-r01 · 3 requirements\nHonor signed cyclic list shifts\nowned-v2-r01 · 3 requirements\nKeep unpaired values during list weaving\nowned-v2-r01 · 3 requirements\nCount adjacent list runs independently\nowned-v2-r01 · 3 requirements\nRepeated page marks fragment contiguous reading runs\nowned-v2-r02 · 3 requirements\nExact-capacity sessions split too early\nowned-v2-r02 · 3 requirements\nChapter boundary pages resolve to the wrong chapter\nowned-v2-r02 · 3 requirements\nLater reading sessions replace earlier page totals\nowned-v2-r02 · 3 requirements\nHalf-percent progress ties round down unexpectedly\nowned-v2-r02 · 3 requirements\nRetain fill-down history across blank worksheet spans\nowned-v2-r03 · 3 requirements\nKeep explicit empty cells during worksheet transposition\nowned-v2-r03 · 3 requirements\nInclude the final complete worksheet window\nowned-v2-r03 · 3 requirements\nCount zero-valued worksheet cells as populated\nowned-v2-r03 · 3 requirements\nLimit worksheet row deduplication to consecutive runs\nowned-v2-r03 · 3 requirements\nRestore adjacency-aware band coalescing\nowned-v2-r04 · 3 requirements\nRestore partial-band span extraction\nowned-v2-r04 · 3 requirements\nRestore whole-pattern tile order\nowned-v2-r04 · 3 requirements\nRestore first-use order in material totals\nowned-v2-r04 · 3 requirements\nRestore material-distance ribbon rotation\nowned-v2-r04 · 3 requirements\n\nowned-v2-r01\n\nRetain first occurrences throughout a list\n\nThe function misses duplicates that are separated by other items. Keep the first copy of each item, in order.\n\nGenerate patch\nLatest result\nCompare approaches\n\n$0.10 maximum · Up to 300 seconds · Review before applying\n\nFull requirements\nRun limits\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "transpose-example",
+      "url": "http://127.0.0.1:43179/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nExamples\nView past runs\nPython examples\n20 of 20\nSearch examples\nRetain first occurrences throughout a list\nowned-v2-r01 · 3 requirements\nPreserve a final partial list block\nowned-v2-r01 · 3 requirements\nHonor signed cyclic list shifts\nowned-v2-r01 · 3 requirements\nKeep unpaired values during list weaving\nowned-v2-r01 · 3 requirements\nCount adjacent list runs independently\nowned-v2-r01 · 3 requirements\nRepeated page marks fragment contiguous reading runs\nowned-v2-r02 · 3 requirements\nExact-capacity sessions split too early\nowned-v2-r02 · 3 requirements\nChapter boundary pages resolve to the wrong chapter\nowned-v2-r02 · 3 requirements\nLater reading sessions replace earlier page totals\nowned-v2-r02 · 3 requirements\nHalf-percent progress ties round down unexpectedly\nowned-v2-r02 · 3 requirements\nRetain fill-down history across blank worksheet spans\nowned-v2-r03 · 3 requirements\nKeep explicit empty cells during worksheet transposition\nowned-v2-r03 · 3 requirements\nInclude the final complete worksheet window\nowned-v2-r03 · 3 requirements\nCount zero-valued worksheet cells as populated\nowned-v2-r03 · 3 requirements\nLimit worksheet row deduplication to consecutive runs\nowned-v2-r03 · 3 requirements\nRestore adjacency-aware band coalescing\nowned-v2-r04 · 3 requirements\nRestore partial-band span extraction\nowned-v2-r04 · 3 requirements\nRestore whole-pattern tile order\nowned-v2-r04 · 3 requirements\nRestore first-use order in material totals\nowned-v2-r04 · 3 requirements\nRestore material-distance ribbon rotation\nowned-v2-r04 · 3 requirements\n\nowned-v2-r03\n\nKeep explicit empty cells during worksheet transposition\n\nThe transpose function replaces existing null cells with padding. Use padding only where a cell is missing.\n\nGenerate patch\nLatest result\nCompare approaches\n\n$0.10 maximum · Up to 300 seconds · Review before applying\n\nFull requirements\nRun limits\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "failure",
+      "url": "http://127.0.0.1:43179/#evidence/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nChecks for attempt 1\n\n11 passed · 2 failed · 0 errors\n\nTask checks\nR01 · v-r01-null-is-data\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[1,2],[null,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved: {\"outcome\":[[1,2],[9,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved result and log · 3.5 s\nR02 · v-r02-padding\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · v-r03-outer\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nAdditional checks\nR01 · a-r01-null-zero\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[null,0],[4,null]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved: {\"outcome\":[[-6,0],[4,-6]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved result and log · 3.6 s\nR01 · a-r01-signed\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.7 s\nR02 · a-r02-null-fill\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty-rows\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-fill-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-float\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-string\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nR03 · a-r03-cell-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-row-number\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nRequirements checked\nAttempt decision\nChecks before repair\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "failure-compare",
+      "url": "http://127.0.0.1:43179/#compare",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nChecks for attempt 1\n\n11 passed · 2 failed · 0 errors\n\nTask checks\nR01 · v-r01-null-is-data\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[1,2],[null,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved: {\"outcome\":[[1,2],[9,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved result and log · 3.5 s\nR02 · v-r02-padding\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · v-r03-outer\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nAdditional checks\nR01 · a-r01-null-zero\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[null,0],[4,null]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved: {\"outcome\":[[-6,0],[4,-6]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved result and log · 3.6 s\nR01 · a-r01-signed\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.7 s\nR02 · a-r02-null-fill\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty-rows\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-fill-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-float\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-string\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nR03 · a-r03-cell-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-row-number\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nRequirements checked\nAttempt decision\nChecks before repair\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "matched-compare",
+      "url": "http://127.0.0.1:43179/#compare",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nBack to examples\nCompare approaches\nExample\nRetain first occurrences throughout a list\nPreserve a final partial list block\nHonor signed cyclic list shifts\nKeep unpaired values during list weaving\nCount adjacent list runs independently\nRepeated page marks fragment contiguous reading runs\nExact-capacity sessions split too early\nChapter boundary pages resolve to the wrong chapter\nLater reading sessions replace earlier page totals\nHalf-percent progress ties round down unexpectedly\nRetain fill-down history across blank worksheet spans\nKeep explicit empty cells during worksheet transposition\nInclude the final complete worksheet window\nCount zero-valued worksheet cells as populated\nLimit worksheet row deduplication to consecutive runs\nRestore adjacency-aware band coalescing\nRestore partial-band span extraction\nRestore whole-pattern tile order\nRestore first-use order in material totals\nRestore material-distance ribbon rotation\nRun all three · $0.30 maximum\nSame inputs and limits\nAll three runs used the same inputs and resource limits.\n\nTask checks\n\nStandard repair\n\nUses the task checks to guide patch revisions.\n\nRecorded live\n\nRecorded task: Retain first occurrences throughout a list\n\nAll listed checks passed\n\nRequirements passing\n3 / 3\nPatch attempts\n2\nElapsed\n135.2 s\nEstimated model cost\n$0.00020172 (estimate)\nView result\nRun this approach\n\nAdditional feedback\n\nRepair with extra checks\n\nAlso uses additional checks to guide patch revisions.\n\nRecorded live\n\nRecorded task: Retain first occurrences throughout a list\n\nAll listed checks passed\n\nRequirements passing\n3 / 3\nPatch attempts\n1\nElapsed\n73.1 s\nEstimated model cost\n$0.00012066 (estimate)\nView result\nRun this approach\n\nPatch selection\n\nPatchProof\n\nUses additional checks and keeps the best checked attempt.\n\nRecorded live\n\nRecorded task: Retain first occurrences throughout a list\n\nAll listed checks passed\n\nRequirements passing\n3 / 3\nPatch attempts\n1\nElapsed\n73.9 s\nEstimated model cost\n$0.00010692 (estimate)\nView result\nRun this approach\nResource allowance\tStandard repair\tRepair with extra checks\tPatchProof\nModel calls\t2 / 3\t1 / 3\t1 / 3\nInput tokens\t2,346 / 786,432\t1,347 / 786,432\t1,338 / 786,432\nOutput tokens\t254 / 6,000\t166 / 6,000\t111 / 6,000\nElapsed time (seconds)\t135.2 / 300\t73.1 / 300\t73.9 / 300\nSandbox CPU (seconds)\tUnmeasured / 900\tUnmeasured / 900\tUnmeasured / 900\nApproved provider spend\t$0.10\t$0.10\t$0.10\n\nRecorded usage / limit. Estimates are labeled; unknown cost and CPU stay unmeasured. Older mock runs retain their own mode labels.\n\nEach approach gets the same limits. A few runs on one example do not establish which approach is better.\n\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "success",
+      "url": "http://127.0.0.1:43179/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:39:09 PM · Recorded live\n\nRetain first occurrences throughout a list\n\nAll listed checks passed\n\nAttempt 1: 9 checks passed · 0 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Passed · Final patch\nPatch\nChecks\nActivity\nRun details\nPatch from attempt 1\n\nPasses the listed checks. Review the change before applying it.\n\ndiff --git a/solution.py b/solution.py\n--- a/solution.py\n+++ b/solution.py\n@@ -1,9 +1,8 @@\n-# ListWeave: original synthetic list-maintenance module. CC0-1.0.\n-def unique(values):\n-    if values is None:\n-        raise TypeError(\"values must be a list\")\n-    result = []\n-    for value in values:\n-        if not result or value != result[-1]:\n-            result.append(value)\n-    return result\n+def unique(values):\n+    if values is None:\n+        raise TypeError(\"values must be a list\")\n+    result = []\n+    for value in values:\n+        if value not in result:\n+            result.append(value)\n+    return result\n\\ No newline at end of file\n \nModel summary\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "details",
+      "url": "http://127.0.0.1:43179/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:39:09 PM · Recorded live\n\nRetain first occurrences throughout a list\n\nAll listed checks passed\n\nAttempt 1: 9 checks passed · 0 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Passed · Final patch\nPatch\nChecks\nActivity\nRun details\nCost and limits\n\nUsage across every attempt in this run.\n\nEstimated model cost\n$0.00010692 (estimate)\nPer-run spend limit\n$0.10\nModel operations / limit\n1 / 3\nInput tokens / limit\n1,338 / 786,432\nOutput tokens / limit\n111 / 6,000\nElapsed / limit\n73.9 s / 300 s\nSandbox CPU / limit\nNot measured / 900 s\n\nEstimated provider cost is labeled separately from measured billing. Unknown charges and CPU stay unmeasured; local electricity and hardware costs are not included.\n\nReproduce this run\n\nSaved inputs, request IDs and replay instructions.\n\nRepair approach\npatchproof\nSource snapshot\nsha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df\nAcceptance policy\nsha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce\nRuntime lock\nsha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed\nRun ID\n08087e0a-f5d9-4c55-b4b6-7666bc8e016c\nModel identifier\nnvidia/NVIDIA-Nemotron-3-Nano-30B-A3B\nProvider request ID\nchatcmpl-39360f8a-cef9-4b48-9b23-7f6ff3fc3e40\nSelected candidate operation IDs\ndocker:patchproof-check-f4d16483-8b98-4384-9312-7967724a5375 docker:patchproof-check-7f944c94-4c9a-457d-b344-6608a57a3af1 docker:patchproof-check-23c5e6c5-5ef7-4eb0-89cf-92ce5f9bdc15 docker:patchproof-check-b5c755fe-1b76-4299-bedf-9af419478338 docker:patchproof-check-773d9aeb-1f0b-4523-9b73-9b54ce5db738 docker:patchproof-check-ee5362af-a405-4ef6-ba52-48b773bc08fa docker:patchproof-check-169928f9-6a04-4057-a142-5f3091d49385 docker:patchproof-check-874dc78f-eb50-48bf-8df8-02a2898ffcf6 docker:patchproof-check-d44b2233-db01-44d3-a8a5-8d290a3d2f69 docker:patchproof-check-6cf41359-8df4-4bc6-8565-61141e599ee4 docker:patchproof-check-e134e240-361d-44e3-920e-56df6a2c31f2 docker:patchproof-check-5e48ae14-1540-400a-8a04-d6f176128965 docker:patchproof-check-37b633e7-3462-4f1d-812b-dc51e8c31aef docker:patchproof-check-04ba55b2-310c-4882-ae1e-8036ba6e7002 docker:patchproof-check-02ec9183-23cf-44ce-8c59-8b7286a49e20 docker:patchproof-check-324088a9-adc8-4519-b74a-0f0f19292442 docker:patchproof-check-e5a6e832-5349-4616-b622-c8610c5d1eb2 docker:patchproof-check-4c7cf7a9-c833-46e8-a0c4-2cef638ac171\nCheck runtime\nLocal Docker checks\nModel service\nNebius Token Factory\n\nSave the downloaded bundle under artifacts/product/exports/<run-id>.json in the source checkout recorded by this run, then execute:\n\nmake reproduce RUN=08087e0a-f5d9-4c55-b4b6-7666bc8e016c\n\nThe export records its inputs and digests. Replay is a separate fresh check execution; it does not rerun model inference.\n\nReal NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.\n\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "incomplete",
+      "url": "http://127.0.0.1:43179/#evidence/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nStandard repair · 9/27/2026, 9:09:23 PM · Recorded live\n\nRetain first occurrences throughout a list\n\nNeeds review\n\nChecks could not finish. This patch has not been verified.\n\nAttempt 3: 0 checks passed · 0 failed · 9 errors\n\nDownload evidence\nAttempt 1 · Check error\nAttempt 2 · Check error\nAttempt 3 · Check error · Kept for review\nPatch\nChecks\nActivity\nRun details\nChecks for attempt 3\n\n0 passed · 0 failed · 9 errors\n\nTask checks\nR01 · u-v-order\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 4.0 s\nR01 · u-v-empty\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.6 s\nR01 · u-v-unicode\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.5 s\nR02 · u-v-mutation\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.2 s\nR03 · u-v-none\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.3 s\nAdditional checks\nR01 · u-a-nested\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.6 s\nR01 · u-a-numeric\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 5.9 s\nR02 · u-a-mutation\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 5.7 s\nR03 · u-a-none\nError\n\nThis check did not produce a verified result.\n\nObserved result and log · 3.9 s\nRequirements checked\nAttempt decision\nChecks before repair\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "runs",
+      "url": "http://127.0.0.1:43179/#runs",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nRuns\nChoose an example\nKeep explicit empty cells during worksheet transposition\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nChecks failed\n202.0 s · $0.00089034 (estimate)\nRetain first occurrences throughout a list\n\nPatchProof · 9/27/2026, 9:39:09 PM · Recorded live\n\nAll listed checks passed\n73.9 s · $0.00010692 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:36:38 PM · Recorded live\n\nAll listed checks passed\n73.1 s · $0.00012066 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:33:55 PM · Recorded live\n\nAll listed checks passed\n135.2 s · $0.00020172 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:25:16 PM · Recorded live\n\nAll listed checks passed\n78.8 s · $0.00012948 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:22:12 PM · Recorded live\n\nChecks failed\n164.4 s · $0.00024468 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:09:23 PM · Recorded live\n\nNeeds review\n171.4 s · $0.00027324 (estimate)\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-390-home",
+      "url": "http://127.0.0.1:43179/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nExamples\nView past runs\nChoose an example\nRetain first occurrences throughout a list\nPreserve a final partial list block\nHonor signed cyclic list shifts\nKeep unpaired values during list weaving\nCount adjacent list runs independently\nRepeated page marks fragment contiguous reading runs\nExact-capacity sessions split too early\nChapter boundary pages resolve to the wrong chapter\nLater reading sessions replace earlier page totals\nHalf-percent progress ties round down unexpectedly\nRetain fill-down history across blank worksheet spans\nKeep explicit empty cells during worksheet transposition\nInclude the final complete worksheet window\nCount zero-valued worksheet cells as populated\nLimit worksheet row deduplication to consecutive runs\nRestore adjacency-aware band coalescing\nRestore partial-band span extraction\nRestore whole-pattern tile order\nRestore first-use order in material totals\nRestore material-distance ribbon rotation\n\nowned-v2-r01\n\nRetain first occurrences throughout a list\n\nThe function misses duplicates that are separated by other items. Keep the first copy of each item, in order.\n\nGenerate patch\nLatest result\nCompare approaches\n\n$0.10 maximum · Up to 300 seconds · Review before applying\n\nFull requirements\nRun limits\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-390-failure",
+      "url": "http://127.0.0.1:43179/#evidence/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nChecks for attempt 1\n\n11 passed · 2 failed · 0 errors\n\nTask checks\nR01 · v-r01-null-is-data\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[1,2],[null,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved: {\"outcome\":[[1,2],[9,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved result and log · 3.5 s\nR02 · v-r02-padding\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · v-r03-outer\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nAdditional checks\nR01 · a-r01-null-zero\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[null,0],[4,null]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved: {\"outcome\":[[-6,0],[4,-6]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved result and log · 3.6 s\nR01 · a-r01-signed\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.7 s\nR02 · a-r02-null-fill\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty-rows\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-fill-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-float\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-string\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nR03 · a-r03-cell-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-row-number\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nRequirements checked\nAttempt decision\nChecks before repair\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-390-details",
+      "url": "http://127.0.0.1:43179/#evidence/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nCost and limits\n\nUsage across every attempt in this run.\n\nEstimated model cost\n$0.00089034 (estimate)\nPer-run spend limit\n$0.10\nModel operations / limit\n3 / 3\nInput tokens / limit\n6,331 / 786,432\nOutput tokens / limit\n2,127 / 6,000\nElapsed / limit\n202.0 s / 300 s\nSandbox CPU / limit\nNot measured / 900 s\n\nEstimated provider cost is labeled separately from measured billing. Unknown charges and CPU stay unmeasured; local electricity and hardware costs are not included.\n\nReproduce this run\n\nSaved inputs, request IDs and replay instructions.\n\nRepair approach\npatchproof\nSource snapshot\nsha256:fadeaa7547f295fb8c022469c6276ceb2f65496bb8bce17043703edf8797aa82\nAcceptance policy\nsha256:8e0c36a17027968bd9933e586da61b19fdb7c3e53e510c453a4997d07cde2f21\nRuntime lock\nsha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed\nRun ID\n5b356c42-8848-4e78-bce7-94800f63eebf\nModel identifier\nnvidia/NVIDIA-Nemotron-3-Nano-30B-A3B\nProvider request ID\nchatcmpl-5adcc59b-dd58-415f-a533-ce1e0f18f2eb\nSelected candidate operation IDs\ndocker:patchproof-check-7ef17838-2fd3-4aab-9ba4-408772feaf35 docker:patchproof-check-957ac87e-5c97-4a7a-ac67-1205a241f1f3 docker:patchproof-check-077afc70-13ec-4469-92f1-808adbafc81e docker:patchproof-check-bec8bd87-9959-4001-ac7c-59c8955853f4 docker:patchproof-check-552e8500-dd29-4beb-976f-419de792b841 docker:patchproof-check-b47ec0cf-92b4-41a8-8f90-d2fe12e71e6a docker:patchproof-check-fc92270e-944a-4043-9552-aae9c07e5ac2 docker:patchproof-check-c5e6567b-277a-4316-99d9-d911a76e7f08 docker:patchproof-check-ba213df3-893f-488b-af5c-9a40fba79ea7 docker:patchproof-check-75ac5de3-30ad-49c0-9b0f-aac35fe18362 docker:patchproof-check-25580e52-f3c3-4f86-ab52-fbf156281ec9 docker:patchproof-check-0d816771-1748-48ff-b966-a13d699e0bb4 docker:patchproof-check-02516d8c-f08c-41ee-b9a9-373c8034a688 docker:patchproof-check-5ec5be37-4e76-4330-8bd6-65c32e857aa1 docker:patchproof-check-6d4f2344-5815-43a3-94ce-46fbcc483158 docker:patchproof-check-d775b90d-24a2-4bd4-807f-4395e6d69de6 docker:patchproof-check-0e5f6637-b4c7-4fc9-a2be-15a80ce5d5a4 docker:patchproof-check-2a20a412-798b-4aef-bb8c-2c961c292994 docker:patchproof-check-35db1456-a297-4be4-879c-21bdcf8a2228 docker:patchproof-check-7c1e57f0-cb58-40d5-8adc-ac2372a3ac4e docker:patchproof-check-fe0c6434-1489-4d7c-8ed3-6d2a770f3257 docker:patchproof-check-2320b58e-0eeb-4caa-934a-418e55e96f08 docker:patchproof-check-b61e0827-f791-46e1-b70e-88162f54a6f5 docker:patchproof-check-433a71d4-739d-4e6c-9824-54d0c294eddb docker:patchproof-check-32b31f1a-b3b3-4bf5-87e9-10614da2c8c8 docker:patchproof-check-537b7313-08e4-458c-a13c-47b5a99ee15c\nCheck runtime\nLocal Docker checks\nModel service\nNebius Token Factory\n\nSave the downloaded bundle under artifacts/product/exports/<run-id>.json in the source checkout recorded by this run, then execute:\n\nmake reproduce RUN=5b356c42-8848-4e78-bce7-94800f63eebf\n\nThe export records its inputs and digests. Replay is a separate fresh check execution; it does not rerun model inference.\n\nReal NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.\n\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-390-runs",
+      "url": "http://127.0.0.1:43179/#runs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nRuns\nChoose an example\nKeep explicit empty cells during worksheet transposition\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nChecks failed\n202.0 s · $0.00089034 (estimate)\nRetain first occurrences throughout a list\n\nPatchProof · 9/27/2026, 9:39:09 PM · Recorded live\n\nAll listed checks passed\n73.9 s · $0.00010692 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:36:38 PM · Recorded live\n\nAll listed checks passed\n73.1 s · $0.00012066 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:33:55 PM · Recorded live\n\nAll listed checks passed\n135.2 s · $0.00020172 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:25:16 PM · Recorded live\n\nAll listed checks passed\n78.8 s · $0.00012948 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:22:12 PM · Recorded live\n\nChecks failed\n164.4 s · $0.00024468 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:09:23 PM · Recorded live\n\nNeeds review\n171.4 s · $0.00027324 (estimate)\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-320-home",
+      "url": "http://127.0.0.1:43179/",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nExamples\nView past runs\nChoose an example\nRetain first occurrences throughout a list\nPreserve a final partial list block\nHonor signed cyclic list shifts\nKeep unpaired values during list weaving\nCount adjacent list runs independently\nRepeated page marks fragment contiguous reading runs\nExact-capacity sessions split too early\nChapter boundary pages resolve to the wrong chapter\nLater reading sessions replace earlier page totals\nHalf-percent progress ties round down unexpectedly\nRetain fill-down history across blank worksheet spans\nKeep explicit empty cells during worksheet transposition\nInclude the final complete worksheet window\nCount zero-valued worksheet cells as populated\nLimit worksheet row deduplication to consecutive runs\nRestore adjacency-aware band coalescing\nRestore partial-band span extraction\nRestore whole-pattern tile order\nRestore first-use order in material totals\nRestore material-distance ribbon rotation\n\nowned-v2-r01\n\nRetain first occurrences throughout a list\n\nThe function misses duplicates that are separated by other items. Keep the first copy of each item, in order.\n\nGenerate patch\nLatest result\nCompare approaches\n\n$0.10 maximum · Up to 300 seconds · Review before applying\n\nFull requirements\nRun limits\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-320-failure",
+      "url": "http://127.0.0.1:43179/#evidence/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nChecks for attempt 1\n\n11 passed · 2 failed · 0 errors\n\nTask checks\nR01 · v-r01-null-is-data\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[1,2],[null,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved: {\"outcome\":[[1,2],[9,3]],\"argsAfter\":[[[1,null],[2,3]]],\"kwargsAfter\":{\"fill\":9}}\nObserved result and log · 3.5 s\nR02 · v-r02-padding\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · v-r03-outer\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nAdditional checks\nR01 · a-r01-null-zero\nFailed\n\nThe observed result did not match the expected result.\n\nExpected: {\"outcome\":[[null,0],[4,null]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved: {\"outcome\":[[-6,0],[4,-6]],\"argsAfter\":[[[null,4],[0,null]]],\"kwargsAfter\":{\"fill\":-6}}\nObserved result and log · 3.6 s\nR01 · a-r01-signed\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.7 s\nR02 · a-r02-null-fill\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.9 s\nR02 · a-r02-empty-rows\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-fill-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-float\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.2 s\nR03 · a-r03-fill-string\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nR03 · a-r03-cell-bool\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.3 s\nR03 · a-r03-row-number\nPassed\n\nThe observed result matches the expected result.\n\nObserved result and log · 3.4 s\nRequirements checked\nAttempt decision\nChecks before repair\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-320-details",
+      "url": "http://127.0.0.1:43179/#evidence/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nAll runs\nRun review\nCompare approaches\nSwitch run\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nKeep explicit empty cells during worksheet transposition\n\nChecks failed\n\nSome checks failed. No patch was approved.\n\nAttempt 1: 11 checks passed · 2 failed · 0 errors\n\nDownload evidence\nAttempt 1 · Failed · Kept for review\nAttempt 2 · Check error\nAttempt 3 · Check error\nPatch\nChecks\nActivity\nRun details\nCost and limits\n\nUsage across every attempt in this run.\n\nEstimated model cost\n$0.00089034 (estimate)\nPer-run spend limit\n$0.10\nModel operations / limit\n3 / 3\nInput tokens / limit\n6,331 / 786,432\nOutput tokens / limit\n2,127 / 6,000\nElapsed / limit\n202.0 s / 300 s\nSandbox CPU / limit\nNot measured / 900 s\n\nEstimated provider cost is labeled separately from measured billing. Unknown charges and CPU stay unmeasured; local electricity and hardware costs are not included.\n\nReproduce this run\n\nSaved inputs, request IDs and replay instructions.\n\nRepair approach\npatchproof\nSource snapshot\nsha256:fadeaa7547f295fb8c022469c6276ceb2f65496bb8bce17043703edf8797aa82\nAcceptance policy\nsha256:8e0c36a17027968bd9933e586da61b19fdb7c3e53e510c453a4997d07cde2f21\nRuntime lock\nsha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed\nRun ID\n5b356c42-8848-4e78-bce7-94800f63eebf\nModel identifier\nnvidia/NVIDIA-Nemotron-3-Nano-30B-A3B\nProvider request ID\nchatcmpl-5adcc59b-dd58-415f-a533-ce1e0f18f2eb\nSelected candidate operation IDs\ndocker:patchproof-check-7ef17838-2fd3-4aab-9ba4-408772feaf35 docker:patchproof-check-957ac87e-5c97-4a7a-ac67-1205a241f1f3 docker:patchproof-check-077afc70-13ec-4469-92f1-808adbafc81e docker:patchproof-check-bec8bd87-9959-4001-ac7c-59c8955853f4 docker:patchproof-check-552e8500-dd29-4beb-976f-419de792b841 docker:patchproof-check-b47ec0cf-92b4-41a8-8f90-d2fe12e71e6a docker:patchproof-check-fc92270e-944a-4043-9552-aae9c07e5ac2 docker:patchproof-check-c5e6567b-277a-4316-99d9-d911a76e7f08 docker:patchproof-check-ba213df3-893f-488b-af5c-9a40fba79ea7 docker:patchproof-check-75ac5de3-30ad-49c0-9b0f-aac35fe18362 docker:patchproof-check-25580e52-f3c3-4f86-ab52-fbf156281ec9 docker:patchproof-check-0d816771-1748-48ff-b966-a13d699e0bb4 docker:patchproof-check-02516d8c-f08c-41ee-b9a9-373c8034a688 docker:patchproof-check-5ec5be37-4e76-4330-8bd6-65c32e857aa1 docker:patchproof-check-6d4f2344-5815-43a3-94ce-46fbcc483158 docker:patchproof-check-d775b90d-24a2-4bd4-807f-4395e6d69de6 docker:patchproof-check-0e5f6637-b4c7-4fc9-a2be-15a80ce5d5a4 docker:patchproof-check-2a20a412-798b-4aef-bb8c-2c961c292994 docker:patchproof-check-35db1456-a297-4be4-879c-21bdcf8a2228 docker:patchproof-check-7c1e57f0-cb58-40d5-8adc-ac2372a3ac4e docker:patchproof-check-fe0c6434-1489-4d7c-8ed3-6d2a770f3257 docker:patchproof-check-2320b58e-0eeb-4caa-934a-418e55e96f08 docker:patchproof-check-b61e0827-f791-46e1-b70e-88162f54a6f5 docker:patchproof-check-433a71d4-739d-4e6c-9824-54d0c294eddb docker:patchproof-check-32b31f1a-b3b3-4bf5-87e9-10614da2c8c8 docker:patchproof-check-537b7313-08e4-458c-a13c-47b5a99ee15c\nCheck runtime\nLocal Docker checks\nModel service\nNebius Token Factory\n\nSave the downloaded bundle under artifacts/product/exports/<run-id>.json in the source checkout recorded by this run, then execute:\n\nmake reproduce RUN=5b356c42-8848-4e78-bce7-94800f63eebf\n\nThe export records its inputs and digests. Replay is a separate fresh check execution; it does not rerun model inference.\n\nReal NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.\n\nPatchProof\nDemo recording",
+      "overflow": false
+    },
+    {
+      "name": "mobile-320-runs",
+      "url": "http://127.0.0.1:43179/#runs",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "text": "Skip to content\nPatchProof\nExamples\nRuns\nWatch demo\nLive model\n\nRuns\nChoose an example\nKeep explicit empty cells during worksheet transposition\n\nPatchProof · 9/27/2026, 9:41:03 PM · Recorded live\n\nChecks failed\n202.0 s · $0.00089034 (estimate)\nRetain first occurrences throughout a list\n\nPatchProof · 9/27/2026, 9:39:09 PM · Recorded live\n\nAll listed checks passed\n73.9 s · $0.00010692 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:36:38 PM · Recorded live\n\nAll listed checks passed\n73.1 s · $0.00012066 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:33:55 PM · Recorded live\n\nAll listed checks passed\n135.2 s · $0.00020172 (estimate)\nRetain first occurrences throughout a list\n\nRepair with extra checks · 9/27/2026, 9:25:16 PM · Recorded live\n\nAll listed checks passed\n78.8 s · $0.00012948 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:22:12 PM · Recorded live\n\nChecks failed\n164.4 s · $0.00024468 (estimate)\nRetain first occurrences throughout a list\n\nStandard repair · 9/27/2026, 9:09:23 PM · Recorded live\n\nNeeds review\n171.4 s · $0.00027324 (estimate)\nPatchProof\nDemo recording",
+      "overflow": false
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+
+> patchproof@0.0.1 test:browser
+> node scripts/verify-browser.ts
+
+(node:1787751) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "testedAt": "2026-09-28T03:10:15.051Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:44605",
+  "observation": "new_ui_comparison",
+  "resumeRunIds": [],
+  "runs": [
+    {
+      "id": "e52442b9-a85f-4785-8935-3bc4b254271f",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "2d168f4b-d654-491e-931f-167fd36b4462",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "77c256b6-9866-4056-87ff-edd826e7b632",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    }
+  ],
+  "selectedTaskId": "stable-unique-01",
+  "unsupportedTaskId": "v2-r01-t02",
+  "rejectedCandidate": {
+    "id": 1,
+    "reason": "One or more declared checks failed or were unavailable.",
+    "nonpassingChecks": [
+      {
+        "id": "u-v-order",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-unicode",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-nested",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-numeric",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      }
+    ]
+  },
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views including run history",
+    "result tab navigation",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:bfe699695bbe64414c818f236d9f7ab1206899de0a492af0a3d1ddb5426321b6",
+  "createdIds": [
+    "e52442b9-a85f-4785-8935-3bc4b254271f",
+    "2d168f4b-d654-491e-931f-167fd36b4462",
+    "77c256b6-9866-4056-87ff-edd826e7b632"
+  ],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-runs-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}
