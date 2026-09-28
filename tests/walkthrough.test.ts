@@ -134,6 +134,9 @@ test('both recorded outcomes have complete four-stage walkthroughs, actual diffs
     for (const stage of ['failed-bug', 'failed-patch', 'failed-checks', 'failed-decision']) {
       await page.evaluate(value => (window as any).renderStage(value), stage);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, `${stage} fits ${width}px.`);
+      const active = await page.locator('.story-step[aria-current="step"]').boundingBox();
+      const navigation = await page.locator('.story-steps').boundingBox();
+      assert.ok(active && navigation && active.x >= navigation.x - 1 && active.x + active.width <= navigation.x + navigation.width + 1, 'The selected mobile step label is fully visible.');
     }
   }
   await page.evaluate(() => (window as any).renderStage('failed-decision'));

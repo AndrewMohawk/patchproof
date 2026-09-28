@@ -33,6 +33,8 @@ for task in tasks:
     assert fixture['id'] == task and fixture['split'] == 'development'
 digest = run(['node', '--input-type=module', '-e', "import {buildOperationalLock} from './packages/orchestrator/src/operational-lock.ts';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(buildOperationalLock(process.cwd())));"], cwd=release, capture_output=True).stdout.strip()
 assert re.fullmatch('sha256:[a-f0-9]{64}', digest)
+pricing_digest = run(['node', '--input-type=module', '-e', "import {readFileSync} from 'node:fs';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(JSON.parse(readFileSync('research/product-v3/model-discovery.json','utf8'))));"], cwd=release, capture_output=True).stdout.strip()
+assert re.fullmatch('sha256:[a-f0-9]{64}', pricing_digest)
 original = config.read_bytes()
 data = json.loads(original)
 backup = config.with_name(f'live-demo-before-{sha[:12]}.json')
@@ -42,7 +44,7 @@ with backup.open('xb') as stream:
 idle()
 run(['systemctl', '--user', 'stop', unit(previous)])
 try:
-    data.update(sourceDigest=digest, taskIds=tasks)
+    data.update(sourceDigest=digest, pricingEvidenceDigest=pricing_digest, taskIds=tasks)
     temporary = config.with_name(f'live-demo-{sha[:12]}.tmp')
     with temporary.open('x') as stream:
         os.fchmod(stream.fileno(), 0o600)
@@ -63,7 +65,7 @@ try:
         raise RuntimeError('Release health or catalogue verification failed')
     run(['systemctl', '--user', 'disable', unit(previous)])
     receipt = dict(deployedAt=datetime.datetime.now(datetime.timezone.utc).isoformat(), releaseCommit=sha,
-                   sourceDigest=digest, previousRelease=previous, health=health, tasks=tasks, paidRequests=0)
+                   sourceDigest=digest, pricingEvidenceDigest=pricing_digest, previousRelease=previous, health=health, tasks=tasks, paidRequests=0)
     (root / f'research/product-v3/verification/rollout-{sha[:12]}.json').write_text(json.dumps(receipt, indent=2) + '\n')
     print(json.dumps(receipt))
 except Exception:

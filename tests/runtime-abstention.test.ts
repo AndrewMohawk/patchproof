@@ -9,8 +9,9 @@ import { EvidenceStore, reproduceEvidence, verifyEvidence } from '../packages/or
 import { RunJournal } from '../packages/orchestrator/src/journal.ts';
 import { MockRepairProvider } from '../workers/repair/index.ts';
 import { DockerCheckRunner, LOCAL_IMAGE_ID } from '../workers/sandbox/index.ts';
+import { LOCAL_MOCK_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 
-test('unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch', { timeout: 60_000 }, async t => {
+test('unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch', { timeout: 120_000 }, async t => {
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-abstention-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   // Exercise the current public catalogue without depending on a retired corpus filename.
@@ -19,7 +20,7 @@ test('unsupported public scripted task exports durable needs_review with zero pr
   assert.ok(fixture, 'The public catalogue must include an unsupported development task.');
   const journalPath = join(directory, 'runs.sqlite');
   const store = new EvidenceStore(join(directory, 'evidence'));
-  const coordinator = new Coordinator({ fixtures: [fixture], runtimeLock: { mode: 'mock', localCheckImage: LOCAL_IMAGE_ID },
+  const coordinator = new Coordinator({ fixtures: [fixture], runtimeLock: { mode: 'mock', localCheckImage: LOCAL_IMAGE_ID, localCheckTimingPolicy: LOCAL_MOCK_CHECK_TIMING_POLICY },
     provider: new MockRepairProvider(), checks: new DockerCheckRunner(), journal: new RunJournal(journalPath), store });
   let runId: string, evidenceDigest: string;
   try {

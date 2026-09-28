@@ -7,11 +7,12 @@ import { tmpdir } from 'node:os';
 import { FixtureSchema } from '../packages/contracts/src/product.ts';
 import type { CheckRunner, ProductRun } from '../packages/contracts/src/product.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
-import { BudgetLedger } from '../packages/orchestrator/src/budget-ledger.ts';
+import { BudgetLedger, usdToMicros } from '../packages/orchestrator/src/budget-ledger.ts';
+import type { PendingInferenceCoverage } from '../packages/orchestrator/src/budget-ledger.ts';
 import { RunJournal } from '../packages/orchestrator/src/journal.ts';
 import { EvidenceStore, verifyEvidence } from '../packages/orchestrator/src/evidence.ts';
 import { Coordinator } from '../packages/orchestrator/src/coordinator.ts';
-import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_MODEL } from '../packages/orchestrator/src/live-local.ts';
+import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_MODEL, LIVE_PRICING, LIVE_RESERVATION_MICROS } from '../packages/orchestrator/src/live-local.ts';
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 import { REPEATED_CHECK_PROTOCOL } from '../packages/orchestrator/src/repeated-checks.ts';
 
@@ -31,7 +32,7 @@ const response = (source = 'def f(): return 2\n', usage = { prompt_tokens: 24, c
     { headers: { 'x-request-id': 'invented-transport' } });
 
 async function setup(t: TestContext) {
-  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-09-28T03:00:00Z') });
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-09-28T06:00:00Z') });
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-live-local-unit-'));
   const budget = { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 25,
     ownerApproval: { approvedBy: 'synthetic', approvedAt: '2026-09-27T00:00:00Z', expiresAt: null, reference: 'invented control' },
@@ -69,24 +70,72 @@ async function setup(t: TestContext) {
   return { directory, accountingDirectory, ledger, journal, store, options, coordinator, observed, hooks, run, reservation };
 }
 
+test('Super shares a quarter-dollar reservation that covers its entire matched token allowance', () => {
+  assert.equal(LIVE_MODEL, 'nvidia/nemotron-3-super-120b-a12b');
+  assert.equal(LIVE_PRICING.verifiedAt, '2026-09-28T05:35:23Z');
+  assert.equal(LIVE_RESERVATION_MICROS, 250_000n);
+  assert.equal(LIVE_RESERVATION_MICROS, usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd));
+  assert.equal(LIVE_LIMITS.inferenceCallLimit, 3);
+  assert.equal(LIVE_LIMITS.inputTokenLimit, 786432);
+  assert.equal(LIVE_LIMITS.outputTokenLimit, 12000);
+  assert.equal(LIVE_LIMITS.wallTimeLimitSeconds, 600);
+  assert.equal(LIVE_PRICING.maximumOutputTokensPerRequest, 4000);
+  const tokenRateProduct = BigInt(LIVE_LIMITS.inferenceCallLimit * LIVE_PRICING.contextTokens) *
+    usdToMicros(LIVE_PRICING.inputUsdPerMillionTokens) +
+    BigInt(LIVE_LIMITS.outputTokenLimit) * usdToMicros(LIVE_PRICING.outputUsdPerMillionTokens);
+  assert.equal(tokenRateProduct, 246_729_600_000n);
+  assert.equal(Number(tokenRateProduct) / 1_000_000_000_000, 0.2467296);
+  assert.ok(tokenRateProduct < LIVE_RESERVATION_MICROS * 1_000_000n);
+  assert.equal(LIVE_PRICING.requestFeeUsd, 0);
+});
+
+test('full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage', async t => {
+  const h = await setup(t);
+  h.ledger.reserve({ id: 'prior-allocation', episodeId: 'prior-allocation', stage: 'smoke', amountMicros: 100_000n, fingerprint: HASH });
+  h.hooks.alwaysFail = true;
+  h.hooks.fetch = () => response('def f(): return 2\n', { prompt_tokens: 262144, completion_tokens: 4000 });
+  const done = await h.run('full-super-envelope');
+  assert.equal(done.terminalStatus, 'failed'); assert.equal(done.usage.inferenceCalls, 3);
+  assert.equal(done.usage.inputTokens, 786432); assert.equal(done.usage.outputTokens, 12000);
+  assert.ok(Math.abs(done.usage.measuredCostUsd! - 0.2467296) < 1e-12);
+  assert.equal(done.usage.costIsEstimate, true);
+  assert.equal(h.reservation(done).reservedMicros, '250000');
+  assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.reservation(done).actualCostMicros, null);
+  const coverage = h.ledger.events().find(event => event.kind === 'closed_inference_exposure_covered')!;
+  const proof = coverage.details.proof as PendingInferenceCoverage;
+  assert.equal(proof.modelId, LIVE_MODEL);
+  assert.equal(proof.inputMicrosPerMillionTokens, '300000');
+  assert.equal(proof.outputMicrosPerMillionTokens, '900000'); assert.equal(proof.requestFeeMicros, '0');
+  // The ledger rounds each request upward independently, keeping the bound conservative.
+  assert.equal(coverage.details.maximumCostMicros, '246732');
+  assert.equal(proof.requests.length, 3);
+  assert.equal(h.ledger.get('prior-allocation').heldMicros, '100000');
+  assert.equal(h.ledger.snapshot().heldMicros, '350000');
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1); assert.equal(h.ledger.snapshot().frozen, false);
+  h.ledger.reserve({ id: 'remaining-smoke', episodeId: 'remaining-smoke', stage: 'smoke', amountMicros: 4_650_000n, fingerprint: HASH });
+  assert.equal(h.ledger.snapshot().stages.smoke.availableMicros, '0');
+  assert.throws(() => h.coordinator.create(request('smoke-exhausted')), /allowance is exhausted/);
+  assert.equal(h.observed.requests.length, 3); assert.equal(h.observed.credentials, 3);
+});
+
 test('real adapter success keeps unknown billed cost and full hold, then permits covered continuation', async t => {
   const h = await setup(t), first = await h.run('success-1');
   assert.equal(first.mode, 'live'); assert.equal(first.terminalStatus, 'verified_for_declared_checks');
   assert.equal(first.reason, 'declared_local_checks_passed'); assert.equal(first.usage.inferenceCalls, 1);
   assert.equal(first.usage.sandboxCpuSeconds, null); assert.equal(first.usage.costIsEstimate, true);
-  assert.equal(first.usage.measuredCostUsd, (24 * .06 + 32 * .24) / 1_000_000);
-  assert.equal(h.reservation(first).actualCostMicros, null); assert.equal(h.reservation(first).heldMicros, '100000');
+  assert.equal(first.usage.measuredCostUsd, (24 * .3 + 32 * .9) / 1_000_000);
+  assert.equal(h.reservation(first).actualCostMicros, null); assert.equal(h.reservation(first).heldMicros, '250000');
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1); assert.equal(h.ledger.snapshot().frozen, false);
   const bundle = verifyEvidence(await h.coordinator.evidence(first.id)); assert.equal(bundle.run.id, first.id); assert.deepEqual(bundle.runtimeLock, lock);
   const second = await h.run('success-2'); assert.equal(second.terminalStatus, 'verified_for_declared_checks');
-  assert.equal(h.ledger.snapshot().heldMicros, '200000'); assert.equal(h.ledger.snapshot().pendingBillingCount, 2);
+  assert.equal(h.ledger.snapshot().heldMicros, '500000'); assert.equal(h.ledger.snapshot().pendingBillingCount, 2);
   assert.equal(h.coordinator.create(request('success-1')).reused, true); assert.equal(h.observed.requests.length, 2);
 });
 
 test('ambiguous transport leaves full hold blocking and never retries automatically', async t => {
   const h = await setup(t); h.hooks.fetch = () => { throw new Error('invented transport uncertainty'); };
   const done = await h.run('ambiguous'); assert.equal(done.reason, 'transport_error'); assert.equal(done.usage.inferenceCalls, 1);
-  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '100000');
+  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
   assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
   assert.throws(() => h.coordinator.create(request('must-block')), /paused|accounting/); assert.equal(h.observed.requests.length, 1);
 });
@@ -110,7 +159,7 @@ test('all variants share exact limits, repeated-check cap and no more than three
     assert.ok(b.timeoutSeconds <= a.timeoutSeconds);
     assert.deepEqual(a.files, b.files); assert.deepEqual(a.cases, b.cases);
   }
-  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '300000');
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '750000');
 });
 
 test('reported per-request input and output overruns cannot become covered exposure', async t => {
@@ -119,7 +168,7 @@ test('reported per-request input and output overruns cannot become covered expos
       const h = await setup(sub); h.hooks.fetch = () => response('def f(): return 2\n', usage);
       const done = await h.run('overrun-' + name); assert.equal(done.reason, 'budget_exceeded');
       assert.equal(h.observed.requests.length, 1); assert.equal(done.candidates.length, 0);
-      assert.equal(h.reservation(done).heldMicros, '100000'); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
+      assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
       assert.equal(h.ledger.snapshot().frozen, true);
     });
   }
@@ -157,7 +206,7 @@ test('cancellation after dispatch retains ambiguous hold and single-flight admis
   const { run } = h.coordinator.create(request('cancelled')); assert.throws(() => h.coordinator.create(request('concurrent')), /already active/);
   await entered; h.coordinator.cancel(run.id); await h.coordinator.settled();
   const done = h.coordinator.get(run.id); assert.equal(done.reason, 'cancelled'); assert.equal(done.terminalStatus, 'needs_review');
-  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).heldMicros, '100000'); assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1);
+  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1);
 });
 
 test('actual credential echoes are withheld from candidate, events and accounting receipts', async t => {

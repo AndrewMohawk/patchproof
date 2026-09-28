@@ -12,12 +12,15 @@ export const storyRecords = {
     codeFunctions: ['unique'],
   },
   failure: {
-    id: '5b356c42-8848-4e78-bce7-94800f63eebf', taskId: 'v2-r03-t02', digest: 'sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8', checkId: 'v-r01-null-is-data',
-    bugTitle: 'Existing empty worksheet cells must survive a transpose.',
-    scenario: 'This worksheet helper swaps rows and columns, padding missing cells when the rows have different lengths. An existing null cell is data; it must not be replaced by the padding value.',
-    goal: 'Transpose uneven rows while preserving existing cell values. Use the filler only for a missing position and leave the original worksheet unchanged.',
-    patchTitle: 'This proposal still confuses a null cell with a missing cell.',
-    changeDescription: 'Review the retained proposal as a complete repair attempt. Its recorded output still replaces an existing null cell with the filler value, so a partial pass does not make it an accepted repair.',
+    id: '9d3cd90e-94e2-4787-b294-5caa577b40e1', taskId: 'v3-config-overlay', digest: 'sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd', checkId: 'v3-config-overlay-nested-list',
+    bugTitle: 'A configuration update applies the wrong values and reports the wrong changes.',
+    scenario: 'A deployment preview merges a base configuration with several overrides. Its six helpers must agree about nested objects, replacement lists, explicit nulls, deletion, and the change report.',
+    goal: 'Replace the region list, change only service.timeout, and report those exact setting paths. Preserve explicit nulls, honor deletion directives, validate all inputs, and leave the caller’s data unchanged.',
+    patchTitle: 'The values improve, but the change report and deletion rules still fail.',
+    changeDescription: 'The model rewrote merge helpers. This proposal replaces the region list correctly, yet reports service instead of service.timeout. Four further checks reject its deletion or change-report behavior.',
+    endingNote: 'Attempt 1 completed its checks: 17 passed and 5 failed. Attempt 2 ran out of the five-minute run allowance before verification completed, producing 22 unavailable check results. The final run status is Execution error; no patch was accepted.',
+    codeFunctions: ['_overlay'], inputLabels: ['Base configuration', 'Override layers'],
+    requirementLabels: { R01: 'Merge objects and replace lists', R02: 'Distinguish null data from explicit deletion', R03: 'Report exact final changes in lexical order', R04: 'Validate the complete input', R05: 'Preserve the caller’s data' },
   },
 };
 const rows = value => Array.isArray(value) ? value : [];
@@ -143,6 +146,11 @@ export function renderStory(container, state, requestedStep = 'bug') {
   for (const [id, label] of [['bug', '1. The bug & goal'], ['patch', '2. AI patch'], ['checks', '3. Check results'], ['decision', '4. Your decision']]) {
     const a = anchor(label, route(id), 'story-step'); if (id === step) a.setAttribute('aria-current', 'step'); tabs.append(a);
   }
+  const paint = (...children) => {
+    container.replaceChildren(...children);
+    const active = tabs.querySelector('[aria-current="step"]');
+    if (active && tabs.scrollWidth > tabs.clientWidth) tabs.scrollLeft = active.offsetLeft - tabs.offsetLeft - (tabs.clientWidth - active.offsetWidth) / 2;
+  };
   const card = node('article', 'story-card');
   const projected = context?.status === 'ready' && context.story;
   const data = projected?.runId === record.id && projected.bundleDigest === record.digest && projected.taskId === record.taskId && projected.kind === kind ? projected : null;
@@ -151,7 +159,7 @@ export function renderStory(container, state, requestedStep = 'bug') {
     const loading = !state.ready || context?.status === 'loading';
     add(card, node('h2', 'story-heading', loading ? 'Loading the recorded example…' : 'This recorded example is unavailable here.'),
       node('p', '', loading ? 'Reading its saved source, patch and check results.' : 'The walkthrough needs its original real-run evidence. This workspace has not supplied it; no example results have been substituted.'), anchor('Browse repair tasks', '#tasks'));
-    container.replaceChildren(cases, tabs, card); return;
+    paint(cases, tabs, card); return;
   }
   const count = statusCounts(data.checks), original = statusCounts(data.baselineChecks);
   add(card, node('p', 'story-meta', `${kind === 'success' ? 'Fixed repair' : 'Failed repair'} · Saved real run · No new model calls`));
@@ -184,6 +192,7 @@ export function renderStory(container, state, requestedStep = 'bug') {
         node('h3', '', data.accepted ? 'Decision supported: review this patch for use.' : 'Decision supported: do not use this as a completed fix.'),
         node('p', '', data.accepted ? 'These results support the stated requirements for the inputs checked. They do not establish correctness for every possible input. Nothing is merged automatically.' : `No candidate was accepted for this run. ${count.fail ? `${count.fail} check${count.fail === 1 ? '' : 's'} still failed in the retained attempt. ` : ''}${count.error ? `${count.error} check${count.error === 1 ? '' : 's'} could not execute normally. ` : ''}A partial pass is not a completed repair.`)),
       section('Every attempt stays in the record', `This run made ${data.usage?.inferenceCalls ?? 'an unrecorded number of'} model ${data.usage?.inferenceCalls === 1 ? 'request' : 'requests'} and recorded ${data.attempts.length} patch ${data.attempts.length === 1 ? 'attempt' : 'attempts'}${Number.isFinite(data.usage?.elapsedMs) ? ` over ${(data.usage.elapsedMs / 1000).toFixed(1)} seconds` : ''}. Retained means the attempt kept for inspection; its check results determine whether it passed.`),
+      data.metadata.endingNote && section('How this run ended', data.metadata.endingNote),
       attemptHistory(data),
       section('Take the evidence with you', 'Open the complete run to inspect every changed line and check. Download its source snapshot, proposals, recorded outputs, logs, identifiers, and accounting. Run details includes instructions for a separate fresh replay of the checks.'),
       add(node('div', 'story-actions'),
@@ -194,5 +203,5 @@ export function renderStory(container, state, requestedStep = 'bug') {
   const runtime = data.execution?.modelProvider === 'nebius-token-factory' ? 'NVIDIA inference through Nebius Token Factory.' : 'Model and provider identifiers are preserved in the run details.';
   const backend = data.execution?.checkBackend === 'local_container' ? ' Checks executed in isolated local Docker containers.' : ' The recorded run identifies its check runtime.';
   const footer = node('p', 'story-footnote', `${runtime}${backend} These curated examples explain the workflow; they do not establish a benchmark advantage.`);
-  container.replaceChildren(cases, tabs, card, footer);
+  paint(cases, tabs, card, footer);
 }

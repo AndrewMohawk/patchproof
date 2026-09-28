@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "Read-only account model discovery for bounded public-development maintenance runs; no inference or paid resource creation.",
+  "observedAt": "2026-09-28T05:35:23.237148+00:00",
+  "sourceCommit": "b66372310a77132387ce7d0a9004523ea4d9648d",
+  "source": "Authenticated Nebius Token Factory model catalog and official Nebius/NVIDIA primary documentation",
+  "modelCatalog": {
+    "method": "GET",
+    "url": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+    "startedAt": "2026-09-28T05:35:22.742896+00:00",
+    "finishedAt": "2026-09-28T05:35:23.237148+00:00",
+    "httpStatus": 200,
+    "requestId": "798f5eabd8a800229062f49e521eb173",
+    "responseByteDigest": "sha256:e5c5ff399b6006cb6b50fa0591f7f5c56565c2cb8ec364a7124ca3104e9af98b",
+    "responseBytes": 20586,
+    "modelCount": 25,
+    "nvidiaModels": [
+      {
+        "id": "nvidia/nemotron-3-super-120b-a12b",
+        "contextLength": 262144,
+        "quantization": "fp4",
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0"
+        }
+      }
+    ]
+  },
+  "catalogObservations": [
+    {
+      "method": "GET",
+      "url": "https://api.tokenfactory.nebius.com/v1/models",
+      "startedAt": "2026-09-28T05:34:31.192647+00:00",
+      "finishedAt": "2026-09-28T05:34:31.681133+00:00",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:bc772711e808c7e4395eaf41d77c4efb47c8eb37270d2b8eb3733986005024e2",
+      "responseBytes": 2345
+    },
+    {
+      "method": "GET",
+      "url": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+      "startedAt": "2026-09-28T05:34:52.192308+00:00",
+      "finishedAt": "2026-09-28T05:34:52.688098+00:00",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:a29f2d6325be54f62c8ce254a6ed6ab32931e07734775dce2c86b88ffea0156d",
+      "responseBytes": 20586
+    },
+    {
+      "method": "GET",
+      "url": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+      "startedAt": "2026-09-28T05:35:22.742896+00:00",
+      "finishedAt": "2026-09-28T05:35:23.237148+00:00",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:e5c5ff399b6006cb6b50fa0591f7f5c56565c2cb8ec364a7124ca3104e9af98b",
+      "responseBytes": 20586
+    }
+  ],
+  "selectedModelId": "nvidia/nemotron-3-super-120b-a12b",
+  "officialInterfaces": {
+    "modelList": "https://docs.tokenfactory.nebius.com/api-reference/models/list-models",
+    "chatCompletion": "https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion",
+    "textGeneration": "https://docs.tokenfactory.nebius.com/api-reference/examples/text-generation",
+    "apiBase": "https://api.tokenfactory.nebius.com/v1"
+  },
+  "documentationReceipts": [
+    {
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/models/list-models.md",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:86f0b12a53f90765abbddd25119299e799957193a2aad858b9990f8c2687303e",
+      "observedAt": "2026-09-28T05:35:23.350317+00:00"
+    },
+    {
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion.md",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:d1fb8fa4f01bacf44335b6b57bf19847b2d4fa0f7a91600ecdd3350f47666d59",
+      "observedAt": "2026-09-28T05:35:23.544321+00:00"
+    },
+    {
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/examples/text-generation.md",
+      "httpStatus": 200,
+      "responseByteDigest": "sha256:9df90da31c1a8454e4ffecd3ba420d12636a76892931358dd2889c90a64204c1",
+      "observedAt": "2026-09-28T05:35:23.786827+00:00"
+    }
+  ],
+  "upstreamModelCard": {
+    "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
+    "revision": "ff433f5493e25d631c9f12b5d55c674229923d02",
+    "pinnedReadmeUrl": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4/raw/ff433f5493e25d631c9f12b5d55c674229923d02/README.md",
+    "httpStatus": 200,
+    "responseByteDigest": "sha256:75a09249ef13176b32cc198bae54d83c234d4bf3f75ec996b59ad81f902b68cd",
+    "hostedWeightsRevision": null,
+    "hostedWeightsRevisionNote": "The account catalog names the hosted model and FP4 quantization; it does not establish a hosted weights revision."
+  },
+  "license": {
+    "name": "NVIDIA Nemotron Open Model License",
+    "url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/",
+    "lastModifiedAsDisplayed": "2025-12-15",
+    "httpStatus": 200,
+    "responseByteDigest": "sha256:91dfef6aef2b28e8b1d857b81cc3ea06f4da7153dc9b3b9122cd83e3c601c0d0",
+    "metadataLicenseName": "nvidia-nemotron-open-model-license",
+    "termsAcceptedByThisDiscovery": false
+  },
+  "reasoning": {
+    "catalogSupportedFeatures": [
+      "tools",
+      "reasoning"
+    ],
+    "catalogSupportedSamplingParameters": [
+      "temperature",
+      "top_p",
+      "top_k",
+      "repetition_penalty",
+      "frequency_penalty",
+      "presence_penalty"
+    ],
+    "upstreamDocumentedDefault": "enabled",
+    "upstreamDocumentedParameter": "chat_template_kwargs.enable_thinking",
+    "upstreamDocumentedValues": [
+      true,
+      false
+    ],
+    "upstreamSuggestedTemperature": 1.0,
+    "upstreamSuggestedTopP": 0.95,
+    "hostedDefaultObserved": null,
+    "hostedEnableThinkingParameterTested": false,
+    "nebiusSchemaNotes": "Chat completion documents max_completion_tokens as including visible and reasoning tokens, and extra_body as extra parameters. No model-specific enable_thinking guarantee was found in the reviewed Nebius pages.",
+    "existingAdapterBehavior": "workers/repair/index.ts emits chat_template_kwargs.enable_thinking=false only when disableThinking is true. Setting disableThinking=false omits that override; it does not explicitly enable thinking.",
+    "implementationRecommendation": "For the intended next real run, removing the existing disabling override uses provider defaults without inventing an unsupported model-specific field. Do not claim reasoning was observed until inference evidence establishes it.",
+    "noNewInferenceParametersApplied": true
+  },
+  "reserveCalculation": {
+    "currency": "USD",
+    "inferenceCallLimit": 3,
+    "perCallInputTokenUpperBound": 262144,
+    "aggregateOutputTokenLimit": 12000,
+    "inputUsdPerMillionTokens": 0.3,
+    "outputUsdPerMillionTokens": 0.9,
+    "requestUsd": 0.0,
+    "formula": "3 * 262144 * 0.3 / 1000000 + 12000 * 0.9 / 1000000",
+    "maximumEstimatedUsd": 0.2467296,
+    "proposedPerRunReservationUsd": 0.25,
+    "remainingHeadroomUsd": 0.0032704,
+    "withinProposedReservation": true,
+    "basis": "Catalog token/request rates; conservative context-sized input on all three calls plus the aggregate output allowance. This is a reservation calculation, not observed invoiced cost.",
+    "configurationChanged": false
+  },
+  "inferenceCalls": 0,
+  "sandboxExecutions": 0,
+  "externallyBilledOperationsInitiated": 0,
+  "credentials": "Read only from owner-approved project credential file into process memory; no token, request headers, or raw authenticated responses persisted.",
+  "priorDiscoveryModified": false
+}

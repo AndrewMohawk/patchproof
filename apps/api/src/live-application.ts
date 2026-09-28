@@ -16,7 +16,7 @@ import { REPEATED_CHECK_PROTOCOL } from '../../../packages/orchestrator/src/repe
 import { buildOperationalLock, verifyOperationalLock } from '../../../packages/orchestrator/src/operational-lock.ts';
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../../../packages/orchestrator/src/local-check-timing.ts';
 import { BudgetLedger } from '../../../packages/orchestrator/src/budget-ledger.ts';
-import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL } from '../../../packages/orchestrator/src/live-local.ts';
+import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const LiveDemoConfigSchema = z.strictObject({ schemaVersion: z.literal('1.0'), executionAuthorized: z.literal(true),
@@ -43,10 +43,12 @@ export async function createLiveApplication(root: URL, configFile: string) {
   try {
     const operationalLock = buildOperationalLock(projectRoot);
     if (digestJson(operationalLock) !== config.sourceDigest) throw new Error('live_demo_source_changed');
-    const discovery = JSON.parse(await readFile(new URL('research/verification/20260927-account-access/discovery.json', root), 'utf8'));
+    const discovery = JSON.parse(await readFile(new URL('research/product-v3/model-discovery.json', root), 'utf8'));
     if (digestJson(discovery) !== config.pricingEvidenceDigest) throw new Error('live_demo_pricing_changed');
     const model = discovery.modelCatalog.nvidiaModels.find((m: {id: string}) => m.id === LIVE_MODEL);
-    if (model?.contextLength !== 262144 || model.pricing.prompt !== '0.00000006' || model.pricing.completion !== '0.00000024' || model.pricing.request !== '0') throw new Error('live_demo_pricing_mismatch');
+    if (model?.contextLength !== LIVE_PRICING.contextTokens || model.quantization !== 'fp4' ||
+        model.pricing.prompt !== '0.0000003' || model.pricing.completion !== '0.0000009' ||
+        model.pricing.request !== '0') throw new Error('live_demo_pricing_mismatch');
     const checks = new DockerCheckRunner(), status = await checks.status();
     if (!status.available) throw new Error('live_demo_local_runtime_unavailable');
     // Execute a fixed benign control under the service's real UID and umask before
@@ -65,10 +67,10 @@ export async function createLiveApplication(root: URL, configFile: string) {
     const fixtures = config.taskIds.map(id => all.find(f => f.id === id && f.split === 'development'));
     if (new Set(config.taskIds).size !== config.taskIds.length || fixtures.some(f => !f || f.visibleCases.length + f.acceptanceCases.length > 22)) throw new Error('live_demo_task_not_available');
     const runtimeLock = { mode: 'live', scope: 'public-curated-development-demo', competitionReady: false,
-      model: { id: LIVE_MODEL, providerQuantization: 'fp8', tokenizerPin: null,
-        modelCardUrl: 'https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16',
-        licenseUrl: 'https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/',
-        license: 'NVIDIA Open Model License Agreement', cardScope: 'base-family BF16 card; provider FP8 tokenizer equivalence unverified' },
+      model: { id: LIVE_MODEL, providerQuantization: 'fp4', tokenizerPin: null,
+        modelCardUrl: discovery.upstreamModelCard.url, modelCardRevision: discovery.upstreamModelCard.revision,
+        hostedWeightsRevision: null, licenseUrl: discovery.license.url, license: discovery.license.name,
+        cardScope: 'upstream NVFP4 card; hosted weights revision and tokenizer equivalence unverified' },
       inferenceInterface: { version: '20260923-f93df18ab', openApiDigest: 'sha256:c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f',
         endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: 'provider defaults; thinking disabled; no determinism claim' },
       execution: LIVE_EXECUTION, liveLocalCheckTimingPolicy: LIVE_LOCAL_CHECK_TIMING_POLICY, pricing: LIVE_PRICING, sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
@@ -97,7 +99,7 @@ export async function createLiveApplication(root: URL, configFile: string) {
       live: { execution: LIVE_EXECUTION, runtimeLockDigest: digestJson(runtimeLock), limits: LIVE_LIMITS, allowedHosts: config.allowedHosts },
       liveAvailability: () => {
         const snapshot = ledger!.snapshot();
-        const remainingRuns = Math.floor(Math.min(Number(snapshot.availableMicros), Number(snapshot.stages.smoke.availableMicros)) / 100000);
+        const remainingRuns = Math.floor(Math.min(Number(snapshot.availableMicros), Number(snapshot.stages.smoke.availableMicros)) / Number(LIVE_RESERVATION_MICROS));
         const expired = Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(LIVE_PRICING.validUntil);
         const running = coordinator.list().some(run => run.phase !== 'terminal');
         return { enabled: !snapshot.frozen && !expired && !running && remainingRuns > 0, remainingRuns,

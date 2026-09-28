@@ -5,20 +5,21 @@ import { digestJson } from '../../contracts/src/digest.ts';
 import type { CheckRunner, Fixture, ProductRun } from '../../contracts/src/product.ts';
 import { NebiusRepairProvider } from '../../../workers/repair/index.ts';
 import type { InferenceReceipt } from '../../../workers/repair/index.ts';
-import { BudgetLedger } from './budget-ledger.ts';
+import { BudgetLedger, usdToMicros } from './budget-ledger.ts';
 import { Coordinator } from './coordinator.ts';
 import { RepeatedCheckRunner } from './repeated-checks.ts';
 import type { RunJournal } from './journal.ts';
 import type { EvidenceStore } from './evidence.ts';
 
-export const LIVE_MODEL = 'nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B';
+export const LIVE_MODEL = 'nvidia/nemotron-3-super-120b-a12b';
 export const LIVE_EXECUTION = Object.freeze({ modelProvider: 'nebius-token-factory', checkBackend: 'local_container', modelId: LIVE_MODEL });
 export const LIVE_LIMITS = Object.freeze(LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 786432,
-  outputTokenLimit: 12000, wallTimeLimitSeconds: 300, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 0.1 }));
-export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.06, outputUsdPerMillionTokens: 0.24,
+  outputTokenLimit: 12000, wallTimeLimitSeconds: 600, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 0.25 }));
+export const LIVE_RESERVATION_MICROS = usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd);
+export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.3, outputUsdPerMillionTokens: 0.9,
   requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
   inputAccounting: 'full-model-context-conservative-ceiling-per-request', actualBilling: 'unknown-full-reservation-held',
-  verifiedAt: '2026-09-28T00:01:53.113Z', validUntil: '2026-10-01T00:00:00Z' });
+  verifiedAt: '2026-09-28T05:35:23Z', validUntil: '2026-10-01T00:00:00Z' });
 export interface LiveLocalSettings {
   limits: typeof LIVE_LIMITS;
   beforeCreate: (id: string, fingerprint: string) => void;
@@ -103,7 +104,7 @@ export function createLiveLocalCoordinator(input: {
       if (active && !active.closed) throw new ContractError('capacity_exceeded', 'One live run is already active.', 429);
       active = null; validate();
       const reservationId = `live-local:${id}`;
-      try { input.ledger.reserve({ id: reservationId, episodeId: id, stage: 'smoke', amountMicros: 100000n, fingerprint }); }
+      try { input.ledger.reserve({ id: reservationId, episodeId: id, stage: 'smoke', amountMicros: LIVE_RESERVATION_MICROS, fingerprint }); }
       catch { throw new ContractError('budget_not_approved', 'The shared live-demo allowance is exhausted or paused.', 403); }
       active = { id, reservationId, fingerprint, intents: [], receipts: [], sink: null, attempted: false, closed: false }; persist();
     },
@@ -125,13 +126,17 @@ export function createLiveLocalCoordinator(input: {
             reservedMicros: reservation.reservedMicros, evidenceDigest, sourceDigest: input.sourceDigest,
             pricingEvidenceDigest: input.pricingEvidenceDigest, closureEvidenceDigest: digestJson(active.receipts), closedAt: new Date().toISOString(),
             endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', modelId: LIVE_MODEL,
-            inputMicrosPerMillionTokens: '60000', outputMicrosPerMillionTokens: '240000', requestFeeMicros: '0',
+            inputMicrosPerMillionTokens: usdToMicros(LIVE_PRICING.inputUsdPerMillionTokens).toString(),
+            outputMicrosPerMillionTokens: usdToMicros(LIVE_PRICING.outputUsdPerMillionTokens).toString(),
+            requestFeeMicros: usdToMicros(LIVE_PRICING.requestFeeUsd).toString(),
             dispatchClosed: true, inventoryComplete: true, otherBillableOperations: 0, requests });
         }
       }
       // This number is explicitly an estimate. The ledger keeps actualCostMicros null.
       if (active.attempted && active.intents.length === active.receipts.length) {
-        run.usage.measuredCostUsd = (run.usage.inputTokens * 0.06 + run.usage.outputTokens * 0.24) / 1_000_000;
+        run.usage.measuredCostUsd = (run.usage.inputTokens * LIVE_PRICING.inputUsdPerMillionTokens +
+          run.usage.outputTokens * LIVE_PRICING.outputUsdPerMillionTokens) / 1_000_000 +
+          run.usage.inferenceCalls * LIVE_PRICING.requestFeeUsd;
         run.usage.costIsEstimate = true;
       }
     },

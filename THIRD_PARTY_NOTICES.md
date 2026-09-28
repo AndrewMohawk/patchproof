@@ -27,3 +27,13 @@ external runtime prerequisites, not copied into this repository. The runtime
 guide pins the observed image and identifies BusyBox. Their upstream image and
 component notices must accompany any future redistributed runtime image; this
 source checkout does not grant additional redistribution rights.
+
+The September 28 live development configuration calls the hosted
+`nvidia/nemotron-3-super-120b-a12b` model through Nebius Token Factory; no model
+weights are downloaded or redistributed. Its upstream
+[NVFP4 model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4)
+links the [NVIDIA Nemotron Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/).
+The checked card revision and account catalog receipt are preserved in
+`research/product-v3/model-discovery.json`. The hosted weights revision and
+tokenizer equivalence remain unverified. This receipt records research, not
+acceptance of additional terms or a public-source license decision.

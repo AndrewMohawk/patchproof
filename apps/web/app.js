@@ -417,13 +417,20 @@ function renderTaskDetail() {
     limits && el('p', '', `${limits.inferenceCallLimit} model calls · ${count(limits.inputTokenLimit)} input / ${count(limits.outputTokenLimit)} output tokens · ${limits.wallTimeLimitSeconds} s elapsed · ${limits.sandboxCpuSecondsLimit} s CPU allowance. Unmeasured CPU is not treated as zero.`));
   const contract = disclosure('Full requirements', el('p', 'task-description', task.description), requirements);
   contract.classList.add('task-contract');
+  const running = [...state.runs.values()].find(run => run.phase !== 'terminal');
+  const runCost = el('p', 'fine-print run-cost', isArchive() ? 'Saved results only.' : isLive() ? `${money(limits?.maxApprovedSpendUsd)} maximum · Up to ${limits?.wallTimeLimitSeconds ?? 300} seconds · Review before applying` : 'Scripted mock response · No model charge');
+  if (isLive() && !canCreate()) {
+    runCost.replaceChildren(document.createTextNode(running ? 'A live repair is running. ' : 'New repairs are paused. '),
+      link(running ? 'View progress' : 'View saved runs', running ? `#evidence/${running.id}` : '#runs', 'text-link'));
+  }
   const launchSection = append(el('section', 'task-launch'), el('h3', '', isArchive() ? 'Review a saved repair' : 'Generate a repair and review the evidence'),
     el('p', 'section-description', isArchive() ? 'Open a recorded run to inspect its patch, check results, and evidence.' : 'PatchProof checks the starting code, asks the model for a change, and tests the proposal against this contract. You will get a diff, check results, and every recorded attempt.'), actions,
-    el('p', 'fine-print run-cost', isArchive() ? 'Saved results only.' : isLive() ? `${money(limits?.maxApprovedSpendUsd)} maximum · Up to ${limits?.wallTimeLimitSeconds ?? 300} seconds · Review before applying` : 'Scripted mock response · No model charge'),
+    runCost,
     !isArchive() && (!canCreate() || !taskSupported(task)) && el('p', 'availability-note', state.meta.availability?.reason ?? (isLive() ? 'New runs are unavailable for this task. Saved results are still available.' : 'This example needs a connected model. Scripted repair is unavailable.')),
     disclosure('Run limits', allowance));
   byId('task-detail').replaceChildren(
-    append(el('div', 'task-intro'), el('p', 'eyebrow', `Python maintenance · ${task.requirements.length} requirements`), el('h2', '', task.title), el('p', 'task-description', brief)),
+    append(el('div', 'task-intro'), el('p', 'eyebrow', `Python maintenance · ${task.requirements.length} requirements`), el('h2', '', task.title), el('p', 'task-description', brief),
+      isLive() && !canCreate() && el('p', 'availability-note', state.meta.availability?.reason ?? 'New repairs are temporarily paused. Saved runs remain available.')),
     append(el('div', 'task-jump-links'), link('Starting code', '#task-starting-code'), link('Required behavior', '#task-required-behavior'), link('Generate patch ↓', '#task-generate')),
     append(el('div', 'task-briefing'), taskCode(task), taskExamples(task)), contract, launchSection);
   // Within-page links preserve the app route and work with a keyboard.

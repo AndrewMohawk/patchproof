@@ -193,6 +193,23 @@ async function eventually(condition: () => boolean, message: string) {
   assert.ok(condition(), message);
 }
 
+test('an active repair explains the disabled mobile action and links to its progress', async t => {
+  const f = await fixtureServer({ singleflight: true }); t.after(f.close);
+  await f.page.setViewportSize({ width: 390, height: 844 });
+  await f.page.goto(f.base + '/#tasks');
+  await f.page.getByRole('button', { name: 'Generate patch', exact: true }).click();
+  await eventually(() => f.requests.length === 1, 'Synthetic active run must exist.');
+  await f.page.locator('[data-nav="tasks"]').click();
+  const progress = f.page.locator('.run-cost').getByRole('link', { name: 'View progress', exact: true });
+  await progress.waitFor();
+  assert.match(await f.page.locator('.task-intro').innerText(), /A run is active/);
+  assert.equal(await f.page.getByRole('button', { name: 'Generate patch', exact: true }).isDisabled(), true);
+  const box = await progress.boundingBox(); assert.ok(box && box.y >= 0 && box.y + box.height <= 844);
+  await progress.click();
+  assert.match(f.page.url(), /#evidence\//);
+  assert.equal(f.requests.length, 1);
+});
+
 test('live comparison waits for each recorded terminal and refreshed allowance before posting the next approach', async t => {
   const f = await fixtureServer({ singleflight: true }); t.after(f.close);
   await f.page.goto(f.base + '/#tasks'); await startComparison(f.page);
