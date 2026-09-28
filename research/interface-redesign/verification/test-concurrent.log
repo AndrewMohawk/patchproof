@@ -826,10 +826,10 @@ test at tests/runtime-abstention.test.ts:13:1
 ✖ unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch (30684.875563ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   + actual - expected
-  
+
   + 'infrastructure_error'
   - 'needs_review'
-  
+
       at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/runtime-abstention.test.ts:31:12)
       at async Test.run (node:internal/test_runner/test:1116:7)
       at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {

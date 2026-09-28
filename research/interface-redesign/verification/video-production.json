@@ -1,0 +1,147 @@
+{
+  "recording": {
+    "origin": "https://patchproof.andrewmohawk.xyz",
+    "startedAt": "2026-09-28T03:13:56.823Z",
+    "responseSubstitution": false,
+    "paidRequests": 0,
+    "scenes": [
+      {
+        "name": "choose-example",
+        "caption": "Choose a Python maintenance example. This recording reviews saved real runs; it does not start new inference.",
+        "startMs": 916,
+        "endMs": 8542
+      },
+      {
+        "name": "patch",
+        "caption": "This saved run used Nebius Token Factory. Its patch passed all nine listed checks in isolated local Docker containers.",
+        "startMs": 9000,
+        "endMs": 16602
+      },
+      {
+        "name": "checks",
+        "caption": "Checks show expected and observed results. The full requirements and checks before repair remain available.",
+        "startMs": 17011,
+        "endMs": 24619
+      },
+      {
+        "name": "failure",
+        "caption": "This different repair failed two checks. The unsuccessful patch remains visible and was not approved.",
+        "startMs": 24964,
+        "endMs": 32560
+      },
+      {
+        "name": "history",
+        "caption": "Run history includes failed repairs. Every result retains its original task, check results and model usage.",
+        "startMs": 32909,
+        "endMs": 40505
+      },
+      {
+        "name": "comparison",
+        "caption": "Compare three repair approaches on matching inputs and limits. These development runs are not a benchmark.",
+        "startMs": 40867,
+        "endMs": 48476
+      },
+      {
+        "name": "cost",
+        "caption": "Run details show model usage and estimated cost. Billing and unmeasured CPU are not presented as verified charges.",
+        "startMs": 48866,
+        "endMs": 56470
+      },
+      {
+        "name": "export",
+        "caption": "Download the patch, checks and saved inputs for review or replay. Try the live app at patchproof.andrewmohawk.xyz.",
+        "startMs": 57028,
+        "endMs": 64652
+      }
+    ],
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/style.css",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/app.js",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/tasks",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+        "allowed": true
+      },
+      {
+        "method": "GET",
+        "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+        "allowed": true
+      }
+    ],
+    "errors": [],
+    "status": "passed",
+    "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+    "videoPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/interface-redesign-01/raw/f48c1d379b2c839b259ad51d145ca64e.webm",
+    "videoSha256": "c56f762166388925d0d0d9c8bd5c7d552f5d62e0c547304524a69d94b8ec634a",
+    "finishedAt": "2026-09-28T03:15:04.666Z"
+  },
+  "editing": {
+    "cuts": false,
+    "speedChanges": false,
+    "added": "120px caption strip below the original 1440x1000 browser capture",
+    "audio": false
+  },
+  "outputSha256": "e2ada1696a11c5d325c4e76b548eb021fc9c9fae1a9d71e14f1a193c72398a48",
+  "bytes": 1592908,
+  "media": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1440,
+        "height": 1120
+      }
+    ],
+    "format": {
+      "duration": "64.240000"
+    }
+  }
+}

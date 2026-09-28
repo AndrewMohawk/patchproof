@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 | Homelab Gateway</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+      :root {
+        color-scheme: dark light;
+        font-family: "IBM Plex Mono", monospace;
+        --bg: #090819;
+        --panel: rgba(18, 16, 36, 0.88);
+        --text: #f7f6ff;
+        --muted: #a7a5d6;
+        --accent: #ff71c2;
+        --line: #45d3ff;
+        --warn: #ffd479;
+        --error: #ff8a9d;
+        --success: #8afccc;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(69, 211, 255, 0.12), transparent 45%),
+          linear-gradient(305deg, rgba(255, 113, 194, 0.1), transparent 55%), var(--bg);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        background-size: 140% 140%;
+        animation: backdrop-shift 18s ease-in-out infinite alternate;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px
+        );
+        background-size: 100% 24px;
+        pointer-events: none;
+      }
+
+      canvas#particles {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      main {
+        width: min(520px, 100%);
+        background: var(--panel);
+        border-radius: 18px;
+        padding: clamp(1.4rem, 3vw, 2.2rem);
+        box-shadow: 0 20px 60px rgba(9, 8, 25, 0.65);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      main::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(69, 211, 255, 0.22);
+        pointer-events: none;
+      }
+
+      header {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .status-chip {
+        display: inline-flex;
+        gap: 0.45rem;
+        padding: 0.3rem 0.7rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        border-radius: 999px;
+        background: rgba(255, 113, 194, 0.12);
+        color: var(--accent);
+      }
+
+      .neon-line {
+        height: 2px;
+        width: 100%;
+        margin-bottom: 1.4rem;
+        background: linear-gradient(90deg, transparent, var(--line), transparent);
+        opacity: 0.7;
+        animation: pulse 5s ease-in-out infinite;
+      }
+
+      section {
+        margin-bottom: 1.1rem;
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      .callout {
+        border-radius: 12px;
+        padding: 1.05rem 1.15rem;
+        background: rgba(22, 20, 38, 0.85);
+        border: 1px solid rgba(255, 113, 194, 0.18);
+        margin-bottom: 0.85rem;
+        animation: card-float 7s ease-in-out infinite;
+      }
+
+      .callout:nth-of-type(odd) {
+        animation-delay: 1.5s;
+      }
+
+      .callout.warn {
+        border-color: rgba(255, 212, 121, 0.3);
+      }
+
+      .callout.danger {
+        border-color: rgba(255, 138, 157, 0.3);
+      }
+
+      .callout.success {
+        border-color: rgba(138, 252, 204, 0.28);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.6rem;
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.55rem 0.95rem;
+        border-radius: 9px;
+        border: 1px solid rgba(143, 140, 210, 0.35);
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.18s ease;
+        background: rgba(16, 14, 30, 0.8);
+      }
+
+      .btn.primary {
+        border-color: rgba(255, 113, 194, 0.45);
+        background: rgba(255, 113, 194, 0.14);
+      }
+
+      .btn:hover {
+        border-color: rgba(69, 211, 255, 0.5);
+        color: var(--line);
+      }
+
+      .wave {
+        position: absolute;
+        inset: auto -40% -45% -40%;
+        height: 120px;
+        background: radial-gradient(circle at 50% 0%, rgba(69, 211, 255, 0.25), transparent 55%),
+          radial-gradient(circle at 20% 60%, rgba(255, 113, 194, 0.2), transparent 60%);
+        filter: blur(45px);
+        opacity: 0.6;
+        animation: float 9s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes backdrop-shift {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      @keyframes card-float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(8px) scale(1.02);
+        }
+        50% {
+          transform: translateY(-6px) scale(0.98);
+        }
+      }
+
+      @media (max-width: 560px) {
+        body {
+          padding: 1.6rem;
+        }
+
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="particles" role="presentation" aria-hidden="true"></canvas>
+    <main>
+      <header>
+        <div class="status-chip">
+          <span>404</span>
+          <span>We couldn&#39;t find that page</span>
+        </div>
+        <h1>We couldn&#39;t find that page</h1>
+        <p class="subtitle">
+          The gateway couldn't complete <strong>http://patchproof.andrewmohawk.xyz/demo/patchproof-real-demo.mp4</strong> just now.
+        </p>
+      </header>
+      <div class="neon-line" aria-hidden="true"></div>
+
+      <section>
+        
+        <div class="callout">
+          <p>
+            We couldn't find the page you asked for. Double-check the address or head back to the app's start page.
+          </p>
+        </div>
+        
+
+        
+
+        
+        <div class="callout">
+          <p>
+            Request originated from the homelab network (10.0.1.207). Feel free to
+            try the service locally or inspect logs directly.
+          </p>
+        </div>
+        
+      </section>
+
+      <section class="actions">
+        <a class="btn primary" href="https://status.andrewmohawk.xyz">Check status dashboard</a>
+        <a class="btn" href="https://homepage.lab.andrewmohawk.xyz">Back to Homepage</a>
+      </section>
+
+      <div class="wave" aria-hidden="true"></div>
+    </main>
+    <script>
+      (function initParticles(){
+        const canvas = document.getElementById('particles');
+        if(!canvas){
+          console.warn('[error-page] particle canvas missing');
+          return;
+        }
+
+        console.log('[error-page] particle backdrop init');
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const pointer = { x: 0, y: 0, active: false };
+        const POINTER_RADIUS = 150;
+        const POINTER_RADIUS_SQ = POINTER_RADIUS * POINTER_RADIUS;
+        let viewWidth = window.innerWidth;
+        let viewHeight = window.innerHeight;
+        let dpr = window.devicePixelRatio || 1;
+
+        function random(min, max){
+          return Math.random() * (max - min) + min;
+        }
+
+        function createParticle(){
+          return {
+            x: random(0, viewWidth),
+            y: random(0, viewHeight),
+            vx: random(-0.22, 0.22),
+            vy: random(-0.22, 0.22),
+            size: random(0.6, 1.4)
+          };
+        }
+
+        function resize(){
+          viewWidth = window.innerWidth;
+          viewHeight = window.innerHeight;
+          dpr = window.devicePixelRatio || 1;
+          canvas.width = viewWidth * dpr;
+          canvas.height = viewHeight * dpr;
+          canvas.style.width = viewWidth + 'px';
+          canvas.style.height = viewHeight + 'px';
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+
+          const targetCount = Math.max(160, Math.min(260, Math.floor((viewWidth * viewHeight) / 32000)));
+          if(particles.length > targetCount){
+            particles.length = targetCount;
+          } else {
+            while(particles.length < targetCount){
+              particles.push(createParticle());
+            }
+          }
+        }
+
+        function updateParticle(p){
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if(p.x <= 0 || p.x >= viewWidth){
+            p.vx *= -1;
+            p.x = Math.max(0, Math.min(viewWidth, p.x));
+          }
+          if(p.y <= 0 || p.y >= viewHeight){
+            p.vy *= -1;
+            p.y = Math.max(0, Math.min(viewHeight, p.y));
+          }
+
+          p.vx += random(-0.005, 0.005);
+          p.vy += random(-0.005, 0.005);
+
+          if(pointer.active){
+            const dx = p.x - pointer.x;
+            const dy = p.y - pointer.y;
+            const distSq = dx*dx + dy*dy;
+            if(distSq < POINTER_RADIUS_SQ && distSq > 1){
+              const dist = Math.sqrt(distSq);
+              const falloff = 1 - distSq / POINTER_RADIUS_SQ;
+              const strength = falloff * falloff * 0.18;
+              const nx = dx / dist;
+              const ny = dy / dist;
+              p.vx += nx * strength;
+              p.vy += ny * strength;
+            }
+          }
+
+          const speed = Math.hypot(p.vx, p.vy);
+          const maxSpeed = 0.28;
+          if(speed > maxSpeed){
+            const scale = maxSpeed / speed;
+            p.vx *= scale;
+            p.vy *= scale;
+          }
+        }
+
+        const LINK_RADIUS = 110;
+        const LINK_RADIUS_SQ = LINK_RADIUS * LINK_RADIUS;
+
+        function draw(){
+          ctx.clearRect(0, 0, viewWidth, viewHeight);
+          ctx.fillStyle = 'rgba(9, 8, 25, 0.88)';
+          ctx.fillRect(0, 0, viewWidth, viewHeight);
+
+          for(const p of particles){
+            updateParticle(p);
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(120, 160, 255, 0.55)';
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          ctx.lineWidth = 0.6;
+          for(let i = 0; i < particles.length; i++){
+            const p = particles[i];
+            for(let j = i + 1; j < particles.length; j++){
+              const q = particles[j];
+              const dx = p.x - q.x;
+              if(Math.abs(dx) > LINK_RADIUS) continue;
+              const dy = p.y - q.y;
+              if(Math.abs(dy) > LINK_RADIUS) continue;
+              const distSq = dx*dx + dy*dy;
+              if(distSq < LINK_RADIUS_SQ){
+                const alpha = 1 - distSq / LINK_RADIUS_SQ;
+                ctx.globalAlpha = alpha * 0.6;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.strokeStyle = 'rgba(120, 160, 255, 0.45)';
+                ctx.stroke();
+              }
+            }
+          }
+          ctx.globalAlpha = 1;
+
+          requestAnimationFrame(draw);
+        }
+
+        function updatePointer(e){
+          pointer.x = e.clientX;
+          pointer.y = e.clientY;
+          pointer.active = true;
+        }
+
+        function clearPointer(){
+          pointer.active = false;
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+        window.addEventListener('pointermove', updatePointer, { passive: true });
+        window.addEventListener('pointerdown', updatePointer, { passive: true });
+        window.addEventListener('pointerleave', clearPointer);
+        requestAnimationFrame(draw);
+      })();
+    </script>
+  </body>
+</html>

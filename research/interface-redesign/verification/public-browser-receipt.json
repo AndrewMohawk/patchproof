@@ -1,0 +1,392 @@
+{
+  "checkedAt": "2026-09-28T03:13:54.890Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "expectedRelease": "b32499432acd3a2b6b8f04658554b2e2984b4bdc",
+  "access": "GET only; new run and cancellation requests are blocked",
+  "paidRequests": 0,
+  "assets": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 4223,
+      "sha256": "b94c1f9202c957d72066a204078006b1550b96ecefdfd47b99797f6ec219bfbc"
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "bytes": 56797,
+      "sha256": "24c80d22c9b351cc6470bfdab2b9640e9987f841c86cf269ed6ad71f335a735f"
+    },
+    {
+      "path": "/style.css",
+      "status": 200,
+      "bytes": 26750,
+      "sha256": "ae8b974e0fdc121a3167cc6373c108d9fef82d0baf122cfe515d739f52baf969"
+    }
+  ],
+  "layouts": [
+    {
+      "name": "desktop",
+      "view": "examples",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-examples.png"
+    },
+    {
+      "name": "desktop",
+      "view": "runs",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-runs.png"
+    },
+    {
+      "name": "desktop",
+      "view": "success-patch",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-success-patch.png"
+    },
+    {
+      "name": "desktop",
+      "view": "success-comparison",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-success-comparison.png"
+    },
+    {
+      "name": "desktop",
+      "view": "failure-checks",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-failure-checks.png"
+    },
+    {
+      "name": "desktop",
+      "view": "failure-comparison",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/desktop-failure-comparison.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "examples",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-examples.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "runs",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-runs.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "success-patch",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-success-patch.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "success-comparison",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-success-comparison.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "failure-checks",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-failure-checks.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "failure-comparison",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile390-failure-comparison.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "examples",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-examples.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "runs",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-runs.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "success-patch",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-success-patch.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "success-comparison",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-success-comparison.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "failure-checks",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-failure-checks.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "failure-comparison",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/interface-redesign/verification/public-screenshots/mobile320-failure-comparison.png"
+    }
+  ],
+  "controls": [
+    {
+      "name": "desktop",
+      "action": {
+        "x": 392,
+        "y": 266.734375,
+        "width": 151.921875,
+        "height": 44
+      }
+    },
+    {
+      "name": "desktop",
+      "search": "worksheet",
+      "matches": 5,
+      "clearRestores": 20
+    },
+    {
+      "name": "mobile390",
+      "action": {
+        "x": 16,
+        "y": 469.203125,
+        "width": 228.203125,
+        "height": 44
+      }
+    },
+    {
+      "name": "mobile390",
+      "allExamples": [
+        {
+          "taskId": "stable-unique-01",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r01-t02",
+          "bottom": 491.609375
+        },
+        {
+          "taskId": "v2-r01-t03",
+          "bottom": 485.328125
+        },
+        {
+          "taskId": "v2-r01-t04",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r01-t05",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r02-t01",
+          "bottom": 541.078125
+        },
+        {
+          "taskId": "v2-r02-t02",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r02-t03",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r02-t04",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r02-t05",
+          "bottom": 491.609375
+        },
+        {
+          "taskId": "v2-r03-t01",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r03-t02",
+          "bottom": 541.078125
+        },
+        {
+          "taskId": "v2-r03-t03",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r03-t04",
+          "bottom": 491.609375
+        },
+        {
+          "taskId": "v2-r03-t05",
+          "bottom": 541.078125
+        },
+        {
+          "taskId": "v2-r04-t01",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r04-t02",
+          "bottom": 513.203125
+        },
+        {
+          "taskId": "v2-r04-t03",
+          "bottom": 491.609375
+        },
+        {
+          "taskId": "v2-r04-t04",
+          "bottom": 491.609375
+        },
+        {
+          "taskId": "v2-r04-t05",
+          "bottom": 513.203125
+        }
+      ],
+      "pickerHeight": 44
+    },
+    {
+      "name": "mobile320",
+      "action": {
+        "x": 16,
+        "y": 461.203125,
+        "width": 158.203125,
+        "height": 44
+      }
+    },
+    {
+      "name": "mobile320",
+      "allExamples": [
+        {
+          "taskId": "stable-unique-01",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r01-t02",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r01-t03",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r01-t04",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r01-t05",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r02-t01",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r02-t02",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r02-t03",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r02-t04",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r02-t05",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r03-t01",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r03-t02",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r03-t03",
+          "bottom": 554.671875
+        },
+        {
+          "taskId": "v2-r03-t04",
+          "bottom": 533.078125
+        },
+        {
+          "taskId": "v2-r03-t05",
+          "bottom": 554.671875
+        },
+        {
+          "taskId": "v2-r04-t01",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r04-t02",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r04-t03",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r04-t04",
+          "bottom": 505.203125
+        },
+        {
+          "taskId": "v2-r04-t05",
+          "bottom": 526.796875
+        }
+      ],
+      "pickerHeight": 44
+    }
+  ],
+  "downloads": [
+    {
+      "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "status": "success",
+      "bytes": 100491,
+      "sha256": "ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf",
+      "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+      "matchesDirectPublicDownload": true
+    },
+    {
+      "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+      "status": "failure",
+      "bytes": 248345,
+      "sha256": "e9e75bf601f12e555af444ee07889148464db2c9d215ad98d8f2a6520f36388c",
+      "bundleDigest": "sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8",
+      "matchesDirectPublicDownload": true
+    }
+  ],
+  "errors": [],
+  "blockedRequests": [],
+  "liveData": {
+    "mode": "live",
+    "taskCount": 20,
+    "runCount": 7,
+    "success": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "failure": "5b356c42-8848-4e78-bce7-94800f63eebf",
+    "runtimeLockDigest": "sha256:80a61646a7c71dca52db8856b760cb805cfc409ad98a080391718df88cb47326"
+  },
+  "status": "pass",
+  "finishedAt": "2026-09-28T03:14:05.727Z"
+}

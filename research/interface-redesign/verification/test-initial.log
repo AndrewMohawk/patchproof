@@ -824,7 +824,7 @@
 test at tests/api.test.ts:9:1
 ✖ real loopback HTTP flow: catalogue → mock record → events → typed evidence (100.479059ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Loading workspace…/. Input:
-  
+
   '<!doctype html>\n' +
     '<html lang="en">\n' +
     '<head>\n' +
@@ -888,7 +888,7 @@ test at tests/api.test.ts:9:1
     '  <noscript><p class="error-banner">JavaScript is required to select examples and review runs.</p></noscript>\n' +
     '</body>\n' +
     '</html>\n'
-  
+
       at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/api.test.ts:66:10)
       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
       at async Test.run (node:internal/test_runner/test:1116:7)

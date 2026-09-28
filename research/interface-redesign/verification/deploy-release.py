@@ -11,14 +11,20 @@ def run(args,**kwargs):return subprocess.run(args,check=True,text=True,**kwargs)
 def get(path):
  with urllib.request.urlopen('https://patchproof.andrewmohawk.xyz'+path,timeout=15) as response:return json.load(response)
 assert all(r['phase']=='terminal' for r in get('/runs')['runs']), 'An active run must finish before rollout.'
-run(['git','worktree','add','--detach',str(release),sha],cwd=root)
-os.chmod(release,0o750)
-run(['npm','ci','--ignore-scripts','--no-audit','--no-fund'],cwd=release)
+if release.exists():
+ assert run(['git','rev-parse','HEAD'],cwd=release,capture_output=True).stdout.strip()==sha
+ assert run(['git','status','--porcelain'],cwd=release,capture_output=True).stdout.strip()==''
+else:
+ run(['git','worktree','add','--detach',str(release),sha],cwd=root)
+ os.chmod(release,0o750)
+ run(['npm','ci','--ignore-scripts','--no-audit','--no-fund'],cwd=release)
 digest=run(['node','--input-type=module','-e',"import {buildOperationalLock} from './packages/orchestrator/src/operational-lock.ts';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(buildOperationalLock(process.cwd())));"],cwd=release,capture_output=True).stdout.strip()
 assert re.fullmatch('sha256:[a-f0-9]{64}',digest)
 original=config.read_bytes(); data=json.loads(original)
 backup=config.with_name(f'live-demo-before-{sha[:12]}.json')
-with backup.open('xb') as f:os.fchmod(f.fileno(),0o600);f.write(original)
+if backup.exists():assert backup.read_bytes()==original
+else:
+ with backup.open('xb') as f:os.fchmod(f.fileno(),0o600);f.write(original)
 assert all(r['phase']=='terminal' for r in get('/runs')['runs']), 'An active run appeared during preparation.'
 run(['systemctl','--user','stop',unit(old)])
 try:
@@ -30,7 +36,7 @@ try:
  for attempt in range(45):
   try:
    health=get('/healthz')
-   if health.get('ok') is True and health.get('mode')=='live':break
+   if health.get('status') == 'ok' and health.get('mode')=='live':break
   except Exception:pass
   time.sleep(1)
  else:raise RuntimeError('New runtime did not become healthy')

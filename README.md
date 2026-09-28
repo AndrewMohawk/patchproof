@@ -90,16 +90,23 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Live deployment and evidence
 
-The public service runs immutable release `3d0ce9d33b2169efec6290d7a478d4002a480a58`.
-All **676 tests** passed before deployment. The service also executes a real
+The public service runs immutable release `b32499432acd3a2b6b8f04658554b2e2984b4bdc`.
+All **680 tests** passed before deployment. The service also executes a real
 container readiness check under its production permissions before accepting work.
 The public and lab routes, Cloudflare access, desktop/mobile interface, and
 health monitoring have been verified. The [deployment record](research/verification/20260928-live-deployment/)
 preserves exact source pins, actual model operations, failed attempts, checks,
 browser recordings and independent reviews.
 
-The captioned **95-second public video** combines an actual repair with its
-recorded evidence walkthrough. Desktop/mobile playback and downloads are verified.
+The redesigned interface uses Examples/Runs navigation, direct task descriptions,
+and separate Patch/Checks/Activity/Run details views. Three UX/UI/copy agents
+discussed the design; independent copy and public browser reviews passed. See
+the [redesign evidence](research/interface-redesign/README.md).
+
+The captioned **64-second public video** reviews saved real results in the new
+interface, including an unsuccessful repair. It makes no new model calls.
+Desktop/mobile playback through Cloudflare, seeking and downloads are verified.
+The previous actual-creation recording remains preserved privately.
 The final three-approach example passed all nine declared checks, and fresh replay
 reproduced every selected result. A second task failed and remains visible; these
 examples do not establish general repair reliability.
@@ -202,6 +209,7 @@ from the remaining provider, billing, calibration and human evidence.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
 refers to that original package. `tasks.json` is a living acceptance tracker.
 
-The GitHub repository is private. Application licensing, public source/video,
-public demo operation and event entry remain owner decisions. No entry,
-publication, deployment or automatic merge has occurred.
+The GitHub repository remains private. The owner authorized the public app and
+hosted recording. Public source licensing, competition submission and any
+third-party video publication still need separate owner decisions. No competition
+entry or automatic merge has occurred.

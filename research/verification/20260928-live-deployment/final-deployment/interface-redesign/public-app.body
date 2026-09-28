@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Generate a maintenance patch, inspect the changes, and review the checks that ran.">
+  <title>PatchProof</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="app-header">
+    <a class="brand" href="#tasks" aria-label="PatchProof home">PatchProof</a>
+    <nav aria-label="Main navigation">
+      <a href="#tasks" data-nav="tasks">Examples</a>
+      <a href="#runs" data-nav="runs">Runs</a>
+      <a id="demo-link" href="/demo/" hidden>Watch demo</a>
+    </nav>
+    <details class="workspace-status">
+      <summary><span id="mode-indicator">Connecting…</span></summary>
+      <div class="workspace-status-body">
+        <strong id="mode-label">Workspace</strong>
+        <p id="mode-description">Loading service status.</p>
+      </div>
+    </details>
+  </header>
+  <div id="error" class="error-banner" role="alert" hidden></div>
+  <p id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
+  <main id="main" tabindex="-1">
+    <section id="tasks-view" class="view" aria-labelledby="tasks-heading">
+      <div class="page-heading"><h1 id="tasks-heading">Examples</h1><a class="text-link" href="#runs">View past runs</a></div>
+      <div class="mobile-task-picker"><label for="mobile-task">Choose an example</label><select id="mobile-task"><option>Loading examples…</option></select></div>
+      <div class="workspace-grid">
+        <aside class="task-panel" aria-label="Example picker">
+          <div class="section-heading"><h2>Python examples</h2><span id="task-count" class="quiet">Loading…</span></div>
+          <div class="task-search-field"><label class="visually-hidden" for="task-search">Search examples</label><input id="task-search" type="search" placeholder="Search examples" autocomplete="off" spellcheck="false"></div>
+          <div id="task-list" class="task-list" aria-label="Maintenance examples"><p class="empty-small">Loading examples…</p></div>
+        </aside>
+        <div id="task-detail" class="detail-panel" aria-live="polite"><div class="empty-state"><h2>Loading the selected example…</h2></div></div>
+      </div>
+    </section>
+    <section id="runs-view" class="view" aria-labelledby="runs-heading" hidden>
+      <div class="page-heading"><h1 id="runs-heading">Runs</h1><a class="button" href="#tasks">Choose an example</a></div>
+      <div id="run-history" class="run-history"><p class="empty-small">Loading past runs…</p></div>
+    </section>
+    <section id="compare-view" class="view" aria-labelledby="compare-heading" hidden>
+      <div class="page-heading"><div><a class="back-link" href="#tasks">Back to examples</a><h1 id="compare-heading">Compare approaches</h1></div></div>
+      <div class="toolbar"><div><label for="compare-task">Example</label><select id="compare-task"></select></div><button id="compare-run" class="button primary" disabled>Run all three</button></div>
+      <div id="comparison" class="comparison"></div>
+      <p id="comparison-notice" class="comparison-notice">A comparison needs matching inputs and resource limits.</p>
+    </section>
+    <section id="evidence-view" class="view" aria-labelledby="evidence-heading" hidden>
+      <div class="page-heading review-page-heading"><div><a class="back-link" href="#runs">All runs</a><h1 id="evidence-heading">Run review</h1></div><a class="text-link" href="#compare">Compare approaches</a></div>
+      <details class="run-switcher"><summary>Switch run</summary><div class="run-picker"><label class="visually-hidden" for="evidence-run">Run</label><select id="evidence-run"><option value="">No runs yet</option></select></div></details>
+      <div id="evidence"></div>
+    </section>
+  </main>
+  <footer><span>PatchProof</span><a id="footer-demo-link" href="/demo/" hidden>Demo recording</a></footer>
+  <noscript><p class="error-banner">JavaScript is required to select examples and review runs.</p></noscript>
+</body>
+</html>

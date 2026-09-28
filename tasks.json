@@ -440,7 +440,7 @@
         "analysis script"
       ],
       "acceptance_tests": [
-        "30 tasks × 3 variants × 3 repetitions accounted for.",
+        "30 tasks \u00d7 3 variants \u00d7 3 repetitions accounted for.",
         "Repo-clustered paired analysis; identical budgets and task information.",
         "No unsupported superiority claim when uncertainty or ablation contradicts it."
       ],
@@ -494,8 +494,8 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Owner-authorized public release 3d0ce9d is deployed with 20 curated tasks, session-owned cancellation, explicit availability and a $0.10 per-run ceiling within the $25 approval. It passes 676 tests plus typecheck/contracts. Three matched real development arms pass with 126 recorded-cleanup local operations; a separate failed task retains 104 operations, and earlier failures remain separate. All 4 selected outcomes reproduce in fresh same-host containers, including the honest failure. Judging-period operating commitments, independent-machine verification and broader release gates remain open.",
-      "blocked_reason": "Owner-authorized public release 3d0ce9d is deployed with 20 curated tasks, session-owned cancellation, explicit availability and a $0.10 per-run ceiling within the $25 approval. It passes 676 tests plus typecheck/contracts. Three matched real development arms pass with 126 recorded-cleanup local operations; a separate failed task retains 104 operations, and earlier failures remain separate. All 4 selected outcomes reproduce in fresh same-host containers, including the honest failure. Judging-period operating commitments, independent-machine verification and broader release gates remain open.",
+      "implementation_note": "Owner-authorized interface release b324994 is deployed; actual model runs retain source 3d0ce9d with 20 curated tasks, session-owned cancellation, explicit availability and a $0.10 per-run ceiling within the $25 approval. The real-run source passed 676 tests plus typecheck/contracts; the current interface passes 680 tests. Three matched real development arms pass with 126 recorded-cleanup local operations; a separate failed task retains 104 operations, and earlier failures remain separate. All 4 selected outcomes reproduce in fresh same-host containers, including the honest failure. Judging-period operating commitments, independent-machine verification and broader release gates remain open. Interface release b324994 is now deployed after 680 passing tests, three-agent UX/copy review, real-Docker local browser integration and independent public verification of all 20 examples, seven saved real runs, mobile layouts, comparison context and identical evidence downloads. Broader release dependencies remain blocked.",
+      "blocked_reason": "Judging-period operating commitments, independent-machine verification and broader release gates remain open. The requested public interface redesign and its verification are complete.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -512,7 +512,8 @@
         "research/verification/20260928-live-deployment/final-release-tests.log",
         "research/verification/20260928-live-deployment/final-deployment/release-3d0ce9d-under-load/deployment-receipt.json",
         "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
-        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json",
+        "research/interface-redesign/README.md"
       ]
     },
     {
@@ -541,8 +542,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G4",
-      "implementation_note": "The real public app is deployed at 3d0ce9d. Its three matched Token Factory/local-Docker arms all pass declared checks; a separate failed worksheet task and all earlier failures remain visible. The 95.12-second captioned real-run walkthrough is published at https://patchproof.andrewmohawk.xyz/demo/, combining actual PatchProof creation/progress with GET-only completed evidence review. Waiting omissions are labeled; no outcomes are substituted. Public playback passes 10/10 checks including desktop/mobile play, download-hash identity and Cloudflare range support. Exact source/run/bundle/video custody and original observer failures remain preserved; old mock footage stays separate. No comparative advantage is claimed. Application licensing, human/evaluation dependencies and final competition submission remain open.",
-      "blocked_reason": "The interactive real-model/local-Docker demo and 95.12-second hosted video are verified. T11 evaluation/human dependencies, application licensing and final competition submission remain open.",
+      "implementation_note": "The real public app now uses interface source b324994; its preserved real model runs used 3d0ce9d. Its three matched Token Factory/local-Docker arms all pass declared checks; a separate failed worksheet task and all earlier failures remain visible. The prior 95.12-second captioned real-run walkthrough was published at https://patchproof.andrewmohawk.xyz/demo/, combining actual PatchProof creation/progress with GET-only completed evidence review. Waiting omissions are labeled; no outcomes are substituted. Public playback passes 10/10 checks including desktop/mobile play, download-hash identity and Cloudflare range support. Exact source/run/bundle/video custody and original observer failures remain preserved; old mock footage stays separate. No comparative advantage is claimed. Application licensing, human/evaluation dependencies and final competition submission remain open. The current public player serves the redesigned interface in a 64.24-second captioned GET-only walkthrough of saved real results. Its versioned MP4, download hash, Cloudflare ranges and desktop/mobile playback/seek are verified. The earlier 95.12-second actual-creation video is preserved privately; no historical result is replaced or relabeled.",
+      "blocked_reason": "The updated public app and hosted recording are complete. Public source licensing, third-party video publication, final rules review and competition entry remain separate owner decisions; broader sponsor/evaluation gates remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -559,7 +560,8 @@
         "research/verification/20260928-live-deployment/final-replays/receipt.json",
         "research/verification/20260928-live-deployment/read-only-walkthrough/capture-receipt.json",
         "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
-        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json",
+        "research/interface-redesign/verification/video-receipt.json"
       ]
     },
     {

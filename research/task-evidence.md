@@ -567,3 +567,9 @@ Prior mock footage is not reused as real-provider proof. Nebius Sandboxes
 entitlement/execution, authoritative billing, calibrated model selection and
 72/270 experiments, uncoached human exercises, independent-host replay and final
 licensing/entry gates remain open.
+
+### 2026-09-28 interface redesign and public recording
+
+Source `b324994` replaces the slogan/dashboard interface with Examples/Runs navigation, searchable public examples, above-fold mobile actions and Patch/Checks/Activity/Run details tabs. Three UX/UI/copy agents discussed the design, rejected five initial defects and independently approved the corrected browser UI. Changes cover apps/web/{index.html,style.css,app.js,verify-browser.ts}, scripts/record-public-demo.ts and corresponding UI/API tests. `node --test --test-concurrency=4 tests/*.test.ts`: exit 0, 680 passed; typecheck, 10 focused UI tests, 5 recorder tests and real-Docker local browser integration also exited 0. Original failed observer/full-suite attempts remain preserved.
+
+The actual public release passed independent desktop/mobile verification against all20 tasks and seven saved real runs, with identical evidence downloads and no overflow/errors. The new public 64.24s captioned walkthrough reviews saved real success/failure records, with no new model calls. Its download hash, Cloudflare range and desktop/mobile playback/seek checks pass. Public player source is pinned in the isolated homelab checkout at 385a47820. Full evidence, files, exact hashes, versions, diagnostics and remaining broader gates: research/interface-redesign/README.md. T12/T13 remain blocked only for their broader release/entry dependencies, not the completed interface delivery.
