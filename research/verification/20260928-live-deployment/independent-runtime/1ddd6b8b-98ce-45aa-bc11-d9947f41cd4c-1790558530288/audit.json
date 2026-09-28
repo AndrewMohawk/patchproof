@@ -1,0 +1,146 @@
+{
+  "recordedAt": "2026-09-28T01:22:10.289Z",
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "releaseCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+  "expectedRuntimeSourceDigest": "sha256:cab5aba383cfb9b912fcabc15933f8ed997ca23a189d1113fc1c0e3256e702d5",
+  "observer": "AI metadata review; GET-only; no provider, candidate, replay, credentials or private billing access",
+  "captures": [
+    {
+      "name": "run.json",
+      "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "status": 200,
+      "bytes": 70209,
+      "digest": "sha256:56362ff39b00181609cc3f42b61a9de78bf9135e1a9e3f0514b6b55de72512a4",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "name": "evidence.json",
+      "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "status": 200,
+      "bytes": 133386,
+      "digest": "sha256:da6d7a82491e06561e6b3bb0ae5a627846b220be5ba3ae49800e62c3159b5245",
+      "contentType": "application/json; charset=utf-8"
+    }
+  ],
+  "assertions": {
+    "evidenceVerifierPassed": true,
+    "runExactlyMatchesEvidence": true,
+    "liveUnscoredLocalDockerScope": true,
+    "sourceDigestMatchesCompleteLock": true,
+    "allSourcePinsMatchExactRelease": true,
+    "distinctProviderResponseIds": true,
+    "modelIdsMatchRuntime": true,
+    "candidateUsageSumsMatchAggregate": true,
+    "usagePricedEstimateHonest": true,
+    "sameBoundedAllowance": true,
+    "completeRepeatedObservations": true,
+    "lifecycleInventoryExactAndUnique": true,
+    "allRecordedCleanupConfirmed": true,
+    "verifiedStatusSupported": true
+  },
+  "limitations": [
+    "Hash consistency is not independent provider authentication.",
+    "Recorded request IDs, token usage and cleanup are not independently authenticated external billing or lifecycle events.",
+    "Same-host artifact inspection is not independent-host reproduction, human review or benchmark evidence."
+  ],
+  "summary": {
+    "bundleDigest": "sha256:90899d407976880a7a5516a734561e1060682ceb39d74ca3b5a13e085f512011",
+    "sourcePins": 116,
+    "mismatches": [],
+    "taskId": "stable-unique-01",
+    "variant": "baseline",
+    "terminalStatus": "needs_review",
+    "reason": "declared_requirements_unverified",
+    "selectedCandidateId": 3,
+    "candidateCount": 3,
+    "providerResponseIds": [
+      "chatcmpl-172fda5e-ebb0-4664-8497-eeff82a31016",
+      "chatcmpl-9c5f6046-c3a5-428c-bc3e-f8ccdbc914d5",
+      "chatcmpl-fba8f5b7-f09e-46e3-92b4-190145a2db02"
+    ],
+    "usage": {
+      "inferenceCalls": 3,
+      "inputTokens": 2622,
+      "outputTokens": 483,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0.00027324,
+      "costIsEstimate": true,
+      "elapsedMs": 171400
+    },
+    "calculatedEstimateUsd": 0.00027324,
+    "authoritativeBilledCostUsd": null,
+    "declaredChecksPerRevision": 9,
+    "repeatedObservations": 72,
+    "observedStatuses": {
+      "error": 72
+    },
+    "revisions": [
+      {
+        "id": "original",
+        "statusCounts": {
+          "error": 9
+        }
+      },
+      {
+        "id": 1,
+        "statusCounts": {
+          "error": 9
+        }
+      },
+      {
+        "id": 2,
+        "statusCounts": {
+          "error": 9
+        }
+      },
+      {
+        "id": 3,
+        "statusCounts": {
+          "error": 9
+        }
+      }
+    ],
+    "lifecycles": 72,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "unverified",
+        "checkIds": [
+          "u-v-order",
+          "u-v-empty",
+          "u-v-unicode",
+          "u-a-nested",
+          "u-a-numeric"
+        ]
+      },
+      {
+        "requirementId": "R02",
+        "status": "unverified",
+        "checkIds": [
+          "u-v-mutation",
+          "u-a-mutation"
+        ]
+      },
+      {
+        "requirementId": "R03",
+        "status": "unverified",
+        "checkIds": [
+          "u-v-none",
+          "u-a-none"
+        ]
+      }
+    ],
+    "timingPolicy": {
+      "id": "live-local-check-timing-v1",
+      "maximumBatchWallSeconds": 60
+    },
+    "checkProtocol": {
+      "id": "repeat-observations-v1",
+      "repetitions": 2,
+      "disagreement": "needs_review",
+      "budget": "shared-batch-wall-time"
+    }
+  },
+  "status": "consistent_recorded_evidence",
+  "collectorDigest": "sha256:574c08f91105185df35e28292d164a94b5365ad86e5e00d196849dd4d5ecd800"
+}

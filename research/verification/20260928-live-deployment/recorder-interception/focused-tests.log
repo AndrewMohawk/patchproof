@@ -1,0 +1,13 @@
+✔ recorder response guard continues ordinary responses and response-less cancellation notifications (1.749405ms)
+✔ recorder tolerates only the exact expired-ID error for the attempted nonredirect continuation (0.41332ms)
+✔ recorder does not suppress unexpected protocol failures or an expired ID from a different command (0.711164ms)
+✔ every redirect is refused before CDP failure, including when its interception ID already disappeared (0.738858ms)
+✔ actual Chromium expired response IDs are tolerated without allowing a redirect to reach its sink (289.893018ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 953.413232

@@ -1,0 +1,140 @@
+{
+  "scope": "Exact run-label only; read-only Docker listing/inspection",
+  "observations": [
+    {
+      "observedAt": "2026-09-28T01:22:39.258Z",
+      "id": "8b533985872b",
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "running": false,
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "destination": "/candidate",
+          "readWrite": false
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-09-28T01:22:41.157Z",
+      "id": "8258f45442bb",
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "running": false,
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "destination": "/candidate",
+          "readWrite": false
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-09-28T01:22:43.025Z",
+      "id": "c6d1794ce530",
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "running": false,
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "destination": "/candidate",
+          "readWrite": false
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-09-28T01:22:44.808Z",
+      "id": "e0b2e6999641",
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "running": false,
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "destination": "/candidate",
+          "readWrite": false
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-09-28T01:22:46.615Z",
+      "id": "14258367df17",
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "running": true,
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false,
+      "mounts": [
+        {
+          "type": "bind",
+          "destination": "/candidate",
+          "readWrite": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "at": "2026-09-28T01:28:39.200Z",
+  "status": "incomplete_two_arm_development_sequence_preserved",
+  "releaseCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+  "operationalSourceDigest": "sha256:0036e421595d907e65db833da99dd1c803283019375ff5bbf72a32b190925878",
+  "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+  "plannedThirdArm": {
+    "variant": "patchproof",
+    "executed": false,
+    "reason": "Coordinator stopped this development sequence before the third arm to improve bounded visible-check diagnostics for all variants; fresh release and new matched sequence planned."
+  },
+  "checks": {
+    "individualAuditsPass": true,
+    "sameFixture": true,
+    "sameRuntimeLock": true,
+    "expectedRuntimeLock": true,
+    "sameAllowance": true
+  },
+  "runs": [
+    {
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "variant": "baseline",
+      "terminalStatus": "failed",
+      "candidates": 3,
+      "acceptedCandidateIds": [],
+      "selectedCandidateId": 3,
+      "usage": {
+        "inferenceCalls": 3,
+        "inputTokens": 2562,
+        "outputTokens": 379,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00024468,
+        "costIsEstimate": true,
+        "elapsedMs": 164442
+      },
+      "observations": 72,
+      "observationStatuses": {
+        "fail": 26,
+        "pass": 46
+      },
+      "artifacts": [
+        {
+          "path": "bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/run.json",
+          "digest": "sha256:c5d02fe344ebb153d1591b2c6f605f53adfdffb2ca940160e6d693f5627ade9c"
+        },
+        {
+          "path": "bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/evidence.json",
+          "digest": "sha256:d4328f16ca6d5babfb32911f61e99ae9d7a2e70cf23204e179df0a2cc8171c76"
+        },
+        {
+          "path": "bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+          "digest": "sha256:1abcc544d42520d392246a02e7ccb57f6d59f6bfe787a61715935d5dae914b7a"
+        }
+      ]
+    },
+    {
+      "runId": "97808518-b836-41a9-961e-8e5f466dc032",
+      "variant": "checks_only",
+      "terminalStatus": "verified_for_declared_checks",
+      "candidates": 1,
+      "acceptedCandidateIds": [
+        1
+      ],
+      "selectedCandidateId": 1,
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 1038,
+        "outputTokens": 280,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00012948000000000001,
+        "costIsEstimate": true,
+        "elapsedMs": 78813
+      },
+      "observations": 36,
+      "observationStatuses": {
+        "fail": 8,
+        "pass": 28
+      },
+      "artifacts": [
+        {
+          "path": "97808518-b836-41a9-961e-8e5f466dc032-1790558844772/run.json",
+          "digest": "sha256:41a9e9b5c00bd47f7e47a2b2c61ba7fdf7c1f169bbe06c65e7e30a9e14b10bff"
+        },
+        {
+          "path": "97808518-b836-41a9-961e-8e5f466dc032-1790558844772/evidence.json",
+          "digest": "sha256:b275c631079774a2dd9c7ecdd35cb753b12e45c7f8395b9ebe081c11a335b608"
+        },
+        {
+          "path": "97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+          "digest": "sha256:b93b15b696926f337710f881edb0eed478ebdb68593f84e0f25251215767689b"
+        }
+      ]
+    }
+  ],
+  "priorInfrastructureFailure": {
+    "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+    "sourceCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+    "artifact": "independent-runtime-review.json",
+    "digest": "sha256:57cea27d7c094a84a05d3ddc7ead7d692375fc879d5f743767360a00baa7ce06",
+    "outcome": "needs_review;72 import-or-serialization errors"
+  },
+  "claims": {
+    "threeArmComparisonCompleted": false,
+    "superiorityEstablished": false,
+    "benchmarkResult": false,
+    "humanReviewed": false,
+    "authoritativeBillingKnown": false,
+    "sponsorSandboxVerified": false
+  },
+  "limitations": [
+    "Each executed arm is one unscored development episode; observed outcomes are not a model or approach performance estimate.",
+    "Recorded model IDs/request IDs/token usage and cleanup are artifact consistency checks, not independent provider authentication.",
+    "Actual billed cost remains unknown; run aggregate cost is explicitly a token-rate estimate.",
+    "No sealed/final evaluation inputs were read and no new jobs, model calls, Docker executions or ledger operations were performed by this collection."
+  ]
+}

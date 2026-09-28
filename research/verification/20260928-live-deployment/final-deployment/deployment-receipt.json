@@ -1,0 +1,248 @@
+{
+  "checkedAt": "2026-09-28T01:23:00.873395+00:00",
+  "releaseCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+  "scope": "Read-only HTTP GET, DNS, service/container metadata, PatchProof monitoring lines only",
+  "paidRequests": 0,
+  "dns": {
+    "argv": [
+      "dig",
+      "+short",
+      "A",
+      "patchproof.andrewmohawk.xyz",
+      "@1.1.1.1"
+    ],
+    "exitCode": 0,
+    "stdout": "172.67.195.222\n104.21.44.59\n",
+    "stderr": ""
+  },
+  "routes": [
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/healthz",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.100571,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 101,
+      "bodySha256": "fa7a3e355bb4504a98031d787152a72a904a3a5464042de68c2776788f76f505",
+      "headers": "public-health.headers",
+      "body": "public-health.body",
+      "health": {
+        "status": "ok",
+        "mode": "live",
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container"
+      }
+    },
+    {
+      "url": "https://patchproof.lab.andrewmohawk.xyz/healthz",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.047562,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 101,
+      "bodySha256": "fa7a3e355bb4504a98031d787152a72a904a3a5464042de68c2776788f76f505",
+      "headers": "lab-health.headers",
+      "body": "lab-health.body",
+      "health": {
+        "status": "ok",
+        "mode": "live",
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container"
+      }
+    },
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.106089,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 4998,
+      "bodySha256": "44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+      "headers": "public-app.headers",
+      "body": "public-app.body"
+    },
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/tasks",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.141768,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 32828,
+      "bodySha256": "79c819505d2dfcd6625357c0cb35d360f207d138d19cb7c6f49c88cee2451ca7",
+      "headers": "public-tasks.headers",
+      "body": "public-tasks.body",
+      "catalog": {
+        "mode": "live",
+        "competitionReady": false,
+        "limits": {
+          "inferenceCallLimit": 3,
+          "inputTokenLimit": 786432,
+          "outputTokenLimit": 6000,
+          "wallTimeLimitSeconds": 300,
+          "sandboxCpuSecondsLimit": 900,
+          "maxApprovedSpendUsd": 0.1
+        },
+        "maxApprovedSpendUsd": 25,
+        "availability": {
+          "enabled": false,
+          "reason": "A live run is in progress. You can follow its evidence.",
+          "remainingRuns": 47
+        },
+        "execution": {
+          "modelProvider": "nebius-token-factory",
+          "checkBackend": "local_container",
+          "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+        },
+        "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+        "taskCount": 20,
+        "allDevelopment": true
+      }
+    },
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/demo/",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.102837,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 888,
+      "bodySha256": "86cf2cb7edfe3bb1b980eeafab70f719e9f7fb946e3bff8f82497665711035f1",
+      "headers": "public-player.headers",
+      "body": "public-player.body"
+    },
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/admin",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 404,
+      "remoteIp": "10.85.0.125",
+      "elapsedSeconds": 0.097831,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 146,
+      "bodySha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+      "headers": "unpublished-route.headers",
+      "body": "unpublished-route.body"
+    },
+    {
+      "url": "https://patchproof.andrewmohawk.xyz/healthz",
+      "curlExitCode": 0,
+      "error": "",
+      "status": 200,
+      "remoteIp": "172.67.195.222",
+      "elapsedSeconds": 0.279551,
+      "tlsVerificationResult": 0,
+      "bodyBytes": 101,
+      "bodySha256": "fa7a3e355bb4504a98031d787152a72a904a3a5464042de68c2776788f76f505",
+      "headers": "cloudflare-health.headers",
+      "body": "cloudflare-health.body",
+      "health": {
+        "status": "ok",
+        "mode": "live",
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container"
+      }
+    }
+  ],
+  "frontend": {
+    "id": "6f27257bc71f8606c3800be4d654dbff2aec7714d6f5766789e10b82b78c3557",
+    "imageId": "sha256:b045b86fd63ef0a346b3bd778ce63124cf54bbc3d8d74fa01e2ed324f46ec2f0",
+    "user": "101:1000",
+    "health": {
+      "Status": "healthy",
+      "FailingStreak": 0,
+      "Log": [
+        {
+          "Start": "2026-09-27T21:21:00.697598605-04:00",
+          "End": "2026-09-27T21:21:00.790895842-04:00",
+          "ExitCode": 1,
+          "Output": "wget: server returned error: HTTP/1.1 502 Bad Gateway\n"
+        },
+        {
+          "Start": "2026-09-27T21:21:30.792204951-04:00",
+          "End": "2026-09-27T21:21:30.873271178-04:00",
+          "ExitCode": 1,
+          "Output": "wget: server returned error: HTTP/1.1 502 Bad Gateway\n"
+        },
+        {
+          "Start": "2026-09-27T21:22:00.874926305-04:00",
+          "End": "2026-09-27T21:22:00.970577661-04:00",
+          "ExitCode": 0,
+          "Output": ""
+        },
+        {
+          "Start": "2026-09-27T21:22:30.972862534-04:00",
+          "End": "2026-09-27T21:22:31.056525481-04:00",
+          "ExitCode": 0,
+          "Output": ""
+        },
+        {
+          "Start": "2026-09-27T21:23:01.058088128-04:00",
+          "End": "2026-09-27T21:23:01.145251914-04:00",
+          "ExitCode": 0,
+          "Output": ""
+        }
+      ]
+    },
+    "running": true,
+    "readOnlyRootfs": true,
+    "privileged": false,
+    "portBindings": {},
+    "capDrop": [
+      "ALL"
+    ],
+    "securityOpt": [
+      "no-new-privileges:true"
+    ],
+    "memoryBytes": 100663296,
+    "nanoCpus": 500000000,
+    "pidsLimit": 64,
+    "mounts": [
+      {
+        "Type": "bind",
+        "Source": "/mnt/raid1-sata-16tb/homelab_data/patchproof/media",
+        "Destination": "/media",
+        "Mode": "",
+        "RW": false,
+        "Propagation": "rprivate"
+      },
+      {
+        "Type": "bind",
+        "Source": "/mnt/raid1-sata-16tb/homelab_data/patchproof/control",
+        "Destination": "/run/patchproof",
+        "Mode": "",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "network": "traefik-v3-public"
+  },
+  "runtimeUnit": {
+    "argv": [
+      "systemctl",
+      "--user",
+      "show",
+      "patchproof-runtime@7467626bc77b78ffe4698efc09898471b3ab72f1.service",
+      "--property=ActiveState,SubState,MainPID,NRestarts,WorkingDirectory,UMask,MemoryMax,CPUQuotaPerSecUSec,TasksMax"
+    ],
+    "exitCode": 0,
+    "stdout": "MainPID=3592742\nNRestarts=0\nCPUQuotaPerSecUSec=2s\nMemoryMax=1073741824\nTasksMax=128\nUMask=0077\nWorkingDirectory=/mnt/raid1-sata-16tb/homelab_data/patchproof/releases/7467626bc77b78ffe4698efc09898471b3ab72f1\nActiveState=active\nSubState=running\n",
+    "stderr": ""
+  },
+  "gatusPatchProofLines": [
+    "2026/09/27 21:18:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=false; errors=0; duration=78ms",
+    "2026/09/27 21:19:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=false; errors=0; duration=56ms",
+    "2026/09/27 21:20:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=false; errors=0; duration=64ms",
+    "2026/09/27 21:21:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=false; errors=0; duration=61ms",
+    "2026/09/27 21:22:07 [watchdog.executeEndpoint] Monitored group=05 Developer Tools; endpoint=PatchProof; key=05-developer-tools_patchproof; success=true; errors=0; duration=2ms"
+  ],
+  "videoStatus": "NOT CHECKED: root will install the actual recording after repair verification"
+}

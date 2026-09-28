@@ -19,3 +19,9 @@ A task-owned systemd user unit runs the trusted controller from a pinned source 
 The provider credential and operator configuration remain outside the source checkout. Never put a key in shell arguments, a browser response, an exported bundle, or a video. Request receipts contain digests, model/request identifiers, bounds, and usage; hidden reasoning is not retained.
 
 Each downloadable bundle includes frozen source, patch, requirements, repeated observations, model IDs, event history, and the runtime lock. Replay uses the exact deployed source and pinned Docker image and makes no inference calls. A reproduced declared check is not a proof of general correctness. Sealed final evaluation and sponsor-Sandbox integration remain separate release gates.
+
+## Recorded development history
+
+The first deployed run returned `needs_review` because the service's restrictive umask made candidate source unreadable to the container user. Explicit modes inside each newly created candidate workspace and a real startup readiness check corrected this; the original run and its model usage remain in history.
+
+The next release, `7467626`, produced a failed ordinary-repair run and a checks-only patch that passed all nine declared checks twice and replayed successfully. This was an incomplete two-arm sequence. Before the final recording, shared retry feedback was improved to include bounded actual exceptions and expected outcomes for already-visible cases. Protected checks remain opaque to the model. The source change applies equally to every approach, preserves the same budgets, and is labeled development calibration; no performance superiority is inferred from these examples.

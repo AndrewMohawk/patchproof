@@ -24,6 +24,30 @@ const signature = (run: ProductRun) => digestJson({ taskId: run.taskId, schemaVe
 const timestamp = (ms: number) => new Date(Math.max(0, Math.round(ms))).toISOString().slice(11, 23).replace('.', ',');
 const message = (error: unknown) => error instanceof Error ? error.message : String(error);
 
+type PausedResponse = { requestId: string; responseStatusCode?: number };
+type InterceptionCommand = 'Fetch.continueRequest' | 'Fetch.continueResponse' | 'Fetch.failRequest';
+type SendInterceptionCommand = (method: InterceptionCommand, params: { requestId: string; errorReason?: 'BlockedByClient' }) => Promise<unknown>;
+
+export async function guardRecordedResponse(event: PausedResponse, send: SendInterceptionCommand, rejectRedirect: (status: number) => void) {
+  if (event.responseStatusCode && event.responseStatusCode >= 300 && event.responseStatusCode < 400) {
+    // Record refusal before sending the command: a disappeared redirect remains
+    // a guard failure and must never be mistaken for a harmless continuation race.
+    rejectRedirect(event.responseStatusCode);
+    await send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
+    return 'redirect_blocked' as const;
+  }
+  const method = event.responseStatusCode ? 'Fetch.continueResponse' : 'Fetch.continueRequest';
+  try { await send(method, { requestId: event.requestId }); }
+  catch (error) {
+    // Chromium can retire a paused request when navigation/SSE cancellation wins
+    // the race. An expired ID cannot be continued; it does not authorize traffic.
+    const expected = `Protocol error (${method}): Invalid InterceptionId.`;
+    if (error instanceof Error && (error.message === expected || error.message === `cdpSession.send: ${expected}`)) return 'already_gone' as const;
+    throw error;
+  }
+  return 'continued' as const;
+}
+
 async function main() {
   if (process.argv[2] === '--help' && process.argv.length === 3) { console.log(usage); return; }
   assert.equal(process.argv.length, 6, usage);
@@ -134,10 +158,10 @@ async function main() {
     const cdp = await context.newCDPSession(page);
     cdp.on('Fetch.requestPaused', event => {
       void (async () => {
-        if (event.responseStatusCode && event.responseStatusCode >= 300 && event.responseStatusCode < 400) {
-          failure('network_guard', `Redirect ${event.responseStatusCode} blocked.`);
-          await cdp.send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
-        } else await cdp.send(event.responseStatusCode ? 'Fetch.continueResponse' : 'Fetch.continueRequest', { requestId: event.requestId });
+        const result = await guardRecordedResponse(event, (method, params) => cdp.send(method, params),
+          status => failure('network_guard', `Redirect ${status} blocked.`));
+        if (result === 'already_gone') note({ type: 'interception_already_gone', requestId: event.requestId,
+          responseStatusCode: event.responseStatusCode ?? null, atMs: elapsed() });
       })().catch(error => {
         if (!closing) { failure('redirect_guard', error); void context?.close().catch(() => {}); }
       });
@@ -262,4 +286,6 @@ async function main() {
   }
 }
 
-main().catch(error => { console.error(message(error)); process.exitCode = 1; });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(error => { console.error(message(error)); process.exitCode = 1; });
+}

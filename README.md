@@ -1,6 +1,6 @@
 # PatchProof
 
-A local maintenance workflow that checks candidate patches against independently
+A maintenance agent that checks real model-generated patches against independently
 controlled requirements and exports a patch with replayable evidence.
 
 The live application connects NVIDIA Nemotron on **Nebius Token Factory** to
@@ -88,7 +88,22 @@ provenance. A replayed mock-model run remains mock and cannot become competition
 ready. The original v1 contract-only scaffold is retained for historical tests;
 `npm run mock-run` produces that older non-executable format, not product evidence.
 
-## Implementation and evidence
+## Live deployment and evidence
+
+The public service runs immutable release `7467626bc77b78ffe4698efc09898471b3ab72f1`.
+All **664 tests** passed before deployment. The service also executes a real
+container readiness check under its production permissions before accepting work.
+The public and lab routes, Cloudflare access, desktop/mobile interface, and
+health monitoring have been verified. The [deployment record](research/verification/20260928-live-deployment/)
+preserves exact source pins, actual model operations, failed attempts, checks,
+browser recordings and independent reviews.
+
+The live model is `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. All 20 development
+tasks are available. The three approaches share the same model, immutable task
+and declared check policy, and aggregate resource limits. These are development
+demonstrations; they do not replace the planned scored pilot or sealed evaluation.
+
+## Historical local validation
 
 Core workflow verification at source `06c584c` passes all **622 tests**, the actual
 desktop/mobile comparison and all three fresh-container patch replays. An
@@ -150,7 +165,9 @@ The [trusted dispatcher](docs/experiment-dispatcher.md) preserves full experimen
 accounting. The [guarded live executor](docs/live-experiment-runtime.md) and
 [private experiment operator](docs/live-experiment-operator.md) connect the existing
 adapters, ledger, final adjudication and independently accepted phase receipts.
-This path is tested with fake transports; actual account and calibration evidence is absent.
+This experiment path is tested with fake transports; its required calibration
+and sponsor-Sandbox account evidence remain absent. The public live demo uses
+the separate verified Token Factory and local-container path described above.
 The [synthetic experiment executor](docs/experiment-executor.md) tests up to 24
 revisions across three branches using the same loop as the product. It rejects
 live providers. [Accounting receipts](docs/accounting-reconciliation.md) support
@@ -167,7 +184,8 @@ The [trusted smoke factory](docs/trusted-smoke.md) connects the provider adapter
 and budget ledger for an explicitly configured integration run of at most three
 proposals. The [private smoke operator](docs/trusted-smoke-operator.md) adds preflight,
 durable single-attempt sessions, cancellation and status. Its tests use fake
-transports; account verification, calibrated ceilings and actual smoke runs remain pending.
+transports; the sponsor-Sandbox account verification, calibrated ceilings and
+actual sponsor-Sandbox smoke runs remain pending.
 The [private evidence operator](docs/private-evidence.md) verifies and exports
 completed smoke bundles. The [read-only archive](docs/evidence-archive.md) displays
 selected recorded live/mock bundles without enabling a provider. The

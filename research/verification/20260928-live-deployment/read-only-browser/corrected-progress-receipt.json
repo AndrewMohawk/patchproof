@@ -1,0 +1,139 @@
+{
+  "status": "passed",
+  "sourceCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "startedAt": "2026-09-28T01:22:28.368Z",
+  "finishedAt": "2026-09-28T01:22:31.500Z",
+  "command": "node research/verification/20260928-live-deployment/read-only-browser/verify-read-only.mjs attempt-02-corrected-progress",
+  "exitCode": 0,
+  "report": "attempt-02-corrected-progress/report.json",
+  "reportDigest": "sha256:bb5c1c2eab1d8c128c39b0261966978267f71f68d510ceb661fa076771222bb5",
+  "observerSourceDigest": "sha256:efef306017ac5ee58c2a9dbea8aaf52ac3735c33196255a1fc7cb4a10b0b893d",
+  "checksPassed": 15,
+  "screenshots": [
+    {
+      "file": "desktop-1440-tasks.png",
+      "digest": "sha256:f303004a10ef072965db00db546942d713b04a85681aa69d088dce5a856b71f3",
+      "bytes": 249707,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-chapter-task.png",
+      "digest": "sha256:c99d9559a60a036d758e8440fdcc0793d1f7b7778a41c5abe837a9495e79e414",
+      "bytes": 202174,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-worksheet-task.png",
+      "digest": "sha256:af993145c3652a147a6dc0a8758a7f031b527bf73186ef192f5634540e351e41",
+      "bytes": 234648,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    },
+    {
+      "file": "desktop-1440-comparison.png",
+      "digest": "sha256:15f00850a46f263041d0ed16726fa59664664a00287011cc06a6a81c9afe2b73",
+      "bytes": 167315,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "desktop-1440-evidence.png",
+      "digest": "sha256:aeedf26ce6964f4067dd4137c877579073b2fa2b389a3e6dd57307600deabab6",
+      "bytes": 276071,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-evidence.png",
+      "digest": "sha256:2d0f8045085026832c9f4d652426fcecc5f99e62e1d970360cbda82d1e2bfa80",
+      "bytes": 242221,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-evidence.png",
+      "digest": "sha256:4d20b762f9ac6dc653e3d88ca39eb5ccc5c7f89189e0adfaa42e964473d000a1",
+      "bytes": 243587,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "path": "/",
+      "local": "apps/web/index.html",
+      "digest": "sha256:44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+      "bytes": 4998
+    },
+    {
+      "path": "/app.js",
+      "local": "apps/web/app.js",
+      "digest": "sha256:a87b161aaa2247ed971842729602dd1042894db4558834da6a269bab1cdf00d6",
+      "bytes": 46939
+    },
+    {
+      "path": "/style.css",
+      "local": "apps/web/style.css",
+      "digest": "sha256:9915af845e241ece3144ddd403c856da9176d16880e9823475655bcfcd5b2b6d",
+      "bytes": 21182
+    }
+  ],
+  "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+  "observedRuns": [
+    {
+      "id": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "taskId": "stable-unique-01",
+      "mode": "live",
+      "phase": "baseline_capture",
+      "status": null,
+      "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": 0,
+        "measuredCostUsd": null,
+        "costIsEstimate": false,
+        "elapsedMs": 0
+      }
+    }
+  ],
+  "initialAvailability": {
+    "enabled": false,
+    "reason": "A live run is in progress. You can follow its evidence.",
+    "remainingRuns": 47
+  },
+  "finalAvailability": {
+    "enabled": false,
+    "reason": "A live run is in progress. You can follow its evidence.",
+    "remainingRuns": 47
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "networkFailures": [],
+  "httpErrors": [],
+  "observedSameOriginGetRequests": 9,
+  "executionPerformedByObserver": false,
+  "terminalOutcomeObserved": false,
+  "scope": "Public live progress only; coordinator-created baseline remained in baseline_capture during this pass. No terminal, successful repair, invoice cost, or hosted video conclusion.",
+  "browserCleanup": "Own browser/context closed; no deployed service changed."
+}

@@ -1,0 +1,104 @@
+{
+  "attempts": [
+    {
+      "status": "failed",
+      "startedAt": "2026-09-28T01:09:20.054Z",
+      "finishedAt": "2026-09-28T01:10:18.257Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "baseline",
+      "source": {
+        "recorderDigest": "sha256:128817eb7c0c71d427e0d360f5d5f5bd358b7ea923264b5efe0f7050e1c7c22e",
+        "recorderCheckoutCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 58201,
+      "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "failures": [
+        {
+          "stage": "recording",
+          "message": "page.evaluate: TimeoutError: signal timed out",
+          "atMs": 56542
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": true,
+      "attemptDirectory": "live-baseline-01",
+      "reportSha256": "32d80df845818f1a7ab04ae5621b63333d8daff9079931cd821271c33cad99b1",
+      "rawVideoSha256": "391907ea7ffe88fefdf74732f2f5978e6c9ffc2f42e0e1d5d1eccd9ce0f313ad",
+      "rawVideoBytes": 4791222,
+      "observerStatusDoesNotReplaceRunOutcome": true
+    },
+    {
+      "status": "captured",
+      "startedAt": "2026-09-28T01:22:09.584Z",
+      "finishedAt": "2026-09-28T01:25:12.883Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "baseline",
+      "source": {
+        "recorderDigest": "sha256:4dae1cfcd73dacfa21655a87a13d4f3c36c9c098a710c972368e669912802657",
+        "recorderCheckoutCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 183298,
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "failures": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": false,
+      "attemptDirectory": "live-baseline-02",
+      "reportSha256": "25c95f6d3308263e8d0e4c17a55c49a2955feddb9acd1b68e0f81cfd4ee55ea7",
+      "rawVideoSha256": "63a5f006fe37586ca40c7fb3bcdaec6b884e418dc71e5bababa1af14c0d9eebd",
+      "rawVideoBytes": 15053612,
+      "observerStatusDoesNotReplaceRunOutcome": true
+    },
+    {
+      "status": "failed",
+      "startedAt": "2026-09-28T01:25:13.885Z",
+      "finishedAt": "2026-09-28T01:26:38.950Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "checks_only",
+      "source": {
+        "recorderDigest": "sha256:4dae1cfcd73dacfa21655a87a13d4f3c36c9c098a710c972368e669912802657",
+        "recorderCheckoutCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 85065,
+      "runId": "97808518-b836-41a9-961e-8e5f466dc032",
+      "failures": [
+        {
+          "stage": "redirect_guard",
+          "message": "cdpSession.send: Protocol error (Fetch.continueRequest): Invalid InterceptionId.",
+          "atMs": 85017
+        },
+        {
+          "stage": "recording",
+          "message": "page.screenshot: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n",
+          "atMs": 85031
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": false,
+      "attemptDirectory": "live-checks-only-01",
+      "reportSha256": "ebff59886dcf02058124af9915f86f38487c4b586678072691176ff480043821",
+      "rawVideoSha256": "c41ea671e3dd441d54fa6aba0646d4d285e0e79b35c9b1bbd52d4b37c9c26fe6",
+      "rawVideoBytes": 6403639,
+      "observerStatusDoesNotReplaceRunOutcome": true
+    }
+  ],
+  "publishedAsFinalVideo": false,
+  "note": "Recordings and original reports remain private and immutable. A failed observer never triggers an automatic paid retry."
+}

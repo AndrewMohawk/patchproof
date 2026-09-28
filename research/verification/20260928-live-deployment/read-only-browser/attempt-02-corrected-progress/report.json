@@ -1,0 +1,382 @@
+{
+  "startedAt": "2026-09-28T01:22:28.368Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "sourceCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+  "scope": "Actual public browser; GET-only observer; no candidate, provider, run, cancel, or replay dispatch.",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Public health identifies live Token Factory and local Docker checks",
+      "passed": true,
+      "details": {
+        "status": "ok",
+        "mode": "live",
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container"
+      }
+    },
+    {
+      "name": "Twenty supported curated tasks and declared spending bounds",
+      "passed": true,
+      "details": {
+        "taskIds": [
+          "stable-unique-01",
+          "v2-r01-t02",
+          "v2-r01-t03",
+          "v2-r01-t04",
+          "v2-r01-t05",
+          "v2-r02-t01",
+          "v2-r02-t02",
+          "v2-r02-t03",
+          "v2-r02-t04",
+          "v2-r02-t05",
+          "v2-r03-t01",
+          "v2-r03-t02",
+          "v2-r03-t03",
+          "v2-r03-t04",
+          "v2-r03-t05",
+          "v2-r04-t01",
+          "v2-r04-t02",
+          "v2-r04-t03",
+          "v2-r04-t04",
+          "v2-r04-t05"
+        ],
+        "runLimitUsd": 0.1,
+        "projectCeilingUsd": 25
+      }
+    },
+    {
+      "name": "Rendered live runtime, twenty-task catalogue, per-run bound and demo link",
+      "passed": true,
+      "details": {
+        "mode": "Live model · Local Docker checks",
+        "launchDisabled": true
+      }
+    },
+    {
+      "name": "desktop tasks has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "mobile 390 task selection has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "Mobile 390 selects a different public task without execution",
+      "passed": true,
+      "details": {
+        "taskId": "v2-r02-t03",
+        "title": "Chapter boundary pages resolve to the wrong chapter"
+      }
+    },
+    {
+      "name": "mobile 320 task selection has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "Mobile 320 selects a different public task without execution",
+      "passed": true,
+      "details": {
+        "taskId": "v2-r03-t04",
+        "title": "Count zero-valued worksheet cells as populated"
+      }
+    },
+    {
+      "name": "Keyboard focus reaches an interactive element",
+      "passed": true,
+      "details": {
+        "tag": "BUTTON",
+        "text": "Limit worksheet row deduplication to consecutive runs3 requirements · New runs paused"
+      }
+    },
+    {
+      "name": "desktop comparison has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "Actual live progress is publicly readable with cancellation unavailable to this observer",
+      "passed": true,
+      "details": {
+        "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+        "phase": "baseline_capture"
+      }
+    },
+    {
+      "name": "desktop evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "mobile 390 evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "mobile 320 evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "Observer traffic stayed same-origin GET; no browser console/page/HTTP errors",
+      "passed": true,
+      "details": {
+        "requests": 9,
+        "streamingRequestsAbortedOnNavigationOrClose": 0
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-1440-tasks.png",
+      "digest": "sha256:f303004a10ef072965db00db546942d713b04a85681aa69d088dce5a856b71f3",
+      "bytes": 249707,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-chapter-task.png",
+      "digest": "sha256:c99d9559a60a036d758e8440fdcc0793d1f7b7778a41c5abe837a9495e79e414",
+      "bytes": 202174,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-worksheet-task.png",
+      "digest": "sha256:af993145c3652a147a6dc0a8758a7f031b527bf73186ef192f5634540e351e41",
+      "bytes": 234648,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    },
+    {
+      "file": "desktop-1440-comparison.png",
+      "digest": "sha256:15f00850a46f263041d0ed16726fa59664664a00287011cc06a6a81c9afe2b73",
+      "bytes": 167315,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "desktop-1440-evidence.png",
+      "digest": "sha256:aeedf26ce6964f4067dd4137c877579073b2fa2b389a3e6dd57307600deabab6",
+      "bytes": 276071,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-evidence.png",
+      "digest": "sha256:2d0f8045085026832c9f4d652426fcecc5f99e62e1d970360cbda82d1e2bfa80",
+      "bytes": 242221,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-evidence.png",
+      "digest": "sha256:4d20b762f9ac6dc653e3d88ca39eb5ccc5c7f89189e0adfaa42e964473d000a1",
+      "bytes": 243587,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "/healthz",
+      "file": "health-before.json",
+      "digest": "sha256:fa7a3e355bb4504a98031d787152a72a904a3a5464042de68c2776788f76f505",
+      "bytes": 101,
+      "observedAt": "2026-09-28T01:22:28.505Z"
+    },
+    {
+      "path": "/tasks",
+      "file": "tasks-before.json",
+      "digest": "sha256:79c819505d2dfcd6625357c0cb35d360f207d138d19cb7c6f49c88cee2451ca7",
+      "bytes": 32828,
+      "observedAt": "2026-09-28T01:22:28.628Z"
+    },
+    {
+      "path": "/runs",
+      "file": "runs-before.json",
+      "digest": "sha256:fb50341d00bc7d2c44756c1b8322f8da1f63d215abc403f787a972e439148d74",
+      "bytes": 72686,
+      "observedAt": "2026-09-28T01:22:28.719Z"
+    },
+    {
+      "path": "/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "file": "observed-run.json",
+      "digest": "sha256:4c97cf61e31a15ce3e7cd29d49247b8dc54309125b841f1b3912e64f1852590f",
+      "bytes": 2353,
+      "observedAt": "2026-09-28T01:22:30.709Z"
+    },
+    {
+      "path": "/tasks",
+      "file": "tasks-after.json",
+      "digest": "sha256:79c819505d2dfcd6625357c0cb35d360f207d138d19cb7c6f49c88cee2451ca7",
+      "bytes": 32828,
+      "observedAt": "2026-09-28T01:22:31.376Z"
+    },
+    {
+      "path": "/runs",
+      "file": "runs-after.json",
+      "digest": "sha256:7bc58f3387ac393d0bb88f5bbe5e6cf302f356263687b7b5c6f5ac9e8b4eb7ea",
+      "bytes": 72749,
+      "observedAt": "2026-09-28T01:22:31.463Z"
+    }
+  ],
+  "sourceAssets": [
+    {
+      "path": "/",
+      "local": "apps/web/index.html",
+      "digest": "sha256:44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+      "bytes": 4998
+    },
+    {
+      "path": "/app.js",
+      "local": "apps/web/app.js",
+      "digest": "sha256:a87b161aaa2247ed971842729602dd1042894db4558834da6a269bab1cdf00d6",
+      "bytes": 46939
+    },
+    {
+      "path": "/style.css",
+      "local": "apps/web/style.css",
+      "digest": "sha256:9915af845e241ece3144ddd403c856da9176d16880e9823475655bcfcd5b2b6d",
+      "bytes": 21182
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/",
+      "at": "2026-09-28T01:22:29.080Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/style.css",
+      "at": "2026-09-28T01:22:29.167Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/app.js",
+      "at": "2026-09-28T01:22:29.168Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/tasks",
+      "at": "2026-09-28T01:22:29.277Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs",
+      "at": "2026-09-28T01:22:29.278Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "at": "2026-09-28T01:22:29.444Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/events",
+      "at": "2026-09-28T01:22:29.446Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "at": "2026-09-28T01:22:29.550Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "at": "2026-09-28T01:22:31.411Z"
+    }
+  ],
+  "blockedRequests": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "networkFailures": [],
+  "httpErrors": [],
+  "observedRuns": [
+    {
+      "id": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "taskId": "stable-unique-01",
+      "mode": "live",
+      "phase": "baseline_capture",
+      "status": null,
+      "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": 0,
+        "measuredCostUsd": null,
+        "costIsEstimate": false,
+        "elapsedMs": 0
+      }
+    }
+  ],
+  "runtimeLockDigest": "sha256:271ad909e3166a037f33c703ae806933ec45a1aee8cffae3a933c2ed1a241e0a",
+  "execution": {
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container",
+    "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+  },
+  "limits": {
+    "inferenceCallLimit": 3,
+    "inputTokenLimit": 786432,
+    "outputTokenLimit": 6000,
+    "wallTimeLimitSeconds": 300,
+    "sandboxCpuSecondsLimit": 900,
+    "maxApprovedSpendUsd": 0.1
+  },
+  "initialAvailability": {
+    "enabled": false,
+    "reason": "A live run is in progress. You can follow its evidence.",
+    "remainingRuns": 47
+  },
+  "browserVersion": "145.0.7632.6",
+  "finalAvailability": {
+    "enabled": false,
+    "reason": "A live run is in progress. You can follow its evidence.",
+    "remainingRuns": 47
+  },
+  "finishedAt": "2026-09-28T01:22:31.500Z",
+  "observerSourceDigest": "sha256:efef306017ac5ee58c2a9dbea8aaf52ac3735c33196255a1fc7cb4a10b0b893d"
+}

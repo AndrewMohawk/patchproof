@@ -1,0 +1,339 @@
+{
+  "recordedAt": "2026-09-28T01:27:24.773Z",
+  "runId": "97808518-b836-41a9-961e-8e5f466dc032",
+  "releaseCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+  "expectedRuntimeSourceDigest": "sha256:0036e421595d907e65db833da99dd1c803283019375ff5bbf72a32b190925878",
+  "observer": "AI metadata review; GET-only; no provider, candidate, replay, credentials or private billing access",
+  "captures": [
+    {
+      "name": "run.json",
+      "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032",
+      "status": 200,
+      "bytes": 57044,
+      "digest": "sha256:41a9e9b5c00bd47f7e47a2b2c61ba7fdf7c1f169bbe06c65e7e30a9e14b10bff",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "name": "evidence.json",
+      "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "status": 200,
+      "bytes": 102920,
+      "digest": "sha256:b275c631079774a2dd9c7ecdd35cb753b12e45c7f8395b9ebe081c11a335b608",
+      "contentType": "application/json; charset=utf-8"
+    }
+  ],
+  "assertions": {
+    "evidenceVerifierPassed": true,
+    "runExactlyMatchesEvidence": true,
+    "liveUnscoredLocalDockerScope": true,
+    "sourceDigestMatchesCompleteLock": true,
+    "allSourcePinsMatchExactRelease": true,
+    "distinctProviderResponseIds": true,
+    "modelIdsMatchRuntime": true,
+    "candidateUsageSumsMatchAggregate": true,
+    "usagePricedEstimateHonest": true,
+    "sameBoundedAllowance": true,
+    "completeRepeatedObservations": true,
+    "lifecycleInventoryExactAndUnique": true,
+    "allRecordedCleanupConfirmed": true,
+    "verifiedStatusSupported": true
+  },
+  "limitations": [
+    "Hash consistency is not independent provider authentication.",
+    "Recorded request IDs, token usage and cleanup are not independently authenticated external billing or lifecycle events.",
+    "Same-host artifact inspection is not independent-host reproduction, human review or benchmark evidence."
+  ],
+  "summary": {
+    "bundleDigest": "sha256:3e0cd5f278bafd96b9bc02bf71ff59de0263778658c82f37bd569f27080f620c",
+    "sourcePins": 116,
+    "mismatches": [],
+    "taskId": "stable-unique-01",
+    "variant": "checks_only",
+    "terminalStatus": "verified_for_declared_checks",
+    "reason": "declared_local_checks_passed",
+    "selectedCandidateId": 1,
+    "candidateCount": 1,
+    "providerResponseIds": [
+      "chatcmpl-6db652dd-8f58-4d53-a698-a8c5cbca00ad"
+    ],
+    "usage": {
+      "inferenceCalls": 1,
+      "inputTokens": 1038,
+      "outputTokens": 280,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0.00012948000000000001,
+      "costIsEstimate": true,
+      "elapsedMs": 78813
+    },
+    "calculatedEstimateUsd": 0.00012948000000000001,
+    "authoritativeBilledCostUsd": null,
+    "declaredChecksPerRevision": 9,
+    "repeatedObservations": 36,
+    "observedStatuses": {
+      "fail": 8,
+      "pass": 28
+    },
+    "revisions": [
+      {
+        "id": "original",
+        "statusCounts": {
+          "fail": 4,
+          "pass": 5
+        },
+        "visibleStatusCounts": {
+          "fail": 2,
+          "pass": 3
+        },
+        "acceptanceStatusCounts": {
+          "fail": 2,
+          "pass": 2
+        },
+        "failedOrUnavailableChecks": [
+          {
+            "id": "u-v-order",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                "elm",
+                "ash",
+                "elm",
+                "birch"
+              ],
+              "argsAfter": [
+                [
+                  "elm",
+                  "ash",
+                  "elm",
+                  "birch"
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                "elm",
+                "ash",
+                "birch"
+              ],
+              "argsAfter": [
+                [
+                  "elm",
+                  "ash",
+                  "elm",
+                  "birch"
+                ]
+              ],
+              "kwargsAfter": {}
+            }
+          },
+          {
+            "id": "u-v-unicode",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                "é",
+                "é",
+                "é"
+              ],
+              "argsAfter": [
+                [
+                  "é",
+                  "é",
+                  "é"
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                "é",
+                "é"
+              ],
+              "argsAfter": [
+                [
+                  "é",
+                  "é",
+                  "é"
+                ]
+              ],
+              "kwargsAfter": {}
+            }
+          },
+          {
+            "id": "u-a-nested",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                {
+                  "a": [
+                    1
+                  ]
+                },
+                [
+                  "x"
+                ],
+                {
+                  "a": [
+                    1
+                  ]
+                },
+                null
+              ],
+              "argsAfter": [
+                [
+                  {
+                    "a": [
+                      1
+                    ]
+                  },
+                  [
+                    "x"
+                  ],
+                  {
+                    "a": [
+                      1
+                    ]
+                  },
+                  null,
+                  null
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                {
+                  "a": [
+                    1
+                  ]
+                },
+                [
+                  "x"
+                ],
+                null
+              ],
+              "argsAfter": [
+                [
+                  {
+                    "a": [
+                      1
+                    ]
+                  },
+                  [
+                    "x"
+                  ],
+                  {
+                    "a": [
+                      1
+                    ]
+                  },
+                  null,
+                  null
+                ]
+              ],
+              "kwargsAfter": {}
+            }
+          },
+          {
+            "id": "u-a-numeric",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                1,
+                "between",
+                true,
+                0
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  "between",
+                  true,
+                  0,
+                  false
+                ]
+              ],
+              "kwargsAfter": {}
+            },
+            "expected": {
+              "outcome": [
+                1,
+                "between",
+                0
+              ],
+              "argsAfter": [
+                [
+                  1,
+                  "between",
+                  true,
+                  0,
+                  false
+                ]
+              ],
+              "kwargsAfter": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "statusCounts": {
+          "pass": 9
+        },
+        "visibleStatusCounts": {
+          "pass": 5
+        },
+        "acceptanceStatusCounts": {
+          "pass": 4
+        },
+        "failedOrUnavailableChecks": []
+      }
+    ],
+    "lifecycles": 36,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "pass",
+        "checkIds": [
+          "u-v-order",
+          "u-v-empty",
+          "u-v-unicode",
+          "u-a-nested",
+          "u-a-numeric"
+        ]
+      },
+      {
+        "requirementId": "R02",
+        "status": "pass",
+        "checkIds": [
+          "u-v-mutation",
+          "u-a-mutation"
+        ]
+      },
+      {
+        "requirementId": "R03",
+        "status": "pass",
+        "checkIds": [
+          "u-v-none",
+          "u-a-none"
+        ]
+      }
+    ],
+    "timingPolicy": {
+      "id": "live-local-check-timing-v2",
+      "maximumBatchWallSeconds": 120
+    },
+    "checkProtocol": {
+      "id": "repeat-observations-v1",
+      "repetitions": 2,
+      "disagreement": "needs_review",
+      "budget": "shared-batch-wall-time"
+    }
+  },
+  "status": "consistent_recorded_evidence",
+  "collectorDigest": "sha256:661540f6ca6216b2dfa3d6a356ed1eea78a4bd8e0a305bdfd2fe3e8a4e53b3a2"
+}

@@ -1,5 +1,6 @@
 import { ContractError } from '../../contracts/src/index.ts';
 import type { CandidateProposal, CandidateRecord, CheckResult, Fixture, RepairInput, SandboxCheckResult } from '../../contracts/src/product.ts';
+import { cloneJsonData } from '../../contracts/src/json-data.ts';
 import { ProposalSchema } from '../../contracts/src/product-validation.ts';
 import { validatePaths } from './fixtures.ts';
 import { createPatch } from './patch.ts';
@@ -24,11 +25,51 @@ export class RevisionCheckError extends ContractError {
 }
 export const allChecksPass = (checks: CheckResult[]) => checks.length > 0 && checks.every(check => check.status === 'pass');
 
+export const REPAIR_FEEDBACK_FORMAT = Object.freeze({ id: 'visible-outcome-feedback-v1',
+  maximumMessageBytes: 4096, maximumDiagnosticBytes: 1536, maximumOriginBytes: 256 });
+
+function boundedFeedbackText(value: string, maximumBytes: number): string {
+  if (Buffer.byteLength(value, 'utf8') <= maximumBytes) return value;
+  const suffix = ' [truncated]';
+  let result = '', bytes = Buffer.byteLength(suffix, 'utf8');
+  for (const character of value) {
+    const size = Buffer.byteLength(character, 'utf8');
+    if (bytes + size > maximumBytes) break;
+    result += character; bytes += size;
+  }
+  return result + suffix;
+}
+
+function diagnosticJson(value: unknown): string {
+  try {
+    // Reject accessors, proxies, cycles and toJSON functions without invoking
+    // them. Checker output is data, never executable serialization behavior.
+    const serialized = JSON.stringify(cloneJsonData(value));
+    return Buffer.byteLength(serialized, 'utf8') <= REPAIR_FEEDBACK_FORMAT.maximumDiagnosticBytes ? serialized :
+      '{"omitted":"diagnostic byte limit"}';
+  } catch { return '{"unavailable":"invalid JSON data"}'; }
+}
+
+function feedbackMessage(fixture: Fixture, context: RevisionContext, check: CheckResult): string {
+  const origin = boundedFeedbackText(context.feedbackOrigin, REPAIR_FEEDBACK_FORMAT.maximumOriginBytes);
+  const source = boundedFeedbackText(context.sourceOrigin, REPAIR_FEEDBACK_FORMAT.maximumOriginBytes);
+  const prefix = `${REPAIR_FEEDBACK_FORMAT.id}: Observed ${origin}; next proposal starts from ${source}.`;
+  const visible = fixture.visibleCases.filter(c => c.id === check.id && c.requirementId === check.requirementId);
+  // Unknown, mismatched or ambiguous identities stay opaque. Neither raw logs
+  // nor checker messages/expected values can expose protected check content.
+  if (visible.length !== 1) return `${prefix} Declared requirement check: ${check.status}.`;
+  const c = visible[0]!;
+  const outcome = c.expectedException !== undefined ? { exception: c.expectedException } : c.expected;
+  const expected = c.assertArgsUnchanged ? { outcome, argsAfter: c.args, kwargsAfter: c.kwargs } : outcome;
+  return boundedFeedbackText(`${prefix} Visible case ${diagnosticJson(c.id)}: ` +
+    `actual=${diagnosticJson(check.actual)}; expected=${diagnosticJson(expected)}.`, REPAIR_FEEDBACK_FORMAT.maximumMessageBytes);
+}
+
 export function repairInput(fixture: Fixture, context: RevisionContext, remaining: RepairInput['remaining']): RepairInput {
   return { taskId: fixture.id, description: fixture.description, requirements: structuredClone(fixture.requirements),
     files: structuredClone(context.files), editAllowlist: [...fixture.editAllowlist], visibleCases: structuredClone(fixture.visibleCases),
     feedback: context.feedback.map(check => ({ requirementId: check.requirementId, status: check.status,
-      message: `Observed ${context.feedbackOrigin}; next proposal starts from ${context.sourceOrigin}. ${check.message}` })),
+      message: feedbackMessage(fixture, context, check) })),
     attempt: context.attempt, remaining: { ...remaining } };
 }
 

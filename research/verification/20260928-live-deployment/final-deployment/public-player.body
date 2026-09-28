@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PatchProof - demo recording</title>
+  <link rel="stylesheet" href="/demo/style.css">
+</head>
+<body>
+  <main>
+    <a class="brand" href="/">PatchProof</a>
+    <p class="eyebrow">A maintenance task, from patch to evidence</p>
+    <h1>Watch the run.</h1>
+    <p>A recording of PatchProof running a curated maintenance task. Open the app to inspect current runtime details and evidence.</p>
+    <video controls playsinline preload="metadata" src="/demo/patchproof-real-demo.mp4">
+      <a href="/demo/patchproof-real-demo.mp4">Download the MP4 recording.</a>
+    </video>
+    <nav>
+      <a class="button" href="/">Open PatchProof</a>
+      <a href="/demo/patchproof-real-demo.mp4" download>Download video</a>
+    </nav>
+  </main>
+</body>
+</html>
