@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "5f4a10c85c6c1cd6254c71504ab056f4c43e7337",
+  "finalCopyCommit": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test --test-concurrency=4 tests/*.test.ts",
+      "exitCode": 0,
+      "passed": 684,
+      "failed": 0,
+      "durationMs": 81907.955327
+    },
+    {
+      "command": "npm run test:browser",
+      "exitCode": 0,
+      "mode": "mock inference with real local Docker checks",
+      "receipt": "local-browser-receipt.json"
+    },
+    {
+      "command": "node --test tests/walkthrough.test.ts",
+      "exitCode": 0,
+      "passed": 3,
+      "reason": "After the two final copy precision changes."
+    }
+  ],
+  "interfaces": {
+    "node": "25.5.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "dependencies": "package-lock.json"
+  },
+  "paidRequests": 0
+}

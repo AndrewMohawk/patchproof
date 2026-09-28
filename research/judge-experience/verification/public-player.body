@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PatchProof - demo recording</title>
+  <link rel="stylesheet" href="/demo/style.css">
+</head>
+<body>
+  <main>
+    <a class="brand" href="/">PatchProof</a>
+    <h1>PatchProof demo</h1>
+    <p>Choose an example, inspect a patch, and review its checks. This walkthrough uses saved real Nebius Token Factory runs with local Docker checks, including a failed repair. It does not start new model calls.</p>
+    <video controls playsinline preload="metadata" src="/demo/patchproof-real-demo.mp4?v=interface-b324994">
+      <a href="/demo/patchproof-real-demo.mp4?v=interface-b324994">Download the MP4 recording.</a>
+    </video>
+    <nav>
+      <a class="button" href="/">Open PatchProof</a>
+      <a href="/demo/patchproof-real-demo.mp4?v=interface-b324994" download>Download video</a>
+    </nav>
+  </main>
+</body>
+</html>

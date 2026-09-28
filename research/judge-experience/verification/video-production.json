@@ -1,0 +1,51 @@
+{
+  "recordingReport": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/report.json",
+  "recordingSourceSha256": "0941a514e87512ba7d510a9bf5bdadc1e4acdd15b78029578bf68adce9ee5c7e",
+  "originalObserverStatus": "failed",
+  "custodyAudit": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/capture-custody-audit.json",
+  "editing": {
+    "cuts": false,
+    "speedChanges": false,
+    "added": "180px caption strip below original 1440x1000 browser capture; lower space retained for player controls",
+    "audio": false
+  },
+  "command": [
+    "ffmpeg",
+    "-v",
+    "warning",
+    "-n",
+    "-i",
+    "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/raw/dedf2669d83c0b7e5e3a647bd7241d79.webm",
+    "-vf",
+    "pad=1440:1180:0:0:color=0x172033,ass=/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/captions.ass",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "fast",
+    "-crf",
+    "21",
+    "-pix_fmt",
+    "yuv420p",
+    "-movflags",
+    "+faststart",
+    "-an",
+    "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/patchproof-judge-demo.mp4"
+  ],
+  "outputPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/patchproof-judge-demo.mp4",
+  "outputSha256": "aafc632bf58033aa73d386d3f8045fbb24752fed95526517f5e2c43acff08eeb",
+  "bytes": 4667867,
+  "media": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1440,
+        "height": 1180
+      }
+    ],
+    "format": {
+      "duration": "135.200000"
+    }
+  },
+  "reviewFrames": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/review-frames"
+}

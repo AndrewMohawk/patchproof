@@ -13,6 +13,11 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
+Start with the walkthrough: inspect a concrete bug, its actual AI patch and
+check results, then decide what to review before using the change. **Try a repair**
+opens the live curated task workspace. The 2-minute 15-second captioned video
+includes a failed repair and an opened check record; [presenter notes](research/judge-experience/presenter-notes.md) support the live demonstration.
+
 See the [live deployment guide](docs/live-demo.md) for the exact runtime,
 accounting boundaries and operator setup. Nebius-hosted Sandboxes and the sealed
 competition evaluation remain separate gates; this is an unscored development
@@ -42,7 +47,7 @@ make test
 make dev
 ```
 
-Open **http://127.0.0.1:43171**. Select **Retain first occurrences throughout a list**
+Open **http://127.0.0.1:43171/#tasks**. Select **Retain first occurrences throughout a list**
 (`stable-unique-01`), compare the three
 policies, inspect a rejected candidate's actual check output, and download its
 evidence. The scripted example supports this one task. Another 29 public tasks

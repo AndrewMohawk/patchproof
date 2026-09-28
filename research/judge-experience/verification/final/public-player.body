@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PatchProof - review an AI repair</title>
+  <link rel="stylesheet" href="/demo/style.css">
+</head>
+<body>
+  <main>
+    <a class="brand" href="/">PatchProof</a>
+    <h1>Review an AI repair, step by step.</h1>
+    <p>Start with a function that leaves a duplicate in a list. See the AI's proposed fix, the checks it passed, and a separate repair that failed. You decide whether to use the patch.</p>
+    <p class="recording-note">Captioned walkthrough of saved real Nebius Token Factory runs, checked in local Docker containers. The recording makes no new model calls.</p>
+    <video controls playsinline preload="metadata" src="/demo/patchproof-real-demo.mp4?v=judge-e15b625-evidence">
+      <a href="/demo/patchproof-real-demo.mp4?v=judge-e15b625-evidence">Download the MP4 recording.</a>
+    </video>
+    <nav>
+      <a class="button" href="/">Follow the walkthrough</a>
+      <a href="/#tasks">Try a live repair</a>
+      <a href="/demo/patchproof-real-demo.mp4?v=judge-e15b625-evidence" download>Download video</a>
+    </nav>
+  </main>
+</body>
+</html>

@@ -1,0 +1,871 @@
+{
+  "checkedAt": "2026-09-28T04:33:00.050Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "expectedRelease": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "access": "GET only; new run and cancellation requests are blocked",
+  "paidRequests": 0,
+  "assets": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 5030,
+      "sha256": "32b67d5155595b1c2fa06bb491c58f9273f1bbbf0caf032fc644ef8b489cb08b"
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "bytes": 58214,
+      "sha256": "7e71d8f96d236aed1affbacf4641843b16a331b3d71db73471f2ff0f8777a1b4"
+    },
+    {
+      "path": "/walkthrough.js",
+      "status": 200,
+      "bytes": 10329,
+      "sha256": "d9bf67b95b8580b8770a4abff6ecc623f3f22187ea122b6d8a479509ef9f4aab"
+    },
+    {
+      "path": "/style.css",
+      "status": 200,
+      "bytes": 37253,
+      "sha256": "85665900c2bf0fca60d776c08142804267db583cb10640f82b59cdf5efd59f97"
+    }
+  ],
+  "layouts": [
+    {
+      "name": "desktop",
+      "view": "story-bug",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-story-bug.png"
+    },
+    {
+      "name": "desktop",
+      "view": "story-patch",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-story-patch.png"
+    },
+    {
+      "name": "desktop",
+      "view": "story-decision",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-story-decision.png"
+    },
+    {
+      "name": "desktop",
+      "view": "story-failure",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-story-failure.png"
+    },
+    {
+      "name": "desktop",
+      "view": "examples",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-examples.png"
+    },
+    {
+      "name": "desktop",
+      "view": "runs",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-runs.png"
+    },
+    {
+      "name": "desktop",
+      "view": "success-patch",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-success-patch.png"
+    },
+    {
+      "name": "desktop",
+      "view": "success-comparison",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-success-comparison.png"
+    },
+    {
+      "name": "desktop",
+      "view": "failure-checks",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-failure-checks.png"
+    },
+    {
+      "name": "desktop",
+      "view": "failure-comparison",
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "screenshot": "research/judge-experience/verification/public-screenshots/desktop-failure-comparison.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "story-bug",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-story-bug.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "story-patch",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-story-patch.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "story-decision",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-story-decision.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "story-failure",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-story-failure.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "examples",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-examples.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "runs",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-runs.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "success-patch",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-success-patch.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "success-comparison",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-success-comparison.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "failure-checks",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-failure-checks.png"
+    },
+    {
+      "name": "mobile390",
+      "view": "failure-comparison",
+      "viewport": 390,
+      "documentWidth": 390,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile390-failure-comparison.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "story-bug",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-story-bug.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "story-patch",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-story-patch.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "story-decision",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-story-decision.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "story-failure",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-story-failure.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "examples",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-examples.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "runs",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-runs.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "success-patch",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-success-patch.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "success-comparison",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-success-comparison.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "failure-checks",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-failure-checks.png"
+    },
+    {
+      "name": "mobile320",
+      "view": "failure-comparison",
+      "viewport": 320,
+      "documentWidth": 320,
+      "screenshot": "research/judge-experience/verification/public-screenshots/mobile320-failure-comparison.png"
+    }
+  ],
+  "controls": [
+    {
+      "name": "desktop",
+      "storyToWorkbench": true
+    },
+    {
+      "name": "desktop",
+      "action": {
+        "x": 392,
+        "y": 327.328125,
+        "width": 151.921875,
+        "height": 44
+      }
+    },
+    {
+      "name": "desktop",
+      "search": "worksheet",
+      "matches": 5,
+      "clearRestores": 20
+    },
+    {
+      "name": "mobile390",
+      "storyToWorkbench": true
+    },
+    {
+      "name": "mobile390",
+      "action": {
+        "x": 16,
+        "y": 548.453125,
+        "width": 228.203125,
+        "height": 44
+      }
+    },
+    {
+      "name": "mobile390",
+      "allExamples": [
+        {
+          "taskId": "stable-unique-01",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r01-t02",
+          "bottom": 570.859375
+        },
+        {
+          "taskId": "v2-r01-t03",
+          "bottom": 564.578125
+        },
+        {
+          "taskId": "v2-r01-t04",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r01-t05",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r02-t01",
+          "bottom": 620.328125
+        },
+        {
+          "taskId": "v2-r02-t02",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r02-t03",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r02-t04",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r02-t05",
+          "bottom": 570.859375
+        },
+        {
+          "taskId": "v2-r03-t01",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r03-t02",
+          "bottom": 620.328125
+        },
+        {
+          "taskId": "v2-r03-t03",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r03-t04",
+          "bottom": 570.859375
+        },
+        {
+          "taskId": "v2-r03-t05",
+          "bottom": 620.328125
+        },
+        {
+          "taskId": "v2-r04-t01",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r04-t02",
+          "bottom": 592.453125
+        },
+        {
+          "taskId": "v2-r04-t03",
+          "bottom": 570.859375
+        },
+        {
+          "taskId": "v2-r04-t04",
+          "bottom": 570.859375
+        },
+        {
+          "taskId": "v2-r04-t05",
+          "bottom": 592.453125
+        }
+      ],
+      "pickerHeight": 44
+    },
+    {
+      "name": "mobile320",
+      "storyToWorkbench": true
+    },
+    {
+      "name": "mobile320",
+      "action": {
+        "x": 16,
+        "y": 570.515625,
+        "width": 158.203125,
+        "height": 44
+      }
+    },
+    {
+      "name": "mobile320",
+      "allExamples": [
+        {
+          "taskId": "stable-unique-01",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r01-t02",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r01-t03",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r01-t04",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r01-t05",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r02-t01",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r02-t02",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r02-t03",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r02-t04",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r02-t05",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r03-t01",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r03-t02",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r03-t03",
+          "bottom": 663.984375
+        },
+        {
+          "taskId": "v2-r03-t04",
+          "bottom": 642.390625
+        },
+        {
+          "taskId": "v2-r03-t05",
+          "bottom": 663.984375
+        },
+        {
+          "taskId": "v2-r04-t01",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r04-t02",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r04-t03",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r04-t04",
+          "bottom": 614.515625
+        },
+        {
+          "taskId": "v2-r04-t05",
+          "bottom": 636.109375
+        }
+      ],
+      "pickerHeight": 44
+    }
+  ],
+  "stories": [
+    {
+      "name": "desktop",
+      "scene": "bug",
+      "action": {
+        "x": 68,
+        "y": 651.171875,
+        "width": 159.671875,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "valueBounds": [
+        {
+          "label": "Input",
+          "bottom": 515.640625
+        },
+        {
+          "label": "Current output · wrong",
+          "bottom": 515.640625
+        },
+        {
+          "label": "Required output",
+          "bottom": 515.640625
+        }
+      ]
+    },
+    {
+      "name": "desktop",
+      "scene": "patch",
+      "action": {
+        "x": 68,
+        "y": 870.984375,
+        "width": 197.6875,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "pythonIndentationPreserved": true
+    },
+    {
+      "name": "desktop",
+      "scene": "decision",
+      "action": {
+        "x": 68,
+        "y": 808.25,
+        "width": 210.515625,
+        "height": 44
+      },
+      "checkTotals": {
+        "before": 5,
+        "after": 9,
+        "total": 9
+      }
+    },
+    {
+      "name": "desktop",
+      "scene": "failure",
+      "action": {
+        "x": 68,
+        "y": 834.203125,
+        "width": 224.109375,
+        "height": 44
+      },
+      "values": [
+        [
+          [
+            1,
+            null
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            null,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            3
+          ]
+        ]
+      ],
+      "failureIsSeparateAndUnapproved": true
+    },
+    {
+      "name": "mobile390",
+      "scene": "bug",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "valueBounds": [
+        {
+          "label": "Input",
+          "bottom": 597.5625
+        },
+        {
+          "label": "Current output · wrong",
+          "bottom": 673.796875
+        },
+        {
+          "label": "Required output",
+          "bottom": 750.03125
+        }
+      ]
+    },
+    {
+      "name": "mobile390",
+      "scene": "patch",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "pythonIndentationPreserved": true
+    },
+    {
+      "name": "mobile390",
+      "scene": "decision",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "checkTotals": {
+        "before": 5,
+        "after": 9,
+        "total": 9
+      }
+    },
+    {
+      "name": "mobile390",
+      "scene": "failure",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 358,
+        "height": 44
+      },
+      "values": [
+        [
+          [
+            1,
+            null
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            null,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            3
+          ]
+        ]
+      ],
+      "failureIsSeparateAndUnapproved": true
+    },
+    {
+      "name": "mobile320",
+      "scene": "bug",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "valueBounds": [
+        {
+          "label": "Input",
+          "bottom": 588.125
+        },
+        {
+          "label": "Current output · wrong",
+          "bottom": 664.359375
+        },
+        {
+          "label": "Required output",
+          "bottom": 740.59375
+        }
+      ]
+    },
+    {
+      "name": "mobile320",
+      "scene": "patch",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "values": [
+        [
+          "elm",
+          "ash",
+          "elm",
+          "birch"
+        ],
+        [
+          "elm",
+          "ash",
+          "birch"
+        ]
+      ],
+      "pythonIndentationPreserved": true
+    },
+    {
+      "name": "mobile320",
+      "scene": "decision",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "checkTotals": {
+        "before": 5,
+        "after": 9,
+        "total": 9
+      }
+    },
+    {
+      "name": "mobile320",
+      "scene": "failure",
+      "action": {
+        "x": 16,
+        "y": 787,
+        "width": 288,
+        "height": 44
+      },
+      "values": [
+        [
+          [
+            1,
+            null
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            null,
+            3
+          ]
+        ],
+        [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            3
+          ]
+        ]
+      ],
+      "failureIsSeparateAndUnapproved": true
+    }
+  ],
+  "downloads": [
+    {
+      "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "status": "success",
+      "bytes": 100491,
+      "sha256": "ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf",
+      "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+      "matchesDirectPublicDownload": true
+    },
+    {
+      "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+      "status": "failure",
+      "bytes": 248345,
+      "sha256": "e9e75bf601f12e555af444ee07889148464db2c9d215ad98d8f2a6520f36388c",
+      "bundleDigest": "sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8",
+      "matchesDirectPublicDownload": true
+    }
+  ],
+  "errors": [],
+  "blockedRequests": [],
+  "liveData": {
+    "mode": "live",
+    "taskCount": 20,
+    "runCount": 7,
+    "success": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "failure": "5b356c42-8848-4e78-bce7-94800f63eebf",
+    "runtimeLockDigest": "sha256:0ffb84f48c5c74fba10b355d80cb3dcbb37309f6988ea123de59d5530f1f7906"
+  },
+  "status": "pass",
+  "finishedAt": "2026-09-28T04:33:13.993Z"
+}

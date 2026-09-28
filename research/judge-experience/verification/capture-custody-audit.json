@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-09-28T04:53:29.889Z",
+  "status": "verified_with_concurrent_live_traffic",
+  "originalCaptureStatus": "failed",
+  "originalFailure": "The public run list acquired an unrelated new run while the GET-only recording completed.",
+  "reportSha256": "36cf30fe1c64f408a7e7c182a156dcc7a1c9e6b1e3815db659f3e5a10a7568a1",
+  "allEightScenesCompleted": true,
+  "allOriginalRunsUnchanged": true,
+  "recordedRunIds": [
+    "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "5b356c42-8848-4e78-bce7-94800f63eebf"
+  ],
+  "bundleDigests": [
+    "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+    "sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8"
+  ],
+  "additionalRuns": [
+    {
+      "id": "42eb21c5-c816-4642-9a5f-e1c99d00f516",
+      "taskId": "v2-r02-t03",
+      "phase": "baseline_capture",
+      "createdAt": "2026-09-28T04:51:15.806Z"
+    }
+  ],
+  "browserWrites": 0,
+  "paidRequestsFromRecorder": 0,
+  "concurrentRequester": "Unknown; no attribution inferred",
+  "limitations": "Global run history was not frozen. The original failed observer report is preserved unmodified."
+}

@@ -1,5 +1,7 @@
 # Interface redesign
 
+**Superseded after owner review:** the owner found that this interface and recording did not explain the product to a judge. The reviews below proved navigation and layout, but did not establish first-visit comprehension. See [the corrective judge experience](../judge-experience/README.md) and its independent rendered-content review. Historical receipts below are preserved.
+
 The owner requested a complete usability and copy redesign, with multiple UX/UI agents discussing the approach and an independent review for AI-style filler. The public app continues to use real Token Factory inference and local Docker checks; this change does not claim a new evaluation result.
 
 Three reviewers inspected the real service, discussed tradeoffs, and agreed on Examples/Runs navigation, an immediately visible Generate patch action, searchable examples, latest results including failures, and Patch/Checks/Activity/Run details tabs. Their initial reviews and resolved disagreements are in ux-review.md, visual-review.md, and copy-review.md. The copy reviewer independently rejected the first implementation and approved it only after five concrete issues were fixed.

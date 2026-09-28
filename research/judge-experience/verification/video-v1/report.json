@@ -1,0 +1,224 @@
+{
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "startedAt": "2026-09-28T04:36:02.579Z",
+  "deployedSourceCommit": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "responseSubstitution": false,
+  "paidRequests": 0,
+  "scenes": [
+    {
+      "name": "01-bug",
+      "startMs": 1040,
+      "endMs": 29167,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/bug"
+    },
+    {
+      "name": "02-patch",
+      "startMs": 29496,
+      "endMs": 51598,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/patch"
+    },
+    {
+      "name": "03-decision",
+      "startMs": 51944,
+      "endMs": 74050,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/decision"
+    },
+    {
+      "name": "04-failure",
+      "startMs": 74374,
+      "endMs": 96480,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/failure"
+    },
+    {
+      "name": "05-evidence",
+      "startMs": 97031,
+      "endMs": 113135,
+      "url": "https://patchproof.andrewmohawk.xyz/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+    },
+    {
+      "name": "06-try-repair",
+      "startMs": 113525,
+      "endMs": 127643,
+      "url": "https://patchproof.andrewmohawk.xyz/#tasks"
+    }
+  ],
+  "captions": [
+    {
+      "scene": "01-bug",
+      "text": "You maintain a Python library. This helper should remove duplicates without changing the caller's original list.",
+      "startMs": 1163,
+      "endMs": 11165
+    },
+    {
+      "scene": "01-bug",
+      "text": "The input contains elm twice. The current output keeps both copies. The required output keeps the first elm, then ash and birch.",
+      "startMs": 11165,
+      "endMs": 20166
+    },
+    {
+      "scene": "01-bug",
+      "text": "You ask for a fix. PatchProof checks the model's proposed code, then keeps the patch and results together for your review.",
+      "startMs": 20166,
+      "endMs": 29167
+    },
+    {
+      "scene": "02-patch",
+      "text": "The original condition only compares with the previous item. The proposed condition checks every item already kept.",
+      "startMs": 29596,
+      "endMs": 40597
+    },
+    {
+      "scene": "02-patch",
+      "text": "The model can edit solution.py. The check definitions stay outside that file; a separate runner tests the proposal.",
+      "startMs": 40597,
+      "endMs": 51598
+    },
+    {
+      "scene": "03-decision",
+      "text": "Before repair, 5 of 9 checks passed. This proposal passes all 9, including unchanged input and TypeError for None.",
+      "startMs": 52047,
+      "endMs": 63048
+    },
+    {
+      "scene": "03-decision",
+      "text": "A passing result covers the listed cases. You still inspect the full patch and decide whether to use it. Nothing is merged automatically.",
+      "startMs": 63048,
+      "endMs": 74050
+    },
+    {
+      "scene": "04-failure",
+      "text": "Here is a separate repair that failed. Rows become columns, but a real null cell must stay null. The fill value is only for missing cells.",
+      "startMs": 74479,
+      "endMs": 85480
+    },
+    {
+      "scene": "04-failure",
+      "text": "This patch still replaces null with 9. Only 11 of 13 checks pass, so it is not accepted. Later attempts had check errors.",
+      "startMs": 85480,
+      "endMs": 96480
+    },
+    {
+      "scene": "05-evidence",
+      "text": "The full patch stays available for human review. Download evidence saves the code change, requirements, observations and run details.",
+      "startMs": 97134,
+      "endMs": 105135
+    },
+    {
+      "scene": "05-evidence",
+      "text": "The standard repair also passed this example. These saved runs explain the workflow; they do not establish a benchmark advantage.",
+      "startMs": 105135,
+      "endMs": 113135
+    },
+    {
+      "scene": "06-try-repair",
+      "text": "To try it yourself, choose a curated Python task and select Generate patch. It starts a new model run and checks the proposal.",
+      "startMs": 113641,
+      "endMs": 120642
+    },
+    {
+      "scene": "06-try-repair",
+      "text": "Then review the patch and its results. This public demo uses curated examples; it does not accept your own repository.",
+      "startMs": 120642,
+      "endMs": 127643
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/style.css",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/app.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/walkthrough.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/tasks",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "allowed": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/",
+      "sha256": "32b67d5155595b1c2fa06bb491c58f9273f1bbbf0caf032fc644ef8b489cb08b"
+    },
+    {
+      "path": "/app.js",
+      "sha256": "7e71d8f96d236aed1affbacf4641843b16a331b3d71db73471f2ff0f8777a1b4"
+    },
+    {
+      "path": "/walkthrough.js",
+      "sha256": "d9bf67b95b8580b8770a4abff6ecc623f3f22187ea122b6d8a479509ef9f4aab"
+    },
+    {
+      "path": "/style.css",
+      "sha256": "85665900c2bf0fca60d776c08142804267db583cb10640f82b59cdf5efd59f97"
+    }
+  ],
+  "errors": [],
+  "status": "passed",
+  "browserVersion": "145.0.7632.6",
+  "download": {
+    "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+    "bytes": 100491,
+    "sha256": "ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf"
+  },
+  "unchangedRunList": true,
+  "runListDigest": "075bea189f6b790aea8eeb6d90d1eb38c27cd057a451f87837bbd6eed3f44cce",
+  "videoPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-01/raw/29c16da00c21990c406eb7de4e0034f4.webm",
+  "videoSha256": "50a09cc9add99f8e116aadc5ee6c5994c8f07040a1755bead56647a77bb75cb2",
+  "finishedAt": "2026-09-28T04:38:16.057Z"
+}

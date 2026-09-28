@@ -1,0 +1,100 @@
+{
+  "testedAt": "2026-09-28T04:31:31.557Z",
+  "status": "passed",
+  "mode": "mock",
+  "competitionReady": false,
+  "browserVersion": "145.0.7632.6",
+  "base": "http://127.0.0.1:35225",
+  "observation": "new_ui_comparison",
+  "resumeRunIds": [],
+  "runs": [
+    {
+      "id": "a88651e5-63e4-41f5-a1d4-f6025c2e74b2",
+      "variant": "baseline",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "2554814e-4de5-4715-b4a1-1fee2bcd321c",
+      "variant": "checks_only",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    },
+    {
+      "id": "31762f52-48d6-43c0-837b-c22544ffe34d",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed"
+    }
+  ],
+  "selectedTaskId": "stable-unique-01",
+  "unsupportedTaskId": "v2-r01-t02",
+  "rejectedCandidate": {
+    "id": 1,
+    "reason": "One or more declared checks failed or were unavailable.",
+    "nonpassingChecks": [
+      {
+        "id": "u-v-order",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-unicode",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-v-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-nested",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-numeric",
+        "requirementId": "R01",
+        "status": "fail"
+      },
+      {
+        "id": "u-a-mutation",
+        "requirementId": "R02",
+        "status": "fail"
+      }
+    ]
+  },
+  "checks": [
+    "task selection updates requirements",
+    "unsupported tasks cannot launch mock repair",
+    "honest mock labels",
+    "real three-variant execution",
+    "matched resource limits",
+    "candidate rejection and repair",
+    "local operation IDs",
+    "readable diff and check logs",
+    "downloaded evidence identity",
+    "addressed-run reload",
+    "mobile all views including run history",
+    "result tab navigation",
+    "keyboard focus",
+    "no console errors",
+    "same-origin browser traffic"
+  ],
+  "artifactDigest": "sha256:a7e38db9ee7a66925653e73381ad967854495cd866658da584f3140565ce58bf",
+  "createdIds": [
+    "a88651e5-63e4-41f5-a1d4-f6025c2e74b2",
+    "2554814e-4de5-4715-b4a1-1fee2bcd321c",
+    "31762f52-48d6-43c0-837b-c22544ffe34d"
+  ],
+  "screenshots": [
+    "/tmp/patchproof-tasks-desktop.png",
+    "/tmp/patchproof-comparison-desktop.png",
+    "/tmp/patchproof-evidence-desktop.png",
+    "/tmp/patchproof-evidence-mobile.png",
+    "/tmp/patchproof-compare-mobile.png",
+    "/tmp/patchproof-runs-mobile.png",
+    "/tmp/patchproof-tasks-mobile.png"
+  ]
+}

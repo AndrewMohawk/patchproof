@@ -1,0 +1,241 @@
+{
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "startedAt": "2026-09-28T04:49:40.569Z",
+  "deployedSourceCommit": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "responseSubstitution": false,
+  "paidRequests": 0,
+  "scenes": [
+    {
+      "name": "01-bug",
+      "startMs": 1606,
+      "endMs": 23702,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/bug"
+    },
+    {
+      "name": "02-patch",
+      "startMs": 24024,
+      "endMs": 42118,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/patch"
+    },
+    {
+      "name": "03-decision",
+      "startMs": 42432,
+      "endMs": 64544,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/decision"
+    },
+    {
+      "name": "04-failure",
+      "startMs": 64860,
+      "endMs": 86983,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/failure"
+    },
+    {
+      "name": "05-full-patch",
+      "startMs": 87443,
+      "endMs": 95560,
+      "url": "https://patchproof.andrewmohawk.xyz/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+    },
+    {
+      "name": "06-observed-check",
+      "startMs": 95977,
+      "endMs": 108091,
+      "url": "https://patchproof.andrewmohawk.xyz/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+    },
+    {
+      "name": "07-evidence-download",
+      "startMs": 108585,
+      "endMs": 120711,
+      "url": "https://patchproof.andrewmohawk.xyz/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+    },
+    {
+      "name": "08-try-repair",
+      "startMs": 121119,
+      "endMs": 135248,
+      "url": "https://patchproof.andrewmohawk.xyz/#tasks"
+    }
+  ],
+  "captions": [
+    {
+      "scene": "01-bug",
+      "text": "You maintain a Python library. In this curated example, remove duplicates without changing the caller's original list.",
+      "startMs": 1700,
+      "endMs": 9700
+    },
+    {
+      "scene": "01-bug",
+      "text": "The input contains elm twice. The current output keeps both copies. The required output keeps the first elm, then ash and birch.",
+      "startMs": 9700,
+      "endMs": 16701
+    },
+    {
+      "scene": "01-bug",
+      "text": "You ask for a fix. PatchProof checks the model's proposed code, then keeps the patch and results together for your review.",
+      "startMs": 16701,
+      "endMs": 23702
+    },
+    {
+      "scene": "02-patch",
+      "text": "The original condition only compares with the previous item. The proposed condition checks every item already kept.",
+      "startMs": 24115,
+      "endMs": 33117
+    },
+    {
+      "scene": "02-patch",
+      "text": "The model can edit solution.py. The check definitions stay outside that file; a separate runner tests the proposal.",
+      "startMs": 33117,
+      "endMs": 42118
+    },
+    {
+      "scene": "03-decision",
+      "text": "Before repair, 5 of 9 checks passed. This proposal passes all 9, including unchanged input and TypeError for None.",
+      "startMs": 42543,
+      "endMs": 53544
+    },
+    {
+      "scene": "03-decision",
+      "text": "A passing result covers the listed cases. You still inspect the full patch and decide whether to use it. Nothing is merged automatically.",
+      "startMs": 53544,
+      "endMs": 64544
+    },
+    {
+      "scene": "04-failure",
+      "text": "Here is a separate repair that failed. Rows become columns, but a real null cell must stay null. The fill value is only for missing cells.",
+      "startMs": 64981,
+      "endMs": 75982
+    },
+    {
+      "scene": "04-failure",
+      "text": "This patch still replaces null with 9. Only 11 of 13 checks pass, so it is not accepted. Later attempts had check errors.",
+      "startMs": 75982,
+      "endMs": 86983
+    },
+    {
+      "scene": "05-full-patch",
+      "text": "Inspect the saved source change before using it. The added code keeps an item only when it is not already in the result.",
+      "startMs": 87559,
+      "endMs": 95560
+    },
+    {
+      "scene": "06-observed-check",
+      "text": "Open an actual check: expected and observed outputs match. The recorded observations also show the original input was left unchanged.",
+      "startMs": 96089,
+      "endMs": 108091
+    },
+    {
+      "scene": "07-evidence-download",
+      "text": "Download the patch, requirements and recorded observations for review. These examples explain the workflow, not a benchmark advantage.",
+      "startMs": 108709,
+      "endMs": 120711
+    },
+    {
+      "scene": "08-try-repair",
+      "text": "To try it yourself, choose a curated Python task and select Generate patch. It starts a new model run and checks the proposal.",
+      "startMs": 121246,
+      "endMs": 128247
+    },
+    {
+      "scene": "08-try-repair",
+      "text": "Then review the patch and its results. This public demo uses curated examples; it does not accept your own repository.",
+      "startMs": 128247,
+      "endMs": 135248
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/style.css",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/app.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/walkthrough.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/tasks",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "allowed": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/",
+      "sha256": "32b67d5155595b1c2fa06bb491c58f9273f1bbbf0caf032fc644ef8b489cb08b"
+    },
+    {
+      "path": "/app.js",
+      "sha256": "7e71d8f96d236aed1affbacf4641843b16a331b3d71db73471f2ff0f8777a1b4"
+    },
+    {
+      "path": "/walkthrough.js",
+      "sha256": "d9bf67b95b8580b8770a4abff6ecc623f3f22187ea122b6d8a479509ef9f4aab"
+    },
+    {
+      "path": "/style.css",
+      "sha256": "85665900c2bf0fca60d776c08142804267db583cb10640f82b59cdf5efd59f97"
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "browserVersion": "145.0.7632.6",
+  "download": {
+    "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+    "bytes": 100491,
+    "sha256": "ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf"
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      baselineChecks: {\n        acceptance: [\n          {\n...\n    {\n+     baselineChecks: null,\n+     candidates: [],\n+     competitionReady: false,\n+     coverage: [\n+       {\n+         checkIds: [],\n+         requirementId: 'R01',\n+         status: 'unverified'\n+       },\n+       {\n+         checkIds: [],\n+         requirementId: 'R02',\n+         status: 'unverified'\n+       },\n+       {\n+         checkIds: [],\n+         requirementId: 'R03',\n+         status: 'unverified'\n+       }\n+     ],\n+     createdAt: '2026-09-28T04:51:15.806Z',\n+     events: [\n+       {\n+         message: 'Run queued with a fixed shared resource allowance.',\n+         phase: 'queued',\n+         sequence: 1,\n+         timestamp: '2026-09-28T04:51:15.919Z'\n+       },\n+       {\n+         message: 'Checking live runtime bindings and the reserved aggregate allowance.',\n+         phase: 'preflight',\n+         sequence: 2,\n+         timestamp: '2026-09-28T04:51:15.968Z'\n+       },\n+       {\n+         message: 'Running original source against frozen declared checks.',\n+         phase: 'baseline_capture',\n+         sequence: 3,\n+         timestamp: '2026-09-28T04:51:16.040Z'\n+       }\n+     ],\n+     finishedAt: null,\n+     id: '42eb21c5-c816-4642-9a5f-e1c99d00f516',\n+     limits: {\n+       inferenceCallLimit: 3,\n+       inputTokenLimit: 786432,\n+       maxApprovedSpendUsd: 0.1,\n+       outputTokenLimit: 6000,\n+       sandboxCpuSecondsLimit: 900,\n+       wallTimeLimitSeconds: 300\n+     },\n+     mode: 'live',\n+     notice: 'Real NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.',\n+     phase: 'baseline_capture',\n+     policyDigest: 'sha256:848f710ef2ffbd75acdfaa3dd6b780d101d4a1f729a6b082d43e7ab1e6eb2afe',\n+     reason: null,\n+     runtimeLockDigest: 'sha256:0ffb84f48c5c74fba10b355d80cb3dcbb37309f6988ea123de59d5530f1f7906',\n+     sandboxOperationIds: [\n+       'docker:patchproof-check-5fb443a4-55b9-46c6-9992-9d55932ca6f6',\n+       'docker:patchproof-check-c3b19b7b-c115-41fe-a3b2-2acdce14b33e',\n+       'docker:patchproof-check-6aa0a3ca-dd81-4e9c-9383-6eb414c453b3',\n+       'docker:patchproof-check-b466306a-9390-4559-a251-59c943edd08c',\n+       'docker:patchproof-check-8fd335d1-d23c-4321-872d-c49a31a509fc',\n+       'docker:patchproof-check-1407e5ac-eda3-476e-a04e-207de79cb5ae',\n+       'docker:patchproof-check-7192c849-54ab-42c0-a89d-9f5d3ff31348',\n+       'docker:patchproof-check-89b2d4be-ab18-460f-9f0b-669f3a7ace6d',\n+       'docker:patchproof-check-c2f3631d-ed84-4583-b957-89822cb95199',\n+       'docker:patchproof-check-475c3ee7-b0b0-4d24-a7fc-1c4246189350',\n+       'docker:patchproof-check-1ef026de-a5e5-4f18-a64a-337d0fe155bb',\n+       'docker:patchproof-check-abc82ccf-798e-4739-88b3-3e83abd3c539',\n+       'docker:patchproof-check-ec19627f-c4c8-4359-ac14-2785a147d515',\n+       'docker:patchproof-check-21a078ae-8190-42ad-a138-8e6cca41cbb4',\n+       'docker:patchproof-check-32a66554-2ad0-4f27-9d40-c27a58fd0bd2',\n+       'docker:patchproof-check-14b8a6e5-724c-4718-8ed3-2a488b46d459',\n+       'docker:patchproof-check-9a5968c6-a02b-4f21-8154-d87541c5f67d',\n+       'docker:patchproof-check-387a7a9e-c965-43df-a1e1-469ebbd897f5'\n+     ],\n+     schemaVersion: '2.2',\n+     selectedCandidateId: null,\n+     sourceDigest: 'sha256:31bbec94d8747beec54710684392ae0095a27c817389f2934610abe9893aaca0',\n+     taskId: 'v2-r02-t03',\n+     terminalStatus: null,\n+     usage: {\n+       costIsEstimate: false,\n+       elapsedMs: 0,\n+       inferenceCalls: 0,\n+       inputTokens: 0,\n+       measuredCostUsd: null,\n+       outputTokens: 0,\n+       sandboxCpuSeconds: 0\n+     },\n+     variant: 'baseline'\n+   },\n+   {\n      baselineChecks: {\n        acceptance: [\n          {\n            actual: {\n              argsAfter: [\n\n    at file:///home/andrewmohawk/patchproof/research/judge-experience/verification/record-judge-demo.mjs:128:10",
+  "videoPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03/raw/dedf2669d83c0b7e5e3a647bd7241d79.webm",
+  "videoSha256": "0941a514e87512ba7d510a9bf5bdadc1e4acdd15b78029578bf68adce9ee5c7e",
+  "finishedAt": "2026-09-28T04:52:03.118Z"
+}

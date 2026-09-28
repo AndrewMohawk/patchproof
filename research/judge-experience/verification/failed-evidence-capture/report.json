@@ -1,0 +1,193 @@
+{
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "startedAt": "2026-09-28T04:47:25.807Z",
+  "deployedSourceCommit": "e15b625cce5a105c590113b6ba50eb62b5a74eb0",
+  "responseSubstitution": false,
+  "paidRequests": 0,
+  "scenes": [
+    {
+      "name": "01-bug",
+      "startMs": 975,
+      "endMs": 23085,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/bug"
+    },
+    {
+      "name": "02-patch",
+      "startMs": 23391,
+      "endMs": 41491,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/patch"
+    },
+    {
+      "name": "03-decision",
+      "startMs": 41802,
+      "endMs": 63904,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/decision"
+    },
+    {
+      "name": "04-failure",
+      "startMs": 64234,
+      "endMs": 86342,
+      "url": "https://patchproof.andrewmohawk.xyz/#story/failure"
+    },
+    {
+      "name": "05-full-patch",
+      "startMs": 86785,
+      "endMs": 94883,
+      "url": "https://patchproof.andrewmohawk.xyz/#evidence/08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+    }
+  ],
+  "captions": [
+    {
+      "scene": "01-bug",
+      "text": "You maintain a Python library. In this curated example, remove duplicates without changing the caller's original list.",
+      "startMs": 1082,
+      "endMs": 9084
+    },
+    {
+      "scene": "01-bug",
+      "text": "The input contains elm twice. The current output keeps both copies. The required output keeps the first elm, then ash and birch.",
+      "startMs": 9084,
+      "endMs": 16085
+    },
+    {
+      "scene": "01-bug",
+      "text": "You ask for a fix. PatchProof checks the model's proposed code, then keeps the patch and results together for your review.",
+      "startMs": 16085,
+      "endMs": 23085
+    },
+    {
+      "scene": "02-patch",
+      "text": "The original condition only compares with the previous item. The proposed condition checks every item already kept.",
+      "startMs": 23490,
+      "endMs": 32490
+    },
+    {
+      "scene": "02-patch",
+      "text": "The model can edit solution.py. The check definitions stay outside that file; a separate runner tests the proposal.",
+      "startMs": 32490,
+      "endMs": 41491
+    },
+    {
+      "scene": "03-decision",
+      "text": "Before repair, 5 of 9 checks passed. This proposal passes all 9, including unchanged input and TypeError for None.",
+      "startMs": 41904,
+      "endMs": 52904
+    },
+    {
+      "scene": "03-decision",
+      "text": "A passing result covers the listed cases. You still inspect the full patch and decide whether to use it. Nothing is merged automatically.",
+      "startMs": 52904,
+      "endMs": 63904
+    },
+    {
+      "scene": "04-failure",
+      "text": "Here is a separate repair that failed. Rows become columns, but a real null cell must stay null. The fill value is only for missing cells.",
+      "startMs": 64340,
+      "endMs": 75340
+    },
+    {
+      "scene": "04-failure",
+      "text": "This patch still replaces null with 9. Only 11 of 13 checks pass, so it is not accepted. Later attempts had check errors.",
+      "startMs": 75340,
+      "endMs": 86342
+    },
+    {
+      "scene": "05-full-patch",
+      "text": "Inspect the saved source change before using it. The added code keeps an item only when it is not already in the result.",
+      "startMs": 86883,
+      "endMs": 94883
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/style.css",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/app.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/walkthrough.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/tasks",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "path": "/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "allowed": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "/",
+      "sha256": "32b67d5155595b1c2fa06bb491c58f9273f1bbbf0caf032fc644ef8b489cb08b"
+    },
+    {
+      "path": "/app.js",
+      "sha256": "7e71d8f96d236aed1affbacf4641843b16a331b3d71db73471f2ff0f8777a1b4"
+    },
+    {
+      "path": "/walkthrough.js",
+      "sha256": "d9bf67b95b8580b8770a4abff6ecc623f3f22187ea122b6d8a479509ef9f4aab"
+    },
+    {
+      "path": "/style.css",
+      "sha256": "85665900c2bf0fca60d776c08142804267db583cb10640f82b59cdf5efd59f97"
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "browserVersion": "145.0.7632.6",
+  "error": "locator.click: Error: strict mode violation: locator('.check-row').filter({ has: getByText('R01 · u-v-order', { exact: true }) }).locator('summary') resolved to 2 elements:\n    1) <summary>Observed result and log · 3.6 s</summary> aka getByText('Observed result and log · 3.6').first()\n    2) <summary>Observed result and log · 3.5 s</summary> aka getByText('Observed result and log · 3.5').first()\n\nCall log:\n\u001b[2m  - waiting for locator('.check-row').filter({ has: getByText('R01 · u-v-order', { exact: true }) }).locator('summary')\u001b[22m\n\n    at /home/andrewmohawk/patchproof/research/judge-experience/verification/record-judge-demo.mjs:106:34\n    at async scene (/home/andrewmohawk/patchproof/research/judge-experience/verification/record-judge-demo.mjs:51:5)\n    at async file:///home/andrewmohawk/patchproof/research/judge-experience/verification/record-judge-demo.mjs:103:3",
+  "videoPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-02/raw/6fa34331b5a8da74f0d7311f1468ca4b.webm",
+  "videoSha256": "8b24dbb5b0d20a8cf20b9212933d27ed115062c76010257307a2f83a8ed59ad8",
+  "finishedAt": "2026-09-28T04:49:04.942Z"
+}
