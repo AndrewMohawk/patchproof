@@ -1,4 +1,4 @@
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, open } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
@@ -67,7 +67,10 @@ export async function createLiveApplication(root: URL, configFile: string) {
       if (digestJson(LiveDemoConfigSchema.parse(readPrivateOperatorJson(configFile, { projectRoot }))) !== fixedConfigDigest) throw new Error('live_demo_config_changed');
     };
     ledger = new BudgetLedger({ filename: config.ledgerFile, budget, existingOnly: true, pendingBillingPolicy: 'allow-covered-inference' });
-    journal = new RunJournal(join(config.stateDirectory, 'runs.sqlite'));
+    const journalPath = join(config.stateDirectory, 'runs.sqlite');
+    try { const file = await open(journalPath, 'wx', 0o600); await file.close(); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
+    journal = new RunJournal(journalPath);
     const coordinator = createLiveLocalCoordinator({ fixtures: fixtures.filter(f => f !== undefined), runtimeLock,
       sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest, ledger, journal,
       store: new EvidenceStore(join(config.stateDirectory, 'evidence')), checks, verifyRuntime, fetch: globalThis.fetch,

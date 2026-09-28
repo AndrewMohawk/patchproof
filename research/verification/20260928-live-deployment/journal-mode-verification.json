@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-28T01:07:49.554Z",
+  "initialStartup": "blocked: operator_file_not_private",
+  "originalJournalMode": "644",
+  "parentMode": "700",
+  "providerCalls": 0,
+  "fix": "create journal with explicit0600 before SQLite opens it",
+  "freshStatePreflights": 2,
+  "umask": "022",
+  "observedModes": [
+    "600",
+    "600"
+  ],
+  "sourceDigest": "sha256:cab5aba383cfb9b912fcabc15933f8ed997ca23a189d1113fc1c0e3256e702d5"
+}
