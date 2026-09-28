@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "coordinator_visual_review",
+  "videoSha256": "sha256:9dd2716037320de0a2023ca3bdb363cbf08657dcc88063e587e274c3a8dd12e7",
+  "checks": [
+    "Viewed original overview and rejected-candidate screenshots",
+    "Decoded and viewed MP4 frames at 17 and 39 seconds",
+    "Recorded mock/read-only labels visible in overview/mobile scene",
+    "Rejected order check shows expected and actual values",
+    "Captions readable over desktop and narrow-screen scenes"
+  ],
+  "limitations": [
+    "Sampled encoded frames, not a human usability study",
+    "Video shows saved scripted-model/local-check evidence, not the separate Token Factory marker call",
+    "Mobile viewport occupies part of fixed-size video canvas"
+  ],
+  "newProviderCalls": 0,
+  "newCandidateExecutions": 0,
+  "outcome": "No visual blocker in reviewed frames"
+}

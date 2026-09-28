@@ -408,3 +408,22 @@ retry occurred. The credential is outside source/candidate workspaces and logs.
 The source-reviewed one-off script, original setup failure, successful no-network
 preflight, operation IDs, API versions, command results and remaining gates are
 in [the access record](verification/20260927-account-access/README.md).
+
+
+## 2026-09-27 — interactive archive and captioned walkthrough
+
+Recorder source `4574e74` passes `make test`: 628 tests, type checking and contract
+locks. Independent source review corrected redirect handling, transient run/history
+pinning and late browser diagnostics. Focused synthetic controls and their earlier
+inconclusive attempts are preserved without claiming provider activity.
+
+The actual first capture passed from the committed source. The four-run archive
+at loopback port 43173 preserves three declared-check passes and the unsupported-task
+abstention. A separate single-run capture produced a 42.84-second H264 MP4 with
+readable captions, original WebM/SRT, exact evidence download and file custody.
+It shows saved `06c584c` scripted-model/local-check evidence, not the separate real
+Token Factory marker call. Recording created zero runs and made zero provider
+calls. The coordinator viewed original screenshots and sampled decoded MP4 frames;
+this is automated/AI review, not a human usability study. See the
+[actual custody record](verification/20260927-archive-recorder/actual-walkthrough-custody.json)
+and the recorder verification folder for commands, exit codes, hashes and limits.

@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "scope": "GET-only actual four-run recorded mock archive",
+  "base": "http://127.0.0.1:43173",
+  "archiveDigest": "sha256:383708c7bc6b896a105786c67ff63be207f5bffb45e5256c85341f7b23b342df",
+  "outcomes": [
+    {
+      "id": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+      "outcome": "Passes declared checks"
+    },
+    {
+      "id": "52bca833-3f06-41e9-a578-26c930df734e",
+      "outcome": "Passes declared checks"
+    },
+    {
+      "id": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "outcome": "Passes declared checks"
+    },
+    {
+      "id": "88017a40-ba4c-4cd5-aead-a64465af7f90",
+      "outcome": "Needs review"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "path": "/app.js"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks"
+    },
+    {
+      "method": "GET",
+      "path": "/runs"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/88017a40-ba4c-4cd5-aead-a64465af7f90/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/52bca833-3f06-41e9-a578-26c930df734e/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/d521c096-5442-4dd6-897b-fd3965a95ed4/evidence"
+    }
+  ],
+  "failures": [],
+  "noNewExecution": true,
+  "providerCalls": 0,
+  "publicationPerformed": false
+}

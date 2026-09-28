@@ -134,8 +134,8 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
-      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
+      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; the actual eight-task repair probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
+      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; the actual eight-task repair probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -375,7 +375,8 @@
         "docs/uncoached-product-exercise.md",
         "docs/uncoached-product-observation.json",
         "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
-        "research/verification/20260927-completion-audit/integration-receipt.json"
+        "research/verification/20260927-completion-audit/integration-receipt.json",
+        "research/verification/20260927-archive-recorder/interactive-verification.json"
       ],
       "blocked_reason": "UI implementation, local browser flow and synthetic archive controls are verified. Explicit acceptance without coaching has no actual human observation yet; live-provider state validation also awaits access."
     },
@@ -488,15 +489,16 @@
       ],
       "requires_owner_action": false,
       "gate": "G4",
-      "implementation_note": "Private setup/submission draft and current v2 screenshots are prepared. The historical 91-second v1 rehearsal is preserved; a 28.24-second private v2 walkthrough of completed c335031 runs has captions and a source/run/file custody record, with zero new execution. Sponsor-backed final recording, application license and public source/video remain pending.",
-      "blocked_reason": "Private setup/submission draft and current v2 screenshots are prepared. The historical 91-second v1 rehearsal is preserved; a 28.24-second private v2 walkthrough of completed c335031 runs has captions and a source/run/file custody record, with zero new execution. Sponsor-backed final recording, application license and public source/video remain pending.",
+      "implementation_note": "Both local presentation assets are prepared and tested: a four-run read-only interactive archive and a 42.84-second captioned MP4 of saved 06c584c mock-model/local-check evidence, captured using source 4574e74. Exact source/run/bundle/video custody and prior recordings are retained; recording created zero runs and made no provider calls. The separate real Nano marker call establishes inference access only. Sponsor-backed final repair/recording, application license and public source/video remain pending.",
+      "blocked_reason": "Local demo and recorded mock walkthrough are complete. Sponsor-backed repair proof, final challenge recording, licensing and public release remain unresolved.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
-        "research/verification/20260927-completion-audit/integration-receipt.json"
+        "research/verification/20260927-completion-audit/integration-receipt.json",
+        "research/verification/20260927-archive-recorder/actual-walkthrough-custody.json"
       ]
     },
     {
@@ -537,7 +539,7 @@
       ]
     }
   ],
-  "execution_as_of": "2026-09-28T00:11:17.609113+00:00",
+  "execution_as_of": "2026-09-28T00:26:30.919858+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {

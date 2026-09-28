@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "recorded-evidence-walkthrough",
+  "status": "passed",
+  "failure": null,
+  "scope": "recorded_archive_observation",
+  "startedAt": "2026-09-28T00:21:10.777Z",
+  "source": {
+    "recorderDigest": "sha256:b97b712a505a4f49f6a0f52ce6aadf98417abdd143d9ac89e84ad95cd6a25213",
+    "servedAssets": {
+      "/": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+      "/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+      "/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa"
+    },
+    "gitCommit": "4574e74e96b915bb86033302e78961eb1888a890"
+  },
+  "browserVersion": "145.0.7632.6",
+  "archiveDigest": "sha256:70a4b5a5c0a204263f74755493d9b3a68b2f948a2c3e4f144e187de3a6220c4d",
+  "responsePins": {
+    "/tasks": "sha256:7aa593f95c756a54bcc34e58cff6673b8dc63df9a32a0b1dcaebbb30dd80e33b",
+    "/runs": "sha256:159a63ac9268b2373276f86167d7856bedea567363af6ea2bc9973bdbe13b9a3",
+    "/favicon.ico": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/runs/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c": "sha256:17cb5d2718124d5210f0627a4b834f6f3f641de4206e32d88bf92a688173c47e",
+    "/runs/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c/evidence": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+    "/": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+    "/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+    "/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa"
+  },
+  "requestTransport": "bounded-no-redirect-GET-forwarder-exact-pinned-bytes",
+  "durationMs": 45993,
+  "encodedDurationSeconds": 42.84,
+  "maximumSeconds": 170,
+  "captionPacing": "3.5words-per-second-minimum3seconds",
+  "authenticityVerified": false,
+  "executionPerformed": false,
+  "newRunsCreated": 0,
+  "providerCallsDuringPlayback": 0,
+  "publicationPerformed": false,
+  "runs": [
+    {
+      "runId": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "bundleDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+      "byteDigest": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+      "mode": "mock",
+      "taskId": "stable-unique-01",
+      "variant": "patchproof",
+      "status": "verified_for_declared_checks",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "runtimeLockDigest": "sha256:14c7c70e5613ddc6817f2378147a0de85cd5b27070f122b2eab58be846cd4d47",
+      "selectedCandidateId": 2,
+      "recordedUsage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0,
+        "costIsEstimate": false,
+        "elapsedMs": 101269
+      }
+    }
+  ],
+  "files": {
+    "80beb4803c919d7b2ae2fb0214441979.webm": "sha256:b7569627bb63f82d917539ae6e3bc2b98ea1b33dd2a0db0f16acbde603fc47fd",
+    "captions.srt": "sha256:68438d70b5ee1cc116e5b11899c933ff9c7a856c98f46ec9da85dac48e92c5cb",
+    "evidence-1.json": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+    "mobile.png": "sha256:14dee89430017210652b92ea496cc4799b7d6917b01c114ef66acb479fbbddc1",
+    "recorded-evidence.webm": "sha256:b7569627bb63f82d917539ae6e3bc2b98ea1b33dd2a0db0f16acbde603fc47fd",
+    "run-1-accounting.png": "sha256:986069d2177887474427c64efbd6b99a07cd14abdb1cbd3e2f30ec92f8ec84cb",
+    "run-1-overview.png": "sha256:64784b9f88ab2a6f1d21c225a059fb1f3430483dfbe322b8976883447bf6210d",
+    "run-1-rejection.png": "sha256:d558bba9e8849e95a58a6c6762407284178550617b6e5ef185b77db733eb2e4f"
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "path": "/app.js"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks"
+    },
+    {
+      "method": "GET",
+      "path": "/runs"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c/evidence"
+    },
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/style.css"
+    },
+    {
+      "method": "GET",
+      "path": "/app.js"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks"
+    },
+    {
+      "method": "GET",
+      "path": "/runs"
+    },
+    {
+      "method": "GET",
+      "path": "/runs/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c/evidence"
+    }
+  ],
+  "observedAssets": {
+    "/": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+    "/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa",
+    "/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9"
+  },
+  "violations": [],
+  "errors": [],
+  "captions": [
+    {
+      "startMs": 335,
+      "text": "Review a saved run in the interactive evidence archive. This playback starts no inference or checks. Recorded model mode stays visible."
+    },
+    {
+      "startMs": 6438,
+      "text": "Recorded task: Retain first occurrences throughout a list. Start with the requirements saved with this run."
+    },
+    {
+      "startMs": 11182,
+      "text": "Recorded mock run: Passes declared checks. Review the declared checks and candidate history."
+    },
+    {
+      "startMs": 15222,
+      "text": "Recorded candidate 1 was rejected. 6 declared check results did not pass. Compare expected and observed values to understand why."
+    },
+    {
+      "startMs": 21215,
+      "text": "Final recorded selection: candidate 2. Verdict: verified_for_declared_checks. Inspect its patch against the original source."
+    },
+    {
+      "startMs": 25251,
+      "text": "Recorded mock · patchproof: verified_for_declared_checks. 0 USD recorded provider cost; sandbox CPU unmeasured. No inference or checks run during playback."
+    },
+    {
+      "startMs": 31133,
+      "text": "Download the original evidence bundle. Its run, source, policy and runtime pins preserve what was checked and selected."
+    },
+    {
+      "startMs": 36669,
+      "text": "The same saved evidence works on a narrow screen. This recorded walkthrough performs no new inference and is not a human usability study."
+    }
+  ]
+}

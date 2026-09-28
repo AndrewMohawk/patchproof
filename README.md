@@ -83,12 +83,24 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Implementation and evidence
 
-Current implementation source `06c584c` passes all **622 tests**, the actual
+Core workflow verification at source `06c584c` passes all **622 tests**, the actual
 desktop/mobile comparison and all three fresh-container patch replays. An
 unsupported-task run honestly abstained with no selected patch. The four selected
 exports were scanned, packaged and verified locally; release approval remains
 blocked. The [integration receipt](research/verification/20260927-completion-audit/integration-receipt.json)
 records those results, confirmed cleanup for all 246 operations and $0 provider spend.
+
+The later archive recorder at `4574e74` passes **628 tests**, type checking and
+contract checks. It records selected existing evidence without starting work,
+pins all displayed response bytes and refuses redirects or write requests. See
+the [recording guide](docs/archive-recording.md) and
+[recorder verification](research/verification/20260927-archive-recorder/recorder-verification.json).
+The [actual walkthrough receipt](research/verification/20260927-archive-recorder/actual-walkthrough-custody.json)
+binds a **42.84-second captioned MP4** to the saved `06c584c` mock run and this
+recorder. A four-run interactive evidence archive is available locally at
+`http://127.0.0.1:43173`, including the abstention. Viewing and recording start no
+new inference or checks; the separate Token Factory marker result is not repair
+evidence. The video is private and has not been published.
 
 ![Local task picker with explicit mock mode](docs/screenshots/tasks.png)
 

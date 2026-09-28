@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-archive-artifact-review",
+  "status": "passed",
+  "recordedAt": "2026-09-28T00:28:58.570Z",
+  "reviewer": "AI subagent json_contract_review",
+  "scope": "Static public-artifact and approved-demo-directory review only",
+  "command": "node --input-type=module (inline static digest, evidence-schema, git-object and receipt consistency assertions)",
+  "exitCode": 0,
+  "assertions": 786,
+  "checked": {
+    "custodyArtifacts": 9,
+    "originalCaptureFiles": 8,
+    "configs": 2,
+    "uniqueBundles": 4,
+    "bundleReferences": 5,
+    "historicalSourcePins": 110,
+    "recordedBrowserGetRequests": 12,
+    "interactiveBrowserGetRequests": 9,
+    "subtitleCues": 8,
+    "editorialCaptionChanges": 3
+  },
+  "bindings": {
+    "custodyByteDigest": "sha256:966af2630ac314dde5041cf259c6b8ffaf52dd1f8e57a8a8910ca123b201cb95",
+    "recordingReceiptByteDigest": "sha256:2d36bcb535493c22e544401915c70a7231cbf397f585b54d555099ccd6ec599c",
+    "interactiveReceiptByteDigest": "sha256:dbf9d25764ebf28bad32594f412c6342d8a462d5d14cfc4ea981864d5bebdb7e",
+    "recordingSource": {
+      "recorderDigest": "sha256:b97b712a505a4f49f6a0f52ce6aadf98417abdd143d9ac89e84ad95cd6a25213",
+      "servedAssets": {
+        "/": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+        "/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+        "/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa"
+      },
+      "gitCommit": "4574e74e96b915bb86033302e78961eb1888a890"
+    },
+    "recordedExecutionSource": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+    "runId": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+    "bundleDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+    "evidenceByteDigest": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+    "videoSha256": "sha256:9dd2716037320de0a2023ca3bdb363cbf08657dcc88063e587e274c3a8dd12e7",
+    "originalVideoSha256": "sha256:b7569627bb63f82d917539ae6e3bc2b98ea1b33dd2a0db0f16acbde603fc47fd"
+  },
+  "claims": {
+    "recordedMock": true,
+    "providerCostUsd": 0,
+    "providerCostScope": "Saved mock run only; not a live-provider billing observation",
+    "sandboxCpuSeconds": null,
+    "noNewExecutionReported": true,
+    "providerAuthenticityVerified": false,
+    "performanceAdvantageEstablished": false,
+    "humanUsabilityStudy": false,
+    "publicationPerformed": false
+  },
+  "limitations": [
+    "No browser, Docker, candidate, provider, replay, codec, network or test-suite execution by this reviewer.",
+    "Video bytes were hashed; duration/codec/content claims were cross-checked against preserved receipts/render log, not independently decoded. Root performs visual review.",
+    "Server lifecycle and first-attempt success are retained operator observations, not newly re-observed process state.",
+    "Read access stayed within public repository artifacts and the explicitly approved demo-20260927 directory; no sibling operator directory, credentials or private evaluator data read.",
+    "Same-host AI review; hash consistency does not establish independent provider authenticity.",
+    "Original/edited SRT timestamps match; ASS represents centiseconds and encoded videos end before the final wall-time cue endpoint, as documented."
+  ],
+  "blockers": []
+}

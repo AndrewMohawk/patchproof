@@ -1,0 +1,47 @@
+(node:1900442) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "scope": "synthetic_archive_recording_verification_only",
+  "status": "passed",
+  "outputRoot": "/mnt/raid1-nvme-4tb/tmp/patchproof-archive-recording-proof-yA9hz9",
+  "results": [
+    {
+      "kind": "positive_capture",
+      "modes": [
+        "mock"
+      ],
+      "recordedStatuses": [
+        "needs_review"
+      ],
+      "directory": "/mnt/raid1-nvme-4tb/tmp/patchproof-archive-recording-proof-yA9hz9/capture-1",
+      "durationSeconds": 14.32,
+      "status": "passed"
+    },
+    {
+      "kind": "expected_network_denial",
+      "blockedRequests": 4,
+      "prohibitedWrites": 0,
+      "unexpectedExternal": 0,
+      "status": "passed"
+    },
+    {
+      "kind": "positive_capture",
+      "modes": [
+        "live",
+        "mock"
+      ],
+      "recordedStatuses": [
+        "failed",
+        "verified_for_declared_checks"
+      ],
+      "directory": "/mnt/raid1-nvme-4tb/tmp/patchproof-archive-recording-proof-yA9hz9/capture-2",
+      "durationSeconds": 28.16,
+      "status": "passed"
+    }
+  ],
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "realProviderEvidence": false,
+  "humanStudy": false,
+  "published": false
+}

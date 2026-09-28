@@ -40,6 +40,14 @@ Its 24 input and 6 output tokens imply $0.00000288 at the observed public rates;
 authoritative billing is unknown and a $0.10 reservation remains held. Sandbox
 authentication requires the project ID. See the [actual access record](../research/verification/20260927-account-access/README.md).
 
+Both local presentation assets now exist: a four-run interactive evidence archive
+and a 42.84-second captioned walkthrough of the saved `06c584c` PatchProof run,
+recorded using `4574e74`. It shows scripted proposals and real historical local
+checks; recording starts no new execution. The [custody record](../research/verification/20260927-archive-recorder/actual-walkthrough-custody.json)
+binds the source, bundles, original footage, captions and MP4. This private
+walkthrough is preparation for the sponsor-backed final demonstration, not its
+replacement. The video has not been uploaded or published.
+
 ## Architecture and originality/reuse
 
 The three-screen loopback app calls a durable coordinator that records shared

@@ -10,7 +10,7 @@ ongoing pushes are authorized.
 The local implementation includes exact-byte smoke export, a read-only recorded
 evidence viewer, separately budgeted replay and accepted live-protocol selection
 for release auditing. Current product contract 2.2 preserves ordinary JSON keys
-without reinterpreting supported historical exports. Current implementation source
+without reinterpreting supported historical exports. Core workflow source
 `06c584c` passes all 622 tests, type checking, contract locks, the actual desktop/mobile
 comparison and all three fresh-container patch replays. An unsupported-task run
 honestly abstained. The four selected exports were scanned, packaged and verified
@@ -69,7 +69,7 @@ This is not a model-generated repair or a completed sponsor integration. Next:
 | T10 | Task/comparison/evidence views; real local checks and browser flow; neutral exercise protocol and blank sheet | Live-provider state validation and actual uncoached human exercise. |
 | T11/G3 | Fixed 270-episode planner, private dispatch, protected phase-accounted adjudication and clustered analysis | Authorized final budget, real final runs, ablations and reviewer study. |
 | T12 | Local lifecycle tests and operations runbook | Public deployment authorization, hardened operator boundary and funded judge access. |
-| T13/G4 | Setup guide, honest draft/storyboard/platform feedback | Sponsor-backed runs, final recording and public licensed source. |
+| T13/G4 | Setup guide, draft/storyboard/platform feedback; tested interactive archive and 42.84-second captioned mock walkthrough | Sponsor-backed runs, final challenge recording and public licensed source. |
 | T14 | Local evidence/review and private source history | Independent clean-machine replay, final rules/license/secret audit and owner release decisions. |
 
 The $25 ceiling is not evidence that either experiment is affordable. Final

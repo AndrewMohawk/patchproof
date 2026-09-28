@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "archive-recorder-local-verification",
+  "status": "passed",
+  "source": {
+    "scripts/record-evidence-archive.ts": "sha256:b97b712a505a4f49f6a0f52ce6aadf98417abdd143d9ac89e84ad95cd6a25213",
+    "scripts/verify-archive-recorder.ts": "sha256:dac91355b9c19c08b0f88578d19cdbace4808813c3388b5391810a72c269f4d6",
+    "tests/archive-recorder.test.ts": "sha256:bc27af7432eb1ec12c2d3c74e25c937c7e78bd503fe8c4a23390062733255128",
+    "docs/archive-recording.md": "sha256:efe382785388681af634bd700d083dc9b4d2ae16acaa09a8ed5ef8f28d9233a4",
+    "docs/evidence-archive.md": "sha256:2d5a4096daefd940e26e6ed989cd62b3dc21d7fd1320872281d8a32218d36283"
+  },
+  "scope": "Invented product metadata and GET-only local browser capture; no real provider or candidate execution.",
+  "commands": [
+    {
+      "command": "node --test tests/archive-recorder.test.ts",
+      "exitCode": 0,
+      "passed": 6,
+      "log": "unit-tests-boundaries.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-boundaries-final.log"
+    },
+    {
+      "command": "node scripts/verify-archive-recorder.ts",
+      "exitCode": 0,
+      "log": "browser-boundaries-final.log",
+      "report": "synthetic-browser-verification.json"
+    }
+  ],
+  "review": {
+    "reviewer": "/root/json_contract_review",
+    "scope": "Independent source-only review; no test, recording or private input access.",
+    "status": "No blocker after three corrections.",
+    "corrections": [
+      "Browser route continuation replaced by bounded redirect-error GET forwarding before Chromium receives response bytes.",
+      "All run-history and individual-run response bytes pinned alongside assets, metadata and evidence.",
+      "Browser producers close and registered request tasks drain before final diagnostics decide receipt status."
+    ]
+  },
+  "retainedAttempts": {
+    "initialPositiveCaptures": [
+      "browser-attempt-01.log",
+      "browser-attempt-02.log",
+      "browser-attempt-03.log"
+    ],
+    "redirectControls": [
+      "redirect-control-before.log",
+      "redirect-control-before-navigation.log"
+    ],
+    "interpretation": "Both earlier redirect controls passed without contacting the sink; they did not establish the identified redirect boundary. Final helper exercises a stylesheet redirect after preflight and asserts a redirect attempt plus zero sink contacts. No reproduced red defect is claimed.",
+    "mcp": "Existing shared MCP browser profile was busy; preserved exact error. Used isolated task-owned Playwright Chromium without closing shared browser."
+  },
+  "controls": {
+    "positiveCaptures": 2,
+    "singleMockAbstention": true,
+    "mixedSyntheticLiveFailureAndMockPass": true,
+    "exactByteDownloads": true,
+    "redirectSinkContacts": 0,
+    "unintendedWrites": 0,
+    "postPreflightHistoryDriftRejected": true,
+    "historyCaveat": "Changed history stays changed; this is not a demonstrated change-and-restore race."
+  },
+  "syntheticOutputRoot": "/mnt/raid1-nvme-4tb/tmp/patchproof-archive-recording-proof-6BjNWo",
+  "logs": {
+    "unit-tests-boundaries.log": "sha256:e912234368ab77ea6e3026f2e7ccc4abcccd115788967b6104595e32045d722e",
+    "typecheck-boundaries-final.log": "sha256:bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "browser-boundaries-final.log": "sha256:b1739894b02055b09b4f0ee8018bf25edcb2573e6fdf67717c9d4d2ffd0f5fef",
+    "browser-attempt-01.log": "sha256:24bd6758a16e2fdf040882fd830c81a7270057df576c9953180ede8beec1c702",
+    "browser-attempt-02.log": "sha256:339214b7f76ae3eb9ca322f4783e06f0e6b09224aabef56fb7a4a7e7ff603737",
+    "browser-attempt-03.log": "sha256:c8b2f83ba8903e3dd226a6412d7be8d5f7b7ec70eb4cb5dd1da0b6105ec59e41",
+    "redirect-control-before.log": "sha256:79cd874cf7d8f1b3e3081770199c3a15508bec8bc82ca392feaee94b43cf91b1",
+    "redirect-control-before-navigation.log": "sha256:a7fbb4edb8ccdea17f45e80fefc8e4e9aa99d65ca4faacba6a9f30ad22cc3982",
+    "mcp-attempt-01.log": "sha256:8b29bc04aab3509eb07107b91db12c52b569add41a445f08adb566caf82fe82c"
+  },
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "realProviderEvidence": false,
+  "humanStudy": false,
+  "published": false,
+  "actualReviewedMockWalkthrough": "Pending separate source-committed capture; not claimed by this receipt."
+}

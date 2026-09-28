@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "actual-recorded-mock-archive-walkthrough",
+  "status": "passed",
+  "scope": "GET-only observation of reviewed historical local mock-model and Docker-check evidence; no inference/checks executed by this capture.",
+  "recordedExecutionSource": "06c584c23ac1b620a14ba5e3c68fbdb02199a164",
+  "recordingSource": {
+    "recorderDigest": "sha256:b97b712a505a4f49f6a0f52ce6aadf98417abdd143d9ac89e84ad95cd6a25213",
+    "servedAssets": {
+      "/": "sha256:e15429923a74596e9bba259689e5622ea84c6fef4e917bc37f6812fbdc9e8d04",
+      "/app.js": "sha256:e3bea3003c3ef220da9ce0d57d181b54b6edadd3b24d59c1ce6294714ad7baa9",
+      "/style.css": "sha256:94c26e00fd70bc0039a2561948d8e9beb4cd54055fb8d456cb8d596b6d445ffa"
+    },
+    "gitCommit": "4574e74e96b915bb86033302e78961eb1888a890"
+  },
+  "reviewedInputReceipt": "research/verification/20260927-completion-audit/integration-receipt.json",
+  "reviewedPacket": "artifacts/release-packets/00accae07a81904edf6c7305b90e0b128c7e02eb506cd7cdf60a0d2a031d2f95",
+  "capture": {
+    "command": [
+      "node",
+      "scripts/record-evidence-archive.ts",
+      "http://127.0.0.1:43175",
+      "sha256:70a4b5a5c0a204263f74755493d9b3a68b2f948a2c3e4f144e187de3a6220c4d",
+      "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+      "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01"
+    ],
+    "exitCode": 0,
+    "attempt": 1,
+    "report": "actual-recording-receipt.json",
+    "archiveDigest": "sha256:70a4b5a5c0a204263f74755493d9b3a68b2f948a2c3e4f144e187de3a6220c4d",
+    "runs": [
+      {
+        "runId": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+        "bundleDigest": "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+        "byteDigest": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+        "mode": "mock",
+        "taskId": "stable-unique-01",
+        "variant": "patchproof",
+        "status": "verified_for_declared_checks",
+        "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+        "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+        "runtimeLockDigest": "sha256:14c7c70e5613ddc6817f2378147a0de85cd5b27070f122b2eab58be846cd4d47",
+        "selectedCandidateId": 2,
+        "recordedUsage": {
+          "inferenceCalls": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "sandboxCpuSeconds": null,
+          "measuredCostUsd": 0,
+          "costIsEstimate": false,
+          "elapsedMs": 101269
+        }
+      }
+    ]
+  },
+  "derivative": {
+    "command": [
+      "ffmpeg",
+      "-nostdin",
+      "-hide_banner",
+      "-n",
+      "-i",
+      "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/recorded-evidence.webm",
+      "-vf",
+      "ass=/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/maintainer-captions.ass",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "20",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-an",
+      "-metadata",
+      "title=PatchProof \u2014 recorded mock evidence walkthrough",
+      "-metadata",
+      "comment=Saved run a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c; recording source4574e74; no new inference or checks.",
+      "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/patchproof-recorded-mock.mp4"
+    ],
+    "exitCode": 0,
+    "ffmpeg": "6.1.1-3ubuntu5",
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 1100
+        }
+      ],
+      "format": {
+        "duration": "42.840000",
+        "size": "3395426"
+      }
+    },
+    "encodedDurationSeconds": 42.84,
+    "originalEncodedDurationSeconds": 42.84,
+    "captureWallDurationMs": 45993,
+    "lastRawSubtitleEndMs": 45993,
+    "subtitleTiming": "Original and maintainer derivative cue times are identical. The final 45.993s cue endpoint includes capture-close overhead; both encoded videos end at 42.840s and naturally truncate that final cue. No video speedup or fabricated frames.",
+    "editorialChanges": "Three captions replace internal status identifiers with plain maintainer wording; saved verdicts, no-execution scope and unknown CPU remain unchanged.",
+    "audio": "No audio track; captions burned into H264 MP4."
+  },
+  "interactive": {
+    "url": "http://127.0.0.1:43173",
+    "primaryUrl": "http://127.0.0.1:43173/#evidence/a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+    "archiveDigest": "sha256:383708c7bc6b896a105786c67ff63be207f5bffb45e5256c85341f7b23b342df",
+    "runs": [
+      {
+        "id": "d521c096-5442-4dd6-897b-fd3965a95ed4",
+        "outcome": "Passes declared checks"
+      },
+      {
+        "id": "52bca833-3f06-41e9-a578-26c930df734e",
+        "outcome": "Passes declared checks"
+      },
+      {
+        "id": "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+        "outcome": "Passes declared checks"
+      },
+      {
+        "id": "88017a40-ba4c-4cd5-aead-a64465af7f90",
+        "outcome": "Needs review"
+      }
+    ],
+    "capabilities": {
+      "createRuns": false,
+      "cancelRuns": false,
+      "replay": false,
+      "streamEvents": false
+    },
+    "pid": 2100176,
+    "execSession": 24515,
+    "status": "Serving at handoff; loopback only.",
+    "verification": "interactive-verification.json",
+    "verifierPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/verify-interactive.mjs",
+    "verifierDigest": "sha256:6edad9aab16d9f1de5203756f1f8c0d5e5311ed312ba77081c92885bcd32f17d",
+    "recordingOnlyServer": {
+      "port": 43175,
+      "pid": 2100261,
+      "execSession": 76527,
+      "status": "Stopped with SIGINT after capture; owned exec session returned exit0. Configuration preserved."
+    }
+  },
+  "operatorConfigs": [
+    {
+      "name": "interactive",
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/interactive.json",
+      "configDigest": "sha256:a20efb1c323df1bb29d0125086154bd19451b8e8382d0225c6c476a60cbbd6d0",
+      "runIds": [
+        "d521c096-5442-4dd6-897b-fd3965a95ed4",
+        "52bca833-3f06-41e9-a578-26c930df734e",
+        "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c",
+        "88017a40-ba4c-4cd5-aead-a64465af7f90"
+      ]
+    },
+    {
+      "name": "walkthrough",
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/walkthrough.json",
+      "configDigest": "sha256:7d82fd92fe01898faaafd743063a68a41e7063444c537a0f1a347e29a063f3c0",
+      "runIds": [
+        "a4ac4fb2-f8a0-44e2-a419-63e2acc2fd8c"
+      ]
+    }
+  ],
+  "artifacts": {
+    "recorded-evidence.webm": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/recorded-evidence.webm",
+      "sha256": "sha256:b7569627bb63f82d917539ae6e3bc2b98ea1b33dd2a0db0f16acbde603fc47fd",
+      "bytes": 4090518
+    },
+    "captions.srt": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/captions.srt",
+      "sha256": "sha256:68438d70b5ee1cc116e5b11899c933ff9c7a856c98f46ec9da85dac48e92c5cb",
+      "bytes": 1270
+    },
+    "recording-receipt.json": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/recording-receipt.json",
+      "sha256": "sha256:2d36bcb535493c22e544401915c70a7231cbf397f585b54d555099ccd6ec599c",
+      "bytes": 6412
+    },
+    "evidence-1.json": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/evidence-1.json",
+      "sha256": "sha256:fbcee54bf7ecb08d00c8b8f9e20c889e877744f836dcf9504dac966db0ae25ca",
+      "bytes": 171909
+    },
+    "maintainer-captions.srt": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/maintainer-captions.srt",
+      "sha256": "sha256:e1cdd2a404097cd9435272b62be942114150f77b639ad79bc858ae4f260e5570",
+      "bytes": 1160
+    },
+    "maintainer-captions.ass": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/maintainer-captions.ass",
+      "sha256": "sha256:e69fd99993d34b15cecf9fc693bf032cb258a62de3ec14d7dd19d2563786dd0c",
+      "bytes": 1835
+    },
+    "patchproof-recorded-mock.mp4": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/patchproof-recorded-mock.mp4",
+      "sha256": "sha256:9dd2716037320de0a2023ca3bdb363cbf08657dcc88063e587e274c3a8dd12e7",
+      "bytes": 3395426
+    },
+    "render.log": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/render.log",
+      "sha256": "sha256:c78462168c12d67f7a14b03c7b0cde4ec607b8bc90f91d89b9965601c8888c0e",
+      "bytes": 5792
+    },
+    "encoded-rejection.png": {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/capture-01/encoded-rejection.png",
+      "sha256": "sha256:d8bf626b07ef18f091e8883c124768e18d6def0327597b2a3af488aad82f5bb5",
+      "bytes": 885639
+    }
+  },
+  "providerCallsDuringPlayback": 0,
+  "newRunsCreated": 0,
+  "competitionReady": false,
+  "realProviderRepairEvidence": false,
+  "authenticityVerified": false,
+  "publicationPerformed": false,
+  "credentialsRead": false,
+  "privateEvaluatorRead": false,
+  "earlierRecordings": "Preserved unchanged; this recording does not replace or relabel their execution provenance."
+}
