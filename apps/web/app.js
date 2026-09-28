@@ -236,7 +236,7 @@ async function launch(selectedVariants) {
   if (!canCreate() || state.busy || !taskSupported(currentTask())) return;
   const taskId = state.taskId, mode = state.meta.mode;
   const sequential = isLive() && selectedVariants.length > 1;
-  state.busy = true; clearError(); renderTaskDetail(); renderTaskPicker();
+  state.busy = true; clearError(); renderTaskDetail(); renderTaskPicker(); renderComparison();
   try {
     for (const [index, variant] of selectedVariants.entries()) {
       if (sequential) {
@@ -371,9 +371,12 @@ function renderComparison() {
         append(card, el('p', 'empty-small', isArchive() ? 'No recorded run for this approach in the archive.' : 'No recorded run for this approach. New runs are unavailable.'));
         cards.append(card); return;
       }
+      append(card, el('p', 'empty-small', taskSupported(currentTask()) ? 'No run for this task yet.' : isLive() ? 'New runs are unavailable for this task.' : 'Requires a connected model. Local scripted repair is unavailable for this task.'));
+    }
+    if (canCreate()) {
       const start = button('Run this approach →', () => launch([key]), 'button');
       start.disabled = state.busy || !taskSupported(currentTask());
-      append(card, el('p', 'empty-small', taskSupported(currentTask()) ? 'No run for this task yet.' : isLive() ? 'New runs are unavailable for this task.' : 'Requires a connected model. Local scripted repair is unavailable for this task.'), start);
+      card.append(start);
     }
     cards.append(card);
   });

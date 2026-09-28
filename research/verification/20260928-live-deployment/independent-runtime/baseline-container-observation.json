@@ -1,0 +1,46 @@
+{
+  "scope": "exact run-id label, read-only ps/inspect only",
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "rows": [
+    {
+      "at": "2026-09-28T01:10:46.456Z",
+      "id": "8ae15cfb945b8c095e61786a5c2eb1f856849b8081dcd9cd4858f7ef08a33ab4",
+      "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "user": "65534:65534",
+      "running": false,
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false
+    },
+    {
+      "at": "2026-09-28T01:10:49.531Z",
+      "id": "1ff8793f73bcea0a676f9af097beb84793976ead0cfefac1c226106af40633cc",
+      "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "user": "65534:65534",
+      "running": true,
+      "network": "none",
+      "readonlyRootfs": true,
+      "memory": 134217728,
+      "memorySwap": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false
+    }
+  ]
+}

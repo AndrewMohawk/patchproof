@@ -214,3 +214,35 @@ test('mock comparison keeps its existing immediate three-approach launch behavio
   assert.deepEqual(f.requests.map(request => request.variant), ['baseline', 'checks_only', 'patchproof']);
   assert.ok(f.requests.every(request => request.mode === 'mock')); assert.equal(f.activity.maxActive, 3); assert.equal(f.activity.overlapAttempts, 0);
 });
+
+test('live comparison can rerun one recorded approach without changing its previous evidence', async t => {
+  const f = await fixtureServer({ singleflight: true }); t.after(f.close);
+  const original = example('curated-example-01', 'live', 'baseline');
+  original.run.createdAt = '2026-01-01T00:00:00.000Z';
+  const prior = buildEvidence(original.run, original.fixture, original.runtimeLock);
+  f.runs.delete(f.historical.run.id); f.bundles.delete(f.historical.run.id);
+  f.runs.set(prior.run.id, prior.run); f.bundles.set(prior.run.id, prior);
+  const preserved = JSON.stringify(prior);
+  await f.page.goto(f.base + '/#compare');
+  const card = f.page.locator('.variant-card').filter({ has: f.page.getByRole('heading', { name: 'Ordinary repair', exact: true }) });
+  await card.getByRole('link', { name: 'Review evidence ↗', exact: true }).waitFor();
+  assert.equal(await card.getByRole('link', { name: 'Review evidence ↗', exact: true }).getAttribute('href'), '#evidence/' + prior.run.id);
+  await card.getByRole('button', { name: 'Run this approach →', exact: true }).click();
+  await eventually(() => f.requests.length === 1, 'rerun starts the chosen approach once');
+  const replacement = [...f.runs.values()].find(run => run.phase !== 'terminal')!;
+  assert.notEqual(replacement.id, prior.run.id);
+  assert.deepEqual(f.requests.map(({ taskId, mode, variant }) => ({ taskId, mode, variant })), [{ taskId: prior.run.taskId, mode: 'live', variant: 'baseline' }]);
+  assert.equal(JSON.stringify(f.bundles.get(prior.run.id)), preserved);
+  await f.page.locator('[data-nav="compare"]').click();
+  assert.equal(await card.getByRole('button', { name: 'Run this approach →', exact: true }).count(), 0, 'paused live allowance hides new-run controls');
+  f.finish(replacement.id);
+  await f.page.locator('#compare-run:not([disabled])').waitFor();
+  assert.equal(await card.getByRole('button', { name: 'Run this approach →', exact: true }).isEnabled(), true);
+  assert.equal(await card.getByRole('link', { name: 'Review evidence ↗', exact: true }).getAttribute('href'), '#evidence/' + replacement.id);
+  await f.page.goto(f.base + '/#evidence/' + prior.run.id);
+  await f.page.locator('.run-summary[data-context-state="ready"]').waitFor();
+  assert.equal(await f.page.locator('#evidence-run').inputValue(), prior.run.id);
+  assert.equal(await f.page.locator(`#evidence-run option[value="${replacement.id}"]`).count(), 1);
+  assert.equal(JSON.stringify(f.bundles.get(prior.run.id)), preserved);
+  assert.equal(f.requests.length, 1); assert.equal(f.activity.overlapAttempts, 0); assert.deepEqual(f.errors, []);
+});

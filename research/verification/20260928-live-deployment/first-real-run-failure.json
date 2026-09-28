@@ -1,0 +1,35 @@
+{
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "release": "88f6de2ef1e94a8d18676316994115560766358c",
+  "status": "needs_review",
+  "reason": "declared_requirements_unverified",
+  "usage": {
+    "inferenceCalls": 3,
+    "inputTokens": 2622,
+    "outputTokens": 483,
+    "sandboxCpuSeconds": null,
+    "measuredCostUsd": 0.00027324,
+    "costIsEstimate": true,
+    "elapsedMs": 171400
+  },
+  "providerResponseIds": [
+    "chatcmpl-172fda5e-ebb0-4664-8497-eeff82a31016",
+    "chatcmpl-9c5f6046-c3a5-428c-bc3e-f8ccdbc914d5",
+    "chatcmpl-fba8f5b7-f09e-46e3-92b4-190145a2db02"
+  ],
+  "originalCheckStatuses": [
+    "error",
+    "error",
+    "error",
+    "error",
+    "error",
+    "error",
+    "error",
+    "error",
+    "error"
+  ],
+  "runtimeDiagnosis": "Service umask0077 stripped group/other read bits from generated0444 source files; guest65534 could not import them.",
+  "recordingObserver": "GET timeout at8seconds; original raw video preserved privately; repair continued to terminal.",
+  "approvedPatch": false,
+  "preserved": true
+}

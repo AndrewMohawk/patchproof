@@ -1,0 +1,26 @@
+(node:3434614) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (117.4344ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (108.74721ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (5.942348ms)
+  ✔ name (4.020147ms)
+  ✔ image (3.72514ms)
+  ✔ ownedLabel (3.719533ms)
+  ✔ operationLabel (3.570203ms)
+  ✔ ownerLabel (9.239063ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (33.201748ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (104.91355ms)
+(node:3434616) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (2023.569282ms)
+ℹ {"ownerRunId":"7ccdd180-928f-493a-82a7-16691eaa73a8","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1770,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-9157f857-0d5a-40c5-baf4-0f0a5d272c2d\",\"createAcknowledged\":true,\"containerId\":\"382376f99539fe3483f5c6ec70793ccaa39c175bafaa1773e3e0bd31a9bae87a\",\"cleanupConfirmed\":true,\"cleanupReason\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-9157f857-0d5a-40c5-baf4-0f0a5d272c2d"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (3.013494ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2343.430987

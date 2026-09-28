@@ -1,0 +1,53 @@
+{
+  "observedAt": "2026-09-28T01:16:53.693Z",
+  "reviewer": "AI development agent",
+  "scope": "Owned source workspace permissions only, plus focused benign Docker and synthetic lifecycle controls.",
+  "productionChange": "Apply chmod0755 to validated nested directories and chmod0444 to exclusively created source files inside fresh task workspace; caller umask unchanged.",
+  "commands": [
+    {
+      "command": "node --test tests/docker-strict-umask.test.ts",
+      "exitCode": 1,
+      "artifact": "strict-umask-before.log",
+      "interpretation": "Preserved actual red: nested directories0700 and sourcefiles0400 under umask0077; nonroot guest import failed; owned cleanup confirmed before pass assertion."
+    },
+    {
+      "command": "node --test tests/docker-strict-umask.test.ts tests/docker-lifecycle-independent.test.ts",
+      "exitCode": 0,
+      "passed": 12,
+      "artifact": "strict-umask-after.log",
+      "interpretation": "Actual nested constant17 returned; sourcefiles0444 and all nested dirs0755, unchanged callerumask0077, owned workspace/container absent;10 synthetic lifecycle assertions pass."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "artifact": "strict-umask-typecheck.log"
+    },
+    {
+      "command": "node --test tests/live-local-runtime.test.ts",
+      "exitCode": 0,
+      "artifact": "live-local-after-cap-test.log",
+      "interpretation": "Synthetic HTTP adapter/runtime controls only; timing ceiling follows versioned policy constant.",
+      "passed": 15
+    }
+  ],
+  "billing": {
+    "paidProviderCalls": 0,
+    "credentialsRead": 0,
+    "privateLedgerReads": 0
+  },
+  "digests": {
+    "workers/sandbox/index.ts": "d6315873ac4e99882c80d5cc058f29292fee361ec7a282da7ef088a386cf691a",
+    "tests/docker-strict-umask.test.ts": "ee3632806efac14f06c9a27f7be753400fad7ff27d40d0b8148d34c68754f9ac",
+    "tests/live-local-runtime.test.ts": "777867f5992b811d265108ec07732e0e7b0dd2d1e6c4bf89a7e597a81bf3fb0a",
+    "research/verification/20260928-live-deployment/independent-runtime/strict-umask-before.log": "a71b45ae52f6675e397b320890bab6717fbe1a158c13acdd7367f39bcec0f639",
+    "research/verification/20260928-live-deployment/independent-runtime/strict-umask-after.log": "5e1ddd72a4c2b652d21dac2460c7719a0de6d099bbfa6581777bd361c983bead",
+    "research/verification/20260928-live-deployment/independent-runtime/strict-umask-typecheck.log": "bef44c7befe4732ead81f4304dae629e0a37e75b877ac15e49965757b1c1fb71",
+    "research/verification/20260928-live-deployment/independent-runtime/live-local-after-cap-test.log": "3569bd5918c3434efce545c6bba540159145f6b540d8b4040f3719e5da498090",
+    "research/verification/20260928-live-deployment/independent-runtime/baseline-audit.json": "505b993e030428a32c5a8359de44f926420fc9666a9a53317d61aeaf91d1ab9f"
+  },
+  "limitations": [
+    "The first actual public model run remains unchanged and failed to verify any declared check.",
+    "This control executes only fixed invented benign source in the pinned local Docker image.",
+    "No model superiority, provider billing, sponsor sandbox or competition readiness claim."
+  ]
+}

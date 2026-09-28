@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "independent-baseline-artifact-audit",
+  "recordedAt": "2026-09-28T01:15:45.319Z",
+  "sourceCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+  "runtimeSourceDigest": "sha256:cab5aba383cfb9b912fcabc15933f8ed997ca23a189d1113fc1c0e3256e702d5",
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "bundleDigest": "sha256:90899d407976880a7a5516a734561e1060682ceb39d74ca3b5a13e085f512011",
+  "inputs": [
+    {
+      "path": "research/verification/20260928-live-deployment/independent-runtime/baseline-terminal.json",
+      "digest": "sha256:56362ff39b00181609cc3f42b61a9de78bf9135e1a9e3f0514b6b55de72512a4"
+    },
+    {
+      "path": "research/verification/20260928-live-deployment/independent-runtime/baseline-evidence.json",
+      "digest": "sha256:da6d7a82491e06561e6b3bb0ae5a627846b220be5ba3ae49800e62c3159b5245"
+    }
+  ],
+  "methods": [
+    "Imported verifyEvidence for metadata/content consistency only; no replay or candidate execution.",
+    "SHA-256 compared each pinned source file with the exact git commit object.",
+    "Parsed repeated observations and nested Docker lifecycle records; reconciled their IDs and candidate usage.",
+    "Calculated token-rate cost from recorded provider usage; did not query authoritative billing.",
+    "Source digest uses the complete operational lock, per apps/api/src/live-application.ts:44-45; candidate measured costs remain null while aggregate estimate is finalized per packages/orchestrator/src/live-local.ts:132-135."
+  ],
+  "assertions": {
+    "evidenceVerifierPassed": true,
+    "terminalMatchesEmbeddedRun": true,
+    "sourcePinsMatchReleaseCommit": true,
+    "runtimeSourceDigestMatchesRequested": true,
+    "candidateUsageSumsMatchAggregate": true,
+    "providerResponseIdsDistinctAndPresent": true,
+    "candidateModelIdsMatchRuntime": true,
+    "repeatedProtocolAndCountMatch": true,
+    "lifecycleOperationsUniqueAndExact": true,
+    "everyRecordedCreateAndCleanupConfirmed": true,
+    "candidateOperationIdsMatchOwnChecks": true,
+    "costMatchesPublishedRateEstimate": true,
+    "costRemainsExplicitlyEstimated": true,
+    "failureRemainsUnverified": true,
+    "noCheckReportedPassOrFail": true,
+    "allObservationErrorsImportOrSerialization": true,
+    "noSponsorSandboxClaim": true,
+    "runtimeSourceDigestMatchesCompleteOperationalLock": true,
+    "candidateAuthoritativeCostsRemainUnknown": true,
+    "candidateRateEstimateSumMatchesAggregate": true
+  },
+  "status": "consistent_recorded_failure",
+  "counts": {
+    "sourcePins": 116,
+    "candidates": 3,
+    "providerResponseIds": 3,
+    "repeatedObservations": 72,
+    "lifecycleOperations": 72,
+    "cleanupConfirmed": 72,
+    "aggregateChecksByStatus": {
+      "error": 36
+    },
+    "observationsByStatus": {
+      "error": 72
+    },
+    "declaredChecksPerRevision": 9,
+    "evaluatedRevisions": 4,
+    "aggregateCheckRows": 36
+  },
+  "usage": {
+    "recorded": {
+      "inferenceCalls": 3,
+      "inputTokens": 2622,
+      "outputTokens": 483,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0.00027324,
+      "costIsEstimate": true,
+      "elapsedMs": 171400
+    },
+    "candidateSum": {
+      "inferenceCalls": 3,
+      "inputTokens": 2622,
+      "outputTokens": 483,
+      "measuredCostUsd": null
+    },
+    "computedRateEstimateUsd": 0.00027324,
+    "authoritativeBilledCostUsd": null,
+    "candidateRateEstimatesUsd": [
+      8.208e-05,
+      0.0001044,
+      8.675999999999999e-05
+    ]
+  },
+  "failure": {
+    "terminalStatus": "needs_review",
+    "reason": "declared_requirements_unverified",
+    "selectedCandidateId": 3,
+    "observationError": "candidate_import_or_serialization_error",
+    "rootCauseEstablishedByThisAudit": false
+  },
+  "sourceMismatches": [],
+  "limitations": [
+    "Artifact consistency is not independent authentication of provider responses or recorded Docker events.",
+    "Actual inference provenance and cleanup are recorded evidence only; no network, provider, Docker, replay, private account or .local access occurred.",
+    "All original and candidate observations are import/serialization errors, so these artifacts cannot establish repair correctness or comparative performance.",
+    "The driver error code does not identify the underlying exception; workspace permissions or another cause require separate controlled diagnosis.",
+    "CPU consumption remains null and authoritative billing remains unknown; the token-rate total is only an estimate.",
+    "No sealed evaluation, human reviewer or competition readiness claim is established."
+  ]
+}

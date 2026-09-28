@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-09-28T01:17:38.446Z",
+  "reviewType": "AI read-only actual failure audit plus separately authorized benign local Docker regression control",
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "releaseCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+  "observedOutcome": "needs_review / declared_requirements_unverified; no check was verified",
+  "artifacts": [
+    {
+      "path": "baseline-audit.json",
+      "sha256": "505b993e030428a32c5a8359de44f926420fc9666a9a53317d61aeaf91d1ab9f"
+    },
+    {
+      "path": "baseline-container-observation.json",
+      "sha256": "fd48be683d08d902f14200291e61ec2b1200ccaeb201425945256e064c32413c"
+    },
+    {
+      "path": "baseline-terminal-container-list.json",
+      "sha256": "e3d6df06ded4eb69da0a4746f26bd18b9db12cf3352c3491b0f0b1105a55e615"
+    },
+    {
+      "path": "strict-umask-verification.json",
+      "sha256": "a1f2493ab0237f8e47cd14f6e0a704f418403b32f1af68dc845ea14224a7a306"
+    }
+  ],
+  "actualAudit": {
+    "methods": [
+      "Public HTTPS GET /runs, /tasks, /runs/:id and /runs/:id/evidence; no mutating routes.",
+      "Read-only Docker listing restricted by exact org.patchproof.run-id label and inspection of returned IDs only.",
+      "Offline evidence verification and116 exact-release git-object source pins."
+    ],
+    "runningContainerObserved": true,
+    "runtimeLimits": {
+      "user": "65534:65534",
+      "network": "none",
+      "readonlyRootfs": true,
+      "memoryBytes": 134217728,
+      "memorySwapBytes": 134217728,
+      "nanoCpus": 500000000,
+      "pidsLimit": 32,
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "privileged": false
+    },
+    "finalOwnedContainersObserved": 0,
+    "checksPerRevision": 9,
+    "revisions": 4,
+    "repetitions": 2,
+    "observations": 72,
+    "observationErrors": 72,
+    "cleanupConfirmedInRecords": 72,
+    "inferenceCalls": 3,
+    "inputTokens": 2622,
+    "outputTokens": 483,
+    "usagePricedEstimateUsd": 0.00027324,
+    "costIsEstimate": true,
+    "authoritativeBilledCostUsd": null
+  },
+  "separateRegression": {
+    "sourceChange": "workers/sandbox/index.ts",
+    "cause": "Restrictive service umask yielded guest-unreadable source files and untraversable nested directories.",
+    "beforeExit": 1,
+    "afterExit": 0,
+    "providerCalls": 0,
+    "benignDockerRuns": 2,
+    "fix": "Explicit owned nested-directory0755/source0444 permissions inside fresh task temp; caller umask unchanged.",
+    "historicalEvidenceModified": false
+  },
+  "limitations": [
+    "Running-container caps were sampled on this host; not every container was independently inspected.",
+    "Recorded IDs and usage are not independently authenticated provider billing. No credentials/private ledger/provider calls in this audit.",
+    "No new actual repair success or comparison exists in this first-run audit.",
+    "No benchmark, model superiority, sponsor sandbox, human review or competition-ready claim."
+  ]
+}

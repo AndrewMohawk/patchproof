@@ -2,7 +2,7 @@
 
 The public application uses NVIDIA Nemotron Nano on Nebius Token Factory to generate maintenance patches. Declared checks run twice in fresh local Docker containers; the model cannot edit the checks. The host controller accepts only curated development task IDs. No arbitrary repositories, shell commands, uploads, or automatic merges are exposed.
 
-Execution is separate from the historical scripted mock and the still-unverified Nebius Sandboxes integration. It is an unscored development demonstration, not evidence of a measured advantage or a completed Coding and Agentic Engineering entry. Baseline, checks-only, and PatchProof receive the same three-call, 6,000-output-token, 300-second allowance. Each model request is capped at 2,000 completion tokens with thinking disabled and no transport retry. Each check batch shares 60 seconds across both repetitions.
+Execution is separate from the historical scripted mock and the still-unverified Nebius Sandboxes integration. It is an unscored development demonstration, not evidence of a measured advantage or a completed Coding and Agentic Engineering entry. Baseline, checks-only, and PatchProof receive the same three-call, 6,000-output-token, 300-second allowance. Each model request is capped at 2,000 completion tokens with thinking disabled and no transport retry. The current timing policy shares up to 120 seconds per batch across both repetitions, within the unchanged 300-second aggregate deadline. Historical 60-second batches remain replayable under their original policy.
 
 The public app is intended for `https://patchproof.andrewmohawk.xyz/`; the recording is served at `/demo/`. Deployment and actual-run receipts identify the tested source revision. Historical mock recordings remain separate.
 

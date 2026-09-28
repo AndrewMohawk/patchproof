@@ -29,7 +29,7 @@ export class Coordinator {
   readonly #verifyRuntime: (() => void) | undefined;
   readonly #trustedSmoke: TrustedSmokeSettings | null;
   readonly #liveLocal: LiveLocalSettings | null;
-  readonly #checkBatchSeconds: 30 | 60;
+  readonly #checkBatchSeconds: 30 | 60 | 120;
   readonly #jobs = new Map<string, { controller: AbortController; promise: Promise<void> }>();
   readonly #listeners = new Map<string, Set<(event: ProductEvent) => void>>();
 

@@ -1,0 +1,10 @@
+{
+  "observedAt": "2026-09-28T01:16:53.691Z",
+  "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "method": "docker ps -aq --filter label=org.patchproof.run-id=1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+  "exitCode": 0,
+  "remainingContainerIds": [],
+  "limitations": [
+    "One read-only observation by exact run label, not a guarantee against future late creation."
+  ]
+}

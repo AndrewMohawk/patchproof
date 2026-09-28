@@ -105,7 +105,9 @@ test('all variants share exact limits, repeated-check cap and no more than three
   }
   for (let i = 0; i < h.observed.checks.length; i += 2) {
     const a = h.observed.checks[i]!, b = h.observed.checks[i + 1]!;
-    assert.ok(a.timeoutSeconds <= 60 && a.timeoutSeconds > 59); assert.ok(b.timeoutSeconds <= a.timeoutSeconds);
+    assert.ok(a.timeoutSeconds <= LIVE_LOCAL_CHECK_TIMING_POLICY.maximumBatchWallSeconds &&
+      a.timeoutSeconds > LIVE_LOCAL_CHECK_TIMING_POLICY.maximumBatchWallSeconds - 1);
+    assert.ok(b.timeoutSeconds <= a.timeoutSeconds);
     assert.deepEqual(a.files, b.files); assert.deepEqual(a.cases, b.cases);
   }
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '300000');

@@ -1,0 +1,33 @@
+(node:3423247) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (8207.052416ms)
+ℹ {"ownerRunId":"25cda701-eef8-4024-aed3-c545fb1c965d","result":{"checks":[{"id":"constant","requirementId":"R01","status":"error","message":"candidate_import_or_serialization_error","actual":null,"expected":17,"durationMs":7962,"log":"{\"observationLog\":\"NOT VERIFIED: candidate_import_or_serialization_error\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-04c803cf-c92a-4aae-bb90-97396e6b89f3\",\"createAcknowledged\":true,\"containerId\":\"b17c43103b3f8a8ebf66ae9f7828c02776d10d9feb319fe065a1dfe0e752f192\",\"cleanupConfirmed\":true,\"cleanupReason\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-04c803cf-c92a-4aae-bb90-97396e6b89f3"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":448,"nested/deep":448,"nested/deep/solution.py":256,"nested/sibling.py":256,"support.py":256}}
+✔ invalid paths stop before any Docker or workspace activity (5.073811ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8528.085981
+
+✖ failing tests:
+
+test at tests/docker-strict-umask.test.ts:13:1
+✖ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (8207.052416ms)
+  AssertionError [ERR_ASSERTION]: candidate_import_or_serialization_error
+  
+  'error' !== 'pass'
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof/tests/docker-strict-umask.test.ts:54:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'error',
+    expected: 'pass',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

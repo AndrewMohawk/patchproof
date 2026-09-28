@@ -1,6 +1,6 @@
 import { mkdtemp, mkdir, writeFile, chmod, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, dirname } from 'node:path';
+import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
@@ -107,8 +107,17 @@ export class DockerCheckRunner implements CheckRunner {
     try {
       await chmod(directory, 0o755);
       for (const [path, source] of Object.entries(input.files)) {
-        await mkdir(dirname(join(directory, path)), { recursive: true, mode: 0o755 });
-        await writeFile(join(directory, path), source, { mode: 0o444, flag: 'wx' });
+        // Every segment was validated above. Only our fresh workspace is made
+        // readable to the non-root guest; service umask must stay unchanged.
+        let parent = directory;
+        for (const segment of path.split('/').slice(0, -1)) {
+          parent = join(parent, segment);
+          await mkdir(parent, { recursive: true, mode: 0o755 });
+          await chmod(parent, 0o755);
+        }
+        const destination = join(directory, path);
+        await writeFile(destination, source, { mode: 0o444, flag: 'wx' });
+        await chmod(destination, 0o444);
       }
       for (const c of input.cases) {
         if (signal.aborted || remainingMs() <= 0) {

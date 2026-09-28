@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "createdAt": "2026-09-28T01:16:24.476Z",
+  "status": "passed",
+  "baseCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+  "sourceFiles": [
+    {
+      "path": "apps/web/app.js",
+      "digest": "sha256:a87b161aaa2247ed971842729602dd1042894db4558834da6a269bab1cdf00d6"
+    },
+    {
+      "path": "tests/live-product-ui.test.ts",
+      "digest": "sha256:5ecdd211ae1173b34761d61bda4066027c92739592990a42f432c845d47992a5"
+    }
+  ],
+  "change": "Existing comparison cards can start a new run of the selected approach under current capability/busy/task gates. Prior evidence link and history remain available. Rendering updates immediately at launch to show busy controls.",
+  "tests": [
+    {
+      "command": "node --test tests/live-product-ui.test.ts",
+      "exitCode": 0,
+      "passed": 6,
+      "failed": 0,
+      "log": "focused-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    }
+  ],
+  "newControl": "Synthetic live baseline rerun sends exactly one baseline POST, creates a different run ID, hides creation during active singleflight, restores it after terminal, preserves previous bundle bytes, and leaves both runs selectable.",
+  "providerCalls": false,
+  "candidateExecution": false,
+  "deployedVerification": "NOT RUN for this edit; coordinator owns corrected release and actual UI rerun.",
+  "firstAttemptPassed": true
+}

@@ -68,7 +68,7 @@ async function main() {
     return { url, safe: url.origin === origin && !url.username && !url.password && !url.search,
       label: ['http:', 'https:'].includes(url.protocol) ? url.origin + url.pathname : url.protocol };
   };
-  const readApi = async (path: string, timeoutMs = 8000): Promise<{ value: unknown; text: string; digest: string | null }> => {
+  const readApi = async (path: string, timeoutMs = 30_000): Promise<{ value: unknown; text: string; digest: string | null }> => {
     assert.ok(readPaths.has(path) || runPath.test(path), 'GET path is not approved.');
     assert.ok(page && !page.isClosed(), 'Recording page is unavailable.');
     const result = await page.evaluate(async ({ path, timeoutMs }) => {
@@ -102,7 +102,7 @@ async function main() {
     browserVersion = browser.version();
     context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true,
       serviceWorkers: 'block', recordVideo: { dir: rawDirectory, size: { width: 1440, height: 1000 } } });
-    context.setDefaultTimeout(12_000); context.setDefaultNavigationTimeout(20_000);
+    context.setDefaultTimeout(30_000); context.setDefaultNavigationTimeout(30_000);
     await context.route('**/*', async route => {
       try {
         const request = route.request(), inspected = inspectUrl(request.url()), method = request.method();
@@ -166,7 +166,7 @@ async function main() {
         .getByRole('button', { name: 'Run this approach →', exact: true });
     assert.equal(await control.count(), 1, 'The real UI has no single-run button for this variant; no request was submitted.');
     assert.equal(await control.isEnabled(), true, 'The real UI does not currently allow this run.');
-    const [creation] = await Promise.all([page.waitForResponse(response => response.url() === `${origin}/runs` && response.request().method() === 'POST', { timeout: 25_000 }), control.click()]);
+    const [creation] = await Promise.all([page.waitForResponse(response => response.url() === `${origin}/runs` && response.request().method() === 'POST', { timeout: 30_000 }), control.click()]);
     const creationText = await creation.text(); await writeFile(join(output, 'creation-response.json'), creationText, { flag: 'wx', mode: 0o600 });
     const parsedRun = JSON.parse(creationText) as ProductRun;
     if (z.uuid().safeParse(parsedRun.id).success) { createdRun = parsedRun; latestRun = parsedRun; }
@@ -179,14 +179,14 @@ async function main() {
     const deadline = postAtMs! + 300_000;
     while (latestRun?.phase !== 'terminal' && elapsed() < deadline) {
       const remaining = deadline - elapsed();
-      const observed = await readApi(`/runs/${createdRun.id}`, Math.max(1, Math.min(8000, remaining)));
+      const observed = await readApi(`/runs/${createdRun.id}`, Math.max(1, Math.min(30_000, remaining)));
       latestRun = observed.value as ProductRun;
       assert.equal(latestRun.id, createdRun.id);
       if (latestRun.phase !== 'terminal') await page.waitForTimeout(Math.min(1500, Math.max(1, deadline - elapsed())));
     }
     assert.equal(latestRun?.phase, 'terminal', 'Terminal state was not observed within 300 seconds; the server retains its own execution deadline.');
     const run = latestRun!; await save('terminal-run.json', run);
-    await page.locator('.run-summary[data-context-state="ready"]').waitFor({ timeout: 15_000 });
+    await page.locator('.run-summary[data-context-state="ready"]').waitFor({ timeout: 30_000 });
     caption(`Recorded outcome: ${run.terminalStatus}. ${run.candidates.length} candidates; ${run.usage.inferenceCalls} model operations. No benchmark advantage is inferred.`);
     await page.screenshot({ path: join(output, '02-terminal.png'), fullPage: true });
     for (const candidate of run.candidates) {

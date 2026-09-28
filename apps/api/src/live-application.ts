@@ -1,4 +1,5 @@
-import { mkdir, readFile, open } from 'node:fs/promises';
+import { mkdir, readFile, open, writeFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
@@ -48,6 +49,18 @@ export async function createLiveApplication(root: URL, configFile: string) {
     if (model?.contextLength !== 262144 || model.pricing.prompt !== '0.00000006' || model.pricing.completion !== '0.00000024' || model.pricing.request !== '0') throw new Error('live_demo_pricing_mismatch');
     const checks = new DockerCheckRunner(), status = await checks.status();
     if (!status.available) throw new Error('live_demo_local_runtime_unavailable');
+    // Execute a fixed benign control under the service's real UID and umask before
+    // accepting paid work. Image metadata alone does not establish usable isolation.
+    const readinessId = randomUUID();
+    const readiness = await checks.run({ files: { 'startup/check.py': 'def ready():\n    return "patchproof-ready"\n' },
+      entrypoint: 'startup/check.py', cases: [{ id: 'runtime-readiness', requirementId: 'R01', function: 'ready',
+        args: [], kwargs: {}, expected: 'patchproof-ready', assertArgsUnchanged: true }],
+      timeoutSeconds: 20, contractVersion: '2.2', ownerRunId: readinessId }, AbortSignal.timeout(25000));
+    await writeFile(join(config.stateDirectory, `startup-${readinessId}.json`), JSON.stringify({
+      checkedAt: new Date().toISOString(), sourceDigest: config.sourceDigest, providerCalls: 0, ...readiness }, null, 2)+'\n', { flag: 'wx', mode: 0o600 });
+    if (readiness.infrastructureError || readiness.checks.length !== 1 || readiness.checks[0]?.status !== 'pass') {
+      throw new Error('live_demo_execution_readiness_failed');
+    }
     const all = await loadFixtures(root);
     const fixtures = config.taskIds.map(id => all.find(f => f.id === id && f.split === 'development'));
     if (new Set(config.taskIds).size !== config.taskIds.length || fixtures.some(f => !f || f.visibleCases.length + f.acceptanceCases.length > 22)) throw new Error('live_demo_task_not_available');

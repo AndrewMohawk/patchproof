@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0",
+  "status": "passed",
+  "sourceCommit": "88f6de2ef1e94a8d18676316994115560766358c",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "startedAt": "2026-09-28T01:12:58.186Z",
+  "finishedAt": "2026-09-28T01:13:01.944Z",
+  "command": "node research/verification/20260928-live-deployment/read-only-browser/verify-read-only.mjs attempt-01",
+  "exitCode": 0,
+  "report": "attempt-01/report.json",
+  "reportDigest": "sha256:281e1896461797542e09a743a69218b3a96b50dc9636cda217ddcd6c0a68ad75",
+  "observerSourceDigest": "sha256:efef306017ac5ee58c2a9dbea8aaf52ac3735c33196255a1fc7cb4a10b0b893d",
+  "browser": "145.0.7632.6",
+  "checksPassed": 15,
+  "screenshots": [
+    {
+      "file": "desktop-1440-tasks.png",
+      "digest": "sha256:73bc74023ac2fa07421605e0cdb20e1f34700381c37d906ba275b1fe1c185013",
+      "bytes": 247664,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-chapter-task.png",
+      "digest": "sha256:6241174bb01f6f681cbb99c5eee7586c4db1f75fbcc23f402fa995a467f4c84c",
+      "bytes": 199416,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-worksheet-task.png",
+      "digest": "sha256:45753d8e5bd86d841b7c47b1ccfd61e4bc5848dda00c2427d72cc3ab8f1171ec",
+      "bytes": 231441,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    },
+    {
+      "file": "desktop-1440-comparison.png",
+      "digest": "sha256:795e78132c527e25c9240375720bceb46cc1693d310df0f318c9315862f41e58",
+      "bytes": 167798,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "desktop-1440-evidence.png",
+      "digest": "sha256:d52f722cef36ad93efc354eda7e4634d6f1851ba8c9a9359623e809e3e00cdbf",
+      "bytes": 656411,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-evidence.png",
+      "digest": "sha256:1c43dea2db46c41bba0043482ef6f5cd87ae6d2dd0964e6543edc612e24dc816",
+      "bytes": 571099,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-evidence.png",
+      "digest": "sha256:e0bf15df6703ff94bc01a65187d97276c46aab75ed99a641899b48c1d3d18483",
+      "bytes": 580709,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "path": "/",
+      "local": "apps/web/index.html",
+      "digest": "sha256:44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+      "bytes": 4998
+    },
+    {
+      "path": "/app.js",
+      "local": "apps/web/app.js",
+      "digest": "sha256:34d113441f2c31c154c5c973999a0a025fe8e99be1e93d64896b0f50676bdc12",
+      "bytes": 46871
+    },
+    {
+      "path": "/style.css",
+      "local": "apps/web/style.css",
+      "digest": "sha256:9915af845e241ece3144ddd403c856da9176d16880e9823475655bcfcd5b2b6d",
+      "bytes": 21182
+    }
+  ],
+  "execution": {
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container",
+    "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+  },
+  "runtimeLockDigest": "sha256:98dea77863a9ec801c42319c82b2f723483f7f3a375f5f79bb33c6f4000ace7d",
+  "limits": {
+    "inferenceCallLimit": 3,
+    "inputTokenLimit": 786432,
+    "outputTokenLimit": 6000,
+    "wallTimeLimitSeconds": 300,
+    "sandboxCpuSecondsLimit": 900,
+    "maxApprovedSpendUsd": 0.1
+  },
+  "observedRuns": [
+    {
+      "id": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "taskId": "stable-unique-01",
+      "mode": "live",
+      "phase": "terminal",
+      "status": "needs_review",
+      "runtimeLockDigest": "sha256:98dea77863a9ec801c42319c82b2f723483f7f3a375f5f79bb33c6f4000ace7d",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "usage": {
+        "inferenceCalls": 3,
+        "inputTokens": 2622,
+        "outputTokens": 483,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00027324,
+        "costIsEstimate": true,
+        "elapsedMs": 171400
+      },
+      "bundleDigest": "sha256:90899d407976880a7a5516a734561e1060682ceb39d74ca3b5a13e085f512011"
+    }
+  ],
+  "observedViewportWidths": [
+    1440,
+    390,
+    320
+  ],
+  "selectedTaskIds": [
+    "stable-unique-01",
+    "v2-r02-t03",
+    "v2-r03-t04"
+  ],
+  "methodScope": "GET only; finite endpoints reject redirects before browser delivery. Only approved same-origin SSE URLs would be streamed; no SSE was requested during this terminal-run observation.",
+  "browserRequests": 6,
+  "nonGetBrowserRequests": 0,
+  "consoleErrors": 0,
+  "pageErrors": 0,
+  "networkFailures": 0,
+  "httpErrors": 0,
+  "blockedRequests": 0,
+  "executionPerformedByObserver": false,
+  "providerCallsByObserver": false,
+  "modelsStartedByObserver": 0,
+  "cleanup": "Own isolated browser/context closed. No service process or existing application session was changed.",
+  "visualReview": {
+    "sampledFiles": [
+      "attempt-01/desktop-1440-tasks.png",
+      "attempt-01/mobile-320-evidence.png"
+    ],
+    "result": "Sampled screenshots show the live/local-Docker labels, readable task layout and actual needs-review evidence. Mobile full-page capture is tall; horizontal overflow was measured independently."
+  },
+  "limitations": [
+    "New-run and cancellation controls were never clicked; this is a public read-only deployment check.",
+    "The observed real run was created by the coordinator. It ended needs_review; this receipt does not claim a successful accepted repair.",
+    "Provider cost is a recorded estimate, not invoice reconciliation; sandbox CPU remains unknown.",
+    "The demo link was inspected but its video target was not requested.",
+    "No live event stream was active during this browser pass.",
+    "No Docker, candidate, replay, provider, credential or private evaluator access was performed by this observer."
+  ]
+}
