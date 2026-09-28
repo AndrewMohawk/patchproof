@@ -73,7 +73,8 @@ export function createLiveLocalCoordinator(input: {
   };
   const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,
     inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
-    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: true,
+    // Omit the disabling override; hosted reasoning behavior remains unverified.
+    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: false,
     countInputTokens: () => LIVE_PRICING.contextTokens,
     credential: async () => { validate(); return input.credential(); },
     fetch: async (url, init) => { validate(); if (!active?.attempted || active.closed) throw new ContractError('authorization_required', 'Dispatch reservation is required.', 403); return input.fetch(url, init); },

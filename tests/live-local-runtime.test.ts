@@ -15,6 +15,7 @@ import { Coordinator } from '../packages/orchestrator/src/coordinator.ts';
 import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_MODEL, LIVE_PRICING, LIVE_RESERVATION_MICROS } from '../packages/orchestrator/src/live-local.ts';
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 import { REPEATED_CHECK_PROTOCOL } from '../packages/orchestrator/src/repeated-checks.ts';
+import { NebiusRepairProvider } from '../workers/repair/index.ts';
 
 // Original invented metadata only. The real HTTP adapter is driven by an in-memory
 // fetch function; checks return invented observations without interpreting source.
@@ -140,7 +141,7 @@ test('ambiguous transport leaves full hold blocking and never retries automatica
   assert.throws(() => h.coordinator.create(request('must-block')), /paused|accounting/); assert.equal(h.observed.requests.length, 1);
 });
 
-test('all variants share exact limits, repeated-check cap and no more than three bounded requests', async t => {
+test('all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests', async t => {
   const h = await setup(t); h.hooks.alwaysFail = true;
   for (const variant of ['baseline', 'checks_only', 'patchproof']) {
     const done = await h.run('variant-' + variant, variant); assert.equal(done.terminalStatus, 'failed');
@@ -150,7 +151,7 @@ test('all variants share exact limits, repeated-check cap and no more than three
   for (const call of h.observed.requests) {
     assert.equal(call.body.model, LIVE_MODEL); assert.equal(call.body.max_tokens, 4000); assert.equal(call.body.max_completion_tokens, 4000);
     assert.equal(call.body.n, 1); assert.equal(call.body.stream, false); assert.equal(call.body.store, false);
-    assert.deepEqual(call.body.chat_template_kwargs, { enable_thinking: false });
+    assert.equal(Object.hasOwn(call.body, 'chat_template_kwargs'), false);
   }
   for (let i = 0; i < h.observed.checks.length; i += 2) {
     const a = h.observed.checks[i]!, b = h.observed.checks[i + 1]!;
@@ -160,6 +161,42 @@ test('all variants share exact limits, repeated-check cap and no more than three
     assert.deepEqual(a.files, b.files); assert.deepEqual(a.cases, b.cases);
   }
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '750000');
+});
+
+test('worker omission of the thinking override preserves the existing explicit disable option', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-09-28T06:00:00Z') });
+  let calls = 0;
+  for (const disableThinking of [false, true]) {
+    const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,
+      inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
+      maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking,
+      countInputTokens: () => LIVE_PRICING.contextTokens, credential: async () => SECRET,
+      fetch: async (_url, init) => {
+        calls++;
+        const body = JSON.parse(String(init?.body));
+        assert.equal(Object.hasOwn(body, 'chat_template_kwargs'), disableThinking);
+        if (disableThinking) assert.deepEqual(body.chat_template_kwargs, { enable_thinking: false });
+        assert.equal(body.max_tokens, 4000); assert.equal(body.max_completion_tokens, 4000);
+        return response();
+      } });
+    await provider.propose({ taskId: fixture.id, description: fixture.description, requirements: fixture.requirements,
+      files: fixture.files, editAllowlist: fixture.editAllowlist, visibleCases: fixture.visibleCases, feedback: [],
+      attempt: 0, remaining: LIVE_LIMITS }, new AbortController().signal);
+  }
+  assert.equal(calls, 2);
+});
+
+test('completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold', async t => {
+  const h = await setup(t);
+  h.hooks.fetch = () => response(undefined, { prompt_tokens: 24, completion_tokens: 4000 }, {
+    choices: [{ finish_reason: 'length', message: { content: '{"files":' } }],
+  });
+  const done = await h.run('completion-exhaustion');
+  assert.equal(done.reason, 'incomplete_response'); assert.equal(done.candidates.length, 0);
+  assert.equal(done.usage.inferenceCalls, 1); assert.equal(done.usage.outputTokens, 4000);
+  assert.equal(h.observed.requests.length, 1); assert.equal(h.observed.checks.length, 2);
+  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1);
 });
 
 test('reported per-request input and output overruns cannot become covered exposure', async t => {

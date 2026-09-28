@@ -72,7 +72,7 @@ export async function createLiveApplication(root: URL, configFile: string) {
         hostedWeightsRevision: null, licenseUrl: discovery.license.url, license: discovery.license.name,
         cardScope: 'upstream NVFP4 card; hosted weights revision and tokenizer equivalence unverified' },
       inferenceInterface: { version: '20260923-f93df18ab', openApiDigest: 'sha256:c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f',
-        endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: 'provider defaults; thinking disabled; no determinism claim' },
+        endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: 'provider defaults; no thinking override; hidden reasoning not retained; no determinism claim' },
       execution: LIVE_EXECUTION, liveLocalCheckTimingPolicy: LIVE_LOCAL_CHECK_TIMING_POLICY, pricing: LIVE_PRICING, sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
       localCheckImage: status.image, localExecution: status, checkProtocol: REPEATED_CHECK_PROTOCOL,
       repairPolicy: 'immutable-branches-visible-baseline-v1', operationalLock, limits: LIVE_LIMITS,
