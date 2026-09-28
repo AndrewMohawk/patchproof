@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-09-28T01:33:40.433Z",
+  "sourceDigest": "sha256:f002c913955f022acbd371e37a170126ddb0d935c9203fdf573d014b4101d71b",
+  "providerCalls": 0,
+  "checks": [
+    {
+      "id": "runtime-readiness",
+      "requirementId": "R01",
+      "status": "pass",
+      "message": "Observed outcome matches the declared check.",
+      "actual": {
+        "outcome": "patchproof-ready",
+        "argsAfter": [],
+        "kwargsAfter": {}
+      },
+      "expected": {
+        "outcome": "patchproof-ready",
+        "argsAfter": [],
+        "kwargsAfter": {}
+      },
+      "durationMs": 1533,
+      "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"patchproof-ready\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-47319eb4-ede8-4898-810f-f05a8b4abdd8\",\"createAcknowledged\":true,\"containerId\":\"94104dafb69d761baf921faf6b8ae08944686d5e2b07e2b0fb782727036dd55f\",\"cleanupConfirmed\":true,\"cleanupReason\":null}}"
+    }
+  ],
+  "isolation": "local_container",
+  "operationIds": [
+    "docker:patchproof-check-47319eb4-ede8-4898-810f-f05a8b4abdd8"
+  ],
+  "cpuSeconds": null,
+  "measuredCostUsd": 0,
+  "infrastructureError": null
+}

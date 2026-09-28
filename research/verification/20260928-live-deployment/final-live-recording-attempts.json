@@ -1,0 +1,95 @@
+{
+  "attempts": [
+    {
+      "status": "captured",
+      "startedAt": "2026-09-28T01:33:52.357Z",
+      "finishedAt": "2026-09-28T01:36:25.215Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "baseline",
+      "source": {
+        "recorderDigest": "sha256:d0caa081efa374595bc818371ee553fe4c5838912659ce106b05d6a3d52be2ae",
+        "recorderCheckoutCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 152857,
+      "runId": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "failures": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": false,
+      "attemptDirectory": "final-baseline-01",
+      "reportSha256": "4c689ac079b9680d9275344d4a6fb26a2f02706e2262d0dcb843d4bce60fce97",
+      "rawVideoSha256": "7d9cc818f8345b39a5df095c1df9ecbc7563e136e637059e4e9bcd10383a4fb8",
+      "rawVideoBytes": 12156767,
+      "actualTerminalStatus": "verified_for_declared_checks",
+      "observerStatusDoesNotReplaceRunOutcome": true
+    },
+    {
+      "status": "failed",
+      "startedAt": "2026-09-28T01:36:35.246Z",
+      "finishedAt": "2026-09-28T01:37:54.319Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "checks_only",
+      "source": {
+        "recorderDigest": "sha256:d0caa081efa374595bc818371ee553fe4c5838912659ce106b05d6a3d52be2ae",
+        "recorderCheckoutCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 79073,
+      "runId": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "failures": [
+        {
+          "stage": "recording",
+          "message": "locator.scrollIntoViewIfNeeded: Element is not attached to the DOM\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    - waiting for element to be stable\u001b[22m\n",
+          "atMs": 77778
+        }
+      ],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": false,
+      "attemptDirectory": "final-checks-only-01",
+      "reportSha256": "d6f705a6bcf69551f4f7b43995fee0606b3ce2f59451e1db8d10bc5aa02c78ea",
+      "rawVideoSha256": "0e9b54c0266a504741bdda3ec6858f54a6caa5643fafa31de68912d80d681385",
+      "rawVideoBytes": 5986173,
+      "actualTerminalStatus": "verified_for_declared_checks",
+      "observerStatusDoesNotReplaceRunOutcome": true
+    },
+    {
+      "status": "captured",
+      "startedAt": "2026-09-28T01:39:06.554Z",
+      "finishedAt": "2026-09-28T01:40:39.204Z",
+      "origin": "https://patchproof.andrewmohawk.xyz",
+      "taskId": "stable-unique-01",
+      "variant": "patchproof",
+      "source": {
+        "recorderDigest": "sha256:d0caa081efa374595bc818371ee553fe4c5838912659ce106b05d6a3d52be2ae",
+        "recorderCheckoutCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+        "nodeVersion": "v25.5.0",
+        "deployedSourceCommit": null
+      },
+      "browserVersion": "145.0.7632.6",
+      "durationMs": 92650,
+      "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "failures": [],
+      "pageErrors": [],
+      "consoleErrors": [],
+      "allowedCreateRequests": 1,
+      "mayStillBeRunning": false,
+      "attemptDirectory": "final-patchproof-01",
+      "reportSha256": "c1cb9b055d9ae7dd2350583c2a8a5e0b0fdded4da4679096ae872489ab2b45bf",
+      "rawVideoSha256": "55b564aff7e99821bbec7ca370564ac5b778c2de3dade5f760ea113787a45215",
+      "rawVideoBytes": 7779505,
+      "actualTerminalStatus": "verified_for_declared_checks",
+      "observerStatusDoesNotReplaceRunOutcome": true
+    }
+  ],
+  "note": "One real creation per attempt. The failed checks-only observer does not change the passing real run and was not retried."
+}

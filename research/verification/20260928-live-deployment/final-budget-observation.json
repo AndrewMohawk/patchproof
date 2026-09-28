@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-09-28T01:48:44.319886+00:00",
+  "approval": {
+    "approval_revision": 1,
+    "approval_digest": "sha256:cdd03e445f84aa76e6ad8f7a6a07d406ed06aed61595f97c860a24dd35691b95",
+    "frozen_reason": null
+  },
+  "approvedUsd": 25,
+  "smokeAllocationUsd": 5,
+  "reservations": [
+    {
+      "id": "token-factory-access-20260927-01",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:97808518-b836-41a9-961e-8e5f466dc032",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    },
+    {
+      "id": "live-local:5b356c42-8848-4e78-bce7-94800f63eebf",
+      "stage": "smoke",
+      "amount_micros": 100000,
+      "state": "attempted",
+      "actual_micros": null,
+      "reconciliation_complete": 0
+    }
+  ],
+  "heldUsd": 0.8,
+  "authoritativeBilledUsd": null,
+  "usagePricedEstimateIncludingAccessMarkerUsd": "0.00196992",
+  "estimateIsInvoice": false,
+  "publicRunCount": 7,
+  "activePublicRuns": 0,
+  "rateVerificationExpiresAt": "2026-10-01T00:00:00Z",
+  "creditsVerifiedUsd": 0
+}

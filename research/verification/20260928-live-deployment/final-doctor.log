@@ -1,0 +1,36 @@
+node scripts/product-cli.ts doctor
+{
+  "mode": "mock",
+  "competitionReady": false,
+  "command": "doctor",
+  "status": "diagnostic_complete",
+  "paidCalls": 0,
+  "local": {
+    "node": "25.5.0",
+    "architecture": "x64",
+    "platform": "linux"
+  },
+  "localRuntime": {
+    "available": true,
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "reason": null
+  },
+  "publicFixtureCount": 30,
+  "maxApprovedSpendUsd": 25,
+  "verifiedCredits": [],
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated.",
+    "Real-provider smoke, sandbox isolation and billing reconciliation have not been verified; no automatic fallback."
+  ],
+  "realIntegration": "NOT RUN",
+  "experimentEpisodesExecuted": 0
+}
+(node:4158875) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,126 @@
+{
+  "releaseCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+  "sources": [
+    {
+      "path": "/home/andrewmohawk/.config/patchproof/operator-20260927/final-patchproof-01/raw-video/943ee7dd93bf12b67736eca8dbdfdf76.webm",
+      "sha256": "55b564aff7e99821bbec7ca370564ac5b778c2de3dade5f760ea113787a45215"
+    },
+    {
+      "path": "/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-read-only-01/raw-video/43c213dd8b7c816320ff7ed421233501.webm",
+      "sha256": "024db3063c1e4da8b4ff5cbb5c8f2b18586c30e045bbb657a47ef02eb28ada88"
+    }
+  ],
+  "segments": [
+    {
+      "source": 0,
+      "fromSeconds": 0.8,
+      "toSeconds": 14
+    },
+    {
+      "source": 0,
+      "fromSeconds": 33,
+      "toSeconds": 44
+    },
+    {
+      "source": 1,
+      "fromSeconds": 1.2,
+      "toSeconds": 72.12
+    }
+  ],
+  "cuts": "Waiting omitted, then a GET-only review of the same completed real run and its source-matched comparisons. Original recordings retained. No frame speed changes or outcome substitution.",
+  "captions": [
+    [
+      0,
+      6,
+      "PatchProof: maintenance patches with reviewable evidence.\nLive public app: patchproof.andrewmohawk.xyz"
+    ],
+    [
+      6,
+      13.2,
+      "Starting a real repair on a curated maintenance task.\nNVIDIA Nemotron Nano on Nebius Token Factory."
+    ],
+    [
+      13.2,
+      24.2,
+      "Waiting trimmed. The model-generated candidate enters independent checks.\nEvery declared check runs twice in fresh local Docker containers."
+    ],
+    [
+      24.2,
+      32.4,
+      "Reported run elapsed: 73.933 seconds. Checking wait omitted.\nNow reviewing preserved evidence for that same run."
+    ],
+    [
+      32.979,
+      41.08,
+      "Three approaches, the same frozen task and resource limits.\nAll passed in this development example."
+    ],
+    [
+      42.38,
+      50.5,
+      "PatchProof: one model call, one candidate, nine checks passed twice.\nCoverage links each declared requirement to its evidence."
+    ],
+    [
+      51.105,
+      59.215,
+      "Inspect the proposed diff against the frozen original snapshot.\nThe patch remains a human review decision."
+    ],
+    [
+      59.825,
+      67.991,
+      "Expanded checks show expected values, actual results,\nand whether repeated observations agree."
+    ],
+    [
+      69.316,
+      77.445,
+      "Earlier baseline attempt: unchanged code failed four checks.\nIts second candidate passed. Both attempts remain visible."
+    ],
+    [
+      78.711,
+      86.826,
+      "This PatchProof run: estimated inference cost $0.00010692.\nInvoice charges and container CPU usage remain unmeasured."
+    ],
+    [
+      87.529,
+      95.12,
+      "Download the patch and replayable evidence.\nOpen patchproof.andrewmohawk.xyz to run or review a task."
+    ]
+  ],
+  "command": [
+    "ffmpeg",
+    "-v",
+    "warning",
+    "-i",
+    "/home/andrewmohawk/.config/patchproof/operator-20260927/final-patchproof-01/raw-video/943ee7dd93bf12b67736eca8dbdfdf76.webm",
+    "-i",
+    "/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-read-only-01/raw-video/43c213dd8b7c816320ff7ed421233501.webm",
+    "-filter_complex_threads",
+    "2",
+    "-filter_complex",
+    "[0:v]split=2[l0][l1];[l0]trim=start=0.8:end=14,setpts=PTS-STARTPTS[a];[l1]trim=start=33:end=44,setpts=PTS-STARTPTS[b];[1:v]trim=start=1.2:end=72.12,setpts=PTS-STARTPTS[c];[a][b][c]concat=n=3:v=1:a=0,pad=1440:1120:0:0:color=0x102E29,ass=/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-edit-01/captions.ass[out]",
+    "-map",
+    "[out]",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-threads",
+    "2",
+    "-preset",
+    "fast",
+    "-crf",
+    "20",
+    "-pix_fmt",
+    "yuv420p",
+    "-r",
+    "25",
+    "-fps_mode",
+    "cfr",
+    "-movflags",
+    "+faststart",
+    "-metadata",
+    "title=PatchProof - real repair and evidence walkthrough",
+    "-metadata",
+    "comment=Actual live run 08087e0a-f5d9-4c55-b4b6-7666bc8e016c followed by read-only evidence review. Waiting omitted; no outcomes substituted.",
+    "/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-edit-01/patchproof-real-demo.mp4"
+  ]
+}

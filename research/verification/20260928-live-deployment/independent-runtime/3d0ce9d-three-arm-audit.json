@@ -1,0 +1,466 @@
+{
+  "schemaVersion": "1.0",
+  "at": "2026-09-28T01:42:32.218Z",
+  "kind": "independent-public-three-arm-development-audit",
+  "reviewer": "AI read-only public artifact audit",
+  "status": "consistent_recorded_evidence",
+  "releaseCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "operationalSourceDigest": "sha256:f002c913955f022acbd371e37a170126ddb0d935c9203fdf573d014b4101d71b",
+  "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+  "taskId": "stable-unique-01",
+  "scope": "One actual live episode per variant on a shared public development fixture; local Docker checks and real Token Factory inference as recorded.",
+  "checks": {
+    "threeDistinctRequestedVariants": true,
+    "all42IndividualAssertionsPass": true,
+    "exactRelease": true,
+    "exactOperationalSource": true,
+    "exactRuntimeLock": true,
+    "sameFixture": true,
+    "sameLimits": true,
+    "sameOriginalOutcomes": true,
+    "allSelectedCandidatesAccepted": true,
+    "allDeclaredCoveragePass": true,
+    "allProviderIdsDistinct": true,
+    "providerIdsMatchObservedEvents": true,
+    "historicalFailuresStillVisibleUnchanged": true,
+    "reportedCallsTokensAndWallTimeWithinAllowance": true
+  },
+  "common": {
+    "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "execution": {
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container",
+      "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+    },
+    "fixtureDigest": "sha256:8f14e311c082ba11f3cb37df4c2db7012603fee63959d8c8fbb0905c0d21f734",
+    "declaredChecks": 9,
+    "requirements": 3,
+    "repetitions": 2,
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 786432,
+      "outputTokenLimit": 6000,
+      "wallTimeLimitSeconds": 300,
+      "sandboxCpuSecondsLimit": 900,
+      "maxApprovedSpendUsd": 0.1
+    },
+    "timingPolicy": {
+      "id": "live-local-check-timing-v2",
+      "maximumBatchWallSeconds": 120
+    },
+    "sourcePinsPerBundle": 116,
+    "prices": {
+      "inputUsdPerMillionTokens": 0.06,
+      "outputUsdPerMillionTokens": 0.24,
+      "requestFeeUsd": 0,
+      "contextTokens": 262144,
+      "maximumOutputTokensPerRequest": 2000,
+      "inputAccounting": "full-model-context-conservative-ceiling-per-request",
+      "actualBilling": "unknown-full-reservation-held",
+      "verifiedAt": "2026-09-28T00:01:53.113Z",
+      "validUntil": "2026-10-01T00:00:00Z"
+    }
+  },
+  "runs": [
+    {
+      "runId": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "variant": "baseline",
+      "terminalStatus": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "candidateCount": 2,
+      "selectedCandidateId": 2,
+      "acceptedCandidateIds": [
+        2
+      ],
+      "bundleDigest": "sha256:618efef5736b49cdd541d33cb84ba4ab8f0f79dea38bb8e4af5c32d0c178a10e",
+      "usage": {
+        "inferenceCalls": 2,
+        "inputTokens": 2346,
+        "outputTokens": 254,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00020171999999999999,
+        "costIsEstimate": true,
+        "elapsedMs": 135216
+      },
+      "coverage": [
+        {
+          "requirementId": "R01",
+          "status": "pass",
+          "checkIds": [
+            "u-v-order",
+            "u-v-empty",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "requirementId": "R02",
+          "status": "pass",
+          "checkIds": [
+            "u-v-mutation",
+            "u-a-mutation"
+          ]
+        },
+        {
+          "requirementId": "R03",
+          "status": "pass",
+          "checkIds": [
+            "u-v-none",
+            "u-a-none"
+          ]
+        }
+      ],
+      "repeatedObservations": 54,
+      "observationStatuses": {
+        "fail": 16,
+        "pass": 38
+      },
+      "providerResponseIds": [
+        "chatcmpl-44925e8e-ec21-474b-aa31-65120fdc432d",
+        "chatcmpl-0fc55227-8bb1-4ea6-9cec-8b79addcb52c"
+      ],
+      "revisions": [
+        {
+          "id": "original",
+          "visibleStatusCounts": {
+            "fail": 2,
+            "pass": 3
+          },
+          "acceptanceStatusCounts": {
+            "fail": 2,
+            "pass": 2
+          },
+          "failedOrUnavailableCheckIds": [
+            "u-v-order",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "id": 1,
+          "visibleStatusCounts": {
+            "fail": 2,
+            "pass": 3
+          },
+          "acceptanceStatusCounts": {
+            "fail": 2,
+            "pass": 2
+          },
+          "failedOrUnavailableCheckIds": [
+            "u-v-order",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "id": 2,
+          "visibleStatusCounts": {
+            "pass": 5
+          },
+          "acceptanceStatusCounts": {
+            "pass": 4
+          },
+          "failedOrUnavailableCheckIds": []
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d-1790559414016/run.json",
+          "digest": "sha256:b2d30b2b669913deb1839ebfb98b96a01d5bdb0bad13a8fdb5fa604b29e2c77e"
+        },
+        {
+          "path": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d-1790559414016/evidence.json",
+          "digest": "sha256:6fdb2db2730292d186db4691786749fef381232244dab5bd9cb8e49be2b40fd6"
+        },
+        {
+          "path": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d-1790559414016/audit.json",
+          "digest": "sha256:e4db906fd48c4d71858a3b01cd068ffccd465848c0b071f88d2c5eba23715399"
+        }
+      ],
+      "collectorExitCode": 0
+    },
+    {
+      "runId": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "variant": "checks_only",
+      "terminalStatus": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "candidateCount": 1,
+      "selectedCandidateId": 1,
+      "acceptedCandidateIds": [
+        1
+      ],
+      "bundleDigest": "sha256:ba97663bcb683e428ac83b38e8cf91178b0470e5600cc0e3da63cffdff2c1bfc",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 1347,
+        "outputTokens": 166,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00012066,
+        "costIsEstimate": true,
+        "elapsedMs": 73122
+      },
+      "coverage": [
+        {
+          "requirementId": "R01",
+          "status": "pass",
+          "checkIds": [
+            "u-v-order",
+            "u-v-empty",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "requirementId": "R02",
+          "status": "pass",
+          "checkIds": [
+            "u-v-mutation",
+            "u-a-mutation"
+          ]
+        },
+        {
+          "requirementId": "R03",
+          "status": "pass",
+          "checkIds": [
+            "u-v-none",
+            "u-a-none"
+          ]
+        }
+      ],
+      "repeatedObservations": 36,
+      "observationStatuses": {
+        "fail": 8,
+        "pass": 28
+      },
+      "providerResponseIds": [
+        "chatcmpl-17b36ed5-7d9e-48c3-91c6-596ab69e1d67"
+      ],
+      "revisions": [
+        {
+          "id": "original",
+          "visibleStatusCounts": {
+            "fail": 2,
+            "pass": 3
+          },
+          "acceptanceStatusCounts": {
+            "fail": 2,
+            "pass": 2
+          },
+          "failedOrUnavailableCheckIds": [
+            "u-v-order",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "id": 1,
+          "visibleStatusCounts": {
+            "pass": 5
+          },
+          "acceptanceStatusCounts": {
+            "pass": 4
+          },
+          "failedOrUnavailableCheckIds": []
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1-1790559517424/run.json",
+          "digest": "sha256:8fba383b82ac63e6209f025992fa9cecea10ad306d6214c389c0250ec0909590"
+        },
+        {
+          "path": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1-1790559517424/evidence.json",
+          "digest": "sha256:0a0a29ca8002e2407478194b035dd39b982f8cc70c68f475defaf21c5f21cc25"
+        },
+        {
+          "path": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1-1790559517424/audit.json",
+          "digest": "sha256:c0799163e15de774b8ba42f4f529fc1baa0745e3aa56ce528a0e405ec5460485"
+        }
+      ],
+      "collectorExitCode": 0
+    },
+    {
+      "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "variant": "patchproof",
+      "terminalStatus": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "candidateCount": 1,
+      "selectedCandidateId": 1,
+      "acceptedCandidateIds": [
+        1
+      ],
+      "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 1338,
+        "outputTokens": 111,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00010692,
+        "costIsEstimate": true,
+        "elapsedMs": 73933
+      },
+      "coverage": [
+        {
+          "requirementId": "R01",
+          "status": "pass",
+          "checkIds": [
+            "u-v-order",
+            "u-v-empty",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "requirementId": "R02",
+          "status": "pass",
+          "checkIds": [
+            "u-v-mutation",
+            "u-a-mutation"
+          ]
+        },
+        {
+          "requirementId": "R03",
+          "status": "pass",
+          "checkIds": [
+            "u-v-none",
+            "u-a-none"
+          ]
+        }
+      ],
+      "repeatedObservations": 36,
+      "observationStatuses": {
+        "fail": 8,
+        "pass": 28
+      },
+      "providerResponseIds": [
+        "chatcmpl-39360f8a-cef9-4b48-9b23-7f6ff3fc3e40"
+      ],
+      "revisions": [
+        {
+          "id": "original",
+          "visibleStatusCounts": {
+            "fail": 2,
+            "pass": 3
+          },
+          "acceptanceStatusCounts": {
+            "fail": 2,
+            "pass": 2
+          },
+          "failedOrUnavailableCheckIds": [
+            "u-v-order",
+            "u-v-unicode",
+            "u-a-nested",
+            "u-a-numeric"
+          ]
+        },
+        {
+          "id": 1,
+          "visibleStatusCounts": {
+            "pass": 5
+          },
+          "acceptanceStatusCounts": {
+            "pass": 4
+          },
+          "failedOrUnavailableCheckIds": []
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c-1790559701951/run.json",
+          "digest": "sha256:2852ab4bb811abec6574dde9c2091a5859766a8cb552bc24e7352829858b1bee"
+        },
+        {
+          "path": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c-1790559701951/evidence.json",
+          "digest": "sha256:ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf"
+        },
+        {
+          "path": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c-1790559701951/audit.json",
+          "digest": "sha256:4f68929e3edf3e953a4bf2714cde7f70247d9e1e0d8eb367e6f4e7845bbcde4f"
+        }
+      ],
+      "collectorExitCode": 0
+    }
+  ],
+  "totals": {
+    "inferenceCalls": 4,
+    "inputTokens": 5031,
+    "outputTokens": 531,
+    "repeatedObservations": 126,
+    "recordedCleanupConfirmed": 126,
+    "usagePricedEstimateUsd": 0.0004293,
+    "authoritativeBilledCostUsd": null,
+    "sandboxCpuSeconds": null
+  },
+  "preservedEarlierRuns": [
+    {
+      "runId": "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c",
+      "variant": "baseline",
+      "terminalStatus": "needs_review",
+      "reason": "declared_requirements_unverified",
+      "artifact": {
+        "path": "baseline-audit.json",
+        "digest": "sha256:505b993e030428a32c5a8359de44f926420fc9666a9a53317d61aeaf91d1ab9f"
+      },
+      "includedInFreshSequence": false
+    },
+    {
+      "runId": "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+      "variant": "baseline",
+      "terminalStatus": "failed",
+      "reason": "declared_checks_not_satisfied",
+      "artifact": {
+        "path": "7467626-two-arm-development-receipt.json",
+        "digest": "sha256:c8eeaa36f2ba8a321d99ca5c9487d8ead0f026a445345cf248082be63f6ccbf9"
+      },
+      "includedInFreshSequence": false
+    },
+    {
+      "runId": "97808518-b836-41a9-961e-8e5f466dc032",
+      "variant": "checks_only",
+      "terminalStatus": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "artifact": {
+        "path": "7467626-two-arm-development-receipt.json",
+        "digest": "sha256:c8eeaa36f2ba8a321d99ca5c9487d8ead0f026a445345cf248082be63f6ccbf9"
+      },
+      "includedInFreshSequence": false
+    }
+  ],
+  "history": {
+    "path": "3d0ce9d-three-arm-history.json",
+    "digest": "sha256:de32f177b72ac36c42cd49f6059c347e75fb0ed8d9b7530f14950e9e03855b35"
+  },
+  "collector": {
+    "path": "collect-run.mjs",
+    "digest": "sha256:661540f6ca6216b2dfa3d6a356ed1eea78a4bd8e0a305bdfd2fe3e8a4e53b3a2"
+  },
+  "recordingLimitations": [
+    "Coordinator reports final checks_only recorder failed a read-only DOM scrolling step after terminal success; raw capture failure is preserved separately. This audit verifies API evidence, not video completion or edit authenticity."
+  ],
+  "claims": {
+    "selectedPatchesPassDeclaredChecks": true,
+    "allCandidateFailuresPreserved": true,
+    "matchedResourceAllowances": true,
+    "identicalPromptsOrFeedback": false,
+    "superiorityEstablished": false,
+    "benchmarkOrFinalEvaluation": false,
+    "authoritativeBillingKnown": false,
+    "sponsorSandboxVerified": false,
+    "competitionReady": false,
+    "humanReviewed": false
+  },
+  "limitations": [
+    "One episode per variant is an unscored development demonstration, not a performance estimate or evidence of superiority; check repetitions are not repeated model trials.",
+    "All provider IDs/usage and cleanup confirmations are recorded observations; hashing does not independently authenticate provider responses or billing.",
+    "Candidate billing values remain null and aggregate cost is a token-rate estimate; private ledger and invoice data were not read.",
+    "No provider calls, POSTs, cancellations, replays, Docker commands or private/evaluator reads were performed by this final3-run collection.",
+    "Local containment was directly sampled on the earlier corrected746 release; no contemporaneous final3d0 Docker inspection was performed while paid jobs ran.",
+    "Independent fresh replay is outside this receipt and owned by the coordinator."
+  ]
+}

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project": "PatchProof",
   "prd_version": "0.1",
-  "as_of": "2026-09-27",
+  "as_of": "2026-09-28",
   "default_new_spend_authorized_usd": 0,
   "tasks": [
     {
@@ -28,14 +28,20 @@
       ],
       "requires_owner_action": true,
       "gate": "G0",
-      "blocked_reason": "Owner confirmations and $25 ceiling are recorded. Actual Token Factory catalog and one bounded Nano marker call succeed. Sandbox project ID/entitlement and controls remain unverified; actual billing is unreconciled with $0.10 held. No model repair or sandbox execution occurred.",
+      "blocked_reason": "Owner eligibility/rights/AI confirmations and $25 ceiling are recorded. Token Factory access and real curated repairs are observed, and the owner-authorized public real-model/local-Docker app is deployed at 3d0ce9d. Nebius Sandboxes project entitlement, sponsor account controls and authoritative billing remain unverified; estimates are not invoices. No scored experiment or final entry is claimed. Coordinator accounting retains $0.80 across seven actual repair runs plus the earlier marker call; the aggregate token-rate estimate is $0.00196992 and true billed cost remains unknown.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-account-access/README.md"
+        "research/verification/20260927-account-access/README.md",
+        "research/verification/20260928-live-deployment/final-deployment/deployment-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json"
       ],
-      "implementation_note": "Owner confirmations and $25 ceiling are recorded. Actual Token Factory catalog and one bounded Nano marker call succeed. Sandbox project ID/entitlement and controls remain unverified; actual billing is unreconciled with $0.10 held. No model repair or sandbox execution occurred."
+      "implementation_note": "Owner eligibility/rights/AI confirmations and $25 ceiling are recorded. Token Factory access and real curated repairs are observed, and the owner-authorized public real-model/local-Docker app is deployed at 3d0ce9d. Nebius Sandboxes project entitlement, sponsor account controls and authoritative billing remain unverified; estimates are not invoices. No scored experiment or final entry is claimed. Coordinator accounting retains $0.80 across seven actual repair runs plus the earlier marker call; the aggregate token-rate estimate is $0.00196992 and true billed cost remains unknown."
     },
     {
       "id": "T02",
@@ -94,7 +100,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Local v2 corpus preparation is complete: 12 separate clean-context AI authors, 60 independently reviewed tasks, a 20/10/30 repository-disjoint split and fresh contract2.2 gold/start/repeat validation for all 60 tasks. Public fixtures and aggregate provenance are integrated; sealed definitions and gold remain in the external frozen-v2 evaluator workspace. All 51 review findings are resolved; two unsuccessful fresh preparation attempts remain preserved alongside 12 accepted repository preparations. Shared model/host authorship is procedural separation, not human or statistical independence. Original v1 corpus, plans and evidence remain intact. Production evaluator-account separation, human scope review, calibrated live protocol and scored experiments remain open. Current implementation source 06c584c passes 622 product tests, the actual v2 browser comparison and all three fresh-container patch replays. An unsupported-task run honestly abstained; all four selected exports were scanned, packaged and verified locally with release gates still blocked. Prior c335031 evidence and video remain separately preserved. This remains unscored local workflow evidence.",
+      "implementation_note": "Local v2 corpus preparation is complete: 12 separate clean-context AI authors, 60 independently reviewed tasks, a 20/10/30 repository-disjoint split and fresh contract2.2 gold/start/repeat validation for all 60 tasks. Public fixtures and aggregate provenance are integrated; sealed definitions and gold remain in the external frozen-v2 evaluator workspace. All 51 review findings are resolved; two unsuccessful fresh preparation attempts remain preserved alongside 12 accepted repository preparations. Shared model/host authorship is procedural separation, not human or statistical independence. Original v1 corpus, plans and evidence remain intact. Production evaluator-account separation, human scope review, calibrated live protocol and scored experiments remain open. Earlier local implementation source 06c584c passed 622 product tests, the actual v2 browser comparison and all three fresh-container patch replays. An unsupported-task run honestly abstained; all four selected exports were scanned, packaged and verified locally with release gates still blocked. Prior c335031 evidence and video remain separately preserved. This remains unscored local workflow evidence.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -134,8 +140,8 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; the actual eight-task repair probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
-      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; the actual eight-task repair probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
+      "implementation_note": "The public app executes actual NVIDIA Nano inference through Token Factory with isolated local Docker checks. Source 3d0ce9d records three matched development runs passing all 9 declared checks, using 2/1/1 calls for baseline/checks_only/PatchProof; prior setup and repair failures remain preserved. A separate worksheet task failed and is retained. This is not Nebius Sandboxes execution or calibrated sponsor smoke/billing proof. Sandbox entitlement, sponsor cancellation/account controls, the actual 8-task model probe and authoritative cost reconciliation remain open.",
+      "blocked_reason": "The public app executes actual NVIDIA Nano inference through Token Factory with isolated local Docker checks. Source 3d0ce9d records three matched development runs passing all 9 declared checks, using 2/1/1 calls for baseline/checks_only/PatchProof; prior setup and repair failures remain preserved. A separate worksheet task failed and is retained. This is not Nebius Sandboxes execution or calibrated sponsor smoke/billing proof. Sandbox entitlement, sponsor cancellation/account controls, the actual 8-task model probe and authoritative cost reconciliation remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -149,7 +155,14 @@
         "docs/model-probe.md",
         "research/verification/20260927-model-probe/receipt.json",
         "research/verification/20260927-model-probe-independent/review.json",
-        "research/verification/20260927-account-access/README.md"
+        "research/verification/20260927-account-access/README.md",
+        "research/verification/20260928-live-deployment/first-real-run-failure.json",
+        "research/verification/20260928-live-deployment/corrected-startup.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json"
       ]
     },
     {
@@ -177,12 +190,17 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Native baseline and usage journal implemented and locally tested. Matched real model execution remains blocked by T04.",
-      "blocked_reason": "Native baseline and usage journal implemented and locally tested. Matched real model execution remains blocked by T04.",
+      "implementation_note": "Native baseline and usage journal are implemented. Actual 3d0ce9d baseline d11aa1fc-61ee-4b42-a89e-df6b385e4f1d passed 9/9 checks on candidate 2 after its first candidate failed 4 checks. The same-source/model/task/limit checks_only and PatchProof runs also passed, using 2/1/1 calls respectively. Earlier failed baseline bb948175 and setup failure 1ddd6b8b remain visible. This is an exploratory development comparison after diagnostic feedback changes, not a scored performance or superiority result; calibrated T04/T09 gates remain open.",
+      "blocked_reason": "Native baseline and usage journal are implemented. Actual 3d0ce9d baseline d11aa1fc-61ee-4b42-a89e-df6b385e4f1d passed 9/9 checks on candidate 2 after its first candidate failed 4 checks. The same-source/model/task/limit checks_only and PatchProof runs also passed, using 2/1/1 calls respectively. Earlier failed baseline bb948175 and setup failure 1ddd6b8b remain visible. This is an exploratory development comparison after diagnostic feedback changes, not a scored performance or superiority result; calibrated T04/T09 gates remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json"
       ]
     },
     {
@@ -215,7 +233,10 @@
         "docs/local-release-review.md",
         "research/blockers.md",
         "research/verification/20260927-docker-integration/integration-receipt.json",
-        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/strict-umask-verification.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json"
       ]
     },
     {
@@ -276,7 +297,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Source-bound local journal/export/replay and private terminal smoke export are implemented. A separate check-only live replay requires verified controls, current curated pins and an existing approved ledger; fake-transport and independent controls pass. Actual Nebius replay and reconciled costs remain unobserved.",
+      "implementation_note": "Source-bound journal/export/replay and private terminal export are implemented. Real public terminal bundles preserve exact run/source/policy/runtime pins and honest estimated/unknown accounting. All 3 final passing patches reproduced in fresh same-host local containers; the separate failed worksheet patch also faithfully reproduced its 2 failed checks. No new inference was used for replay. Nebius Sandboxes replay and reconciled provider costs remain unobserved.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -286,7 +307,12 @@
         "docs/private-evidence.md",
         "docs/replay-operator.md",
         "research/verification/20260927-trusted-replay/receipt.json",
-        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json"
       ]
     },
     {
@@ -316,8 +342,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G2",
-      "implementation_note": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
-      "blocked_reason": "Fixed planner, durable dispatcher, guarded 24-call/48-batch live factory, private session command, protected adjudication, independent phase-accounting intake and immutable aggregate export are implemented with synthetic tests. A composed fake-provider episode records runtime and adjudication accounting once. Actual access, calibrated account/control/tokenizer proofs, authoritative billing/cleanup, affordable real runs and human/release evidence remain pending; no scored experiment result exists.",
+      "implementation_note": "Fixed 72/270 planner, durable dispatcher, guarded live factory, private operator, protected adjudication, accounting intake and immutable aggregate export are implemented with synthetic controls. Actual Token Factory/local-Docker development demonstrations now include 3 matched passing arms and a separately retained task failure. These are not pilot rows. Calibrated sponsor control/account/tokenizer proofs, authoritative billing, the 72 planned pilot episodes and G2 continuation decision remain open.",
+      "blocked_reason": "Fixed 72/270 planner, durable dispatcher, guarded live factory, private operator, protected adjudication, accounting intake and immutable aggregate export are implemented with synthetic controls. Actual Token Factory/local-Docker development demonstrations now include 3 matched passing arms and a separately retained task failure. These are not pilot rows. Calibrated sponsor control/account/tokenizer proofs, authoritative billing, the 72 planned pilot episodes and G2 continuation decision remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -335,7 +361,12 @@
         "docs/phase-accounting-operator.md",
         "docs/adjudication-accounting.md",
         "research/verification/20260927-live-experiment/receipt.json",
-        "research/verification/runtime-followup/adjudication-accounting-verification.json"
+        "research/verification/runtime-followup/adjudication-accounting-verification.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json"
       ]
     },
     {
@@ -363,7 +394,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Three-screen local product and read-only recorded archive are implemented and tested. Prior complete status described code only and overstated the uncoached human acceptance criterion; that evidence is pending.",
+      "implementation_note": "The public three-screen app at https://patchproof.andrewmohawk.xyz uses real Token Factory inference and isolated local Docker checks across 20 curated tasks. Actual 3d0ce9d terminal evidence, matching comparison and history were inspected at desktop 1440 and mobile 390/320 with no overflow or browser errors. Individual reruns retain prior evidence; recorded/live/mock labels and estimate/unknown accounting remain explicit. A GET-only completed-run walkthrough passed. Uncoached human acceptance and T09 remain pending.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -376,9 +407,18 @@
         "docs/uncoached-product-observation.json",
         "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
         "research/verification/20260927-completion-audit/integration-receipt.json",
-        "research/verification/20260927-archive-recorder/interactive-verification.json"
+        "research/verification/20260927-archive-recorder/interactive-verification.json",
+        "research/verification/20260928-live-deployment/read-only-browser/corrected-progress-receipt.json",
+        "research/verification/20260928-live-deployment/rerun-control/receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/deployment-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json",
+        "research/verification/20260928-live-deployment/read-only-walkthrough/capture-receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
       ],
-      "blocked_reason": "UI implementation, local browser flow and synthetic archive controls are verified. Explicit acceptance without coaching has no actual human observation yet; live-provider state validation also awaits access."
+      "blocked_reason": "The public three-screen app at https://patchproof.andrewmohawk.xyz uses real Token Factory inference and isolated local Docker checks across 20 curated tasks. Actual 3d0ce9d terminal evidence, matching comparison and history were inspected at desktop 1440 and mobile 390/320 with no overflow or browser errors. Individual reruns retain prior evidence; recorded/live/mock labels and estimate/unknown accounting remain explicit. A GET-only completed-run walkthrough passed. Uncoached human acceptance and T09 remain pending."
     },
     {
       "id": "T11",
@@ -400,7 +440,7 @@
         "analysis script"
       ],
       "acceptance_tests": [
-        "30 tasks \u00d7 3 variants \u00d7 3 repetitions accounted for.",
+        "30 tasks × 3 variants × 3 repetitions accounted for.",
         "Repo-clustered paired analysis; identical budgets and task information.",
         "No unsupported superiority claim when uncertainty or ablation contradicts it."
       ],
@@ -454,13 +494,25 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Local lifecycle/containment/browser verification and operations runbook prepared. Public demo authorization, operator, funding and deployment remain open.",
-      "blocked_reason": "Local lifecycle/containment/browser verification and operations runbook prepared. Public demo authorization, operator, funding and deployment remain open.",
+      "implementation_note": "Owner-authorized public release 3d0ce9d is deployed with 20 curated tasks, session-owned cancellation, explicit availability and a $0.10 per-run ceiling within the $25 approval. It passes 676 tests plus typecheck/contracts. Three matched real development arms pass with 126 recorded-cleanup local operations; a separate failed task retains 104 operations, and earlier failures remain separate. All 4 selected outcomes reproduce in fresh same-host containers, including the honest failure. Judging-period operating commitments, independent-machine verification and broader release gates remain open.",
+      "blocked_reason": "Owner-authorized public release 3d0ce9d is deployed with 20 curated tasks, session-owned cancellation, explicit availability and a $0.10 per-run ceiling within the $25 approval. It passes 676 tests plus typecheck/contracts. Three matched real development arms pass with 126 recorded-cleanup local operations; a separate failed task retains 104 operations, and earlier failures remain separate. All 4 selected outcomes reproduce in fresh same-host containers, including the honest failure. Judging-period operating commitments, independent-machine verification and broader release gates remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
         "research/blockers.md",
-        "research/verification/20260927-docker-integration/integration-receipt.json"
+        "research/verification/20260927-docker-integration/integration-receipt.json",
+        "research/verification/20260928-live-deployment/corrected-release-tests.log",
+        "research/verification/20260928-live-deployment/corrected-startup.json",
+        "research/verification/20260928-live-deployment/final-deployment/deployment-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json",
+        "research/verification/20260928-live-deployment/final-release-tests.log",
+        "research/verification/20260928-live-deployment/final-deployment/release-3d0ce9d-under-load/deployment-receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
       ]
     },
     {
@@ -489,8 +541,8 @@
       ],
       "requires_owner_action": false,
       "gate": "G4",
-      "implementation_note": "Both local presentation assets are prepared and tested: a four-run read-only interactive archive and a 42.84-second captioned MP4 of saved 06c584c mock-model/local-check evidence, captured using source 4574e74. Exact source/run/bundle/video custody and prior recordings are retained; recording created zero runs and made no provider calls. The separate real Nano marker call establishes inference access only. Sponsor-backed final repair/recording, application license and public source/video remain pending.",
-      "blocked_reason": "Local demo and recorded mock walkthrough are complete. Sponsor-backed repair proof, final challenge recording, licensing and public release remain unresolved.",
+      "implementation_note": "The real public app is deployed at 3d0ce9d. Its three matched Token Factory/local-Docker arms all pass declared checks; a separate failed worksheet task and all earlier failures remain visible. The 95.12-second captioned real-run walkthrough is published at https://patchproof.andrewmohawk.xyz/demo/, combining actual PatchProof creation/progress with GET-only completed evidence review. Waiting omissions are labeled; no outcomes are substituted. Public playback passes 10/10 checks including desktop/mobile play, download-hash identity and Cloudflare range support. Exact source/run/bundle/video custody and original observer failures remain preserved; old mock footage stays separate. No comparative advantage is claimed. Application licensing, human/evaluation dependencies and final competition submission remain open.",
+      "blocked_reason": "The interactive real-model/local-Docker demo and 95.12-second hosted video are verified. T11 evaluation/human dependencies, application licensing and final competition submission remain open.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -498,7 +550,16 @@
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
         "research/verification/20260927-completion-audit/integration-receipt.json",
-        "research/verification/20260927-archive-recorder/actual-walkthrough-custody.json"
+        "research/verification/20260927-archive-recorder/actual-walkthrough-custody.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/recorder-interception/receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json",
+        "research/verification/20260928-live-deployment/read-only-walkthrough/capture-receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
       ]
     },
     {
@@ -526,8 +587,8 @@
       ],
       "requires_owner_action": true,
       "gate": null,
-      "implementation_note": "Evidence-bound receipts and scan-gated immutable packets now accept explicit calibrated live protocol metadata without hardcoded local-only bindings. Smoke presentation scope is distinct from experiment completion; synthetic tests pass. Real release receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
-      "blocked_reason": "Evidence-bound receipts and scan-gated immutable packets now accept explicit calibrated live protocol metadata without hardcoded local-only bindings. Smoke presentation scope is distinct from experiment completion; synthetic tests pass. Real release receipts, independent-machine replay and owner license/publication/entry decisions remain open.",
+      "implementation_note": "Evidence-bound receipts, independent recorded-artifact/source review and scan-gated immutable packets are implemented. The owner-authorized public app records real model/local-Docker observations, retained failures and fresh same-host replays. These do not complete calibrated experiments, human exercises, independent-machine reproduction, authoritative billing or the final rules/license/source-publication/entry audit. No competition-ready or final-entry claim is made.",
+      "blocked_reason": "Evidence-bound receipts, independent recorded-artifact/source review and scan-gated immutable packets are implemented. The owner-authorized public app records real model/local-Docker observations, retained failures and fresh same-host replays. These do not complete calibrated experiments, human exercises, independent-machine reproduction, authoritative billing or the final rules/license/source-publication/entry audit. No competition-ready or final-entry claim is made.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -535,11 +596,19 @@
         "research/verification/20260927-runtime-completion/workflows-receipt.json",
         "research/verification/20260927-release-live-protocol/verification.json",
         "research/verification/20260927-trusted-replay/receipt.json",
-        "research/verification/20260927-corpus-v2-integration/integration-receipt.json"
+        "research/verification/20260927-corpus-v2-integration/integration-receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/deployment-receipt.json",
+        "research/verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json",
+        "research/verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json",
+        "research/verification/20260928-live-deployment/final-replays/receipt.json",
+        "research/verification/20260928-live-deployment/final-deployment/video-receipt.json",
+        "research/verification/20260928-live-deployment/public-video/publication-receipt.json"
       ]
     }
   ],
-  "execution_as_of": "2026-09-28T00:26:30.919858+00:00",
+  "execution_as_of": "2026-09-28T01:53:02.327Z",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {

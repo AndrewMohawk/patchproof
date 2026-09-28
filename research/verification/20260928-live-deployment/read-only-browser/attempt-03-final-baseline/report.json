@@ -1,0 +1,423 @@
+{
+  "startedAt": "2026-09-28T01:38:52.431Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "sourceCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "scope": "Actual public browser; GET-only observer; no candidate, provider, run, cancel, or replay dispatch.",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Public health identifies live Token Factory and local Docker checks",
+      "passed": true,
+      "details": {
+        "status": "ok",
+        "mode": "live",
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container"
+      }
+    },
+    {
+      "name": "Twenty supported curated tasks and declared spending bounds",
+      "passed": true,
+      "details": {
+        "taskIds": [
+          "stable-unique-01",
+          "v2-r01-t02",
+          "v2-r01-t03",
+          "v2-r01-t04",
+          "v2-r01-t05",
+          "v2-r02-t01",
+          "v2-r02-t02",
+          "v2-r02-t03",
+          "v2-r02-t04",
+          "v2-r02-t05",
+          "v2-r03-t01",
+          "v2-r03-t02",
+          "v2-r03-t03",
+          "v2-r03-t04",
+          "v2-r03-t05",
+          "v2-r04-t01",
+          "v2-r04-t02",
+          "v2-r04-t03",
+          "v2-r04-t04",
+          "v2-r04-t05"
+        ],
+        "runLimitUsd": 0.1,
+        "projectCeilingUsd": 25
+      }
+    },
+    {
+      "name": "Rendered live runtime, twenty-task catalogue, per-run bound and demo link",
+      "passed": true,
+      "details": {
+        "mode": "Live model · Local Docker checks",
+        "launchDisabled": false
+      }
+    },
+    {
+      "name": "desktop tasks has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "mobile 390 task selection has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "Mobile 390 selects a different public task without execution",
+      "passed": true,
+      "details": {
+        "taskId": "v2-r02-t03",
+        "title": "Chapter boundary pages resolve to the wrong chapter"
+      }
+    },
+    {
+      "name": "mobile 320 task selection has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "Mobile 320 selects a different public task without execution",
+      "passed": true,
+      "details": {
+        "taskId": "v2-r03-t04",
+        "title": "Count zero-valued worksheet cells as populated"
+      }
+    },
+    {
+      "name": "Keyboard focus reaches an interactive element",
+      "passed": true,
+      "details": {
+        "tag": "BUTTON",
+        "text": "Limit worksheet row deduplication to consecutive runs3 requirements · Live repair available"
+      }
+    },
+    {
+      "name": "desktop comparison has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "Explicit completed current-runtime run and earlier failure/pass history retained",
+      "passed": true,
+      "details": {
+        "runId": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+        "historyCount": 5
+      }
+    },
+    {
+      "name": "Terminal rendering identifies recorded live local-Docker evidence and honest accounting",
+      "passed": true,
+      "details": {
+        "accounting": "Provider cost\n$0.00020172 (estimate)\nPer-run spend limit\n$0.10\nModel operations / limit\n2 / 3\nInput tokens / limit\n2,346 / 786,432\nOutput tokens / limit\n254 / 6,000\nElapsed / limit\n135.2 s / 300 s\nSandbox CPU / limit\nNot measured / 900 s"
+      }
+    },
+    {
+      "name": "Actual terminal evidence is publicly readable with live run and runtime identity",
+      "passed": true,
+      "details": {
+        "runId": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+        "bundleDigest": "sha256:618efef5736b49cdd541d33cb84ba4ab8f0f79dea38bb8e4af5c32d0c178a10e"
+      }
+    },
+    {
+      "name": "desktop evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "mobile 390 evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "mobile 320 evidence has no horizontal overflow",
+      "passed": true,
+      "details": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "Observer traffic stayed same-origin GET; no browser console/page/HTTP errors",
+      "passed": true,
+      "details": {
+        "requests": 10,
+        "streamingRequestsAbortedOnNavigationOrClose": 0
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-1440-tasks.png",
+      "digest": "sha256:c3fb7b435ee9a47e20d780a0f4957611e535875778519c8e4136a07a9208c109",
+      "bytes": 247583,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-chapter-task.png",
+      "digest": "sha256:b447c58060d5b38b1de62bc2e49c18a85c057cb17c6fa42af06fae6cde34ef3a",
+      "bytes": 199355,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-worksheet-task.png",
+      "digest": "sha256:1beae711b27cc9405d93a83a9d5a716a133958eb51004d2fc7f219063b75b0ef",
+      "bytes": 231405,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    },
+    {
+      "file": "desktop-1440-comparison.png",
+      "digest": "sha256:427b4dc7bcef50e90d0c9df4dc37a1a1d964c0f64e5a0541c51c7a90acabe2d5",
+      "bytes": 177245,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "desktop-1440-evidence.png",
+      "digest": "sha256:af5f01836f08b7ca54296874f796aa87a9d3841e28e94ec9e8ffb262b142ed81",
+      "bytes": 629631,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      }
+    },
+    {
+      "file": "mobile-390-evidence.png",
+      "digest": "sha256:b20e8f349c67ed56c17af84f2acde4bdc059aea4b61d263a5a764a2fe9bf764e",
+      "bytes": 545577,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "mobile-320-evidence.png",
+      "digest": "sha256:0246fd9a3d7791fd877bd57dd9c1c64dba904f6f2ea803d25e028a80a33dbfb5",
+      "bytes": 555237,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "/healthz",
+      "file": "health-before.json",
+      "digest": "sha256:fa7a3e355bb4504a98031d787152a72a904a3a5464042de68c2776788f76f505",
+      "bytes": 101,
+      "observedAt": "2026-09-28T01:38:52.571Z"
+    },
+    {
+      "path": "/tasks",
+      "file": "tasks-before.json",
+      "digest": "sha256:e01670ac25e9da12817f17fc0c357a92d3cb621c67fc71412d2304fad8699a6d",
+      "bytes": 32772,
+      "observedAt": "2026-09-28T01:38:52.664Z"
+    },
+    {
+      "path": "/runs",
+      "file": "runs-before.json",
+      "digest": "sha256:f20833e76d813bbe6d02429c6ee2e288397d9a6f151f8c319344ab34ca0d8895",
+      "bytes": 379320,
+      "observedAt": "2026-09-28T01:38:52.766Z"
+    },
+    {
+      "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "file": "observed-run.json",
+      "digest": "sha256:b2d30b2b669913deb1839ebfb98b96a01d5bdb0bad13a8fdb5fa604b29e2c77e",
+      "bytes": 84055,
+      "observedAt": "2026-09-28T01:38:54.901Z"
+    },
+    {
+      "path": "/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "file": "observed-evidence.json",
+      "digest": "sha256:6fdb2db2730292d186db4691786749fef381232244dab5bd9cb8e49be2b40fd6",
+      "bytes": 152253,
+      "observedAt": "2026-09-28T01:38:55.009Z"
+    },
+    {
+      "path": "/tasks",
+      "file": "tasks-after.json",
+      "digest": "sha256:e01670ac25e9da12817f17fc0c357a92d3cb621c67fc71412d2304fad8699a6d",
+      "bytes": 32772,
+      "observedAt": "2026-09-28T01:38:56.160Z"
+    },
+    {
+      "path": "/runs",
+      "file": "runs-after.json",
+      "digest": "sha256:f20833e76d813bbe6d02429c6ee2e288397d9a6f151f8c319344ab34ca0d8895",
+      "bytes": 379320,
+      "observedAt": "2026-09-28T01:38:56.255Z"
+    }
+  ],
+  "sourceAssets": [
+    {
+      "path": "/",
+      "local": "apps/web/index.html",
+      "digest": "sha256:44b568ee7b37f41653877495b9560019eae7aa48c19dfed8ed2e1be95a97b663",
+      "bytes": 4998
+    },
+    {
+      "path": "/app.js",
+      "local": "apps/web/app.js",
+      "digest": "sha256:a87b161aaa2247ed971842729602dd1042894db4558834da6a269bab1cdf00d6",
+      "bytes": 46939
+    },
+    {
+      "path": "/style.css",
+      "local": "apps/web/style.css",
+      "digest": "sha256:9915af845e241ece3144ddd403c856da9176d16880e9823475655bcfcd5b2b6d",
+      "bytes": 21182
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/",
+      "at": "2026-09-28T01:38:53.157Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/style.css",
+      "at": "2026-09-28T01:38:53.250Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/app.js",
+      "at": "2026-09-28T01:38:53.253Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/tasks",
+      "at": "2026-09-28T01:38:53.365Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs",
+      "at": "2026-09-28T01:38:53.367Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "at": "2026-09-28T01:38:53.579Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "at": "2026-09-28T01:38:53.580Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "at": "2026-09-28T01:38:53.582Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "at": "2026-09-28T01:38:53.585Z"
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "at": "2026-09-28T01:38:53.588Z"
+    }
+  ],
+  "blockedRequests": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "networkFailures": [],
+  "httpErrors": [],
+  "observedRuns": [
+    {
+      "id": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "taskId": "stable-unique-01",
+      "mode": "live",
+      "phase": "terminal",
+      "status": "verified_for_declared_checks",
+      "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "usage": {
+        "inferenceCalls": 2,
+        "inputTokens": 2346,
+        "outputTokens": 254,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00020171999999999999,
+        "costIsEstimate": true,
+        "elapsedMs": 135216
+      },
+      "bundleDigest": "sha256:618efef5736b49cdd541d33cb84ba4ab8f0f79dea38bb8e4af5c32d0c178a10e",
+      "selectedCandidateId": 2,
+      "candidates": [
+        {
+          "id": 1,
+          "accepted": false,
+          "rejectionReason": "One or more declared checks failed or were unavailable."
+        },
+        {
+          "id": 2,
+          "accepted": true,
+          "rejectionReason": null
+        }
+      ]
+    }
+  ],
+  "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+  "execution": {
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container",
+    "modelId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
+  },
+  "limits": {
+    "inferenceCallLimit": 3,
+    "inputTokenLimit": 786432,
+    "outputTokenLimit": 6000,
+    "wallTimeLimitSeconds": 300,
+    "sandboxCpuSecondsLimit": 900,
+    "maxApprovedSpendUsd": 0.1
+  },
+  "initialAvailability": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 44
+  },
+  "browserVersion": "145.0.7632.6",
+  "finalAvailability": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 44
+  },
+  "finishedAt": "2026-09-28T01:38:56.318Z",
+  "observerSourceDigest": "sha256:344277692aadc2f9c0102b3d70ec4d8c61c6bdc43e08c4a87a64bb13c4572c24"
+}

@@ -4,10 +4,18 @@ import datetime
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
+import sys
 
 OUT = Path(__file__).resolve().parent
 SHA = '7467626bc77b78ffe4698efc09898471b3ab72f1'
+if len(sys.argv) > 1:
+    if len(sys.argv) != 3 or not re.fullmatch('[a-f0-9]{40}', sys.argv[1]) or not re.fullmatch('[a-z0-9][a-z0-9-]{0,60}', sys.argv[2]):
+        raise SystemExit('usage: verify-deployment.py RELEASE_SHA NEW_OUTPUT_LABEL')
+    SHA = sys.argv[1]
+    OUT = OUT / sys.argv[2]
+    OUT.mkdir()  # Never overwrite a previous release verification.
 
 def command(argv):
     p = subprocess.run(argv, capture_output=True, text=True, timeout=45)

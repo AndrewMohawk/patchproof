@@ -1,0 +1,32 @@
+{
+  "method": "Python ast.parse of saved public candidate bytes only; no compile/exec/import of candidate code",
+  "candidateExecution": false,
+  "dockerCalls": 0,
+  "providerCalls": 0,
+  "results": [
+    {
+      "candidateId": 1,
+      "file": "gridloom.py",
+      "sourceSha256": "3c22451de2ba83e7c3f6b541222b40c5ab1d44bfac90d985a08dcc52e8367a2f",
+      "parseStatus": "valid_syntax"
+    },
+    {
+      "candidateId": 2,
+      "file": "gridloom.py",
+      "sourceSha256": "e2965bb772f1688084f32b1a0b7fcfcc1c8d5109949a6933d548b8bc1d286b3d",
+      "parseStatus": "invalid_syntax",
+      "exception": "SyntaxError",
+      "line": 3,
+      "message": "invalid syntax"
+    },
+    {
+      "candidateId": 3,
+      "file": "gridloom.py",
+      "sourceSha256": "854c504f4df76f88d6a8f869830dc66fabcde18e61489e9ae3ee2e718d72446f",
+      "parseStatus": "invalid_syntax",
+      "exception": "IndentationError",
+      "line": 1,
+      "message": "unexpected indent"
+    }
+  ]
+}

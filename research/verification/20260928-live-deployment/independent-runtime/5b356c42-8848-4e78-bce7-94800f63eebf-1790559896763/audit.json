@@ -1,0 +1,730 @@
+{
+  "recordedAt": "2026-09-28T01:44:56.764Z",
+  "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+  "releaseCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "expectedRuntimeSourceDigest": "sha256:f002c913955f022acbd371e37a170126ddb0d935c9203fdf573d014b4101d71b",
+  "observer": "AI metadata review; GET-only; no provider, candidate, replay, credentials or private billing access",
+  "captures": [
+    {
+      "name": "run.json",
+      "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf",
+      "status": 200,
+      "bytes": 146889,
+      "digest": "sha256:6c6111c60d7dcea9020026642f9c4d96507610941e8da22ed6d19a86bf367927",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "name": "evidence.json",
+      "path": "/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "status": 200,
+      "bytes": 248345,
+      "digest": "sha256:e9e75bf601f12e555af444ee07889148464db2c9d215ad98d8f2a6520f36388c",
+      "contentType": "application/json; charset=utf-8"
+    }
+  ],
+  "assertions": {
+    "evidenceVerifierPassed": true,
+    "runExactlyMatchesEvidence": true,
+    "liveUnscoredLocalDockerScope": true,
+    "sourceDigestMatchesCompleteLock": true,
+    "allSourcePinsMatchExactRelease": true,
+    "distinctProviderResponseIds": true,
+    "modelIdsMatchRuntime": true,
+    "candidateUsageSumsMatchAggregate": true,
+    "usagePricedEstimateHonest": true,
+    "sameBoundedAllowance": true,
+    "completeRepeatedObservations": true,
+    "lifecycleInventoryExactAndUnique": true,
+    "allRecordedCleanupConfirmed": true,
+    "verifiedStatusSupported": true
+  },
+  "limitations": [
+    "Hash consistency is not independent provider authentication.",
+    "Recorded request IDs, token usage and cleanup are not independently authenticated external billing or lifecycle events.",
+    "Same-host artifact inspection is not independent-host reproduction, human review or benchmark evidence."
+  ],
+  "summary": {
+    "bundleDigest": "sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8",
+    "sourcePins": 116,
+    "mismatches": [],
+    "taskId": "v2-r03-t02",
+    "variant": "patchproof",
+    "terminalStatus": "failed",
+    "reason": "declared_checks_not_satisfied",
+    "selectedCandidateId": 1,
+    "candidateCount": 3,
+    "providerResponseIds": [
+      "chatcmpl-5adcc59b-dd58-415f-a533-ce1e0f18f2eb",
+      "chatcmpl-4a84e7ee-d054-41ea-9d30-46911c599efb",
+      "chatcmpl-2d2119e3-8d3e-44d2-ad4b-8d8fdebb0ef6"
+    ],
+    "usage": {
+      "inferenceCalls": 3,
+      "inputTokens": 6331,
+      "outputTokens": 2127,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": 0.0008903399999999999,
+      "costIsEstimate": true,
+      "elapsedMs": 201986
+    },
+    "calculatedEstimateUsd": 0.0008903399999999999,
+    "authoritativeBilledCostUsd": null,
+    "declaredChecksPerRevision": 13,
+    "repeatedObservations": 104,
+    "observedStatuses": {
+      "fail": 8,
+      "pass": 44,
+      "error": 52
+    },
+    "revisions": [
+      {
+        "id": "original",
+        "statusCounts": {
+          "fail": 2,
+          "pass": 11
+        },
+        "visibleStatusCounts": {
+          "fail": 1,
+          "pass": 2
+        },
+        "acceptanceStatusCounts": {
+          "fail": 1,
+          "pass": 9
+        },
+        "failedOrUnavailableChecks": [
+          {
+            "id": "v-r01-null-is-data",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  9,
+                  3
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    1,
+                    null
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": 9
+              }
+            },
+            "expected": {
+              "outcome": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  null,
+                  3
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    1,
+                    null
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": 9
+              }
+            }
+          },
+          {
+            "id": "a-r01-null-zero",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                [
+                  -6,
+                  0
+                ],
+                [
+                  4,
+                  -6
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    null,
+                    4
+                  ],
+                  [
+                    0,
+                    null
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": -6
+              }
+            },
+            "expected": {
+              "outcome": [
+                [
+                  null,
+                  0
+                ],
+                [
+                  4,
+                  null
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    null,
+                    4
+                  ],
+                  [
+                    0,
+                    null
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": -6
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "statusCounts": {
+          "fail": 2,
+          "pass": 11
+        },
+        "visibleStatusCounts": {
+          "fail": 1,
+          "pass": 2
+        },
+        "acceptanceStatusCounts": {
+          "fail": 1,
+          "pass": 9
+        },
+        "failedOrUnavailableChecks": [
+          {
+            "id": "v-r01-null-is-data",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  9,
+                  3
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    1,
+                    null
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": 9
+              }
+            },
+            "expected": {
+              "outcome": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  null,
+                  3
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    1,
+                    null
+                  ],
+                  [
+                    2,
+                    3
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": 9
+              }
+            }
+          },
+          {
+            "id": "a-r01-null-zero",
+            "status": "fail",
+            "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+            "actual": {
+              "outcome": [
+                [
+                  -6,
+                  0
+                ],
+                [
+                  4,
+                  -6
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    null,
+                    4
+                  ],
+                  [
+                    0,
+                    null
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": -6
+              }
+            },
+            "expected": {
+              "outcome": [
+                [
+                  null,
+                  0
+                ],
+                [
+                  4,
+                  null
+                ]
+              ],
+              "argsAfter": [
+                [
+                  [
+                    null,
+                    4
+                  ],
+                  [
+                    0,
+                    null
+                  ]
+                ]
+              ],
+              "kwargsAfter": {
+                "fill": -6
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "statusCounts": {
+          "error": 13
+        },
+        "visibleStatusCounts": {
+          "error": 3
+        },
+        "acceptanceStatusCounts": {
+          "error": 10
+        },
+        "failedOrUnavailableChecks": [
+          {
+            "id": "v-r01-null-is-data",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                1,
+                2
+              ],
+              [
+                null,
+                3
+              ]
+            ]
+          },
+          {
+            "id": "v-r02-padding",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                2,
+                0,
+                7
+              ],
+              [
+                0,
+                0,
+                8
+              ]
+            ]
+          },
+          {
+            "id": "v-r03-outer",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r01-null-zero",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                null,
+                0
+              ],
+              [
+                4,
+                null
+              ]
+            ]
+          },
+          {
+            "id": "a-r01-signed",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                -2,
+                5
+              ],
+              [
+                0,
+                -8
+              ]
+            ]
+          },
+          {
+            "id": "a-r02-null-fill",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                1,
+                3,
+                null
+              ],
+              [
+                2,
+                null,
+                null
+              ]
+            ]
+          },
+          {
+            "id": "a-r02-empty",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": []
+          },
+          {
+            "id": "a-r02-empty-rows",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": []
+          },
+          {
+            "id": "a-r03-fill-bool",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-fill-float",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-fill-string",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-cell-bool",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-row-number",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "statusCounts": {
+          "error": 13
+        },
+        "visibleStatusCounts": {
+          "error": 3
+        },
+        "acceptanceStatusCounts": {
+          "error": 10
+        },
+        "failedOrUnavailableChecks": [
+          {
+            "id": "v-r01-null-is-data",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                1,
+                2
+              ],
+              [
+                null,
+                3
+              ]
+            ]
+          },
+          {
+            "id": "v-r02-padding",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                2,
+                0,
+                7
+              ],
+              [
+                0,
+                0,
+                8
+              ]
+            ]
+          },
+          {
+            "id": "v-r03-outer",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r01-null-zero",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                null,
+                0
+              ],
+              [
+                4,
+                null
+              ]
+            ]
+          },
+          {
+            "id": "a-r01-signed",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                -2,
+                5
+              ],
+              [
+                0,
+                -8
+              ]
+            ]
+          },
+          {
+            "id": "a-r02-null-fill",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": [
+              [
+                1,
+                3,
+                null
+              ],
+              [
+                2,
+                null,
+                null
+              ]
+            ]
+          },
+          {
+            "id": "a-r02-empty",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": []
+          },
+          {
+            "id": "a-r02-empty-rows",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": []
+          },
+          {
+            "id": "a-r03-fill-bool",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-fill-float",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-fill-string",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-cell-bool",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          },
+          {
+            "id": "a-r03-row-number",
+            "status": "error",
+            "message": "verification_unavailable: check_error.",
+            "actual": null,
+            "expected": {
+              "exception": "TypeError"
+            }
+          }
+        ]
+      }
+    ],
+    "lifecycles": 104,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "fail",
+        "checkIds": [
+          "v-r01-null-is-data",
+          "a-r01-null-zero",
+          "a-r01-signed"
+        ]
+      },
+      {
+        "requirementId": "R02",
+        "status": "pass",
+        "checkIds": [
+          "v-r02-padding",
+          "a-r02-null-fill",
+          "a-r02-empty",
+          "a-r02-empty-rows"
+        ]
+      },
+      {
+        "requirementId": "R03",
+        "status": "pass",
+        "checkIds": [
+          "v-r03-outer",
+          "a-r03-fill-bool",
+          "a-r03-fill-float",
+          "a-r03-fill-string",
+          "a-r03-cell-bool",
+          "a-r03-row-number"
+        ]
+      }
+    ],
+    "timingPolicy": {
+      "id": "live-local-check-timing-v2",
+      "maximumBatchWallSeconds": 120
+    },
+    "checkProtocol": {
+      "id": "repeat-observations-v1",
+      "repetitions": 2,
+      "disagreement": "needs_review",
+      "budget": "shared-batch-wall-time"
+    }
+  },
+  "status": "consistent_recorded_evidence",
+  "collectorDigest": "sha256:661540f6ca6216b2dfa3d6a356ed1eea78a4bd8e0a305bdfd2fe3e8a4e53b3a2"
+}

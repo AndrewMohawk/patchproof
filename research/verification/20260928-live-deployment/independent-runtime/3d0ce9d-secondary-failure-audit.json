@@ -1,0 +1,247 @@
+{
+  "at": "2026-09-28T01:45:50.673Z",
+  "kind": "independent-secondary-development-failure-audit",
+  "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+  "taskId": "v2-r03-t02",
+  "title": "Keep explicit empty cells during worksheet transposition",
+  "releaseCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "operationalSourceDigest": "sha256:f002c913955f022acbd371e37a170126ddb0d935c9203fdf573d014b4101d71b",
+  "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+  "collectorExitCode": 0,
+  "individualAssertionsPassed": 14,
+  "outcome": {
+    "terminalStatus": "failed",
+    "reason": "declared_checks_not_satisfied",
+    "selectedCandidateId": 1,
+    "acceptedCandidateIds": [],
+    "requirements": [
+      {
+        "requirementId": "R01",
+        "status": "fail",
+        "checkIds": [
+          "v-r01-null-is-data",
+          "a-r01-null-zero",
+          "a-r01-signed"
+        ]
+      },
+      {
+        "requirementId": "R02",
+        "status": "pass",
+        "checkIds": [
+          "v-r02-padding",
+          "a-r02-null-fill",
+          "a-r02-empty",
+          "a-r02-empty-rows"
+        ]
+      },
+      {
+        "requirementId": "R03",
+        "status": "pass",
+        "checkIds": [
+          "v-r03-outer",
+          "a-r03-fill-bool",
+          "a-r03-fill-float",
+          "a-r03-fill-string",
+          "a-r03-cell-bool",
+          "a-r03-row-number"
+        ]
+      }
+    ],
+    "declaredChecks": 13,
+    "repetitions": 2,
+    "candidates": 3,
+    "repeatedObservations": 104,
+    "observationStatuses": {
+      "fail": 8,
+      "pass": 44,
+      "error": 52
+    },
+    "recordedCleanupConfirmed": 104,
+    "selectedCandidateFailures": [
+      {
+        "id": "v-r01-null-is-data",
+        "status": "fail",
+        "actual": {
+          "outcome": [
+            [
+              1,
+              2
+            ],
+            [
+              9,
+              3
+            ]
+          ],
+          "argsAfter": [
+            [
+              [
+                1,
+                null
+              ],
+              [
+                2,
+                3
+              ]
+            ]
+          ],
+          "kwargsAfter": {
+            "fill": 9
+          }
+        },
+        "expected": {
+          "outcome": [
+            [
+              1,
+              2
+            ],
+            [
+              null,
+              3
+            ]
+          ],
+          "argsAfter": [
+            [
+              [
+                1,
+                null
+              ],
+              [
+                2,
+                3
+              ]
+            ]
+          ],
+          "kwargsAfter": {
+            "fill": 9
+          }
+        }
+      },
+      {
+        "id": "a-r01-null-zero",
+        "status": "fail",
+        "actual": {
+          "outcome": [
+            [
+              -6,
+              0
+            ],
+            [
+              4,
+              -6
+            ]
+          ],
+          "argsAfter": [
+            [
+              [
+                null,
+                4
+              ],
+              [
+                0,
+                null
+              ]
+            ]
+          ],
+          "kwargsAfter": {
+            "fill": -6
+          }
+        },
+        "expected": {
+          "outcome": [
+            [
+              null,
+              0
+            ],
+            [
+              4,
+              null
+            ]
+          ],
+          "argsAfter": [
+            [
+              [
+                null,
+                4
+              ],
+              [
+                0,
+                null
+              ]
+            ]
+          ],
+          "kwargsAfter": {
+            "fill": -6
+          }
+        }
+      }
+    ]
+  },
+  "usage": {
+    "inferenceCalls": 3,
+    "inputTokens": 6331,
+    "outputTokens": 2127,
+    "sandboxCpuSeconds": null,
+    "measuredCostUsd": 0.0008903399999999999,
+    "costIsEstimate": true,
+    "elapsedMs": 201986
+  },
+  "authoritativeBilledCostUsd": null,
+  "syntaxMetadataControl": {
+    "command": "python3 -I -S; ast.parse saved candidate file strings only",
+    "exitCode": 0,
+    "results": [
+      {
+        "candidateId": 1,
+        "file": "gridloom.py",
+        "sourceSha256": "3c22451de2ba83e7c3f6b541222b40c5ab1d44bfac90d985a08dcc52e8367a2f",
+        "parseStatus": "valid_syntax"
+      },
+      {
+        "candidateId": 2,
+        "file": "gridloom.py",
+        "sourceSha256": "e2965bb772f1688084f32b1a0b7fcfcc1c8d5109949a6933d548b8bc1d286b3d",
+        "parseStatus": "invalid_syntax",
+        "exception": "SyntaxError",
+        "line": 3,
+        "message": "invalid syntax"
+      },
+      {
+        "candidateId": 3,
+        "file": "gridloom.py",
+        "sourceSha256": "854c504f4df76f88d6a8f869830dc66fabcde18e61489e9ae3ee2e718d72446f",
+        "parseStatus": "invalid_syntax",
+        "exception": "IndentationError",
+        "line": 1,
+        "message": "unexpected indent"
+      }
+    ],
+    "candidateExecuted": false
+  },
+  "artifacts": [
+    {
+      "path": "5b356c42-8848-4e78-bce7-94800f63eebf-1790559896763/run.json",
+      "digest": "sha256:6c6111c60d7dcea9020026642f9c4d96507610941e8da22ed6d19a86bf367927"
+    },
+    {
+      "path": "5b356c42-8848-4e78-bce7-94800f63eebf-1790559896763/evidence.json",
+      "digest": "sha256:e9e75bf601f12e555af444ee07889148464db2c9d215ad98d8f2a6520f36388c"
+    },
+    {
+      "path": "5b356c42-8848-4e78-bce7-94800f63eebf-1790559896763/audit.json",
+      "digest": "sha256:866e21f941d41871f34ea02b6cf4db2e2f7207ca209f1445f40946a60a02a147"
+    },
+    {
+      "path": "5b356c42-8848-4e78-bce7-94800f63eebf-1790559896763/source-syntax-observation.json",
+      "digest": "sha256:e17008dc4f762125caddcba65f8b7bc3b21efcdbca8cfc32c2553b71377bd39e"
+    }
+  ],
+  "limitations": [
+    "Separate authorized development task, not another arm of the stable-unique three-run sequence.",
+    "The model produced no approved patch: selected candidate1 fails two declared checks; candidates2/3 cannot parse.",
+    "A faithful replay of selected candidate1 should reproduce its rejected result, not support repair success.",
+    "Driver error strings alone are generic; metadata syntax parsing independently identifies invalid syntax in saved candidates2/3 without executing them.",
+    "Provider billed cost remains unknown; usage total is explicitly an estimate.",
+    "No provider calls, Docker commands, candidate execution, private ledgers, credentials or evaluator data were used by this audit.",
+    "No model superiority, performance generalization, human approval or competition-ready claim."
+  ]
+}

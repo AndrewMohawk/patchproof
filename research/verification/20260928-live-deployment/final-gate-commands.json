@@ -1,0 +1,18 @@
+{
+  "release": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "commands": [
+    {
+      "command": "make doctor",
+      "exitCode": 0,
+      "log": "final-doctor.log",
+      "sha256": "0fdcbb8996ecc480928d95511103878f61e49d10c07350cebed19df9953966ec"
+    },
+    {
+      "command": "make release-check",
+      "exitCode": 2,
+      "log": "final-release-check.log",
+      "sha256": "070290f7f236e58c338fb59534c7c14569ade9c680f17c99b11d4b4d4f118ff9"
+    }
+  ],
+  "context": "Competition release gates remain distinct from the real public Token Factory and local Docker demonstration."
+}

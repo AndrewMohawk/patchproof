@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "recordedAt": "2026-09-28T01:33:12.090Z",
+  "files": [
+    {
+      "path": "scripts/record-public-demo.ts",
+      "digest": "sha256:d0caa081efa374595bc818371ee553fe4c5838912659ce106b05d6a3d52be2ae"
+    },
+    {
+      "path": "tests/public-demo-recorder.test.ts",
+      "digest": "sha256:3bf6fa45ace1b5f6cab58355e60151a0c7116942e3c5051fd1907860889acead"
+    }
+  ],
+  "historicalFailure": {
+    "sourceCommit": "7467626bc77b78ffe4698efc09898471b3ab72f1",
+    "actualRunId": "97808518-b836-41a9-961e-8e5f466dc032",
+    "actualRunStatus": "verified_for_declared_checks",
+    "observerError": "cdpSession.send: Protocol error (Fetch.continueRequest): Invalid InterceptionId.",
+    "preservedBy": "Coordinator retains original private live-checks-only-01 report/raw recording; no paid rerun for observer failure.",
+    "source": "Coordinator report; private recording inputs were not read by this review."
+  },
+  "fix": "Record every redirect refusal before failRequest. Tolerate only the exact expired-ID protocol message for the matching nonredirect continuation command; journal already_gone. Keep unexpected/different-command errors fatal. Module import cannot start the recorder.",
+  "validation": [
+    {
+      "command": "node --test tests/public-demo-recorder.test.ts",
+      "exitCode": 0,
+      "passed": 5,
+      "failed": 0,
+      "log": "focused-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    }
+  ],
+  "actualBrowserControl": "An invented loopback HTTP page and isolated Chromium reproduce the expired response-ID error; revised guard tolerates it. A real302 navigation is refused with zero sink requests.",
+  "independentReview": {
+    "agent": "/root/json_contract_review",
+    "scope": "Source-only review of guard, call site, import boundary and focused tests; tests not independently executed.",
+    "result": "No blocker; exact matching and redirect refusal order preserve the boundary."
+  },
+  "providerCalls": 0,
+  "candidateExecutions": 0,
+  "paidRunRetries": 0,
+  "actualPublicRecorderRerun": "NOT RUN by this agent; coordinator owns subsequent matched development recording.",
+  "originalFailureNotOverwritten": true
+}

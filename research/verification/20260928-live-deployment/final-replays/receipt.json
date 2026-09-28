@@ -1,0 +1,70 @@
+{
+  "checkedAt": "2026-09-28T01:47:23.886021+00:00",
+  "releaseCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "sameHost": true,
+  "parallelism": 4,
+  "newInferenceCalls": 0,
+  "results": [
+    {
+      "runId": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "command": "make reproduce RUN=d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "exitCode": 0,
+      "status": "reproduced",
+      "checks": 9,
+      "checkStatuses": {
+        "pass": 9,
+        "fail": 0,
+        "error": 0
+      },
+      "bundleDigest": "sha256:618efef5736b49cdd541d33cb84ba4ab8f0f79dea38bb8e4af5c32d0c178a10e",
+      "providerCalls": 0,
+      "logSha256": "b5c180b228b62e54eef656e563bc3cc440ac70ec80b13aff86cdedd56c56ac4d"
+    },
+    {
+      "runId": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "command": "make reproduce RUN=9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "exitCode": 0,
+      "status": "reproduced",
+      "checks": 9,
+      "checkStatuses": {
+        "pass": 9,
+        "fail": 0,
+        "error": 0
+      },
+      "bundleDigest": "sha256:ba97663bcb683e428ac83b38e8cf91178b0470e5600cc0e3da63cffdff2c1bfc",
+      "providerCalls": 0,
+      "logSha256": "000854454d3b6ca64500f42a5a3224f44fc3c49fef076d69c5d71f94a15b7fa7"
+    },
+    {
+      "runId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "command": "make reproduce RUN=08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "exitCode": 0,
+      "status": "reproduced",
+      "checks": 9,
+      "checkStatuses": {
+        "pass": 9,
+        "fail": 0,
+        "error": 0
+      },
+      "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+      "providerCalls": 0,
+      "logSha256": "52011f404a7b98beb9091ab62ca746894d02665b7f87205ddd50d19c908a449b"
+    },
+    {
+      "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+      "command": "make reproduce RUN=5b356c42-8848-4e78-bce7-94800f63eebf",
+      "exitCode": 0,
+      "status": "reproduced",
+      "checks": 13,
+      "checkStatuses": {
+        "pass": 11,
+        "fail": 2,
+        "error": 0
+      },
+      "bundleDigest": "sha256:5a9c00d2629636f2963c63efa49ef0236876b98ac3ba7a670b684abd32e12ff8",
+      "providerCalls": 0,
+      "logSha256": "c5e611284743293a8f6a5055b2faecb601dab2a8fdfd88490509047c1fbf8045"
+    }
+  ],
+  "note": "Reproduced means the saved outcomes match. The secondary task retains two failed checks and is not an approved patch."
+}

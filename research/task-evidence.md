@@ -1,4 +1,4 @@
-# Task evidence — local product
+# Task evidence — implementation and observed operation
 
 ## Scope and source references
 
@@ -13,10 +13,13 @@
   source-bound verification records below. They retain actual commands, exit
   codes, bundles and run IDs.
 
-The owner explicitly authorized full local development before provider access.
-Original real-provider/experiment/release gates remain unpassed. `tasks.json`
-separates completed local implementation from blocked external acceptance.
-No paid provider call, benchmark result, public deployment or entry is claimed.
+The owner authorized local development before provider access and subsequently
+authorized the real Token Factory/local-Docker public application. Actual repair
+requests and public deployment are now observed; the dated real-deployment record
+below preserves their outcomes and failures. `tasks.json` keeps sponsor Sandbox,
+calibrated experiment, human acceptance and final release gates separate. Earlier
+dated sections retain the claims and limits of their own snapshots; no benchmark
+result or competition entry is claimed.
 
 ## Implemented paths and verification
 
@@ -24,12 +27,12 @@ No paid provider call, benchmark result, public deployment or entry is claimed.
 |---|---|---|
 | T01/T02 | `owner-decisions.json`, `budget.json`, `runtime-lock.json`, contracts, workspace | Config validation, exact $25 ceiling, v1/v2 digest locks, TypeScript checks. Unknown account fields stay null. |
 | T03 | `fixtures/`, `workers/evaluator/`, separate evaluator workspace | All 60 independently authored v2 tasks passed separate review and fresh contract 2.2 gold/start/repeat validation; all 100 controls passed. Immutable public integration, provenance, two preserved infrastructure failures and final cleanup audit are under `corpus-v2/`. V1 history remains preserved. No gold or final vectors in this checkout. |
-| T04 | `workers/repair/`, `workers/sandbox/` | Fake HTTP transports plus actual pinned Docker checks, cancellation, parent death, wall deadlines and exact run-owned cleanup. Real Nebius calls NOT RUN. |
-| T05–T07 | `packages/orchestrator/` | Same limits, protected paths, policy variants, actual rejected/accepted candidates; scripted model only. Final feedback inaccessible to repair loop. |
+| T04 | `workers/repair/`, `workers/sandbox/` | Fake transport controls plus actual Token Factory model requests and pinned local Docker checks. Real Nebius Sandboxes entitlement/execution and authoritative billing remain unverified. |
+| T05–T07 | `packages/orchestrator/` | Equal-limit scripted controls and actual baseline/checks-only development observations, with failures retained. Three-arm live results and any subsequent diagnostic revision must bind their own source; no benchmark advantage is inferred. Final feedback remains inaccessible to the repair loop. |
 | T08 | journal, lease, evidence and patch modules | Durable reopen/idempotency, failed publication, partial infrastructure logs, interrupted-runtime drift, immutable bundle and fresh patch replay. |
 | T09/T11 | evaluator planner/adjudicator/analyzer, `research/evaluation/` | Fixed 72/270 plans, protected one-use final adjudication tests, matched budgets/denominators and clustered inference tests. Scored experiments NOT RUN. |
-| T10 | `apps/web/`, product API | Actual browser task/comparison/evidence flow, real container observations, export/reload, desktop/mobile and keyboard; HTTP cancellation/denial/SSE tests. |
-| T12–T14 | operations, submission draft, local release review, release audit | Local lifecycle/evidence checks, explicit NOT RUN provider/release items; no public rollout or recording. |
+| T10 | `apps/web/`, product API | Actual public FQDN task/progress/evidence rendering at desktop/mobile widths, plus local export/reload, keyboard and HTTP cancellation/denial/SSE controls. Uncoached human acceptance is still unobserved. |
+| T12–T14 | operations, submission draft, local release review, release audit | Public real-model/local-Docker rollout and a 95.12-second hosted real-run walkthrough are verified; original recording attempts and failures remain retained. Broader competition gates and earlier mock footage remain separate. |
 
 `make test` runs type checking, locked-contract checks and the full suite, including
 real local container tests. The final local-product validation records its actual
@@ -74,10 +77,12 @@ license metadata are locked. Local Python image/control details are in
 `workers/sandbox/README.md`. Public provider URLs and retrieval statuses are in
 `research/sources.json`; unversioned docs are not account verification.
 
-Sponsor smoke/cost reconciliation, real 72/270 episodes, independent clean-machine
-replay, uncoached reviewer timing/accuracy, public demo availability and final
-submission: **NOT RUN**, for the specific gates in `research/blockers.md`.
-Application license and owner publication/entry decisions remain open.
+Nebius Sandboxes smoke, authoritative cost reconciliation, real 72/270 episodes,
+independent clean-machine replay, uncoached reviewer timing/accuracy and final
+submission remain **NOT RUN**, for the specific gates in `research/blockers.md`.
+Public demo availability is observed, but judging-period operation is not proven
+by a point-in-time health check. Application licensing, final source publication
+and entry decisions remain open.
 
 ## Final local validation record
 
@@ -427,3 +432,138 @@ calls. The coordinator viewed original screenshots and sampled decoded MP4 frame
 this is automated/AI review, not a human usability study. See the
 [actual custody record](verification/20260927-archive-recorder/actual-walkthrough-custody.json)
 and the recorder verification folder for commands, exit codes, hashes and limits.
+
+## 2026-09-28 — actual public model/local-Docker development observations
+
+The owner-authorized public application at
+`https://patchproof.andrewmohawk.xyz` uses
+`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` through Nebius Token Factory and isolated
+**local Docker checks**, not Nebius Sandboxes. It exposes 20 curated development
+task IDs, a $0.10 per-run ceiling under the $25 project approval, and availability
+gates for new runs. Source `7467626bc77b78ffe4698efc09898471b3ab72f1` passed
+664 tests, typechecking and contract checks. See the
+[deployment receipt](verification/20260928-live-deployment/final-deployment/deployment-receipt.json),
+[original test log](verification/20260928-live-deployment/corrected-release-tests.log)
+and [restrictive-umask startup control](verification/20260928-live-deployment/corrected-startup.json).
+
+The first release `88f6de2` run `1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c`
+ended `needs_review` after three real model calls. The service umask removed guest
+read permission from generated checker inputs; all checks errored. Its original
+bundle, recording attempt and $0.00027324 estimate remain preserved in the
+[failure record](verification/20260928-live-deployment/first-real-run-failure.json).
+Candidate 3 was selected as retained evidence, but no patch was accepted.
+Selection must not be described as approval.
+
+The corrected release then produced these real development observations:
+
+| Approach and run | Observed result | Calls / estimated provider USD | Recorded local operations |
+|---|---|---|---|
+| Baseline `bb948175-27cb-412a-9fb7-ba64b46dd3d6` | `failed`; no accepted patch; selected candidate 3 remains evidence | 3 / $0.00024468 | 72 repeated check operations; all cleanup recorded confirmed |
+| Checks only `97808518-b836-41a9-961e-8e5f466dc032` | `verified_for_declared_checks`; first candidate passes all 9 checks | 1 / $0.00012948 | 36 repeated check operations; all cleanup recorded confirmed |
+
+Independent GET-only artifact review verified each bundle against the observed
+terminal record, all 116 release source pins, request/operation inventories and
+token-rate estimates: [baseline audit](verification/20260928-live-deployment/independent-runtime/bb948175-27cb-412a-9fb7-ba64b46dd3d6-1790558716857/audit.json)
+and [checks-only audit](verification/20260928-live-deployment/independent-runtime/97808518-b836-41a9-961e-8e5f466dc032-1790558844772/audit.json).
+This checks recorded consistency; it does not independently authenticate billing
+or turn the observations into a benchmark. Authoritative charges and sandbox CPU
+remain unknown. Original and candidate failures are retained in the denominator.
+
+The corrected public UI passed 15 GET-only browser checks at 1440, 390 and 320 px,
+including actual starting-check progress, disabled new-run controls while busy,
+no cancellation for an unowned run and zero browser errors. Its
+[progress receipt](verification/20260928-live-deployment/read-only-browser/corrected-progress-receipt.json)
+does not claim a terminal outcome. Individual approach reruns preserve prior
+evidence/history; the [synthetic browser controls](verification/20260928-live-deployment/rerun-control/receipt.json)
+passed without provider calls.
+
+The checks-only run passed even though its recorder later failed on an expired
+Chromium interception ID. The raw recording/report remain preserved. A narrow
+guard correction tolerates only that exact nonredirect continuation error while
+still refusing every redirect; [five focused controls](verification/20260928-live-deployment/recorder-interception/receipt.json)
+and typechecking pass, with independent source review. No paid run was retried to
+hide that observer failure.
+
+Visible-check retry diagnostics were subsequently identified for improvement.
+These two runs remain development history; they are not a complete three-arm
+comparison or evidence of superiority. The fresh matched exploratory runs and
+real-run video are recorded in the next source-bound section. The earlier
+42.84-second mock video stays separately labeled. No scored pilot/evaluation,
+human study, Nebius Sandboxes result, independent-machine reproduction or final
+submission is established by this deployment.
+
+## 2026-09-28 — current matched development demonstration, source 3d0ce9d
+
+The current operational release is
+`3d0ce9d33b2169efec6290d7a478d4002a480a58`, operational source
+`sha256:f002c913955f022acbd371e37a170126ddb0d935c9203fdf573d014b4101d71b`,
+runtime lock `sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed`.
+It passed **676 tests**, typechecking and locked-contract checks in the
+[final release log](verification/20260928-live-deployment/final-release-tests.log).
+The [deployment-under-load receipt](verification/20260928-live-deployment/final-deployment/release-3d0ce9d-under-load/deployment-receipt.json)
+binds the public route to this release.
+
+After improving shared visible-check diagnostics, the coordinator ran a fresh
+three-arm development sequence. This protocol change and its preceding runs are
+retained; the sequence is explicitly exploratory, not a scored experiment.
+
+| Approach | Run | Accepted candidate / declared checks | Calls | Elapsed | Estimated provider USD |
+|---|---|---|---|---|---|
+| Baseline | `d11aa1fc-61ee-4b42-a89e-df6b385e4f1d` | Candidate 2 / 9 of 9 | 2 | 135.216 s | $0.00020172 |
+| Checks only | `9943a027-4d6c-4f4b-94bb-d1ed4664b2f1` | Candidate 1 / 9 of 9 | 1 | 73.122 s | $0.00012066 |
+| PatchProof | `08087e0a-f5d9-4c55-b4b6-7666bc8e016c` | Candidate 1 / 9 of 9 | 1 | 73.933 s | $0.00010692 |
+
+All three share the same fixture, model, source, policy, runtime lock and aggregate
+allowances. Baseline's first candidate retained the original behavior and failed
+four checks; that rejection remains visible. There is no invented rejected
+PatchProof candidate: its first candidate passed. The
+[independent three-arm audit](verification/20260928-live-deployment/independent-runtime/3d0ce9d-three-arm-audit.json)
+verified 42 per-run assertions, 116 source pins per bundle and 126 unique recorded
+local-check operations with cleanup confirmed. One episode per approach does not
+establish superiority or a performance estimate.
+
+A separate worksheet task, `v2-r03-t02`, also ran through the public app:
+`5b356c42-8848-4e78-bce7-94800f63eebf` **failed**. Selected candidate 1 passed
+11 of 13 checks and was not accepted; later candidates had syntax errors. Its
+three model calls, 104 recorded local-check operations and $0.00089034 estimate
+remain visible in the [secondary failure audit](verification/20260928-live-deployment/independent-runtime/3d0ce9d-secondary-failure-audit.json).
+This unsuccessful task is separate from the three-arm sequence, not omitted.
+
+The coordinator's [fresh same-host replays](verification/20260928-live-deployment/final-replays/receipt.json)
+all exited 0 without new inference. The three accepted patches reproduced 9/9
+passing checks; the worksheet patch reproduced its two failures. Successful
+reproduction means agreement with saved outcomes, not repair approval.
+
+Current coordinator accounting records seven actual repair runs plus the earlier
+marker call, a $0.00196992 aggregate token-rate **estimate**, and $0.80 retained
+in reservations. Authoritative billed charges remain unknown; the $25 owner
+ceiling is unchanged. These figures are not independently reconciled invoice
+amounts, and unmeasured sandbox CPU stays unknown.
+
+The completed baseline passed [17 public GET-only desktop/mobile checks](verification/20260928-live-deployment/read-only-browser/attempt-03-final-baseline/report.json).
+A [72.120-second GET-only walkthrough](verification/20260928-live-deployment/read-only-walkthrough/README.md)
+then captured the actual comparison, PatchProof diff/check logs, baseline rejection,
+costs and evidence export with eight readable scenes. Its 24 browser requests were
+all GETs, no application response or DOM was substituted, and there were zero
+browser/guard errors or locator retries. Separate 390/320 px terminal PatchProof
+views had no horizontal overflow. Raw footage, captions, source/run/bundle/video
+digests and scene timing are preserved. The coordinator also retained actual
+creation/progress recordings and their failed observer attempts.
+
+The final **95.120-second H264 video** is published at
+[the demo player](https://patchproof.andrewmohawk.xyz/demo/) with a
+[direct MP4 download](https://patchproof.andrewmohawk.xyz/demo/patchproof-real-demo.mp4).
+It combines actual PatchProof creation/progress with the GET-only evidence
+walkthrough of that same run. Waiting omissions are labeled, playback speed is
+unchanged, and no outcome is substituted. The
+[publication receipt](verification/20260928-live-deployment/public-video/publication-receipt.json)
+binds source `3d0ce9d`, primary run `08087e0a-f5d9-4c55-b4b6-7666bc8e016c`
+and video SHA-256 `c3acffaa8cc3d84af794efdd86f798ccb3abe4572c5fb370ee62a298a9921864`.
+The separate [public playback receipt](verification/20260928-live-deployment/final-deployment/video-receipt.json)
+passes 10/10 checks: HTTP 200 download hash equality, Cloudflare HTTP 206 range
+support, and actual desktop 1440/mobile 390 playback without errors or overflow.
+
+Prior mock footage is not reused as real-provider proof. Nebius Sandboxes
+entitlement/execution, authoritative billing, calibrated model selection and
+72/270 experiments, uncoached human exercises, independent-host replay and final
+licensing/entry gates remain open.

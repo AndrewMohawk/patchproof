@@ -90,13 +90,19 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Live deployment and evidence
 
-The public service runs immutable release `7467626bc77b78ffe4698efc09898471b3ab72f1`.
-All **664 tests** passed before deployment. The service also executes a real
+The public service runs immutable release `3d0ce9d33b2169efec6290d7a478d4002a480a58`.
+All **676 tests** passed before deployment. The service also executes a real
 container readiness check under its production permissions before accepting work.
 The public and lab routes, Cloudflare access, desktop/mobile interface, and
 health monitoring have been verified. The [deployment record](research/verification/20260928-live-deployment/)
 preserves exact source pins, actual model operations, failed attempts, checks,
 browser recordings and independent reviews.
+
+The captioned **95-second public video** combines an actual repair with its
+recorded evidence walkthrough. Desktop/mobile playback and downloads are verified.
+The final three-approach example passed all nine declared checks, and fresh replay
+reproduced every selected result. A second task failed and remains visible; these
+examples do not establish general repair reliability.
 
 The live model is `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. All 20 development
 tasks are available. The three approaches share the same model, immutable task

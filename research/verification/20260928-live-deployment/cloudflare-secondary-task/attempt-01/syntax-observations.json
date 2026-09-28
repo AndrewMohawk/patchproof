@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-09-28T01:45:31.896655+00:00",
+  "runId": "5b356c42-8848-4e78-bce7-94800f63eebf",
+  "method": "Python ast.parse on the exported candidate source. Source was not executed. No provider request.",
+  "candidates": [
+    {
+      "candidateId": 1,
+      "checkErrors": [],
+      "sourceParse": {
+        "gridloom.py": {
+          "sha256": "3c22451de2ba83e7c3f6b541222b40c5ab1d44bfac90d985a08dcc52e8367a2f",
+          "parsed": true
+        }
+      }
+    },
+    {
+      "candidateId": 2,
+      "checkErrors": [
+        "verification_unavailable: check_error."
+      ],
+      "sourceParse": {
+        "gridloom.py": {
+          "sha256": "e2965bb772f1688084f32b1a0b7fcfcc1c8d5109949a6933d548b8bc1d286b3d",
+          "parsed": false,
+          "line": 3,
+          "classification": "invalid syntax"
+        }
+      }
+    },
+    {
+      "candidateId": 3,
+      "checkErrors": [
+        "verification_unavailable: check_error."
+      ],
+      "sourceParse": {
+        "gridloom.py": {
+          "sha256": "854c504f4df76f88d6a8f869830dc66fabcde18e61489e9ae3ee2e718d72446f",
+          "parsed": false,
+          "line": 1,
+          "classification": "unexpected indent"
+        }
+      }
+    }
+  ]
+}

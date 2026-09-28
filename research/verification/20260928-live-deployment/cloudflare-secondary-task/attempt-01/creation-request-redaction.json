@@ -1,0 +1,10 @@
+{
+  "reason": "Generic API-key heuristic matched the request deduplication nonce. It is not an API key or authentication credential. The export omits it instead of adding a scanner allowlist.",
+  "originalSha256": "9caf7c156a3524b2e1ac95e8e0e8239de6a91111958e7bb96f276d8839f9b87c",
+  "sanitizedSha256": "091df8b8ce9a79f409ad36fe122ee145b24f69832ce15861926054607135e118",
+  "changedFields": [
+    "idempotencyKey"
+  ],
+  "originalBytesPreservedPrivately": true,
+  "requestOutcomeUnchanged": true
+}

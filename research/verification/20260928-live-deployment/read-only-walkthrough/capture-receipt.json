@@ -1,0 +1,396 @@
+{
+  "startedAt": "2026-09-28T01:45:32.772Z",
+  "origin": "https://patchproof.andrewmohawk.xyz",
+  "output": "/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-read-only-01",
+  "primaryId": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+  "runIds": [
+    "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+    "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+    "08087e0a-f5d9-4c55-b4b6-7666bc8e016c"
+  ],
+  "sourceCommit": "3d0ce9d33b2169efec6290d7a478d4002a480a58",
+  "recorderDigest": "sha256:339fa44c7d4085b501a0685d868de5f6628b84a80ef08f9658dec45aad5855e3",
+  "scope": "GET-only observation of existing real model / local Docker evidence. No responses or DOM are substituted.",
+  "status": "captured",
+  "scenes": [
+    {
+      "title": "task",
+      "caption": "Recorded evidence from real Nebius Token Factory inference. Declared checks ran in isolated local Docker containers.",
+      "startMs": 1209,
+      "endMs": 9348
+    },
+    {
+      "title": "comparison",
+      "caption": "All three approaches passed the declared checks. They share this task, source, policy, runtime and resource limits; this is not a benchmark.",
+      "startMs": 9979,
+      "endMs": 18080
+    },
+    {
+      "title": "patchproof-result",
+      "caption": "PatchProof passed on its first candidate. This completed run used 1 model call and took 73.933 seconds.",
+      "startMs": 19380,
+      "endMs": 27500
+    },
+    {
+      "title": "selected-diff",
+      "caption": "Inspect the selected change against the original snapshot. A passing check result supports review; it does not replace your judgment.",
+      "startMs": 28105,
+      "endMs": 36215
+    },
+    {
+      "title": "acceptance-evidence",
+      "caption": "All nine declared checks pass. Expanded logs preserve expected values, actual observations and repeated-check agreement.",
+      "startMs": 36825,
+      "endMs": 44991
+    },
+    {
+      "title": "baseline-rejection",
+      "caption": "Ordinary repair first returned an unchanged candidate that failed four checks. Its second candidate passed. The rejection remains inspectable.",
+      "startMs": 46316,
+      "endMs": 54445
+    },
+    {
+      "title": "resource-accounting",
+      "caption": "Token usage and estimated provider cost remain visible. Authoritative billing and measured sandbox CPU are unavailable; they are not shown as zero.",
+      "startMs": 55711,
+      "endMs": 63826
+    },
+    {
+      "title": "export",
+      "caption": "Download the preserved run, patch, checks and provenance. Explore the real public app at patchproof.andrewmohawk.xyz; no new run is started in this walkthrough.",
+      "startMs": 64529,
+      "endMs": 72643
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/style.css",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/app.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/tasks",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/style.css",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/app.js",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/tasks",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/5b356c42-8848-4e78-bce7-94800f63eebf/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/08087e0a-f5d9-4c55-b4b6-7666bc8e016c/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/9943a027-4d6c-4f4b-94bb-d1ed4664b2f1/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/d11aa1fc-61ee-4b42-a89e-df6b385e4f1d/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/97808518-b836-41a9-961e-8e5f466dc032/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/bb948175-27cb-412a-9fb7-ba64b46dd3d6/evidence",
+      "allowed": true
+    },
+    {
+      "method": "GET",
+      "url": "https://patchproof.andrewmohawk.xyz/runs/1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c/evidence",
+      "allowed": true
+    }
+  ],
+  "blocked": [],
+  "errors": [],
+  "navigationRetries": [],
+  "bundles": [
+    {
+      "id": "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+      "variant": "baseline",
+      "terminalStatus": "verified_for_declared_checks",
+      "bundleDigest": "sha256:618efef5736b49cdd541d33cb84ba4ab8f0f79dea38bb8e4af5c32d0c178a10e",
+      "fileDigest": "sha256:6fdb2db2730292d186db4691786749fef381232244dab5bd9cb8e49be2b40fd6",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+      "usage": {
+        "inferenceCalls": 2,
+        "inputTokens": 2346,
+        "outputTokens": 254,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00020171999999999999,
+        "costIsEstimate": true,
+        "elapsedMs": 135216
+      },
+      "candidateCount": 2,
+      "selectedCandidateId": 2
+    },
+    {
+      "id": "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+      "variant": "checks_only",
+      "terminalStatus": "verified_for_declared_checks",
+      "bundleDigest": "sha256:ba97663bcb683e428ac83b38e8cf91178b0470e5600cc0e3da63cffdff2c1bfc",
+      "fileDigest": "sha256:0a0a29ca8002e2407478194b035dd39b982f8cc70c68f475defaf21c5f21cc25",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 1347,
+        "outputTokens": 166,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00012066,
+        "costIsEstimate": true,
+        "elapsedMs": 73122
+      },
+      "candidateCount": 1,
+      "selectedCandidateId": 1
+    },
+    {
+      "id": "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+      "variant": "patchproof",
+      "terminalStatus": "verified_for_declared_checks",
+      "bundleDigest": "sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08",
+      "fileDigest": "sha256:ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf",
+      "sourceDigest": "sha256:2b9975006fe494a204d21bce70c73d5d025bb23cf50d1e7cb11b0e6229a331df",
+      "policyDigest": "sha256:4e8250b6b6454e08a353e4be209b95f32fcdc9a4fc58716bf76ddc2b954740ce",
+      "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 1338,
+        "outputTokens": 111,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.00010692,
+        "costIsEstimate": true,
+        "elapsedMs": 73933
+      },
+      "candidateCount": 1,
+      "selectedCandidateId": 1
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "01-task.png",
+      "digest": "sha256:622324aa022c876b584d6c48eb0f5bcb83fa3f727aeee69b18971b2a5b2609b5",
+      "bytes": 202611,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "02-comparison.png",
+      "digest": "sha256:91f27fa7502edd1128e576a844465cfd584d40acb12e6c1d048296a5bc6eaa86",
+      "bytes": 122038,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "03-patchproof-result.png",
+      "digest": "sha256:48e03fb728e43207f54685f8915a33cb5d4abcb0ead27cac91c0f7a9c2216513",
+      "bytes": 169023,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "04-selected-diff.png",
+      "digest": "sha256:81c97398e1edb7faaa2b81d5e40b7817b74722d8603477cdb570b1e31e3e9aee",
+      "bytes": 171922,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "05-acceptance-evidence.png",
+      "digest": "sha256:8055212379bee4b3f29faa10805a6209d3ca6a17d78137e509b9633f2c7eaa14",
+      "bytes": 266669,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "06-baseline-rejection.png",
+      "digest": "sha256:1e690831b1af10f74b0c7d733e7f1a7f92359feb611bfe34a29ed5ec68ed249f",
+      "bytes": 180471,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "07-resource-accounting.png",
+      "digest": "sha256:5ddf5d8d6deccd6b17379dafa581e14b7e2ec5e43def53161f0b079d831e4722",
+      "bytes": 166878,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "08-export.png",
+      "digest": "sha256:5ddf5d8d6deccd6b17379dafa581e14b7e2ec5e43def53161f0b079d831e4722",
+      "bytes": 166878,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "mobile-390-terminal.png",
+      "digest": "sha256:75369c4af634e000a2912734bfef565e41bb95ea0eb3860fb3d51904cbd6c0cd",
+      "bytes": 520749,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "mobile-320-terminal.png",
+      "digest": "sha256:477a3310715e79c12175fb8e31d08fc22ead50430b966487646ef457e5c0f686",
+      "bytes": 529815,
+      "viewport": {
+        "width": 320,
+        "height": 844
+      }
+    }
+  ],
+  "runtimeLockDigest": "sha256:d122f93095fbbfe47c1d4bfab9f3ac8a5c2323d7d84781e37f51deb7d4ecdbed",
+  "initialAvailability": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 42
+  },
+  "initialHistoryIds": [
+    "5b356c42-8848-4e78-bce7-94800f63eebf",
+    "08087e0a-f5d9-4c55-b4b6-7666bc8e016c",
+    "9943a027-4d6c-4f4b-94bb-d1ed4664b2f1",
+    "d11aa1fc-61ee-4b42-a89e-df6b385e4f1d",
+    "97808518-b836-41a9-961e-8e5f466dc032",
+    "bb948175-27cb-412a-9fb7-ba64b46dd3d6",
+    "1ddd6b8b-98ce-45aa-bc11-d9947f41cd4c"
+  ],
+  "browserVersion": "145.0.7632.6",
+  "downloadDigest": "sha256:ecbb6003d0c1705176603f32a46405c6bb0372121b5878ab7711f19c4d321fbf",
+  "videoPath": "/home/andrewmohawk/.config/patchproof/demo-20260927/live-final-read-only-01/raw-video/43c213dd8b7c816320ff7ed421233501.webm",
+  "videoDigest": "sha256:024db3063c1e4da8b4ff5cbb5c8f2b18586c30e045bbb657a47ef02eb28ada88",
+  "video": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "vp8",
+        "width": 1440,
+        "height": 1000
+      }
+    ],
+    "format": {
+      "duration": "72.120000"
+    }
+  },
+  "timingBasis": "Scene times are observed monotonic milliseconds since recording page creation. Encoded media duration is independently measured; no frame-exact alignment is asserted.",
+  "mobile": [
+    {
+      "width": 390,
+      "noHorizontalOverflow": true,
+      "terminalStatus": "verified_for_declared_checks"
+    },
+    {
+      "width": 320,
+      "noHorizontalOverflow": true,
+      "terminalStatus": "verified_for_declared_checks"
+    }
+  ],
+  "finishedAt": "2026-09-28T01:46:51.972Z",
+  "executionPerformed": false,
+  "responseSubstitution": false,
+  "rawVideoUnedited": true
+}

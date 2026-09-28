@@ -1,0 +1,50 @@
+[
+  {
+    "title": "task",
+    "caption": "Recorded evidence from real Nebius Token Factory inference. Declared checks ran in isolated local Docker containers.",
+    "startMs": 1209,
+    "endMs": 9348
+  },
+  {
+    "title": "comparison",
+    "caption": "All three approaches passed the declared checks. They share this task, source, policy, runtime and resource limits; this is not a benchmark.",
+    "startMs": 9979,
+    "endMs": 18080
+  },
+  {
+    "title": "patchproof-result",
+    "caption": "PatchProof passed on its first candidate. This completed run used 1 model call and took 73.933 seconds.",
+    "startMs": 19380,
+    "endMs": 27500
+  },
+  {
+    "title": "selected-diff",
+    "caption": "Inspect the selected change against the original snapshot. A passing check result supports review; it does not replace your judgment.",
+    "startMs": 28105,
+    "endMs": 36215
+  },
+  {
+    "title": "acceptance-evidence",
+    "caption": "All nine declared checks pass. Expanded logs preserve expected values, actual observations and repeated-check agreement.",
+    "startMs": 36825,
+    "endMs": 44991
+  },
+  {
+    "title": "baseline-rejection",
+    "caption": "Ordinary repair first returned an unchanged candidate that failed four checks. Its second candidate passed. The rejection remains inspectable.",
+    "startMs": 46316,
+    "endMs": 54445
+  },
+  {
+    "title": "resource-accounting",
+    "caption": "Token usage and estimated provider cost remain visible. Authoritative billing and measured sandbox CPU are unavailable; they are not shown as zero.",
+    "startMs": 55711,
+    "endMs": 63826
+  },
+  {
+    "title": "export",
+    "caption": "Download the preserved run, patch, checks and provenance. Explore the real public app at patchproof.andrewmohawk.xyz; no new run is started in this walkthrough.",
+    "startMs": 64529,
+    "endMs": 72643
+  }
+]
