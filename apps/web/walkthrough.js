@@ -3,18 +3,19 @@ import { renderDiff } from './diff-view.js';
 // Guided readings of pinned, saved real runs. Viewing a story never creates a run.
 export const storyRecords = {
   success: {
-    id: '08087e0a-f5d9-4c55-b4b6-7666bc8e016c', taskId: 'stable-unique-01', digest: 'sha256:c2ba45e30a1526e446d5a47c7d194c65523cec18e902335f5dfa672b868bff08', checkId: 'u-v-order',
-    bugTitle: 'Separated duplicates survive the original filter.',
-    scenario: 'A list-maintenance helper should retain the first occurrence of each item, in order. Its refactor compares only neighboring values, so a repeated item can survive.',
-    goal: 'Remove repeated items while preserving their first-occurrence order, the caller’s original data, and the existing error behavior.',
-    patchTitle: 'The proposal checks every item already retained.',
-    changeDescription: 'The proposed condition checks membership in the whole result instead of comparing only its last item. Review the exact lines below, then inspect what happened when the checks ran.',
-    codeFunctions: ['unique'],
+    id: '4b031998-ae91-4316-aacd-607cfff91f72', taskId: 'v3-cursor-pagination', digest: 'sha256:c38760acc78dc0b70289020eabc43a4600b43a3c351f66eb691bb47fd1fb6476', checkId: 'v3-cursor-pagination-next-page',
+    bugTitle: 'The next page repeats a record, and deleted revisions can reappear.',
+    scenario: 'An activity browser pages through a stream of record revisions. Its six functions must resolve updates and deletions, sort the surviving records, resume after a cursor, and report whether another page exists.',
+    goal: 'After record B, show only record C and mark the final page correctly. Keep the latest revision of each record, use the last input when revisions tie, honor deletions, and preserve validation and the caller’s data.',
+    patchTitle: 'Three coordinated changes fix revision selection, cursor boundaries, and page metadata.',
+    changeDescription: 'The proposal retains the latest revision before filtering deleted records, handles equal revisions in input order, resumes strictly after the cursor, and reports another page only when more records remain. Unchanged code stays as context in the diff.',
+    codeFunctions: ['_after_cursor'], inputLabels: ['Record revisions', 'Page size'],
+    requirementLabels: { R01: 'Resolve revisions, ties and deletions', R02: 'Sort consistently and resume after the cursor', R03: 'Return accurate items and next-page metadata', R04: 'Validate every input, including obsolete records', R05: 'Preserve records and the caller’s data' },
   },
   failure: {
     id: '9d3cd90e-94e2-4787-b294-5caa577b40e1', taskId: 'v3-config-overlay', digest: 'sha256:cda1b49674a48b45d7a4fc66c99a1ffb24ca33db8a2337b289521e6c7b2189fd', checkId: 'v3-config-overlay-nested-list',
     bugTitle: 'A configuration update applies the wrong values and reports the wrong changes.',
-    scenario: 'A deployment preview merges a base configuration with several overrides. Its six helpers must agree about nested objects, replacement lists, explicit nulls, deletion, and the change report.',
+    scenario: 'A deployment preview merges a base configuration with several overrides. Its six functions must agree about nested objects, replacement lists, explicit nulls, deletion, and the change report.',
     goal: 'Replace the region list, change only service.timeout, and report those exact setting paths. Preserve explicit nulls, honor deletion directives, validate all inputs, and leave the caller’s data unchanged.',
     patchTitle: 'The values improve, but the change report and deletion rules still fail.',
     changeDescription: 'The model rewrote merge helpers. This proposal replaces the region list correctly, yet reports service instead of service.timeout. Four further checks reject its deletion or change-report behavior.',
