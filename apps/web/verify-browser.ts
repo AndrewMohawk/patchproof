@@ -43,7 +43,7 @@ try {
   });
   // Active runs keep their SSE connections open. Wait for rendered task data,
   // not an idle network, so an observer can attach while work is streaming.
-  await page.goto(base, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${base}/#tasks`, { waitUntil: 'domcontentloaded' });
   const demoTaskCard = page.locator(`.task-card[data-task-id="${demoTaskId}"]`);
   await demoTaskCard.waitFor({ state: 'visible' });
   assert.equal(await page.title(), 'PatchProof');

@@ -17,7 +17,7 @@ const usage = 'node scripts/record-public-demo.ts https://patchproof.andrewmohaw
 const origin = 'https://patchproof.andrewmohawk.xyz';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const runPath = /^\/runs\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?:\/(?:events|evidence))?$/;
-const readPaths = new Set(['/', '/app.js', '/style.css', '/favicon.ico', '/healthz', '/tasks', '/runs']);
+const readPaths = new Set(['/', '/app.js', '/walkthrough.js', '/style.css', '/favicon.ico', '/healthz', '/tasks', '/runs']);
 const variantNames = { baseline: 'Standard repair', checks_only: 'Repair with extra checks', patchproof: 'PatchProof' };
 const signature = (run: ProductRun) => digestJson({ taskId: run.taskId, schemaVersion: run.schemaVersion,
   sourceDigest: run.sourceDigest, policyDigest: run.policyDigest, runtimeLockDigest: run.runtimeLockDigest, mode: run.mode, limits: run.limits });
@@ -168,7 +168,7 @@ async function main() {
     });
     await cdp.send('Fetch.enable', { patterns: [{ urlPattern: '*', requestStage: 'Response' }] });
     watchdog = setTimeout(() => { failure('watchdog', 'Recorder exceeded its 420-second overall limit.'); void context?.close().catch(() => {}); }, 420_000);
-    await page.goto(origin, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${origin}/#tasks`, { waitUntil: 'domcontentloaded' });
     const catalogueRead = await readApi('/tasks'), historyRead = await readApi('/runs');
     await save('catalogue-before.json', catalogueRead.value); await save('history-before.json', historyRead.value);
     const catalogue = catalogueRead.value as { mode: string; realExecutionEnabled: boolean; runtimeLockDigest: string;

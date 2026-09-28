@@ -46,7 +46,7 @@ async function fixtureServer(options: { singleflight?: boolean } = {}) {
     meta.realExecutionEnabled = !active; meta.capabilities.createRuns = !active;
   };
   const assets = new Map<string, Buffer>();
-  for (const [path, file] of [['/', 'index.html'], ['/app.js', 'app.js'], ['/style.css', 'style.css']] as const) assets.set(path, await readFile(new URL('../apps/web/' + file, import.meta.url)));
+  for (const [path, file] of [['/', 'index.html'], ['/app.js', 'app.js'], ['/walkthrough.js', 'walkthrough.js'], ['/style.css', 'style.css']] as const) assets.set(path, await readFile(new URL('../apps/web/' + file, import.meta.url)));
   const server = createServer(async (req, res) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'");
     const path = req.url!;
@@ -155,7 +155,7 @@ test('live UI uses enabled curated IDs and live requests, real event phases, run
   await openRunTab(page, 'Run details');
   assert.match(await page.locator('.accounting').innerText(), /\$0\.00000012 \(estimate\)/);
   for (const width of [320, 390]) {
-    await page.setViewportSize({ width, height: 844 }); await page.goto(f.base);
+    await page.setViewportSize({ width, height: 844 }); await page.goto(f.base + '/#tasks');
     await page.getByRole('button', { name: 'Generate patch', exact: true }).waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
   }
@@ -166,7 +166,7 @@ test('live UI uses enabled curated IDs and live requests, real event phases, run
 test('live capabilities and task availability fail closed while old mock mode remains usable', async t => {
   const f = await fixtureServer(); t.after(f.close); const { page } = f;
   f.meta.tasks[1]!.executionSupported = false;
-  await page.goto(f.base); await page.locator('.task-card[data-task-id="curated-example-02"]').click();
+  await page.goto(f.base + '/#tasks'); await page.locator('.task-card[data-task-id="curated-example-02"]').click();
   assert.equal(await page.getByRole('button', { name: 'Generate patch', exact: true }).isDisabled(), true);
   f.meta.availability = { enabled: false, reason: 'Allowance used. Review saved evidence.', remainingRuns: 0 };
   f.meta.realExecutionEnabled = false; await page.reload(); await page.locator('.task-card[data-task-id="curated-example-01"]').click();
@@ -194,7 +194,7 @@ async function eventually(condition: () => boolean, message: string) {
 
 test('live comparison waits for each recorded terminal and refreshed allowance before posting the next approach', async t => {
   const f = await fixtureServer({ singleflight: true }); t.after(f.close);
-  await f.page.goto(f.base); await startComparison(f.page);
+  await f.page.goto(f.base + '/#tasks'); await startComparison(f.page);
   for (let index = 0; index < 3; index++) {
     await eventually(() => f.requests.length >= index + 1, 'next selected approach must start after prior terminal');
     await new Promise(done => setTimeout(done, 100));
@@ -213,7 +213,7 @@ test('live comparison does not queue another provider attempt after cancellation
   for (const [status, reason] of [['needs_review', 'cancelled'], ['needs_review', 'timeout'], ['infrastructure_error', 'sandbox_cleanup_unconfirmed']] as const) {
     const f = await fixtureServer({ singleflight: true });
     try {
-      await f.page.goto(f.base); await startComparison(f.page);
+      await f.page.goto(f.base + '/#tasks'); await startComparison(f.page);
       await eventually(() => f.requests.length === 1, 'first selected approach starts once');
       const active = [...f.runs.values()].find(run => run.phase !== 'terminal')!; f.finish(active.id, status, reason);
       await f.page.locator('#error').getByText(/Comparison stopped after/).waitFor();
@@ -227,7 +227,7 @@ test('live comparison does not queue another provider attempt after cancellation
 test('mock comparison keeps its existing immediate three-approach launch behavior', async t => {
   const f = await fixtureServer({ singleflight: true }); t.after(f.close);
   f.meta.mode = 'mock'; f.meta.realExecutionEnabled = false; f.meta.tasks[0]!.mockSupported = true;
-  await f.page.goto(f.base); await startComparison(f.page);
+  await f.page.goto(f.base + '/#tasks'); await startComparison(f.page);
   await eventually(() => f.requests.length === 3, 'mock comparison launches all approaches without waiting for a terminal');
   assert.deepEqual(f.requests.map(request => request.variant), ['baseline', 'checks_only', 'patchproof']);
   assert.ok(f.requests.every(request => request.mode === 'mock')); assert.equal(f.activity.maxActive, 3); assert.equal(f.activity.overlapAttempts, 0);
@@ -270,7 +270,7 @@ test('live comparison can rerun one recorded approach without changing its previ
 
 test('example search and compact mobile selection keep the selected task and first action usable', async t => {
   const f = await fixtureServer(); t.after(f.close); const { page } = f;
-  await page.goto(f.base);
+  await page.goto(f.base + '/#tasks');
   const search = page.locator('#task-search');
   await search.fill('example-02');
   assert.equal(await page.locator('.task-card').count(), 1);
@@ -315,7 +315,7 @@ test('latest saved failure stays visible and run history retains both failed and
   f.estimated.run.createdAt = '2026-09-28T00:00:00.000Z'; f.estimated.run.finishedAt = '2026-09-28T00:00:01.000Z';
   const failureBundle = buildEvidence(f.estimated.run, f.estimated.fixture, f.estimated.runtimeLock);
   f.bundles.set(failureBundle.run.id, failureBundle); f.runs.set(failureBundle.run.id, failureBundle.run);
-  await page.goto(f.base);
+  await page.goto(f.base + '/#tasks');
   const latest = page.getByRole('link', { name: 'Latest result', exact: true });
   await latest.waitFor();
   assert.equal(await latest.getAttribute('href'), '#evidence/' + failureBundle.run.id, 'a newer failure must never be replaced by an older passing example');
@@ -395,4 +395,30 @@ test('stream updates preserve keyboard focus and open check details on the same 
   await page.getByRole('link', { name: 'Compare approaches', exact: true }).click();
   assert.equal(await page.locator('#compare-task').inputValue(), active.taskId, 'comparison opened from an addressed failed run stays on that task');
   assert.equal(f.requests.length, 0); assert.deepEqual(f.errors, []);
+});
+
+test('first visit explains the review task without starting work or fabricating a saved walkthrough', async () => {
+  for (const mode of ['live', 'mock'] as const) {
+    const f = await fixtureServer();
+    try {
+      f.meta.mode = mode; f.meta.realExecutionEnabled = mode === 'live';
+      if (mode === 'mock') f.meta.tasks[0]!.mockSupported = true;
+      await f.page.goto(f.base);
+      await f.page.locator('#story-view').waitFor({ state: 'visible' });
+      assert.match(await f.page.locator('#story-purpose').innerText(), /AI code fix/);
+      assert.match(await f.page.locator('.story-introduction').innerText(), /runs checks the model cannot edit/);
+      assert.match(await f.page.locator('.story-introduction').innerText(), /You decide whether to use it/);
+      await f.page.locator('#story[data-state="unavailable"]').waitFor();
+      assert.match(await f.page.locator('#story').innerText(), /unavailable/i);
+      assert.doesNotMatch(await f.page.locator('#story').innerText(), /9 (?:listed )?checks passed|all 9|elm.*ash.*birch/i);
+      assert.equal(f.requests.length, 0, 'default walkthrough navigation must never create a run');
+      await f.page.locator('[data-nav="tasks"]').click();
+      await f.page.getByRole('button', { name: 'Generate patch', exact: true }).waitFor();
+      const guidance = await f.page.locator('#tasks-view .page-description').innerText();
+      assert.match(guidance, /Choose/);
+      if (mode === 'mock') { assert.match(guidance, /scripted|mock/i); assert.doesNotMatch(guidance, /asks the live model/); }
+      else { assert.match(guidance, /Generate patch/); assert.match(guidance, /review|inspect/i); assert.match(guidance, /live model/); }
+      assert.equal(f.requests.length, 0); assert.deepEqual(f.errors, []);
+    } finally { await f.close(); }
+  }
 });

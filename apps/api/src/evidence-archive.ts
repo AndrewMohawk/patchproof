@@ -61,7 +61,7 @@ export async function createEvidenceArchive(options: { projectRoot: string; conf
       runs: [...records.values()].map(item => JSON.parse(item.run)).sort((a, b) => b.createdAt.localeCompare(a.createdAt)) });
     // Freeze assets as well as evidence: this listener does not reread changing source or operator files.
     const assets = new Map<string, { bytes: Buffer; type: string }>();
-    for (const [url, file, type] of [['/', 'index.html', 'text/html'], ['/app.js', 'app.js', 'text/javascript'], ['/style.css', 'style.css', 'text/css']] as const) {
+    for (const [url, file, type] of [['/', 'index.html', 'text/html'], ['/app.js', 'app.js', 'text/javascript'], ['/walkthrough.js', 'walkthrough.js', 'text/javascript'], ['/style.css', 'style.css', 'text/css']] as const) {
       assets.set(url, { bytes: await readFile(new URL(`../../web/${file}`, import.meta.url)), type });
     }
     const server = createServer((req, res) => {

@@ -36,7 +36,7 @@ export function recordingRequestAllowed(base: string, ids: readonly string[], me
   try {
     const url = new URL(value);
     if (method !== 'GET' || url.origin !== base || url.username || url.password || url.search) return false;
-    return ['/', '/app.js', '/style.css', '/favicon.ico', '/tasks', '/runs'].includes(url.pathname) ||
+    return ['/', '/app.js', '/walkthrough.js', '/style.css', '/favicon.ico', '/tasks', '/runs'].includes(url.pathname) ||
       ids.some(id => url.pathname === `/runs/${id}` || url.pathname === `/runs/${id}/evidence`);
   } catch { return false; }
 }
@@ -88,7 +88,7 @@ export async function inspectRecordingArchive(baseValue: string, expectedArchive
     records.push({ bundle, bytes, byteDigest: digest(bytes) });
   }
   const assets: Record<string, string> = {};
-  for (const path of ['/', '/app.js', '/style.css']) assets[path] = digest(await getBytes(base, path));
+  for (const path of ['/', '/app.js', '/walkthrough.js', '/style.css']) assets[path] = digest(await getBytes(base, path));
   Object.assign(responsePins, assets);
   return { base, ids, meta, metaByteDigest: digest(metaBytes), records, assets, responsePins };
 }

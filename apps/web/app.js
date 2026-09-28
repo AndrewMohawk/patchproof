@@ -1,3 +1,4 @@
+import { projectStory, renderStory } from './walkthrough.js';
 const byId = id => document.getElementById(id);
 const variants = {
   baseline: { name: 'Standard repair', label: 'Task checks', description: 'Uses the task checks to guide patch revisions.' },
@@ -156,6 +157,7 @@ function modeLabel(run) {
   return run.mode === 'mock' ? 'Mock model · Local checks' : run.phase === 'terminal' ? 'Recorded live' : 'Live model';
 }
 function renderMode() {
+  byId('workspace-intro').textContent = isArchive() ? 'Choose a task and inspect its saved patches and checks. This archive cannot start new repairs.' : isLive() ? 'Choose a small Python bug. Generate patch asks the live model for a repair, then checks it against the requirements. You review the change; nothing is merged.' : 'Choose a small Python bug. Generate patch uses a scripted response, runs local checks, and opens the result for review. No live model is called.';
   byId('demo-link').hidden = !isLive();
   byId('footer-demo-link').hidden = !isLive();
   byId('mode-indicator').textContent = isArchive() ? 'Read-only archive' : isLive() ? 'Live model' : 'Mock model';
@@ -222,10 +224,11 @@ async function loadRunContext(run, retry = false) {
       checkBackend: ['local_container', 'nebius_sandbox'].includes(execution.checkBackend) ? execution.checkBackend : null,
     }) : bundle.runtimeLock?.localExecution?.available === true && typeof bundle.runtimeLock?.localCheckImage === 'string'
       ? Object.freeze({ checkBackend: 'local_container', modelProvider: null, modelId: null }) : undefined;
+    context.story = projectStory(bundle);
     context.status = 'ready';
   } catch { context.status = 'error'; }
   if (state.contexts.get(run.id) !== context || !sameJson(state.runs.get(run.id), context.run)) return;
-  renderRunPicker(); renderComparison();
+  renderRunPicker(); renderComparison(); renderWalkthrough();
   if (state.runId === run.id) renderEvidence();
 }
 
@@ -257,12 +260,13 @@ function empty(title, description, actionText, href) {
 }
 function route() {
   const [rawView, id] = location.hash.slice(1).split('/');
-  const view = ['tasks', 'runs', 'compare', 'evidence'].includes(rawView) ? rawView : 'tasks';
+  const view = ['story', 'tasks', 'runs', 'compare', 'evidence'].includes(rawView) ? rawView : 'story';
   if (id && view === 'evidence') state.runId = id;
-  for (const name of ['tasks', 'runs', 'compare', 'evidence']) byId(`${name}-view`).hidden = name !== view;
+  for (const name of ['story', 'tasks', 'runs', 'compare', 'evidence']) byId(`${name}-view`).hidden = name !== view;
   document.querySelectorAll('[data-nav]').forEach(node => {
     if (node.dataset.nav === (view === 'evidence' ? 'runs' : view)) node.setAttribute('aria-current', 'page'); else node.removeAttribute('aria-current');
   });
+  if (view === 'story') renderWalkthrough();
   if (view === 'runs') renderHistory();
   if (view === 'compare') renderComparison();
   if (view === 'evidence') {
@@ -270,6 +274,7 @@ function route() {
     if (state.ready && state.runId && !state.runs.has(state.runId)) refreshRun(state.runId).catch(showError);
   }
 }
+function renderWalkthrough() { renderStory(byId('story'), state, location.hash.split('/')[1]); }
 function chooseTask(id) {
   const taskHadFocus = document.activeElement?.classList.contains('task-card');
   state.taskId = id;
@@ -651,6 +656,7 @@ function renderEvidence() {
   if (context.status !== 'ready') intro.append(el('p', 'run-meta', contextMessage(run, context)));
   if (run.phase !== 'terminal') append(intro, progress(run), el('p', 'stream-note', 'Updates automatically. You can leave and return to this run.'));
   else if (run.terminalStatus !== 'verified_for_declared_checks') intro.append(el('p', 'failure-summary', run.reason ? humanReason(run.reason) : 'No patch was approved. Review the checks and activity.'));
+  if (run.phase === 'terminal') intro.append(el('p', 'review-instruction', run.terminalStatus === 'verified_for_declared_checks' ? 'Next: inspect the patch and its checks, then download the record if you want to review or replay it. Applying the change remains your decision.' : 'This is not an approved fix. Start with the checks below to see what failed or could not be verified.'));
   if (checks.length) intro.append(el('p', 'result-counts', `Attempt ${candidate.id}: ${checks.length - failed.length} checks passed · ${failed.filter(check => check.status === 'fail').length} failed · ${failed.filter(check => check.status === 'error').length} errors`));
   const actions = el('div', 'actions');
   if (run.phase === 'terminal' && context.status === 'ready') {
@@ -690,7 +696,14 @@ byId('mobile-task').addEventListener('change', event => chooseTask(event.target.
 byId('compare-task').addEventListener('change', event => chooseTask(event.target.value));
 byId('compare-run').addEventListener('click', () => launch(Object.keys(variants)));
 byId('evidence-run').addEventListener('change', event => { state.runId = event.target.value; location.hash = `evidence/${state.runId}`; renderEvidence(); });
-window.addEventListener('hashchange', route);
+window.addEventListener('hashchange', () => {
+  route();
+  if (location.hash.startsWith('#story/')) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const heading = document.querySelector('#story .story-heading');
+    if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+  }
+});
 window.addEventListener('pagehide', () => { for (const stream of streams.values()) stream.close(); clearInterval(pollTimer); });
 route();
 try {
