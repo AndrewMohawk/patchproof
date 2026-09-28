@@ -50,7 +50,10 @@ execution until account, model, image, isolation and billing requirements are
 verified. The [smoke operator](docs/trusted-smoke-operator.md) and
 [experiment operator](docs/live-experiment-operator.md) document that boundary.
 Fake-transport results do not establish account-specific behavior or completed
-Nebius integration; actual provider validation remains deferred.
+Nebius integration. The owner subsequently supplied Token Factory access; the
+actual [catalog and one-call marker validation](research/verification/20260927-account-access/README.md)
+passed. Sponsor sandbox, tokenizer/control calibration and actual billed-cost
+reconciliation remain unresolved.
 
 ## Evaluation and claims
 
@@ -81,3 +84,13 @@ fields distinguish script, measured zero provider spend and unknown CPU use.
 No public demo, sponsor-backed recording, final report, signed release or event
 submission exists. Local draft assets and operations instructions do not satisfy
 those gates. The release tracker preserves each missing item explicitly.
+
+The owner emphasized both an interactive demonstration and a video on September
+27. Prepare and verify both locally, preserving the recorded execution mode and
+source/run custody. The supplied Token Factory credential stays in a private
+operator file outside the repository, candidate workspaces and logs. The existing
+$25 ceiling applies; the one real account-control call holds $0.10 in the sole
+durable project ledger pending authoritative billing. Do not replace that ledger
+to evade its unresolved-cost hold. The successful control is neither a repair
+episode nor model selection. Public hosting, source/video publication and entry
+remain separate owner release decisions.

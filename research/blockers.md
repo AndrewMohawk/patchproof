@@ -3,7 +3,9 @@
 The local product is implemented and tested under the owner's instruction to
 build before provider access. **Real Nebius integration is the first remaining
 external gate.** It is not a missing spending approval: $25 total is approved;
-actual spending is $0. The private repository and ongoing pushes are authorized.
+one real model access call has a $0.00000288 usage-priced estimate, actual billing
+is unknown, and its $0.10 reservation remains held. The private repository and
+ongoing pushes are authorized.
 
 The local implementation includes exact-byte smoke export, a read-only recorded
 evidence viewer, separately budgeted replay and accepted live-protocol selection
@@ -25,14 +27,21 @@ and fresh contract 2.2 validation cover all 60 tasks. Two infrastructure failure
 and their reviewed reruns remain preserved. V1's
 shared authoring process and its observations remain preserved history. The
 eight-task model-probe planner/analyzer is implemented and independently tested;
-its verified model catalog and real observations remain NOT RUN. See
+authenticated model discovery and a one-call marker control now pass, while
+its eight-task repair probe and model selection remain NOT RUN. See
 `corpus-v2/README.md`, `verification/20260927-model-probe/receipt.json` and the
 independent probe receipt. No local or fake-provider result closes the gates below.
 
 ## Provider integration (T01/T04, G0/G1)
 
-Access has been deliberately deferred. When supplied through an approved file or
-provisioner outside the repository, candidate workspaces and logs, the next work is:
+The owner supplied Token Factory access. The credential is stored privately
+outside the repository and candidate workspaces. Authenticated catalog discovery
+returned 25 models, including four NVIDIA IDs. A single Nano marker control
+returned HTTP 200 with 24 input/6 output tokens and no returned reasoning.
+Sandbox `GET /v1/whoami` returned HTTP 400, `Missing "Project" header`; the
+owner has been asked for the project ID and entitlement. See the
+[actual access receipt](verification/20260927-account-access/README.md).
+This is not a model-generated repair or a completed sponsor integration. Next:
 
 1. Verify project entitlements, NVIDIA model ID/license/card, rates and any credits
    with service, amount and expiry. Do not infer account availability from public docs.
@@ -82,7 +91,9 @@ phase receipts and draining owned cleanup before closing local state. A complete
 invented-provider episode exercises the composed path; it is not a benchmark.
 Receipt intake does not obtain or authenticate billing data. Verified authoritative
 billing/cleanup evidence and any account-specific collector remain external
-integration work. No verified account configuration or real-provider result is present.
+integration work. No complete verified runtime configuration, sponsor sandbox execution or
+model-generated repair is present. The separate marker access result does not
+satisfy these execution requirements.
 
 Application license, public source/video, public demo operator and service budget
 through the required judging period remain owner decisions. No terms were

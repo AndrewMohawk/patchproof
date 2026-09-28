@@ -1,0 +1,8 @@
+
+> patchproof@0.0.1 check:contracts
+> node scripts/check-contract-lock.ts
+
+pass: Current contract 1.0: checked all recorded source digests.
+pass: Current contract 2.2: checked all recorded source digests.
+pass: Historical contract 2.1: checked original lock bytes and both exact source snapshots; current 2.2 separately binds explicit legacy readers.
+Contract byte checks do not satisfy independent execution, access or release gates.

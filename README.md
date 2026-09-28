@@ -14,8 +14,11 @@ keys throughout checking and export. Supported historical 2.0/2.1 bundles retain
 their original bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
 The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot.
-Actual provider spending is **$0**. Account access is deferred at the owner's
-request while the local build proceeds. See [decisions](decisions.md),
+Authenticated model discovery and one bounded NVIDIA inference access check now
+pass. That call reports 24 input and 6 output tokens: **$0.00000288 estimated**
+from published rates, with actual billing unverified and **$0.10 held** in the
+shared ledger. Sandbox discovery requires the owner's project ID; no sponsor
+sandbox or model-generated repair has run. See the [access receipt](research/verification/20260927-account-access/README.md), [decisions](decisions.md),
 [budget](budget.json) and [remaining gates](research/blockers.md).
 
 ## Run

@@ -390,3 +390,21 @@ handoff commit. Real provider access/calibration/billing, matched experiments,
 uncoached human review, independent-machine replay and owner release decisions
 remain unverified. These are local mock workflow observations, not comparative
 model results or competition-ready evidence.
+
+
+## 2026-09-27 — actual account access and demo preparation
+
+The owner supplied Token Factory access and emphasized both the interactive demo
+and a video. Authenticated catalog discovery returned 25 models/four NVIDIA IDs.
+Sandbox introspection returned HTTP 400 with `Missing "Project" header`, preserved
+as a blocker; project ID/entitlement was requested. A separate bounded Nano marker
+control succeeded with 24 input/6 output tokens, exact model and expected marker.
+This is inference-access evidence, not a repair episode, selection or benchmark.
+
+The $25 ceiling remains. One existing-only private project ledger reserved $0.10
+before dispatch; the usage-priced estimate is $0.00000288, authoritative billing
+remains null, and the reservation stays held. No sponsor sandbox or automatic
+retry occurred. The credential is outside source/candidate workspaces and logs.
+The source-reviewed one-off script, original setup failure, successful no-network
+preflight, operation IDs, API versions, command results and remaining gates are
+in [the access record](verification/20260927-account-access/README.md).

@@ -1,9 +1,11 @@
 # Prospective eight-task model probe
 
 The PRD requires a development-only model-selection probe before the pilot. The
-offline planner and analyzer are implemented; the account catalog, real probe and
-model selection are **NOT RUN**. No candidate model ID, price, entitlement or
-outcome is established by the synthetic unit tests.
+offline planner and analyzer are implemented. Authenticated account discovery now
+lists four NVIDIA models, and one Nano marker call confirms inference access; see
+the [access receipt](../research/verification/20260927-account-access/README.md).
+The eight-task repair probe and model selection are **NOT RUN**. Neither the
+access control nor synthetic unit tests establish repair quality or a selection.
 
 The frozen procedure uses the first two task IDs in lexical order from each of
 four five-task development repositories. Every verified candidate gets the same

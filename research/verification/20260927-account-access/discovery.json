@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "Actual authenticated discovery, not execution or billing entitlement",
+  "sourceCommit": "3e749a5db90e0b223555975d85f57ba3f93c668b",
+  "modelCatalog": {
+    "method": "GET",
+    "url": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+    "startedAt": "2026-09-28T00:01:52.630Z",
+    "finishedAt": "2026-09-28T00:01:53.113Z",
+    "httpStatus": 200,
+    "requestId": "e9c3ca846b0662e665b2dc7cff73a704",
+    "responseByteDigest": "sha256:b1ac7092a111be6648ca0b4842c78dfc84344ba8a2ccea72941cad2036b90ab8",
+    "responseBytes": 20586,
+    "modelCount": 25,
+    "nvidiaModels": [
+      {
+        "id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "contextLength": 262144,
+        "quantization": "fp8",
+        "pricing": {
+          "prompt": "0.00000006",
+          "completion": "0.00000024",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0"
+        }
+      },
+      {
+        "id": "nvidia/Nemotron-3_5-Lightning",
+        "contextLength": 1048576,
+        "quantization": "bf16",
+        "pricing": {
+          "prompt": "0.00000006",
+          "completion": "0.00000024",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0"
+        }
+      },
+      {
+        "id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "contextLength": 1048576,
+        "quantization": "fp4",
+        "pricing": {
+          "prompt": "0.000001",
+          "completion": "0.000003",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0"
+        }
+      },
+      {
+        "id": "nvidia/nemotron-3-super-120b-a12b",
+        "contextLength": 262144,
+        "quantization": "fp4",
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0"
+        }
+      }
+    ]
+  },
+  "sandboxAuthentication": {
+    "method": "GET",
+    "url": "https://api.tokenfactory.nebius.com/sandboxes/v1/whoami",
+    "startedAt": "2026-09-28T00:04:50.586Z",
+    "finishedAt": "2026-09-28T00:04:50.977Z",
+    "httpStatus": 400,
+    "requestId": "d57272af5e6f7663e2ebc1066271660a",
+    "responseByteDigest": "sha256:212b1dc42347e2e6ecd66be9a5c6939927c8dd4db34c3b43f961dfc96819ed98",
+    "responseBytes": 54,
+    "projectHeaderSupplied": false,
+    "providerError": "Missing \"Project\" header"
+  },
+  "inferenceCalls": 0,
+  "sandboxExecutions": 0,
+  "remaining": [
+    "Nebius project ID and sandbox entitlement",
+    "Verified sandbox controls, billing, image and cleanup",
+    "Tokenizer calibration and prospective model-selection experiment",
+    "Actual billed-cost reconciliation"
+  ],
+  "rawReceiptCustody": "Private operator files outside repository; no credentials included here"
+}

@@ -34,6 +34,12 @@ integration, branching advantage, production security or general correctness.
 The 60-task suite is original synthetic data. The fixed 72/270 experiment tools
 have not run a scored model episode. No headline improvement percentage is claimed.
 
+Separately, an authenticated Token Factory catalog query and a single NVIDIA
+Nemotron Nano marker call succeeded. This establishes inference access only.
+Its 24 input and 6 output tokens imply $0.00000288 at the observed public rates;
+authoritative billing is unknown and a $0.10 reservation remains held. Sandbox
+authentication requires the project ID. See the [actual access record](../research/verification/20260927-account-access/README.md).
+
 ## Architecture and originality/reuse
 
 The three-screen loopback app calls a durable coordinator that records shared

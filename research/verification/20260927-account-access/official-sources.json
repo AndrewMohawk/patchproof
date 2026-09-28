@@ -1,0 +1,47 @@
+{
+  "inspectedOn": "2026-09-27",
+  "inferenceOpenApi": {
+    "version": "20260923-f93df18ab",
+    "sha256": "c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f"
+  },
+  "sandboxOpenApi": {
+    "version": "1.0.0",
+    "url": "https://eu-north.nebius.computer/static/api.yaml",
+    "sha256": "23d748a2918b1124b3072d54d17d8eb43aa00d0b969bc1fa718f34ac884ee887"
+  },
+  "sources": [
+    "https://docs.tokenfactory.nebius.com/api-reference/models/list-models",
+    "https://nebius.com/services/token-factory/models/nvidia-nemotron-models-inference",
+    "https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion",
+    "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+    "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/",
+    "https://docs.tokenfactory.nebius.com/sandboxes/cli/commands/auth",
+    "https://docs.tokenfactory.nebius.com/ai-models-inference/observability-api-integrations",
+    "https://docs.tokenfactory.nebius.com/ai-models-inference/observability",
+    "https://docs.tokenfactory.nebius.com/other-capabilities/billing-new"
+  ],
+  "verifiedRatesUsdPerMillion": {
+    "nano": {
+      "input": 0.06,
+      "output": 0.24
+    },
+    "lightning": {
+      "input": 0.06,
+      "output": 0.24
+    },
+    "super": {
+      "input": 0.3,
+      "output": 0.9
+    },
+    "ultra": {
+      "input": 1.0,
+      "output": 3.0
+    }
+  },
+  "limitations": [
+    "Catalog price units inferred by matching current official per-million prices; Pricing schema does not describe units",
+    "NVIDIA BF16 tokenizer/card is a candidate for Nano FP8 endpoint, not a provider tokenizer pin",
+    "Observability is explicitly not a billing reconciliation source",
+    "No numeric sandbox billing rate or configurable memory/CPU/PID ceilings established"
+  ]
+}

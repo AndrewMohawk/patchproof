@@ -1,0 +1,21 @@
+{
+  "scope": "Independent AI source review only; no private files, provider calls or tests by reviewer",
+  "reviewer": "/root/json_contract_review",
+  "scriptSha256": "b8843112a807eb134dd7a5c708c90c261e8a61e5631c670662ad3d271bb811e5",
+  "findings": [
+    {
+      "issue": "Credential echo in retained header or decoded JSON identifier",
+      "resolution": "safeId rejects values containing the token before output"
+    },
+    {
+      "issue": "Intent/result writes lacked fsync",
+      "resolution": "Exclusive writes fsync file and parent directory"
+    }
+  ],
+  "result": "No source-level blocker identified after corrections",
+  "notEstablished": [
+    "Catalog/rate correctness",
+    "Provider behavior",
+    "Authoritative billing"
+  ]
+}

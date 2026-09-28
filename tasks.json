@@ -28,13 +28,14 @@
       ],
       "requires_owner_action": true,
       "gate": "G0",
-      "blocked_reason": "Owner confirmations and $25 cap recorded; provider account, rates and runtime verification deferred.",
+      "blocked_reason": "Owner confirmations and $25 ceiling are recorded. Actual Token Factory catalog and one bounded Nano marker call succeed. Sandbox project ID/entitlement and controls remain unverified; actual billing is unreconciled with $0.10 held. No model repair or sandbox execution occurred.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
-        "research/blockers.md"
+        "research/blockers.md",
+        "research/verification/20260927-account-access/README.md"
       ],
-      "implementation_note": "Owner confirmations and $25 cap recorded; provider account, rates and runtime verification deferred."
+      "implementation_note": "Owner confirmations and $25 ceiling are recorded. Actual Token Factory catalog and one bounded Nano marker call succeed. Sandbox project ID/entitlement and controls remain unverified; actual billing is unreconciled with $0.10 held. No model repair or sandbox execution occurred."
     },
     {
       "id": "T02",
@@ -133,8 +134,8 @@
       ],
       "requires_owner_action": true,
       "gate": "G1",
-      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN.",
-      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open.",
+      "implementation_note": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
+      "blocked_reason": "Nebius transport adapters, trusted three-proposal smoke factory and private preflight/start/status/cancel operator are implemented with pinned tokenizer artifacts and durable single-attempt sessions. Synthetic integration tests pass. Verified account/model/tokenizer/control inputs, calibrated episode ceilings and two real billed smoke cases remain open. Offline eight-task model-probe planning and accepted-observation analysis are implemented and independently tested; verified catalog, actual probe and model selection remain NOT RUN. Actual authenticated catalog discovery and one Nano marker call pass; these are access controls, not repair results. Sandbox project ID/entitlement and runtime proofs remain pending. The sole real ledger holds $0.10 pending billing; no automatic retry is authorized by the operator.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -147,7 +148,8 @@
         "research/verification/20260927-docker-integration/integration-receipt.json",
         "docs/model-probe.md",
         "research/verification/20260927-model-probe/receipt.json",
-        "research/verification/20260927-model-probe-independent/review.json"
+        "research/verification/20260927-model-probe-independent/review.json",
+        "research/verification/20260927-account-access/README.md"
       ]
     },
     {
@@ -535,7 +537,7 @@
       ]
     }
   ],
-  "execution_as_of": "2026-09-27T12:54:59.178795+00:00",
+  "execution_as_of": "2026-09-28T00:11:17.609113+00:00",
   "current_approved_spend_usd": 25,
   "approval_source": "budget.json",
   "local_build_sequence_override": {
