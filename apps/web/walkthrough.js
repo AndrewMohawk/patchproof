@@ -60,7 +60,7 @@ export function renderStory(container, state, requestedStep = 'bug') {
       const indent = Math.min(...lines.map(line => line.length - line.trimStart().length));
       return lines.map(line => line.slice(indent)).join('\n');
     };
-    add(card, node('h2', 'story-heading', 'The model checks all retained items, not just the last one.'),
+    add(card, node('h2', 'story-heading', 'The patch checks all retained items, not just the last one.'),
       node('p', 'story-lead', 'The original code only compared neighboring items. The proposed change checks whether an item has already appeared anywhere in the result.'),
       add(node('div', 'story-code-comparison'), add(node('div'), node('h3', '', 'Original code · relevant lines'), node('pre', 'story-code bad', snippet(data.beforeSource))), add(node('div'), node('h3', '', 'AI proposal · relevant lines'), node('pre', 'story-code good', snippet(data.afterSource)))),
       add(node('div', 'story-values'), value('Original output', data.before, 'bad'), value('Output from this patch', data.after, 'good')),
@@ -71,7 +71,7 @@ export function renderStory(container, state, requestedStep = 'bug') {
     add(card, node('h2', 'story-heading', 'The listed checks pass. You still decide whether to use the patch.'),
       node('p', 'story-lead', `The original code passed ${passing(original)} of ${original.length} checks. The proposed patch passed ${passing(checks)} of ${checks.length}. Here is what those checks covered.`));
     const requirements = node('div', 'story-requirements');
-    const labels = { R01: 'Remove duplicates and preserve first-occurrence order', R02: 'Leave the caller’s original data unchanged', R03: 'Keep the existing error for invalid input' };
+    const labels = { R01: 'Remove duplicates and preserve first-occurrence order', R02: 'Leave the caller’s original data unchanged', R03: 'Keep the existing error when input is None' };
     for (const row of run.coverage) {
       const matched = checks.filter(check => row.checkIds.includes(check.id));
       add(requirements, add(node('div'), node('h3', '', labels[row.requirementId] ?? row.requirementId), node('p', '', `${passing(matched)} of ${matched.length} checks passed`)));
