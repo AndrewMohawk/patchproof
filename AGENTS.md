@@ -1,12 +1,12 @@
 # AGENTS.md — PatchProof build instructions
 
-Read `nebius-patchproof-PRD.md`, then `tasks.json`. This is a proposed build package, not evidence that the product already exists. All tasks begin `planned`. Do not invent existing code, benchmark results, access credentials or a deployed demo.
+Read `README.md`, `docs/release-readiness.md`, and `tasks.json` for current implementation and open gates. `nebius-patchproof-PRD.md` preserves the original September 25 plan; its pre-build status is historical. Existing code and dated development receipts do not imply current availability, completed benchmarks, or submission readiness. Do not invent results, credentials, or deployment claims.
 
 ## Objective
 
 Deliver a small maintenance agent whose patch decisions are supported by independent executable checks and reproducible reviewer evidence. Compete through demonstrated correctness and usability, not invented novelty or hidden benchmark leakage.
 
-## First execution sequence
+## Original build sequence and continuing gates
 
 1. Complete T01: recheck current rules and obtain owner decisions for eligibility, rights and externally billed resources. Reading public sources and local preparation are permitted; spending, publishing and entry are not implied.
 2. Freeze shared contracts in T02. Create `decisions.md`, `runtime-lock.json`, and `budget.json`, recording unknown fields honestly.
@@ -40,9 +40,11 @@ Deliver a small maintenance agent whose patch decisions are supported by indepen
 
 Commit/reference, changed files, executed test command, exit code, artifact paths, remaining failures and exact source/version of external interfaces. For unrun tests say `NOT RUN` with a reason. Record blocked dependencies and never silently skip them.
 
-## Release commands to implement
+## Command overview
 
-These commands are target interfaces, not commands claimed to work in the current package:
+The current implementations and limitations are documented in `README.md` and the
+`Makefile`. This original overview is not a claim that a configured provider or
+release gate is available:
 
 ```sh
 make doctor                 # no paid calls; reports architecture/dependencies/entitlements

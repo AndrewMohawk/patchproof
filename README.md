@@ -13,6 +13,13 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
+**October 13 release status:** The source repository is still private. New repairs
+were paused at the read-only availability check because model pricing verification
+needs refresh; the recorded pricing window expired October 1. The saved examples
+and recording document earlier runs. See [release readiness](docs/release-readiness.md)
+for current blockers and the [submission draft](docs/submission-draft.md) for the
+supported claims. No new runtime execution was performed for this documentation update.
+
 Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
 public v3 Python maintenance tasks. Each task shows the starting source, the
 behavior to repair, five requirements, and five selectable input/expected-output
@@ -46,10 +53,10 @@ throughout checking and export. Historical 2.0/2.1 bundles retain their original
 bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
 The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. The
-current v3 configuration uses `nvidia/nemotron-3-super-120b-a12b` on Token
+September 28 recorded v3 configuration uses `nvidia/nemotron-3-super-120b-a12b` on Token
 Factory, with a **$0.25 hold per run**, at most **three model calls**, **12,000 total
 output tokens**, and **600 seconds**. The [public runtime check](research/product-v3/public-review/mobile-fixes.json)
-confirms these limits; older saved runs retain their own recorded allowances. Actual invoice costs remain unknown and reservations stay
+records those historical limits; older saved runs retain their own recorded allowances. Actual invoice costs remain unknown and reservations stay
 held; displayed token-based costs are estimates. See the [model discovery
 receipt](research/product-v3/model-discovery.json), [decisions](decisions.md),
 [budget](budget.json), and [account access receipt](research/verification/20260927-account-access/README.md).
@@ -117,7 +124,7 @@ ready. The original v1 contract-only scaffold is retained for historical tests;
 
 ## Live deployment and evidence
 
-The public application performs real Token Factory inference and checks candidate
+The implemented public application uses real Token Factory inference and checks candidate
 Python code in isolated local Docker containers. Every run records its exact
 model, source, allowance, observations, and evidence digest. Earlier runs retain
 their original runtime locks when the interface or model configuration changes.
@@ -241,7 +248,14 @@ from the remaining provider, billing, calibration and human evidence.
 The original planning package remains in commit `4bf1335`; its `SHA256SUMS.txt`
 refers to that original package. `tasks.json` is a living acceptance tracker.
 
-The GitHub repository remains private. The owner authorized the public app and
-hosted recording. Public source licensing, competition submission and any
-third-party video publication still need separate owner decisions. No competition
-entry or automatic merge has occurred.
+## License and release scope
+
+The owner selected the [MIT license](LICENSE) for original PatchProof software
+and documentation and approved source and existing-demo publication preparation.
+The [CC0 fixture dedication](fixtures/LICENSE-CC0.txt) and [third-party notices](THIRD_PARTY_NOTICES.md)
+remain separate; MIT does not relicense third-party components or media.
+
+The GitHub repository remains private pending a full-history secret and rights
+review. The existing recording is hosted at the app's demo URL; no verified
+YouTube publication is recorded here. Competition entry and acceptance of its
+terms are separate steps. No competition entry or automatic merge has occurred.

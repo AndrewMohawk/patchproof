@@ -1,5 +1,12 @@
 # Public real-inference demo
 
+**Availability note — October 13, 2026:** A read-only public-app inspection found
+new repairs paused with a pricing-refresh message. The checked source's pricing
+validity ended on October 1. This guide describes the implemented workflow and
+dated September evidence; it does not establish that new runs are available now.
+See [release readiness](release-readiness.md). This documentation update changes
+no pricing, resource limit, service, or deployment.
+
 [Open PatchProof](https://patchproof.andrewmohawk.xyz/) to review AI-generated
 maintenance changes and their executable check results. The public application
 uses NVIDIA Nemotron through Nebius Token Factory. Declared checks run twice in
@@ -43,7 +50,7 @@ local Chatterbox synthetic narration, a transcript and links to both examples.
 
 ## Model and run limits
 
-The current public configuration uses
+The September 28 recorded public configuration uses
 `nvidia/nemotron-3-super-120b-a12b`. Its exact account catalog identifier and
 reservation calculation are recorded in the [model discovery receipt](../research/product-v3/model-discovery.json).
 Discovery was read-only and is not evidence of successful model inference. The
@@ -55,7 +62,7 @@ Provider defaults are requested without a thinking-disable override. Hidden
 reasoning is never retained or displayed; completion-token and spending caps
 remain enforced. Truncated responses cannot become accepted patches.
 
-The current v3 allowance is shared by baseline, checks-only, and PatchProof:
+The September 28 recorded v3 allowance was shared by baseline, checks-only, and PatchProof:
 
 | Limit | Per run |
 |---|---|
