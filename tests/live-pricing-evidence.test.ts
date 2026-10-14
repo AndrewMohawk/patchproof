@@ -21,3 +21,9 @@ test('deployment and startup bind the same pricing evidence artifact', () => {
   const deploy = readFileSync(new URL('../research/product-v3/verification/deploy-release.py', import.meta.url), 'utf8');
   assert.ok(deploy.includes(`readFileSync('${LIVE_PRICING_EVIDENCE_PATH}','utf8')`));
 });
+
+test('offline deployment recovery remains explicit and requires the previous unit to be down', () => {
+  const deploy = readFileSync(new URL('../research/product-v3/verification/deploy-release.py', import.meta.url), 'utf8');
+  assert.ok(deploy.includes("os.environ.get('PATCHPROOF_RECOVER_OFFLINE') != '1'"));
+  assert.ok(deploy.includes("status.stdout.strip() in {'failed', 'inactive'}"));
+});
