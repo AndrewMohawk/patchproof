@@ -19,6 +19,7 @@ import { BudgetLedger } from '../../../packages/orchestrator/src/budget-ledger.t
 import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
+export const LIVE_PRICING_EVIDENCE_PATH = 'research/verification/20261014-live-pricing-refresh/pricing-evidence.json';
 const LivePricingEvidenceSchema = z.object({ schemaVersion: z.literal('1.0'),
   verifiedAt: z.iso.datetime(), validUntil: z.iso.datetime(),
   provider: z.literal('nebius-token-factory'), modelId: z.string(),
@@ -63,7 +64,7 @@ export async function createLiveApplication(root: URL, configFile: string) {
   try {
     const operationalLock = buildOperationalLock(projectRoot);
     if (digestJson(operationalLock) !== config.sourceDigest) throw new Error('live_demo_source_changed');
-    const pricingEvidence = JSON.parse(await readFile(new URL('research/verification/20261014-live-pricing-refresh/pricing-evidence.json', root), 'utf8'));
+    const pricingEvidence = JSON.parse(await readFile(new URL(LIVE_PRICING_EVIDENCE_PATH, root), 'utf8'));
     verifyLivePricingEvidence(pricingEvidence, config.pricingEvidenceDigest);
     const discovery = JSON.parse(await readFile(new URL('research/product-v3/model-discovery.json', root), 'utf8'));
     const checks = new DockerCheckRunner(), status = await checks.status();
