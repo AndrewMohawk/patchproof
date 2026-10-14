@@ -5,8 +5,8 @@ import { digestBytes, digestJson } from '../../contracts/src/digest.ts';
 import { ContractError } from '../../contracts/src/index.ts';
 import { REPEATED_CHECK_PROTOCOL } from './repeated-checks.ts';
 
-const roots = ['packages', 'workers', 'apps', 'scripts'];
-const topFiles = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json',
+export const OPERATIONAL_LOCK_ROOTS = ['packages', 'workers', 'apps', 'scripts'];
+export const OPERATIONAL_LOCK_FILES = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json',
   'research/product-v3/model-discovery.json'];
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const OperationalLockSchema = z.strictObject({
@@ -27,8 +27,8 @@ export type OperationalLock = z.infer<typeof OperationalLockSchema>;
 
 /** Binds actual local code and configuration; does not assert unverified live model behavior. */
 export function buildOperationalLock(root: string): OperationalLock {
-  const files = [...topFiles];
-  for (const directory of roots) {
+  const files = [...OPERATIONAL_LOCK_FILES];
+  for (const directory of OPERATIONAL_LOCK_ROOTS) {
     for (const item of readdirSync(join(root, directory), { recursive: true }) as string[]) {
       const path = `${directory}/${item}`;
       const stat = lstatSync(join(root, path));

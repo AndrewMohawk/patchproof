@@ -13,15 +13,17 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-**October 13 release status:** The source repository is still private. New repairs
-were paused at the read-only availability check because model pricing verification
-needs refresh; the recorded pricing window expired October 1. The saved examples
-and recording document earlier runs. See [release readiness](docs/release-readiness.md)
-for current blockers and the [submission draft](docs/submission-draft.md) for the
-supported claims. No new runtime execution was performed for this documentation update.
+**October 14 release status:** The [source repository](https://github.com/AndrewMohawk/patchproof)
+is public under MIT for first-party software and documentation. The guarded live
+release is healthy in read-only mode; public run creation is operator-paused after
+two supervised benign attempts stopped in repeated local baseline checks before
+any provider request. Their reservations reconciled at known zero. The refreshed
+pricing evidence expires October 15 at 01:00 UTC and does not authorize ongoing
+public spend. See [release readiness](docs/release-readiness.md) and the
+[restoration receipt](research/verification/20261014-live-pricing-refresh/live-restoration-receipt.json).
 
-Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
-public v3 Python maintenance tasks. Each task shows the starting source, the
+Start with a saved walkthrough, then inspect either of the two currently published
+v3 Python maintenance tasks. Run controls remain hidden while creation is paused. Each task shows the starting source, the
 behavior to repair, five requirements, and five selectable input/expected-output
 examples. The tasks cover configuration overlays, cursor pagination, inventory,
 invoices, caches, schedules, manifests, event processing, retry batches, and search.
