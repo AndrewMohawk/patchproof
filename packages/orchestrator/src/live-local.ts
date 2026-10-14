@@ -19,7 +19,7 @@ export const LIVE_RESERVATION_MICROS = usdToMicros(LIVE_LIMITS.maxApprovedSpendU
 export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.3, outputUsdPerMillionTokens: 0.9,
   requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
   inputAccounting: 'full-model-context-conservative-ceiling-per-request', actualBilling: 'unknown-full-reservation-held',
-  verifiedAt: '2026-09-28T05:35:23Z', validUntil: '2026-10-01T00:00:00Z' });
+  verifiedAt: '2026-10-14T00:48:07Z', validUntil: '2026-10-15T01:00:00Z' });
 export interface LiveLocalSettings {
   limits: typeof LIVE_LIMITS;
   beforeCreate: (id: string, fingerprint: string) => void;

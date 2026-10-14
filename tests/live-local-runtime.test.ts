@@ -33,7 +33,7 @@ const response = (source = 'def f(): return 2\n', usage = { prompt_tokens: 24, c
     { headers: { 'x-request-id': 'invented-transport' } });
 
 async function setup(t: TestContext) {
-  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-09-28T06:00:00Z') });
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-14T01:00:00Z') });
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-live-local-unit-'));
   const budget = { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 25,
     ownerApproval: { approvedBy: 'synthetic', approvedAt: '2026-09-27T00:00:00Z', expiresAt: null, reference: 'invented control' },
@@ -73,7 +73,8 @@ async function setup(t: TestContext) {
 
 test('Super shares a quarter-dollar reservation that covers its entire matched token allowance', () => {
   assert.equal(LIVE_MODEL, 'nvidia/nemotron-3-super-120b-a12b');
-  assert.equal(LIVE_PRICING.verifiedAt, '2026-09-28T05:35:23Z');
+  assert.equal(LIVE_PRICING.verifiedAt, '2026-10-14T00:48:07Z');
+  assert.equal(LIVE_PRICING.validUntil, '2026-10-15T01:00:00Z');
   assert.equal(LIVE_RESERVATION_MICROS, 250_000n);
   assert.equal(LIVE_RESERVATION_MICROS, usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd));
   assert.equal(LIVE_LIMITS.inferenceCallLimit, 3);
@@ -164,7 +165,7 @@ test('all variants use provider defaults with exact limits, repeated-check cap a
 });
 
 test('worker omission of the thinking override preserves the existing explicit disable option', async t => {
-  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-09-28T06:00:00Z') });
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-14T01:00:00Z') });
   let calls = 0;
   for (const disableThinking of [false, true]) {
     const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,

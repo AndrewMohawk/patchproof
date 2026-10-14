@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Short-lived live-demo pricing refresh",
+  "verifiedAt": "2026-10-14T00:48:07Z",
+  "validUntil": "2026-10-15T01:00:00Z",
+  "provider": "nebius-token-factory",
+  "modelId": "nvidia/nemotron-3-super-120b-a12b",
+  "catalog": {
+    "endpoint": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+    "authenticatedReadOnlyRequest": true,
+    "canonicalTargetRecordSha256": "1909a54e0d566e0ea1107216ed718c5d98cf92d013c2f999676bf18eb3fa275e",
+    "contextTokens": 262144,
+    "quantization": "fp4",
+    "inputUsdPerMillionTokens": 0.3,
+    "outputUsdPerMillionTokens": 0.9,
+    "requestFeeUsd": 0
+  },
+  "accountReview": {
+    "billingActive": true,
+    "trialCreditAvailable": true,
+    "taxPolicyReviewed": true,
+    "additionalTaxApplies": false,
+    "sensitiveBillingDetailsRetained": false
+  },
+  "spendBoundary": {
+    "existingSmokeStageApprovedUsd": 5,
+    "existingHeldReservationsUsd": 1.6,
+    "maximumNewRawReservationsUsd": 3.4,
+    "ownerAdditionalAuthorizationUsd": 5,
+    "perRunReservationUsd": 0.25,
+    "inferenceCallsPerRun": 3,
+    "pricingHeadroomPerRunUsd": 0.0032704,
+    "publicTrafficBoundedByExistingLedger": true
+  },
+  "sources": [
+    "https://docs.tokenfactory.nebius.com/api-reference/models/list-models",
+    "https://tokenfactory.nebius.com/organization/prices",
+    "https://docs.tokenfactory.nebius.com/other-capabilities/billing-new"
+  ],
+  "limitations": [
+    "Token-derived cost remains an estimate until provider billing reconciliation.",
+    "Existing unresolved requests retain their conservative reservations.",
+    "This refresh expires automatically and does not authorize an experiment or competition submission."
+  ]
+}

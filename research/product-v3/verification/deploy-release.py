@@ -36,7 +36,7 @@ for task in tasks:
     assert fixture['id'] == task and fixture['split'] == 'development'
 digest = run(['node', '--input-type=module', '-e', "import {buildOperationalLock} from './packages/orchestrator/src/operational-lock.ts';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(buildOperationalLock(process.cwd())));"], cwd=release, capture_output=True).stdout.strip()
 assert re.fullmatch('sha256:[a-f0-9]{64}', digest)
-pricing_digest = run(['node', '--input-type=module', '-e', "import {readFileSync} from 'node:fs';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(JSON.parse(readFileSync('research/product-v3/model-discovery.json','utf8'))));"], cwd=release, capture_output=True).stdout.strip()
+pricing_digest = run(['node', '--input-type=module', '-e', "import {readFileSync} from 'node:fs';import {digestJson} from './packages/contracts/src/digest.ts';console.log(digestJson(JSON.parse(readFileSync('research/verification/20261014-live-pricing-refresh/pricing-evidence.json','utf8'))));"], cwd=release, capture_output=True).stdout.strip()
 assert re.fullmatch('sha256:[a-f0-9]{64}', pricing_digest)
 original = config.read_bytes()
 data = json.loads(original)
