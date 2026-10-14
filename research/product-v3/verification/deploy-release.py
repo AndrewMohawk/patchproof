@@ -1,5 +1,5 @@
 """Deploy a tested immutable PatchProof revision with an explicit curated catalogue."""
-import datetime, json, os, pathlib, re, subprocess, sys, time, urllib.request
+import datetime, json, os, pathlib, re, subprocess, sys, time, urllib.error, urllib.request
 
 root = pathlib.Path(__file__).resolve().parents[3]
 sha, previous, *tasks = sys.argv[1:]
@@ -21,7 +21,13 @@ def get(path):
         return json.load(response)
 
 def idle():
-    assert all(item['phase'] == 'terminal' for item in get('/runs')['runs']), 'Wait for active public run before rollout.'
+    try:
+        assert all(item['phase'] == 'terminal' for item in get('/runs')['runs']), 'Wait for active public run before rollout.'
+    except urllib.error.HTTPError as error:
+        if error.code != 404 or os.environ.get('PATCHPROOF_RECOVER_OFFLINE') != '1':
+            raise
+        status = subprocess.run(['systemctl', '--user', 'is-active', unit(previous)], text=True, capture_output=True)
+        assert status.stdout.strip() in {'failed', 'inactive'}, 'Offline recovery requires a failed or inactive previous release.'
 
 idle()
 if release.exists():
