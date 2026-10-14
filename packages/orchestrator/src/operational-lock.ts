@@ -6,7 +6,8 @@ import { ContractError } from '../../contracts/src/index.ts';
 import { REPEATED_CHECK_PROTOCOL } from './repeated-checks.ts';
 
 const roots = ['packages', 'workers', 'apps', 'scripts'];
-const topFiles = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json'];
+const topFiles = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json',
+  'research/product-v3/model-discovery.json'];
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const OperationalLockSchema = z.strictObject({
   schemaVersion: z.literal('1.0'), scope: z.literal('local-unscored-development'), liveProtocolFrozen: z.literal(false),
