@@ -19,6 +19,27 @@ import { BudgetLedger } from '../../../packages/orchestrator/src/budget-ledger.t
 import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
+export const LIVE_PRICING_EVIDENCE_PATH = 'research/verification/20261014-live-pricing-refresh/pricing-evidence.json';
+const LivePricingEvidenceSchema = z.object({ schemaVersion: z.literal('1.0'),
+  verifiedAt: z.iso.datetime(), validUntil: z.iso.datetime(),
+  provider: z.literal('nebius-token-factory'), modelId: z.string(),
+  catalog: z.object({ contextTokens: z.number().int().positive(), quantization: z.string(),
+    inputUsdPerMillionTokens: z.number().nonnegative(), outputUsdPerMillionTokens: z.number().nonnegative(),
+    requestFeeUsd: z.number().nonnegative() }),
+  spendBoundary: z.object({ perRunReservationUsd: z.number().positive(), inferenceCallsPerRun: z.number().int().positive() }),
+});
+export function verifyLivePricingEvidence(value: unknown, expectedDigest: string) {
+  if (digestJson(value) !== expectedDigest) throw new Error('live_demo_pricing_changed');
+  const evidence = LivePricingEvidenceSchema.parse(value);
+  if (evidence.modelId !== LIVE_MODEL || evidence.verifiedAt !== LIVE_PRICING.verifiedAt ||
+      evidence.validUntil !== LIVE_PRICING.validUntil || evidence.catalog.contextTokens !== LIVE_PRICING.contextTokens ||
+      evidence.catalog.quantization !== 'fp4' || evidence.catalog.inputUsdPerMillionTokens !== LIVE_PRICING.inputUsdPerMillionTokens ||
+      evidence.catalog.outputUsdPerMillionTokens !== LIVE_PRICING.outputUsdPerMillionTokens ||
+      evidence.catalog.requestFeeUsd !== LIVE_PRICING.requestFeeUsd ||
+      evidence.spendBoundary.perRunReservationUsd !== LIVE_LIMITS.maxApprovedSpendUsd ||
+      evidence.spendBoundary.inferenceCallsPerRun !== LIVE_LIMITS.inferenceCallLimit) throw new Error('live_demo_pricing_mismatch');
+  return evidence;
+}
 export const LiveDemoConfigSchema = z.strictObject({ schemaVersion: z.literal('1.0'), executionAuthorized: z.literal(true),
   publicHostingAuthorized: z.literal(true), stateDirectory: z.string().min(1), ledgerFile: z.string().min(1),
   modelCredentialFile: z.string().min(1), socketFile: z.string().min(1), sourceDigest: hash,
@@ -43,12 +64,9 @@ export async function createLiveApplication(root: URL, configFile: string) {
   try {
     const operationalLock = buildOperationalLock(projectRoot);
     if (digestJson(operationalLock) !== config.sourceDigest) throw new Error('live_demo_source_changed');
+    const pricingEvidence = JSON.parse(await readFile(new URL(LIVE_PRICING_EVIDENCE_PATH, root), 'utf8'));
+    verifyLivePricingEvidence(pricingEvidence, config.pricingEvidenceDigest);
     const discovery = JSON.parse(await readFile(new URL('research/product-v3/model-discovery.json', root), 'utf8'));
-    if (digestJson(discovery) !== config.pricingEvidenceDigest) throw new Error('live_demo_pricing_changed');
-    const model = discovery.modelCatalog.nvidiaModels.find((m: {id: string}) => m.id === LIVE_MODEL);
-    if (model?.contextLength !== LIVE_PRICING.contextTokens || model.quantization !== 'fp4' ||
-        model.pricing.prompt !== '0.0000003' || model.pricing.completion !== '0.0000009' ||
-        model.pricing.request !== '0') throw new Error('live_demo_pricing_mismatch');
     const checks = new DockerCheckRunner(), status = await checks.status();
     if (!status.available) throw new Error('live_demo_local_runtime_unavailable');
     // Execute a fixed benign control under the service's real UID and umask before
