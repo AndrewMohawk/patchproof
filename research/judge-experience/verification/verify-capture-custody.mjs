@@ -3,9 +3,12 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
+import { homedir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { verifyEvidence } from '../../../packages/orchestrator/src/evidence.ts';
-const root = process.argv[2];
-assert.equal(root, '/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03');
+const privateRoot=resolve(process.env.PATCHPROOF_PRIVATE_ROOT??join(homedir(),'.config/patchproof/demo-20260927'));
+const root = resolve(process.argv[2]);
+assert.equal(root, join(privateRoot,'judge-experience-03'));
 const read = async name => JSON.parse(await readFile(`${root}/${name}`));
 const reportBytes = await readFile(`${root}/report.json`);
 const report = JSON.parse(reportBytes), audit = await read('capture-custody-audit.json');

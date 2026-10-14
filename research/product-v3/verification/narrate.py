@@ -18,7 +18,7 @@ import wave
 TTS = 'https://chatterbox.lab.andrewmohawk.xyz'
 STT = 'https://stt-ui.lab.andrewmohawk.xyz'
 REFERENCE = 'ivr_female_02_prompt.wav'
-PRIVATE = Path('/home/andrewmohawk/.config/patchproof/demo-20260927')
+PRIVATE = Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
 
 
 def digest(data):

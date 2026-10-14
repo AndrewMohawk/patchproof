@@ -15,7 +15,8 @@ import sys
 import wave
 
 root = Path(sys.argv[1]).absolute()
-assert root.resolve() == root and root.parent == Path('/home/andrewmohawk/.config/patchproof/demo-20260927')
+private = Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
+assert root.resolve() == root and root.parent == private
 assert root.name.startswith('product-v3-')
 production = json.loads((root / 'video-production.json').read_text())
 capture = json.loads((root / 'capture-report.json').read_text())

@@ -1,6 +1,6 @@
 // Read-only reconciliation audit. Never starts/removes containers or reads authored source maps.
 import { readdirSync, readFileSync, existsSync, writeFileSync, lstatSync } from 'node:fs';
-import { join, resolve, relative } from 'node:path';
+import { dirname, join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -75,7 +75,8 @@ export function parseListing(stdout,ownedRuns){
 }
 
 async function main(){
- const base='/home/andrewmohawk/patchproof-evaluation-v2',root='/home/andrewmohawk/patchproof';
+ const root=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
+ const base=resolve(process.env.PATCHPROOF_EVALUATION_ROOT??join(root,'..','patchproof-evaluation-v2'));
  const readBytes=p=>{const s=lstatSync(p);demand(s.isFile()&&!s.isSymbolicLink()&&s.size<=64*1024*1024,'unsafe_metadata_file');return readFileSync(p);};
  const read=p=>JSON.parse(readBytes(p));
  const startedAt=new Date().toISOString(),ownedRuns=new Set(),operations=new Map(),unconfirmed=new Map(),errors=[];
@@ -104,7 +105,7 @@ async function main(){
   }
   if(matches.length!==1)unresolved.push(operationId);else reconciliations.push({operationId,...matches[0]});
  }
- const {runDocker}=await import('/home/andrewmohawk/patchproof/workers/sandbox/process.ts');
+ const {runDocker}=await import('../../../workers/sandbox/process.ts');
  const listing=await runDocker(['ps','--all','--no-trunc','--filter','label=org.patchproof.owned=true','--format','{{.ID}}\t{{.Names}}\t{{.Label "org.patchproof.run-id"}}'],{timeoutMs:10000});
  let listingConfirmed=!listing.error&&listing.code===0,listingRows=[];
  if(listingConfirmed)try{listingRows=parseListing(listing.stdout,ownedRuns);}catch(e){listingConfirmed=false;errors.push({code:e.message});}

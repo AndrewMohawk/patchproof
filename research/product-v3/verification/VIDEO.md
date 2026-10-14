@@ -39,12 +39,13 @@ There is no arbitrary script action. Network routing blocks write requests even
 if a mistaken click tries to start a run.
 
 ```sh
+export PATCHPROOF_PRIVATE_ROOT="${PATCHPROOF_PRIVATE_ROOT:-$HOME/.config/patchproof/demo-20260927}"
 python3 research/product-v3/verification/narrate.py manifest.json \
-  /home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01 --transcribe
+  "$PATCHPROOF_PRIVATE_ROOT/product-v3-01" --transcribe
 node research/product-v3/verification/capture-video.mjs manifest.json \
-  /home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01
+  "$PATCHPROOF_PRIVATE_ROOT/product-v3-01"
 python3 research/product-v3/verification/assemble-video.py \
-  /home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01
+  "$PATCHPROOF_PRIVATE_ROOT/product-v3-01"
 ```
 
 Review every transcription before capture. Speech files are generated first, so
@@ -96,7 +97,7 @@ GitHub-style changes, and an actual evidence download.
   readable chapter annotations are present.
 
 Private artifacts are in
-`/home/andrewmohawk/.config/patchproof/demo-20260927/product-v3-01/`.
+`$PATCHPROOF_PRIVATE_ROOT/product-v3-01/`.
 The final file is `patchproof-product-v3.mp4`; its receipts are
 `capture-report.json`, `narration-index.json`, `video-production.json`, and
 `audio-video-verification.json`. The reviewed manifest is

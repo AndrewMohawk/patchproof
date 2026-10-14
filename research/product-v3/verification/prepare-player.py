@@ -1,6 +1,7 @@
 """Prepare the authorized public player after the reviewed video is installed."""
 from html import escape
 import json
+import os
 from pathlib import Path
 import re
 
@@ -8,7 +9,8 @@ receipt = json.loads(Path('research/product-v3/verification/final-video/video-pu
 url = receipt['url']
 assert re.fullmatch(r'https://patchproof\.andrewmohawk\.xyz/demo/patchproof-real-demo\.mp4\?v=product-v3-[a-f0-9]{12}', url)
 source = Path(receipt['source'])
-assert source.parent.parent == Path('/home/andrewmohawk/.config/patchproof/demo-20260927')
+private = Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
+assert source.parent.parent == private
 production = json.loads((source.parent / 'video-production.json').read_text())
 assert production['outputSha256'] == receipt['sha256']
 duration = round(receipt['durationSeconds'])
@@ -50,8 +52,11 @@ html = f'''<!doctype html>
 </body>
 </html>
 '''
-roots = [Path('/mnt/raid1-sata-16tb/homelab_backup/docker/patchproof'),
-         Path('/mnt/raid1-nvme-4tb/codex-worktrees/patchproof-deploy-20260928/docker/patchproof')]
+configured_roots = os.environ.get('PATCHPROOF_DEPLOY_ROOTS')
+if not configured_roots:
+    raise SystemExit('PATCHPROOF_DEPLOY_ROOTS is required')
+roots = [Path(value).expanduser().resolve() for value in configured_roots.split(os.pathsep) if value]
+assert roots
 for root in roots:
     (root / 'demo/index.html').write_text(html)
     css = root / 'demo/style.css'

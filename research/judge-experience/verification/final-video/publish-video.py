@@ -8,7 +8,8 @@ import subprocess
 import sys
 
 source = Path(sys.argv[1]).resolve()
-private = Path('/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03')
+private_root = Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
+private = private_root / 'judge-experience-03'
 assert source.parent == private and source.suffix == '.mp4'
 production = json.loads(Path('research/judge-experience/verification/video-production.json').read_text())
 new_bytes = source.read_bytes()
@@ -16,7 +17,10 @@ digest = hashlib.sha256(new_bytes).hexdigest()
 assert production['outputSha256'] == digest
 probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'json', str(source)]))
 assert 90 < float(probe['format']['duration']) < 170
-target = Path('/mnt/raid1-sata-16tb/homelab_data/patchproof/media/patchproof-real-demo.mp4')
+target_value = os.environ.get('PATCHPROOF_PUBLIC_VIDEO_PATH')
+if not target_value:
+    raise SystemExit('PATCHPROOF_PUBLIC_VIDEO_PATH is required')
+target = Path(target_value).expanduser().resolve()
 previous = target.read_bytes()
 old_digest = hashlib.sha256(previous).hexdigest()
 assert old_digest == 'fe8b13daae03dc0b882f3827a313dc4bd92a9adeca4dca7bf70886567286f4d9', 'The current public recording changed; inspect before replacing.'

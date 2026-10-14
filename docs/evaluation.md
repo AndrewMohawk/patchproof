@@ -40,7 +40,7 @@ node workers/evaluator/cli.ts plan final /tmp/patchproof-final-plan.json
 ## Protected evaluation workspace
 
 The current frozen evaluation workspace is
-`/home/andrewmohawk/patchproof-evaluation-v2/frozen-v2`. Authors received their own
+`$PATCHPROOF_EVALUATION_ROOT/frozen-v2`. Authors received their own
 job and shared schemas in fresh contexts, without sibling definitions or prior
 repair results. An evaluator who is not an author owns review, gold, sealed checks
 and runtime preparation. The [freeze receipt](../research/corpus-v2/freeze-publication-receipt.json)

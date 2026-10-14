@@ -1,9 +1,13 @@
 import {readFileSync,writeFileSync} from 'node:fs';
+import {dirname,join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {FunctionCaseSchema} from '/home/andrewmohawk/patchproof/packages/contracts/src/product.ts';
-const path='/home/andrewmohawk/patchproof/packages/contracts/src/product.ts';
+import {FunctionCaseSchema} from '../../../packages/contracts/src/product.ts';
+const projectRoot=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
+const evaluationRoot=resolve(process.env.PATCHPROOF_EVALUATION_ROOT??join(projectRoot,'..','patchproof-evaluation-v2'));
+const path=join(projectRoot,'packages/contracts/src/product.ts');
 const values=['{"__proto__":3}','{"constructor":4}','{"toString":5}','{"é":3,"é":4}'];
 const results=values.map(text=>{const data=JSON.parse(text);const value={id:'probe',requirementId:'R02',function:'f',args:[data],kwargs:{},assertArgsUnchanged:true,expected:data};const result=FunctionCaseSchema.safeParse(value);return{input:data,accepted:result.success,parsedArgument:result.success?result.data.args[0]:null};});
 const output={purpose:'generic invented JSON mapping fidelity probe',source:{path,digest:'sha256:'+createHash('sha256').update(readFileSync(path)).digest('hex')},nodeVersion:process.version,results,candidateExecution:false,providerCalls:0,spendUsd:0};
-writeFileSync('/home/andrewmohawk/patchproof-evaluation-v2/review/json-mapping-fidelity-result.json',JSON.stringify(output,null,2)+'\n',{flag:'wx',mode:0o600});
+writeFileSync(join(evaluationRoot,'review/json-mapping-fidelity-result.json'),JSON.stringify(output,null,2)+'\n',{flag:'wx',mode:0o600});
 console.log(JSON.stringify({probes:results.length,accepted:results.filter(r=>r.accepted).length,lossyAccepted:results.filter(r=>r.accepted&&JSON.stringify(r.input)!==JSON.stringify(r.parsedArgument)).length}));

@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile, chmod, realpath } from 'node:fs/promises';
+import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { verifyEvidence } from '../../../packages/orchestrator/src/evidence.ts';
 import { guardRecordedResponse } from '../../../scripts/record-public-demo.ts';
 
 const origin = 'https://patchproof.andrewmohawk.xyz';
-const output = process.argv[2] ?? '/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03';
-assert.match(output, /^\/home\/andrewmohawk\/\.config\/patchproof\/demo-20260927\/judge-experience-\d{2}$/);
+const privateRoot=resolve(process.env.PATCHPROOF_PRIVATE_ROOT??join(homedir(),'.config/patchproof/demo-20260927'));
+const output = resolve(process.argv[2]??join(privateRoot,'judge-experience-03'));
+assert.equal(dirname(output), privateRoot); assert.match(output, /\/judge-experience-\d{2}$/);
 assert.equal(resolve(output), output); assert.equal(await realpath(dirname(output)), dirname(output));
 await mkdir(output, { mode: 0o700 }); await mkdir(join(output, 'raw'), { mode: 0o700 });
 const success = '08087e0a-f5d9-4c55-b4b6-7666bc8e016c', failure = '5b356c42-8848-4e78-bce7-94800f63eebf';

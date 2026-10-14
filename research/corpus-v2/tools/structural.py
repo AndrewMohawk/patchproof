@@ -1,8 +1,9 @@
 """Parse JSON and Python AST only; never import or execute authored Python."""
-import ast, datetime, hashlib, json, sys, re
+import ast, datetime, hashlib, json, os, sys, re
 from pathlib import Path
 from jsonschema import Draft202012Validator
-BASE=Path('/home/andrewmohawk/patchproof-evaluation-v2')
+PROJECT_ROOT=Path(__file__).resolve().parents[3]
+BASE=Path(os.environ.get('PATCHPROOF_EVALUATION_ROOT',PROJECT_ROOT.parent/'patchproof-evaluation-v2')).expanduser().resolve()
 slot=sys.argv[1]
 if slot not in [f'repo{i:02d}' for i in range(1,13)]:raise SystemExit('Explicit repository slot required')
 job=json.loads((BASE/'shared/jobs'/f'{slot}.json').read_text())

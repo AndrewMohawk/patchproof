@@ -1,7 +1,9 @@
 """Copy only completed receipt metadata into the root-safe author ledger."""
 from pathlib import Path
 import json,hashlib,datetime,os
-B=Path('/home/andrewmohawk/patchproof-evaluation-v2');P=Path('/home/andrewmohawk/patchproof/research/corpus-v2/author-jobs.json')
+ROOT=Path(__file__).resolve().parents[3]
+B=Path(os.environ.get('PATCHPROOF_EVALUATION_ROOT',ROOT.parent/'patchproof-evaluation-v2')).expanduser().resolve()
+P=ROOT/'research/corpus-v2/author-jobs.json'
 digest=lambda b:'sha256:'+hashlib.sha256(b).hexdigest()
 original=P.read_bytes();ledger=json.loads(original);updated=[]
 for i in range(1,13):
