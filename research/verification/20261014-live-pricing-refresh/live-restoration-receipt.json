@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Post-rollout benign live-demo verification",
+  "observedAt": "2026-10-14T02:00:44.609Z",
+  "releaseCommit": "8ad4b27f76e437cf603e9dd1bfd022909da36abd",
+  "sourceDigest": "sha256:b7fea875a09fc7175d2f2cada9960cb0bd5f009eac30480b76c3d5e7b773e1cc",
+  "pricingEvidenceDigest": "sha256:fd45f7d3ebf9495dc1d842cc16d3cd56567340cd1840f5ecccf8a91c86992557",
+  "service": {
+    "active": true,
+    "health": "ok",
+    "mode": "live",
+    "checkBackend": "local_container",
+    "taskIds": [
+      "v3-config-overlay",
+      "v3-cursor-pagination"
+    ],
+    "remainingRuns": 13,
+    "creationEnabled": false,
+    "pauseReason": "operator_paused_supervised_only"
+  },
+  "runs": [
+    {
+      "id": "153f82cf-af03-416f-919a-8071dfc87d46",
+      "taskId": "v3-config-overlay",
+      "variant": "patchproof",
+      "terminalStatus": "infrastructure_error",
+      "reason": "repeat-observations baseline exceeded the local verification deadline under host load",
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "actualCostUsd": 0,
+      "reservationUsd": 0.25,
+      "reservationState": "reconciled",
+      "reconciliationComplete": true,
+      "elapsedMs": 121566,
+      "bundleDigest": "sha256:aaccd56e9c9abd09f07b7d56eff29e2d7b531e641c3ef691423bfd1a9a5ace56",
+      "ledgerEvidenceDigest": "sha256:a9885db97d147e580c93bba1a806b29a32753e12650f1f1cccdfb74fa89e18b3"
+    },
+    {
+      "id": "e1c579ec-a206-480a-ba60-fb1a2fc1b5da",
+      "taskId": "v3-cursor-pagination",
+      "variant": "patchproof",
+      "terminalStatus": "infrastructure_error",
+      "reason": "repeat-observations baseline exceeded the local verification deadline under host load",
+      "inferenceCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "actualCostUsd": 0,
+      "reservationUsd": 0.25,
+      "reservationState": "reconciled",
+      "reconciliationComplete": true,
+      "elapsedMs": 121152,
+      "bundleDigest": "sha256:326f7af85482b81b884555fe393fff1f47440127d17288bb39a7b1d3ed77911d",
+      "ledgerEvidenceDigest": "sha256:7273fbe49cf43b070a52ff51b21bdfd576427ee621039cba6f9ae3f0492e55bf"
+    }
+  ],
+  "accounting": {
+    "newProviderRequests": 0,
+    "newActualProviderUsageUsd": 0,
+    "newReservationsUsd": 0.5,
+    "newReservationsFullyReconciledAtZero": true,
+    "preExistingHeldReservationsUsd": 1.6,
+    "smokeStageCapUsd": 5,
+    "remainingRawReservationCapacityUsd": 3.4
+  },
+  "readiness": {
+    "deploymentHealthy": true,
+    "readOnlySiteHealthy": true,
+    "providerInferenceVerified": false,
+    "judgeAccessReady": false,
+    "blockers": [
+      "Both approved benign runs stopped during repeated local baseline checks before any provider request.",
+      "The short-lived pricing evidence expires at 2026-10-15T01:00:00Z.",
+      "Future judge access requires a separately approved pricing refresh and spend policy; this receipt grants neither."
+    ]
+  }
+}
