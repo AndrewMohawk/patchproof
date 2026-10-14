@@ -1,7 +1,8 @@
 """Root-safe progress metadata only; never emits task names, cases or source."""
 from pathlib import Path
-import json,hashlib
-b=Path('/home/andrewmohawk/patchproof-evaluation-v2/candidate-corpus')
+import json,hashlib,os
+root=Path(__file__).resolve().parents[3]
+b=Path(os.environ.get('PATCHPROOF_EVALUATION_ROOT',root.parent/'patchproof-evaluation-v2')).expanduser().resolve()/'candidate-corpus'
 rows=[]
 for p in sorted(b.glob('repo*-*/artifacts/validation-private.json')):
  v=json.loads(p.read_text())

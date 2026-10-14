@@ -1,7 +1,8 @@
 """Assemble only fully reviewed, validated v2 submissions. Never runs candidates."""
 from pathlib import Path
-import hashlib,json,shutil,datetime
-B=Path('/home/andrewmohawk/patchproof-evaluation-v2');P=Path('/home/andrewmohawk/patchproof')
+import hashlib,json,shutil,datetime,os
+P=Path(__file__).resolve().parents[3]
+B=Path(os.environ.get('PATCHPROOF_EVALUATION_ROOT',P.parent/'patchproof-evaluation-v2')).expanduser().resolve()
 def digest(b):return 'sha256:'+hashlib.sha256(b).hexdigest()
 def read(p):
  if p.is_symlink()or not p.is_file():raise ValueError('Unsafe regular file')

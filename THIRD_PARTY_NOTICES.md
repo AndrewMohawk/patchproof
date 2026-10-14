@@ -1,9 +1,27 @@
-# Third-party dependencies
+# Licensing scope and third-party notices
+
+The root [MIT license](LICENSE) covers original PatchProof application source and
+project documentation, except material carrying its own license or notice. The
+owner selected MIT for release preparation on October 13, 2026. The existing
+[CC0 dedication](fixtures/LICENSE-CC0.txt) for original fixture material remains
+unchanged. Third-party packages, model weights, runtime images, trademarks, and
+media are not relicensed by the root license.
+
+Public-release review remains open. In particular, verify the provenance and
+redistribution terms of any screenshots, fonts, recording assets, and synthetic
+narration/reference audio before including or republishing them. The hosted demo's
+existence and its technical playback receipts do not establish those rights.
+No general redistribution permission for third-party or media assets is asserted.
+
+## Third-party dependencies
 
 Versions and package-integrity hashes are pinned in `package-lock.json`.
-Upstream license files remain in the installed packages; no third-party source
-has been copied into PatchProof implementation files. Install lifecycle scripts
-are disabled. No SWE-Gate, mini-SWE-agent, OpenHands or Aider code/data is vendored.
+Upstream license files remain in the installed packages. Install lifecycle scripts
+are disabled. The prior dependency inventory recorded no third-party source
+copied into implementation files and no vendored SWE-Gate, mini-SWE-agent,
+OpenHands, or Aider code/data. This documentation-only preparation does not
+independently establish those provenance claims; copied/vendored-source review
+remains part of the release audit.
 
 | Package | Version | License | Upstream |
 |---|---|---|---|
@@ -20,7 +38,7 @@ lockfile on 2026-09-27. Browser binaries are not committed/distributed in this
 repository; Playwright downloads include their own notices. The local Node
 runtime is external to this repository. A full redistribution/license audit is
 still required before the public release, including any selected NVIDIA model
-and sponsor SDK/image. The PatchProof project license itself is not selected yet.
+and sponsor SDK/image. Selecting MIT for first-party code does not waive that audit.
 
 The installed Python/Alpine container, Docker engine, host Python and BusyBox are
 external runtime prerequisites, not copied into this repository. The runtime
@@ -35,5 +53,5 @@ weights are downloaded or redistributed. Its upstream
 links the [NVIDIA Nemotron Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/).
 The checked card revision and account catalog receipt are preserved in
 `research/product-v3/model-discovery.json`. The hosted weights revision and
-tokenizer equivalence remain unverified. This receipt records research, not
-acceptance of additional terms or a public-source license decision.
+tokenizer equivalence remain unverified. This receipt records historical model research, not
+acceptance of additional terms or authorization to redistribute model weights.

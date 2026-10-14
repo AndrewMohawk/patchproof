@@ -6,8 +6,9 @@ import subprocess
 import sys
 import textwrap
 
-root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else '/home/andrewmohawk/.config/patchproof/demo-20260927/judge-experience-03')
-assert root.parent == pathlib.Path('/home/andrewmohawk/.config/patchproof/demo-20260927')
+private = pathlib.Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', pathlib.Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
+root = pathlib.Path(sys.argv[1]).expanduser().resolve() if len(sys.argv) > 1 else private / 'judge-experience-03'
+assert root.parent == private
 assert root.name.startswith('judge-experience-') and root.resolve() == root
 report = json.loads((root / 'report.json').read_text())
 if report['status'] == 'passed':

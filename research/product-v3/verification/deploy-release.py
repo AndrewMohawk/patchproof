@@ -1,13 +1,16 @@
 """Deploy a tested immutable PatchProof revision with an explicit curated catalogue."""
 import datetime, json, os, pathlib, re, subprocess, sys, time, urllib.request
 
-root = pathlib.Path('/home/andrewmohawk/patchproof')
+root = pathlib.Path(__file__).resolve().parents[3]
 sha, previous, *tasks = sys.argv[1:]
 assert all(re.fullmatch('[a-f0-9]{40}', value) for value in [sha, previous])
 assert 1 <= len(tasks) <= 20 and len(set(tasks)) == len(tasks)
 assert all(re.fullmatch('v3-[a-z0-9-]+', task) for task in tasks)
-release = pathlib.Path('/mnt/raid1-sata-16tb/homelab_data/patchproof/releases') / sha
-config = pathlib.Path('/home/andrewmohawk/.config/patchproof/operator-20260927/live-demo.json')
+release_root = os.environ.get('PATCHPROOF_RELEASE_ROOT')
+if not release_root:
+    raise SystemExit('PATCHPROOF_RELEASE_ROOT is required')
+release = pathlib.Path(release_root).expanduser().resolve() / sha
+config = pathlib.Path(os.environ.get('PATCHPROOF_OPERATOR_CONFIG', pathlib.Path.home() / '.config/patchproof/operator-20260927/live-demo.json')).expanduser().resolve()
 unit = lambda ref: f'patchproof-runtime@{ref}.service'
 
 def run(args, **kwargs):

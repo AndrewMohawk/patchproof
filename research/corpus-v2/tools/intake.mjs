@@ -1,9 +1,11 @@
 import { readFileSync, writeFileSync, mkdirSync, lstatSync, readdirSync } from 'node:fs';
-import { resolve, join, relative } from 'node:path';
+import { resolve, join, relative, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
-import { FixtureSchema, FunctionCaseSchema } from '/home/andrewmohawk/patchproof/packages/contracts/src/product.ts';
-const base='/home/andrewmohawk/patchproof-evaluation-v2';
+import { FixtureSchema, FunctionCaseSchema } from '../../../packages/contracts/src/product.ts';
+const projectRoot=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
+const base=resolve(process.env.PATCHPROOF_EVALUATION_ROOT??join(projectRoot,'..','patchproof-evaluation-v2'));
 const digest=bytes=>'sha256:'+createHash('sha256').update(bytes).digest('hex');
 function read(path){const s=lstatSync(path);if(!s.isFile()||s.isSymbolicLink()||s.nlink!==1||s.size>1048576)throw new Error('Unsafe input file');return readFileSync(path);}
 function paths(files){return Object.keys(files).sort();}

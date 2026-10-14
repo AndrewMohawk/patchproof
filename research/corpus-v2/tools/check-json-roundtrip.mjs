@@ -1,8 +1,12 @@
 import {readFileSync,writeFileSync,readdirSync,existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {isDeepStrictEqual} from 'node:util';
-import {FunctionCaseSchema} from '/home/andrewmohawk/patchproof/packages/contracts/src/product.ts';
-const base='/home/andrewmohawk/patchproof-evaluation-v2';
+import {dirname,join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {FunctionCaseSchema} from '../../../packages/contracts/src/product.ts';
+const projectRoot=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
+const base=resolve(process.env.PATCHPROOF_EVALUATION_ROOT??join(projectRoot,'..','patchproof-evaluation-v2'));
+const contractPath=join(projectRoot,'packages/contracts/src/product.ts');
 const hash=bytes=>'sha256:'+createHash('sha256').update(bytes).digest('hex');
 const records=[],failures=[];let caseCount=0;
 for(let i=1;i<=12;i++){
@@ -20,5 +24,5 @@ for(let i=1;i<=12;i++){
  }
  records.push({slot,submissionDigest:hash(subBytes),caseCount:count});
 }
-const output={purpose:'authored-case JSON parser projection preflight, no authored Python execution',contractDigest:hash(readFileSync('/home/andrewmohawk/patchproof/packages/contracts/src/product.ts')),records,caseCount,failures,providerCalls:0,candidateExecutions:0};
+const output={purpose:'authored-case JSON parser projection preflight, no authored Python execution',contractDigest:hash(readFileSync(contractPath)),records,caseCount,failures,providerCalls:0,candidateExecutions:0};
 const outputPath=base+'/review/json-roundtrip-'+new Date().toISOString().replaceAll(':','-')+'.json';writeFileSync(outputPath,JSON.stringify(output,null,2)+'\n',{flag:'wx',mode:0o600});console.log(JSON.stringify({repositories:records.length,cases:caseCount,projectionFailures:failures.length,artifactDigest:hash(readFileSync(outputPath))}));

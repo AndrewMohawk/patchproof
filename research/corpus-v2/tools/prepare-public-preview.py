@@ -1,7 +1,8 @@
 """Create a new read-only public-only preview after the first six repositories pass."""
 from pathlib import Path
-import json,hashlib,datetime,uuid,shutil
-B=Path('/home/andrewmohawk/patchproof-evaluation-v2');ROOT=Path('/home/andrewmohawk/patchproof')
+import json,hashlib,datetime,uuid,shutil,os
+ROOT=Path(__file__).resolve().parents[3]
+B=Path(os.environ.get('PATCHPROOF_EVALUATION_ROOT',ROOT.parent/'patchproof-evaluation-v2')).expanduser().resolve()
 digest=lambda b:'sha256:'+hashlib.sha256(b).hexdigest()
 ledger=json.loads((ROOT/'research/corpus-v2/author-jobs.json').read_text());prepared=[];bindings=[]
 for i in range(1,7):

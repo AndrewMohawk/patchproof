@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile, chmod } from 'node:fs/promises';
-import { join } from 'node:path';
+import { homedir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { verifyEvidence } from '../../../packages/orchestrator/src/evidence.ts';
 const origin = 'https://patchproof.andrewmohawk.xyz';
-const output = process.argv[2]; assert.ok(output?.startsWith('/home/andrewmohawk/.config/patchproof/'));
+const privateRoot=resolve(process.env.PATCHPROOF_PRIVATE_ROOT??join(homedir(),'.config/patchproof/demo-20260927'));
+const output = process.argv[2] && resolve(process.argv[2]); assert.ok(output?.startsWith(privateRoot+'/'));
 await mkdir(output, {mode:0o700}); await mkdir(join(output,'raw'),{mode:0o700});
 const success='08087e0a-f5d9-4c55-b4b6-7666bc8e016c', failure='5b356c42-8848-4e78-bce7-94800f63eebf';
 const report={origin,startedAt:new Date().toISOString(),responseSubstitution:false,paidRequests:0,scenes:[],requests:[],errors:[],status:'started'};

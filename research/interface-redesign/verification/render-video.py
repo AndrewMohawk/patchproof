@@ -1,5 +1,6 @@
 import json,pathlib,subprocess,os,hashlib
-root=pathlib.Path('/home/andrewmohawk/.config/patchproof/demo-20260927/interface-redesign-01')
+private=pathlib.Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT',pathlib.Path.home()/'.config/patchproof/demo-20260927')).expanduser().resolve()
+root=private/'interface-redesign-01'
 report=json.loads((root/'report.json').read_text());assert report['status']=='passed'
 def stamp(ms):
  ticks=round(ms/10);return f'{ticks//360000}:{ticks//6000%60:02}:{ticks//100%60:02}.{ticks%100:02}'

@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 source = Path(sys.argv[1]).resolve()
-private = Path('/home/andrewmohawk/.config/patchproof/demo-20260927')
+private = Path(os.environ.get('PATCHPROOF_PRIVATE_ROOT', Path.home() / '.config/patchproof/demo-20260927')).expanduser().resolve()
 assert source.parent.parent == private
 assert re.fullmatch(r'product-v3-[a-z0-9-]+', source.parent.name)
 assert source.name == 'patchproof-product-v3.mp4'
@@ -26,7 +26,10 @@ probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_ent
     'format=duration:stream=codec_name', '-of', 'json', str(source)]))
 assert 40 < float(probe['format']['duration']) < 180
 assert any(stream['codec_name'] == 'aac' for stream in probe['streams'])
-target = Path('/mnt/raid1-sata-16tb/homelab_data/patchproof/media/patchproof-real-demo.mp4')
+target_value = os.environ.get('PATCHPROOF_PUBLIC_VIDEO_PATH')
+if not target_value:
+    raise SystemExit('PATCHPROOF_PUBLIC_VIDEO_PATH is required')
+target = Path(target_value).expanduser().resolve()
 previous = target.read_bytes()
 old_digest = hashlib.sha256(previous).hexdigest()
 assert old_digest == 'aafc632bf58033aa73d386d3f8045fbb24752fed95526517f5e2c43acff08eeb', 'Public media changed; inspect before replacing.'

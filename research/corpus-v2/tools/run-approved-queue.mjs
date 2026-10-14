@@ -1,9 +1,11 @@
 // Trusted scheduling only. Authored Python is executed exclusively by the bounded child validator.
 import { spawn } from 'node:child_process';
 import { openSync, closeSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createHash, randomUUID } from 'node:crypto';
-const base='/home/andrewmohawk/patchproof-evaluation-v2';
+const projectRoot=resolve(dirname(fileURLToPath(import.meta.url)),'../../..');
+const base=resolve(process.env.PATCHPROOF_EVALUATION_ROOT??join(projectRoot,'..','patchproof-evaluation-v2'));
 const slots=process.argv.slice(2);
 if(!slots.length||new Set(slots).size!==slots.length||slots.some(s=>!/^repo(?:0[1-9]|1[0-2])$/.test(s)))throw new Error('Explicit unique approved repository slots required');
 const queueId=randomUUID(),startedAt=new Date().toISOString(),digest=bytes=>'sha256:'+createHash('sha256').update(bytes).digest('hex');
