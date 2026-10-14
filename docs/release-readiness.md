@@ -1,23 +1,26 @@
 # Release readiness
 
-**Checked:** October 13, 2026 (UTC)  
-**Source reviewed:** `993c1d09bed9e45396d9bda7b606c982c335f9d3`  
-**Disposition:** Private preparation only. No release, merge, deployment, or submission.
+**Checked:** October 14, 2026 (UTC)
+**Deployed release:** `8ad4b27f76e437cf603e9dd1bfd022909da36abd`
+**Disposition:** Public source and healthy read-only deployment; run creation is operator-paused. No competition submission was performed.
 
 ## Current evidence
 
-- The repository is private. Root package metadata previously said
-  `UNLICENSED`; this proposed change adds MIT for first-party software and
-  documentation. Fixture CC0 and dependency licenses remain separate.
+- The [repository is public](https://github.com/AndrewMohawk/patchproof). Root
+  package metadata and the root license identify MIT for first-party software
+  and documentation. Fixture CC0 and dependency licenses remain separate.
 - September 28 receipts document real Token Factory inference with the NVIDIA
   Super model and local-container checks. The accepted pagination result is
   22/22, with fresh same-host replay. [Evidence index](../research/product-v3/README.md).
 - The 149.76-second recording is hosted at the app's
-  [demo page](https://patchproof.andrewmohawk.xyz/demo/). A YouTube publication is
-  not verified.
-- October 13 read-only app inspection reported new repairs paused for a pricing
-  refresh. [The source](../packages/orchestrator/src/live-local.ts) sets the prior
-  pricing validity to October 1. This change does not extend it or start any run.
+  [demo page](https://patchproof.andrewmohawk.xyz/demo/) and on
+  [YouTube](https://youtu.be/brNW1NrkAmc).
+- The October 14 rollout is healthy in read-only mode. Two supervised benign
+  attempts stopped during repeated local baseline checks before provider dispatch;
+  usage was zero and both reservations reconciled completely. Public creation is
+  operator-paused. [Receipt](../research/verification/20261014-live-pricing-refresh/live-restoration-receipt.json).
+- Refreshed pricing evidence expires October 15 at 01:00 UTC. It does not authorize
+  ongoing public spend or judge traffic through December 15.
 - The 700-test result belongs to the dated September 28
   [receipt](../research/product-v3/verification/test-results/final-suite-receipt.json),
   not this revision.

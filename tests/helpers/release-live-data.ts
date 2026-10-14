@@ -17,6 +17,7 @@ export async function syntheticReleaseData(existingRoot?: string) {
   const now = new Date(), verifiedAt = new Date(now.getTime() - 1000).toISOString(), validUntil = new Date(now.getTime() + 60_000).toISOString();
   const json = (path: string, value: unknown) => writeFile(join(root, path), JSON.stringify(value));
   for (const name of ['packages', 'workers', 'apps', 'scripts', 'research']) await mkdir(join(root, name), { recursive: true });
+  await mkdir(join(root, 'research/product-v3'), { recursive: true });
   for (const path of ['Makefile', 'tsconfig.json', 'package-lock.json', 'scripts/unit.ts']) await writeFile(join(root, path), '{}');
   await json('package.json', { name: 'synthetic-release-unit', license: 'UNLICENSED', dependencies: {} });
   await json('budget.json', { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 0, ownerApproval: null, verifiedCredits: [],
@@ -36,6 +37,7 @@ export async function syntheticReleaseData(existingRoot?: string) {
       imageDigest: digestBytes('synthetic-image'), architecture: process.arch, accountVerifiedAt: verifiedAt, billingUnit: 'synthetic', usdPerBillingUnit: 1,
       networkControlsVerifiedAt: verifiedAt, cancellationVerifiedAt: verifiedAt }, integrationOperationIds: [], sources: ['https://example.invalid/synthetic-only'] };
   await json('runtime-lock.json', runtime);
+  await json('research/product-v3/model-discovery.json', { schemaVersion: 'synthetic-unit-only', providerCalls: 0 });
   for (const version of [1, 2]) await json(`research/contracts-v${version}-lock.json`, { files: { 'scripts/unit.ts': digestBytes('{}') } });
   const config = await readConfiguration(pathToFileURL(root + '/')), operational = buildOperationalLock(root);
   const settings = { maxOutputTokensPerCall: 100, maxModelCallSeconds: 5, maxCheckBatchSeconds: 3, accountingTimeoutSeconds: 5, cleanupTimeoutSeconds: 1, hostOverheadSeconds: 1,

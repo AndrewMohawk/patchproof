@@ -13,20 +13,24 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-**October 13 release status:** The source repository is still private. New repairs
-were paused at the read-only availability check because model pricing verification
-needs refresh; the recorded pricing window expired October 1. The saved examples
-and recording document earlier runs. See [release readiness](docs/release-readiness.md)
-for current blockers and the [submission draft](docs/submission-draft.md) for the
-supported claims. No new runtime execution was performed for this documentation update.
+**October 14 release status:** The [source repository](https://github.com/AndrewMohawk/patchproof)
+is public under MIT for first-party software and documentation. The guarded live
+release is healthy in read-only mode; public run creation is operator-paused after
+two supervised benign attempts stopped in repeated local baseline checks before
+any provider request. Their reservations reconciled at known zero. The refreshed
+pricing evidence expires October 15 at 01:00 UTC and does not authorize ongoing
+public spend. See [release readiness](docs/release-readiness.md) and the
+[restoration receipt](research/verification/20261014-live-pricing-refresh/live-restoration-receipt.json).
 
-Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
-public v3 Python maintenance tasks. Each task shows the starting source, the
+Start with a saved walkthrough, then inspect either of the two currently published
+v3 Python maintenance tasks. Run controls remain hidden while creation is paused. Each task shows the starting source, the
 behavior to repair, five requirements, and five selectable input/expected-output
-examples. The tasks cover configuration overlays, cursor pagination, inventory,
-invoices, caches, schedules, manifests, event processing, retry batches, and search.
-They are original synthetic examples with interacting rules, not a benchmark of
-production repositories.
+examples. The current catalogue covers configuration overlays and cursor
+pagination. Eight additional original synthetic development examples cover
+inventory, invoices, caches, schedules, manifests, event processing, retry
+batches, and search; they appear in historical ten-task evidence but are not
+currently published. These examples have interacting rules and are not a
+benchmark of production repositories.
 
 **How it works** explains the model, protected checks, evidence, and the reviewer’s
 role. Successful and failed walkthroughs both use four stages: **The bug → AI
@@ -35,7 +39,8 @@ headers, original/proposed line numbers, and expandable unchanged context. Faile
 attempts remain inspectable. Nothing is merged automatically.
 
 The [product v3 record](research/product-v3/README.md) is the index for this upgrade.
-The ten-task interface has been [reviewed on the public app](research/product-v3/public-review/review.md).
+The historical ten-task interface was
+[reviewed on the public app](research/product-v3/public-review/review.md).
 The successful walkthrough follows a real Super pagination repair: the original
 passed 16 of 22 checks, the proposed repair passed all 22, and a fresh same-host
 replay reproduced the result. The complete configuration failure shows why
@@ -80,7 +85,8 @@ Open **http://127.0.0.1:43171/#tasks**. Select **Retain first occurrences throug
 policies, inspect a rejected candidate's actual check output, and download its
 evidence. The scripted provider supports this one task. Other fixtures may be inspected,
 but generating their patches requires a connected model. The public live
-service has its own allowlist of ten v3 tasks.
+service currently allowlists the configuration overlay and cursor pagination
+tasks; the ten-task catalogue in older receipts is historical.
 
 `make doctor` makes no paid calls. If the pinned local checker image is absent,
 it reports the blocker; there is no automatic image pull or provider fallback.
@@ -130,9 +136,11 @@ model, source, allowance, observations, and evidence digest. Earlier runs retain
 their original runtime locks when the interface or model configuration changes.
 
 Use the [product v3 record](research/product-v3/README.md) for the final deployment,
-run, replay, and recording receipts. Public UI inspection
-has verified the ten-task catalogue, source and example controls, How it works,
-both four-stage walkthroughs, and the context diff at desktop and mobile sizes.
+run, replay, and recording receipts. Historical public UI inspection verified
+the then-current ten-task catalogue, source and example controls, How it works,
+both four-stage walkthroughs, and the context diff at desktop and mobile sizes;
+it does not establish current catalogue availability. The current public
+catalogue contains the two tasks identified above.
 That inspection starts no model calls; the separate actual-run and replay
 receipts establish the recorded pagination outcome.
 
