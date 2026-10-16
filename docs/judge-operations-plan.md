@@ -1,8 +1,8 @@
 # Judge operations through December 15, 2026, 20:00 UTC
 
 Renewable evidence controls and the shared budget allocation are implemented.
-See the dated renewable deployment receipt for the actual installed state. New
-generation remains operator-paused while the read-only application stays available.
+See the dated renewable deployment receipt for the actual installed state. Generation was resumed at 23:17 UTC after the audited checks; the read-only
+application and saved evidence remain available.
 A successful configuration repair and a correctly rejected pagination repair are
 accepted demonstrations of checked maintenance; a perfect pagination repair is
 not a reopening requirement. Failed attempts remain visible.
@@ -92,7 +92,8 @@ expiry in the private receipt governs; these suggested times never extend it.
    current ledger checkpoint after reviewing pricing, budget and actual health.
    The verifier cannot clear the pause or any financial freeze.
 
-A named primary and backup must own these observations through December 15.
+The owner or delegated operator must complete these observations through December 15.
+Naming a backup is recommended, not an additional submission gate.
 This is an operational responsibility, not a new spending grant. Parent can
 handle user-only reminders/notifications; this deployment creates none.
 Without a completed renewal, fail closed and keep saved evidence accessible.

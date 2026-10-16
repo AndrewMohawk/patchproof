@@ -624,12 +624,17 @@
     "scope": "Local implementation before provider access and pilot; no real gate waived."
   },
   "current_demo_review": {
-    "as_of": "2026-10-16T22:46:57.990778+00:00",
-    "evidence": "research/verification/20261016-demo-repair/final-validation.json",
+    "as_of": "2026-10-16T23:17:51.131993+00:00",
+    "evidence": "research/verification/20261016-demo-repair/public-readiness.json",
     "historical_task_status_as_of": "2026-09-28",
     "public_task_count": 2,
-    "generation_paused": true,
-    "judge_access_ready": false,
-    "ledger_held_usd": 2.35
+    "generation_paused": false,
+    "judge_access_ready": true,
+    "ledger_held_usd": 2.35,
+    "judge_access_ready_now": true,
+    "judging_period_availability_guaranteed": false,
+    "remaining_reservations": 90,
+    "next_fee_renewal_before": "2026-10-17T20:50:00Z",
+    "readiness_scope": "Current bounded generation and saved evidence; continued access requires real evidence renewal and remaining budget."
   }
 }

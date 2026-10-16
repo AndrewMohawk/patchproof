@@ -1,7 +1,9 @@
 # Release readiness
 
 **Checked:** October 16, 2026 (UTC)
-**Disposition:** Repair candidate validated on Andromeda; live admissions remain paused.
+**Disposition:** Bounded live repairs reopened on Andromeda at 23:17 UTC.
+Hourly catalog verification is installed; genuine account-fee renewal is due
+before October 17 at 20:50 UTC. Finite capacity and fail-closed gates remain.
 See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
 for current timing, pricing, supervised repairs, accounting and rollout gates.
 The historical October 13 sections below are retained as dated context; they

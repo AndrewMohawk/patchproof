@@ -1,0 +1,66 @@
+{
+  "observedAt": "2026-10-16T23:16:13.057955+00:00",
+  "releaseCommit": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "runtimeService": "patchproof-runtime@b2eb173.service",
+  "pricingTimer": "patchproof-pricing@b2eb173.timer",
+  "timer": "NextElapseUSecMonotonic=2d 9h 30min 25.195174s\nActiveState=active\nSubState=waiting\n",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "availability": {
+    "enabled": false,
+    "reason": "Live execution is paused pending accounting review.",
+    "remainingRuns": 90
+  },
+  "creationEnabled": false,
+  "pricingReceipt": {
+    "schemaVersion": "1.0",
+    "policyDigest": "sha256:321d6cb5ac9ef9b275cb2e1ec05eab3ebb6e2d3a20cd7b45f9866458b41cdfc9",
+    "sourceDigest": "sha256:1e6dd1b0a6d90dbf26d6014aa3e3ac797d19cad4dde1d7505939a7e8958ca2be",
+    "budgetDigest": "sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53",
+    "verifiedAt": "2026-10-16T23:15:54.098Z",
+    "validUntil": "2026-10-17T00:25:54.098Z",
+    "catalogDigest": "sha256:79af265adb360784790d5277924aea5c9b5a4eeca6fd340b91a2ab2a76d3c977",
+    "modelId": "nvidia/nemotron-3-super-120b-a12b",
+    "contextTokens": 262144,
+    "quantization": "fp4",
+    "inputUsdPerMillionTokens": 0.3,
+    "outputUsdPerMillionTokens": 0.9,
+    "requestFeeUsd": 0,
+    "feeEvidence": {
+      "schemaVersion": "1.0",
+      "verifiedAt": "2026-10-16T21:01:00Z",
+      "validUntil": "2026-10-17T21:00:00Z",
+      "evidenceDigest": "sha256:9c51dfa981b666f7b2a6548e0545210c9b0813d7e4ced944595e758d946d21b2",
+      "accountBillingActive": true,
+      "additionalFeeUsdPerRun": 0,
+      "basis": "operator-reviewed-account-pricing-and-fees"
+    }
+  },
+  "feeValidityExtended": false,
+  "accountPermissionsChanged": false,
+  "newCredentials": false,
+  "paidCallsDuringRenewalWork": 0,
+  "ledgerHeldUsd": 2.35,
+  "totalCapUsd": 25,
+  "sharedRemainingReservations": 90,
+  "publicEvidence": [
+    {
+      "id": "352bcf84-ffa2-4668-801c-af258ea79e2c",
+      "status": "verified_for_declared_checks",
+      "digest": "sha256:57916af3b6385944491f3013cc4ca99b610274832be54e249ad00908296180b3"
+    },
+    {
+      "id": "3171cb35-a100-4b01-92b9-0a51642992b6",
+      "status": "failed",
+      "digest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77"
+    }
+  ],
+  "operatorPausePreserved": true,
+  "externalNotificationsCreated": false,
+  "hostingPurchased": false,
+  "approvalReviewBlockedActions": []
+}

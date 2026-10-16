@@ -1,10 +1,18 @@
 # October 16 guarded demo repair
 
-The PR contains validated infrastructure repairs and retained supervised outcomes.
-The immutable release `1c0289596184f6d7727b4fe36c1151cb9853dff4` serves the
-read-only walkthrough with generation paused. Judge access is **not ready**.
-Latest outcomes and accounting are recorded in the dated supervised receipts;
-earlier validation sections below describe their historical checkpoints.
+Current status at 23:17 UTC: immutable release
+`b2eb1732a7da5ef14105b7cf127348c200265a8e` is healthy and new generation is enabled.
+The audited resume preserved all historical reservations. The shared approved
+$25 verification/judge pool has $2.35 held and 90 further $0.25 reservations at
+this snapshot. The hourly catalog verifier is installed; fee evidence still
+requires genuine renewal before October 17 at 20:50 UTC. No unlimited capacity
+or unattended availability through December 15 is claimed.
+
+See [public readiness](public-readiness.json), [renewable deployment](renewable-deployment.json),
+[allocation synchronization](shared-allocation-sync.json), [audited resume](public-resume.json),
+and the [operations runbook](../../../docs/judge-operations-plan.md).
+The sections below preserve dated intermediate checkpoints, including earlier
+paused states and the monitor proposal that the implemented controls supersede.
 
 ## Baseline reliability
 
@@ -232,3 +240,29 @@ patch. Do not claim every example repairs successfully or that saved evidence
 makes new generation available. See the concrete
 [judge operations plan](../../../docs/judge-operations-plan.md) for the remaining
 pricing renewal, reserved capacity, implementation and owner decisions.
+
+## Implemented renewal and public reopening (23:17 UTC)
+
+Renewable source/budget/policy-bound evidence, hourly read-only catalog
+verification, separate expiring fee attestations, atomic failure states and
+per-run receipt recording are implemented and deployed. All 74 final regression
+tests and typechecking passed. Real isolated-container startup and rejected
+admissions for paused/missing/changed-price/failed-monitor states passed in a
+no-cost preflight against a ledger copy. The approved internal allocation was
+then synchronized by CAS to revision 3 without changing the $25 total, expiry,
+19 reservation rows or $2.35 holds. The historical $5 smoke cap was an internal
+allocation, not a permission gap for judge use.
+
+The hourly verifier uses the existing credential and account permissions. No
+new credential, account grant, external notification, hosting purchase or
+additional paid call was needed. The previously approved audited resume cleared
+only the operator pause. Public GET checks confirm healthy runtime, enabled
+creation, both curated tasks, 90 remaining reservations and preserved evidence
+exports. There are no denied or pending live-control approvals.
+
+Daily account-fee review remains real operational maintenance; the timer does
+not forge that observation or extend old evidence. Parent can handle user-only
+notifications. Missing renewal, changed prices, exhausted capacity or accounting
+uncertainty close generation while saved evidence remains accessible. A perfect
+pagination repair, unlimited public traffic, an access-queue redesign or a new
+budget grant are not requirements for this checked-maintenance demo.

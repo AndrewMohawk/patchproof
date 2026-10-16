@@ -1,0 +1,119 @@
+{
+  "observedAt": "2026-10-16T23:17:17.614Z",
+  "action": "audited-public-demo-resume",
+  "authority": "sha256:7ce2736d3a62bb4af9b5ea301bf15f9cbf25b32fcff5d5819306df621bb513df",
+  "checkpoint": {
+    "approvalRevision": 3,
+    "eventSequence": 80
+  },
+  "sourceDigest": "sha256:1e6dd1b0a6d90dbf26d6014aa3e3ac797d19cad4dde1d7505939a7e8958ca2be",
+  "pricingEvidenceDigest": "sha256:ca86810f134144e82cb2403578362ce367cb735ac92fcc53eafec9da3fea2cad",
+  "before": {
+    "currency": "USD",
+    "unit": "microdollar",
+    "approvalRevision": 3,
+    "approvalDigest": "sha256:fc710da9662797bd7ee413526a59d2eae94e24d7abb2ea840f9fa2186efebb5b",
+    "connectionApprovalCurrent": true,
+    "approvalExpiresAt": "2026-12-15T20:00:00Z",
+    "frozen": true,
+    "freezeReasons": [
+      "operator_paused_supervised_only"
+    ],
+    "approvedMicros": "25000000",
+    "chargedMicros": "0",
+    "heldMicros": "2350000",
+    "committedMicros": "2350000",
+    "availableMicros": "22650000",
+    "pendingBillingCount": 16,
+    "reservationCount": 19,
+    "verifiedCreditsAppliedMicros": "0",
+    "pendingBillingPolicy": "allow-covered-inference",
+    "coveredPendingBillingCount": 16,
+    "blockingPendingBillingCount": 0,
+    "stages": {
+      "smoke": {
+        "approvedMicros": "25000000",
+        "chargedMicros": "0",
+        "heldMicros": "2350000",
+        "committedMicros": "2350000",
+        "availableMicros": "22650000"
+      },
+      "pilot": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "evaluate": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "hosting": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      }
+    }
+  },
+  "after": {
+    "currency": "USD",
+    "unit": "microdollar",
+    "approvalRevision": 3,
+    "approvalDigest": "sha256:fc710da9662797bd7ee413526a59d2eae94e24d7abb2ea840f9fa2186efebb5b",
+    "connectionApprovalCurrent": true,
+    "approvalExpiresAt": "2026-12-15T20:00:00Z",
+    "frozen": false,
+    "freezeReasons": [],
+    "approvedMicros": "25000000",
+    "chargedMicros": "0",
+    "heldMicros": "2350000",
+    "committedMicros": "2350000",
+    "availableMicros": "22650000",
+    "pendingBillingCount": 16,
+    "reservationCount": 19,
+    "verifiedCreditsAppliedMicros": "0",
+    "pendingBillingPolicy": "allow-covered-inference",
+    "coveredPendingBillingCount": 16,
+    "blockingPendingBillingCount": 0,
+    "stages": {
+      "smoke": {
+        "approvedMicros": "25000000",
+        "chargedMicros": "0",
+        "heldMicros": "2350000",
+        "committedMicros": "2350000",
+        "availableMicros": "22650000"
+      },
+      "pilot": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "evaluate": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "hosting": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      }
+    }
+  },
+  "historicalReservationsUnchanged": true,
+  "paidCallsInitiatedByResume": 0,
+  "automaticBudgetIncrease": false,
+  "feeValidityExtended": false
+}
