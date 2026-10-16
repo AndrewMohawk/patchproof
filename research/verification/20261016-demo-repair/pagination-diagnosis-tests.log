@@ -1,0 +1,28 @@
+(node:1821287) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ visible feedback includes case identity and observed exception with expected value from the public definition (5.486429ms)
+✔ mutation and expected-exception diagnostics retain the visible outcome shape (1.555274ms)
+✔ nonvisible observations retain only requirement/status and generated provenance (0.730684ms)
+✔ mismatched and ambiguous visible identities cannot unlock structured observations (1.098502ms)
+✔ diagnostic serialization rejects getters, proxies, toJSON, cycles and non-JSON values without invoking behavior (3.245514ms)
+✔ ordinary JSON keys survive safely and every diagnostic and message has an explicit UTF-8 bound (2.931507ms)
+✔ all three revision policies use identical visible diagnostics with unchanged resource limits (4.678278ms)
+(node:1821398) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ P branches receive immutable original source while B1 progresses, and B0 selection cannot use acceptance scores (3252.802234ms)
+✔ scripted mock is task bounded and uses the same attempt/feedback rule for every caller (2.342903ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.870608ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (27.294239ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (2.113872ms)
+✔ cancelled proposal sends nothing (0.320285ms)
+✔ operation journal failures prevent initial dispatch and retain completed response identity and usage (1.385502ms)
+✔ cancelled stalled completion body stops promptly and retains attempted-call accounting (8.309185ms)
+✔ malformed completion choices still retain independently valid response identity and token usage (1.695801ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4208.728621

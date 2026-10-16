@@ -206,3 +206,29 @@ paused; saved walkthrough and evidence access are restored on the validated code
 [Final deployment receipt](final-deployment.json): public health and both evidence
 downloads passed at 22:48 UTC. The previous recovery unit was disabled after the
 new unit became healthy. No unrelated service was stopped.
+
+## Pagination diagnosis and truthful demo scope
+
+The [request reconstruction receipt](pagination-diagnosis.json) matches all
+three dispatched request digests exactly. Every request contained the complete
+public requirement, including the equal-revision tie rule. The feedback origins
+and original-source branching match the declared policy; protected diagnostic
+contents remain withheld. A synthetic transport roundtrip preserves each stored
+candidate's source. All three actual candidates passed 21/22 declared checks and
+missed the same explicit clause. No specification, context projection, parser or
+coordinator defect was established. The raw provider responses are not retained;
+parser roundtrip uses the retained proposal, while request verification uses the
+immutable actual dispatch digests.
+
+The focused feedback/parser/repair-policy suite passed 16/16 tests on deployed
+source. No additional paid call, prompt change, expected-answer disclosure,
+fixture edit or hardcoded repair was made for this diagnosis. More identical
+attempts are not justified by the evidence. This establishes a limitation of the
+observed bounded model configuration, not a universal inability of the model.
+
+The verified configuration-overlay run is a truthful primary demo. Keep the
+pagination rejection as a visible example of the checker refusing an incorrect
+patch. Do not claim every example repairs successfully or that saved evidence
+makes new generation available. See the concrete
+[judge operations plan](../../../docs/judge-operations-plan.md) for the remaining
+pricing renewal, reserved capacity, implementation and owner decisions.

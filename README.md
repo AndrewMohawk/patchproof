@@ -18,10 +18,14 @@ exposed by the deployed service; the repository contains ten synthetic tasks.
 The two-lane baseline scheduler and bounded cleanup reinspection completed real
 supervised checks on Andromeda. Configuration overlays passed; pagination's
 three generated candidates were correctly rejected by declared checks. Current
-pricing is reverified, but successful pagination repair and maintained judge
-availability remain open. See the
+pricing is reverified. Diagnosis confirms the complete pagination requirement
+reached the model; its three 21/22 results are retained as a model limitation.
+The verified configuration example and rejected pagination example provide a
+truthful walkthrough. Maintained judge generation remains open. See the
 [October 16 repair evidence](research/verification/20261016-demo-repair/README.md)
-and [release readiness](docs/release-readiness.md).
+and [release readiness](docs/release-readiness.md). The
+[judge operations plan](docs/judge-operations-plan.md) identifies the renewal,
+capacity and operating decisions required before generation reopens.
 
 Start with a saved walkthrough, then open **Try a repair** to inspect one of the two currently exposed
 v3 Python maintenance tasks. Each task shows the starting source, the
