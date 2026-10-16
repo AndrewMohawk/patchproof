@@ -10,8 +10,8 @@
   },
   "verifiedCredits": [],
   "stages": {
-    "smoke": 5,
-    "pilot": 20,
+    "smoke": 25,
+    "pilot": 0,
     "evaluate": 0,
     "hosting": 0
   },
@@ -23,5 +23,5 @@
     "sandboxCpuSecondsLimit": null,
     "candidateBranchLimit": 3
   },
-  "note": "October 16 renewal preserves the $25 TOTAL ceiling and existing $5 smoke/$20 pilot stage caps. Historical usage and fees count within the total; unresolved reservations must remain held. Hosting is not approved. Durable ledger approval must be explicitly synchronized before rollout; this file alone does not authorize a reset or unpause."
+  "note": "The October 16 approval covers verification AND judge demo usage within one $25 TOTAL ceiling, including historical usage and fees. The existing live-controller stage name smoke now holds the shared $25 allocation; it is not a separate $5 permission limit. No additional pilot/evaluation/hosting allowance exists. Preserve all historical reservations and synchronize the existing ledger approval by compare-and-swap; never reset or automatically unpause."
 }

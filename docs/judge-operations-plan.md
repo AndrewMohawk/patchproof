@@ -1,105 +1,133 @@
 # Judge operations through December 15, 2026, 20:00 UTC
 
-This is a concrete operating plan, not an installed monitor or an availability
-commitment. Generation remains paused. Existing read-only walkthroughs and
-recorded evidence remain free to access. This plan authorizes no extra spending,
-hosting purchase, credential creation, reservation release or expiry extension.
+Renewable evidence controls and the shared budget allocation are implemented.
+See the dated renewable deployment receipt for the actual installed state. New
+generation remains operator-paused while the read-only application stays available.
+A successful configuration repair and a correctly rejected pagination repair are
+accepted demonstrations of checked maintenance; a perfect pagination repair is
+not a reopening requirement. Failed attempts remain visible.
 
-## Truthful demo scope
+- Verified walkthrough: https://patchproof.andrewmohawk.xyz/#evidence/352bcf84-ffa2-4668-801c-af258ea79e2c
+- Rejected walkthrough: https://patchproof.andrewmohawk.xyz/#evidence/3171cb35-a100-4b01-92b9-0a51642992b6
 
-Use the verified configuration-overlay run as the primary demonstration:
-https://patchproof.andrewmohawk.xyz/#evidence/352bcf84-ffa2-4668-801c-af258ea79e2c
+## Approved shared capacity
 
-Keep pagination's rejected run visible:
-https://patchproof.andrewmohawk.xyz/#evidence/3171cb35-a100-4b01-92b9-0a51642992b6
+The October 16 approval covers verification AND judge demo use within the same
+$25 TOTAL, including historical usage and fees. The old $5 smoke/$20 pilot split
+was an internal allocation, not a permission boundary. The live controller's
+existing stage name `smoke` now contains the shared $25 pool; all other stages
+are zero. Synchronize the existing ledger by explicit compare-and-swap. Never
+create a second budget, reset accounting or release unresolved reservations.
 
-The first demonstrates a real model repair passing all 22 repeated checks.
-The second demonstrates refusing three incorrect patches, each passing 21/22.
-Exact reconstruction matches all three dispatched request digests: the complete
-explicit tie-order requirement reached the model. No context, parser or
-coordinator defect was found. More identical paid retries are unjustified.
-This is a limitation of the observed bounded model configuration, not a claim
-that the model can never solve the task. Do not manufacture success by weakening
-checks, exposing protected expected answers, or installing a hand-written patch.
+At the reviewed snapshot, $2.35 remains held and $22.65 remains available: at most
+90 additional $0.25 reservations. This is finite current capacity, not a guarantee
+of 90 successful repairs or uninterrupted access. Failed and ambiguous requests
+retain their holds; verification and judge requests draw from the same total.
+No further permission is needed merely to use the already approved judge purpose.
+No automatic increase, hosting purchase or inferred trial-credit allowance exists.
 
-The read-only application is useful today, but does not establish availability
-of new generation. Whether it satisfies entry requirements remains a separate
-submission review; no competition-readiness claim is made here.
+## Implemented evidence controls
 
-## Capacity and accounting
+`packages/orchestrator/src/renewable-pricing.ts` validates source, budget and
+policy bindings, exact model/context/FP4/rates/request fee, a maximum 70-minute
+catalog window, and separate account-fee evidence no older than 24 hours.
+Every admission and paid dispatch revalidates current evidence against the
+original run deadline. Missing, malformed, future, stale, blocked or mismatched
+evidence closes admissions. Valid catalog observations cannot extend fee evidence
+or the December 15 approval. The $0.25 hold, three calls, 12,000 aggregate output
+tokens, 600 seconds, repeated checks, isolation and single flight are unchanged.
 
-The ceiling is $25 TOTAL through the deadline, including historical usage and
-fees. The ledger retains $2.35 in holds and has $22.65 project capacity. The
-current $5 smoke allocation has $2.65 available: ten additional $0.25 holds.
-The $20 pilot allocation is separate; live admission currently uses only smoke.
+`scripts/verify-live-pricing.ts` performs one authenticated GET to the existing
+model catalog. It writes private immutable receipts and atomically replaces the
+current state. A failed observation immediately writes a blocked state. A
+single-writer lease prevents overlap; a crashed process can be recovered by the
+existing dead-process lease logic. A failed write cannot extend the preceding
+short-lived receipt. Request size/time and service resources are bounded.
 
-The arithmetic project ceiling is at most 90 additional reservations at current
-rates, NOT 90 currently available public or guaranteed judge runs. Failures,
-verification calls, price changes and unresolved fees consume capacity. Every
-unknown charge keeps its full hold; aggregate dashboard usage cannot reconcile
-individual reservations. Preserve the original $1.60 historical holds.
+`deploy/patchproof-pricing@.service` and `.timer` provide hourly on-host execution
+using the existing credential, UID and catalog endpoint. This requires no new
+account-access grant, key or persistent account permission. Installation/enabling
+is an operational deployment of the authorized verification; any exact action
+rejected by approval review must still be reported before proceeding. The timer
+never resumes generation, changes the budget, reconciles holds, makes inference
+calls, or sends external notifications. It does not read account billing PII.
 
-Owner decision proposed: designate the existing $20 pilot allocation for judge
-generation and retain smoke for verification. This changes purpose within the
-existing ceiling; record approval before changing admission accounting. Use one
-global atomic ledger, never duplicate its allowance in another budget. Prevent
-anonymous public use from consuming reserved judge capacity. A reviewed access
-or queue design is required; creating credentials or expanding persistent access
-requires separate approval. No such access change is implemented by this plan.
+Renewed pricing receipts are embedded in per-run evidence events and immutable
+accounting records. The old October 16 receipt remains a historical rate/fee
+anchor, not the renewal authority when renewable verification is configured.
 
-## Required pricing and monitor implementation
+## Account-fee renewal runbook
 
-Current pricing expires October 17 at 21:00 UTC, so the existing 600-second guard
-stops admission at 20:50 UTC. A one-day receipt cannot cover the judging period.
-Do not change that date without new verification.
+Account-fee automation is not established: the observed dashboard is aggregated,
+and a supported authoritative per-operation/account-fee API has not been verified.
+Do not guess endpoints, mint credentials, reuse browser session secrets, or
+pretend hourly model-catalog reads renew tax/fee verification.
 
-1. Implement a bounded hourly read-only monitor with the existing credential.
-   Read the authenticated exact model/context/quantization/rates/request fee,
-   private ledger, public health/admission and active-run age. Never infer,
-   purchase, top up, release holds, create keys or unpause. Retain minimal
-   timestamped receipts and bounded logs without secrets or billing PII.
-2. Separate renewable external evidence from immutable code. Bind a versioned
-   verification policy to the source, approved cap and expected model/rates;
-   bind each receipt to that policy, raw observation digests, account-fee
-   evidence, verifiedAt and a short validUntil. Reject missing/malformed/future
-   or stale evidence, policy mismatch, changed rates and unknown fees. This
-   requires implementation and tests; the current hardcoded daily receipt must
-   not be silently extended or treated as a maintenance mechanism.
-3. Admission and every paid dispatch must validate the current receipt and
-   original run deadline. A monitor that only alerts is insufficient: stale or
-   failed monitoring must block generation. An unchanged catalog cannot renew
-   unknown account fees. No refresh may clear an operator or financial freeze,
-   change the cap, or increase token/call/time/isolation allowances.
-4. Establish authoritative account-fee verification. No supported per-operation
-   billing endpoint has been verified; the observed dashboard is aggregated.
-   Until a reliable machine-readable fee source is established, a named operator
-   must review account pricing/fees before each renewal. Never invent a
-   multi-month freshness period to avoid this work. Missing renewal leaves the
-   read-only experience available and generation clearly unavailable.
-5. Test exact expiry, missing/stale evidence, clock skew, changed model/prices/
-   fees, catalog failure, source-policy mismatch, monitor crash, exhausted
-   stage/project capacity, concurrent admission and restart recovery with all
-   holds preserved. Deploy paused, validate no-cost failure cases, and only then
-   consider one explicitly bounded supervised renewal check if necessary.
+The current fee attestation retains its original October 17, 21:00 UTC expiry.
+The full 600-second allowance therefore stops admission by 20:50 UTC unless an
+operator performs a real renewal. Suggested operating cadence: primary review
+at 18:00 UTC daily, backup review before 20:00 UTC if needed. The actual next
+expiry in the private receipt governs; these suggested times never extend it.
 
-## Owner decisions and operational responsibilities
+1. Using existing authorized access, inspect account billing status, account
+   model prices, applicable fees/taxes and the authoritative published policy.
+   Record a dated minimal review receipt with source references and observations;
+   retain no billing PII, card details or credentials. If anything is unknown or
+   changed, keep generation unavailable and investigate; do not reuse old facts.
+2. Create a private fee attestation with `schemaVersion: "1.0"`, actual
+   `verifiedAt`, justified `validUntil` no more than 24 hours later,
+   `evidenceDigest` of that new review, `accountBillingActive: true`,
+   `additionalFeeUsdPerRun: 0`, and
+   `basis: "operator-reviewed-account-pricing-and-fees"`. Zero fees must have
+   been verified; a nonzero or unknown fee needs a reviewed pricing policy and
+   conservative reservation calculation, not this zero-fee renewal path.
+3. Atomically replace the configured `feeEvidenceFile` in its existing private
+   directory with mode 0600. This is evidence renewal, not credential creation.
+   Never extend the prior attestation by changing only its date.
+4. Start the installed `patchproof-pricing@<release>.service`, or invoke the
+   committed verifier once with the explicit existing private config. Check its
+   JSON result, current receipt, fee expiry and public `/tasks` availability.
+   Catalog verification makes no paid calls. A blocked result stays blocked.
+5. Any public resume uses the existing audited operator-pause control at the
+   current ledger checkpoint after reviewing pricing, budget and actual health.
+   The verifier cannot clear the pause or any financial freeze.
 
-| Item | Next action | Approval or dependency |
-| --- | --- | --- |
-| Monitor and evidence gate | Implement the controls above and retain failure-injection results | Preparation fits maintenance scope; any admission/accounting change requiring approval must be reviewed explicitly. No new access or spending. |
-| Operator coverage | Name primary and backup, renewal frequency and incident response responsibility through Dec 15 | The owner must accept this ongoing commitment; a one-time repair task cannot establish it. |
-| Notifications | Choose destination and recipients for stale evidence, failed health, low capacity or uncertain accounting | External messaging and recurring notifications need explicit authorization. |
-| Judge allocation | Decide on the proposed $20 purpose allocation and access/queue design | No cap increase. New credentials or persistent access require separate approval. |
-| Existing host | Confirm continued use of the existing machine, storage headroom and bounded logs | No unrelated service shutdown or paid hosting is authorized. New hosting costs require separate approval. |
-| Reopening | Verify renewal controls, finite reserved capacity, operator ownership and healthy checks; use audited resume at the current ledger checkpoint | Never automatic; financial freezes and all unresolved holds remain protected. |
+A named primary and backup must own these observations through December 15.
+This is an operational responsibility, not a new spending grant. Parent can
+handle user-only reminders/notifications; this deployment creates none.
+Without a completed renewal, fail closed and keep saved evidence accessible.
 
-Alert on any disabled admission or accounting uncertainty. Treat five or fewer
-available judge reservations as low capacity and zero as exhausted. Monitoring
-itself makes no paid calls. Avoid routine container probes under load; use a
-bounded no-cost baseline after runtime changes or observed health failure,
-serialized with paid work.
+## Readiness and incident procedure
 
-At December 15, 20:00 UTC authorization expires. Preserve the 600-second guard:
-last admission is 19:50 UTC if all other evidence remains valid. Stop paid
-admissions and preserve accounting/receipts. Continue read-only hosting only
-within existing authorization. No automatic renewal, purchase or extension.
+Inspect the current service/timer status, latest verifier JSON, `/healthz`,
+`/tasks`, available reservations and nonterminal runs. Alert the owner on failed
+or stale verification, unavailable generation, uncertain accounting or five or
+fewer remaining reservations. A destination for external messages would require
+separate authorization; no such messages are sent here. Do not release holds
+based on aggregated usage; invoices or authoritative per-operation records are
+needed for reconciliation.
+
+The implementation is tested for exact expiry, fee and price changes, source/
+budget/policy mismatch, failed fetches, private atomic writes, overlapping
+writers, loss of evidence during baseline, preserved exported evidence, budget
+exhaustion, pause state and concurrent admission. A real no-cost preflight also
+checks isolated-container startup against an isolated ledger copy. See
+`research/verification/20261016-demo-repair/renewable-final-tests.log` and
+`renewable-preflight.json`.
+
+Keep the service paused when deploying changed policy. Review any source/config
+binding mismatch; never make the old receipt valid by editing its timestamp.
+If the timer crashes, its receipt expires in at most 70 minutes and admissions
+stop ten minutes before that. Restart the reviewed verifier after diagnosing
+the failure. No model retry is needed just to verify a pricing renewal.
+
+Use the existing host only. No unrelated workload shutdown, new paid hosting,
+credential creation, persistent access expansion or security-setting changes
+are authorized by this plan. Existing read-only service continuity and disk/log
+headroom need normal operator care; no uptime guarantee is invented.
+
+At December 15, 20:00 UTC approval expires. The last possible admission is 19:50
+UTC when all other evidence remains valid. The verifier refuses catalog access
+once the full run no longer fits the approval window. Stop the timer at handoff,
+preserve accounting/receipts, and retain read-only access only within existing
+hosting authorization. No automatic purchase, renewal or extension follows.

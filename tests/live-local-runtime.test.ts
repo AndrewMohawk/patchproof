@@ -15,6 +15,8 @@ import { Coordinator } from '../packages/orchestrator/src/coordinator.ts';
 import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_MODEL, LIVE_PRICING, LIVE_RESERVATION_MICROS } from '../packages/orchestrator/src/live-local.ts';
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../packages/orchestrator/src/local-check-timing.ts';
 import { REPEATED_CHECK_PROTOCOL } from '../packages/orchestrator/src/repeated-checks.ts';
+import { makePricingReceipt, verifyRenewablePricing } from '../packages/orchestrator/src/renewable-pricing.ts';
+import type { VerifiedPricing } from '../packages/orchestrator/src/renewable-pricing.ts';
 import { NebiusRepairProvider } from '../workers/repair/index.ts';
 
 // Original invented metadata only. The real HTTP adapter is driven by an in-memory
@@ -32,7 +34,7 @@ const response = (source = 'def f(): return 2\n', usage = { prompt_tokens: 24, c
   Response.json({ id: 'invented-response', model: LIVE_MODEL, choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ files: { 'solution.py': source }, summary: 'Invented proposal.' }) } }], usage, ...extra },
     { headers: { 'x-request-id': 'invented-transport' } });
 
-async function setup(t: TestContext) {
+async function setup(t: TestContext, verifyPricing?: (deadline: number) => VerifiedPricing) {
   t.mock.timers.enable({ apis: ['Date'], now: Date.parse(LIVE_PRICING.verifiedAt) });
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-live-local-unit-'));
   const budget = { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 25,
@@ -55,7 +57,7 @@ async function setup(t: TestContext) {
       isolation: 'local_container', operationIds: [id], cpuSeconds: null, measuredCostUsd: 0, infrastructureError: null };
   } };
   const options = { fixtures: [fixture], runtimeLock: lock, sourceDigest: HASH, pricingEvidenceDigest: HASH, ledger, journal, store, checks,
-    accountingDirectory, verifyRuntime: () => { if (observed.sourceChanged) throw new ContractError('digest_mismatch', 'Invented source changed.'); },
+    accountingDirectory, ...(verifyPricing ? { verifyPricing } : {}), verifyRuntime: () => { if (observed.sourceChanged) throw new ContractError('digest_mismatch', 'Invented source changed.'); },
     credential: async () => { observed.credentials++; return SECRET; }, fetch: (async (url, init) => {
       observed.requests.push({ url: String(url), init: init!, body: JSON.parse(String(init!.body)) });
       assert.equal(String(url), 'https://api.tokenfactory.nebius.com/v1/chat/completions');
@@ -388,4 +390,43 @@ test('queue delay consumes the admitted allowance before any check or credential
   await h.coordinator.settled();
   assert.equal(h.coordinator.get(created.run.id).reason, 'timeout');
   assert.equal(h.observed.checks.length, 0); assert.equal(h.observed.credentials, 0);
+});
+
+
+test('renewable evidence admits after legacy expiry and is retained in exported events and accounting', async t => {
+  const now = Date.parse('2026-10-18T00:00:00Z');
+  const bindings = { sourceDigest: HASH, budgetDigest: HASH, approvalExpiresAt: '2026-12-15T20:00:00Z' };
+  const catalog = { data: [{ id: LIVE_MODEL, context_length: 262144, quantization: 'fp4', pricing: { prompt: '0.0000003', completion: '0.0000009', request: '0', image: '0', price_per_video_second: '0', price_per_minute: '0', input_cache_read: null } }] };
+  const fee = { schemaVersion: '1.0', verifiedAt: new Date(now).toISOString(), validUntil: new Date(now + 3600_000).toISOString(), evidenceDigest: HASH,
+    accountBillingActive: true, additionalFeeUsdPerRun: 0, basis: 'operator-reviewed-account-pricing-and-fees' };
+  let state: unknown = { status: 'verified', receipt: makePricingReceipt(catalog, fee, bindings, now) };
+  const h = await setup(t, deadline => verifyRenewablePricing(state, bindings, deadline));
+  t.mock.timers.setTime(now);
+  const done = await h.run('renewable-after-historical-expiry');
+  assert.equal(done.terminalStatus, 'verified_for_declared_checks');
+  const evidence = verifyEvidence(await h.coordinator.evidence(done.id));
+  assert.ok(evidence.run.events.some(event => event.message.startsWith('Pricing verification: ')));
+  const files = await readdir(h.accountingDirectory);
+  const records = await Promise.all(files.map(file => readFile(join(h.accountingDirectory, file), 'utf8').then(JSON.parse)));
+  assert.ok(records.some(record => record.pricingVerifications?.length === 1));
+  assert.equal(h.reservation(done).heldMicros, '250000');
+  state = { status: 'blocked', checkedAt: new Date(now).toISOString(), reason: 'catalog_unavailable' };
+  const before = h.ledger.snapshot();
+  assert.throws(() => h.coordinator.create(request('renewable-blocked-next-admission')), /verification/);
+  assert.deepEqual(h.ledger.snapshot(), before);
+  assert.equal(h.observed.requests.length, 1);
+});
+
+test('loss of renewable evidence after baseline prevents credentials and dispatch', async t => {
+  let ready = true;
+  const h = await setup(t, () => {
+    if (!ready) throw new ContractError('authorization_required', 'Synthetic renewal failed.', 403);
+    return { digest: HASH, evidence: {} as VerifiedPricing['evidence'] };
+  });
+  h.hooks.check = () => { ready = false; };
+  const done = await h.run('renewal-lost-during-baseline');
+  assert.equal(done.terminalStatus, 'infrastructure_error');
+  assert.equal(done.reason, 'authorization_required');
+  assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
+  assert.equal(h.reservation(done).actualCostMicros, '0');
 });
