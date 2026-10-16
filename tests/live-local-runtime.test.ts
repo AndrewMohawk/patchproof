@@ -142,7 +142,7 @@ test('ambiguous transport leaves full hold blocking and never retries automatica
   assert.throws(() => h.coordinator.create(request('must-block')), /paused|accounting/); assert.equal(h.observed.requests.length, 1);
 });
 
-test('all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests', async t => {
+test('all variants request non-thinking mode with exact limits, repeated-check cap and at most three bounded requests', async t => {
   const h = await setup(t); h.hooks.alwaysFail = true;
   for (const variant of ['baseline', 'checks_only', 'patchproof']) {
     const done = await h.run('variant-' + variant, variant); assert.equal(done.terminalStatus, 'failed');
@@ -152,7 +152,7 @@ test('all variants use provider defaults with exact limits, repeated-check cap a
   for (const call of h.observed.requests) {
     assert.equal(call.body.model, LIVE_MODEL); assert.equal(call.body.max_tokens, 4000); assert.equal(call.body.max_completion_tokens, 4000);
     assert.equal(call.body.n, 1); assert.equal(call.body.stream, false); assert.equal(call.body.store, false);
-    assert.equal(Object.hasOwn(call.body, 'chat_template_kwargs'), false);
+    assert.deepEqual(call.body.chat_template_kwargs, { enable_thinking: false });
   }
   for (let i = 0; i < h.observed.checks.length; i += 2) {
     const a = h.observed.checks[i]!, b = h.observed.checks[i + 1]!;

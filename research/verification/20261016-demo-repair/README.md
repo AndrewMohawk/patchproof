@@ -1,9 +1,10 @@
 # October 16 guarded demo repair
 
-This is a validated repair candidate. The public service remains on release
-`8ad4b27f76e437cf603e9dd1bfd022909da36abd`, with new runs disabled and the
-`operator_paused_supervised_only` ledger freeze preserved. Judge access is **not
-ready**. No paid inference was performed for this change.
+The PR is a guarded repair in active validation. The immutable recovery release
+`6f7bb22e9a3b282f4986b9618927527c75c3e9fe` serves the read-only walkthrough with
+generation paused between supervised attempts. Judge access is **not ready**.
+Latest outcomes and accounting are recorded in the dated supervised receipts;
+earlier validation sections below describe their historical checkpoints.
 
 ## Baseline reliability
 
@@ -45,32 +46,47 @@ The conservative three-call envelope is $0.2467296 against a $0.25 hold, leaving
 $0.0032704. An unknown fee or price increase must block admissions rather than
 consume this small margin speculatively.
 
-The existing durable ledger still contains 13 unresolved reservations totaling
-$1.60. Two October 14 pre-inference failures remain reconciled at zero. The
-account usage screen for September 16–October 16, updated at 19:38 UTC, shows
-product costs totaling $0.01281912. Aggregated product rows do not map charges to
-individual reservations, so no reservation was released or reset.
+The original 13 unresolved reservations totaling $1.60 remain intact. The two
+October 14 pre-inference failures and the first October 16 baseline failure are
+reconciled at zero. The second October 16 supervised run completed its baseline
+but hit the 4,000-token response limit on its first model call. Its estimated
+cost is $0.0045753; actual invoiced cost remains unknown, so its full $0.25 hold
+remains. After that attempt the ledger held $1.85 across 14 covered pending
+reservations, with no blocking pending charges. Aggregated account usage does
+not identify individual reservations and is not used to release them.
 
 The renewed approval in budget.json expires December 15 at 20:00 UTC and remains
 $25 TOTAL including prior usage and applicable fees. Existing $5 smoke/$20 pilot
 allocations remain; hosting is zero and no automatic increase is permitted.
-The deployed ledger approval has **not** been changed to the new file. An
-explicit compare-and-swap approval synchronization is required during a guarded
-rollout. Changing a checkout is not a new spending allowance.
+The durable approval was synchronized with compare-and-swap to revision 2.
+Andrew explicitly approved the audited operator resume control on October 16.
+It clears only an operator pause at the exact reviewed event checkpoint and
+rejects stale checkpoints, financial freezes, and underlying accounting anomalies.
+All prior reservations are checked unchanged after supervision.
 
-## Remaining rollout gates
+## Baseline cleanup follow-up and supervised validation
 
-- Review this change and its no-cost tests. The new pricing/code/source digest
-  bindings are prepared together; the deployed configuration is unchanged.
-- Establish an audited operator resume procedure for the existing operator
-  pause. The ledger deliberately has no automatic thaw API. Do not clear
-  overrun, unknown-billing or other freezes, or directly reset ledger rows to
-  obtain a green state.
-- After durable approval synchronization and controlled operator resume, perform
-  at most one supervised repair per currently exposed fixture, preserving all
-  reservations and unsuccessful outcomes. Paid repair validation is NOT RUN.
-- Reopen only after successful end-to-end checks and verified accounting.
-  The current one-day pricing receipt alone is insufficient for judge access.
+Two no-cost baselines under service limits completed in 36.662 and 40.373 seconds.
+A full coordinator diagnostic completed both in 55.086 and 52.563 seconds and
+measured a 4.075-second event-loop stall while durable journaling was active.
+The first supervised run encountered a cleanup inspection timeout. A later run
+reproduced a one-second Docker inspect timeout even though stderr reported the
+container no longer existed. That timed-out output is never accepted as proof.
+Cleanup now repeats read-only inspection within the unchanged five-second cleanup
+budget and requires a separate successful absence observation. Ownership mismatch
+and malformed inspection remain immediate failures; persistent errors still fail
+closed. No container creation or model request is retried by this change.
+
+The second supervised run completed all 44 baseline container operations. Its
+model response was incomplete at the unchanged token cap. The next candidate
+requests NVIDIA's documented `chat_template_kwargs.enable_thinking=false` for all
+live variants and records the setting in runtime evidence. Hosted behavior is
+validated by supervision, not inferred from the upstream documentation. Token,
+call, time and spending limits remain unchanged.
+
+Public reopening remains gated on verified repairs, durable accounting, and a
+maintainable pricing/capacity plan. Failed attempts remain in evidence. There is
+no automatic unpause or unlimited judge capacity.
 
 ## Maintainable monitoring proposal through December 15, 20:00 UTC
 
@@ -160,3 +176,29 @@ pre-fix export failures are retained in [the regression log](evidence-preservati
 The initial candidate fix also exposed the verifier's passing-observations
 assumption; the final version preserves a matching explicit terminal rejection.
 No paid calls, deployment changes or ledger changes occurred.
+
+## Final supervised outcomes (22:45 UTC)
+
+The [third supervised receipt](supervised-repairs-third.json) preserves both
+outcomes. Configuration overlays passed every declared repeated check with one
+model call, 855 output tokens and 88 fresh container operations in 121.686 seconds.
+Pagination completed baseline and three candidate check batches without an
+infrastructure error, but all candidates failed the revision-tie requirement;
+it was correctly rejected after 264.462 seconds and 176 container operations.
+The supervisor's requirement that both tasks succeed therefore failed. This is
+not represented as a two-task success, and no further paid attempts were made.
+
+There were five new provider calls today across three attempted paid runs,
+including the earlier truncated response. Their combined token-rate estimate is
+$0.0118197, not invoiced cost. All three $0.25 reservations remain held alongside
+the original $1.60: total $2.35, 16 covered pending reservations, zero blocking
+pending reservations, and $22.65 project capacity. Current smoke-stage capacity
+is $2.65 (10 more $0.25 reservations); pilot capacity is separately allocated.
+The ledger is operator-paused. No historical reservation changed.
+
+The final request/runtime/cleanup suite passed 50/50 tests and typechecking.
+Earlier evidence/accounting and operator-resume suites remain separately dated.
+Both new evidence bundles are retained, including the rejected pagination patches.
+The proposed monitor is not installed, the one-day pricing window is not extended,
+and free judge access through December 15 is not established. Generation remains
+paused; saved walkthrough and evidence access are restored on the validated code.

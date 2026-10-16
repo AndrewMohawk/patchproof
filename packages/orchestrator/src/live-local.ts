@@ -82,8 +82,9 @@ export function createLiveLocalCoordinator(input: {
   };
   const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,
     inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
-    // Omit the disabling override; hosted reasoning behavior remains unverified.
-    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: false,
+    // Explicit upstream non-thinking mode keeps the bounded output available for a patch.
+    // The evidence records this request setting; it does not claim hidden provider behavior.
+    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: true,
     countInputTokens: () => LIVE_PRICING.contextTokens,
     credential: async () => { validate(); return input.credential(); },
     fetch: async (url, init) => { validate(); if (!active?.attempted || active.closed) throw new ContractError('authorization_required', 'Dispatch reservation is required.', 403); return input.fetch(url, init); },

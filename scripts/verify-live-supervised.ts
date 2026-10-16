@@ -2,6 +2,7 @@ import type { ProductRun, ProductEvidence } from '../packages/contracts/src/prod
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createLiveApplication } from '../apps/api/src/live-application.ts';
+import { DockerCheckRunner } from '../workers/sandbox/index.ts';
 import { BudgetLedger } from '../packages/orchestrator/src/budget-ledger.ts';
 import { digestJson } from '../packages/contracts/src/digest.ts';
 
@@ -21,7 +22,7 @@ assert.deepEqual(config.taskIds, tasks);
 const ledger = new BudgetLedger({ filename: config.ledgerFile, budget, existingOnly: true, pendingBillingPolicy: 'allow-covered-inference' });
 const before = ledger.snapshot();
 assert.equal(before.approvedMicros, '25000000');
-assert.equal(before.heldMicros, '1600000'); assert.equal(before.reservationCount, 15);
+assert.equal(before.heldMicros, '1850000'); assert.equal(before.reservationCount, 17);
 assert.equal(before.blockingPendingBillingCount, 0);
 assert.deepEqual(before.freezeReasons, ['operator_paused_supervised_only']);
 const priorIds = [...new Set(ledger.events().flatMap(e => e.reservationId ? [e.reservationId] : []))];
@@ -38,13 +39,16 @@ for (const signal of ['SIGTERM', 'SIGINT'] as const) process.once(signal, () => 
 try {
   app = await createLiveApplication(new URL('../', import.meta.url), configFile);
   assert(app.coordinator.list().every(run => run.phase === 'terminal'));
+  const previousCleanup = await new DockerCheckRunner().reconcile(['7a0b1afe-16e3-49e7-8051-f0a72be3671b']);
+  assert.equal(previousCleanup.error, null); assert.deepEqual(previousCleanup.remainingOperationIds, []);
+  console.log(JSON.stringify({ event: 'prior-failed-run-cleanup-confirmed', ...previousCleanup }));
   assert.equal(interrupted, false);
   ledger.resumeOperatorPause({ ...checkpoint, evidenceDigest: authority });
   for (const taskId of tasks) {
     assert.equal(interrupted, false);
     const snapshot = ledger.snapshot();
     assert.equal(snapshot.frozen, false); assert.equal(snapshot.blockingPendingBillingCount, 0);
-    const created: { run: ProductRun; reused: boolean } = app.coordinator.create({ taskId, mode: 'live', variant: 'patchproof', idempotencyKey: 'supervised-20261016-' + taskId });
+    const created: { run: ProductRun; reused: boolean } = app.coordinator.create({ taskId, mode: 'live', variant: 'patchproof', idempotencyKey: 'supervised-20261016-third-' + taskId });
     assert.equal(created.reused, false);
     console.log(JSON.stringify({ event: 'supervised-run-started', taskId, runId: created.run.id }));
     await app.coordinator.settled();
@@ -64,7 +68,7 @@ try {
   for (const row of historical) assert.deepEqual(ledger.get(row.id), row);
   const receipt = { completedAt: new Date().toISOString(), sourceDigest: config.sourceDigest, authority,
     success, before, after: ledger.snapshot(), historicalReservationsUnchanged: true, results };
-  writeFileSync(new URL('../research/verification/20261016-demo-repair/supervised-repairs.json', import.meta.url),
+  writeFileSync(new URL('../research/verification/20261016-demo-repair/supervised-repairs-third.json', import.meta.url),
     JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
   if (app) await app.close();
   ledger.close();

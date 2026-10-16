@@ -117,3 +117,29 @@ test('real container with an already expired absolute guest deadline never invok
   assert.equal(result.infrastructureError, null); // Expected candidate timer exit; cleanup is verified.
   const after = await runDocker(['container', 'inspect', name]); assert.notEqual(after.code, 0); assert.match(after.stderr, /No such (container|object)/i);
 });
+
+test('transient inspection timeout is re-observed within the existing cleanup budget before success', async () => {
+  const expected = identity(), id = 'a'.repeat(64); let reads=0, removed=false;
+  const result = await cleanupOwnedContainer(async args => {
+    if(args[0]==='rm'){assert.deepEqual(args,['rm','-f',id]);removed=true;return success();}
+    if(++reads===1)return {code:null,error:'timeout',stdout:'',stderr:''};
+    return removed?missing:inspected(expected,id);
+  },expected,true,{timeoutMs:100,pollMs:1});
+  assert.equal(reads,3);assert(removed);assert.deepEqual(result,{confirmed:true,id,reason:null,inspectionFailure:{code:null,error:'timeout',stderr:''}});
+});
+test('persistent inspection errors remain uncertain at the unchanged overall cleanup deadline', async () => {
+  let reads=0;const start=performance.now();
+  const result=await cleanupOwnedContainer(async args=>{
+    assert.equal(args[0],'container');reads++;
+    return {code:1,error:null,stdout:'',stderr:'synthetic daemon temporarily unavailable'};
+  },identity(),true,{timeoutMs:40,pollMs:5});
+  assert(reads>1);assert.equal(result.confirmed,false);assert.equal(result.reason,'inspection_failed');
+  assert(performance.now()-start<250);
+});
+test('invalid ownership inspection is terminal and never retried or removed',async()=>{
+  let reads=0;
+  const result=await cleanupOwnedContainer(async args=>{
+    assert.equal(args[0],'container');reads++;return success('{}');
+  },identity(),true,{timeoutMs:100,pollMs:1});
+  assert.equal(reads,1);assert.equal(result.confirmed,false);assert.equal(result.reason,'invalid_inspection');
+});

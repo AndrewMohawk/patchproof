@@ -1,0 +1,93 @@
+(node:1333703) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (120.133223ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (108.585519ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (7.551091ms)
+  ✔ name (3.354996ms)
+  ✔ image (3.149665ms)
+  ✔ ownedLabel (2.785706ms)
+  ✔ operationLabel (2.230642ms)
+  ✔ ownerLabel (2.258702ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (23.761706ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (112.369247ms)
+(node:1333963) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (1739.013107ms)
+ℹ {"ownerRunId":"9f5aa77b-52a1-45f3-bf30-4a2d8db9d80d","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1463,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-8558043c-1102-433d-b42e-4d2e4b3241fa\",\"createAcknowledged\":true,\"containerId\":\"0e5a3b03155170d9df08e80d3fb2da3b74d35f38dc1e7d70202d4972a4fec9cd\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-8558043c-1102-433d-b42e-4d2e4b3241fa"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (1.387811ms)
+(node:1335138) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.338032ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (3342.121029ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (3647.846228ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1869.609411ms)
+✔ all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests (8064.62994ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.444047ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1881.249698ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1953.907239ms)
+  ✔ output (1862.697699ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3818.47797ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (967.364855ms)
+✔ live hard allowances are frozen against mutation after factory construction (2422.927137ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1612.273251ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1486.898267ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1354.489025ms)
+  ✔ header (2028.970038ms)
+  ✔ candidate (1795.788837ms)
+  ✔ escaped_candidate (1630.633504ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (6811.779312ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (1755.389364ms)
+  ✔ 0 (2729.900191ms)
+  ✔ 1 (776.797771ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (5264.964926ms)
+✔ persisted operator pause rejects creation before credentials or spending (985.264998ms)
+✔ approval expiry must cover the entire run even when pricing remains current (851.812567ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (2721.989505ms)
+  ✔ approval (2072.739763ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (4796.052121ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (1268.556254ms)
+  ✔ pricing1 (1661.558577ms)
+  ✔ approval0 (1553.1577ms)
+  ✔ approval1 (1546.774138ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (6032.121597ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (2050.466102ms)
+  ✔ 0 (2426.370885ms)
+  ✔ 1 (910.316954ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (5388.756007ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (2065.128248ms)
+✔ late baseline preserves observations and cleanup logs without inference (1410.843869ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1403.739233ms)
+(node:1353991) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ two lanes overlap with bounded concurrency, preserve order and repeat all observations (40.852177ms)
+✔ infrastructure uncertainty aborts the peer and awaits its cleanup (21.111577ms)
+✔ thrown lane preserves pre-spawn handles and drains sibling (10.985894ms)
+✔ historical scheduling remains serial and unknown frozen scheduling fails closed (1.763225ms)
+✔ second lane originating failure survives first lane cancellation (11.004584ms)
+(node:1354033) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (50.059203ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (18.952802ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (41.173306ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (45.810191ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.491933ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (962.90615ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1345.276543ms)
+✔ transient inspection timeout is re-observed within the existing cleanup budget before success (3.285196ms)
+✔ persistent inspection errors remain uncertain at the unchanged overall cleanup deadline (41.603912ms)
+✔ invalid ownership inspection is terminal and never retried or removed (2.507951ms)
+ℹ tests 67
+ℹ suites 0
+ℹ pass 67
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75184.286451

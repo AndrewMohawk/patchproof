@@ -15,9 +15,11 @@ still uses explicitly labeled scripted responses.
 
 **October 16 status:** New repairs remain operator-paused. Two curated tasks are
 exposed by the deployed service; the repository contains ten synthetic tasks.
-A two-lane container scheduler has completed both repeated baselines on Andromeda.
-Current account pricing is reverified, but supervised paid repair validation,
-guarded rollout and maintained judge availability remain open. See the
+The two-lane baseline scheduler and bounded cleanup reinspection completed real
+supervised checks on Andromeda. Configuration overlays passed; pagination's
+three generated candidates were correctly rejected by declared checks. Current
+pricing is reverified, but successful pagination repair and maintained judge
+availability remain open. See the
 [October 16 repair evidence](research/verification/20261016-demo-repair/README.md)
 and [release readiness](docs/release-readiness.md).
 

@@ -3,7 +3,9 @@
 **Checked:** October 16, 2026 (UTC)
 **Disposition:** Repair candidate validated on Andromeda; live admissions remain paused.
 See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
-for timing, pricing, accounting and remaining supervised rollout gates.
+for current timing, pricing, supervised repairs, accounting and rollout gates.
+The historical October 13 sections below are retained as dated context; they
+do not describe the October 16 test environment or current pricing receipt.
 
 ## Prior release review evidence (October 13)
 
@@ -72,7 +74,7 @@ event requirements or claim their outcomes. Keep the submission's claims within
 the real development evidence while track fit and working-demo requirements are
 resolved.
 
-## Verification of this documentation change
+## Historical October 13 documentation-only verification
 
 Only license text, package license metadata, and documentation are changed.
 Local validation must check JSON consistency, unchanged dependency metadata and

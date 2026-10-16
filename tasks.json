@@ -622,5 +622,14 @@
   "local_build_sequence_override": {
     "reference": "owner-decisions.json#localBuildBeforeProviderAccess",
     "scope": "Local implementation before provider access and pilot; no real gate waived."
+  },
+  "current_demo_review": {
+    "as_of": "2026-10-16T22:46:57.990778+00:00",
+    "evidence": "research/verification/20261016-demo-repair/final-validation.json",
+    "historical_task_status_as_of": "2026-09-28",
+    "public_task_count": 2,
+    "generation_paused": true,
+    "judge_access_ready": false,
+    "ledger_held_usd": 2.35
   }
 }

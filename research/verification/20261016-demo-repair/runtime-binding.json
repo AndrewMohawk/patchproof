@@ -1,9 +1,21 @@
 {
-  "sourceDigest": "sha256:a1184d8db81e4098cc1a7055c11e1d64c02c2f031255bdba0042c1b902afa427",
+  "sourceDigest": "sha256:175ffbe9b724fa965bc6bd664b47bfad0b344313af8d77013af1077963967603",
   "pricingEvidenceDigest": "sha256:9c51dfa981b666f7b2a6548e0545210c9b0813d7e4ced944595e758d946d21b2",
-  "configDigest": "sha256:83311331b3ed22b5f683679176a8aa628ba20ce46cf740bed931209a798a4693",
+  "configDigest": "sha256:5be8a16a26c7e5e88f5422a7c464116af839ab94ebb15ae0431ac89255ea9438",
   "budgetDigest": "sha256:e1d98734a8f66659a7d12fd90aeef109ce9697f87da3b8769c1fe224598b4ad4",
-  "status": "prepared-not-deployed",
-  "ledgerApprovalSynchronized": false,
-  "operatorPausePreserved": true
+  "status": "validated-for-paused-rollout",
+  "ledgerApprovalSynchronized": true,
+  "operatorPausePreserved": true,
+  "verifiedEvidence": [
+    {
+      "runId": "352bcf84-ffa2-4668-801c-af258ea79e2c",
+      "digest": "sha256:57916af3b6385944491f3013cc4ca99b610274832be54e249ad00908296180b3",
+      "status": "verified_for_declared_checks"
+    },
+    {
+      "runId": "3171cb35-a100-4b01-92b9-0a51642992b6",
+      "digest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77",
+      "status": "failed"
+    }
+  ]
 }
