@@ -22,7 +22,7 @@ export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.3, outpu
   verifiedAt: '2026-10-16T21:01:00Z', validUntil: '2026-10-17T21:00:00Z' });
 export interface LiveLocalSettings {
   limits: typeof LIVE_LIMITS;
-  beforeCreate: (id: string, fingerprint: string) => void;
+  beforeCreate: (id: string, fingerprint: string, createdAt: string) => void;
   bindEventSink: (sink: (message: string) => void) => void;
   validateStep: () => void;
   terminal: (run: ProductRun) => void;
@@ -46,7 +46,7 @@ export function createLiveLocalCoordinator(input: {
   }
   if (!input.fixtures.length || input.fixtures.some(f => f.split !== 'development')) throw new ContractError('unknown_task', 'Only curated development tasks may run publicly.');
   mkdirSync(input.accountingDirectory, { recursive: true, mode: 0o700 });
-  type Active = { id: string; reservationId: string; fingerprint: string; intents: string[]; receipts: InferenceReceipt[];
+  type Active = { id: string; deadlineMs: number; reservationId: string; fingerprint: string; intents: string[]; receipts: InferenceReceipt[];
     sink: ((message: string) => void) | null; attempted: boolean; closed: boolean };
   let active: Active | null = null;
   const persist = () => {
@@ -60,12 +60,17 @@ export function createLiveLocalCoordinator(input: {
     const directory = openSync(input.accountingDirectory, constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW);
     try { fsyncSync(directory); } finally { closeSync(directory); }
   };
-  const validate = () => {
+  const validate = (deadlineMs = active?.deadlineMs ?? Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000) => {
     input.verifyRuntime();
-    if (Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(LIVE_PRICING.validUntil)) throw new ContractError('authorization_required', 'Model pricing verification needs refresh.', 403);
+    // Admission reserves the full window once. Later gates retain that exact
+    // deadline rather than silently demanding another full allowance.
+    if (!Number.isFinite(deadlineMs) || Date.now() >= deadlineMs) {
+      throw new ContractError('timeout', 'The admitted run deadline has elapsed.');
+    }
+    if (deadlineMs > Date.parse(LIVE_PRICING.validUntil) || Date.now() >= Date.parse(LIVE_PRICING.validUntil)) throw new ContractError('authorization_required', 'Model pricing verification needs refresh.', 403);
     const snapshot = input.ledger.snapshot();
     if (snapshot.approvalExpiresAt !== null &&
-        Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(snapshot.approvalExpiresAt)) {
+        (deadlineMs > Date.parse(snapshot.approvalExpiresAt) || Date.now() >= Date.parse(snapshot.approvalExpiresAt))) {
       throw new ContractError('authorization_required', 'The full run must fit within the approved spending window.', 403);
     }
     // The current in-flight call is intentionally pending. Every other pending
@@ -105,13 +110,15 @@ export function createLiveLocalCoordinator(input: {
   const capability = Object.freeze({});
   capabilities.set(capability, {
     limits: LIVE_LIMITS,
-    beforeCreate: (id, fingerprint) => {
+    beforeCreate: (id, fingerprint, createdAt) => {
       if (active && !active.closed) throw new ContractError('capacity_exceeded', 'One live run is already active.', 429);
-      active = null; validate();
+      active = null;
+      const deadlineMs = Date.parse(createdAt) + LIVE_LIMITS.wallTimeLimitSeconds * 1000;
+      validate(deadlineMs);
       const reservationId = `live-local:${id}`;
       try { input.ledger.reserve({ id: reservationId, episodeId: id, stage: 'smoke', amountMicros: LIVE_RESERVATION_MICROS, fingerprint }); }
       catch { throw new ContractError('budget_not_approved', 'The shared live-demo allowance is exhausted or paused.', 403); }
-      active = { id, reservationId, fingerprint, intents: [], receipts: [], sink: null, attempted: false, closed: false }; persist();
+      active = { id, deadlineMs, reservationId, fingerprint, intents: [], receipts: [], sink: null, attempted: false, closed: false }; persist();
     },
     bindEventSink: sink => { if (active) active.sink = sink; }, validateStep: validate,
     terminal: run => {

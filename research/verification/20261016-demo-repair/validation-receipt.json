@@ -42,5 +42,26 @@
     "production rollout",
     "public reopening",
     "continuous judge availability monitoring"
-  ]
+  ],
+  "reviewFollowup": {
+    "reviewedCommit": "93820d9a064640a6bcbe68ffd293c98e64bda8b7",
+    "changes": [
+      "fixed admitted deadline across pricing, approval, queue, inference and final checks",
+      "preserve originating failure from either lane"
+    ],
+    "typecheckExitCode": 0,
+    "tests": 135,
+    "passed": 135,
+    "failed": 0,
+    "testConcurrency": 1,
+    "testLog": "review-followup-tests.log",
+    "providerCalls": 0,
+    "sourceConfigPricingBindingsVerified": true,
+    "productionChanged": false,
+    "ledgerChanged": false,
+    "priorAttempts": [
+      "Advancing-time regression failed for pricing and approval before the fix (review-regression-red.log).",
+      "Expanded suite initially failed the approval-before boundary because its synthetic clock preceded pricing verification by 1 ms. Moved that test start 60 seconds later; final clean serialized run passes (prior log: review-clock-fixture-attempt.log)."
+    ]
+  }
 }

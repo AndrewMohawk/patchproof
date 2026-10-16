@@ -295,3 +295,67 @@ test('approval expiry must cover the entire run even when pricing remains curren
   assert.throws(() => h.coordinator.create(request('approval-window')), /full run must fit/);
   assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
 });
+
+test('admitted runs retain their original pricing and approval deadline as time advances', async t => {
+  for (const kind of ['pricing', 'approval']) await t.test(kind, async t => {
+    const h = await setup(t);
+    const start = kind === 'pricing' ? Date.parse(LIVE_PRICING.validUntil) - 600000 : Date.now();
+    t.mock.timers.setTime(start);
+    if (kind === 'approval') h.ledger.syncApproval({ ...h.budget,
+      ownerApproval: { ...h.budget.ownerApproval, expiresAt: new Date(start + 600000).toISOString() } },
+      { expectedRevision: h.ledger.snapshot().approvalRevision });
+    h.hooks.check = n => { if (n === 2) t.mock.timers.setTime(start + 90000); };
+    const done = await h.run('elapsed-' + kind);
+    assert.equal(done.terminalStatus, 'verified_for_declared_checks');
+    assert.equal(h.observed.requests.length, 1);
+    for (const file of await readdir(h.accountingDirectory)) {
+      const record = JSON.parse(await readFile(join(h.accountingDirectory, file), 'utf8'));
+      assert.equal(record.deadlineMs, Date.parse(done.createdAt) + 600000);
+    }
+  });
+});
+test('no credentials or dispatch at or beyond the admitted deadline', async t => {
+  for (const kind of ['pricing', 'approval']) for (const offset of [0, 1]) await t.test(kind + offset, async t => {
+    const h = await setup(t);
+    const start = kind === 'pricing' ? Date.parse(LIVE_PRICING.validUntil) - 600000 : Date.now();
+    t.mock.timers.setTime(start);
+    if (kind === 'approval') h.ledger.syncApproval({ ...h.budget,
+      ownerApproval: { ...h.budget.ownerApproval, expiresAt: new Date(start + 600000).toISOString() } },
+      { expectedRevision: h.ledger.snapshot().approvalRevision });
+    h.hooks.check = n => { if (n === 2) t.mock.timers.setTime(start + 600000 + offset); };
+    const done = await h.run('deadline-' + kind + offset);
+    assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
+    assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
+    assert.equal(h.reservation(done).heldMicros, '0');
+  });
+});
+
+test('approval admission accepts before and exactly at its full-window boundary only', async t => {
+  for (const offset of [-1, 0, 1]) await t.test(String(offset), async t => {
+    const h = await setup(t), expires = Date.now() + 660000;
+    h.ledger.syncApproval({ ...h.budget, ownerApproval: { ...h.budget.ownerApproval,
+      expiresAt: new Date(expires).toISOString() } }, { expectedRevision: h.ledger.snapshot().approvalRevision });
+    t.mock.timers.setTime(expires - 600000 + offset);
+    if (offset > 0) {
+      assert.throws(() => h.coordinator.create(request('approval-boundary')), /full run must fit/);
+      assert.equal(h.observed.credentials, 0);
+    } else assert.equal((await h.run('approval-boundary')).terminalStatus, 'verified_for_declared_checks');
+  });
+});
+test('a late final check cannot publish a verified result after the admitted deadline', async t => {
+  const h = await setup(t), start = Date.now();
+  h.hooks.check = n => { if (n === 4) t.mock.timers.setTime(start + 600000); };
+  const done = await h.run('late-final-check');
+  assert.equal(done.reason, 'timeout');
+  assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
+  assert.equal(h.observed.requests.length, 1);
+  assert.equal(h.reservation(done).heldMicros, '250000');
+});
+test('queue delay consumes the admitted allowance before any check or credential access', async t => {
+  const h = await setup(t), start = Date.now();
+  const created = h.coordinator.create(request('expired-in-queue'));
+  t.mock.timers.setTime(start + 600000);
+  await h.coordinator.settled();
+  assert.equal(h.coordinator.get(created.run.id).reason, 'timeout');
+  assert.equal(h.observed.checks.length, 0); assert.equal(h.observed.credentials, 0);
+});

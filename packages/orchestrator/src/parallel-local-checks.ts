@@ -21,15 +21,17 @@ export class TwoLaneLocalCheckRunner implements CheckRunner {
     const stop = new AbortController();
     const combined = AbortSignal.any([signal, stop.signal]);
     const lanes = [input.cases.filter((_, i) => i % 2 === 0), input.cases.filter((_, i) => i % 2 === 1)];
+    let originatingFailure: string | null = null;
     const results = await Promise.all(lanes.map(async cases => {
       const operationIds: string[] = [];
       try {
         const result = await this.runner.run({ ...input, files: structuredClone(input.files),
           cases: structuredClone(cases), timeoutSeconds: Math.max(0.001, (deadline - performance.now()) / 1000),
           onOperation: id => { operationIds.push(id); input.onOperation?.(id); } }, combined);
-        if (result.infrastructureError) stop.abort();
+        if (result.infrastructureError) { originatingFailure ??= result.infrastructureError; stop.abort(); }
         return result;
       } catch {
+        originatingFailure ??= 'local_lane_error';
         stop.abort();
         return { checks: errorChecks(cases, 'local_lane_error'), operationIds, isolation: 'unavailable' as const,
           cpuSeconds: null, measuredCostUsd: null, infrastructureError: 'local_lane_error' };
@@ -41,6 +43,6 @@ export class TwoLaneLocalCheckRunner implements CheckRunner {
       isolation: results.every(r => r.isolation === 'local_container') ? 'local_container' : 'unavailable',
       cpuSeconds: results.reduce<number | null>((n, r) => sumKnown(n, r.cpuSeconds), 0),
       measuredCostUsd: results.reduce<number | null>((n, r) => sumKnown(n, r.measuredCostUsd), 0),
-      infrastructureError: results.find(r => r.infrastructureError)?.infrastructureError ?? null };
+      infrastructureError: originatingFailure };
   }
 }

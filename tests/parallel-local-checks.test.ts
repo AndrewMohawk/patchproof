@@ -47,3 +47,14 @@ test('historical scheduling remains serial and unknown frozen scheduling fails c
  assert.equal(calls,2);
  assert.throws(()=>runnerForFrozenProtocol(runner,{localCheckSchedulingPolicy:{...LOCAL_CHECK_SCHEDULING_POLICY,maximumConcurrentContainers:3}}));
 });
+
+test('second lane originating failure survives first lane cancellation', async () => {
+ let drained=false;
+ const runner:CheckRunner={async run(i,signal){
+ if(i.cases[0]!.id==='c1'){await new Promise(r=>setTimeout(r,10));return {...result(i.cases),infrastructureError:'timeout'};}
+ await new Promise<void>(resolve=>signal.addEventListener('abort',()=>resolve(),{once:true}));
+ drained=true;return {...result(i.cases),infrastructureError:'cancelled'};
+ }};
+ const r=await new TwoLaneLocalCheckRunner(runner).run(input,new AbortController().signal);
+ assert(drained);assert.equal(r.infrastructureError,'timeout');
+});

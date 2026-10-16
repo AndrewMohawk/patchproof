@@ -98,7 +98,7 @@ This is a proposal, not an installed monitor or funded availability commitment.
 
 ## Validation
 
-Typecheck and all **72** targeted tests passed on Andromeda, including exact
+The initial typecheck and all **72** targeted tests passed on Andromeda, including exact
 pricing expiry boundaries, mismatched prices, approval-window expiry, exhausted
 budget, persisted operator pause, concurrent-run rejection, two-lane cancellation,
 historical scheduling, and real container cleanup controls. Fixture integrity
@@ -109,3 +109,34 @@ An earlier concurrent suite attempt failed an existing cleanup timing assertion;
 its [log](parallel-suite-attempt.log) is retained. The serialized rerun passed
 without changing cleanup code or timeouts. Initial test-only typing/key errors
 were corrected. Full repository tests and paid end-to-end repairs are NOT RUN.
+
+## Review follow-up: fixed admission deadline
+
+An advancing clock reproduced the sliding-expiry bug for both pricing and
+approval: a run admitted exactly ten minutes before expiry was stopped after
+its baseline because later gates demanded another full ten minutes. Admission
+now persists one absolute deadline shared with the run creation timestamp.
+Later checks, credential access and dispatch validate that deadline against
+current pricing and approval; queue time consumes the allowance. A final check
+returning after the deadline cannot publish a verified result. No expiry,
+timeout, reservation, or isolation limit was increased.
+
+The two-lane runner now retains the first originating infrastructure failure
+regardless of lane order, while still waiting for both cleanup paths.
+The second-lane-first cancellation regression is covered.
+
+The live ledger is unchanged: approval revision 1, operator pause present,
+13 unresolved reservations totaling $1.60. An audited resume API was proposed
+but its implementation was rejected by automatic approval review as a
+security-sensitive control change requiring explicit approval. No part of that
+denied implementation ran. Paid validation and rollout remain blocked on that
+approval; this timing fix does not clear any freeze.
+
+Final review validation: typecheck and **135/135 tests passed** on Andromeda
+with test concurrency 1. See [follow-up log](review-followup-tests.log).
+The expanded suite includes the coordinator, API, UI and trusted synthetic
+transport controls in addition to the original accounting, pricing and real
+Docker cleanup tests. The prior clock-fixture attempt is retained; the
+approval-before case now starts after pricing verification so it isolates the
+intended boundary. Candidate source, pricing and private configuration hashes
+were verified together after the code change. No paid provider calls occurred.
