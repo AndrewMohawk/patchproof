@@ -1,0 +1,195 @@
+(node:146676) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ USD conversion is decimal-exact and rejects implicit fractional-micro rounding (1.797703ms)
+✔ ledger reads the project schema, keeps approved stage ceilings, and creates private files (576.763323ms)
+✔ separate connections enforce durable stage and aggregate reservations without float loss (549.176122ms)
+✔ IDs bind immutable request fingerprints and each episode has one aggregate allowance (376.790974ms)
+✔ runtime input validation rejects unbounded, nonfinite and partial reservations (513.776121ms)
+✔ attempt, unknown billing and cancellation survive restart and never silently release money (997.169266ms)
+✔ even unattempted cancellation retains the hold until explicit zero-cost reconciliation (692.483612ms)
+✔ explicit uncertain billing blocks dispatch even when an attempted marker was missing (509.458218ms)
+✔ late incomplete billing cannot resurrect a reconciled episode for dispatch (485.061606ms)
+✔ overrun is retained beyond the reservation and freezes future spending across restarts (861.389994ms)
+✔ late increased billing remains recorded and positive charges without dispatch freeze accounting (707.553742ms)
+✔ charge without a recorded dispatch is never discarded (493.134286ms)
+✔ approval expiry prevents reservation and dispatch but still permits honest reconciliation (563.911308ms)
+✔ missing and future authorization fail closed (421.472818ms)
+✔ reduced approval caps freeze existing exposure and stale connections cannot restore prior permission (785.606085ms)
+✔ changed configuration with equal approval timestamp needs explicit CAS and older approval is refused (459.091705ms)
+✔ credits do not expand approved ceilings and snapshots/events omit private approval text (584.73025ms)
+✔ SQLite integer costs retain precision past JavaScript safe integers and aggregate without overflow (559.560652ms)
+✔ symlink ledger files and directories are refused without changing the target (7.325424ms)
+✔ simultaneous processes cannot oversubscribe a stage reservation ceiling (844.734655ms)
+✔ simultaneous identical IDs create exactly one durable reservation and event (676.652309ms)
+✔ simultaneous workers obtain at most one dispatch grant for the episode (927.028868ms)
+✔ process termination after granting dispatch leaves its unknown charge durably held (783.958178ms)
+(node:150833) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.296208ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (2932.281437ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (3637.777633ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1862.249041ms)
+✔ all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests (8180.098033ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.280423ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1872.276553ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1711.899331ms)
+  ✔ output (2235.867675ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3949.840173ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (725.285737ms)
+✔ live hard allowances are frozen against mutation after factory construction (1546.539159ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1336.520483ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1788.578351ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1403.420619ms)
+  ✔ header (1621.880036ms)
+  ✔ candidate (1403.821097ms)
+  ✔ escaped_candidate (1904.196858ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (6335.543967ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (2029.425126ms)
+  ✔ 0 (1963.355068ms)
+  ✔ 1 (1226.416573ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (5220.817151ms)
+✔ persisted operator pause rejects creation before credentials or spending (960.551704ms)
+✔ approval expiry must cover the entire run even when pricing remains current (827.281003ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (1912.385928ms)
+  ✔ approval (1714.365649ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (3628.076277ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (1310.030557ms)
+  ✔ pricing1 (1678.360203ms)
+  ✔ approval0 (1402.950788ms)
+  ✔ approval1 (1295.083886ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (5688.470179ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✖ -1 (1221.09943ms)
+  ✔ 0 (2339.681451ms)
+  ✔ 1 (876.820807ms)
+✖ approval admission accepts before and exactly at its full-window boundary only (4439.651328ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (1621.644718ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1169.911567ms)
+(node:167052) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ current live pricing evidence matches the runtime constants and its digest (2.700171ms)
+✔ live pricing evidence rejects digest and rate changes (0.948957ms)
+✔ deployment and startup bind the same pricing evidence artifact (0.314863ms)
+✔ offline deployment recovery remains explicit and requires the previous unit to be down (0.206814ms)
+✔ the operational source lock binds model and license metadata (56.042763ms)
+(node:167177) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ default product server remains mock with loopback guard and existing cancellation behavior (43.292086ms)
+✔ live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards (12.081578ms)
+✔ opaque browser ownership protects live cancellation without changing public run or evidence access (19.845172ms)
+✔ a process restart never grants an old or replayed cookie ownership of retained public history (7.108752ms)
+✔ invalid live host/runtime metadata is refused before serving or coordinator work (3.346986ms)
+✔ budget availability pauses only new runs, preserves owned cancellation and public history, and fails closed on callback errors (10.662252ms)
+(node:167337) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ live UI uses enabled curated IDs and live requests, real event phases, runtime pins and explicit cost labels (1330.539609ms)
+✔ live capabilities and task availability fail closed while old mock mode remains usable (1165.452057ms)
+✔ an active repair explains the disabled mobile action and links to its progress (721.221586ms)
+✔ live comparison waits for each recorded terminal and refreshed allowance before posting the next approach (2667.337912ms)
+✔ live comparison does not queue another provider attempt after cancellation, timeout or infrastructure failure (4709.01098ms)
+✔ mock comparison keeps its existing immediate three-approach launch behavior (611.155006ms)
+✔ live comparison can rerun one recorded approach without changing its previous evidence (752.666177ms)
+✔ example search and compact mobile selection keep the selected task and first action usable (841.756266ms)
+✔ latest saved failure stays visible and run history retains both failed and passing records (796.661568ms)
+✔ run tabs work from the keyboard and saved requirements retain their recorded identity (683.466094ms)
+✔ stream updates preserve keyboard focus and open check details on the same active run (692.525205ms)
+✔ first visit explains the review task without starting work or fabricating a saved walkthrough (1390.142343ms)
+✔ repair briefing shows actual source, explicit public goals and the full workflow on desktop and mobile (1045.749499ms)
+(node:175239) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ only the exact recorded local policy increases mock timing; live and absent policy stay historical (2.51052ms)
+✔ all three mock arms keep equal 60-second batches, three proposals and the unchanged aggregate allowance (2999.214123ms)
+✔ remaining aggregate deadline shrinks later batches and prevents a third proposal at 120 seconds (1041.870114ms)
+✔ legacy coordinator locks retain 30-second batches without rewriting historical policy (1210.72392ms)
+✔ malformed policy prevents coordinator construction before checker or proposal entry (341.961011ms)
+✔ historical2.0/2.1/2.2 replays retain30, new mock policy uses60, and live replay never increases (282.340886ms)
+✔ recorded repeats share one accepted mock60 or historical30 budget (62.98061ms)
+✔ unknown replay policy fails before any runner entry, even when hashes are internally consistent (10.849849ms)
+(node:176489) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ coordinator preserves protected helpers, publishes coherent evidence, and replays actual diff (913.719445ms)
+✔ infrastructure errors retain partial checks and operation IDs in evidence (959.413151ms)
+✔ publication failure cannot leave an approval in the final journal event (1252.925259ms)
+▶ terminal evidence reads wait for that publication and retain failure when publication rejects
+  ✔ published (774.684999ms)
+  ✔ failed (928.842333ms)
+  ✔ timeout (777.670372ms)
+✔ terminal evidence reads wait for that publication and retain failure when publication rejects (2483.837902ms)
+✔ restart recovery reconciles run-owned handles before recording interruption (1184.879828ms)
+✔ recovery with a changed runtime preserves old bindings without serving stale or fabricated evidence (1036.411298ms)
+✔ recovery checker failure records an infrastructure error without blocking startup (1102.647747ms)
+✔ coordinator lease refuses a second live owner and releases its own lease (4.412731ms)
+✔ diff replay reconstructs added files and exact missing final newlines (28.629726ms)
+✔ current evidence binds all task metadata and never guesses a legacy digest after mismatch (970.559291ms)
+(node:179618) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ two lanes overlap with bounded concurrency, preserve order and repeat all observations (36.297194ms)
+✔ infrastructure uncertainty aborts the peer and awaits its cleanup (21.006589ms)
+✔ thrown lane preserves pre-spawn handles and drains sibling (11.894141ms)
+✔ historical scheduling remains serial and unknown frozen scheduling fails closed (1.72073ms)
+✔ second lane originating failure survives first lane cancellation (11.951442ms)
+(node:179665) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ product HTTP refuses arbitrary/live requests and durably exports an actual cancellation (1462.403493ms)
+(node:180147) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (45.670298ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (19.365741ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (41.163115ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (46.392248ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.124586ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (1776.905087ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1784.522501ms)
+(node:183352) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ trusted synthetic transport lifecycle shares one durable envelope and retains actual-vs-estimate distinction (3907.176929ms)
+✔ full three-proposal failure accounts for original and every candidate repetition without extra retry (4396.124831ms)
+✔ synthetic baseline and checks-only callers retain identical aggregate smoke envelopes (14942.449113ms)
+✔ account/tokenizer/context/source/CPU/cost denials happen before credentials, provider calls or reservations (869.148359ms)
+✔ default coordinator rejects live requests and forged capabilities without calling providers (619.096454ms)
+✔ source change after preparation denies start before the dispatch grant (643.145282ms)
+✔ failed model JSON keeps usage and response ID and stops without a repair retry (2405.426412ms)
+✔ cancelled model dispatch retains attempted usage and unknown billing across ledger restart (1669.104256ms)
+✔ credential cancellation cannot later dispatch when the supplier eventually resolves (2067.476752ms)
+✔ known sandbox cleanup survives a stale new-work source guard after cancellation (1878.701219ms)
+✔ source changes while model credentials resolve retain the exact safe blocker and prevent inference (1686.654618ms)
+✔ source change between repeated batches preserves first-round observations and operation handles (1411.351558ms)
+✔ source change during sandbox credential wait keeps the gate code and prevents new upload (1536.168618ms)
+✔ durable approval changes mid-episode preserve the exact blocker without another dispatch (2113.113389ms)
+✔ caller property mutation cannot replace frozen ledger, source verifier or injected runtime dependencies (4722.120143ms)
+ℹ tests 135
+ℹ suites 0
+ℹ pass 133
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164796.447243
+
+✖ failing tests:
+
+test at tests/live-local-runtime.test.ts:334:44
+✖ -1 (1221.09943ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'infrastructure_error'
+  - 'verified_for_declared_checks'
+
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:342:19)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:334:36)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'verified_for_declared_checks',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

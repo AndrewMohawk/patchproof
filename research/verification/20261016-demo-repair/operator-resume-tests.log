@@ -1,0 +1,108 @@
+(node:997977) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (952.199979ms)
+✔ covered reservations still consume every global and stage microdollar (1121.908498ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (927.294213ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (835.004397ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (962.379855ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (850.783657ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (677.26433ms)
+✔ audited resume preserves covered holds and strict connections still block them (936.134452ms)
+(node:1000117) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ existing-only missing paths, empty files and unrelated databases never initialize an allowance (126.991865ms)
+✔ existing-only reads the current durable approval and reservation inventory through a live WAL without initialization (730.724073ms)
+✔ existing-only refuses missing tables, absent approval and changed schema without repairing or migrating them (1874.614274ms)
+✔ existing-only refuses permissive modes and filesystem aliases without chmod or following links (551.460563ms)
+(node:1001084) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ USD conversion is decimal-exact and rejects implicit fractional-micro rounding (1.901543ms)
+✔ ledger reads the project schema, keeps approved stage ceilings, and creates private files (478.962457ms)
+✔ separate connections enforce durable stage and aggregate reservations without float loss (585.917034ms)
+✔ IDs bind immutable request fingerprints and each episode has one aggregate allowance (531.969469ms)
+✔ runtime input validation rejects unbounded, nonfinite and partial reservations (367.999036ms)
+✔ attempt, unknown billing and cancellation survive restart and never silently release money (869.474262ms)
+✔ even unattempted cancellation retains the hold until explicit zero-cost reconciliation (876.773683ms)
+✔ explicit uncertain billing blocks dispatch even when an attempted marker was missing (609.929795ms)
+✔ late incomplete billing cannot resurrect a reconciled episode for dispatch (570.325849ms)
+✔ overrun is retained beyond the reservation and freezes future spending across restarts (708.986932ms)
+✔ late increased billing remains recorded and positive charges without dispatch freeze accounting (593.017155ms)
+✔ charge without a recorded dispatch is never discarded (535.081345ms)
+✔ approval expiry prevents reservation and dispatch but still permits honest reconciliation (710.332926ms)
+✔ missing and future authorization fail closed (543.622457ms)
+✔ reduced approval caps freeze existing exposure and stale connections cannot restore prior permission (921.203084ms)
+✔ changed configuration with equal approval timestamp needs explicit CAS and older approval is refused (508.708347ms)
+✔ credits do not expand approved ceilings and snapshots/events omit private approval text (465.860272ms)
+✔ SQLite integer costs retain precision past JavaScript safe integers and aggregate without overflow (787.178453ms)
+✔ symlink ledger files and directories are refused without changing the target (4.628168ms)
+✔ simultaneous processes cannot oversubscribe a stage reservation ceiling (949.830809ms)
+✔ simultaneous identical IDs create exactly one durable reservation and event (882.763303ms)
+✔ simultaneous workers obtain at most one dispatch grant for the episode (950.923164ms)
+✔ process termination after granting dispatch leaves its unknown charge durably held (1042.892094ms)
+✔ audited operator resume preserves accounting and rejects stale or replayed checkpoints (837.532401ms)
+▶ operator resume rejects unresolved accounting and unfinished reservations without releasing holds
+  ✔ false (665.820129ms)
+  ✔ true (558.163357ms)
+✔ operator resume rejects unresolved accounting and unfinished reservations without releasing holds (1225.66148ms)
+▶ operator pause cannot hide a later financial anomaly from resume
+  ✔ false (675.628934ms)
+  ✔ true (876.35115ms)
+✔ operator pause cannot hide a later financial anomaly from resume (1553.085206ms)
+✔ operator control never clears an existing financial freeze (660.677097ms)
+✔ operator resume rejects expired approval and a stale approval connection (617.421599ms)
+(node:1006770) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.283096ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (3341.048218ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (3729.671283ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1562.943443ms)
+✔ all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests (7870.124929ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.001444ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1841.350931ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1803.502962ms)
+  ✔ output (1537.175979ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3342.793556ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (508.455581ms)
+✔ live hard allowances are frozen against mutation after factory construction (1764.351293ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1411.109176ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1686.933519ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1928.085556ms)
+  ✔ header (2413.124766ms)
+  ✔ candidate (1761.676893ms)
+  ✔ escaped_candidate (2313.410715ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (8418.659837ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (2312.575795ms)
+  ✔ 0 (1645.878313ms)
+  ✔ 1 (609.93019ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (4570.126491ms)
+✔ persisted operator pause rejects creation before credentials or spending (751.862392ms)
+✔ approval expiry must cover the entire run even when pricing remains current (1361.204868ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (2062.785779ms)
+  ✔ approval (2172.258875ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (4236.118369ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (1712.543202ms)
+  ✔ pricing1 (1253.175125ms)
+  ✔ approval0 (1444.530235ms)
+  ✔ approval1 (1512.663599ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (5924.773488ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (2604.595415ms)
+  ✔ 0 (2088.17847ms)
+  ✔ 1 (708.893194ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (5403.266975ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (1980.226915ms)
+✔ late baseline preserves observations and cleanup logs without inference (1436.927915ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1386.823447ms)
+ℹ tests 84
+ℹ suites 0
+ℹ pass 84
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93392.992617

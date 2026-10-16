@@ -13,17 +13,22 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-**October 13 release status:** The source repository is still private. New repairs
-were paused at the read-only availability check because model pricing verification
-needs refresh; the recorded pricing window expired October 1. The saved examples
-and recording document earlier runs. See [release readiness](docs/release-readiness.md)
-for current blockers and the [submission draft](docs/submission-draft.md) for the
-supported claims. No new runtime execution was performed for this documentation update.
+**October 16 status (23:17 UTC):** New bounded repairs are enabled again. Two
+curated tasks are exposed; the repository contains ten synthetic tasks. The
+verified configuration repair and correctly rejected pagination repair show
+checked maintenance without claiming every model proposal succeeds. Pricing
+verification runs hourly and fails closed; separate account-fee evidence needs
+real renewal before October 17 at 20:50 UTC. The shared $25 total includes all
+verification and judge use, with $2.35 held and capacity for 90 more $0.25
+reservations at this snapshot. No unlimited-capacity guarantee is made.
+See [current readiness](research/verification/20261016-demo-repair/public-readiness.json),
+[repair evidence](research/verification/20261016-demo-repair/README.md), and the
+[implemented operations runbook](docs/judge-operations-plan.md).
 
-Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
-public v3 Python maintenance tasks. Each task shows the starting source, the
+Start with a saved walkthrough, then open **Try a repair** to inspect one of the two currently exposed
+v3 Python maintenance tasks. Each task shows the starting source, the
 behavior to repair, five requirements, and five selectable input/expected-output
-examples. The tasks cover configuration overlays, cursor pagination, inventory,
+examples. The repository corpus covers configuration overlays, cursor pagination, inventory,
 invoices, caches, schedules, manifests, event processing, retry batches, and search.
 They are original synthetic examples with interacting rules, not a benchmark of
 production repositories.
@@ -35,7 +40,7 @@ headers, original/proposed line numbers, and expandable unchanged context. Faile
 attempts remain inspectable. Nothing is merged automatically.
 
 The [product v3 record](research/product-v3/README.md) is the index for this upgrade.
-The ten-task interface has been [reviewed on the public app](research/product-v3/public-review/review.md).
+The historical ten-task interface was [reviewed on the public app](research/product-v3/public-review/review.md).
 The successful walkthrough follows a real Super pagination repair: the original
 passed 16 of 22 checks, the proposed repair passed all 22, and a fresh same-host
 replay reproduced the result. The complete configuration failure shows why
@@ -80,7 +85,7 @@ Open **http://127.0.0.1:43171/#tasks**. Select **Retain first occurrences throug
 policies, inspect a rejected candidate's actual check output, and download its
 evidence. The scripted provider supports this one task. Other fixtures may be inspected,
 but generating their patches requires a connected model. The public live
-service has its own allowlist of ten v3 tasks.
+service currently allows configuration overlays and cursor pagination only.
 
 `make doctor` makes no paid calls. If the pinned local checker image is absent,
 it reports the blocker; there is no automatic image pull or provider fallback.

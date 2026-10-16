@@ -1,4 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
+import { LOCAL_CHECK_SCHEDULING_POLICY, TwoLaneLocalCheckRunner } from './parallel-local-checks.ts';
 import { ContractError } from '../../contracts/src/index.ts';
 import type { CheckRunner, CheckResult, SandboxCheckResult } from '../../contracts/src/product.ts';
 
@@ -48,7 +49,20 @@ export class RepeatedCheckRunner implements CheckRunner {
   }
 }
 
+export function runnerForLocalScheduling(runner: CheckRunner, lock: unknown): CheckRunner {
+  if (lock && typeof lock === 'object' && 'localCheckSchedulingPolicy' in lock) {
+    if (!isDeepStrictEqual(lock.localCheckSchedulingPolicy, LOCAL_CHECK_SCHEDULING_POLICY) ||
+      !('execution' in lock) || !lock.execution || typeof lock.execution !== 'object' ||
+      !('checkBackend' in lock.execution) || lock.execution.checkBackend !== 'local_container') {
+      throw new ContractError('setup_error', 'Unsupported local check scheduling policy.');
+    }
+    runner = new TwoLaneLocalCheckRunner(runner);
+  }
+  return runner;
+}
+
 export function runnerForFrozenProtocol(runner: CheckRunner, lock: unknown): CheckRunner {
+  runner = runnerForLocalScheduling(runner, lock);
   const protocol = lock && typeof lock === 'object' && 'checkProtocol' in lock ? lock.checkProtocol : undefined;
   if (protocol === undefined) return runner; // Explicit historical bundles had one observation.
   if (!isDeepStrictEqual(protocol, REPEATED_CHECK_PROTOCOL)) throw new ContractError('setup_error', 'Unsupported frozen check protocol.');

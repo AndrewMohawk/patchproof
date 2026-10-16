@@ -12,7 +12,9 @@ complete workflow, protected checks, recorded outcomes, review, export and repla
 Both saved stories have four stages: bug and goal, proposed patch, check results,
 and a review decision. Their display is bound to original real-run evidence.
 
-Ten new development tasks replace the live picker’s earlier small examples.
+The repository contains ten development tasks. The current deployed picker
+exposes two: configuration overlays and cursor pagination. The ten-task picker
+described in historical review receipts is not the current public configuration.
 Each has 60–79 lines, five to six functions, five requirements and 22 declared
 checks. Complexity comes from interacting behavior: for example, pagination
 combines revision resolution, tombstones, ordering, exclusive cursors, and

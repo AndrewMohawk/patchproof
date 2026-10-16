@@ -1,0 +1,45 @@
+(node:1298403) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (115.531413ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (106.047079ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (4.858037ms)
+  ✔ name (3.35488ms)
+  ✔ image (2.694192ms)
+  ✔ ownedLabel (2.165518ms)
+  ✔ operationLabel (2.427776ms)
+  ✔ ownerLabel (2.47878ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (19.881953ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (103.845064ms)
+(node:1298928) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (1906.222453ms)
+ℹ {"ownerRunId":"580b8c62-6ba6-4f0f-bd56-a07db398e6d5","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1646,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-3bbd656d-fd97-4cec-8699-85c394772b2e\",\"createAcknowledged\":true,\"containerId\":\"b6edb06af6f90b6e664f181438780bce79bdb2a59020667b56a6dbbab3f021c7\",\"cleanupConfirmed\":true,\"cleanupReason\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-3bbd656d-fd97-4cec-8699-85c394772b2e"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (2.774104ms)
+(node:1300365) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ two lanes overlap with bounded concurrency, preserve order and repeat all observations (37.665714ms)
+✔ infrastructure uncertainty aborts the peer and awaits its cleanup (21.356137ms)
+✔ thrown lane preserves pre-spawn handles and drains sibling (11.8483ms)
+✔ historical scheduling remains serial and unknown frozen scheduling fails closed (1.714068ms)
+✔ second lane originating failure survives first lane cancellation (10.964826ms)
+(node:1300545) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (44.84362ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (19.087441ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (41.331579ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (46.129528ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.2969ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (724.273931ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1418.380733ms)
+✔ transient inspection timeout is re-observed within the existing cleanup budget before success (3.380363ms)
+✔ persistent inspection errors remain uncertain at the unchanged overall cleanup deadline (40.729576ms)
+✔ invalid ownership inspection is terminal and never retried or removed (2.091373ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10722.850466

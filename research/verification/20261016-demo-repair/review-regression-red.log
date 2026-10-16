@@ -1,0 +1,99 @@
+(node:104450) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.255642ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (3316.196809ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (2922.366983ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1461.912342ms)
+✔ all variants use provider defaults with exact limits, repeated-check cap and at most three bounded requests (7921.701752ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.913343ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1538.442918ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1445.543716ms)
+  ✔ output (2237.020752ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3684.185985ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (905.082229ms)
+✔ live hard allowances are frozen against mutation after factory construction (2093.843488ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1512.213143ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (2162.472983ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1436.966047ms)
+  ✔ header (2147.421525ms)
+  ✔ candidate (1945.413425ms)
+  ✔ escaped_candidate (2079.831187ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (7611.655073ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (1770.658918ms)
+  ✔ 0 (2130.126633ms)
+  ✔ 1 (794.700503ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (4696.991439ms)
+✔ persisted operator pause rejects creation before credentials or spending (1595.372123ms)
+✔ approval expiry must cover the entire run even when pricing remains current (1305.149165ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✖ pricing (2593.827107ms)
+  ✖ approval (2668.856188ms)
+✖ admitted runs retain their original pricing and approval deadline as time advances (5264.521821ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (3293.502134ms)
+  ✔ pricing1 (2498.554632ms)
+  ✔ approval0 (2609.379011ms)
+  ✔ approval1 (3127.771835ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (11531.35332ms)
+(node:123152) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ two lanes overlap with bounded concurrency, preserve order and repeat all observations (38.490122ms)
+✔ infrastructure uncertainty aborts the peer and awaits its cleanup (21.367007ms)
+✔ thrown lane preserves pre-spawn handles and drains sibling (10.806586ms)
+✔ historical scheduling remains serial and unknown frozen scheduling fails closed (1.708007ms)
+✔ second lane originating failure survives first lane cancellation (11.093955ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 35
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60187.307086
+
+✖ failing tests:
+
+test at tests/live-local-runtime.test.ts:300:55
+✖ pricing (2593.827107ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'infrastructure_error'
+  - 'verified_for_declared_checks'
+
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:309:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:300:47)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'verified_for_declared_checks',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/live-local-runtime.test.ts:300:55
+✖ approval (2668.856188ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'infrastructure_error'
+  - 'verified_for_declared_checks'
+
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:309:12)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:300:47)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'infrastructure_error',
+    expected: 'verified_for_declared_checks',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

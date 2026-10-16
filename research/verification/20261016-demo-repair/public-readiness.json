@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-10-16T23:17:51.131993+00:00",
+  "releaseCommit": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "availability": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 90
+  },
+  "creationEnabled": true,
+  "taskIds": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "judgeGenerationAvailableNow": true,
+  "unlimitedCapacityClaimed": false,
+  "judgingPeriodAvailabilityGuaranteed": false,
+  "nextFeeRenewalNeededBeforeUtc": "2026-10-17T20:50:00Z",
+  "hourlyCatalogVerificationInstalled": true,
+  "totalCapUsd": 25,
+  "heldUsd": 2.35,
+  "newPaidCallsForRenewalOrResume": 0,
+  "liveActionsDeniedOrPendingApproval": []
+}

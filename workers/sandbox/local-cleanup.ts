@@ -4,8 +4,9 @@ import type { ProcessRunner } from './process.ts';
 export interface OwnedContainer {
   name: string; image: string; ownerRunId?: string; id?: string;
 }
+interface InspectionFailure { code: number | null; error: string | null; stderr: string; }
 export interface OwnedInspection {
-  state: 'present' | 'missing' | 'error'; id: string | null; reason: string | null;
+  state: 'present' | 'missing' | 'error'; id: string | null; reason: string | null; inspectionFailure?: InspectionFailure;
 }
 const container = z.object({
   Id: z.string().regex(/^[a-f0-9]{64}$/), Name: z.string(), Image: z.string(),
@@ -18,7 +19,7 @@ export async function inspectOwnedContainer(process: ProcessRunner, expected: Ow
   const result = await process(['container', 'inspect', expected.id ?? expected.name, '--format', '{{json .}}'],
     { timeoutMs: Math.max(1, timeoutMs), ...(signal ? { signal } : {}) });
   if (!result.error && result.code !== 0 && missing(result.stderr)) return { state: 'missing', id: null, reason: null };
-  if (result.error || result.code !== 0) return { state: 'error', id: null, reason: 'inspection_failed' };
+  if (result.error || result.code !== 0) return { state: 'error', id: null, reason: 'inspection_failed', inspectionFailure: { code: result.code, error: result.error, stderr: result.stderr.slice(0, 1024) } };
   const parsed = (() => { try { return container.safeParse(JSON.parse(result.stdout)); } catch { return null; } })();
   if (!parsed?.success) return { state: 'error', id: null, reason: 'invalid_inspection' };
   const value = parsed.data, labels = value.Config.Labels;
@@ -30,15 +31,27 @@ export async function inspectOwnedContainer(process: ProcessRunner, expected: Ow
 
 /** Absence alone is insufficient when create was never acknowledged. No original abort signal is used. */
 export async function cleanupOwnedContainer(process: ProcessRunner, original: OwnedContainer, acknowledged: boolean,
-  options: { timeoutMs?: number; pollMs?: number } = {}): Promise<{ confirmed: boolean; id: string | null; reason: string | null }> {
+  options: { timeoutMs?: number; pollMs?: number } = {}): Promise<{ confirmed: boolean; id: string | null; reason: string | null; inspectionFailure?: InspectionFailure }> {
   const deadline = performance.now() + (options.timeoutMs ?? 5000), pollMs = options.pollMs ?? 100;
+  let inspectionFailure: InspectionFailure | undefined;
+  const diagnostic = () => inspectionFailure ? { inspectionFailure } : {};
   const expected = { ...original }; let observed = acknowledged, lastReason = 'create_unacknowledged';
   while (performance.now() < deadline) {
     let inspected: OwnedInspection;
     try { inspected = await inspectOwnedContainer(process, expected, Math.min(1000, deadline - performance.now())); }
     catch { inspected = { state: 'error', id: null, reason: 'inspection_failed' }; }
-    if (inspected.state === 'error') return { confirmed: false, id: expected.id ?? null, reason: inspected.reason };
-    if (inspected.state === 'missing' && observed) return { confirmed: true, id: expected.id ?? null, reason: null };
+    if (inspected.state === 'error') {
+      // A read-only inspection can time out under contention while the container
+      // exits normally. Re-observe within the original cleanup deadline; never
+      // infer absence, retry creation/start, or tolerate malformed ownership.
+      if (inspected.reason !== 'inspection_failed') return { confirmed: false, id: expected.id ?? null, reason: inspected.reason };
+      inspectionFailure = inspected.inspectionFailure ?? { code: null, error: 'inspection_exception', stderr: '' };
+      lastReason = inspected.reason;
+      const remaining = deadline - performance.now();
+      if (remaining > 0) await new Promise(resolve => setTimeout(resolve, Math.min(pollMs, remaining)));
+      continue;
+    }
+    if (inspected.state === 'missing' && observed) return { confirmed: true, id: expected.id ?? null, reason: null, ...diagnostic() };
     if (inspected.state === 'present') {
       observed = true; expected.id = inspected.id!;
       if (performance.now() >= deadline) break;
@@ -51,5 +64,5 @@ export async function cleanupOwnedContainer(process: ProcessRunner, original: Ow
     const remaining = deadline - performance.now();
     if (remaining > 0) await new Promise(resolve => setTimeout(resolve, Math.min(pollMs, remaining)));
   }
-  return { confirmed: false, id: expected.id ?? null, reason: lastReason };
+  return { confirmed: false, id: expected.id ?? null, reason: lastReason, ...diagnostic() };
 }

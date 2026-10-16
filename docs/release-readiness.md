@@ -1,10 +1,15 @@
 # Release readiness
 
-**Checked:** October 13, 2026 (UTC)  
-**Source reviewed:** `993c1d09bed9e45396d9bda7b606c982c335f9d3`  
-**Disposition:** Private preparation only. No release, merge, deployment, or submission.
+**Checked:** October 16, 2026 (UTC)
+**Disposition:** Bounded live repairs reopened on Andromeda at 23:17 UTC.
+Hourly catalog verification is installed; genuine account-fee renewal is due
+before October 17 at 20:50 UTC. Finite capacity and fail-closed gates remain.
+See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
+for current timing, pricing, supervised repairs, accounting and rollout gates.
+The historical October 13 sections below are retained as dated context; they
+do not describe the October 16 test environment or current pricing receipt.
 
-## Current evidence
+## Prior release review evidence (October 13)
 
 - The repository is private. Root package metadata previously said
   `UNLICENSED`; this proposed change adds MIT for first-party software and
@@ -71,7 +76,7 @@ event requirements or claim their outcomes. Keep the submission's claims within
 the real development evidence while track fit and working-demo requirements are
 resolved.
 
-## Verification of this documentation change
+## Historical October 13 documentation-only verification
 
 Only license text, package license metadata, and documentation are changed.
 Local validation must check JSON consistency, unchanged dependency metadata and

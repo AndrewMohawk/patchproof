@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-10-16T22:53:20.471Z",
+  "sourceCommit": "1c0289596184f6d7727b4fe36c1151cb9853dff4",
+  "runId": "3171cb35-a100-4b01-92b9-0a51642992b6",
+  "evidenceDigest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77",
+  "externalCalls": 0,
+  "results": [
+    {
+      "candidateId": 1,
+      "requestDigest": "sha256:f2f56d845d2896ba3abae18115a7bc4cf705814631506230764d28d5971bea02",
+      "receiptDigestMatches": true,
+      "allRequirementsPresent": true,
+      "protectedDiagnosticsWithheld": true,
+      "parserPreservesSource": true,
+      "failedRequirements": [
+        "R01"
+      ],
+      "passedChecks": 21,
+      "totalChecks": 22
+    },
+    {
+      "candidateId": 2,
+      "requestDigest": "sha256:a8268c1ff64a13737645ed0991b71a8eae65909f7ca88d375f94f8a160a57aba",
+      "receiptDigestMatches": true,
+      "allRequirementsPresent": true,
+      "protectedDiagnosticsWithheld": true,
+      "parserPreservesSource": true,
+      "failedRequirements": [
+        "R01"
+      ],
+      "passedChecks": 21,
+      "totalChecks": 22
+    },
+    {
+      "candidateId": 3,
+      "requestDigest": "sha256:f7ed21eb308810f9b0da51a514d6d525bcf04f5cf639db4e7c76a08d281f1d2d",
+      "receiptDigestMatches": true,
+      "allRequirementsPresent": true,
+      "protectedDiagnosticsWithheld": true,
+      "parserPreservesSource": true,
+      "failedRequirements": [
+        "R01"
+      ],
+      "passedChecks": 21,
+      "totalChecks": 22
+    }
+  ],
+  "conclusion": "All three exact dispatched requests include the complete explicit tie-order requirement and bounded opaque failure feedback. Parser preserves candidate files. No spec/context/parser/coordinator defect established. The model missed the same stated clause in all three bounded attempts; additional identical retries are not justified.",
+  "limitation": "The response parser roundtrip uses retained proposal content, not unavailable raw provider responses. Request digests are compared to immutable dispatch receipts.",
+  "focusedTests": {
+    "passed": 16,
+    "failed": 0,
+    "log": "pagination-diagnosis-tests.log"
+  },
+  "operatingPlan": "docs/judge-operations-plan.md",
+  "readOnlyHealth": {
+    "observedAt": "2026-10-16T22:57:51.858269+00:00",
+    "health": {
+      "status": "ok",
+      "mode": "live",
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container"
+    },
+    "availability": {
+      "enabled": false,
+      "reason": "Live execution is paused pending accounting review.",
+      "remainingRuns": 10
+    }
+  },
+  "browserVisualCheck": {
+    "status": "NOT RUN",
+    "reason": "In-app browser unavailable; Chrome navigation returned net::ERR_BLOCKED_BY_CLIENT. Public HTTP health and evidence checks succeed."
+  }
+}

@@ -90,11 +90,12 @@ export class Coordinator {
     if (this.#jobs.size >= 3) throw new ContractError('capacity_exceeded', 'Three runs are already active.', 429);
     if (trustedLive) this.#trustedSmoke!.beforeCreate();
     const id = trustedLive ? this.#trustedSmoke!.episodeId : randomUUID();
-    if (localLive) this.#liveLocal!.beforeCreate(id, fingerprint);
+    const createdAt = new Date().toISOString();
+    if (localLive) this.#liveLocal!.beforeCreate(id, fingerprint, createdAt);
     const run: ProductRun = {
       schemaVersion: PRODUCT_CONTRACT_VERSION, id, taskId: fixture.id, variant: request.variant, mode: request.mode,
       competitionReady: false, notice: localLive ? 'Real NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.' : trustedLive ? 'Trusted sponsor smoke path; at most three proposals. Not a calibrated or scored experiment.' : 'Mock model; scripted proposals. Declared checks execute in isolated local containers. Not competition evidence.',
-      phase: 'queued', terminalStatus: null, reason: null, createdAt: new Date().toISOString(), finishedAt: null,
+      phase: 'queued', terminalStatus: null, reason: null, createdAt, finishedAt: null,
       ...fixtureDigests(fixture), runtimeLockDigest: digestJson(this.#runtimeLock), limits: { ...(localLive ? this.#liveLocal!.limits : trustedLive ? this.#trustedSmoke!.limits : LOCAL_LIMITS) },
       usage: { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, sandboxCpuSeconds: 0,
         measuredCostUsd: (trustedLive || localLive) ? null : 0, costIsEstimate: false, elapsedMs: 0 },
@@ -209,7 +210,8 @@ export class Coordinator {
   async #execute(run: ProductRun, fixture: Fixture, controller: AbortController) {
     await nextTurn();
     const started = Date.now();
-    const timer = setTimeout(() => controller.abort(new Error('timeout')), run.limits.wallTimeLimitSeconds * 1000);
+    const deadline = Date.parse(run.createdAt) + run.limits.wallTimeLimitSeconds * 1000;
+    const timer = setTimeout(() => controller.abort(new Error('timeout')), Math.max(0, deadline - Date.now()));
     try {
       controller.signal.throwIfAborted();
       this.#event(run, 'preflight', run.mode === 'live' ? 'Checking live runtime bindings and the reserved aggregate allowance.' : 'Checking immutable input digests and isolated local runtime.');
@@ -222,6 +224,8 @@ export class Coordinator {
       this.#event(run, 'baseline_capture', 'Running original source against frozen declared checks.');
       const original = await this.#check(run, fixture, fixture.files, controller.signal);
       run.baselineChecks = { visible: original.visible, acceptance: original.acceptance };
+      this.journal.save(run);
+      this.#liveLocal?.validateStep();
       if (original.result.infrastructureError) {
         if (this.#trustedSmoke && original.result.infrastructureError.startsWith('trusted_smoke_')) throw new TrustedSmokeGateError(original.result.infrastructureError.slice('trusted_smoke_'.length));
         throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
@@ -231,7 +235,7 @@ export class Coordinator {
         maximumRevisions: Math.min(3, run.limits.inferenceCallLimit), signal: controller.signal,
         initialFeedback: run.variant === 'baseline' ? original.visible : [...original.visible, ...original.acceptance], revisions: run.candidates,
         propose: async context => {
-          const modelRemainingSeconds = Math.floor(run.limits.wallTimeLimitSeconds - (Date.now() - started) / 1000);
+          const modelRemainingSeconds = Math.floor((deadline - Date.now()) / 1000);
           if (modelRemainingSeconds < 1) throw new ContractError('timeout', 'No aggregate wall-time allowance remains for inference.');
           this.#trustedSmoke?.validateStep();
           this.#liveLocal?.validateStep();
@@ -251,6 +255,7 @@ export class Coordinator {
         },
         onProposed: candidate => { this.journal.save(run); this.#event(run, 'check', `Checking candidate ${candidate.id} in a fresh isolated workspace.`); },
         check: candidate => this.#check(run, fixture, candidate.files, controller.signal),
+        validateChecked: () => this.#liveLocal?.validateStep(),
         onChecked: () => this.journal.save(run), onSelection: id => { run.selectedCandidateId = id; },
       });
       this.#coverage(run, fixture);

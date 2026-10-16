@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-16T22:37:44.626095+00:00",
+  "change": "Request chat_template_kwargs.enable_thinking=false for every live demo variant. No token, call, time, spending or isolation limits changed.",
+  "basis": "A supervised provider-default response consumed all 4000 completion tokens without a complete patch. NVIDIA documents non-thinking mode. Nebius documents extra parameters but model-specific hosted behavior remains to be validated by bounded supervision.",
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4/raw/main/README.md",
+      "digest": "sha256:75a09249ef13176b32cc198bae54d83c234d4bf3f75ec996b59ad81f902b68cd"
+    },
+    {
+      "url": "https://docs.tokenfactory.nebius.com/api-reference/inference/create-chat-completion.md",
+      "digest": "sha256:9274d66dc2b70e580b4089adffcddcbdc23da5d370a0fadc1e1f8e409fd957b6"
+    }
+  ]
+}

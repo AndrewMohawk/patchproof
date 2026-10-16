@@ -1,0 +1,118 @@
+{
+  "observedAt": "2026-10-16T22:46:57.990778+00:00",
+  "sourceDigest": "sha256:175ffbe9b724fa965bc6bd664b47bfad0b344313af8d77013af1077963967603",
+  "noCostValidation": {
+    "typecheckExitCode": 0,
+    "requestRuntimeCleanupTests": 50,
+    "passed": 50,
+    "log": "non-thinking-tests.log",
+    "earlierEvidenceAndAccountingTests": 175,
+    "earlierOperatorResumeTests": 84
+  },
+  "supervisedCallsToday": 5,
+  "estimatedNewInferenceCostUsd": 0.0118197,
+  "actualBilledCostKnown": false,
+  "ledger": {
+    "currency": "USD",
+    "unit": "microdollar",
+    "approvalRevision": 2,
+    "approvalDigest": "sha256:422896b8ed142b473368de4eb30fea66dbdae91a295c975b13acbb71006ce83f",
+    "connectionApprovalCurrent": true,
+    "approvalExpiresAt": "2026-12-15T20:00:00Z",
+    "frozen": true,
+    "freezeReasons": [
+      "operator_paused_supervised_only"
+    ],
+    "approvedMicros": "25000000",
+    "chargedMicros": "0",
+    "heldMicros": "2350000",
+    "committedMicros": "2350000",
+    "availableMicros": "22650000",
+    "pendingBillingCount": 16,
+    "reservationCount": 19,
+    "verifiedCreditsAppliedMicros": "0",
+    "pendingBillingPolicy": "allow-covered-inference",
+    "coveredPendingBillingCount": 16,
+    "blockingPendingBillingCount": 0,
+    "stages": {
+      "smoke": {
+        "approvedMicros": "5000000",
+        "chargedMicros": "0",
+        "heldMicros": "2350000",
+        "committedMicros": "2350000",
+        "availableMicros": "2650000"
+      },
+      "pilot": {
+        "approvedMicros": "20000000",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "20000000"
+      },
+      "evaluate": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "hosting": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      }
+    }
+  },
+  "historicalReservationsUnchanged": true,
+  "outcomes": [
+    {
+      "taskId": "v3-config-overlay",
+      "runId": "352bcf84-ffa2-4668-801c-af258ea79e2c",
+      "terminalStatus": "verified_for_declared_checks",
+      "reason": "declared_local_checks_passed",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 3251,
+        "outputTokens": 855,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.0017448,
+        "costIsEstimate": true,
+        "elapsedMs": 121686
+      },
+      "baselineChecks": 22,
+      "candidateCount": 1,
+      "operations": 88,
+      "evidenceDigest": "sha256:57916af3b6385944491f3013cc4ca99b610274832be54e249ad00908296180b3"
+    },
+    {
+      "taskId": "v3-cursor-pagination",
+      "runId": "3171cb35-a100-4b01-92b9-0a51642992b6",
+      "terminalStatus": "failed",
+      "reason": "declared_checks_not_satisfied",
+      "usage": {
+        "inferenceCalls": 3,
+        "inputTokens": 11462,
+        "outputTokens": 2290,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.0054996,
+        "costIsEstimate": true,
+        "elapsedMs": 264462
+      },
+      "baselineChecks": 22,
+      "candidateCount": 3,
+      "operations": 176,
+      "evidenceDigest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77"
+    }
+  ],
+  "bothTasksSuccessfullyRepaired": false,
+  "publicGenerationReopened": false,
+  "judgeAccessReady": false,
+  "remainingGates": [
+    "Pagination generated three patches that failed revision-tie checks; no successful pagination repair is claimed.",
+    "Maintained pricing and reserved judge capacity through December 15 remain unestablished. Current pricing admissions expire October 17 at 20:50 UTC."
+  ],
+  "monitorProposal": "README.md#maintainable-monitoring-proposal-through-december-15-2000-utc",
+  "fullRepositorySuite": "NOT RUN; targeted suites cover the changed paths"
+}
