@@ -331,6 +331,51 @@ export class BudgetLedger {
     if (reasons.length) fail(reasons[0]!,`Budget dispatch blocked: ${reasons.join(', ')}.`);
   }
 
+  /** Local operator control only; never exposed by the public API. */
+  pauseOperator(evidenceDigest: string) {
+    digest.parse(evidenceDigest);
+    return this.#transaction(() => {
+      this.#db.prepare('UPDATE budget_meta SET frozen_reason=COALESCE(frozen_reason,?),updated_at=? WHERE id=1')
+        .run('operator_paused_supervised_only', this.#timestamp());
+      this.#event('operator_paused', null, { evidenceDigest, reservationsPreserved: true });
+      return this.operatorResumeCheckpoint();
+    });
+  }
+
+  operatorResumeCheckpoint() {
+    return { approvalRevision: this.#meta().revision,
+      eventSequence: Number(this.#row('SELECT COALESCE(MAX(sequence),0) AS sequence FROM budget_events')!.sequence) };
+  }
+
+  /** Clears only the operator pause after an exact audit checkpoint. Charges,
+   * holds, financial freezes and unresolved accounting are never changed. */
+  resumeOperatorPause(value: unknown) {
+    const request = z.strictObject({ approvalRevision: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+      eventSequence: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER), evidenceDigest: digest }).parse(value);
+    return this.#transaction(() => {
+      const checkpoint = this.operatorResumeCheckpoint();
+      if (checkpoint.approvalRevision !== request.approvalRevision || checkpoint.eventSequence !== request.eventSequence) {
+        fail('operator_checkpoint_changed', 'Accounting or approval changed; review a fresh checkpoint.');
+      }
+      const meta = this.#meta(), accounting = this.#accounting();
+      if (meta.frozenReason !== 'operator_paused_supervised_only') fail('operator_pause_required', 'Only an explicit operator pause can be resumed.');
+      const reasons = this.#reasons({ ...meta, frozenReason: null }, accounting);
+      if (reasons.length) fail(reasons[0]!, 'Operator resume blocked: ' + reasons.join(', '));
+      // A pause may predate a financial anomaly whose frozen_reason was retained
+      // by COALESCE. Check the underlying immutable charges as well as metadata.
+      const unsafe = this.#rows('SELECT * FROM budget_reservations').some(row =>
+        (row.actual_micros !== null && (row.actual_micros as bigint) > (row.amount_micros as bigint)) ||
+        (row.attempted_at === null && (row.actual_micros as bigint | null ?? 0n) > 0n) ||
+        (row.reconciliation_complete === 0n && row.attempted_at === null));
+      if (unsafe) fail('operator_accounting_review_required', 'Unfinished reservations or financial anomalies require accounting review.');
+      this.#db.prepare('UPDATE budget_meta SET frozen_reason=NULL,updated_at=? WHERE id=1').run(this.#timestamp());
+      this.#event('operator_resumed', null, { evidenceDigest: request.evidenceDigest, checkpoint,
+        heldMicros: String(accounting.total.held), committedMicros: String(accounting.total.committed),
+        reservationCount: accounting.count, reservationsPreserved: true });
+      return this.operatorResumeCheckpoint();
+    });
+  }
+
   reserve(value: unknown): { created: boolean; reservation: ReservationView } {
     const request = ReserveSchema.parse(value), requestDigest = fingerprint({ ...request,amountMicros:String(request.amountMicros) });
     return this.#transaction(() => {

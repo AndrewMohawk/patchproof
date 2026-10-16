@@ -303,3 +303,58 @@ process.exit(17);`,{ mode:0o600 });
   assert.equal(ledger.markAttempted('crash').dispatchGranted,false);
   assert.throws(()=>ledger.reserve(request('next')),code('billing_pending'));
 });
+
+test('audited operator resume preserves accounting and rejects stale or replayed checkpoints', async t => {
+  const { open } = await setup(t), a = open(), b = open();
+  a.reserve(request('paid')); a.markAttempted('paid'); a.reconcile(billed('paid', 100000));
+  const prior = a.snapshot(), first = a.pauseOperator(EVIDENCE);
+  b.pauseOperator(HASH);
+  assert.throws(() => a.resumeOperatorPause({ ...first, evidenceDigest: HASH }), code('operator_checkpoint_changed'));
+  const checkpoint = a.operatorResumeCheckpoint();
+  a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE });
+  const after = a.snapshot();
+  for (const key of ['chargedMicros', 'heldMicros', 'committedMicros', 'reservationCount', 'approvedMicros'] as const) assert.equal(after[key], prior[key]);
+  assert.equal(after.frozen, false);
+  assert.equal(a.events().at(-1)!.kind, 'operator_resumed');
+  assert.throws(() => a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE }), code('operator_checkpoint_changed'));
+});
+test('operator resume rejects unresolved accounting and unfinished reservations without releasing holds', async t => {
+  for (const attempted of [false, true]) await t.test(String(attempted), async t => {
+    const { open } = await setup(t), a = open();
+    a.reserve(request('pending')); if (attempted) a.markAttempted('pending');
+    const checkpoint = a.pauseOperator(EVIDENCE), before = a.snapshot();
+    assert.throws(() => a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE }));
+    assert.deepEqual(a.snapshot(), before); assert.equal(a.get('pending').heldMicros, '1000000');
+  });
+});
+test('operator pause cannot hide a later financial anomaly from resume', async t => {
+  for (const attempted of [false, true]) await t.test(String(attempted), async t => {
+    const { open } = await setup(t), a = open();
+    a.reserve(request('anomaly')); if (attempted) a.markAttempted('anomaly');
+    a.pauseOperator(EVIDENCE); a.reconcile(billed('anomaly', attempted ? 1000001 : 1));
+    const checkpoint = a.operatorResumeCheckpoint();
+    assert.throws(() => a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE }), code('operator_accounting_review_required'));
+    assert(a.snapshot().frozen);
+  });
+});
+test('operator control never clears an existing financial freeze', async t => {
+  const { open } = await setup(t), a = open();
+  a.reserve(request('overrun')); a.markAttempted('overrun'); a.reconcile(billed('overrun',1000001));
+  const checkpoint = a.pauseOperator(EVIDENCE);
+  assert.throws(() => a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE }), code('operator_pause_required'));
+  assert(a.snapshot().freezeReasons.includes('reservation_overrun'));
+  assert.throws(() => a.pauseOperator('not-a-digest'));
+});
+
+test('operator resume rejects expired approval and a stale approval connection', async t => {
+  const { open } = await setup(t), initial = budget();
+  let clock = new Date(NOW);
+  initial.ownerApproval.expiresAt = new Date(clock.getTime() + 1000).toISOString();
+  const a = open(initial, () => clock), b = open(initial, () => clock);
+  const checkpoint = a.pauseOperator(EVIDENCE);
+  clock = new Date(clock.getTime() + 1000);
+  assert.throws(() => a.resumeOperatorPause({ ...checkpoint, evidenceDigest: EVIDENCE }), code('approval_expired'));
+  a.syncApproval(budget(), { expectedRevision: checkpoint.approvalRevision });
+  assert.throws(() => b.resumeOperatorPause({ ...b.operatorResumeCheckpoint(), evidenceDigest: EVIDENCE }), code('approval_changed'));
+  assert(a.snapshot().frozen);
+});

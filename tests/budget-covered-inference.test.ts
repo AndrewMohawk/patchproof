@@ -137,3 +137,16 @@ test('first coverage cannot mask a prepared accounting receipt or override reduc
   assert.ok(ledger.snapshot().freezeReasons.includes('approved_cap_below_commitment'));
   assert.throws(() => ledger.coverPendingInference(proof('marker')), code('approved_cap_below_commitment'));
 });
+
+test('audited resume preserves covered holds and strict connections still block them', async t => {
+  const { open } = await setup(t), ledger = open(true);
+  pending(ledger, 'resume-covered'); ledger.coverPendingInference(proof('resume-covered'));
+  const before = ledger.get('resume-covered'), checkpoint = ledger.pauseOperator(E);
+  const strict = open(false, true);
+  assert.throws(() => strict.resumeOperatorPause({ ...checkpoint, evidenceDigest: J }), code('billing_pending'));
+  ledger.resumeOperatorPause({ ...checkpoint, evidenceDigest: J });
+  assert.deepEqual(ledger.get('resume-covered'), before);
+  assert.equal(ledger.snapshot().heldMicros, '100000');
+  assert.equal(ledger.snapshot().coveredPendingBillingCount, 1);
+  assert.equal(ledger.snapshot().frozen, false);
+});

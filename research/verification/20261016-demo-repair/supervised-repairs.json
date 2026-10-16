@@ -1,0 +1,134 @@
+{
+  "completedAt": "2026-10-16T22:20:24.339Z",
+  "sourceDigest": "sha256:e41e559058fce1835b18136ea5bb80cbbc23c2087cfa7ab146afa5357c87ae00",
+  "authority": "sha256:8601509bd1209aef93777b3eb317c96e792d48e4a8a03b93e970aac569e77290",
+  "success": false,
+  "before": {
+    "currency": "USD",
+    "unit": "microdollar",
+    "approvalRevision": 2,
+    "approvalDigest": "sha256:422896b8ed142b473368de4eb30fea66dbdae91a295c975b13acbb71006ce83f",
+    "connectionApprovalCurrent": true,
+    "approvalExpiresAt": "2026-12-15T20:00:00Z",
+    "frozen": true,
+    "freezeReasons": [
+      "operator_paused_supervised_only"
+    ],
+    "approvedMicros": "25000000",
+    "chargedMicros": "0",
+    "heldMicros": "1600000",
+    "committedMicros": "1600000",
+    "availableMicros": "23400000",
+    "pendingBillingCount": 13,
+    "reservationCount": 15,
+    "verifiedCreditsAppliedMicros": "0",
+    "pendingBillingPolicy": "allow-covered-inference",
+    "coveredPendingBillingCount": 13,
+    "blockingPendingBillingCount": 0,
+    "stages": {
+      "smoke": {
+        "approvedMicros": "5000000",
+        "chargedMicros": "0",
+        "heldMicros": "1600000",
+        "committedMicros": "1600000",
+        "availableMicros": "3400000"
+      },
+      "pilot": {
+        "approvedMicros": "20000000",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "20000000"
+      },
+      "evaluate": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "hosting": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      }
+    }
+  },
+  "after": {
+    "currency": "USD",
+    "unit": "microdollar",
+    "approvalRevision": 2,
+    "approvalDigest": "sha256:422896b8ed142b473368de4eb30fea66dbdae91a295c975b13acbb71006ce83f",
+    "connectionApprovalCurrent": true,
+    "approvalExpiresAt": "2026-12-15T20:00:00Z",
+    "frozen": true,
+    "freezeReasons": [
+      "operator_paused_supervised_only"
+    ],
+    "approvedMicros": "25000000",
+    "chargedMicros": "0",
+    "heldMicros": "1600000",
+    "committedMicros": "1600000",
+    "availableMicros": "23400000",
+    "pendingBillingCount": 13,
+    "reservationCount": 16,
+    "verifiedCreditsAppliedMicros": "0",
+    "pendingBillingPolicy": "allow-covered-inference",
+    "coveredPendingBillingCount": 13,
+    "blockingPendingBillingCount": 0,
+    "stages": {
+      "smoke": {
+        "approvedMicros": "5000000",
+        "chargedMicros": "0",
+        "heldMicros": "1600000",
+        "committedMicros": "1600000",
+        "availableMicros": "3400000"
+      },
+      "pilot": {
+        "approvedMicros": "20000000",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "20000000"
+      },
+      "evaluate": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      },
+      "hosting": {
+        "approvedMicros": "0",
+        "chargedMicros": "0",
+        "heldMicros": "0",
+        "committedMicros": "0",
+        "availableMicros": "0"
+      }
+    }
+  },
+  "historicalReservationsUnchanged": true,
+  "results": [
+    {
+      "taskId": "v3-config-overlay",
+      "runId": "7a0b1afe-16e3-49e7-8051-f0a72be3671b",
+      "terminalStatus": "infrastructure_error",
+      "reason": "infrastructure_error",
+      "usage": {
+        "inferenceCalls": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": null,
+        "costIsEstimate": false,
+        "elapsedMs": 31710
+      },
+      "baselineChecks": 22,
+      "candidateCount": 0,
+      "operations": 19,
+      "evidenceDigest": "sha256:07290201404754f6fd71f9fd65e2eca30897110ecde43a23dc64f03af0e0d9ec"
+    }
+  ]
+}
