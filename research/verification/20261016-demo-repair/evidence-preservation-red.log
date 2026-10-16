@@ -1,0 +1,48 @@
+(node:306911) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ a late final check cannot publish a verified result after the admitted deadline (2015.035755ms)
+✖ late baseline preserves observations and cleanup logs without inference (1310.003358ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3710.899585
+
+✖ failing tests:
+
+test at tests/live-local-runtime.test.ts:345:1
+✖ a late final check cannot publish a verified result after the admitted deadline (2015.035755ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  null !== 'timeout'
+
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:355:51)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'timeout',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/live-local-runtime.test.ts:367:1
+✖ late baseline preserves observations and cleanup logs without inference (1310.003358ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(exported.baselineChecks)
+
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-baseline-reliability-20261016/tests/live-local-runtime.test.ts:376:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

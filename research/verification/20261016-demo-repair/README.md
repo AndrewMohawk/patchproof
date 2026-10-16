@@ -140,3 +140,23 @@ Docker cleanup tests. The prior clock-fixture attempt is retained; the
 approval-before case now starts after pricing verification so it isolates the
 intended boundary. Candidate source, pricing and private configuration hashes
 were verified together after the code change. No paid provider calls occurred.
+
+## Review follow-up: preserve observations at terminal gates
+
+The post-check deadline gate previously threw before completed results reached
+the baseline or candidate evidence. Returned observations and lifecycle logs
+are now recorded before the terminal gate. Candidate acceptance and selection
+still occur only after that gate succeeds. The evidence verifier recognizes an
+explicit matching terminal live gate rejection without converting passing
+observations into acceptance. The late-baseline and late-candidate export tests
+assert retained observations, lifecycle logs and operation IDs, rejected/unselected
+candidates, no additional inference, and unchanged reservation handling.
+
+Evidence-preservation validation: typecheck and **175/175 tests passed** on
+Andromeda with concurrency 1. The [full follow-up log](evidence-preservation-tests.log)
+includes the previous 135 controls plus late-baseline export, shared experiment
+execution, repair policy, historical evidence and archive coverage. Both
+pre-fix export failures are retained in [the regression log](evidence-preservation-red.log).
+The initial candidate fix also exposed the verifier's passing-observations
+assumption; the final version preserves a matching explicit terminal rejection.
+No paid calls, deployment changes or ledger changes occurred.

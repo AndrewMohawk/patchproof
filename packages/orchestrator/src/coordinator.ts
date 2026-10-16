@@ -203,7 +203,6 @@ export class Coordinator {
     if (run.usage.sandboxCpuSeconds !== null && run.usage.sandboxCpuSeconds > run.limits.sandboxCpuSecondsLimit) {
       result.infrastructureError = 'sandbox_cpu_budget_exceeded';
     }
-    this.#liveLocal?.validateStep();
     const visibleIds = new Set(fixture.visibleCases.map(c => c.id));
     return { result, visible: result.checks.filter(c => visibleIds.has(c.id)), acceptance: result.checks.filter(c => !visibleIds.has(c.id)) };
   }
@@ -225,6 +224,8 @@ export class Coordinator {
       this.#event(run, 'baseline_capture', 'Running original source against frozen declared checks.');
       const original = await this.#check(run, fixture, fixture.files, controller.signal);
       run.baselineChecks = { visible: original.visible, acceptance: original.acceptance };
+      this.journal.save(run);
+      this.#liveLocal?.validateStep();
       if (original.result.infrastructureError) {
         if (this.#trustedSmoke && original.result.infrastructureError.startsWith('trusted_smoke_')) throw new TrustedSmokeGateError(original.result.infrastructureError.slice('trusted_smoke_'.length));
         throw new ContractError('infrastructure_error', 'Initial checker infrastructure failure.');
@@ -254,6 +255,7 @@ export class Coordinator {
         },
         onProposed: candidate => { this.journal.save(run); this.#event(run, 'check', `Checking candidate ${candidate.id} in a fresh isolated workspace.`); },
         check: candidate => this.#check(run, fixture, candidate.files, controller.signal),
+        validateChecked: () => this.#liveLocal?.validateStep(),
         onChecked: () => this.journal.save(run), onSelection: id => { run.selectedCandidateId = id; },
       });
       this.#coverage(run, fixture);

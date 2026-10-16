@@ -51,7 +51,7 @@ async function setup(t: TestContext) {
     const pass = !hooks.alwaysFail && input.files['solution.py']!.includes('return 2');
     const id = 'invented-check-' + observed.checks.length; input.onOperation?.(id);
     return { checks: input.cases.map(c => ({ id: c.id, requirementId: c.requirementId, status: pass ? 'pass' : 'fail',
-      actual: pass ? 2 : 1, expected: 2, durationMs: 0, log: 'Invented observation; no interpreter.', message: 'Invented check.' })),
+      actual: pass ? 2 : 1, expected: 2, durationMs: 0, log: JSON.stringify({ synthetic: true, operationId: id, lifecycle: ['created', 'started', 'cleanup-confirmed'] }), message: 'Invented check.' })),
       isolation: 'local_container', operationIds: [id], cpuSeconds: null, measuredCostUsd: 0, infrastructureError: null };
   } };
   const options = { fixtures: [fixture], runtimeLock: lock, sourceDigest: HASH, pricingEvidenceDigest: HASH, ledger, journal, store, checks,
@@ -350,6 +350,36 @@ test('a late final check cannot publish a verified result after the admitted dea
   assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
   assert.equal(h.observed.requests.length, 1);
   assert.equal(h.reservation(done).heldMicros, '250000');
+  const exported = verifyEvidence(await h.coordinator.evidence(done.id)).run;
+  const candidate = exported.candidates[0]!;
+  assert.equal(candidate.accepted, false); assert.equal(candidate.rejectionReason, 'timeout');
+  assert.equal(exported.selectedCandidateId, null);
+  assert.deepEqual(candidate.sandboxOperationIds, ['invented-check-3', 'invented-check-4']);
+  assert.equal(candidate.visibleChecks.length, 1); assert.equal(candidate.acceptanceChecks.length, 1);
+  for (const row of [...candidate.visibleChecks, ...candidate.acceptanceChecks]) {
+    assert.equal(row.status, 'pass');
+    const observations = JSON.parse(row.log).observations;
+    assert.equal(observations.length, 2);
+    assert.deepEqual(observations.map((o: { log: string }) => JSON.parse(o.log).lifecycle),
+      [['created', 'started', 'cleanup-confirmed'], ['created', 'started', 'cleanup-confirmed']]);
+  }
+});
+test('late baseline preserves observations and cleanup logs without inference', async t => {
+  const h = await setup(t), start = Date.now();
+  h.hooks.check = n => { if (n === 2) t.mock.timers.setTime(start + 600000); };
+  const done = await h.run('late-baseline-evidence');
+  assert.equal(done.reason, 'timeout'); assert.equal(h.observed.requests.length, 0);
+  assert.equal(h.observed.credentials, 0); assert.equal(h.reservation(done).heldMicros, '0');
+  const exported = verifyEvidence(await h.coordinator.evidence(done.id)).run;
+  assert.equal(exported.candidates.length, 0);
+  assert.deepEqual(exported.sandboxOperationIds, ['invented-check-1', 'invented-check-2']);
+  assert.ok(exported.baselineChecks);
+  assert.equal(exported.baselineChecks.visible.length, 1); assert.equal(exported.baselineChecks.acceptance.length, 1);
+  for (const row of [...exported.baselineChecks.visible, ...exported.baselineChecks.acceptance]) {
+    assert.equal(row.status, 'fail');
+    assert.equal(JSON.parse(row.log).observations.length, 2);
+    assert.match(row.log, /cleanup-confirmed/);
+  }
 });
 test('queue delay consumes the admitted allowance before any check or credential access', async t => {
   const h = await setup(t), start = Date.now();

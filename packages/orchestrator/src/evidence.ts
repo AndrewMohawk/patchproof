@@ -70,7 +70,15 @@ export function verifyEvidence(value: unknown, trustedDigest?: string): ProductE
     const declared = [...fixture.visibleCases, ...fixture.acceptanceCases];
     const checked = [...candidate.visibleChecks, ...candidate.acceptanceChecks];
     const complete = checked.length === declared.length && declared.every(c => checked.some(result => result.id === c.id && result.requirementId === c.requirementId));
-    if (candidate.accepted !== (complete && checked.every(check => check.status === 'pass'))) throw new ContractError('digest_mismatch', 'Unsupported candidate approval.');
+    // Completed passing observations do not authorize acceptance after a live
+    // deadline/source/budget gate failed. Preserve that explicit terminal rejection.
+    const terminalGateRejection = run.mode === 'live' && !candidate.accepted &&
+      run.selectedCandidateId !== candidate.id && ['infrastructure_error', 'needs_review'].includes(run.terminalStatus ?? '') &&
+      candidate.rejectionReason === run.reason &&
+      ['timeout', 'authorization_required', 'budget_not_approved', 'digest_mismatch'].includes(run.reason ?? '');
+    if (!terminalGateRejection && candidate.accepted !== (complete && checked.every(check => check.status === 'pass'))) {
+      throw new ContractError('digest_mismatch', 'Unsupported candidate approval.');
+    }
   }
   if (run.selectedCandidateId !== null && !candidateIds.has(run.selectedCandidateId)) throw new ContractError('digest_mismatch', 'Missing selected candidate.');
   const checkIds = new Set([...fixture.visibleCases, ...fixture.acceptanceCases].map(c => c.id));
