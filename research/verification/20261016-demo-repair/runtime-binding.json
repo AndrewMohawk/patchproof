@@ -3,7 +3,7 @@
   "pricingEvidenceDigest": "sha256:9c51dfa981b666f7b2a6548e0545210c9b0813d7e4ced944595e758d946d21b2",
   "configDigest": "sha256:5be8a16a26c7e5e88f5422a7c464116af839ab94ebb15ae0431ac89255ea9438",
   "budgetDigest": "sha256:e1d98734a8f66659a7d12fd90aeef109ce9697f87da3b8769c1fe224598b4ad4",
-  "status": "validated-for-paused-rollout",
+  "status": "deployed-operator-paused",
   "ledgerApprovalSynchronized": true,
   "operatorPausePreserved": true,
   "verifiedEvidence": [
@@ -17,5 +17,6 @@
       "digest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77",
       "status": "failed"
     }
-  ]
+  ],
+  "releaseCommit": "1c0289596184f6d7727b4fe36c1151cb9853dff4"
 }

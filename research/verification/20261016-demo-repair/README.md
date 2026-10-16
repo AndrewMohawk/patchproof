@@ -1,8 +1,8 @@
 # October 16 guarded demo repair
 
-The PR is a guarded repair in active validation. The immutable recovery release
-`6f7bb22e9a3b282f4986b9618927527c75c3e9fe` serves the read-only walkthrough with
-generation paused between supervised attempts. Judge access is **not ready**.
+The PR contains validated infrastructure repairs and retained supervised outcomes.
+The immutable release `1c0289596184f6d7727b4fe36c1151cb9853dff4` serves the
+read-only walkthrough with generation paused. Judge access is **not ready**.
 Latest outcomes and accounting are recorded in the dated supervised receipts;
 earlier validation sections below describe their historical checkpoints.
 
@@ -202,3 +202,7 @@ Both new evidence bundles are retained, including the rejected pagination patche
 The proposed monitor is not installed, the one-day pricing window is not extended,
 and free judge access through December 15 is not established. Generation remains
 paused; saved walkthrough and evidence access are restored on the validated code.
+
+[Final deployment receipt](final-deployment.json): public health and both evidence
+downloads passed at 22:48 UTC. The previous recovery unit was disabled after the
+new unit became healthy. No unrelated service was stopped.

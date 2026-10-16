@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-16T22:48:53.145797+00:00",
+  "releaseCommit": "1c0289596184f6d7727b4fe36c1151cb9853dff4",
+  "service": "patchproof-runtime@1c02895.service",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "availability": {
+    "enabled": false,
+    "reason": "Live execution is paused pending accounting review.",
+    "remainingRuns": 10
+  },
+  "taskIds": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "creationEnabled": false,
+  "judgeAccessReady": false,
+  "publicEvidence": [
+    {
+      "id": "352bcf84-ffa2-4668-801c-af258ea79e2c",
+      "status": "verified_for_declared_checks",
+      "digest": "sha256:57916af3b6385944491f3013cc4ca99b610274832be54e249ad00908296180b3",
+      "sourceDigest": "sha256:175ffbe9b724fa965bc6bd664b47bfad0b344313af8d77013af1077963967603"
+    },
+    {
+      "id": "3171cb35-a100-4b01-92b9-0a51642992b6",
+      "status": "failed",
+      "digest": "sha256:3fa2674281172568d4cb27684dedf93b983316114efd6bfb2052a67903648a77",
+      "sourceDigest": "sha256:175ffbe9b724fa965bc6bd664b47bfad0b344313af8d77013af1077963967603"
+    }
+  ],
+  "pricingAdmissionDeadlineUtc": "2026-10-17T20:50:00Z",
+  "ledgerHeldUsd": 2.35,
+  "historicalReservationsPreserved": true,
+  "unrelatedServicesChanged": false
+}
