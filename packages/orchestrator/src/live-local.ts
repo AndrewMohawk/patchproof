@@ -7,7 +7,7 @@ import { NebiusRepairProvider } from '../../../workers/repair/index.ts';
 import type { InferenceReceipt } from '../../../workers/repair/index.ts';
 import { BudgetLedger, usdToMicros } from './budget-ledger.ts';
 import { Coordinator } from './coordinator.ts';
-import { RepeatedCheckRunner } from './repeated-checks.ts';
+import { RepeatedCheckRunner, runnerForLocalScheduling } from './repeated-checks.ts';
 import type { RunJournal } from './journal.ts';
 import type { EvidenceStore } from './evidence.ts';
 
@@ -19,7 +19,7 @@ export const LIVE_RESERVATION_MICROS = usdToMicros(LIVE_LIMITS.maxApprovedSpendU
 export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.3, outputUsdPerMillionTokens: 0.9,
   requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
   inputAccounting: 'full-model-context-conservative-ceiling-per-request', actualBilling: 'unknown-full-reservation-held',
-  verifiedAt: '2026-10-14T00:48:07Z', validUntil: '2026-10-15T01:00:00Z' });
+  verifiedAt: '2026-10-16T21:01:00Z', validUntil: '2026-10-17T21:00:00Z' });
 export interface LiveLocalSettings {
   limits: typeof LIVE_LIMITS;
   beforeCreate: (id: string, fingerprint: string) => void;
@@ -64,6 +64,10 @@ export function createLiveLocalCoordinator(input: {
     input.verifyRuntime();
     if (Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(LIVE_PRICING.validUntil)) throw new ContractError('authorization_required', 'Model pricing verification needs refresh.', 403);
     const snapshot = input.ledger.snapshot();
+    if (snapshot.approvalExpiresAt !== null &&
+        Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(snapshot.approvalExpiresAt)) {
+      throw new ContractError('authorization_required', 'The full run must fit within the approved spending window.', 403);
+    }
     // The current in-flight call is intentionally pending. Every other pending
     // reservation must already have an immutable bounded closure attestation.
     const ownPending = active?.attempted && !active.closed ? 1 : 0;
@@ -143,6 +147,6 @@ export function createLiveLocalCoordinator(input: {
     },
   });
   return new Coordinator({ fixtures: input.fixtures, runtimeLock: input.runtimeLock, provider,
-    checks: new RepeatedCheckRunner(input.checks), journal: input.journal, store: input.store,
+    checks: new RepeatedCheckRunner(runnerForLocalScheduling(input.checks, input.runtimeLock)), journal: input.journal, store: input.store,
     verifyRuntime: input.verifyRuntime, liveLocalCapability: capability });
 }

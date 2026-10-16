@@ -12,6 +12,7 @@ import { EvidenceStore } from '../../../packages/orchestrator/src/evidence.ts';
 import { DockerCheckRunner } from '../../../workers/sandbox/index.ts';
 import { createProductServer } from './product-server.ts';
 import { acquireCoordinatorLease } from '../../../packages/orchestrator/src/lease.ts';
+import { LOCAL_CHECK_SCHEDULING_POLICY } from '../../../packages/orchestrator/src/parallel-local-checks.ts';
 import { REPEATED_CHECK_PROTOCOL } from '../../../packages/orchestrator/src/repeated-checks.ts';
 import { buildOperationalLock, verifyOperationalLock } from '../../../packages/orchestrator/src/operational-lock.ts';
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../../../packages/orchestrator/src/local-check-timing.ts';
@@ -19,7 +20,7 @@ import { BudgetLedger } from '../../../packages/orchestrator/src/budget-ledger.t
 import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
-export const LIVE_PRICING_EVIDENCE_PATH = 'research/verification/20261014-live-pricing-refresh/pricing-evidence.json';
+export const LIVE_PRICING_EVIDENCE_PATH = 'research/verification/20261016-demo-repair/pricing-evidence.json';
 const LivePricingEvidenceSchema = z.object({ schemaVersion: z.literal('1.0'),
   verifiedAt: z.iso.datetime(), validUntil: z.iso.datetime(),
   provider: z.literal('nebius-token-factory'), modelId: z.string(),
@@ -92,7 +93,7 @@ export async function createLiveApplication(root: URL, configFile: string) {
       inferenceInterface: { version: '20260923-f93df18ab', openApiDigest: 'sha256:c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f',
         endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: 'provider defaults; no thinking override; hidden reasoning not retained; no determinism claim' },
       execution: LIVE_EXECUTION, liveLocalCheckTimingPolicy: LIVE_LOCAL_CHECK_TIMING_POLICY, pricing: LIVE_PRICING, sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
-      localCheckImage: status.image, localExecution: status, checkProtocol: REPEATED_CHECK_PROTOCOL,
+      localCheckSchedulingPolicy: LOCAL_CHECK_SCHEDULING_POLICY, localCheckImage: status.image, localExecution: status, checkProtocol: REPEATED_CHECK_PROTOCOL,
       repairPolicy: 'immutable-branches-visible-baseline-v1', operationalLock, limits: LIVE_LIMITS,
       sponsorSandboxesVerified: false, calibration: 'unscored-development-only', transportRetries: 0 };
     const verifyRuntime = () => {
@@ -118,10 +119,12 @@ export async function createLiveApplication(root: URL, configFile: string) {
       liveAvailability: () => {
         const snapshot = ledger!.snapshot();
         const remainingRuns = Math.floor(Math.min(Number(snapshot.availableMicros), Number(snapshot.stages.smoke.availableMicros)) / Number(LIVE_RESERVATION_MICROS));
-        const expired = Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000 > Date.parse(LIVE_PRICING.validUntil);
+        const admissionEnd = Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000;
+        const expired = admissionEnd > Date.parse(LIVE_PRICING.validUntil);
+        const approvalExpired = snapshot.approvalExpiresAt !== null && admissionEnd > Date.parse(snapshot.approvalExpiresAt);
         const running = coordinator.list().some(run => run.phase !== 'terminal');
-        return { enabled: !snapshot.frozen && !expired && !running && remainingRuns > 0, remainingRuns,
-          reason: expired ? 'Model pricing verification needs refresh.' : running ? 'A live run is in progress. You can follow its evidence.' :
+        return { enabled: !snapshot.frozen && !expired && !approvalExpired && !running && remainingRuns > 0, remainingRuns,
+          reason: expired ? 'Model pricing verification needs refresh.' : approvalExpired ? 'The full run must fit within the approved spending window.' : running ? 'A live run is in progress. You can follow its evidence.' :
             snapshot.frozen ? 'Live execution is paused pending accounting review.' : remainingRuns < 1 ? 'The live-demo allowance is exhausted.' : null };
       } });
     return { server, coordinator, config, runtimeLock, close: async () => { try { await coordinator.close(); } finally { ledger!.close(); await release(); } } };

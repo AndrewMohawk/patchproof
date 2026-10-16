@@ -1,0 +1,46 @@
+{
+  "baseCommit": "bddb7ac888ea712fa44d2c61a995e2e6dec13339",
+  "environment": "Andromeda, Node 25.5.0",
+  "providerCalls": 0,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test --test-concurrency=1 tests/parallel-local-checks.test.ts tests/local-check-timing.test.ts tests/live-local-runtime.test.ts tests/live-pricing-evidence.test.ts tests/budget-ledger.test.ts tests/runtime-docker-cleanup.test.ts",
+      "exitCode": 0,
+      "tests": 72,
+      "passed": 72
+    },
+    {
+      "command": "node scripts/verify-v3-corpus.ts",
+      "exitCode": 0,
+      "fixtures": 10,
+      "declaredChecks": 220
+    },
+    {
+      "command": "node scripts/verify-live-baseline.ts",
+      "exitCode": 0,
+      "paidCalls": 0,
+      "fixtureCount": 2,
+      "freshContainerCount": 88
+    },
+    {
+      "command": "gitleaks git --staged --redact --no-banner",
+      "exitCode": 0,
+      "scope": "proposed changes only, not full history"
+    }
+  ],
+  "priorAttempts": [
+    "Test-only TypeScript result annotations and one undersized idempotency key were corrected before final passing validation.",
+    "A concurrent suite attempt failed an existing cleanup timing assertion (container_cleanup_unconfirmed instead of cancelled). Retained in parallel-suite-attempt.log. Final serialized suite passed without changing cleanup deadlines or code."
+  ],
+  "notRun": [
+    "full repository suite",
+    "paid model-generated repair",
+    "production rollout",
+    "public reopening",
+    "continuous judge availability monitoring"
+  ]
+}

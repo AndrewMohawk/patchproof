@@ -4,9 +4,9 @@
   "maxApprovedSpendUsd": 25,
   "ownerApproval": {
     "approvedBy": "project_owner",
-    "approvedAt": "2026-09-27T07:42:19.279Z",
-    "expiresAt": null,
-    "reference": "User instruction: you can make the spending cap $25"
+    "approvedAt": "2026-10-16T20:57:00Z",
+    "expiresAt": "2026-12-15T20:00:00Z",
+    "reference": "Owner approved $25 USD total for PatchProof Token Factory verification and judge demo usage through December 15, including existing usage and applicable fees; existing billing only; no automatic increase; hosting excluded."
   },
   "verifiedCredits": [],
   "stages": {
@@ -23,5 +23,5 @@
     "sandboxCpuSecondsLimit": null,
     "candidateBranchLimit": 3
   },
-  "note": "Owner authorized $25 total on 2026-09-27. Coordinator allocated up to $5 smoke and $20 pilot within that total. No expiry supplied. No credits verified. Account access, prices and runtime limits remain blockers; stage caps do not bypass dependency gates."
+  "note": "October 16 renewal preserves the $25 TOTAL ceiling and existing $5 smoke/$20 pilot stage caps. Historical usage and fees count within the total; unresolved reservations must remain held. Hosting is not approved. Durable ledger approval must be explicitly synchronized before rollout; this file alone does not authorize a reset or unpause."
 }

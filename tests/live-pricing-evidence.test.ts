@@ -5,7 +5,7 @@ import { digestJson } from '../packages/contracts/src/digest.ts';
 import { buildOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 import { LIVE_PRICING_EVIDENCE_PATH, verifyLivePricingEvidence } from '../apps/api/src/live-application.ts';
 
-const evidence = JSON.parse(readFileSync(new URL('../research/verification/20261014-live-pricing-refresh/pricing-evidence.json', import.meta.url), 'utf8'));
+const evidence = JSON.parse(readFileSync(new URL('../research/verification/20261016-demo-repair/pricing-evidence.json', import.meta.url), 'utf8'));
 
 test('current live pricing evidence matches the runtime constants and its digest', () => {
   assert.equal(verifyLivePricingEvidence(evidence, digestJson(evidence)).modelId, 'nvidia/nemotron-3-super-120b-a12b');

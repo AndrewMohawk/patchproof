@@ -33,7 +33,7 @@ const response = (source = 'def f(): return 2\n', usage = { prompt_tokens: 24, c
     { headers: { 'x-request-id': 'invented-transport' } });
 
 async function setup(t: TestContext) {
-  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-14T01:00:00Z') });
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse(LIVE_PRICING.verifiedAt) });
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-live-local-unit-'));
   const budget = { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 25,
     ownerApproval: { approvedBy: 'synthetic', approvedAt: '2026-09-27T00:00:00Z', expiresAt: null, reference: 'invented control' },
@@ -68,13 +68,13 @@ async function setup(t: TestContext) {
   t.after(async () => { await coordinator.close(); ledger.close(); await rm(directory, { recursive: true, force: true }); });
   const run = async (key: string, variant = 'patchproof') => { const created = coordinator.create(request(key, variant)); await coordinator.settled(); return coordinator.get(created.run.id); };
   const reservation = (run: ProductRun) => ledger.get('live-local:' + run.id);
-  return { directory, accountingDirectory, ledger, journal, store, options, coordinator, observed, hooks, run, reservation };
+  return { budget, directory, accountingDirectory, ledger, journal, store, options, coordinator, observed, hooks, run, reservation };
 }
 
 test('Super shares a quarter-dollar reservation that covers its entire matched token allowance', () => {
   assert.equal(LIVE_MODEL, 'nvidia/nemotron-3-super-120b-a12b');
-  assert.equal(LIVE_PRICING.verifiedAt, '2026-10-14T00:48:07Z');
-  assert.equal(LIVE_PRICING.validUntil, '2026-10-15T01:00:00Z');
+  assert.equal(LIVE_PRICING.verifiedAt, '2026-10-16T21:01:00Z');
+  assert.equal(LIVE_PRICING.validUntil, '2026-10-17T21:00:00Z');
   assert.equal(LIVE_RESERVATION_MICROS, 250_000n);
   assert.equal(LIVE_RESERVATION_MICROS, usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd));
   assert.equal(LIVE_LIMITS.inferenceCallLimit, 3);
@@ -165,7 +165,7 @@ test('all variants use provider defaults with exact limits, repeated-check cap a
 });
 
 test('worker omission of the thinking override preserves the existing explicit disable option', async t => {
-  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-10-14T01:00:00Z') });
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse(LIVE_PRICING.verifiedAt) });
   let calls = 0;
   for (const disableThinking of [false, true]) {
     const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,
@@ -260,4 +260,38 @@ test('actual credential echoes are withheld from candidate, events and accountin
     if (place !== 'header') { assert.equal(done.candidates.length, 0); }
     if (place === 'id' || place === 'candidate') assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
   });
+});
+
+test('pricing admission includes the entire 600-second allowance at its exact boundary', async t => {
+  for (const [offset, allowed] of [[-1, true], [0, true], [1, false]] as const) {
+    await t.test(String(offset), async t => {
+      const h = await setup(t);
+      t.mock.timers.setTime(Date.parse(LIVE_PRICING.validUntil) - LIVE_LIMITS.wallTimeLimitSeconds * 1000 + offset);
+      if (allowed) {
+        h.coordinator.create(request('expiry-boundary')); await h.coordinator.settled();
+        assert(h.observed.requests.length > 0);
+      } else {
+        assert.throws(() => h.coordinator.create(request('expiry-after-boundary')), /pricing verification needs refresh/);
+        assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
+      }
+    });
+  }
+});
+test('persisted operator pause rejects creation before credentials or spending', async t => {
+  const h = await setup(t);
+  const { DatabaseSync } = await import('node:sqlite');
+  const db = new DatabaseSync(join(h.directory, 'budget.sqlite'));
+  db.prepare('UPDATE budget_meta SET frozen_reason=? WHERE id=1').run('operator_paused_supervised_only');
+  db.close();
+  assert.throws(() => h.coordinator.create(request('operator-paused')), /paused/);
+  assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
+});
+
+test('approval expiry must cover the entire run even when pricing remains current', async t => {
+  const h = await setup(t);
+  const expiresAt = new Date(Date.now() + 599999).toISOString();
+  h.ledger.syncApproval({ ...h.budget, ownerApproval: { ...h.budget.ownerApproval, expiresAt } },
+    { expectedRevision: h.ledger.snapshot().approvalRevision });
+  assert.throws(() => h.coordinator.create(request('approval-window')), /full run must fit/);
+  assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
 });

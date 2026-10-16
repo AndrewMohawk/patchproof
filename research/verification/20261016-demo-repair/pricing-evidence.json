@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Authenticated pricing review; guarded repair candidate, not public readiness",
+  "verifiedAt": "2026-10-16T21:01:00Z",
+  "validUntil": "2026-10-17T21:00:00Z",
+  "provider": "nebius-token-factory",
+  "modelId": "nvidia/nemotron-3-super-120b-a12b",
+  "catalog": {
+    "endpoint": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+    "authenticatedReadOnlyRequest": true,
+    "canonicalTargetRecordSha256": "9f22fd91ff49e74aad004b41b4d441f9019be559ce252fcefd0c203687b65394",
+    "contextTokens": 262144,
+    "quantization": "fp4",
+    "inputUsdPerMillionTokens": 0.3,
+    "outputUsdPerMillionTokens": 0.9,
+    "requestFeeUsd": 0
+  },
+  "accountReview": {
+    "billingActive": true,
+    "existingPaymentMethodVerified": true,
+    "trialCreditAvailable": true,
+    "trialRemainingDisplayedUsd": 0.99,
+    "trialDaysRemaining": 11,
+    "taxPolicyReviewed": true,
+    "additionalTaxApplies": false,
+    "sensitiveBillingDetailsRetained": false,
+    "usagePeriod": "2026-09-16/2026-10-16",
+    "usageLastUpdatedUtc": "19:38",
+    "displayedProductCostsUsd": [
+      "0.00201012",
+      "0.001902",
+      "0.0045519",
+      "0.0043551"
+    ],
+    "displayedProductCostsSumUsd": "0.01281912",
+    "perReservationReconciliationComplete": false
+  },
+  "spendBoundary": {
+    "approvedProjectTotalUsd": 25,
+    "includesHistoricalUsageAndFees": true,
+    "existingSmokeStageApprovedUsd": 5,
+    "existingHeldReservationsUsd": 1.6,
+    "maximumNewRawReservationsUsd": 3.4,
+    "perRunReservationUsd": 0.25,
+    "inferenceCallsPerRun": 3,
+    "conservativeTokenCeilingUsd": 0.2467296,
+    "pricingHeadroomPerRunUsd": 0.0032704,
+    "hostingApprovedUsd": 0,
+    "automaticIncrease": false
+  },
+  "sources": [
+    "https://tokenfactory.nebius.com/organization/prices",
+    "https://tokenfactory.nebius.com/organization/usage",
+    "https://tokenfactory.nebius.com/organization/billing-details",
+    "https://docs.tokenfactory.nebius.com/other-capabilities/billing-new"
+  ],
+  "limitations": [
+    "The account usage view aggregates products, not request identities; no held reservation was released.",
+    "Trial credits do not establish judge access through December 15.",
+    "This short-lived receipt does not establish continuous availability or public reopening.",
+    "No paid requests were made during this pricing review."
+  ]
+}

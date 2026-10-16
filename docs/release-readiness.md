@@ -1,10 +1,11 @@
 # Release readiness
 
-**Checked:** October 13, 2026 (UTC)  
-**Source reviewed:** `993c1d09bed9e45396d9bda7b606c982c335f9d3`  
-**Disposition:** Private preparation only. No release, merge, deployment, or submission.
+**Checked:** October 16, 2026 (UTC)
+**Disposition:** Repair candidate validated on Andromeda; live admissions remain paused.
+See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
+for timing, pricing, accounting and remaining supervised rollout gates.
 
-## Current evidence
+## Prior release review evidence (October 13)
 
 - The repository is private. Root package metadata previously said
   `UNLICENSED`; this proposed change adds MIT for first-party software and
