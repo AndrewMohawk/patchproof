@@ -1,3 +1,4 @@
+import { validateEditRegion } from './edit-region.ts';
 import { constants } from 'node:fs';
 import { mkdir, open, readFile, lstat } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -64,6 +65,7 @@ export function verifyEvidence(value: unknown, trustedDigest?: string): ProductE
     if (candidateIds.has(candidate.id)) throw new ContractError('digest_mismatch', 'Duplicate candidate.');
     candidateIds.add(candidate.id);
     validatePaths(candidate.files);
+    validateEditRegion(fixture, candidate.files);
     validatePaths(Object.fromEntries(Object.entries(candidate.files).filter(([path, content]) => fixture.files[path] !== content)), fixture.editAllowlist);
     if (Object.keys(fixture.files).some(path => !(path in candidate.files))) throw new ContractError('digest_mismatch', 'Original source omitted from candidate.');
     if (candidate.diff !== createLegacyPatch(fixture.files, candidate.files) && candidate.diff !== createPatch(fixture.files, candidate.files)) throw new ContractError('digest_mismatch', 'Diff/source mismatch.');

@@ -110,6 +110,10 @@ export class NebiusRepairProvider implements RepairProvider {
         requirements: input.requirements, files: input.files, editAllowlist: input.editAllowlist,
         visibleCases: input.visibleCases, feedback: input.feedback }) },
     ];
+    if (input.editRegion) {
+      messages[0]!.content += ' REGION PROTOCOL: for this task only, files[path] must be the replacement INDENTED BODY of the named function, excluding its def/signature and excluding all other code. Keep every nonblank line indented by at least four spaces and end with a newline. The host restores the immutable prefix and suffix; do not include them in your response.';
+      messages[1]!.content = JSON.stringify({ ...JSON.parse(messages[1]!.content), editRegion: { path: input.editRegion.path, functionName: input.editRegion.functionName, output: 'indented body only' } });
+    }
     const outputLimit = Math.min(input.remaining.outputTokenLimit, o.maximumOutputTokens ?? input.remaining.outputTokenLimit);
     const promptTokens = o.countInputTokens(messages);
     if (!Number.isSafeInteger(promptTokens) || promptTokens < 1 || promptTokens > input.remaining.inputTokenLimit) {
@@ -200,6 +204,13 @@ export class NebiusRepairProvider implements RepairProvider {
     }
     if (!Object.keys(proposal.files).length || Object.keys(proposal.files).some(path => !input.editAllowlist.includes(path))) {
       throw new RepairError('protected_path', 'Candidate edits outside the frozen allowlist were rejected.', usage, parsed.id);
+    }
+    if (input.editRegion) {
+      const region = input.editRegion, body = proposal.files[region.path];
+      if (Object.keys(proposal.files).length !== 1 || typeof body !== 'string' || !body.trim() || !body.endsWith('\n') || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
+        throw new RepairError('protected_path', 'Invalid function-only replacement body.', usage, parsed.id);
+      }
+      proposal.files[region.path] = region.prefix + body + region.suffix;
     }
     return { ...proposal, usage, modelId: parsed.model, providerRequestId: parsed.id };
   }

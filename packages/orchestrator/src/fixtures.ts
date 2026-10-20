@@ -1,3 +1,4 @@
+import { validateEditRegion } from './edit-region.ts';
 import { readdir, readFile } from 'node:fs/promises';
 import { FixtureSchema, PRODUCT_CONTRACT_VERSION } from '../../contracts/src/product.ts';
 import type { Fixture, ProductContractVersion } from '../../contracts/src/product.ts';
@@ -44,6 +45,7 @@ export async function loadFixtures(root: URL): Promise<Fixture[]> {
       const fixture = FixtureSchema.parse(raw);
       if (fixture.split !== split) throw new Error('Fixture split does not match public directory.');
       validatePaths(fixture.files);
+      validateEditRegion(fixture, fixture.files);
       validatePaths(Object.fromEntries(fixture.editAllowlist.map(path => [path, ''])));
       if (!(fixture.entrypoint in fixture.files)) throw new Error('Fixture entrypoint missing.');
       const requirements = new Set(fixture.requirements.map(r => r.id));
@@ -61,5 +63,6 @@ export async function loadFixtures(root: URL): Promise<Fixture[]> {
 export function publicTask(fixture: Fixture) {
   const { id, repoId, split, title, description, requirements, files, entrypoint, editAllowlist } = fixture;
   return { id, repoId, split, title, description, requirements, files, entrypoint, editAllowlist,
+    license: fixture.license, provenance: fixture.provenance, ...(fixture.licenseText ? { licenseText: fixture.licenseText } : {}),
     examples: structuredClone(fixture.visibleCases), mockSupported: id === 'stable-unique-01', ...fixtureDigests(fixture) };
 }

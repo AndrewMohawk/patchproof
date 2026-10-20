@@ -1,0 +1,36 @@
+✔ current contract locks and exact historical snapshots are validated independently (23.987447ms)
+✔ the historical demonstration retains its frozen 2.0 fingerprint while 2.1 binds metadata (8.926992ms)
+✔ Humanize source and MIT notice retain pinned provenance (3.212349ms)
+✔ function guard accepts an indented body and rejects surrounding, signature, and top-level changes (1.151799ms)
+✔ region transport expands only body, retains usage, and rejects whole-file or extra-file responses (40.330907ms)
+(node:3302179) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (36.174642ms)
+(node:3302220) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ visible feedback includes case identity and observed exception with expected value from the public definition (5.957228ms)
+✔ mutation and expected-exception diagnostics retain the visible outcome shape (1.905845ms)
+✔ nonvisible observations retain only requirement/status and generated provenance (0.868147ms)
+✔ mismatched and ambiguous visible identities cannot unlock structured observations (1.379962ms)
+✔ diagnostic serialization rejects getters, proxies, toJSON, cycles and non-JSON values without invoking behavior (3.911335ms)
+✔ ordinary JSON keys survive safely and every diagnostic and message has an explicit UTF-8 bound (3.061127ms)
+✔ all three revision policies use identical visible diagnostics with unchanged resource limits (5.109472ms)
+(node:3302355) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ P branches receive immutable original source while B1 progresses, and B0 selection cannot use acceptance scores (3889.441194ms)
+✔ scripted mock is task bounded and uses the same attempt/feedback rule for every caller (2.411474ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.958713ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (27.661509ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (2.17428ms)
+✔ cancelled proposal sends nothing (0.336867ms)
+✔ operation journal failures prevent initial dispatch and retain completed response identity and usage (1.426083ms)
+✔ cancelled stalled completion body stops promptly and retains attempted-call accounting (8.984434ms)
+✔ malformed completion choices still retain independently valid response identity and token usage (1.844281ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5697.549585

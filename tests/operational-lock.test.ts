@@ -8,11 +8,15 @@ import { buildOperationalLock, verifyOperationalLock } from '../packages/orchest
 
 test('operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims', async t => {
   const directory = await mkdtemp(join(tmpdir(), 'patchproof-lock-test-')); t.after(() => rm(directory, { recursive: true, force: true }));
-  for (const path of ['packages/contracts/src','packages/orchestrator/src','workers/repair','apps/api/src','apps/web','scripts']) await mkdir(join(directory,path), { recursive: true });
-  for (const path of ['Makefile','tsconfig.json','package.json','package-lock.json','runtime-lock.json','budget.json','owner-decisions.json']) await writeFile(join(directory,path),'{}\n');
+  for (const path of ['packages/contracts/src','packages/orchestrator/src','workers/repair','apps/api/src','apps/web','scripts','fixtures/development','research/product-v3']) await mkdir(join(directory,path), { recursive: true });
+  for (const path of ['Makefile','tsconfig.json','package.json','package-lock.json','runtime-lock.json','budget.json','owner-decisions.json','research/product-v3/model-discovery.json']) await writeFile(join(directory,path),'{}\n');
   const prompt = join(directory,'workers/repair/index.ts'); await writeFile(prompt,'export const prompt = "original";\n');
+  const fixture = join(directory,'fixtures/development/example.json'); await writeFile(fixture,'{}\n');
   const lock = buildOperationalLock(directory); const digest = digestJson(lock);
   assert.deepEqual(verifyOperationalLock(directory, lock, digest), lock);
+  await writeFile(fixture,'{"changed":true}\n');
+  assert.throws(() => verifyOperationalLock(directory, lock, digest), /Operational source/);
+  await writeFile(fixture,'{}\n');
   assert.equal(lock.liveProtocolFrozen, false); assert.equal(lock.behavior.modelSeed, null);
   await writeFile(prompt,'export const prompt = "changed";\n');
   assert.throws(() => verifyOperationalLock(directory, lock, digest), /Operational source/);

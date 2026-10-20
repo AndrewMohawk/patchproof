@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "1399e049734bd7c779b38fa64dd02742b6aadb06",
+  "wheel": "humanize-4.9.1.dev32-py3-none-any.whl",
+  "wheelSha256": "65dc0c5ddfdf19accc403045b197ec1074772e71399d7257ea55c37cacffce50",
+  "metadataSha256": "16c66ce0e634327fdffe3883b9d6f5d03f473d11639aeb6d06cdb528dfc2464e",
+  "pythonSourceSha256": {
+    "src/humanize/__init__.py": "40ef19c44742ab72fbf4f6c9ea83c516b23735d286be1ad9e97c3d1cfcc92538",
+    "src/humanize/filesize.py": "24b3c05bc07f38bbfdbab017125c58bc33225d0177e9c01e172ff61c39ce107e",
+    "src/humanize/i18n.py": "df8a810a73766c245792a1fae5f91e1239b10c4e7002731ca77521c43dfdcb2a",
+    "src/humanize/number.py": "a0d7aa2901819a5fddfa5c1cf973feaaf82e9c7fa299cff34a112eaee300c33c",
+    "src/humanize/time.py": "25b19956797e3ffb51468b80cb596c16a6f976547c432c4c4a66ee8d232b6b1f"
+  },
+  "buildDependencies": [
+    "hatch-vcs==0.4.0",
+    "hatchling==1.27.0",
+    "packaging==26.3",
+    "pathspec==1.1.1",
+    "pluggy==1.7.0",
+    "setuptools==84.2.0",
+    "setuptools-scm==10.3.4",
+    "trove-classifiers==2026.9.21.13",
+    "vcs-versioning==2.6.0"
+  ],
+  "scope": "All upstream Python modules; built distribution metadata; English default locale. Translated locale data and full upstream tests are not claimed."
+}
