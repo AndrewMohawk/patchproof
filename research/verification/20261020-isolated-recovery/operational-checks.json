@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-20T19:19:32.086945+00:00",
+  "scope": "Documented operational recovery checks, not a replacement for generic competition release gates",
+  "documentation": [
+    "docs/judge-operations-plan.md#readiness-and-incident-procedure",
+    "docs/judge-operations-plan.md#implemented-evidence-controls",
+    "docs/closed-dispatch-recovery.md#preparation-and-application-contract",
+    "research/verification/20261016-demo-repair/README.md#baseline-reliability"
+  ],
+  "checks": [
+    {
+      "check": "Exact approved container identity, isolated repeated execution and scoped cleanup",
+      "evidence": "validation.json; protected.log; 42.653s and 44.865s baselines",
+      "status": "observed pass before test-only corrections; production guards unchanged"
+    },
+    {
+      "check": "Current account fees and authenticated exact catalog/source/budget/policy binding for the intended release",
+      "status": "production baseline verified at 18:34 UTC; candidate binding must be verified before any approved deployment"
+    },
+    {
+      "check": "Expiry, mismatch, cap exhaustion, pause, concurrent admission, receipt preservation and non-retryability",
+      "status": "Focused suites passed; corrected bounded full suite completed 779 pass, 1 fail. Full-suite acceptance remains pending."
+    },
+    {
+      "check": "Exact authentic five-artifact proof, fresh ledger sequence/revision and serialized append with all holds retained",
+      "status": "implementation and offline evidence reviewed; production application not performed"
+    },
+    {
+      "check": "Post-change health, timer/verifier, public admission state, unchanged reservation rows and historical redispatch denial",
+      "status": "not performed; deployment and recovery pending review and applicable checks"
+    }
+  ],
+  "genericReleaseAudit": "Remains blocked as recorded in genuine-release-audit-comparison.json; no waiver or bypass added",
+  "noDeployment": true,
+  "paidCalls": 0
+}

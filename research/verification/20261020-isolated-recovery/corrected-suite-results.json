@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-10-20T19:19:32.086945+00:00",
+  "testedCommit": "d09984addc9858226ce1e36369d8cc4836008227",
+  "deployedBaseline": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "testOnlyChanges": [
+    "Two synthetic projects now supply required model-discovery metadata",
+    "Observer elapsed time starts at actual observer entry; 1-second runtime bound, 2.5-second assertion and incomplete-billing checks preserved"
+  ],
+  "productionCodeUnchangedFromReviewedCommit": "ab701dfcdd1a71b4d432ed083eec9f6a3e2fcece",
+  "fullSuite": {
+    "command": "node --test --test-concurrency=2 tests/*.test.ts",
+    "exit": 1,
+    "tests": 780,
+    "pass": 779,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 1073506.251828,
+    "failure": "tests/live-experiment-operator.test.ts:149 accepted.size 0 !== 2; composed fake-provider episode",
+    "threeCorrectedTestsPassed": true,
+    "malformedCompletionEndToEndAndSharedTrustedSmokeAndLiveExperimentIncluded": true
+  },
+  "diagnosticRerun": {
+    "command": "node --test --test-concurrency=1 --test-name-pattern=\"one composed fake-provider episode\" tests/live-experiment-operator-diagnostic.test.ts",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "durationMs": 10867.934312,
+    "instrumentation": "Temporary uncommitted copy added one console diagnostic immediately before original accepted.size assertion, printing result/counts/snapshot; all deadlines and assertions unchanged; copy removed after run. No production code changed.",
+    "acceptedReceipts": 2,
+    "fakeModelCalls": 1,
+    "fakeSandboxRequests": 11,
+    "outcome": "correct",
+    "rootCause": "Unresolved: full-suite log retains assertion only, temporary episode state was cleaned by test. Standalone pass is not proof that resource contention was the sole cause."
+  },
+  "operationalAcceptance": "Pending: full-suite failure, candidate-bound current pricing/fees, quiescence and fresh recovery checkpoint; no deployment or production recovery performed",
+  "genericCompetitionAudit": "Separately blocked; genuine historical inputs and baseline comparison retained. Not used as an invented operational bypass.",
+  "paidCalls": 0,
+  "productionLedgerChanged": false,
+  "rawLogs": {
+    "full-suite-bounded.log": "sha256:1654ef5b27b5d578307fd0be5b79e0c5e76ffbcfc72abbcda54a96d0660bc0c3",
+    "composed-diagnostic.log": "sha256:64ea54eb1cc5edc1c549fd946bbeb6f9cde0c395f00e635f42835a4996edf71d"
+  }
+}

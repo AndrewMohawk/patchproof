@@ -151,3 +151,25 @@ release receipts, and inherited configuration/research prerequisites. No accepte
 live protocol was found in the searched project evidence. These are not current
 judge-access or competition-ready attestations. See the [full-suite and audit
 receipt](../research/verification/20261020-isolated-recovery/full-suite-audit.json).
+
+
+## Corrected test-only candidate (October 20, 19:15 UTC)
+
+Commit `d09984addc9858226ce1e36369d8cc4836008227` supplies the required
+model-discovery metadata to two synthetic projects and measures observer elapsed
+time from actual observer entry. The 1-second observer timeout, 2.5-second
+assertion and incomplete-billing checks remain unchanged. No production code
+changed from reviewed `ab701dfc`.
+
+The full suite with `--test-concurrency=2` completed: **779 passed, one failed,
+zero cancelled or skipped**, of 780. All three corrected tests passed. The
+remaining composed fake-provider operator test accepted zero of two expected
+accounting receipts. A temporary diagnostic copy passed alone with unchanged
+deadlines/assertions and both receipts accepted. Its earlier full-suite failure
+remains unresolved; the standalone pass does not replace the failed suite.
+See [corrected suite results](../research/verification/20261020-isolated-recovery/corrected-suite-results.json)
+and [documented operational checks](../research/verification/20261020-isolated-recovery/operational-checks.json).
+
+Production deployment and one-run recovery remain pending review and applicable
+checks. The generic research/competition audit remains separately blocked with
+its genuine-input results preserved; no receipt, waiver or bypass was invented.
