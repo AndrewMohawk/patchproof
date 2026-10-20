@@ -111,6 +111,8 @@ export class NebiusRepairProvider implements RepairProvider {
         visibleCases: input.visibleCases, feedback: input.feedback }) },
     ];
     if (input.editRegion) {
+      messages[0]!.content = messages[0]!.content.replace('full replacement source', 'replacement indented function body');
+      messages[0]!.content += ' Encode the body as a valid JSON string: escape newlines and double quotes. The outer object must contain exactly files and summary; do not return Markdown fences or additional fields.';
       messages[0]!.content += ' REGION PROTOCOL: for this task only, files[path] must be the replacement INDENTED BODY of the named function, excluding its def/signature and excluding all other code. Keep every nonblank line indented by at least four spaces and end with a newline. The host restores the immutable prefix and suffix; do not include them in your response.';
       messages[1]!.content = JSON.stringify({ ...JSON.parse(messages[1]!.content), editRegion: { path: input.editRegion.path, functionName: input.editRegion.functionName, output: 'indented body only' } });
     }

@@ -11,3 +11,9 @@ Only the body of `naturaldelta` may change. The model receives the original pack
 `integration-tests.log` records 22 passing protocol, edit-boundary, provenance, source-binding, historical contract and repair-feedback tests. The test setup now creates the fixture and model-discovery directories required by the operational lock. It also verifies that changing a fixture invalidates the lock.
 
 Paid repair, fresh candidate replay, deployment, footage and submission results must be recorded separately after they occur. Their absence is not success. The limit for this demonstration is at most three $0.25 reservations within the existing $25 project cap; unresolved historical holds remain untouched. No upstream PR or automatic merge is part of this reproduction.
+
+## First two supervised runs
+
+Run `a7b1b65b-0af3-4bf9-ac42-372d2c590cda` used the original-source branching policy: three candidates each scored 13/20 and were rejected. Run `f775b3bf-763c-440a-a029-7d698da9dc70` used the existing progressive baseline policy and stopped after one malformed files-and-summary response; no candidate executed. Both immutable evidence bundles are retained. Token estimates total $0.026139, while both full $0.25 reservations remain held. The startup attempt before the first run made no model call or reservation; its missing-image failure is retained separately.
+
+The function-region prompt had conflicting full-file/body-only wording. This was removed, and strict JSON encoding requirements made explicit. The original malformed response body was not retained, so this ambiguity is a suspected contributor, not a proven explanation of that response. Strict parsing and protected edit checks remain unchanged. All 19 focused follow-up tests and type checking pass. The third and final authorized demonstration run uses this corrected protocol, with the same fixture/checks and resource limits.

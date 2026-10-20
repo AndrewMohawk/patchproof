@@ -37,7 +37,7 @@ test('region transport expands only body, retains usage, and rejects whole-file 
    inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>100,
    fetch:async (_url, init) => {
     const request=JSON.parse(String(init?.body));
-    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert.equal(request.max_tokens,4000);
+    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000);
     assert(!request.messages[1].content.includes('218a86ec'));
     return Response.json({id:'test-request',model:'nvidia/test-only',usage:{prompt_tokens:100,completion_tokens:20},
      choices:[{finish_reason:'stop',message:{content:JSON.stringify({files:bad==='extra'?{[r.path]:'    return "example"\n','humanize_adapter.py':'bad'}:{[r.path]:bad?f.files[r.path]:'    return "example"\n'},summary:'Synthetic protocol test, not a repair.'})}}]});
