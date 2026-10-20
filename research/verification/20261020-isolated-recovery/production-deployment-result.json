@@ -1,0 +1,86 @@
+{
+  "observedAt": "2026-10-20T19:54:38.544423+00:00",
+  "releaseCommit": "ca783e2c8bca604d93e01381399459286f38693e",
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "tasks": {
+    "schemaVersion": "2.2",
+    "mode": "live",
+    "competitionReady": false,
+    "capabilities": {
+      "createRuns": true,
+      "cancelRuns": true,
+      "replay": false,
+      "streamEvents": true
+    },
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 786432,
+      "outputTokenLimit": 12000,
+      "wallTimeLimitSeconds": 600,
+      "sandboxCpuSecondsLimit": 900,
+      "maxApprovedSpendUsd": 0.25
+    },
+    "maxApprovedSpendUsd": 25,
+    "realExecutionEnabled": true,
+    "availability": {
+      "enabled": true,
+      "reason": null,
+      "remainingRuns": 85
+    },
+    "localRuntime": {
+      "available": true,
+      "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+      "reason": null
+    },
+    "execution": {
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "runtimeLockDigest": "sha256:9a2e4fde51bc25f276b250fce9a5875d8f80db7a7ab0bf018a72868910948efc"
+  },
+  "taskIds": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "startupReceipt": "/mnt/raid1-sata-16tb/homelab_data/patchproof/state/startup-692e8e62-a311-4104-972d-fe6778ba2340.json",
+  "startup": {
+    "checkedAt": "2026-10-20T19:54:25.237Z",
+    "sourceDigest": "sha256:41573d1b7bc9105a9b48c5d91fc4d24d66a5cb61ec039b8983c3df43f3d22221",
+    "providerCalls": 0,
+    "checks": [
+      {
+        "id": "runtime-readiness",
+        "requirementId": "R01",
+        "status": "pass",
+        "message": "Observed outcome matches the declared check.",
+        "actual": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "expected": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "durationMs": 1709,
+        "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"patchproof-ready\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-e86234c7-6a61-4bd0-aba9-de65440ea723\",\"createAcknowledged\":true,\"containerId\":\"fe581eb9e782a0cf1b574fbc67e671f118938356ae196a69a73ffe3267e55bfe\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+      }
+    ],
+    "isolation": "local_container",
+    "operationIds": [
+      "docker:patchproof-check-e86234c7-6a61-4bd0-aba9-de65440ea723"
+    ],
+    "cpuSeconds": null,
+    "measuredCostUsd": 0,
+    "infrastructureError": null
+  },
+  "idempotentCoverageVerified": true,
+  "paidCalls": 0
+}

@@ -1,0 +1,54 @@
+(node:2714011) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (123.506754ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (107.985389ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (7.296626ms)
+  ✔ name (3.768032ms)
+  ✔ image (3.290347ms)
+  ✔ ownedLabel (2.831311ms)
+  ✔ operationLabel (2.350101ms)
+  ✔ ownerLabel (2.351681ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (24.274219ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (103.805066ms)
+(node:2714178) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (1937.859912ms)
+ℹ {"ownerRunId":"95660cc7-9d4e-4df8-8d61-4422d79bfcf4","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1677,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-2dbc3603-49b8-4a81-8306-5b57204326d7\",\"createAcknowledged\":true,\"containerId\":\"82c15774440c61e93c268f37b70ed8804682431ee958face0358b8a4d2f08a30\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-2dbc3603-49b8-4a81-8306-5b57204326d7"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (2.381166ms)
+(node:2715643) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (45.794237ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (19.2214ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (40.541249ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (46.758463ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.239616ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (941.958696ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1502.870326ms)
+✔ transient inspection timeout is re-observed within the existing cleanup budget before success (3.951611ms)
+✔ persistent inspection errors remain uncertain at the unchanged overall cleanup deadline (40.827157ms)
+✔ invalid ownership inspection is terminal and never retried or removed (1.292038ms)
+(node:2718600) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ trusted launcher kills an execed harmless child when its parent dies and reaps test processes (119.884357ms)
+✔ trusted launcher refuses exec when the original parent has changed (22.637634ms)
+✔ host comparison rejects wrong returns and mutated arguments even with correct return (4.296578ms)
+✔ Docker invocation exposes inputs only and enforces declared local containment flags (113.328687ms)
+✔ invalid owner IDs and failed operation journaling cannot start containers (6.622946ms)
+✔ recovery validates exact run ownership and fails closed on mismatched or unavailable state (4.553344ms)
+✔ recovery preserves remaining handles when removal or verification fails (1.58309ms)
+✔ real restart recovery removes only the specified sleeping run and confirms absence (2454.002088ms)
+✔ unavailable Docker and pre-cancellation produce check errors with no execution (1.351699ms)
+✔ unconfirmed cleanup stops the batch before another container can overlap it (5006.019027ms)
+✔ real local pinned Python container independently observes return, exception and input mutation (5326.504253ms)
+✔ local cancellation removes its running container and records non-passing checks (1946.896753ms)
+✔ in-container wall limit kills sleeping candidate before the longer host process timeout (2442.894179ms)
+✔ Nebius fake transport maps verified methods and never includes oracle fields (40.074777ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28554.368886

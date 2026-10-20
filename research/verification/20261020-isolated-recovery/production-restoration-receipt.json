@@ -1,0 +1,62 @@
+{
+  "observedAt": "2026-10-20T19:55:11.112272+00:00",
+  "deployedCommit": "ca783e2c8bca604d93e01381399459286f38693e",
+  "reviewedScope": "isolated production-base recovery and receipt-order fix; no Humanize merge",
+  "serialTests": {
+    "testedCommit": "932a6653d5055517c55821f3c3e89139c33bf89e",
+    "pass": 780,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "stagedProtectedTests": {
+    "pass": 36,
+    "fail": 0,
+    "skipped": 0,
+    "command": "node --test --test-concurrency=1 tests/docker-strict-umask.test.ts tests/docker-lifecycle-independent.test.ts tests/runtime-docker-cleanup.test.ts tests/runtime-sandbox.test.ts"
+  },
+  "startupProtectedCheck": {
+    "passed": true,
+    "cleanupConfirmed": true,
+    "durationMs": 1709,
+    "providerCalls": 0
+  },
+  "ledger": {
+    "sequenceBefore": 100,
+    "sequenceAfter": 101,
+    "approvalRevision": 3,
+    "coverageEventsAppended": 1,
+    "heldBeforeMicros": "3600000",
+    "heldAfterMicros": "3600000",
+    "reservationRowsIdentical": true,
+    "rowDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19",
+    "actualUnknownCount": 21,
+    "historicalActualCostMicros": null,
+    "historicalSettlementComplete": false,
+    "historicalRedispatchGranted": false,
+    "approvedTotalUsd": 25,
+    "availableUsd": 21.4,
+    "boundedReservationSlots": 85,
+    "slotsAreNotGuaranteedSuccessfulRuns": true
+  },
+  "pricingVerifiedAt": "2026-10-20T19:54:43.701Z",
+  "pricingValidUntil": "2026-10-20T21:04:43.701Z",
+  "feeValidUntil": "2026-10-21T18:34:25.618Z",
+  "feeTimestampChangedDuringDeployment": false,
+  "pricingTimer": "new release timer enabled, active/waiting; immediate genuine verifier exit0, hourly thereafter; old runtime/timer disabled",
+  "generationAdmissionReady": true,
+  "healthHttpStatus": 200,
+  "tasksHttpStatus": 200,
+  "publicTaskIds": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "competitionReady": false,
+  "genericCompetitionAudit": "Still blocked; no research/competition receipts invented or bypassed",
+  "operatingLimitation": "Price renewal fails closed; full 600-second run must fit pricing, fee and approval windows. Account-fee review is still required before its expiry; hourly catalog renewal does not extend fee authority or guarantee availability through December15. No extra spending or hosting approved.",
+  "transportInterruption": "A startup exec connection failed before execution. Read-only checks confirmed new service/timer inactive and no deployment result, ledger sequence101; startup was then executed once. Coverage was not reapplied; idempotent verification returned created=false.",
+  "inferenceCallsMade": 0,
+  "emailsSent": 0,
+  "noCredentialCreation": true,
+  "noUnrelatedServiceChanges": true
+}

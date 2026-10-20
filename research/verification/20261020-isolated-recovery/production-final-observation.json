@@ -1,0 +1,117 @@
+{
+  "observedAt": "2026-10-20T19:55:11.112272+00:00",
+  "releaseCommit": "ca783e2c8bca604d93e01381399459286f38693e",
+  "runtime": {
+    "exit": 0,
+    "output": "MainPID=2771635\nResult=success\nExecMainStartTimestamp=Tue 2026-10-20 15:54:22 EDT\nWorkingDirectory=/mnt/raid1-sata-16tb/homelab_data/patchproof/releases/ca783e2c8bca604d93e01381399459286f38693e\nActiveState=active\nSubState=running",
+    "error": ""
+  },
+  "timer": {
+    "exit": 0,
+    "output": "NextElapseUSecRealtime=\nNextElapseUSecMonotonic=6d 6h 9min 14.827202s\nLastTriggerUSec=Tue 2026-10-20 15:54:38 EDT\nActiveState=active\nSubState=waiting",
+    "error": ""
+  },
+  "pricingService": {
+    "exit": 0,
+    "output": "Result=success\nExecMainStartTimestamp=Tue 2026-10-20 15:54:38 EDT\nExecMainStatus=0\nActiveState=inactive\nSubState=dead",
+    "error": ""
+  },
+  "oldRuntime": {
+    "exit": 1,
+    "output": "disabled",
+    "error": ""
+  },
+  "oldTimer": {
+    "exit": 1,
+    "output": "disabled",
+    "error": ""
+  },
+  "checkContainers": {
+    "exit": 0,
+    "output": "",
+    "error": ""
+  },
+  "ledger": {
+    "eventSequence": 101,
+    "recoveryEventCount": 1,
+    "rowDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19",
+    "heldMicros": 3600000,
+    "unknownActualCosts": 21
+  },
+  "pricing": {
+    "status": "verified",
+    "receipt": {
+      "schemaVersion": "1.0",
+      "policyDigest": "sha256:321d6cb5ac9ef9b275cb2e1ec05eab3ebb6e2d3a20cd7b45f9866458b41cdfc9",
+      "sourceDigest": "sha256:41573d1b7bc9105a9b48c5d91fc4d24d66a5cb61ec039b8983c3df43f3d22221",
+      "budgetDigest": "sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53",
+      "verifiedAt": "2026-10-20T19:54:43.701Z",
+      "validUntil": "2026-10-20T21:04:43.701Z",
+      "catalogDigest": "sha256:79af265adb360784790d5277924aea5c9b5a4eeca6fd340b91a2ab2a76d3c977",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b",
+      "contextTokens": 262144,
+      "quantization": "fp4",
+      "inputUsdPerMillionTokens": 0.3,
+      "outputUsdPerMillionTokens": 0.9,
+      "requestFeeUsd": 0,
+      "feeEvidence": {
+        "schemaVersion": "1.0",
+        "verifiedAt": "2026-10-20T18:34:25.618Z",
+        "validUntil": "2026-10-21T18:34:25.618Z",
+        "evidenceDigest": "sha256:0990b0ffb42ecc72fce21012dfeb989db1938acde0fbb03b996617503c2c68f3",
+        "accountBillingActive": true,
+        "additionalFeeUsdPerRun": 0,
+        "basis": "operator-reviewed-account-pricing-and-fees"
+      }
+    }
+  },
+  "/healthz": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "mode": "live",
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container"
+    }
+  },
+  "/tasks": {
+    "status": 200,
+    "body": {
+      "schemaVersion": "2.2",
+      "mode": "live",
+      "competitionReady": false,
+      "capabilities": {
+        "createRuns": true,
+        "cancelRuns": true,
+        "replay": false,
+        "streamEvents": true
+      },
+      "limits": {
+        "inferenceCallLimit": 3,
+        "inputTokenLimit": 786432,
+        "outputTokenLimit": 12000,
+        "wallTimeLimitSeconds": 600,
+        "sandboxCpuSecondsLimit": 900,
+        "maxApprovedSpendUsd": 0.25
+      },
+      "maxApprovedSpendUsd": 25,
+      "realExecutionEnabled": true,
+      "availability": {
+        "enabled": true,
+        "reason": null,
+        "remainingRuns": 85
+      },
+      "localRuntime": {
+        "available": true,
+        "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+        "reason": null
+      },
+      "execution": {
+        "modelProvider": "nebius-token-factory",
+        "checkBackend": "local_container",
+        "modelId": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "runtimeLockDigest": "sha256:9a2e4fde51bc25f276b250fce9a5875d8f80db7a7ab0bf018a72868910948efc"
+    }
+  }
+}

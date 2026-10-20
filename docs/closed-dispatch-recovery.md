@@ -1,10 +1,13 @@
 # Historical closed-dispatch exposure recovery
 
-Status checked 2026-10-20T18:53:50.839599+00:00. Independent static review approved the complete
-production-base code delta from `b2eb1732` to `ab701dfc`. Production deployment
-and historical ledger coverage remain pending acceptance of validation results.
-No charge was settled, hold released, or historical request retried. The isolated
-candidate includes the preventive receipt-order fix. No inference calls were made.
+Status checked October 20, 2026 at 19:55 UTC. Independent review and the complete
+780-test serial suite passed. Isolated release `ca783e2c8bca604d93e01381399459286f38693e`
+is deployed. The exact historical coverage event was appended once: sequence
+100 to 101, with every reservation row unchanged and all $3.60 held. Historical
+actual cost remains null, settlement incomplete, and redispatch denied. Public
+generation admission is ready for two curated tasks. No inference call was made
+for this restoration. See the [production restoration receipt](../research/verification/20261020-isolated-recovery/production-restoration-receipt.json).
+The dated validation sections below retain the preceding failures and decisions.
 
 The exact approved image was restored on October 20 before the 18:34 UTC pricing
 review. Its identity and protected execution passed. Account-fee evidence was
