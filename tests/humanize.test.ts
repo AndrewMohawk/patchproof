@@ -37,7 +37,7 @@ test('region transport expands only body, retains usage, and rejects whole-file 
    inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,disableThinking:true,enableThinkingForEditRegions:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>100,
    fetch:async (_url, init) => {
     const request=JSON.parse(String(init?.body));
-    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000); assert.equal(request.max_completion_tokens,4000); assert.equal(request.chat_template_kwargs.enable_thinking,true);
+    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000); assert.equal(request.max_completion_tokens,4000); assert.deepEqual(request.chat_template_kwargs,{enable_thinking:true,low_effort:true,force_nonempty_content:true});
     assert(!request.messages[1].content.includes('218a86ec'));
     const payload = JSON.parse(request.messages[1].content);
     assert.deepEqual(Object.keys(payload.files), [r.path]);

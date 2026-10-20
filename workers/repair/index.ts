@@ -154,7 +154,7 @@ export class NebiusRepairProvider implements RepairProvider {
           },
         } },
       } : { type: 'json_object' }, stream: false, store: false, n: 1,
-      ...(o.enableThinkingForEditRegions && input.editRegion ? { chat_template_kwargs: { enable_thinking: true } } :
+      ...(o.enableThinkingForEditRegions && input.editRegion ? { chat_template_kwargs: { enable_thinking: true, low_effort: true, force_nonempty_content: true } } :
         o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
     try { o.onOperation?.({ kind: 'request_intent', id: intentId }); }
     catch (error) {
