@@ -1,0 +1,30 @@
+(node:1750013) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3650.746703ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3985.827994
+
+✖ failing tests:
+
+test at tests/live-experiment.test.ts:240:1
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3650.746703ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(performance.now() - started < 2500)
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/live-experiment.test.ts:245:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

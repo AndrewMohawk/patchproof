@@ -1,0 +1,126 @@
+(node:1689592) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ export command preserves a wholly pending synthetic grid without invoking execution (787.348082ms)
+✔ actual verification CLI uses the pinned manifest without opening the old database (1065.381651ms)
+✔ operator config binding and current-checkout failures leave no partial export (456.890554ms)
+✔ operator refuses overwrite and unapproved live readiness on synthetic captures (906.823728ms)
+✖ current-source binding uses the source-map digest, and rejects a whole-lock digest (410.164265ms)
+(node:1690433) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ private live preflight binds real factory without reading credentials, dispatching or reserving (767.690738ms)
+✔ missing or changed project ledger/budget/source fails before provider use; status survives missing access (1773.317411ms)
+✔ evaluate command cannot dispatch a pilot plan (487.798961ms)
+✔ runtime config cannot alias a ledger sidecar before opening SQLite (538.85535ms)
+✔ real factory setup failure preserves one attempted hold and permits cancellation after budget changes (5011.403694ms)
+✔ one composed fake-provider episode requires distinct reviewed runtime and adjudication receipts (18012.111179ms)
+(node:1697863) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ guarded live factory uses real mappings against fake transports and preserves the dispatcher-only grant (2901.838912ms)
+✔ 24-call live path uses 48 actual fake-transport batches and no original checks or extra grant (34675.798011ms)
+✔ missing/unaccepted or changed account, tokenizer and source proof rejects before credentials (4010.943631ms)
+✔ unattempted, mismatched and prior-process-style old grants cannot start any provider work (1872.685963ms)
+✔ prospective model, all-case CPU, wall and adjudication envelopes deny before credentials (4415.353632ms)
+✔ unknown USD and incomplete retention/inventory/CPU never become complete billing or finalized selection (16417.845119ms)
+✔ approval/source change and abort during credential wait prevent later fetch and preserve intent/accounting limits (2232.097036ms)
+✔ malformed model response keeps request/response identity and known tokens without exposing provider body (1963.56646ms)
+✔ cancellation after instance creation still permits scoped DELETE cleanup after source and ledger new-work gates close (1788.403362ms)
+✔ caller property mutation cannot swap captured ledger, source, tokenizer, transport or accounting authority (3855.62157ms)
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3676.070831ms)
+✔ source or reservation changes while accounting resolves cannot escape as finalized selection (4748.298681ms)
+✔ settled drains bounded checker cleanup after the caller abort race has already returned (1876.570622ms)
+✔ adjudication reserve must fit accounting, cleanup and one usable check second before any grant (492.12485ms)
+(node:1721118) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (9.807091ms)
+(node:1721309) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unsupported public scripted task exports durable needs_review with zero provider activity and no selected patch (26353.987437ms)
+(node:1731043) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent replay: exposed envelope cannot mutate fingerprint-bound caps (526.67371ms)
+✔ independent replay: trusted cap reduction during credential read stops POST and keeps hold (882.617958ms)
+✔ independent replay: cancellation after durable intent retains handles and an unknown hold (752.331485ms)
+✔ independent replay: measured CPU overrun is retained and prevents the second batch (893.710612ms)
+✔ independent replay: source revocation after first raw batch blocks additional paid work (584.58005ms)
+✔ independent replay: attempted identity remains blocked across ledger reopen (683.05426ms)
+✔ independent replay: wall deadline aborts transport and retains the unresolved upload intent (1721.016492ms)
+(node:1732710) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ trusted synthetic transport lifecycle shares one durable envelope and retains actual-vs-estimate distinction (3887.061024ms)
+✔ full three-proposal failure accounts for original and every candidate repetition without extra retry (4542.623287ms)
+✔ synthetic baseline and checks-only callers retain identical aggregate smoke envelopes (13652.078286ms)
+✔ account/tokenizer/context/source/CPU/cost denials happen before credentials, provider calls or reservations (827.825168ms)
+✔ default coordinator rejects live requests and forged capabilities without calling providers (861.209229ms)
+✔ source change after preparation denies start before the dispatch grant (1218.886142ms)
+✔ failed model JSON keeps usage and response ID and stops without a repair retry (2048.534909ms)
+✔ cancelled model dispatch retains attempted usage and unknown billing across ledger restart (1994.224827ms)
+✔ credential cancellation cannot later dispatch when the supplier eventually resolves (2791.105008ms)
+✔ known sandbox cleanup survives a stale new-work source guard after cancellation (1567.644049ms)
+✔ source changes while model credentials resolve retain the exact safe blocker and prevent inference (2107.546141ms)
+✔ source change between repeated batches preserves first-round observations and operation handles (1763.06928ms)
+✔ source change during sandbox credential wait keeps the gate code and prevents new upload (1403.589745ms)
+✔ durable approval changes mid-episode preserve the exact blocker without another dispatch (2338.933285ms)
+✔ caller property mutation cannot replace frozen ledger, source verifier or injected runtime dependencies (4103.0362ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 46
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 194906.170325
+
+✖ failing tests:
+
+test at tests/experiment-export-cli.test.ts:91:1
+✖ current-source binding uses the source-map digest, and rejects a whole-lock digest (410.164265ms)
+  Error: ENOENT: no such file or directory, open '/tmp/patchproof-export-cli-xdquQT/project/research/product-v3/model-discovery.json'
+      at Object.openSync (node:fs:555:18)
+      at readFileSync (node:fs:439:35)
+      at file:///home/andrewmohawk/patchproof-recovery-release-20261020/packages/orchestrator/src/operational-lock.ts:40:77
+      at Array.map (<anonymous>)
+      at buildOperationalLock (file:///home/andrewmohawk/patchproof-recovery-release-20261020/packages/orchestrator/src/operational-lock.ts:40:46)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/experiment-export-cli.test.ts:97:16)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/patchproof-export-cli-xdquQT/project/research/product-v3/model-discovery.json'
+  }
+
+test at tests/live-experiment.test.ts:240:1
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3676.070831ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(performance.now() - started < 2500)
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/live-experiment.test.ts:245:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/operational-lock.test.ts:9:1
+✖ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (9.807091ms)
+  Error: ENOENT: no such file or directory, open '/tmp/patchproof-lock-test-71NLvD/research/product-v3/model-discovery.json'
+      at Object.openSync (node:fs:555:18)
+      at readFileSync (node:fs:439:35)
+      at file:///home/andrewmohawk/patchproof-recovery-release-20261020/packages/orchestrator/src/operational-lock.ts:40:77
+      at Array.map (<anonymous>)
+      at buildOperationalLock (file:///home/andrewmohawk/patchproof-recovery-release-20261020/packages/orchestrator/src/operational-lock.ts:40:46)
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/operational-lock.test.ts:14:16)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/patchproof-lock-test-71NLvD/research/product-v3/model-discovery.json'
+  }

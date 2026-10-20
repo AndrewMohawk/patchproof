@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-20T18:44:31.331853+00:00",
+  "candidateCommit": "ab701dfcdd1a71b4d432ed083eec9f6a3e2fcece",
+  "deployedCommit": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "operationalLockDigest": "sha256:41573d1b7bc9105a9b48c5d91fc4d24d66a5cb61ec039b8983c3df43f3d22221",
+  "sourceMapDigest": "sha256:308d03adc1ec02d76fc14e2b44e3c2f4e5e060dc700c6853c705dd0199e4065f",
+  "sameGateAssessmentAsDeployed": true,
+  "samePrerequisiteChecksAsDeployed": true,
+  "genuineInputs": [
+    "research/verification/20260927-completion-audit/release-input.json",
+    "research/verification/20260927-runtime-completion/release-input.json"
+  ],
+  "bothExit": 2,
+  "missingGateReceipts": [
+    "live_smoke",
+    "pilot",
+    "sealed_evaluation",
+    "reviewer_study",
+    "presentation_runs",
+    "independent_replay",
+    "hosted_judge_access",
+    "current_rules",
+    "license_review"
+  ],
+  "expiredGate": "release_secrets",
+  "expiredReceiptWindows": [
+    "2026-09-28T09:18:04.796Z",
+    "2026-09-28T15:55:35.083Z"
+  ],
+  "missingReferencedBundlePaths": 7,
+  "acceptedLiveProtocolFound": false,
+  "searchCoverage": {
+    "isolatedResearchJson": 490,
+    "pr9ResearchJson": 520,
+    "productionStateJson": 187
+  },
+  "interpretation": "Generic research/competition release audit remains blocked identically on deployed baseline. Current account/catalog evidence and protected local checks are separate evidence formats and must not be promoted into missing gate receipts. This audit does not independently establish acceptance for narrowly scoped operational recovery.",
+  "productionChanged": false,
+  "paidCalls": 0
+}

@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-10-20T18:53:50.839599+00:00",
+  "testedCommit": "ab701dfcdd1a71b4d432ed083eec9f6a3e2fcece",
+  "deployedBaseline": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "operationalLockDigest": "sha256:41573d1b7bc9105a9b48c5d91fc4d24d66a5cb61ec039b8983c3df43f3d22221",
+  "sourceMapDigest": "sha256:308d03adc1ec02d76fc14e2b44e3c2f4e5e060dc700c6853c705dd0199e4065f",
+  "fullSuite": {
+    "command": "node --test tests/*.test.ts",
+    "exit": 1,
+    "tests": 780,
+    "passed": 769,
+    "failed": 10,
+    "cancelled": 1,
+    "skipped": 0,
+    "durationMs": 574544.388791
+  },
+  "affectedSequential": {
+    "command": "node --test --test-concurrency=1 (seven affected test files)",
+    "exit": 1,
+    "tests": 49,
+    "passed": 46,
+    "failed": 3,
+    "cancelled": 0,
+    "durationMs": 194906.170325
+  },
+  "persistentFailures": [
+    "experiment-export-cli.test.ts:91 missing synthetic research/product-v3/model-discovery.json",
+    "operational-lock.test.ts:9 missing synthetic research/product-v3/model-discovery.json",
+    "live-experiment.test.ts:240 observer elapsed <2500ms assertion"
+  ],
+  "allPersistentFailuresReproducedOnDeployedBaseline": true,
+  "observerTestDurationMs": {
+    "baseline": 3656.790919,
+    "candidate": 3650.746703
+  },
+  "malformedCompletionEndToEndPassed": true,
+  "sharedSmokeAndLiveExperimentIncluded": true,
+  "genuineReleaseAudit": {
+    "exit": 2,
+    "sameChecksAndGatesAsDeployed": true,
+    "report": "genuine-release-audit-comparison.json"
+  },
+  "productionDeployment": false,
+  "productionRecovery": false,
+  "paidCalls": 0,
+  "changesDuringValidation": "No executable code or tests changed; only documentation and captured result artifacts added after tests.",
+  "rawLogNote": "Raw Node assertion output retains its whitespace-only lines; git diff --check flags those log lines. Documentation and JSON pass the whitespace check. Logs are intentionally unedited.",
+  "rawLogSha256": {
+    "full-suite.log": "1f4442460ddaebbbe9154dd3bc56006e2be6212340dc6d96e4b4b55ce4a96783",
+    "affected-sequential.log": "e2f6e77679b7ed66eead92efe372d99d60f044dd2d54c9bfc244d916136b7fbb"
+  }
+}

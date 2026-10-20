@@ -1,10 +1,16 @@
 # Historical closed-dispatch exposure recovery
 
-This is an offline implementation awaiting independent review. It has not been
-applied to production. It does not settle a charge, release money, retry the
-historical run, refresh a pricing/fee attestation, or authorize deployment or
-inference. The separate preventive receipt-order fix remains necessary for new
-requests.
+Status checked 2026-10-20T18:53:50.839599+00:00. Independent static review approved the complete
+production-base code delta from `b2eb1732` to `ab701dfc`. Production deployment
+and historical ledger coverage remain pending acceptance of validation results.
+No charge was settled, hold released, or historical request retried. The isolated
+candidate includes the preventive receipt-order fix. No inference calls were made.
+
+The exact approved image was restored on October 20 before the 18:34 UTC pricing
+review. Its identity and protected execution passed. Account-fee evidence was
+genuinely reviewed and refreshed separately at 18:34:25 UTC; authenticated catalog
+verification completed at 18:34:27 UTC. These operational observations do not
+supply the missing competition release receipts.
 
 ## Why the historical request blocks admission
 
@@ -102,7 +108,7 @@ regression sends a synthetic malformed completion through the real adapter and
 coordinator, confirms durable receipt-based coverage, and checks that repeating
 the request does not dispatch again. No test makes a paid inference request.
 
-## Validation limits and reopening blockers
+## Historical pre-restoration validation (October 20, before 18:25 UTC)
 
 The real-history offline simulation used a private SQLite backup and an expired,
 fixed test clock. All 24 reservation rows remained unchanged;
@@ -111,10 +117,10 @@ in the copy, survived reopening, and remained idempotent. Historical redispatch
 was rejected. The production ledger was read only for the backup and was not
 opened by `BudgetLedger` or changed by the simulation.
 
-Independent of recovery, the full-suite Docker integration cannot find the pinned
+At that earlier observation, the full-suite Docker integration could not find the pinned
 image `sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51`.
-Read-only Docker inspection confirms the image is absent and the production
-release pins that same image. No image was downloaded or substituted. HTTP health
+Read-only Docker inspection then confirmed the image was absent and the production
+release pins that same image. No image had then been downloaded or substituted. HTTP health
 alone does not establish usable execution; restore the exact image and pass a
 fresh protected container check before reopening.
 
@@ -127,3 +133,21 @@ the public scripted abstention control. These tests, fixtures and image pins rem
 unchanged. The full result is 766 passed / 18 failed / 0 skipped; the focused recovery,
 receipt, config and runtime suite is 84 passed / 0 failed. See the committed
 [offline validation receipt](../research/verification/20261020-closed-dispatch/offline-validation.json).
+
+## Isolated candidate verification after restoration
+
+The full suite on `ab701dfc` completed with 769 passed, 10 failed, one cancelled
+(timeout), and zero skipped, out of 780 tests. The malformed-completion end-to-end
+regression passed. A sequential rerun of affected files, with unchanged deadlines,
+passed 46 of 49 tests. The three persistent failures reproduce on deployed
+`b2eb1732`: two synthetic projects omit model-discovery metadata, and an accounting
+observer deadline test exceeds its 2.5-second assertion (about 3.65 seconds on
+both revisions). No timeout or assertion was weakened. Concurrent-run failures
+that passed sequentially remain recorded; the full suite is not a clean pass.
+
+The genuine historical release-input manifests were audited on both revisions.
+Both return the same blocked gates: expired September scan receipts, nine missing
+release receipts, and inherited configuration/research prerequisites. No accepted
+live protocol was found in the searched project evidence. These are not current
+judge-access or competition-ready attestations. See the [full-suite and audit
+receipt](../research/verification/20261020-isolated-recovery/full-suite-audit.json).

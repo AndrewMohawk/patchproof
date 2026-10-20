@@ -1,0 +1,56 @@
+(node:1692938) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ export command preserves a wholly pending synthetic grid without invoking execution (1803.021983ms)
+✔ actual verification CLI uses the pinned manifest without opening the old database (2129.980873ms)
+✔ operator config binding and current-checkout failures leave no partial export (828.400889ms)
+✔ operator refuses overwrite and unapproved live readiness on synthetic captures (1790.354173ms)
+✖ current-source binding uses the source-map digest, and rejects a whole-lock digest (831.512638ms)
+(node:1695255) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (13.967963ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7971.677212
+
+✖ failing tests:
+
+test at tests/experiment-export-cli.test.ts:91:1
+✖ current-source binding uses the source-map digest, and rejects a whole-lock digest (831.512638ms)
+  Error: ENOENT: no such file or directory, open '/tmp/patchproof-export-cli-zQp23q/project/research/product-v3/model-discovery.json'
+      at Object.openSync (node:fs:555:18)
+      at readFileSync (node:fs:439:35)
+      at file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/packages/orchestrator/src/operational-lock.ts:40:77
+      at Array.map (<anonymous>)
+      at buildOperationalLock (file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/packages/orchestrator/src/operational-lock.ts:40:46)
+      at TestContext.<anonymous> (file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/tests/experiment-export-cli.test.ts:97:16)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/patchproof-export-cli-zQp23q/project/research/product-v3/model-discovery.json'
+  }
+
+test at tests/operational-lock.test.ts:9:1
+✖ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (13.967963ms)
+  Error: ENOENT: no such file or directory, open '/tmp/patchproof-lock-test-FEVuhm/research/product-v3/model-discovery.json'
+      at Object.openSync (node:fs:555:18)
+      at readFileSync (node:fs:439:35)
+      at file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/packages/orchestrator/src/operational-lock.ts:40:77
+      at Array.map (<anonymous>)
+      at buildOperationalLock (file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/packages/orchestrator/src/operational-lock.ts:40:46)
+      at TestContext.<anonymous> (file:///tmp/patchproof-isolated-recovery-20261020/deployed-baseline-tests/tests/operational-lock.test.ts:14:16)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/patchproof-lock-test-FEVuhm/research/product-v3/model-discovery.json'
+  }

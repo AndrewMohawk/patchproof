@@ -1,0 +1,238 @@
+{
+  "command": "release-check",
+  "status": "blocked",
+  "mode": "mock",
+  "competitionReady": false,
+  "paidCalls": 0,
+  "experimentEpisodesExecuted": 0,
+  "checks": [
+    {
+      "id": "research/contracts-v1-lock.json",
+      "status": "pass",
+      "detail": "Current contract 1.0: checked all recorded source digests."
+    },
+    {
+      "id": "research/contracts-v2.2-lock.json",
+      "status": "pass",
+      "detail": "Current contract 2.2: checked all recorded source digests."
+    },
+    {
+      "id": "research/contracts-history/2.1/contracts-v2-lock.json",
+      "status": "pass",
+      "detail": "Historical contract 2.1: checked original lock bytes and both exact source snapshots; current 2.2 separately binds explicit legacy readers."
+    },
+    {
+      "id": "public_fixtures",
+      "status": "blocked",
+      "detail": "40 schema-valid public fixtures; sealed workspace not inspected."
+    },
+    {
+      "id": "dependency_pins",
+      "status": "pass",
+      "detail": "Direct npm versions are exact; license notices still require final release review."
+    },
+    {
+      "id": "application_license",
+      "status": "blocked",
+      "detail": "Owner-selected application license must agree with package metadata."
+    },
+    {
+      "id": "owner_release",
+      "status": "blocked",
+      "detail": "Public source, demo and entry are separately controlled by the owner."
+    },
+    {
+      "id": "hosting_assignment",
+      "status": "blocked",
+      "detail": "Operator Andrew Mohawk; hosting allocation $0."
+    },
+    {
+      "id": "release_binding",
+      "status": "pass",
+      "detail": "Compared release bindings against current source, runtime and operational behavior."
+    },
+    {
+      "id": "live_smoke",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "pilot",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "sealed_evaluation",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "reviewer_study",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "presentation_runs",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "independent_replay",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "hosted_judge_access",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "release_secrets",
+      "status": "blocked",
+      "detail": "stale: Receipt is expired, future-dated or has an invalid observation window."
+    },
+    {
+      "id": "current_rules",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "license_review",
+      "status": "not_run",
+      "detail": "missing: No receipt supplied."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "NVIDIA model/account availability not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Selected model license/card not pinned."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Model billing rates unknown."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox endpoint/entitlement not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox SDK/image/architecture not pinned."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox network controls not verified."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Sandbox billing rate/unit unknown."
+    },
+    {
+      "id": "configuration",
+      "status": "blocked",
+      "detail": "Episode token/CPU limits not calibrated."
+    }
+  ],
+  "blockers": [
+    "NVIDIA model/account availability not verified.",
+    "Selected model license/card not pinned.",
+    "Model billing rates unknown.",
+    "Sandbox endpoint/entitlement not verified.",
+    "Sandbox SDK/image/architecture not pinned.",
+    "Sandbox network controls not verified.",
+    "Sandbox billing rate/unit unknown.",
+    "Episode token/CPU limits not calibrated."
+  ],
+  "receiptAssessment": {
+    "status": "blocked",
+    "bindings": {
+      "sourceDigest": "sha256:694044516419722b2d857cf387260cd669c81d8db93b3deb250831b1691500cb",
+      "runtimeDigest": "sha256:3cd8ee786eadf4a8adec070f1d8cf2b49267fb1d27ed41913006a98187fcbdb5",
+      "protocolDigest": "sha256:b0466c074ae76239ff642286976f3f83e5ec91969fda631f74cf22850a0aa91e",
+      "bundleDigests": [
+        "sha256:0aa90e0c77826aea2720f84e964f76bc3c5522aca0ba1b94fd511faac2558364",
+        "sha256:13611e9e625d7d7d97f127e838195d720df21cca97c7ccaa90dfda6ba40af1c5",
+        "sha256:4b3c15b9b657bbc958660da40150cc12f504a36bad49fdeb1e5cbf44f124f422",
+        "sha256:6565c9ee7c592d5e34f4e6d4b52ac21efaf7a59f859212d69e7d73028eb5d253"
+      ],
+      "runtimeMode": "mock",
+      "liveProtocolFrozen": false
+    },
+    "gates": [
+      {
+        "id": "live_smoke",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "pilot",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "sealed_evaluation",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "reviewer_study",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "presentation_runs",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "independent_replay",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "hosted_judge_access",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "release_secrets",
+        "status": "stale",
+        "receiptDigest": "sha256:873136925b03fc7006baf7dea16d70514ad4f8c62a47f2365f718f7ba105048a",
+        "detail": "Receipt is expired, future-dated or has an invalid observation window."
+      },
+      {
+        "id": "current_rules",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      },
+      {
+        "id": "license_review",
+        "status": "missing",
+        "receiptDigest": null,
+        "detail": "No receipt supplied."
+      }
+    ],
+    "malformedCount": 0,
+    "authenticityVerified": false,
+    "publicationAuthorized": false,
+    "notice": "Digests establish content consistency, not the truth, independence or authorship of observations. Publication and entry are separate owner actions."
+  },
+  "note": "Local content/receipt audit only. Accepted records do not authenticate claims. Publication, hosting and entry remain separate owner actions."
+}
