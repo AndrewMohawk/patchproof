@@ -1,0 +1,30 @@
+(node:2275049) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ one composed fake-provider episode requires distinct reviewed runtime and adjudication receipts (7377.010572ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7756.112337
+
+✖ failing tests:
+
+test at tests/composed-delay-diagnostic.test.ts:128:1
+✖ one composed fake-provider episode requires distinct reviewed runtime and adjudication receipts (7377.010572ms)
+  AssertionError [ERR_ASSERTION]: {"episode":{"episodeId":"pilot:smoke-operator-unit:baseline:0","dispatchId":"8818887c-37e2-4738-8c00-000a80ac70c4","phase":"terminal","reason":"execution_or_setup_failed","cancelRequested":false,"operationIds":["nebius:model-intent:b63c099b-2328-4304-acbd-43f8347dd189","unit-model-response","nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a","nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763"],"observedUsage":{"inferenceCalls":1,"inputTokens":10,"outputTokens":20,"runtimeFeedbackRounds":0,"elapsedMs":4260,"sandboxCpuSeconds":null,"measuredCostUsd":null},"result":{"episodeId":"pilot:smoke-operator-unit:baseline:0","planDigest":"sha256:f53f8287dd4df1a862072b1d839b647b5bf49e821aa5bd57a1f89d305cc115a6","modelLockDigest":"sha256:92ec1b3d3f41abdd00f268fecaab30931cd1b3c798dce260b6fdd2d3d7798435","executionMode":"live","policyDigest":"sha256:be6faaabc6e20af3c482ba2c7141177117133e9afc46272f9f48f4491571fe44","variant":"baseline","outcome":"infrastructure_error","runtimeApproved":false,"sealedChecksExecuted":false,"includesSetupAndRetries":true,"finalOracleFeedbackRounds":0,"infrastructureExclusion":null,"usage":{"inferenceCalls":1,"inputTokens":10,"outputTokens":20,"runtimeFeedbackRounds":0,"elapsedMs":4861,"sandboxCpuSeconds":null,"measuredCostUsd":null},"artifactsDigest":"sha256:7e667f644266215f678781c948492c8ef6efe1c480f668b22c7af0571f95378c"}},"counts":{"model":1,"sandbox":1},"accepted":0,"phaseRequestCount":0,"requests":[],"ledger":{"currency":"USD","unit":"microdollar","approvalRevision":1,"approvalDigest":"sha256:59b3a50a225a18240647b5d6f8b786f24227ddbf1e3e7fb29452597e1419f72f","connectionApprovalCurrent":true,"approvalExpiresAt":"2026-10-20T21:23:58.992Z","frozen":true,"freezeReasons":["billing_pending"],"approvedMicros":"25000000","chargedMicros":"0","heldMicros":"200000","committedMicros":"200000","availableMicros":"24800000","pendingBillingCount":1,"reservationCount":1,"verifiedCreditsAppliedMicros":"0","pendingBillingPolicy":"block-all","coveredPendingBillingCount":0,"blockingPendingBillingCount":1,"stages":{"smoke":{"approvedMicros":"5000000","chargedMicros":"0","heldMicros":"0","committedMicros":"0","availableMicros":"5000000"},"pilot":{"approvedMicros":"20000000","chargedMicros":"0","heldMicros":"200000","committedMicros":"200000","availableMicros":"19800000"},"evaluate":{"approvedMicros":"0","chargedMicros":"0","heldMicros":"0","committedMicros":"0","availableMicros":"0"},"hosting":{"approvedMicros":"0","chargedMicros":"0","heldMicros":"0","committedMicros":"0","availableMicros":"0"}}},"traces":[{"path":"runtime/objects/4ee1e6c7441345d500d893f9fee1bf32f397dda54869092b806e85cbba454c93.json","result":{"benchmarkExecuted":false,"outcome":"unverified","reason":"execution_or_setup_failed","synthetic":false},"observations":[{"kind":"raw-check-observation","result":{"checks":[{"actual":null,"durationMs":0,"expected":1,"id":"visible","log":"{\"error\":\"sandbox_batch_timeout\",\"operations\":[],\"handles\":[\"nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a\",\"nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763\"]}","message":"sandbox_batch_timeout","requirementId":"R01","status":"error"}],"cpuSeconds":null,"infrastructureError":"sandbox_batch_timeout","isolation":"unavailable","measuredCostUsd":null,"operationIds":["nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a","nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763"]},"round":1,"usage":{"elapsedMs":3917,"inferenceCalls":1,"inputTokens":10,"measuredCostUsd":null,"outputTokens":20,"runtimeFeedbackRounds":0,"sandboxCpuSeconds":null}},{"candidateId":1,"kind":"checks","result":{"checks":[{"actual":null,"durationMs":0,"expected":1,"id":"visible","log":"{\"protocol\":\"repeat-observations-v1\",\"stability\":\"unverified\",\"observations\":[{\"id\":\"visible\",\"requirementId\":\"R01\",\"status\":\"error\",\"message\":\"sandbox_batch_timeout\",\"actual\":null,\"expected\":1,\"durationMs\":0,\"log\":\"{\\\"error\\\":\\\"sandbox_batch_timeout\\\",\\\"operations\\\":[],\\\"handles\\\":[\\\"nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a\\\",\\\"nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763\\\"]}\"}]}","message":"verification_unavailable: sandbox_batch_timeout.","requirementId":"R01","status":"error"}],"cpuSeconds":null,"infrastructureError":"sandbox_batch_timeout","isolation":"unavailable","measuredCostUsd":null,"operationIds":["nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a","nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763"]},"usage":{"elapsedMs":4068,"inferenceCalls":1,"inputTokens":10,"measuredCostUsd":null,"outputTokens":20,"runtimeFeedbackRounds":0,"sandboxCpuSeconds":null}},{"kind":"failure","operations":["nebius:model-intent:b63c099b-2328-4304-acbd-43f8347dd189","unit-model-response","nebius:upload-intent:1124624e-6bd3-4e3b-9e04-6e3d8bf53f9a","nebius:file:4f7573ef-db54-409e-8849-e8011e1a4763"],"reason":"execution_or_setup_failed","usage":{"elapsedMs":4334,"inferenceCalls":1,"inputTokens":10,"measuredCostUsd":null,"outputTokens":20,"runtimeFeedbackRounds":0,"sandboxCpuSeconds":null}}]}]}
+  
+  0 !== 2
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/composed-delay-diagnostic.test.ts:169:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,57 @@
+{
+  "observedAt": "2026-10-20T19:25:45.348161+00:00",
+  "diagnosticCommit": "3c510ffa068ffa0245f29b1561f78eaf267bc3b8",
+  "baseCommit": "c5132caabb0f7ac6a9676ff103b2251ec06d1a43",
+  "command": "node --test --test-concurrency=2 --test-name-pattern=\"one composed|24-call live path\" tests/live-experiment-operator.test.ts tests/live-experiment.test.ts",
+  "result": {
+    "exit": 1,
+    "tests": 2,
+    "pass": 1,
+    "fail": 1,
+    "skipped": 0,
+    "durationMs": 39189.79553
+  },
+  "observedCause": "First repeated check passed; second uploaded source then returned sandbox_batch_timeout before instance creation. Shared three-second check allowance and integral-second guest limit rejected remaining time. Runtime loop failed before finalizeAccounting; phase request count and accepted receipt count both zero.",
+  "evidence": {
+    "fakeModelCalls": 1,
+    "fakeSandboxRequests": 4,
+    "firstCheckDurationMs": 786,
+    "secondCheckDurationMs": 0,
+    "phaseRequests": 0,
+    "acceptedReceipts": 0,
+    "terminalReason": "execution_or_setup_failed",
+    "heldMicros": "200000",
+    "pendingBillingCount": 1,
+    "freezeReason": "billing_pending"
+  },
+  "sourceExplanation": [
+    "RepeatedCheckRunner includes both rounds, durable observation tracing and checkpointing in shared wall time.",
+    "NebiusSandboxCheckRunner requires at least one whole second after source upload before spawning each guest.",
+    "Experiment executor calls finalizeAccounting only after runRevisionLoop succeeds; exception path records failure and retains hold.",
+    "Operator exitCode zero reports completed command, including a recorded failed episode."
+  ],
+  "limitsOfInference": "Original full run discarded trace state, so its exact internal event cannot be recovered. Natural concurrency-two reproduction has the same failed assertion and now demonstrates pre-accounting timeout. No receipt rejection or observer starvation was observed in this reproduction. Filesystem scheduling/fsync contention is consistent with timing and synchronous durable code, but per-syscall latency was not measured.",
+  "controlledFault": {
+    "change": "Temporary test copy delayed fake source uploads by 2100ms; removed afterward",
+    "exit": 1,
+    "reason": "sandbox_batch_timeout before first instance",
+    "purpose": "Validate pre-accounting failure diagnostics; not presented as natural runtime evidence"
+  },
+  "earlierComparison": {
+    "command": "node --test --test-concurrency=2 tests/composed-diagnostic.test.ts tests/live-experiment.test.ts",
+    "tests": 20,
+    "pass": 20,
+    "durationMs": 101887.01415,
+    "note": "Earlier temporary diagnostics, same guards; pass does not supersede subsequent observed failure"
+  },
+  "minimalProposal": "Retain diagnostics. Run existing wall-clock-sensitive composed/live tests serially (full suite concurrency=1 is simplest) and preserve every deadline, assertion, repeated check and durable write. Validate serial run; do not deploy based on isolated pass. Do not move persistence tests to volatile storage or remove fsync.",
+  "typecheckExit": 0,
+  "productionCodeChanged": false,
+  "productionAccountingChanged": false,
+  "deployed": false,
+  "paidCalls": 0,
+  "rawLogSha256": {
+    "composed-retained-pair.log": "113a3719c0d8ae01cc3593c105ccdc7cefe7e512eb17ec09f6e2c8d0baadfd87",
+    "composed-retained-delay.log": "9b1693be3623d3ce112be84582aa8733997def8fc29a8262cb567be5266c2db4"
+  }
+}
