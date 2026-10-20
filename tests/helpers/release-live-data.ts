@@ -16,8 +16,9 @@ export async function syntheticReleaseData(existingRoot?: string) {
   const root = existingRoot ?? await mkdtemp(join(tmpdir(), 'patchproof-release-live-'));
   const now = new Date(), verifiedAt = new Date(now.getTime() - 1000).toISOString(), validUntil = new Date(now.getTime() + 60_000).toISOString();
   const json = (path: string, value: unknown) => writeFile(join(root, path), JSON.stringify(value));
-  for (const name of ['packages', 'workers', 'apps', 'scripts', 'research']) await mkdir(join(root, name), { recursive: true });
+  for (const name of ['packages', 'workers', 'apps', 'scripts', 'research', 'research/product-v3']) await mkdir(join(root, name), { recursive: true });
   for (const path of ['Makefile', 'tsconfig.json', 'package-lock.json', 'scripts/unit.ts']) await writeFile(join(root, path), '{}');
+  await json('research/product-v3/model-discovery.json', { scope: 'synthetic-release-test-only', modelId: 'nvidia/synthetic-release-unit' });
   await json('package.json', { name: 'synthetic-release-unit', license: 'UNLICENSED', dependencies: {} });
   await json('budget.json', { schemaVersion: '1.0', currency: 'USD', maxApprovedSpendUsd: 0, ownerApproval: null, verifiedCredits: [],
     stages: { smoke: 0, pilot: 0, evaluate: 0, hosting: 0 }, episodeLimits: { inferenceCallLimit: 24, inputTokenLimit: null, outputTokenLimit: null,

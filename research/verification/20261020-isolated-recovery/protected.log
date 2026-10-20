@@ -1,0 +1,41 @@
+(node:1372983) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (2143.830647ms)
+ℹ {"ownerRunId":"1ca5dad4-fe99-4485-b56e-d331f79dfd25","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1896,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-df3ab4ba-e1b7-4c81-bc6f-70940f539506\",\"createAcknowledged\":true,\"containerId\":\"f77cb8ff587d02b1a3fcce40cd916d72e52aa33140e6d4f60e78b86e78442b83\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-df3ab4ba-e1b7-4c81-bc6f-70940f539506"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (2.488529ms)
+(node:1372984) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (48.706604ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (18.860591ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (40.476635ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (46.886021ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.633416ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (928.998558ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1376.994789ms)
+✔ transient inspection timeout is re-observed within the existing cleanup budget before success (4.47688ms)
+✔ persistent inspection errors remain uncertain at the unchanged overall cleanup deadline (41.597401ms)
+✔ invalid ownership inspection is terminal and never retried or removed (2.567661ms)
+(node:1372985) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ trusted launcher kills an execed harmless child when its parent dies and reaps test processes (112.016272ms)
+✔ trusted launcher refuses exec when the original parent has changed (34.77281ms)
+✔ host comparison rejects wrong returns and mutated arguments even with correct return (7.444942ms)
+✔ Docker invocation exposes inputs only and enforces declared local containment flags (114.745938ms)
+✔ invalid owner IDs and failed operation journaling cannot start containers (6.15658ms)
+✔ recovery validates exact run ownership and fails closed on mismatched or unavailable state (3.427956ms)
+✔ recovery preserves remaining handles when removal or verification fails (1.296819ms)
+✔ real restart recovery removes only the specified sleeping run and confirms absence (2559.050728ms)
+✔ unavailable Docker and pre-cancellation produce check errors with no execution (1.799271ms)
+✔ unconfirmed cleanup stops the batch before another container can overlap it (5006.485828ms)
+✔ real local pinned Python container independently observes return, exception and input mutation (5155.988076ms)
+✔ local cancellation removes its running container and records non-passing checks (1777.822896ms)
+✔ in-container wall limit kills sleeping candidate before the longer host process timeout (2351.510628ms)
+✔ Nebius fake transport maps verified methods and never includes oracle fields (41.191838ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17462.2523

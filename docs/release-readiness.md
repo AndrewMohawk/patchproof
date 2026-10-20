@@ -1,7 +1,8 @@
 # Release readiness
 
-**Checked:** October 16, 2026 (UTC)
-**Disposition:** Repair candidate validated on Andromeda; live admissions remain paused.
+**Checked:** October 20, 2026 (UTC)
+**Disposition:** Isolated recovery integration under validation; production remains paused.
+The reviewed exact-case [closed-dispatch recovery](closed-dispatch-recovery.md) retains all holds and unknown settlement. The exact approved container image has been restored. This integration excludes the Humanize feature; no production recovery has been applied.
 See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
 for current timing, pricing, supervised repairs, accounting and rollout gates.
 The historical October 13 sections below are retained as dated context; they

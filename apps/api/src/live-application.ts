@@ -19,7 +19,8 @@ import { buildOperationalLock, verifyOperationalLock } from '../../../packages/o
 import { LIVE_LOCAL_CHECK_TIMING_POLICY } from '../../../packages/orchestrator/src/local-check-timing.ts';
 import { RENEWABLE_PRICING_POLICY, RENEWABLE_PRICING_POLICY_DIGEST, verifyRenewablePricing } from '../../../packages/orchestrator/src/renewable-pricing.ts';
 import { BudgetLedger } from '../../../packages/orchestrator/src/budget-ledger.ts';
-import { createLiveLocalCoordinator, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
+import { CLOSED_DISPATCH_POLICY_ID } from '../../../packages/orchestrator/src/closed-dispatch-recovery.ts';
+import { createLiveLocalCoordinator, LIVE_SAMPLING_DESCRIPTION, LIVE_EXECUTION, LIVE_LIMITS, LIVE_PRICING, LIVE_MODEL, LIVE_RESERVATION_MICROS } from '../../../packages/orchestrator/src/live-local.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const LIVE_PRICING_EVIDENCE_PATH = 'research/verification/20261016-demo-repair/pricing-evidence.json';
@@ -46,7 +47,7 @@ export function verifyLivePricingEvidence(value: unknown, expectedDigest: string
 export const LiveDemoConfigSchema = z.strictObject({ schemaVersion: z.literal('1.0'), executionAuthorized: z.literal(true),
   publicHostingAuthorized: z.literal(true), stateDirectory: z.string().min(1), ledgerFile: z.string().min(1),
   modelCredentialFile: z.string().min(1), socketFile: z.string().min(1), sourceDigest: hash,
-  pricingEvidenceDigest: hash, taskIds: z.array(z.string().regex(/^[a-z][a-z0-9-]{0,63}$/)).min(1).max(20),
+  pricingEvidenceDigest: hash, closedDispatchRecoveryPolicy: z.literal(CLOSED_DISPATCH_POLICY_ID).optional(), taskIds: z.array(z.string().regex(/^[a-z][a-z0-9-]{0,63}$/)).min(1).max(20),
   pricingVerification: z.strictObject({ stateFile: z.string().min(1), feeEvidenceFile: z.string().min(1) }).optional(),
   allowedHosts: z.array(z.enum(['patchproof.andrewmohawk.xyz', 'patchproof.lab.andrewmohawk.xyz'])).min(1).max(2),
 });
@@ -103,7 +104,8 @@ export async function createLiveApplication(root: URL, configFile: string) {
         hostedWeightsRevision: null, licenseUrl: discovery.license.url, license: discovery.license.name,
         cardScope: 'upstream NVFP4 card; hosted weights revision and tokenizer equivalence unverified' },
       inferenceInterface: { version: '20260923-f93df18ab', openApiDigest: 'sha256:c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f',
-        endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: 'provider sampling defaults; chat_template_kwargs.enable_thinking=false requested; hidden reasoning not retained; no determinism claim' },
+        endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: LIVE_SAMPLING_DESCRIPTION },
+      ...(config.closedDispatchRecoveryPolicy ? { closedDispatchRecoveryPolicy: config.closedDispatchRecoveryPolicy } : {}),
       execution: LIVE_EXECUTION, liveLocalCheckTimingPolicy: LIVE_LOCAL_CHECK_TIMING_POLICY, pricing: LIVE_PRICING,
       ...(verifyPricing ? { renewablePricing: { policy: RENEWABLE_PRICING_POLICY, policyDigest: RENEWABLE_PRICING_POLICY_DIGEST, evidenceLocation: 'per-run pricing verification events and immutable accounting receipts', legacyPricingDatesAreAdmissionAuthority: false } } : {}), sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
       localCheckSchedulingPolicy: LOCAL_CHECK_SCHEDULING_POLICY, localCheckImage: status.image, localExecution: status, checkProtocol: REPEATED_CHECK_PROTOCOL,
@@ -113,7 +115,8 @@ export async function createLiveApplication(root: URL, configFile: string) {
       verifyOperationalLock(projectRoot, operationalLock);
       if (digestJson(LiveDemoConfigSchema.parse(readPrivateOperatorJson(configFile, { projectRoot }))) !== fixedConfigDigest) throw new Error('live_demo_config_changed');
     };
-    ledger = new BudgetLedger({ filename: config.ledgerFile, budget, existingOnly: true, pendingBillingPolicy: 'allow-covered-inference' });
+    ledger = new BudgetLedger({ filename: config.ledgerFile, budget, existingOnly: true, pendingBillingPolicy: 'allow-covered-inference',
+      ...(config.closedDispatchRecoveryPolicy ? { closedDispatchRecoveryPolicy: config.closedDispatchRecoveryPolicy } : {}) });
     const journalPath = join(config.stateDirectory, 'runs.sqlite');
     try { const file = await open(journalPath, 'wx', 0o600); await file.close(); }
     catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }

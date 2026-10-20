@@ -1,0 +1,2288 @@
+{
+  "observedAt": "2026-10-20T18:37:44.657496+00:00",
+  "productionBase": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "reviewedRecoverySource": "e12335c4bd09d604bf027a435215f342138c7916",
+  "receiptOrderSource": "89e1ffe8c30942901af345438afb5cd1ee5786ee",
+  "scope": "Isolated recovery and exact receipt-order transplant; no Humanize implementation or fixture registration",
+  "reviewPending": "Confirm isolated receipt-order transplant and test-only metadata fixture repair before deployment; prior independent approval explicitly covered e12335c only",
+  "tests": {
+    "typecheck": 0,
+    "contracts": 0,
+    "protected": {
+      "exit": 0,
+      "pass": 26,
+      "fail": 0
+    },
+    "releaseFocused": {
+      "exit": 0,
+      "pass": 68,
+      "fail": 0
+    },
+    "liveApplication": {
+      "exit": 0,
+      "pass": 29,
+      "fail": 0
+    },
+    "recoveryInitial": {
+      "exit": 1,
+      "pass": 70,
+      "fail": 1,
+      "reason": "Missing historical evidence file, subsequently copied byte-identically from e12335c and covered by passing releaseFocused run"
+    },
+    "releaseInitial": {
+      "exit": 1,
+      "pass": 60,
+      "fail": 8,
+      "reason": "Synthetic release helper omitted model-discovery metadata required by operational lock; fixed without changing assertions"
+    },
+    "fullSuite": "NOT RUN on isolated integration; previous PR9 full run recorded separately",
+    "genericReleaseAudit": {
+      "exit": 2,
+      "reason": "No release receipt input supplied; default mock/research gates remain unfulfilled. Not a successful judge-access or competition release attestation."
+    }
+  },
+  "baseline": {
+    "observedAt": "2026-10-20T18:36:12.247Z",
+    "providerCalls": 0,
+    "timeoutSeconds": 120,
+    "repetitions": 2,
+    "maximumConcurrentContainers": 2,
+    "results": [
+      {
+        "taskId": "v3-config-overlay",
+        "runId": "091a8b19-7738-4fdd-b995-8545911df82b",
+        "elapsedMs": 42653,
+        "pass": 15,
+        "fail": 7,
+        "error": null,
+        "operations": 44,
+        "cleanup": {
+          "remainingOperationIds": [],
+          "error": null
+        },
+        "timings": [
+          {
+            "operation": "image",
+            "ms": 66,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 83,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 341,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 351,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 61,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 86,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1543,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1549,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 207,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 201,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1746,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 62,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1839,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 165,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 88,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 194,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1252,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1245,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 187,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 215,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1337,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1203,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 79,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 270,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 260,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1411,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 213,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1731,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 79,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 178,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1382,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 62,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1304,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 181,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 195,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 60,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1335,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 81,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1247,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 63,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 168,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 171,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1376,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1271,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 264,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 317,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1438,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1444,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 59,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 188,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 205,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 83,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1290,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 61,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 180,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1540,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 151,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1268,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 63,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1203,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 191,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 210,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 60,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1559,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1596,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 253,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 252,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 61,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1541,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1559,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 274,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 270,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1583,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 82,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1763,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 166,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 81,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 170,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1464,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1285,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 197,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 182,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 86,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1676,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1726,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 259,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 265,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 88,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1270,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1512,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 274,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 108,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 199,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1382,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1264,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 79,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 166,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 83,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 170,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 86,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1821,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1748,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 73,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 81,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 196,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 193,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2396,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 266,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2780,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 157,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 73,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1826,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 61,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 168,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1870,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 88,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 220,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1579,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1757,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "ps",
+            "ms": 81,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "ps",
+            "ms": 64,
+            "code": 0,
+            "error": null
+          }
+        ]
+      },
+      {
+        "taskId": "v3-cursor-pagination",
+        "runId": "1a11488d-2bcc-453f-9b13-4bbffad827b7",
+        "elapsedMs": 44865,
+        "pass": 16,
+        "fail": 6,
+        "error": null,
+        "operations": 44,
+        "cleanup": {
+          "remainingOperationIds": [],
+          "error": null
+        },
+        "timings": [
+          {
+            "operation": "image",
+            "ms": 64,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 73,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 214,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 214,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2119,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2134,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 269,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 261,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 63,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 89,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1845,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1898,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 92,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 58,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 200,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 165,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 65,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1710,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 62,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1855,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 155,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 63,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 174,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 55,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2354,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2361,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 149,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 183,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 82,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2071,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1962,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 167,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 155,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1441,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1500,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 83,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 199,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 67,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 152,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 81,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1898,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1969,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 187,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 73,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 154,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1311,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 185,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1404,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 190,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1484,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 165,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1568,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 56,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 159,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2436,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 2120,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 327,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 333,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1476,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1526,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 60,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "image",
+            "ms": 73,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 250,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 247,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 73,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1427,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 63,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1614,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 73,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 268,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 293,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1370,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 66,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1291,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 190,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 141,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1449,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1364,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 83,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 207,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 204,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 89,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 79,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1531,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1600,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 277,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 273,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1476,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1445,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 176,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 175,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1554,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1553,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 299,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 301,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 69,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 76,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1599,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1628,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 72,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 196,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 203,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 77,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1401,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1581,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 267,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 287,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1412,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 70,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1395,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 56,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 254,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 78,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 299,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1404,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 84,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1281,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 64,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 163,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 75,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "create",
+            "ms": 166,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 74,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1457,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 80,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "start",
+            "ms": 1632,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "container",
+            "ms": 71,
+            "code": 1,
+            "error": null
+          },
+          {
+            "operation": "ps",
+            "ms": 81,
+            "code": 0,
+            "error": null
+          },
+          {
+            "operation": "ps",
+            "ms": 68,
+            "code": 0,
+            "error": null
+          }
+        ]
+      }
+    ]
+  },
+  "image": {
+    "registry": "docker.io/library/python",
+    "manifest": "sha256:79e7a9b9ff1cbceff819f856fb374477792a5967759d94df266de7b7b4120e6f",
+    "id": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "platform": "linux/amd64"
+  },
+  "production": {
+    "deployed": false,
+    "recoveryApplied": false,
+    "heldMicros": 3600000,
+    "capMicros": 25000000,
+    "eventSequence": 100,
+    "approvalRevision": 3,
+    "unknownActualCount": 21,
+    "reservationRowsDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19",
+    "createRuns": false,
+    "historicalReservationStillUnknown": true
+  },
+  "feeEvidenceValidUntil": "2026-10-21T18:34:25.618Z",
+  "catalogEvidenceValidUntil": "2026-10-20T19:44:27.100Z",
+  "paidCalls": 0
+}

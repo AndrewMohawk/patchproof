@@ -1,0 +1,91 @@
+(node:1442890) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (3478.296727ms)
+✔ covered reservations still consume every global and stage microdollar (2600.338924ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (1271.910944ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (2541.99519ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (2663.464031ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (2197.669696ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (3373.527956ms)
+✔ audited resume preserves covered holds and strict connections still block them (2647.737584ms)
+(node:1442891) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reviewed historical policy pins authentic bundle, source, requested thinking, missing receipt and conservative bound (56.128142ms)
+✔ separate opt-in append keeps all money and unknown settlement, persists, is idempotent, and cannot retry the historical run (2000.624569ms)
+✔ all changed facts, unknown fees, hidden retries, model claims and invented receipt digests are rejected without mutation (2823.282785ms)
+✔ five-minute checkpoint boundaries, future clocks, approval changes and unrelated writes fail closed (1939.459681ms)
+▶ prepared receipts and later evidence invalidate coverage permanently without changing holds
+  ✔ prepared (2157.505525ms)
+  ✔ reconcile (2371.804208ms)
+  ✔ cancel (1563.301126ms)
+✔ prepared receipts and later evidence invalidate coverage permanently without changing holds (6094.675181ms)
+▶ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced
+  ✔ all dollars committed (2328.92715ms)
+  ✔ cap below commitment (2989.739955ms)
+  ✔ operator pause (2429.286068ms)
+  ✔ sticky overrun (836.452492ms)
+✔ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced (8586.309398ms)
+✔ committed recovery survives abrupt process death and an acknowledgment retry never duplicates it (1503.941731ms)
+✔ storage failure rolls back the coverage event and leaves the original checkpoint usable (1653.176699ms)
+✔ two processes racing the same checkpoint append exactly once and retain the full hold (1661.738359ms)
+✔ an outstanding reservation blocks first recovery even with a fresh review checkpoint (1046.475612ms)
+▶ underfunded or differently sized historical reservations cannot be covered
+  ✔ 246000 (1075.151774ms)
+  ✔ 249999 (930.906406ms)
+  ✔ 250001 (1406.400433ms)
+✔ underfunded or differently sized historical reservations cannot be covered (3413.8645ms)
+✔ first recovery cannot bypass an already prepared accounting receipt (1179.134805ms)
+(node:1442892) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ packet requires scanned selected bytes, copies verified success/failure bundles and remains local blocked preparation (998.467939ms)
+✔ changed bundle bytes after scan and selected digest substitution fail closed (63.469153ms)
+✔ historical source references remain explicitly blocked and tampered evidence cannot be packaged (806.916192ms)
+✔ repository evidence reads reject traversal, symlinks, oversized files and directories (6.286293ms)
+✔ versioned live protocol packet accepts matching smoke presentation scope only after its metadata is scanned, without granting experiment completion (2018.106236ms)
+✔ default CLI refuses live replay before any local checker fallback (378.186283ms)
+(node:1442898) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent release: accepting the whole lock as a source-map pin cannot authorize current source (53.378178ms)
+✔ independent release: newly accepted future-dated proof cannot pass current release gate (7.613114ms)
+✔ independent release: smoke scope and protocol remain necessary and never classify experiment execution (9.064212ms)
+(node:1442899) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ recorded local timing metadata preserves matching mock release identity without modifying exports (4.182304ms)
+✔ unknown or malformed local timing cannot be discarded to manufacture a current release binding (0.849611ms)
+✔ default release bindings stay local and supplied calibrated proof explicitly selects a distinct frozen protocol (59.283793ms)
+✔ missing trust, stale proofs and changed source/runtime/model/calibration fail closed (23.309229ms)
+✔ CLI input and audit share live selection; receipts cannot select it and synthetic scope still blocks actual gates (27.736404ms)
+✔ matching smoke retains its own presentation policy while mock, historical and mismatched pins never become current experiment execution (6.25458ms)
+✔ complete synthetic receipt grid never fulfills actual release gates even with trusted digest ingestion (6.854571ms)
+✔ missing, malformed, expired, future-dated and ambiguous receipts fail closed (2.455686ms)
+✔ every source/runtime/protocol/bundle binding mutation invalidates a receipt (1.31892ms)
+✔ actual-labelled hypothetical claims cannot bypass local scope, absent humans or lack of trusted ingestion (1.356723ms)
+✔ recomputed receipt hashes do not excuse changed referenced artifacts or failed outcomes (0.879651ms)
+(node:1442901) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ renewable rates preserve the unchanged worst-case reservation and resource limits (1.071762ms)
+✔ fresh evidence works after the historical receipt expired, with exact full-run boundaries (8.82689ms)
+✔ missing, blocked, stale, future, oversized-age and mismatched evidence fail closed (21.099763ms)
+✔ approval expiry bounds renewal and admission, and fees can never be renewed by catalog success (12.082759ms)
+✔ catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected (9.143296ms)
+✔ atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks (781.791284ms)
+✔ catalog fetch is read-only, bounded, refuses redirects and never retries failures (16.488691ms)
+✔ full verifier serializes writers, publishes failure immediately, and expired fees prevent network access (971.40448ms)
+✔ the approved shared purpose reallocates the same total without releasing holds or clearing pause (2832.771757ms)
+✔ scripted mock is task bounded and uses the same attempt/feedback rule for every caller (2.419189ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.902139ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (29.067081ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (2.385001ms)
+✔ cancelled proposal sends nothing (0.29707ms)
+✔ operation journal failures prevent initial dispatch and retain completed response identity and usage (1.503412ms)
+✔ cancelled stalled completion body stops promptly and retains attempted-call accounting (8.980895ms)
+✔ malformed completion choices still retain independently valid response identity and token usage (2.381358ms)
+✔ unusable capped completion preserves receipt before candidate validation (2.256515ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 68
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32211.971792
