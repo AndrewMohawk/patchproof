@@ -7,7 +7,7 @@
   "requirements": [
     {
       "id": "R01",
-      "text": "Treat timedelta durations as absolute distances, including negative microseconds, milliseconds, seconds, minutes and hours. Do not use the current clock."
+      "text": "Treat both timedelta durations and numeric-second inputs as absolute distances, including negative microseconds, milliseconds, seconds, minutes and hours. Do not use the current clock."
     },
     {
       "id": "R02",
