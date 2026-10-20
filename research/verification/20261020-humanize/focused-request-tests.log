@@ -1,0 +1,216 @@
+(node:76014) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (3274.011793ms)
+✔ covered reservations still consume every global and stage microdollar (3745.684137ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (2566.030663ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (3120.159552ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (2971.373054ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (2083.054181ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (2575.903646ms)
+✔ audited resume preserves covered holds and strict connections still block them (2495.879335ms)
+(node:76015) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ existing-only missing paths, empty files and unrelated databases never initialize an allowance (306.938497ms)
+✔ existing-only reads the current durable approval and reservation inventory through a live WAL without initialization (1904.435467ms)
+✔ existing-only refuses missing tables, absent approval and changed schema without repairing or migrating them (8072.283975ms)
+✔ existing-only refuses permissive modes and filesystem aliases without chmod or following links (1994.88548ms)
+(node:76016) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ USD conversion is decimal-exact and rejects implicit fractional-micro rounding (1.87407ms)
+✔ ledger reads the project schema, keeps approved stage ceilings, and creates private files (1561.722345ms)
+✔ separate connections enforce durable stage and aggregate reservations without float loss (2049.947563ms)
+✔ IDs bind immutable request fingerprints and each episode has one aggregate allowance (2111.726358ms)
+✔ runtime input validation rejects unbounded, nonfinite and partial reservations (2698.616077ms)
+✔ attempt, unknown billing and cancellation survive restart and never silently release money (3393.444159ms)
+✔ even unattempted cancellation retains the hold until explicit zero-cost reconciliation (2469.970599ms)
+✔ explicit uncertain billing blocks dispatch even when an attempted marker was missing (1704.116935ms)
+✔ late incomplete billing cannot resurrect a reconciled episode for dispatch (2049.373463ms)
+✔ overrun is retained beyond the reservation and freezes future spending across restarts (2790.716879ms)
+✔ late increased billing remains recorded and positive charges without dispatch freeze accounting (2082.734587ms)
+✔ charge without a recorded dispatch is never discarded (1610.559222ms)
+✔ approval expiry prevents reservation and dispatch but still permits honest reconciliation (1813.667828ms)
+✔ missing and future authorization fail closed (1258.267143ms)
+✔ reduced approval caps freeze existing exposure and stale connections cannot restore prior permission (1950.324885ms)
+✔ changed configuration with equal approval timestamp needs explicit CAS and older approval is refused (1554.132795ms)
+✔ credits do not expand approved ceilings and snapshots/events omit private approval text (1346.326387ms)
+✔ SQLite integer costs retain precision past JavaScript safe integers and aggregate without overflow (1667.17714ms)
+✔ symlink ledger files and directories are refused without changing the target (4.627737ms)
+✔ simultaneous processes cannot oversubscribe a stage reservation ceiling (2193.511144ms)
+✔ simultaneous identical IDs create exactly one durable reservation and event (1559.990421ms)
+✔ simultaneous workers obtain at most one dispatch grant for the episode (1688.588959ms)
+✔ process termination after granting dispatch leaves its unknown charge durably held (2499.269281ms)
+✔ audited operator resume preserves accounting and rejects stale or replayed checkpoints (1486.873207ms)
+▶ operator resume rejects unresolved accounting and unfinished reservations without releasing holds
+  ✔ false (1111.545303ms)
+  ✔ true (1408.274266ms)
+✔ operator resume rejects unresolved accounting and unfinished reservations without releasing holds (2521.163312ms)
+▶ operator pause cannot hide a later financial anomaly from resume
+  ✔ false (1925.975814ms)
+  ✔ true (1487.738625ms)
+✔ operator pause cannot hide a later financial anomaly from resume (3414.794481ms)
+✔ operator control never clears an existing financial freeze (1538.647554ms)
+✔ operator resume rejects expired approval and a stale approval connection (1761.27045ms)
+✔ Humanize source and MIT notice retain pinned provenance (3.233298ms)
+✔ function guard accepts an indented body and rejects surrounding, signature, and top-level changes (1.191455ms)
+✔ region transport expands only body, retains usage, and rejects whole-file or extra-file responses (35.500091ms)
+✔ invalid candidate syntax and shape retain static diagnostics without response contents (4.164258ms)
+(node:76018) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ private live preflight binds real factory without reading credentials, dispatching or reserving (1902.222169ms)
+✔ missing or changed project ledger/budget/source fails before provider use; status survives missing access (2051.348748ms)
+✔ evaluate command cannot dispatch a pilot plan (2521.069632ms)
+✔ runtime config cannot alias a ledger sidecar before opening SQLite (2346.588263ms)
+✔ real factory setup failure preserves one attempted hold and permits cancellation after budget changes (14841.924026ms)
+✖ one composed fake-provider episode requires distinct reviewed runtime and adjudication receipts (16105.987186ms)
+(node:76019) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ guarded live factory uses real mappings against fake transports and preserves the dispatcher-only grant (12582.46996ms)
+✔ 24-call live path uses 48 actual fake-transport batches and no original checks or extra grant (83154.884353ms)
+✔ missing/unaccepted or changed account, tokenizer and source proof rejects before credentials (7842.382495ms)
+✔ unattempted, mismatched and prior-process-style old grants cannot start any provider work (4329.934405ms)
+✔ prospective model, all-case CPU, wall and adjudication envelopes deny before credentials (8771.623955ms)
+✔ unknown USD and incomplete retention/inventory/CPU never become complete billing or finalized selection (21759.664227ms)
+✔ approval/source change and abort during credential wait prevent later fetch and preserve intent/accounting limits (2198.025813ms)
+✔ malformed model response keeps request/response identity and known tokens without exposing provider body (1211.945567ms)
+✔ cancellation after instance creation still permits scoped DELETE cleanup after source and ledger new-work gates close (1948.630023ms)
+✔ caller property mutation cannot swap captured ledger, source, tokenizer, transport or accounting authority (3070.746477ms)
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3741.111084ms)
+✔ source or reservation changes while accounting resolves cannot escape as finalized selection (5013.254822ms)
+✔ settled drains bounded checker cleanup after the caller abort race has already returned (1814.616865ms)
+✔ adjudication reserve must fit accounting, cleanup and one usable check second before any grant (625.381765ms)
+(node:76025) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (2.155898ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (11284.831006ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (10650.374875ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (4817.797857ms)
+✔ all variants request non-thinking mode with exact limits, repeated-check cap and at most three bounded requests (18067.482507ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.629261ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (4850.359871ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (4044.677758ms)
+  ✔ output (2499.363398ms)
+✔ reported per-request input and output overruns cannot become covered exposure (6546.031464ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (1253.842108ms)
+✔ live hard allowances are frozen against mutation after factory construction (3559.176583ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1990.001392ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (2774.396303ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (2415.763204ms)
+  ✔ header (4134.27521ms)
+  ✔ candidate (2349.049026ms)
+  ✔ escaped_candidate (3560.221983ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (12461.701174ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (3118.962614ms)
+  ✔ 0 (3109.778942ms)
+  ✔ 1 (1094.386852ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (7324.790477ms)
+✔ persisted operator pause rejects creation before credentials or spending (1287.694273ms)
+✔ approval expiry must cover the entire run even when pricing remains current (970.042835ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (3161.219741ms)
+  ✔ approval (3766.578405ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (6928.942777ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (3064.074887ms)
+  ✔ pricing1 (2456.370796ms)
+  ✔ approval0 (2874.275536ms)
+  ✔ approval1 (2909.821848ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (11306.383606ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (4186.729079ms)
+  ✔ 0 (3779.440837ms)
+  ✔ 1 (1319.186603ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (9287.047239ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (3636.580236ms)
+✔ late baseline preserves observations and cleanup logs without inference (2398.592737ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (2090.028444ms)
+✔ renewable evidence admits after legacy expiry and is retained in exported events and accounting (3444.442151ms)
+✔ loss of renewable evidence after baseline prevents credentials and dispatch (2339.939257ms)
+(node:76037) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ current live pricing evidence matches the runtime constants and its digest (2.586978ms)
+✔ live pricing evidence rejects digest and rate changes (0.944901ms)
+✔ deployment and startup bind the same pricing evidence artifact (19.212931ms)
+✔ offline deployment recovery remains explicit and requires the previous unit to be down (0.353283ms)
+✔ the operational source lock binds model and license metadata (25.196883ms)
+(node:76048) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ default product server remains mock with loopback guard and existing cancellation behavior (56.774225ms)
+✔ live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards (31.122002ms)
+✔ opaque browser ownership protects live cancellation without changing public run or evidence access (22.992504ms)
+✔ a process restart never grants an old or replayed cookie ownership of retained public history (7.726128ms)
+✔ invalid live host/runtime metadata is refused before serving or coordinator work (3.387461ms)
+✔ budget availability pauses only new runs, preserves owned cancellation and public history, and fails closed on callback errors (14.530257ms)
+(node:76056) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ live UI uses enabled curated IDs and live requests, real event phases, runtime pins and explicit cost labels (1821.426497ms)
+✔ live capabilities and task availability fail closed while old mock mode remains usable (2449.600973ms)
+✔ an active repair explains the disabled mobile action and links to its progress (1661.508231ms)
+✔ live comparison waits for each recorded terminal and refreshed allowance before posting the next approach (2671.376288ms)
+✔ live comparison does not queue another provider attempt after cancellation, timeout or infrastructure failure (4644.078215ms)
+✔ mock comparison keeps its existing immediate three-approach launch behavior (1090.751057ms)
+✔ live comparison can rerun one recorded approach without changing its previous evidence (1136.896945ms)
+✔ example search and compact mobile selection keep the selected task and first action usable (1702.338825ms)
+✔ latest saved failure stays visible and run history retains both failed and passing records (1081.626559ms)
+✔ run tabs work from the keyboard and saved requirements retain their recorded identity (1249.81831ms)
+✔ stream updates preserve keyboard focus and open check details on the same active run (1180.760734ms)
+✔ first visit explains the review task without starting work or fabricating a saved walkthrough (2205.15537ms)
+✔ repair briefing shows actual source, explicit public goals and the full workflow on desktop and mobile (1062.64242ms)
+(node:76060) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ renewable rates preserve the unchanged worst-case reservation and resource limits (1.007537ms)
+✔ fresh evidence works after the historical receipt expired, with exact full-run boundaries (11.868682ms)
+✔ missing, blocked, stale, future, oversized-age and mismatched evidence fail closed (24.138151ms)
+✔ approval expiry bounds renewal and admission, and fees can never be renewed by catalog success (9.921528ms)
+✔ catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected (6.005698ms)
+✔ atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks (664.010432ms)
+✔ catalog fetch is read-only, bounded, refuses redirects and never retries failures (17.103579ms)
+✔ full verifier serializes writers, publishes failure immediately, and expired fees prevent network access (1272.753276ms)
+✔ the approved shared purpose reallocates the same total without releasing holds or clearing pause (2157.031758ms)
+ℹ tests 143
+ℹ suites 0
+ℹ pass 141
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 158454.158825
+
+✖ failing tests:
+
+test at tests/live-experiment-operator.test.ts:128:1
+✖ one composed fake-provider episode requires distinct reviewed runtime and adjudication receipts (16105.987186ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-humanize-demo-20261020/tests/live-experiment-operator.test.ts:149:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/live-experiment.test.ts:240:1
+✖ accounting observer wait is deadline bounded; missing receipt never yields a selected artifact (3741.111084ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(performance.now() - started < 2500)
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-humanize-demo-20261020/tests/live-experiment.test.ts:245:10)
+      at async Test.run (node:internal/test_runner/test:1116:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

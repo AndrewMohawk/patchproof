@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-20T03:50:50.961992+00:00",
+  "purpose": "Exploratory focused-context follow-up after preserved unsuccessful runs; no benchmark claim.",
+  "authorization": {
+    "maximumAdditionalRuns": 3,
+    "maximumHoldUsdPerRun": 0.25,
+    "maximumAdditionalHoldsUsd": 0.75,
+    "existingTotalCapUsd": 25,
+    "stopAfterVerifiedRepair": true,
+    "existingHoldsPreserved": true
+  },
+  "accountReview": {
+    "source": "https://tokenfactory.nebius.com/organization/prices",
+    "billingStatus": "Active",
+    "inputUsdPerMillion": 0.3,
+    "outputUsdPerMillion": 0.9,
+    "priceValidFrom": "2026-03-01",
+    "usageSource": "https://tokenfactory.nebius.com/organization/usage",
+    "usageWindow": "2026-09-20 to 2026-10-20",
+    "usageLastUpdatedUtc": "02:18",
+    "aggregateDisplayedCostUsd": 0.02463882,
+    "usageLimitation": "Delayed aggregate is not run-level settlement; all existing holds retained.",
+    "existingFeeEvidenceExpiryUnchanged": true
+  },
+  "requestChange": {
+    "focusedContext": "Exact immutable prefix and complete current function body; omit suffix and other files",
+    "responseFormat": "json_schema with strict files/summary and exact permitted path",
+    "providerDocumentation": "https://docs.tokenfactory.nebius.com/ai-models-inference/json",
+    "modelSpecificSchemaSupport": "Not advertised in current model-card UI; actual supported response remains to be verified within supervised allowance.",
+    "checksUnchanged": true,
+    "upstreamFixOrHandwrittenControlSent": false,
+    "allowancesUnchanged": true
+  },
+  "validation": {
+    "typecheck": "passed",
+    "broadSuite": "141/143 passed; two original timing failures retained in log",
+    "serialRecheck": "composed provider passed; observer test still measured whole episode",
+    "observerTestCorrection": "Measure observer wait from invocation, preserving 2500ms bound and production deadlines; passes",
+    "focusedProtocolTests": "4/4 passed"
+  }
+}

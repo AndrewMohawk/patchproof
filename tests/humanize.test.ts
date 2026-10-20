@@ -39,6 +39,22 @@ test('region transport expands only body, retains usage, and rejects whole-file 
     const request=JSON.parse(String(init?.body));
     assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000);
     assert(!request.messages[1].content.includes('218a86ec'));
+    const payload = JSON.parse(request.messages[1].content);
+    assert.deepEqual(Object.keys(payload.files), [r.path]);
+    assert.equal(payload.files[r.path], f.files[r.path]!.slice(0, -r.suffix.length));
+    assert.deepEqual(payload.requirements, input.requirements);
+    assert.deepEqual(payload.visibleCases, input.visibleCases);
+    assert.deepEqual(payload.feedback, input.feedback);
+    assert(!request.messages[1].content.includes('METADATA'));
+    assert(request.messages[1].content.length < 15000);
+    assert.equal(request.response_format.type, 'json_schema');
+    assert.equal(request.response_format.json_schema.strict, true);
+    const schema = request.response_format.json_schema.schema;
+    assert.equal(schema.additionalProperties, false);
+    assert.deepEqual(schema.required, ['files', 'summary']);
+    assert.equal(schema.properties.files.additionalProperties, false);
+    assert.deepEqual(schema.properties.files.required, [r.path]);
+    assert.deepEqual(Object.keys(schema.properties.files.properties), [r.path]);
     return Response.json({id:'test-request',model:'nvidia/test-only',usage:{prompt_tokens:100,completion_tokens:20},
      choices:[{finish_reason:'stop',message:{content:JSON.stringify({files:bad==='extra'?{[r.path]:'    return "example"\n','humanize_adapter.py':'bad'}:{[r.path]:bad?f.files[r.path]:'    return "example"\n'},summary:'Synthetic protocol test, not a repair.'})}}]});
    }});

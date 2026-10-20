@@ -115,7 +115,14 @@ export class NebiusRepairProvider implements RepairProvider {
       messages[0]!.content = messages[0]!.content.replace('full replacement source', 'replacement indented function body');
       messages[0]!.content += ' Encode the body as a valid JSON string: escape newlines and double quotes. The outer object must contain exactly files and summary; do not return Markdown fences or additional fields.';
       messages[0]!.content += ' REGION PROTOCOL: for this task only, files[path] must be the replacement INDENTED BODY of the named function, excluding its def/signature and excluding all other code. Keep every nonblank line indented by at least four spaces and end with a newline. The host restores the immutable prefix and suffix; do not include them in your response.';
-      messages[1]!.content = JSON.stringify({ ...JSON.parse(messages[1]!.content), editRegion: { path: input.editRegion.path, functionName: input.editRegion.functionName, output: 'indented body only' } });
+      const region = input.editRegion, source = input.files[region.path];
+      if (typeof source !== 'string' || !source.startsWith(region.prefix) || !source.endsWith(region.suffix)) {
+        throw new RepairError('protected_path', 'Current source does not match the frozen function boundary.');
+      }
+      messages[1]!.content = JSON.stringify({ ...JSON.parse(messages[1]!.content),
+        files: { [region.path]: source.slice(0, -region.suffix.length) },
+        sourceScope: 'Focused excerpt: immutable module prefix and signature followed by the complete current function body. Remaining module code and other package files are omitted and preserved by the host.',
+        editRegion: { path: region.path, functionName: region.functionName, output: 'indented body only' } });
     }
     const outputLimit = Math.min(input.remaining.outputTokenLimit, o.maximumOutputTokens ?? input.remaining.outputTokenLimit);
     const promptTokens = o.countInputTokens(messages);
@@ -137,7 +144,15 @@ export class NebiusRepairProvider implements RepairProvider {
     if (combined.aborted) throw new RepairError('cancelled', 'Inference cancelled before dispatch.');
     const intentId = randomUUID();
     const requestBody = { model: o.modelId, messages, max_tokens: outputLimit, max_completion_tokens: outputLimit,
-      response_format: { type: 'json_object' }, stream: false, store: false, n: 1,
+      response_format: input.editRegion ? {
+        type: 'json_schema', json_schema: { name: 'function_repair', strict: true, schema: {
+          type: 'object', additionalProperties: false, required: ['files', 'summary'], properties: {
+            files: { type: 'object', additionalProperties: false, required: [input.editRegion.path],
+              properties: { [input.editRegion.path]: { type: 'string' } } },
+            summary: { type: 'string', maxLength: 2000 },
+          },
+        } },
+      } : { type: 'json_object' }, stream: false, store: false, n: 1,
       ...(o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
     try { o.onOperation?.({ kind: 'request_intent', id: intentId }); }
     catch (error) {
