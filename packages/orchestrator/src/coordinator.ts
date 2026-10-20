@@ -287,6 +287,10 @@ export class Coordinator {
       if (error && typeof error === 'object' && 'providerRequestId' in error && typeof error.providerRequestId === 'string' && /^[A-Za-z0-9_.:/-]{1,200}$/.test(error.providerRequestId)) {
         this.#event(run, 'repair', `Failed inference response ID: ${error.providerRequestId}. Billing remains unreconciled.`);
       }
+      if (error && typeof error === 'object' && 'candidateFormatFailure' in error &&
+          (error.candidateFormatFailure === 'invalid_json' || error.candidateFormatFailure === 'invalid_schema')) {
+        this.#event(run, 'repair', `Candidate format rejection: ${error.candidateFormatFailure}. Response content withheld.`);
+      }
       this.#coverage(run, fixture);
     } finally {
       clearTimeout(timer); run.finishedAt = new Date().toISOString(); run.usage.elapsedMs = Date.now() - started;

@@ -8,12 +8,13 @@ export class RepairError extends Error {
   readonly code: string;
   readonly usage: { inferenceCalls: number; inputTokens: number; outputTokens: number; measuredCostUsd: number | null };
   readonly providerRequestId: string | null;
+  readonly candidateFormatFailure: 'invalid_json' | 'invalid_schema' | null;
   constructor(code: string, message: string,
-    usage = { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, measuredCostUsd: null as number | null }, providerRequestId: string | null = null) {
+    usage = { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, measuredCostUsd: null as number | null }, providerRequestId: string | null = null, candidateFormatFailure: 'invalid_json' | 'invalid_schema' | null = null) {
     super(message);
     this.code = code;
     this.usage = usage;
-    this.providerRequestId = providerRequestId;
+    this.providerRequestId = providerRequestId; this.candidateFormatFailure = candidateFormatFailure;
   }
 }
 
@@ -198,9 +199,12 @@ export class NebiusRepairProvider implements RepairProvider {
       throw new RepairError('operation_journal_error', 'Inference receipt could not be preserved; retain the full reservation.', usage, parsed.id);
     }
     if (parsed.choices[0]!.finish_reason !== 'stop') throw new RepairError('incomplete_response', 'Provider did not return a complete candidate.', usage, parsed.id);
+    let candidateValue: unknown;
+    try { candidateValue = JSON.parse(parsed.choices[0]!.message.content); }
+    catch { throw new RepairError('invalid_candidate', 'Candidate is not valid JSON.', usage, parsed.id, 'invalid_json'); }
     let proposal: z.infer<typeof proposalSchema>;
-    try { proposal = proposalSchema.parse(JSON.parse(parsed.choices[0]!.message.content)); }
-    catch { throw new RepairError('invalid_candidate', 'Candidate is not the required files-and-summary JSON.', usage, parsed.id); }
+    try { proposal = proposalSchema.parse(candidateValue); }
+    catch { throw new RepairError('invalid_candidate', 'Candidate does not match the files-and-summary schema.', usage, parsed.id, 'invalid_schema'); }
     if ([proposal.summary, ...Object.keys(proposal.files), ...Object.values(proposal.files)].some(value => value.includes(token))) {
       throw new RepairError('invalid_candidate', 'Candidate contained credential material and was withheld.', usage, parsed.id);
     }
@@ -209,7 +213,7 @@ export class NebiusRepairProvider implements RepairProvider {
     }
     if (input.editRegion) {
       const region = input.editRegion, body = proposal.files[region.path];
-      if (Object.keys(proposal.files).length !== 1 || typeof body !== 'string' || !body.trim() || !body.endsWith('\n') || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
+      if (Object.keys(proposal.files).length !== 1 || typeof body !== 'string' || !body.trim() || !body.endsWith('\n') || /[\r\f\v]/.test(body) || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
         throw new RepairError('protected_path', 'Invalid function-only replacement body.', usage, parsed.id);
       }
       proposal.files[region.path] = region.prefix + body + region.suffix;

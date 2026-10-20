@@ -11,7 +11,7 @@ export function validateEditRegion(fixture: Fixture, files: Record<string, strin
     throw new ContractError('invalid_request', 'Changes outside the frozen function body are forbidden.');
   }
   const body = candidate.slice(region.prefix.length, candidate.length - region.suffix.length);
-  if (!body.endsWith('\n') || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
+  if (!body.endsWith('\n') || /[\r\f\v]/.test(body) || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
     throw new ContractError('invalid_request', 'Replacement body must remain indented inside the frozen function.');
   }
 }

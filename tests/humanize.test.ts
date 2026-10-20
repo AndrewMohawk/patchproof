@@ -46,3 +46,17 @@ test('region transport expands only body, retains usage, and rejects whole-file 
   else {const proposal=await provider.propose(input,new AbortController().signal);assert.equal(proposal.files[r.path],r.prefix+'    return "example"\n'+r.suffix);validateEditRegion(f,{...f.files,...proposal.files});}
  }
 });
+
+
+test('invalid candidate syntax and shape retain static diagnostics without response contents', async () => {
+ const input: RepairInput = { taskId:f.id,description:f.description,requirements:f.requirements,files:f.files,
+   editAllowlist:f.editAllowlist,visibleCases:f.visibleCases,editRegion:r,feedback:[],attempt:0,
+   remaining:{inferenceCallLimit:3,inputTokenLimit:262144,outputTokenLimit:4000,wallTimeLimitSeconds:600,sandboxCpuSecondsLimit:900,maxApprovedSpendUsd:0.25} };
+ for(const [content,diagnostic] of [['not JSON','invalid_json'],[JSON.stringify({unexpected:'value'}),'invalid_schema']] as const) {
+  const provider = new NebiusRepairProvider({modelId:'nvidia/test-only',accountVerifiedAt:'2026-10-01T00:00:00Z',
+   inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>100,
+   fetch:async()=>Response.json({id:'format-test',model:'nvidia/test-only',usage:{prompt_tokens:100,completion_tokens:20},choices:[{finish_reason:'stop',message:{content}}]})});
+  await assert.rejects(provider.propose(input,new AbortController().signal),e=>e instanceof RepairError && e.code==='invalid_candidate' && e.candidateFormatFailure===diagnostic && e.usage.inferenceCalls===1 && e.providerRequestId==='format-test' && !e.message.includes(content));
+ }
+ for(const control of ['\r','\f','\v']) assert.throws(()=>validateEditRegion(f,{...f.files,[r.path]:r.prefix+'    '+control+'    pass\n'+r.suffix}),/indented/);
+});

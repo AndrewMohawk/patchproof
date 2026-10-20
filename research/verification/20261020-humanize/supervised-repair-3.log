@@ -1,0 +1,24 @@
+(node:3591198) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"event":"started","runId":"51fb0a59-511b-4e71-833d-d5e050317484"}
+{"runId":"51fb0a59-511b-4e71-833d-d5e050317484","terminalStatus":"infrastructure_error","reason":"invalid_candidate","usage":{"inferenceCalls":2,"inputTokens":36267,"outputTokens":1996,"sandboxCpuSeconds":null,"measuredCostUsd":0.0126765,"costIsEstimate":true,"elapsedMs":136447},"operations":80,"candidates":1,"evidenceDigest":"sha256:7a4426c8b9e4d0c2004fa256113ac7b9dc1f13b67f23324ddf441d737f537468"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'infrastructure_error'
+- 'verified_for_declared_checks'
+
+    at file:///tmp/patchproof-humanize-supervised-3.mjs:28:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'infrastructure_error',
+  expected: 'verified_for_declared_checks',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.5.0
