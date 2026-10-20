@@ -98,7 +98,7 @@ export function createLiveLocalCoordinator(input: {
     inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
     // Explicit upstream non-thinking mode keeps the bounded output available for a patch.
     // The evidence records this request setting; it does not claim hidden provider behavior.
-    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: true,
+    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: true, enableThinkingForEditRegions: true,
     countInputTokens: () => LIVE_PRICING.contextTokens,
     credential: async () => { validate(); return input.credential(); },
     fetch: async (url, init) => { validate(); if (!active?.attempted || active.closed) throw new ContractError('authorization_required', 'Dispatch reservation is required.', 403); return input.fetch(url, init); },

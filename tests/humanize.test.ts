@@ -34,10 +34,10 @@ test('region transport expands only body, retains usage, and rejects whole-file 
    remaining:{inferenceCallLimit:3,inputTokenLimit:262144,outputTokenLimit:4000,wallTimeLimitSeconds:600,sandboxCpuSecondsLimit:900,maxApprovedSpendUsd:0.25} };
  for (const bad of [false, true, 'extra'] as const) {
   const provider = new NebiusRepairProvider({modelId:'nvidia/test-only',accountVerifiedAt:'2026-10-01T00:00:00Z',
-   inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>100,
+   inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,disableThinking:true,enableThinkingForEditRegions:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>100,
    fetch:async (_url, init) => {
     const request=JSON.parse(String(init?.body));
-    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000);
+    assert.match(request.messages[0].content,/REGION PROTOCOL/); assert(!request.messages[0].content.includes('full replacement source')); assert.match(request.messages[0].content,/valid JSON string/); assert.equal(request.max_tokens,4000); assert.equal(request.max_completion_tokens,4000); assert.equal(request.chat_template_kwargs.enable_thinking,true);
     assert(!request.messages[1].content.includes('218a86ec'));
     const payload = JSON.parse(request.messages[1].content);
     assert.deepEqual(Object.keys(payload.files), [r.path]);

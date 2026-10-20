@@ -1,0 +1,13 @@
+{
+  "preparedAt": "2026-10-20T03:59:52.897473+00:00",
+  "priorRunId": "b36aa9bd-d4bb-4d5f-a0bf-566672466ef1",
+  "priorOutcome": "All three candidates failed; valid constrained output does not establish repair correctness.",
+  "nextChange": "Explicitly enable the existing model reasoning mode for function-region fixtures only. Ordinary synthetic requests retain disabled thinking.",
+  "source": "https://docs.nvidia.com/nim/large-language-models/2.0.4/turbo/get-started-nemotron-3-super-120b-a12b.html",
+  "endpointCard": "Reasoning available; authenticated UI reviewed October 20.",
+  "limits": "Unchanged 4000 output tokens per request, including any reasoning tokens, 3 requests, 12000 aggregate, 600 seconds and $0.25 reservation. Truncation is failure, not a retry exception.",
+  "fixturesChecksAndPromptUnchanged": true,
+  "upstreamFixOrHandwrittenControlSent": false,
+  "maximumAdditionalReservationsRemaining": 2,
+  "noSuccessClaim": true
+}

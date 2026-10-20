@@ -54,6 +54,7 @@ export interface InferenceReceipt {
 export interface NebiusRepairOptions {
   maximumOutputTokens?: number;
   disableThinking?: boolean;
+  enableThinkingForEditRegions?: boolean;
   onReceipt?: (receipt: InferenceReceipt) => void;
   modelId: string;
   accountVerifiedAt: string;
@@ -153,7 +154,8 @@ export class NebiusRepairProvider implements RepairProvider {
           },
         } },
       } : { type: 'json_object' }, stream: false, store: false, n: 1,
-      ...(o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
+      ...(o.enableThinkingForEditRegions && input.editRegion ? { chat_template_kwargs: { enable_thinking: true } } :
+        o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
     try { o.onOperation?.({ kind: 'request_intent', id: intentId }); }
     catch (error) {
       if (error instanceof ContractError) throw error;
