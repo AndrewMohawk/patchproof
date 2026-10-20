@@ -173,3 +173,26 @@ and [documented operational checks](../research/verification/20261020-isolated-r
 Production deployment and one-run recovery remain pending review and applicable
 checks. The generic research/competition audit remains separately blocked with
 its genuine-input results preserved; no receipt, waiver or bypass was invented.
+
+
+## Complete serial validation (October 20, 2026)
+
+The complete suite on `932a6653d5055517c55821f3c3e89139c33bf89e`, run with
+`node --test --test-concurrency=1 tests/*.test.ts`, passed **780/780**, with zero
+failures, skips or cancellations. No runtime deadline, assertion, repeated check
+or durable write was changed. The composed operator and malformed-completion
+end-to-end regressions passed. Prior concurrent failures and their reproduced
+pre-accounting sandbox timeout remain preserved, not superseded or erased.
+
+A genuine authenticated catalog check at 19:28:13 UTC produced candidate-source
+bound evidence valid until 20:38:13 UTC. Its existing reviewed fee evidence still
+expires October 21 at 18:34:25 UTC; no fee timestamp was extended. The production
+ledger stayed at sequence 100/revision 3 with all $3.60 held and identical
+reservation rows. Public health and task endpoints returned 200, with new runs
+still paused for accounting review. All 23 journaled production runs were terminal
+at the read-only snapshot. This is not a deployment lease or permission to skip
+fresh recovery checks.
+
+See [serial validation receipt](../research/verification/20261020-isolated-recovery/serial-suite-results.json).
+Deployment and recovery remain pending final review and current operational
+checks. The generic research/competition audit remains separately blocked.
