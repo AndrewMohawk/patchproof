@@ -1,0 +1,156 @@
+{
+  "checkedAt": "2026-10-20T04:07:12.895038+00:00",
+  "newTranche": {
+    "authorizedRuns": 3,
+    "admittedRuns": 2,
+    "reservedUsd": 0.5,
+    "remainingUnspentAuthorizationUsd": 0.25,
+    "attempt6": "Blocked before admission by frozen billing_pending ledger; zero new calls/reservations."
+  },
+  "runs": [
+    {
+      "runId": "b36aa9bd-d4bb-4d5f-a0bf-566672466ef1",
+      "terminalStatus": "failed",
+      "reason": "declared_checks_not_satisfied",
+      "usage": {
+        "inferenceCalls": 3,
+        "inputTokens": 8542,
+        "outputTokens": 2997,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.0052599,
+        "costIsEstimate": true,
+        "elapsedMs": 276074
+      },
+      "operations": 160,
+      "candidates": 3,
+      "evidenceDigest": "sha256:0944896623b866e7834fefbf1218d311741a8f6228ff59fb8b06281940cc48e5"
+    },
+    {
+      "runId": "06e10471-44b0-4b5c-80b9-a01f9eabd5f9",
+      "terminalStatus": "infrastructure_error",
+      "reason": "invalid_response",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 3046,
+        "outputTokens": 4000,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": null,
+        "costIsEstimate": false,
+        "elapsedMs": 84452
+      },
+      "operations": 40,
+      "candidates": 0,
+      "evidenceDigest": "sha256:63cf9ffba0f104f1542e0bfa04eb1aa650c590b4b1ea38de5cb852a8d573ac39"
+    }
+  ],
+  "ledger": {
+    "snapshot": {
+      "currency": "USD",
+      "unit": "microdollar",
+      "approvalRevision": 3,
+      "approvalDigest": "sha256:fc710da9662797bd7ee413526a59d2eae94e24d7abb2ea840f9fa2186efebb5b",
+      "connectionApprovalCurrent": true,
+      "approvalExpiresAt": "2026-12-15T20:00:00Z",
+      "frozen": true,
+      "freezeReasons": [
+        "billing_pending"
+      ],
+      "approvedMicros": "25000000",
+      "chargedMicros": "0",
+      "heldMicros": "3600000",
+      "committedMicros": "3600000",
+      "availableMicros": "21400000",
+      "pendingBillingCount": 21,
+      "reservationCount": 24,
+      "verifiedCreditsAppliedMicros": "0",
+      "pendingBillingPolicy": "allow-covered-inference",
+      "coveredPendingBillingCount": 20,
+      "blockingPendingBillingCount": 1,
+      "stages": {
+        "smoke": {
+          "approvedMicros": "25000000",
+          "chargedMicros": "0",
+          "heldMicros": "3600000",
+          "committedMicros": "3600000",
+          "availableMicros": "21400000"
+        },
+        "pilot": {
+          "approvedMicros": "0",
+          "chargedMicros": "0",
+          "heldMicros": "0",
+          "committedMicros": "0",
+          "availableMicros": "0"
+        },
+        "evaluate": {
+          "approvedMicros": "0",
+          "chargedMicros": "0",
+          "heldMicros": "0",
+          "committedMicros": "0",
+          "availableMicros": "0"
+        },
+        "hosting": {
+          "approvedMicros": "0",
+          "chargedMicros": "0",
+          "heldMicros": "0",
+          "committedMicros": "0",
+          "availableMicros": "0"
+        }
+      }
+    },
+    "lastEvent": {
+      "sequence": 100,
+      "timestamp": "2026-10-20T04:03:26.181Z",
+      "kind": "billing_incomplete",
+      "reservationId": "live-local:06e10471-44b0-4b5c-80b9-a01f9eabd5f9",
+      "approvalRevision": 3,
+      "details": {
+        "actualCostMicros": null,
+        "complete": false,
+        "evidenceDigest": "sha256:d931aea983c261d612ebb8779f2fa72e28482190900646b6840ef1a01d36acf2",
+        "overrun": false,
+        "unrecordedDispatch": false
+      }
+    }
+  },
+  "public": {
+    "release": "b2eb173",
+    "health": {
+      "status": "ok",
+      "mode": "live",
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container"
+    },
+    "taskIds": [
+      "v3-config-overlay",
+      "v3-cursor-pagination"
+    ],
+    "availability": {
+      "enabled": false,
+      "reason": "Live execution is paused pending accounting review.",
+      "remainingRuns": 85
+    },
+    "capabilities": {
+      "createRuns": false,
+      "cancelRuns": true,
+      "replay": false,
+      "streamEvents": true
+    }
+  },
+  "historicalReservationsUnchanged": true,
+  "humanizeVerified": false,
+  "humanizeDeployed": false,
+  "freshCandidateReplay": "Not run: no accepted candidate.",
+  "recording": "Blocked: Mac locked; Chrome public-demo navigation reported ERR_BLOCKED_BY_CLIENT.",
+  "submission": "Unchanged; no new footage or successful Humanize claim.",
+  "accountingBlock": "Capped response retained usage but no durable inference receipt, because candidate-envelope parsing preceded receipt persistence. Future ordering fix cannot reconstruct missing historical bytes; keep full hold and billing_pending block.",
+  "paidWorkStopped": true,
+  "validation": {
+    "accountingRetentionAndRuntimeTests": {
+      "passed": 55,
+      "failed": 0,
+      "log": "accounting-retention-tests.log"
+    },
+    "typecheck": "passed",
+    "paidValidationOfFinalReceiptFix": "NOT RUN: shared ledger frozen; no further paid dispatch permitted."
+  }
+}

@@ -13,17 +13,22 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-**October 16 status (23:17 UTC):** New bounded repairs are enabled again. Two
-curated tasks are exposed; the repository contains ten synthetic tasks. The
-verified configuration repair and correctly rejected pagination repair show
-checked maintenance without claiming every model proposal succeeds. Pricing
-verification runs hourly and fails closed; separate account-fee evidence needs
-real renewal before October 17 at 20:50 UTC. The shared $25 total includes all
-verification and judge use, with $2.35 held and capacity for 90 more $0.25
-reservations at this snapshot. No unlimited-capacity guarantee is made.
-See [current readiness](research/verification/20261016-demo-repair/public-readiness.json),
-[repair evidence](research/verification/20261016-demo-repair/README.md), and the
-[implemented operations runbook](docs/judge-operations-plan.md).
+**October 20 status:** The existing public app and saved evidence are available,
+but new repairs are paused by durable accounting review. The latest supervised
+Humanize response reached the output cap without a usable candidate and lacked
+a durable response receipt. Its full reservation remains held; the pause has
+not been bypassed. Production still exposes two synthetic tasks. This branch
+contains ten synthetic tasks and one curated historical Humanize fixture, which
+has not produced a verified repair and is not deployed.
+
+The shared $25 total includes verification and judge use through December 15,
+2026 at 20:00 UTC. Current holds are $3.60, with $21.40 uncommitted; the theoretical
+85 further $0.25 reservations are unavailable while accounting is blocked.
+Hourly catalog verification fails closed. Separate fee evidence expires
+October 20 at 21:11 UTC, with admission closing ten minutes earlier. Neither
+finite capacity nor today's receipt guarantees uninterrupted judge access.
+See the [latest outcome](research/verification/20261020-humanize/followup-outcome.json)
+and [operations runbook](docs/judge-operations-plan.md).
 
 Start with a saved walkthrough, then open **Try a repair** to inspect one of the two currently exposed
 v3 Python maintenance tasks. Each task shows the starting source, the
@@ -57,7 +62,7 @@ New evidence uses product contract **2.2**, preserving ordinary JSON mapping key
 throughout checking and export. Historical 2.0/2.1 bundles retain their original
 bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
-The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. The
+The owner approved **$25 total** for verification and judge usage, including existing usage and fees, with no automatic increase or hosting allowance. The
 September 28 recorded v3 configuration uses `nvidia/nemotron-3-super-120b-a12b` on Token
 Factory, with a **$0.25 hold per run**, at most **three model calls**, **12,000 total
 output tokens**, and **600 seconds**. The [public runtime check](research/product-v3/public-review/mobile-fixes.json)

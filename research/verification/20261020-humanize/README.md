@@ -27,3 +27,33 @@ Production remains on `b2eb173`, exposing the original two tasks, with no Humani
 A no-cost follow-up separates JSON syntax failure from files-and-summary schema failure using static diagnostic categories, without retaining response content. The coordinator records these safe categories in future evidence. Historical malformed responses cannot be retroactively classified because their raw contents were not retained. Function-body validation also rejects carriage-return, form-feed and vertical-tab line controls. The strict parser, protected paths, checks, model and spending limits remain unchanged. Type checking and all 55 follow-up tests passed (`diagnostic-tests.log`). This diagnostic change has not been validated through a further paid call or deployed.
 
 Further paid work needs an explicit extension of the three-run demonstration limit within the existing project cap. Before another repair attempt, confirm the selected model's constrained-output support and use a narrow response-format experiment with safe diagnostics. Nebius documents `json_schema` versus unconstrained `json_object` at https://docs.tokenfactory.nebius.com/ai-models-inference/json ; model-specific support and successful repair are not established by that documentation. Do not repeat identical calls or represent the current failures as a functioning repair demo.
+
+## October 20 follow-up: accounting block retained
+
+The owner authorized up to three additional $0.25 reservations within the existing
+$25 total. Two were admitted; the third was blocked before admission.
+
+- Run `b36aa9bd-d4bb-4d5f-a0bf-566672466ef1` used focused source context and strict
+  JSON schema. All three responses parsed, but all three candidates failed checks.
+  It used 8,542 input / 2,997 output tokens and 160 isolated check operations.
+- Run `06e10471-44b0-4b5c-80b9-a01f9eabd5f9` enabled reasoning under the unchanged
+  output cap. One response reported 3,046 input / 4,000 output tokens, but supplied
+  no usable candidate. No candidate executed; 40 baseline check operations completed.
+- A low-effort reasoning follow-up was prepared using NVIDIA's documented options,
+  but the shared ledger refused admission. It made zero calls and created no reservation.
+
+The capped response passed identity/usage extraction but failed the completion
+shape validation before durable receipt persistence. Its complete $0.25 hold is
+retained, and `billing_pending` blocks further admission. The proposed adapter
+correction now preserves validated identity/model/usage and response hashes before
+validating the candidate envelope. It does not accept invalid candidates, change
+cost bounds, settle old billing, or reconstruct missing response bytes. Runtime
+reasoning remains disabled by default pending successful validation.
+
+Project holds are $3.60, with $21.40 uncommitted and one blocking reservation.
+The newly authorized tranche used $0.50; $0.25 remains unused. Previous rows are
+unchanged. Production remains on the previous release, and new runs are paused.
+No Humanize success, fresh replay, rollout, video or submission update is claimed.
+The locked Mac and Chrome client-side block remain separate recording blockers.
+`followup-outcome.json` records the final observed state. All failed outputs,
+setup logs, source-bound price refreshes and test failures are retained.

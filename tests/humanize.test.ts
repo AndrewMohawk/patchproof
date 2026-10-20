@@ -76,3 +76,16 @@ test('invalid candidate syntax and shape retain static diagnostics without respo
  }
  for(const control of ['\r','\f','\v']) assert.throws(()=>validateEditRegion(f,{...f.files,[r.path]:r.prefix+'    '+control+'    pass\n'+r.suffix}),/indented/);
 });
+
+test('unusable completion preserves validated accounting receipt without accepting a candidate', async () => {
+ const input: RepairInput = { taskId:f.id,description:f.description,requirements:f.requirements,files:f.files,
+   editAllowlist:f.editAllowlist,visibleCases:f.visibleCases,editRegion:r,feedback:[],attempt:0,
+   remaining:{inferenceCallLimit:3,inputTokenLimit:262144,outputTokenLimit:4000,wallTimeLimitSeconds:600,sandboxCpuSecondsLimit:900,maxApprovedSpendUsd:0.25} };
+ const receipts: unknown[] = [];
+ const provider = new NebiusRepairProvider({modelId:'nvidia/test-only',accountVerifiedAt:'2026-10-01T00:00:00Z',
+  inputUsdPerMillionTokens:0.3,outputUsdPerMillionTokens:0.9,authorized:true,credential:async()=> 'SYNTHETIC-TOKEN',countInputTokens:()=>262144,onReceipt:r=>receipts.push(r),
+  fetch:async()=>Response.json({id:'capped-test',model:'nvidia/test-only',usage:{prompt_tokens:3046,completion_tokens:4000},choices:[{finish_reason:'length',message:{content:null}}]})});
+ await assert.rejects(provider.propose(input,new AbortController().signal),e=>e instanceof RepairError && e.code==='invalid_response' && e.providerRequestId==='capped-test' && e.usage.outputTokens===4000);
+ assert.equal(receipts.length,1);
+ assert.equal((receipts[0] as {observedOutputTokens:number}).observedOutputTokens,4000);
+});

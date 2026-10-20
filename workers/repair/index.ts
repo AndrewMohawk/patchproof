@@ -197,24 +197,30 @@ export class NebiusRepairProvider implements RepairProvider {
       if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: responseId }); throw error; }
       throw new RepairError('operation_journal_error', 'Inference response identity could not be journaled; retain this failed call.', usage, responseId);
     }
-    let parsed: z.infer<typeof responseSchema>;
-    try { parsed = responseSchema.parse(decoded); }
+    const accountingResponseSchema = responseSchema.pick({ id: true, model: true, usage: true });
+    let accounted: z.infer<typeof accountingResponseSchema>;
+    try { accounted = accountingResponseSchema.parse(decoded); }
     catch { throw new RepairError('invalid_response', 'Inference response did not match the documented completion contract.', usage, responseId); }
-    if (parsed.model !== o.modelId) throw new RepairError('model_mismatch', 'Provider returned a different model identifier.', usage, parsed.id);
+    if (accounted.model !== o.modelId) throw new RepairError('model_mismatch', 'Provider returned a different model identifier.', usage, accounted.id);
     if (usage.inputTokens > Math.min(promptTokens, input.remaining.inputTokenLimit) || usage.outputTokens > outputLimit) {
-      throw new RepairError('budget_exceeded', 'Provider-reported tokens exceeded the approved allowance; retain this failed call.', usage, parsed.id);
+      throw new RepairError('budget_exceeded', 'Provider-reported tokens exceeded the approved allowance; retain this failed call.', usage, accounted.id);
     }
     const reportedCostEstimate = (usage.inputTokens * o.inputUsdPerMillionTokens + usage.outputTokens * o.outputUsdPerMillionTokens) / 1_000_000;
-    if (reportedCostEstimate > input.remaining.maxApprovedSpendUsd) throw new RepairError('budget_exceeded', 'Reported token usage exceeds the remaining cost allowance; retain this failed call.', usage, parsed.id);
+    if (reportedCostEstimate > input.remaining.maxApprovedSpendUsd) throw new RepairError('budget_exceeded', 'Reported token usage exceeds the remaining cost allowance; retain this failed call.', usage, accounted.id);
     const rawTransportId = response.headers.get('x-request-id');
     const transportRequestId = rawTransportId && /^[A-Za-z0-9_.:/-]{1,200}$/.test(rawTransportId) && !rawTransportId.includes(token) ? rawTransportId : null;
-    try { o.onReceipt?.({ intentId, requestDigest: digestJson(requestBody), responseDigest: digestBytes(raw), usageDigest: digestJson(parsed.usage),
-      providerRequestId: parsed.id, transportRequestId, modelId: parsed.model,
+    try { o.onReceipt?.({ intentId, requestDigest: digestJson(requestBody), responseDigest: digestBytes(raw), usageDigest: digestJson(accounted.usage),
+      providerRequestId: accounted.id, transportRequestId, modelId: accounted.model,
       inputTokenCeiling: promptTokens, outputTokenCeiling: outputLimit, observedInputTokens: usage.inputTokens, observedOutputTokens: usage.outputTokens }); }
     catch (error) {
-      if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: parsed.id }); throw error; }
-      throw new RepairError('operation_journal_error', 'Inference receipt could not be preserved; retain the full reservation.', usage, parsed.id);
+      if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: accounted.id }); throw error; }
+      throw new RepairError('operation_journal_error', 'Inference receipt could not be preserved; retain the full reservation.', usage, accounted.id);
     }
+    // Preserve validated identity/usage before rejecting an unusable candidate envelope.
+    // A capped or malformed candidate must not discard the completed request receipt.
+    let parsed: z.infer<typeof responseSchema>;
+    try { parsed = responseSchema.parse(decoded); }
+    catch { throw new RepairError('invalid_response', 'Inference response did not match the documented completion contract.', usage, accounted.id); }
     if (parsed.choices[0]!.finish_reason !== 'stop') throw new RepairError('incomplete_response', 'Provider did not return a complete candidate.', usage, parsed.id);
     let candidateValue: unknown;
     try { candidateValue = JSON.parse(parsed.choices[0]!.message.content); }
