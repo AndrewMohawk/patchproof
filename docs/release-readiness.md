@@ -9,6 +9,12 @@ The final authorized follow-up was blocked before admission and made no call.
 The proposed adapter correction preserves validated response accounting before
 candidate-envelope validation, but cannot reconstruct the missing historical receipt.
 Do not clear the pause without adequate accounting evidence.
+A separately labeled, exact-case [closed-dispatch recovery policy](closed-dispatch-recovery.md)
+is implemented for offline review. It retains the full hold and unknown settlement;
+no production recovery or deployment is included. Fresh offline validation also
+found the pinned Docker Python image absent; the same pin is used by production.
+Restore and verify that exact execution image before reopening; HTTP health alone
+does not establish usable checks.
 
 Humanize rollout, fresh candidate replay, new footage and a corresponding
 submission update are unfinished. Native recording is blocked by a locked Mac;

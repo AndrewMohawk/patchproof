@@ -12,6 +12,9 @@ import { RepeatedCheckRunner, runnerForLocalScheduling } from './repeated-checks
 import type { RunJournal } from './journal.ts';
 import type { EvidenceStore } from './evidence.ts';
 
+// One source for request behavior and exported descriptions. Historical bundles stay immutable.
+export const LIVE_THINKING_SETTINGS = Object.freeze({ disableThinking: true, enableThinkingForEditRegions: false });
+export const LIVE_SAMPLING_DESCRIPTION = `provider sampling defaults; chat_template_kwargs.enable_thinking=${!LIVE_THINKING_SETTINGS.disableThinking} requested; edit-region override=${LIVE_THINKING_SETTINGS.enableThinkingForEditRegions}; hidden reasoning not retained; no determinism claim`;
 export const LIVE_MODEL = 'nvidia/nemotron-3-super-120b-a12b';
 export const LIVE_EXECUTION = Object.freeze({ modelProvider: 'nebius-token-factory', checkBackend: 'local_container', modelId: LIVE_MODEL });
 export const LIVE_LIMITS = Object.freeze(LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 786432,
@@ -98,7 +101,7 @@ export function createLiveLocalCoordinator(input: {
     inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
     // Explicit upstream non-thinking mode keeps the bounded output available for a patch.
     // The evidence records this request setting; it does not claim hidden provider behavior.
-    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, disableThinking: true,
+    maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, ...LIVE_THINKING_SETTINGS,
     countInputTokens: () => LIVE_PRICING.contextTokens,
     credential: async () => { validate(); return input.credential(); },
     fetch: async (url, init) => { validate(); if (!active?.attempted || active.closed) throw new ContractError('authorization_required', 'Dispatch reservation is required.', 403); return input.fetch(url, init); },
