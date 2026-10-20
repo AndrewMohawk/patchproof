@@ -94,6 +94,8 @@ test('current-source binding uses the source-map digest, and rejects a whole-loc
   for (const file of ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json']) {
     writeFileSync(join(s.projectRoot, file), '{}\n');
   }
+  mkdirSync(join(s.projectRoot, 'research/product-v3'), { recursive: true });
+  writeFileSync(join(s.projectRoot, 'research/product-v3/model-discovery.json'), '{"scope":"synthetic-test-only"}\n');
   const lock = buildOperationalLock(s.projectRoot);
   s.config.sourceBinding = 'current-operational-lock'; s.config.bindings.sourceDigest = digestJson(lock); s.save();
   assert.equal(runExperimentExportOperator(s.args(), s.projectRoot).exitCode, 2);

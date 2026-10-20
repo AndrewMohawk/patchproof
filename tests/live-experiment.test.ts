@@ -239,10 +239,15 @@ test('caller property mutation cannot swap captured ledger, source, tokenizer, t
 
 test('accounting observer wait is deadline bounded; missing receipt never yields a selected artifact', async t => {
   const s = await setup(t); s.options.settings.accountingTimeoutSeconds = 1; s.accept();
-  s.hooks.accounting = async () => new Promise(() => {}); // Deliberately ignores abort; the factory still bounds its wait.
-  const executor = createLiveExperimentExecutor(s.options), input = s.input(); s.grant(input); const started = performance.now();
+  let observerStarted = Number.NaN;
+  s.hooks.accounting = async () => {
+    observerStarted = performance.now();
+    return new Promise(() => {}); // Deliberately ignores abort; the factory still bounds its wait.
+  };
+  const executor = createLiveExperimentExecutor(s.options), input = s.input(); s.grant(input);
   await assert.rejects(executor.execute(input, new AbortController().signal), /billing_incomplete/);
-  assert.ok(performance.now() - started < 2500); assert.equal(s.observed.accounting.length, 1);
+  assert.ok(Number.isFinite(observerStarted), 'The accounting observer must have been entered.');
+  assert.ok(performance.now() - observerStarted < 2500); assert.equal(s.observed.accounting.length, 1);
   assert.equal(s.ledger.get(input.dispatchId).actualCostMicros, null); assert.equal(s.ledger.get(input.dispatchId).reconciliationComplete, false);
 });
 
