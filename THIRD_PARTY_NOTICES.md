@@ -55,3 +55,7 @@ The checked card revision and account catalog receipt are preserved in
 `research/product-v3/model-discovery.json`. The hosted weights revision and
 tokenizer equivalence remain unverified. This receipt records historical model research, not
 acceptance of additional terms or authorization to redistribute model weights.
+
+## Humanize historical fixture
+
+The fixture `fixtures/development/humanize-negative-duration.json` includes five Python modules from python-humanize/humanize commit `1399e049734bd7c779b38fa64dd02742b6aadb06`, copyright Jason Moiron and Contributors, under the MIT license. The complete notice is embedded in the fixture and preserved in `research/verification/20261020-humanize/HUMANIZE-LICENCE`. Package metadata and provenance are recorded beside it.

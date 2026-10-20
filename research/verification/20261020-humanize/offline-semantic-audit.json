@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-10-20T03:20:31.522898+00:00",
+  "paidCalls": 0,
+  "upstreamFixInspected": false,
+  "originalFixtureBytesSha256": "48e1d58bdb3f6b0b487cc54e7e629296e50f9644136f2562c74543408f7c46b8",
+  "candidateAstComparisons": [
+    {
+      "runId": "a7b1b65b-0af3-4bf9-ac42-372d2c590cda",
+      "candidateId": 1,
+      "astIdenticalExceptDocstrings": false
+    },
+    {
+      "runId": "a7b1b65b-0af3-4bf9-ac42-372d2c590cda",
+      "candidateId": 2,
+      "astIdenticalExceptDocstrings": true
+    },
+    {
+      "runId": "a7b1b65b-0af3-4bf9-ac42-372d2c590cda",
+      "candidateId": 3,
+      "astIdenticalExceptDocstrings": true
+    },
+    {
+      "runId": "51fb0a59-511b-4e71-833d-d5e050317484",
+      "candidateId": 1,
+      "astIdenticalExceptDocstrings": true
+    }
+  ],
+  "stdlibNormalization": [
+    {
+      "caseId": "negative-tiny",
+      "adapterInput": -7,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86399,
+      "normalizedMicroseconds": 999993,
+      "signedTotalMicroseconds": -7,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "negative-microseconds",
+      "adapterInput": -7,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86399,
+      "normalizedMicroseconds": 999993,
+      "signedTotalMicroseconds": -7,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "negative-milliseconds",
+      "adapterInput": -250000,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86399,
+      "normalizedMicroseconds": 750000,
+      "signedTotalMicroseconds": -250000,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "negative-seconds",
+      "adapterInput": -30000000,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86370,
+      "normalizedMicroseconds": 0,
+      "signedTotalMicroseconds": -30000000,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "negative-minutes",
+      "adapterInput": -120000000,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86280,
+      "normalizedMicroseconds": 0,
+      "signedTotalMicroseconds": -120000000,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "negative-hours",
+      "adapterInput": -18000000000,
+      "argumentUnit": "microseconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 68400,
+      "normalizedMicroseconds": 0,
+      "signedTotalMicroseconds": -18000000000,
+      "microsecondsAlreadyNonnegative": true
+    },
+    {
+      "caseId": "numeric-negative",
+      "adapterInput": -30,
+      "argumentUnit": "seconds",
+      "normalizedDays": -1,
+      "normalizedSeconds": 86370,
+      "normalizedMicroseconds": 0,
+      "signedTotalMicroseconds": -30000000,
+      "microsecondsAlreadyNonnegative": true
+    }
+  ],
+  "malformedResponses": "Not stored as raw content. Only digests, identity, usage and terminal invalid_candidate remain; syntax/schema distinction cannot be recovered.",
+  "testContractAmbiguity": "R01 previously said timedelta durations only, although the numeric-negative acceptance case expects the same absolute-distance behavior. Clarify supported numeric-second inputs explicitly; do not alter check inputs or expected results."
+}

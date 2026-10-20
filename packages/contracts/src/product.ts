@@ -19,9 +19,11 @@ const FixtureObjectSchema = z.strictObject({
   title: z.string(), description: z.string(), requirements: z.array(RequirementSchema).min(1),
   files: jsonRecord(z.string()), editAllowlist: z.array(z.string()).min(1),
   entrypoint: z.string(), visibleCases: z.array(FunctionCaseSchema), acceptanceCases: z.array(FunctionCaseSchema),
-  license: z.literal('CC0-1.0'), provenance: z.string(),
+  license: z.enum(['CC0-1.0', 'MIT']), provenance: z.string(),
+  licenseText: z.string().min(1).optional(),
+  editRegion: z.strictObject({ path: z.string(), functionName: z.string(), prefix: z.string().min(1), suffix: z.string().min(1) }).optional(),
 });
-export const FixtureSchema = jsonShape(FixtureObjectSchema);
+export const FixtureSchema = jsonShape(FixtureObjectSchema).refine(f => f.license !== 'MIT' || Boolean(f.licenseText), 'MIT license notice required');
 export function parseFixtureForVersion(value: unknown, version: ProductContractVersion) {
   const copy = JsonDataSchema.parse(value);
   if (version === '2.2') return FixtureSchema.parse(copy);
@@ -45,6 +47,7 @@ export interface RepairInput {
   files: Record<string, string>;
   editAllowlist: string[];
   visibleCases: FunctionCase[];
+  editRegion?: { path: string; functionName: string; prefix: string; suffix: string };
   feedback: Array<{ requirementId: string; status: string; message: string }>;
   attempt: number;
   remaining: z.infer<typeof LimitsSchema>;

@@ -1,0 +1,971 @@
+{
+  "format": "patchproof-evidence-v2",
+  "schemaVersion": "2.2",
+  "mode": "live",
+  "competitionReady": false,
+  "run": {
+    "schemaVersion": "2.2",
+    "id": "06e10471-44b0-4b5c-80b9-a01f9eabd5f9",
+    "taskId": "humanize-negative-duration",
+    "variant": "baseline",
+    "mode": "live",
+    "competitionReady": false,
+    "notice": "Real NVIDIA inference on Nebius Token Factory; declared checks execute in isolated local containers. Unscored demonstration.",
+    "phase": "terminal",
+    "terminalStatus": "infrastructure_error",
+    "reason": "invalid_response",
+    "createdAt": "2026-10-20T04:02:01.156Z",
+    "finishedAt": "2026-10-20T04:03:26.044Z",
+    "sourceDigest": "sha256:1dc90b7271eefd9962c835417f376a64776deabc26c3bb7e5b861d99d682d019",
+    "policyDigest": "sha256:1d2867ff7c6fd74e184a5682c934d2c14b4f18466cc9cbf7521963153d196470",
+    "runtimeLockDigest": "sha256:efee37c49eea3209c0131d9f986b2846e8cba87ec1717fbfb8113dbe8a2c18c5",
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 786432,
+      "outputTokenLimit": 12000,
+      "wallTimeLimitSeconds": 600,
+      "sandboxCpuSecondsLimit": 900,
+      "maxApprovedSpendUsd": 0.25
+    },
+    "usage": {
+      "inferenceCalls": 1,
+      "inputTokens": 3046,
+      "outputTokens": 4000,
+      "sandboxCpuSeconds": null,
+      "measuredCostUsd": null,
+      "costIsEstimate": false,
+      "elapsedMs": 84452
+    },
+    "baselineChecks": {
+      "visible": [
+        {
+          "id": "negative-tiny",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "a moment",
+          "durationMs": 6178,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-tiny\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"a moment\",\"durationMs\":2948,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-7],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-80af58ea-1c83-4609-9bd5-5086b9891263\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"3f708f094af6d6661201d4e3678a3edd3f2b131990a8dd0afecd521841897305\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-tiny\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"a moment\",\"durationMs\":3230,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-7],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-a7a01c38-e664-4b4f-a824-eb1f59a31fc0\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"4c1d8317be0ec00e2a97f91e8f7f314c199a762131ba617790ff5d07d2d4cc35\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "negative-microseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "7 microseconds",
+          "durationMs": 6060,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-microseconds\",\"requirementId\":\"R02\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"7 microseconds\",\"durationMs\":2821,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-7],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"microseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-bfae1bb7-adf1-418c-8d68-586397fa80f5\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"97fa08804effbfcddd516d8b1ac6be52a28ae1161f23e2f175db20e8fd14748b\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-microseconds\",\"requirementId\":\"R02\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"7 microseconds\",\"durationMs\":3239,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-7],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"microseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-807d0e7d-f6bf-4371-ab5b-1fdb1438e905\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"059ca8ac99c02bbf5cf65440ced843c95505854318368d7b81385e35b77fd944\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "negative-milliseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "250 milliseconds",
+          "durationMs": 6087,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-milliseconds\",\"requirementId\":\"R02\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"250 milliseconds\",\"durationMs\":3065,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-250000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"milliseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-4fe3269d-18c5-44a1-8ad6-e3e36c972a76\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"365d05e2051ac80fe28a43e093cfe47e2926395d136072b82b16a68cc8957366\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-milliseconds\",\"requirementId\":\"R02\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"250 milliseconds\",\"durationMs\":3022,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-250000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"milliseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-4fb15100-49a7-4203-9dc2-8e1b907cf78e\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"7ccbc0d270a9b2d7bf3ac4e69845f543c9ffc2de083ab42d4af022104df60921\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "negative-seconds",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 6066,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-seconds\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"30 seconds\",\"durationMs\":3075,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-30000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-81ac9572-058b-476f-9429-8ad8382c5057\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"7a6d3acc425bc85a9ea5d349ed9dba8fa0c25d445b0bf85311829e3b287d1e56\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-seconds\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"30 seconds\",\"durationMs\":2991,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-30000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-6369b915-7a52-411e-b7fa-f5fdcb2872e7\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"00d4d5872bb792ad649f7cd73a4475202adca283bad4430d53564d7ee6d1d5d2\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        }
+      ],
+      "acceptance": [
+        {
+          "id": "negative-minutes",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "2 minutes",
+          "durationMs": 6065,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-minutes\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"2 minutes\",\"durationMs\":3266,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-120000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-56e97da8-7648-4321-a5f3-fe60763a9657\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"abce119bd47662a44b098847914beb41d77f52b47e149239cbfe00c234d505e4\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-minutes\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"2 minutes\",\"durationMs\":2799,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-120000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-bcd26690-0155-4c32-ac63-b954eabbf9f5\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"64fd8c6f40c7e70713c7c3f80fe714855ca3dcc94cd46ceaa2d077608895d5f1\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "negative-hours",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "5 hours",
+          "durationMs": 6259,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"negative-hours\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"5 hours\",\"durationMs\":3374,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-18000000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-60f0e75f-6022-4e25-9ed3-eee3bd0076c9\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"70a6b4439382af87561c6f5ac96526e3e2aae0427591e6c498743cf896e807ea\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"negative-hours\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"5 hours\",\"durationMs\":2885,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-18000000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-273fd3c7-3cab-4b4b-943c-84784af5fcab\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"23aa23be187ca4b397c10a489292bf499e8d894e46422a739c3ebf7039bfe900\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-tiny",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 5868,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-tiny\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a moment\",\"expected\":\"a moment\",\"durationMs\":3034,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a moment\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[7],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-4ab05913-1d86-4184-84f4-1b4c65d691f3\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"f34b427da09219594e47fd90325fbcb7e87792b16d782046446e20d870ca7e58\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-tiny\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a moment\",\"expected\":\"a moment\",\"durationMs\":2834,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a moment\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[7],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-fe52c081-9e67-4d2e-a447-25057978cfcd\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"463af9062a3c7cdc5405e4950e6b887d740c9127954ad5010da675c68c69d516\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-microseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "7 microseconds",
+          "expected": "7 microseconds",
+          "durationMs": 5913,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-microseconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"7 microseconds\",\"expected\":\"7 microseconds\",\"durationMs\":3033,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"7 microseconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[7],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"microseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-b1dd1860-56f7-4c82-9f63-16106b2ec73e\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"633db68d2d72c97e9bf353dfbe5282fb159551f9b6dcd10ab5819e95a3a45cc3\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-microseconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"7 microseconds\",\"expected\":\"7 microseconds\",\"durationMs\":2880,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"7 microseconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[7],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"microseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-0cd1d059-dfa6-4449-968f-0c47a579be0e\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"eabf70d58fb812aae143151682848f92d0da23f4be6da36f2dba1d91fd8bf16d\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-milliseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "250 milliseconds",
+          "expected": "250 milliseconds",
+          "durationMs": 6066,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-milliseconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"250 milliseconds\",\"expected\":\"250 milliseconds\",\"durationMs\":2980,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"250 milliseconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[250000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"milliseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-af6ad9a2-4903-49a1-ba5d-64138c950d1d\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"6c7a7ae3d5864888703addf08c2a5d047b95de3005c8ea8ae1e1238ba53c7b75\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-milliseconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"250 milliseconds\",\"expected\":\"250 milliseconds\",\"durationMs\":3086,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"250 milliseconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[250000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"milliseconds\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-c8513698-a1ad-4f6a-8c63-8a14087c3a72\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"fd73b7d8b6c2f405f08bab6e20a37a63ae7e01725a257d823bc1527791a3f213\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-seconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 6037,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-seconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"30 seconds\",\"expected\":\"30 seconds\",\"durationMs\":3076,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"30 seconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[30000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-ed9e47a5-2b3d-4326-845e-f45f46b1175d\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"584fe9e050845daccfd7fac928b8599b1c246a137a0a5ca94f2e5cbd4739e0b2\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-seconds\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"30 seconds\",\"expected\":\"30 seconds\",\"durationMs\":2961,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"30 seconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[30000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-3bd0b84c-a434-4cf9-8a99-c205e4f4106d\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"c89a6728c5d00102e1be4f62204953b3c2d0f9574d977e25899ded202fa2a123\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-minutes",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "2 minutes",
+          "expected": "2 minutes",
+          "durationMs": 5979,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-minutes\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"2 minutes\",\"expected\":\"2 minutes\",\"durationMs\":3120,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"2 minutes\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[120000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-1e59383a-b3f1-4c3b-9936-47d0a95fe160\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"4afd11510634948647441fad6114903846365cd7fe91907e524f20fdd8eaffc1\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-minutes\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"2 minutes\",\"expected\":\"2 minutes\",\"durationMs\":2859,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"2 minutes\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[120000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-9fec2633-7a4c-45ac-ad46-8561ee108c3c\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"4e2fb054287295fb750039583734a70757bc32a658be10fe09eff2a64a4e31de\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "positive-hours",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "5 hours",
+          "expected": "5 hours",
+          "durationMs": 6014,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"positive-hours\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"5 hours\",\"expected\":\"5 hours\",\"durationMs\":3094,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"5 hours\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[18000000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-b5c80123-8b5c-4fc5-924f-7f8bf4587a2c\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"e1d78d8eb607573a0fad87d22e4433b790e2a4fe83a26ecb0b39aefcd601d1d8\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"positive-hours\",\"requirementId\":\"R02\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"5 hours\",\"expected\":\"5 hours\",\"durationMs\":2920,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"5 hours\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[18000000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-cf7fea88-96d0-48cf-98c8-885413b1bb41\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"d69ac4ddd92bb6e1848f2fb8859ae0788eaa0f428fde05a5d5d24000d4eec889\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "zero",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 5978,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"zero\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a moment\",\"expected\":\"a moment\",\"durationMs\":2809,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a moment\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[0],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-331aec0a-c3bb-416b-ad29-7dce5bf6b58a\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"03e9930f935336096bce23d66560c931765eebb05808842bb408b7a35fc73384\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"zero\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a moment\",\"expected\":\"a moment\",\"durationMs\":3169,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a moment\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[0],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-90f6e9e3-fa74-4174-b97f-6aa0c16e0cf9\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"ea9ba4a761b30552419c4ef56a3fbb8553fc9e3edd0ab512f254ec7bd7fd60d0\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "month",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "a month",
+          "expected": "a month",
+          "durationMs": 5852,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"month\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a month\",\"expected\":\"a month\",\"durationMs\":2881,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a month\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[2678400000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-f1f3de07-71e1-4476-a2fd-af0572847972\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"218cc87b003794b2963093d7762a0c82c0394d09b49024329dc2b2d739960e05\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"month\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"a month\",\"expected\":\"a month\",\"durationMs\":2971,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a month\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[2678400000000],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-cf143c3b-66ab-4a07-9d31-1b169d3154ba\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"59c0647de7a6264c5ae4a134d2ad75da347409e442eb6658d234171e1bc6e844\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "month-disabled",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "31 days",
+          "expected": "31 days",
+          "durationMs": 5737,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"month-disabled\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"31 days\",\"expected\":\"31 days\",\"durationMs\":2837,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"31 days\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[2678400000000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"months\\\\\\\":false}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-fc956086-ac50-4e30-8731-278177ce53c6\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"0542665be23a75842b63c7002f8cde1ddfe8f96fc86584be6dfa429b6c9ffaee\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"month-disabled\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"31 days\",\"expected\":\"31 days\",\"durationMs\":2900,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"31 days\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[2678400000000],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"months\\\\\\\":false}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-d046bed3-bcc7-4c28-aeb4-863d44a02aa5\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"e303496e9781de2278bb3ba5397b2fe699b976a4b48d13a74dae49f0ed71e924\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "invalid-known-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": {
+            "exception": "ValueError"
+          },
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 6134,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"invalid-known-unit\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"ValueError\"},\"expected\":{\"exception\":\"ValueError\"},\"durationMs\":2972,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"exception\\\\\\\":\\\\\\\"ValueError\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[1],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"hours\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-99296e2a-8851-41b2-ad60-0583be17f0de\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"c1d8e1ba5441de5f8955c7af0b0a712ffe1ee4e8536861dd3e006f46f594c4e7\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"invalid-known-unit\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"ValueError\"},\"expected\":{\"exception\":\"ValueError\"},\"durationMs\":3162,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"exception\\\\\\\":\\\\\\\"ValueError\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[1],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"hours\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-84b31911-0617-4311-ae37-5bbedd9f5c5c\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"73da0215e04284cf4f7e4b39554b2dd4a728951416320b45423a18130bbd6579\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "invalid-unknown-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": {
+            "exception": "KeyError"
+          },
+          "expected": {
+            "exception": "KeyError"
+          },
+          "durationMs": 5625,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"invalid-unknown-unit\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"KeyError\"},\"expected\":{\"exception\":\"KeyError\"},\"durationMs\":2839,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"exception\\\\\\\":\\\\\\\"KeyError\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[1],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"bananas\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-a1942c09-d352-4b10-8c70-233303bdf3ff\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"b2424266f37d0506917b9d984bfc8fb1fad15caebf8dca6662971fc8d221152f\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"invalid-unknown-unit\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":{\"exception\":\"KeyError\"},\"expected\":{\"exception\":\"KeyError\"},\"durationMs\":2786,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"exception\\\\\\\",\\\\\\\"exception\\\\\\\":\\\\\\\"KeyError\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[1],\\\\\\\"kwargsAfter\\\\\\\":{\\\\\\\"minimum_unit\\\\\\\":\\\\\\\"bananas\\\\\\\"}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-05c8714c-9f84-425a-ad51-d6679576faa4\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"3d452f0d76859d61755e95e6093b8460c7f4fc335d73bf8fbc2151a6f585ed22\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "numeric-negative",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check. Repeated observations agree.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 5993,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"numeric-negative\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"30 seconds\",\"durationMs\":3191,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-30],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-edb8f25c-fe05-4bcb-a171-db069978c296\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"70779d795a39e6ca2e91c5e920f57f04301ab20f089ec1cefcb23cc71b51ae84\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"numeric-negative\",\"requirementId\":\"R01\",\"status\":\"fail\",\"message\":\"Observed outcome differs from the declared check.\",\"actual\":\"a day\",\"expected\":\"30 seconds\",\"durationMs\":2802,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":false,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"a day\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[-30],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-51da46f1-494e-4f38-94bf-4a8f4ca87a45\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"a060e67f49d4bc0de990d5388f8f94abd156373cd0ce9bce654a7e09fc043130\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "numeric-positive",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 5903,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"numeric-positive\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"30 seconds\",\"expected\":\"30 seconds\",\"durationMs\":3116,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"30 seconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[30],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-2532030d-8c7a-4b80-8fed-44ad590ba88f\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"dfb6be75022676a684f3e530103ff7dcbb0377b5c3d28fc9ea4bad350cf54d67\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"numeric-positive\",\"requirementId\":\"R03\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"30 seconds\",\"expected\":\"30 seconds\",\"durationMs\":2787,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"30 seconds\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[30],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-cd4401ca-ec32-431c-889f-e57e8c76cfaa\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"6e03b4fb55cf1464ff3c8f7be5eda20267bb0526878dbf1dde08eaedb6a3c220\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        },
+        {
+          "id": "package-metadata",
+          "requirementId": "R04",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check. Repeated observations agree.",
+          "actual": "4.9.1.dev32",
+          "expected": "4.9.1.dev32",
+          "durationMs": 5815,
+          "log": "{\"protocol\":\"repeat-observations-v1\",\"stability\":\"consistent\",\"observations\":[{\"id\":\"package-metadata\",\"requirementId\":\"R04\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"4.9.1.dev32\",\"expected\":\"4.9.1.dev32\",\"durationMs\":2835,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"4.9.1.dev32\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-20aee157-8be5-4546-8770-0c3517e0608e\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"a009187d91f5817810502e345eaec03058c4dffce98a74e6d21cd55205f1d90e\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"},{\"id\":\"package-metadata\",\"requirementId\":\"R04\",\"status\":\"pass\",\"message\":\"Observed outcome matches the declared check.\",\"actual\":\"4.9.1.dev32\",\"expected\":\"4.9.1.dev32\",\"durationMs\":2980,\"log\":\"{\\\"observationLog\\\":\\\"{\\\\\\\"comparisonPerformedBy\\\\\\\":\\\\\\\"host_controller\\\\\\\",\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"outcomeMatches\\\\\\\":true,\\\\\\\"argsUnchanged\\\\\\\":true,\\\\\\\"observed\\\\\\\":{\\\\\\\"kind\\\\\\\":\\\\\\\"return\\\\\\\",\\\\\\\"value\\\\\\\":\\\\\\\"4.9.1.dev32\\\\\\\",\\\\\\\"argsAfter\\\\\\\":[],\\\\\\\"kwargsAfter\\\\\\\":{}}}\\\",\\\"dockerLifecycle\\\":{\\\"operationId\\\":\\\"docker:patchproof-check-fb0338b4-b201-46f2-b107-7e4b925522c9\\\",\\\"createAcknowledged\\\":true,\\\"containerId\\\":\\\"37b4dc2d72a4c37719abcd7b537e9ea3574e2ff69ab6e8fbe2d62f14fcb4d69b\\\",\\\"cleanupConfirmed\\\":true,\\\"cleanupReason\\\":null,\\\"cleanupInspectionFailure\\\":null}}\"}]}"
+        }
+      ]
+    },
+    "candidates": [],
+    "selectedCandidateId": null,
+    "coverage": [
+      {
+        "requirementId": "R01",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R02",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R03",
+        "status": "unverified",
+        "checkIds": []
+      },
+      {
+        "requirementId": "R04",
+        "status": "unverified",
+        "checkIds": []
+      }
+    ],
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-10-20T04:02:01.433Z",
+        "phase": "repair",
+        "message": "Pricing verification: {\"digest\":\"sha256:570cb15173df86bdc89fbeb18bc72a6c9c3080a3d3ca0b139c24841fa3c3e87e\",\"evidence\":{\"schemaVersion\":\"1.0\",\"policyDigest\":\"sha256:321d6cb5ac9ef9b275cb2e1ec05eab3ebb6e2d3a20cd7b45f9866458b41cdfc9\",\"sourceDigest\":\"sha256:aed7c93b7dc29d17277a059eb4865c51167ad1af052d20dbdeab8f2ae773f456\",\"budgetDigest\":\"sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53\",\"verifiedAt\":\"2026-10-20T04:01:38.948Z\",\"validUntil\":\"2026-10-20T05:11:38.948Z\",\"catalogDigest\":\"sha256:79af265adb360784790d5277924aea5c9b5a4eeca6fd340b91a2ab2a76d3c977\",\"modelId\":\"nvidia/nemotron-3-super-120b-a12b\",\"contextTokens\":262144,\"quantization\":\"fp4\",\"inputUsdPerMillionTokens\":0.3,\"outputUsdPerMillionTokens\":0.9,\"requestFeeUsd\":0,\"feeEvidence\":{\"schemaVersion\":\"1.0\",\"verifiedAt\":\"2026-10-19T21:11:58.134Z\",\"validUntil\":\"2026-10-20T21:11:58.134Z\",\"evidenceDigest\":\"sha256:1fddb65de6bca39f6a6c681fbcc4ff149b544d054db7c88b5ccdb6b74522fad0\",\"accountBillingActive\":true,\"additionalFeeUsdPerRun\":0,\"basis\":\"operator-reviewed-account-pricing-and-fees\"}}}"
+      },
+      {
+        "sequence": 2,
+        "timestamp": "2026-10-20T04:02:01.542Z",
+        "phase": "queued",
+        "message": "Run queued with a fixed shared resource allowance."
+      },
+      {
+        "sequence": 3,
+        "timestamp": "2026-10-20T04:02:01.592Z",
+        "phase": "preflight",
+        "message": "Checking live runtime bindings and the reserved aggregate allowance."
+      },
+      {
+        "sequence": 4,
+        "timestamp": "2026-10-20T04:02:01.754Z",
+        "phase": "baseline_capture",
+        "message": "Running original source against frozen declared checks."
+      },
+      {
+        "sequence": 5,
+        "timestamp": "2026-10-20T04:03:04.382Z",
+        "phase": "repair",
+        "message": "Requesting NVIDIA model candidate 1; all candidates share the reserved envelope."
+      },
+      {
+        "sequence": 6,
+        "timestamp": "2026-10-20T04:03:04.776Z",
+        "phase": "repair",
+        "message": "Nebius model request_intent: b12dafb1-4c0c-475d-ba52-745348443e07."
+      },
+      {
+        "sequence": 7,
+        "timestamp": "2026-10-20T04:03:25.954Z",
+        "phase": "repair",
+        "message": "Nebius model response: chatcmpl-aa7682ce8eecf855."
+      },
+      {
+        "sequence": 8,
+        "timestamp": "2026-10-20T04:03:26.020Z",
+        "phase": "repair",
+        "message": "Failed inference response ID: chatcmpl-aa7682ce8eecf855. Billing remains unreconciled."
+      },
+      {
+        "sequence": 9,
+        "timestamp": "2026-10-20T04:03:26.044Z",
+        "phase": "export",
+        "message": "Preserving source, patch, checks, costs and observed events."
+      },
+      {
+        "sequence": 10,
+        "timestamp": "2026-10-20T04:03:26.080Z",
+        "phase": "terminal",
+        "message": "infrastructure_error: invalid_response. Real inference; provider billing remains unreconciled."
+      }
+    ],
+    "sandboxOperationIds": [
+      "docker:patchproof-check-80af58ea-1c83-4609-9bd5-5086b9891263",
+      "docker:patchproof-check-bfae1bb7-adf1-418c-8d68-586397fa80f5",
+      "docker:patchproof-check-81ac9572-058b-476f-9429-8ad8382c5057",
+      "docker:patchproof-check-4fe3269d-18c5-44a1-8ad6-e3e36c972a76",
+      "docker:patchproof-check-60f0e75f-6022-4e25-9ed3-eee3bd0076c9",
+      "docker:patchproof-check-56e97da8-7648-4321-a5f3-fe60763a9657",
+      "docker:patchproof-check-b1dd1860-56f7-4c82-9f63-16106b2ec73e",
+      "docker:patchproof-check-4ab05913-1d86-4184-84f4-1b4c65d691f3",
+      "docker:patchproof-check-ed9e47a5-2b3d-4326-845e-f45f46b1175d",
+      "docker:patchproof-check-af6ad9a2-4903-49a1-ba5d-64138c950d1d",
+      "docker:patchproof-check-1e59383a-b3f1-4c3b-9936-47d0a95fe160",
+      "docker:patchproof-check-b5c80123-8b5c-4fc5-924f-7f8bf4587a2c",
+      "docker:patchproof-check-331aec0a-c3bb-416b-ad29-7dce5bf6b58a",
+      "docker:patchproof-check-f1f3de07-71e1-4476-a2fd-af0572847972",
+      "docker:patchproof-check-fc956086-ac50-4e30-8731-278177ce53c6",
+      "docker:patchproof-check-99296e2a-8851-41b2-ad60-0583be17f0de",
+      "docker:patchproof-check-a1942c09-d352-4b10-8c70-233303bdf3ff",
+      "docker:patchproof-check-edb8f25c-fe05-4bcb-a171-db069978c296",
+      "docker:patchproof-check-2532030d-8c7a-4b80-8fed-44ad590ba88f",
+      "docker:patchproof-check-20aee157-8be5-4546-8770-0c3517e0608e",
+      "docker:patchproof-check-a7a01c38-e664-4b4f-a824-eb1f59a31fc0",
+      "docker:patchproof-check-807d0e7d-f6bf-4371-ab5b-1fdb1438e905",
+      "docker:patchproof-check-4fb15100-49a7-4203-9dc2-8e1b907cf78e",
+      "docker:patchproof-check-6369b915-7a52-411e-b7fa-f5fdcb2872e7",
+      "docker:patchproof-check-bcd26690-0155-4c32-ac63-b954eabbf9f5",
+      "docker:patchproof-check-273fd3c7-3cab-4b4b-943c-84784af5fcab",
+      "docker:patchproof-check-fe52c081-9e67-4d2e-a447-25057978cfcd",
+      "docker:patchproof-check-0cd1d059-dfa6-4449-968f-0c47a579be0e",
+      "docker:patchproof-check-c8513698-a1ad-4f6a-8c63-8a14087c3a72",
+      "docker:patchproof-check-3bd0b84c-a434-4cf9-8a99-c205e4f4106d",
+      "docker:patchproof-check-9fec2633-7a4c-45ac-ad46-8561ee108c3c",
+      "docker:patchproof-check-cf7fea88-96d0-48cf-98c8-885413b1bb41",
+      "docker:patchproof-check-90f6e9e3-fa74-4174-b97f-6aa0c16e0cf9",
+      "docker:patchproof-check-cf143c3b-66ab-4a07-9d31-1b169d3154ba",
+      "docker:patchproof-check-d046bed3-bcc7-4c28-aeb4-863d44a02aa5",
+      "docker:patchproof-check-84b31911-0617-4311-ae37-5bbedd9f5c5c",
+      "docker:patchproof-check-05c8714c-9f84-425a-ad51-d6679576faa4",
+      "docker:patchproof-check-51da46f1-494e-4f38-94bf-4a8f4ca87a45",
+      "docker:patchproof-check-cd4401ca-ec32-431c-889f-e57e8c76cfaa",
+      "docker:patchproof-check-fb0338b4-b201-46f2-b107-7e4b925522c9"
+    ]
+  },
+  "fixture": {
+    "id": "humanize-negative-duration",
+    "repoId": "python-humanize-humanize-1399e049",
+    "split": "development",
+    "title": "Humanize: tiny negative durations display as a day",
+    "description": "Historical open-source regression reproduction from python-humanize/humanize commit 1399e049734bd7c779b38fa64dd02742b6aadb06, reported as issue #171 in 2024. This is not a novel discovery or a claim about current releases. Repair only naturaldelta; all five upstream Python modules are preserved. A protected adapter converts JSON microseconds to timedelta and loads metadata built from this exact checkout. Checks cover English duration formatting, not the whole upstream test suite or translated locales. Return only the indented function body for the editable path as requested by the region protocol.",
+    "requirements": [
+      {
+        "id": "R01",
+        "text": "Treat both timedelta durations and numeric-second inputs as absolute distances, including negative microseconds, milliseconds, seconds, minutes and hours. Do not use the current clock."
+      },
+      {
+        "id": "R02",
+        "text": "Preserve microseconds and milliseconds minimum-unit formatting, singular/plural behavior, and matching positive-duration behavior."
+      },
+      {
+        "id": "R03",
+        "text": "Preserve zero, ordinary positive and numeric-second inputs, month formatting and invalid minimum-unit errors."
+      },
+      {
+        "id": "R04",
+        "text": "Only the body of naturaldelta in src/humanize/time.py may change. Preserve its signature and all remaining upstream source bytes, protected adapter and metadata."
+      }
+    ],
+    "files": {
+      "src/humanize/__init__.py": "\"\"\"Main package for humanize.\"\"\"\n\nfrom __future__ import annotations\n\nimport importlib.metadata\n\nfrom humanize.filesize import naturalsize\nfrom humanize.i18n import activate, deactivate, decimal_separator, thousands_separator\nfrom humanize.number import (\n    apnumber,\n    clamp,\n    fractional,\n    intcomma,\n    intword,\n    metric,\n    ordinal,\n    scientific,\n)\nfrom humanize.time import (\n    naturaldate,\n    naturalday,\n    naturaldelta,\n    naturaltime,\n    precisedelta,\n)\n\n__version__ = importlib.metadata.version(__name__)\n\n\n__all__ = [\n    \"__version__\",\n    \"activate\",\n    \"apnumber\",\n    \"clamp\",\n    \"deactivate\",\n    \"decimal_separator\",\n    \"fractional\",\n    \"intcomma\",\n    \"intword\",\n    \"metric\",\n    \"naturaldate\",\n    \"naturalday\",\n    \"naturaldelta\",\n    \"naturalsize\",\n    \"naturaltime\",\n    \"ordinal\",\n    \"precisedelta\",\n    \"scientific\",\n    \"thousands_separator\",\n]\n",
+      "src/humanize/filesize.py": "#!/usr/bin/env python\n\n\"\"\"Bits and bytes related humanization.\"\"\"\nfrom __future__ import annotations\n\nsuffixes = {\n    \"decimal\": (\" kB\", \" MB\", \" GB\", \" TB\", \" PB\", \" EB\", \" ZB\", \" YB\"),\n    \"binary\": (\" KiB\", \" MiB\", \" GiB\", \" TiB\", \" PiB\", \" EiB\", \" ZiB\", \" YiB\"),\n    \"gnu\": \"KMGTPEZY\",\n}\n\n\ndef naturalsize(\n    value: float | str,\n    binary: bool = False,\n    gnu: bool = False,\n    format: str = \"%.1f\",\n) -> str:\n    \"\"\"Format a number of bytes like a human readable filesize (e.g. 10 kB).\n\n    By default, decimal suffixes (kB, MB) are used.\n\n    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.\n\n    Examples:\n        ```pycon\n        >>> naturalsize(3000000)\n        '3.0 MB'\n        >>> naturalsize(300, False, True)\n        '300B'\n        >>> naturalsize(3000, False, True)\n        '2.9K'\n        >>> naturalsize(3000, False, True, \"%.3f\")\n        '2.930K'\n        >>> naturalsize(3000, True)\n        '2.9 KiB'\n        >>> naturalsize(10**28)\n        '10000.0 YB'\n        >>> naturalsize(-4096, True)\n        '-4.0 KiB'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n        binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base\n            2<sup>10</sup> instead of 10<sup>3</sup>.\n        gnu (bool): If `True`, the binary argument is ignored and GNU-style\n            (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.\n        format (str): Custom formatter.\n\n    Returns:\n        str: Human readable representation of a filesize.\n    \"\"\"\n    if gnu:\n        suffix = suffixes[\"gnu\"]\n    elif binary:\n        suffix = suffixes[\"binary\"]\n    else:\n        suffix = suffixes[\"decimal\"]\n\n    base = 1024 if (gnu or binary) else 1000\n    bytes_ = float(value)\n    abs_bytes = abs(bytes_)\n\n    if abs_bytes == 1 and not gnu:\n        return \"%d Byte\" % bytes_\n\n    if abs_bytes < base and not gnu:\n        return \"%d Bytes\" % bytes_\n\n    if abs_bytes < base and gnu:\n        return \"%dB\" % bytes_\n\n    for i, s in enumerate(suffix):\n        unit = base ** (i + 2)\n\n        if abs_bytes < unit:\n            break\n\n    ret: str = format % (base * bytes_ / unit) + s\n    return ret\n",
+      "src/humanize/i18n.py": "\"\"\"Activate, get and deactivate translations.\"\"\"\n\nfrom __future__ import annotations\n\nimport gettext as gettext_module\nimport os.path\nfrom threading import local\n\n__all__ = [\"activate\", \"deactivate\", \"decimal_separator\", \"thousands_separator\"]\n\n_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {\n    None: gettext_module.NullTranslations()\n}\n_CURRENT = local()\n\n\n# Mapping of locale to thousands separator\n_THOUSANDS_SEPARATOR = {\n    \"de_DE\": \".\",\n    \"fr_FR\": \" \",\n    \"it_IT\": \".\",\n    \"pt_BR\": \".\",\n    \"hu_HU\": \" \",\n}\n\n# Mapping of locale to decimal separator\n_DECIMAL_SEPARATOR = {\n    \"de_DE\": \",\",\n    \"it_IT\": \",\",\n    \"pt_BR\": \",\",\n    \"hu_HU\": \",\",\n}\n\n\ndef _get_default_locale_path() -> str | None:\n    try:\n        if __file__ is None:\n            return None\n        return os.path.join(os.path.dirname(__file__), \"locale\")\n    except NameError:\n        return None\n\n\ndef get_translation() -> gettext_module.NullTranslations:\n    try:\n        return _TRANSLATIONS[_CURRENT.locale]\n    except (AttributeError, KeyError):\n        return _TRANSLATIONS[None]\n\n\ndef activate(locale: str, path: str | None = None) -> gettext_module.NullTranslations:\n    \"\"\"Activate internationalisation.\n\n    Set `locale` as current locale. Search for locale in directory `path`.\n\n    Args:\n        locale (str): Language name, e.g. `en_GB`.\n        path (str): Path to search for locales.\n\n    Returns:\n        dict: Translations.\n\n    Raises:\n        Exception: If humanize cannot find the locale folder.\n    \"\"\"\n    if path is None:\n        path = _get_default_locale_path()\n\n    if path is None:\n        msg = (\n            \"Humanize cannot determinate the default location of the 'locale' folder. \"\n            \"You need to pass the path explicitly.\"\n        )\n        raise Exception(msg)\n    if locale not in _TRANSLATIONS:\n        translation = gettext_module.translation(\"humanize\", path, [locale])\n        _TRANSLATIONS[locale] = translation\n    _CURRENT.locale = locale\n    return _TRANSLATIONS[locale]\n\n\ndef deactivate() -> None:\n    \"\"\"Deactivate internationalisation.\"\"\"\n    _CURRENT.locale = None\n\n\ndef _gettext(message: str) -> str:\n    \"\"\"Get translation.\n\n    Args:\n        message (str): Text to translate.\n\n    Returns:\n        str: Translated text.\n    \"\"\"\n    return get_translation().gettext(message)\n\n\ndef _pgettext(msgctxt: str, message: str) -> str:\n    \"\"\"Fetches a particular translation.\n\n    It works with `msgctxt` .po modifiers and allows duplicate keys with different\n    translations.\n\n    Args:\n        msgctxt (str): Context of the translation.\n        message (str): Text to translate.\n\n    Returns:\n        str: Translated text.\n    \"\"\"\n    return get_translation().pgettext(msgctxt, message)\n\n\ndef _ngettext(message: str, plural: str, num: int) -> str:\n    \"\"\"Plural version of _gettext.\n\n    Args:\n        message (str): Singular text to translate.\n        plural (str): Plural text to translate.\n        num (int): The number (e.g. item count) to determine translation for the\n            respective grammatical number.\n\n    Returns:\n        str: Translated text.\n    \"\"\"\n    return get_translation().ngettext(message, plural, num)\n\n\ndef _gettext_noop(message: str) -> str:\n    \"\"\"Mark a string as a translation string without translating it.\n\n    Example usage:\n    ```python\n    CONSTANTS = [_gettext_noop('first'), _gettext_noop('second')]\n    def num_name(n):\n        return _gettext(CONSTANTS[n])\n    ```\n\n    Args:\n        message (str): Text to translate in the future.\n\n    Returns:\n        str: Original text, unchanged.\n    \"\"\"\n    return message\n\n\ndef _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:\n    \"\"\"Mark two strings as pluralized translations without translating them.\n\n    Example usage:\n    ```python\n    CONSTANTS = [ngettext_noop('first', 'firsts'), ngettext_noop('second', 'seconds')]\n    def num_name(n):\n        return _ngettext(*CONSTANTS[n])\n    ```\n\n    Args:\n        singular (str): Singular text to translate in the future.\n        plural (str): Plural text to translate in the future.\n\n    Returns:\n        tuple: Original text, unchanged.\n    \"\"\"\n    return singular, plural\n\n\ndef thousands_separator() -> str:\n    \"\"\"Return the thousands separator for a locale, default to comma.\n\n    Returns:\n         str: Thousands separator.\n    \"\"\"\n    try:\n        sep = _THOUSANDS_SEPARATOR[_CURRENT.locale]\n    except (AttributeError, KeyError):\n        sep = \",\"\n    return sep\n\n\ndef decimal_separator() -> str:\n    \"\"\"Return the decimal separator for a locale, default to dot.\n\n    Returns:\n         str: Decimal separator.\n    \"\"\"\n    try:\n        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]\n    except (AttributeError, KeyError):\n        sep = \".\"\n    return sep\n",
+      "src/humanize/number.py": "\"\"\"Humanizing functions for numbers.\"\"\"\n\nfrom __future__ import annotations\n\nimport math\nimport re\nimport sys\nfrom fractions import Fraction\nfrom typing import TYPE_CHECKING\n\nfrom .i18n import _gettext as _\nfrom .i18n import _ngettext, decimal_separator, thousands_separator\nfrom .i18n import _ngettext_noop as NS_\nfrom .i18n import _pgettext as P_\n\nif TYPE_CHECKING:\n    if sys.version_info >= (3, 10):\n        from typing import TypeAlias\n    else:\n        from typing_extensions import TypeAlias\n\n# This type can be better defined by typing.SupportsInt, typing.SupportsFloat\n# but that's a Python 3.8 only typing option.\nNumberOrString: TypeAlias = \"float | str\"\n\n\ndef _format_not_finite(value: float) -> str:\n    \"\"\"Utility function to handle infinite and nan cases.\"\"\"\n    if math.isnan(value):\n        return \"NaN\"\n    if math.isinf(value) and value < 0:\n        return \"-Inf\"\n    if math.isinf(value) and value > 0:\n        return \"+Inf\"\n    return \"\"\n\n\ndef ordinal(value: NumberOrString, gender: str = \"male\") -> str:\n    \"\"\"Converts an integer to its ordinal as a string.\n\n    For example, 1 is \"1st\", 2 is \"2nd\", 3 is \"3rd\", etc. Works for any integer or\n    anything `int()` will turn into an integer. Anything else will return the output\n    of str(value).\n\n    Examples:\n        ```pycon\n        >>> ordinal(1)\n        '1st'\n        >>> ordinal(1002)\n        '1002nd'\n        >>> ordinal(103)\n        '103rd'\n        >>> ordinal(4)\n        '4th'\n        >>> ordinal(12)\n        '12th'\n        >>> ordinal(101)\n        '101st'\n        >>> ordinal(111)\n        '111th'\n        >>> ordinal(\"something else\")\n        'something else'\n        >>> ordinal([1, 2, 3]) == \"[1, 2, 3]\"\n        True\n\n        ```\n\n    Args:\n        value (int, str, float): Integer to convert.\n        gender (str): Gender for translations. Accepts either \"male\" or \"female\".\n\n    Returns:\n        str: Ordinal string.\n    \"\"\"\n    try:\n        if not math.isfinite(float(value)):\n            return _format_not_finite(float(value))\n        value = int(value)\n    except (TypeError, ValueError):\n        return str(value)\n    if gender == \"male\":\n        t = (\n            P_(\"0 (male)\", \"th\"),\n            P_(\"1 (male)\", \"st\"),\n            P_(\"2 (male)\", \"nd\"),\n            P_(\"3 (male)\", \"rd\"),\n            P_(\"4 (male)\", \"th\"),\n            P_(\"5 (male)\", \"th\"),\n            P_(\"6 (male)\", \"th\"),\n            P_(\"7 (male)\", \"th\"),\n            P_(\"8 (male)\", \"th\"),\n            P_(\"9 (male)\", \"th\"),\n        )\n    else:\n        t = (\n            P_(\"0 (female)\", \"th\"),\n            P_(\"1 (female)\", \"st\"),\n            P_(\"2 (female)\", \"nd\"),\n            P_(\"3 (female)\", \"rd\"),\n            P_(\"4 (female)\", \"th\"),\n            P_(\"5 (female)\", \"th\"),\n            P_(\"6 (female)\", \"th\"),\n            P_(\"7 (female)\", \"th\"),\n            P_(\"8 (female)\", \"th\"),\n            P_(\"9 (female)\", \"th\"),\n        )\n    if value % 100 in (11, 12, 13):  # special case\n        return f\"{value}{t[0]}\"\n    return f\"{value}{t[value % 10]}\"\n\n\ndef intcomma(value: NumberOrString, ndigits: int | None = None) -> str:\n    \"\"\"Converts an integer to a string containing commas every three digits.\n\n    For example, 3000 becomes \"3,000\" and 45000 becomes \"45,000\". To maintain some\n    compatibility with Django's `intcomma`, this function also accepts floats.\n\n    Examples:\n        ```pycon\n        >>> intcomma(100)\n        '100'\n        >>> intcomma(\"1000\")\n        '1,000'\n        >>> intcomma(1_000_000)\n        '1,000,000'\n        >>> intcomma(1_234_567.25)\n        '1,234,567.25'\n        >>> intcomma(1234.5454545, 2)\n        '1,234.55'\n        >>> intcomma(14308.40, 1)\n        '14,308.4'\n        >>> intcomma(\"14308.40\", 1)\n        '14,308.4'\n        >>> intcomma(None)\n        'None'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer or float to convert.\n        ndigits (int, None): Digits of precision for rounding after the decimal point.\n\n    Returns:\n        str: String containing commas every three digits.\n    \"\"\"\n    thousands_sep = thousands_separator()\n    decimal_sep = decimal_separator()\n    try:\n        if isinstance(value, str):\n            value = value.replace(thousands_sep, \"\").replace(decimal_sep, \".\")\n            if not math.isfinite(float(value)):\n                return _format_not_finite(float(value))\n            if \".\" in value:\n                value = float(value)\n            else:\n                value = int(value)\n        else:\n            if not math.isfinite(float(value)):\n                return _format_not_finite(float(value))\n            float(value)\n    except (TypeError, ValueError):\n        return str(value)\n\n    if ndigits is not None:\n        orig = \"{0:.{1}f}\".format(value, ndigits)\n    else:\n        orig = str(value)\n    orig = orig.replace(\".\", decimal_sep)\n    while True:\n        new = re.sub(r\"^(-?\\d+)(\\d{3})\", rf\"\\g<1>{thousands_sep}\\g<2>\", orig)\n        if orig == new:\n            return new\n        orig = new\n\n\npowers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]\nhuman_powers = (\n    NS_(\"thousand\", \"thousand\"),\n    NS_(\"million\", \"million\"),\n    NS_(\"billion\", \"billion\"),\n    NS_(\"trillion\", \"trillion\"),\n    NS_(\"quadrillion\", \"quadrillion\"),\n    NS_(\"quintillion\", \"quintillion\"),\n    NS_(\"sextillion\", \"sextillion\"),\n    NS_(\"septillion\", \"septillion\"),\n    NS_(\"octillion\", \"octillion\"),\n    NS_(\"nonillion\", \"nonillion\"),\n    NS_(\"decillion\", \"decillion\"),\n    NS_(\"googol\", \"googol\"),\n)\n\n\ndef intword(value: NumberOrString, format: str = \"%.1f\") -> str:\n    \"\"\"Converts a large integer to a friendly text representation.\n\n    Works best for numbers over 1 million. For example, 1_000_000 becomes \"1.0 million\",\n    1200000 becomes \"1.2 million\" and \"1_200_000_000\" becomes \"1.2 billion\". Supports up\n    to decillion (33 digits) and googol (100 digits).\n\n    Examples:\n        ```pycon\n        >>> intword(\"100\")\n        '100'\n        >>> intword(\"12400\")\n        '12.4 thousand'\n        >>> intword(\"1000000\")\n        '1.0 million'\n        >>> intword(1_200_000_000)\n        '1.2 billion'\n        >>> intword(8100000000000000000000000000000000)\n        '8.1 decillion'\n        >>> intword(None)\n        'None'\n        >>> intword(\"1234000\", \"%0.3f\")\n        '1.234 million'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n        format (str): To change the number of decimal or general format of the number\n            portion.\n\n    Returns:\n        str: Friendly text representation as a string, unless the value passed could not\n            be coaxed into an `int`.\n    \"\"\"\n    try:\n        if not math.isfinite(float(value)):\n            return _format_not_finite(float(value))\n        value = int(value)\n    except (TypeError, ValueError):\n        return str(value)\n\n    if value < 0:\n        value *= -1\n        negative_prefix = \"-\"\n    else:\n        negative_prefix = \"\"\n\n    if value < powers[0]:\n        return negative_prefix + str(value)\n\n    for ordinal_, power in enumerate(powers[1:], 1):\n        if value < power:\n            chopped = value / float(powers[ordinal_ - 1])\n            powers_difference = powers[ordinal_] / powers[ordinal_ - 1]\n            if float(format % chopped) == powers_difference:\n                chopped = value / float(powers[ordinal_])\n                singular, plural = human_powers[ordinal_]\n                return (\n                    negative_prefix\n                    + \" \".join(\n                        [format, _ngettext(singular, plural, math.ceil(chopped))]\n                    )\n                ) % chopped\n\n            singular, plural = human_powers[ordinal_ - 1]\n            return (\n                negative_prefix\n                + \" \".join([format, _ngettext(singular, plural, math.ceil(chopped))])\n            ) % chopped\n\n    return negative_prefix + str(value)\n\n\ndef apnumber(value: NumberOrString) -> str:\n    \"\"\"Converts an integer to Associated Press style.\n\n    Examples:\n      ```pycon\n      >>> apnumber(0)\n      'zero'\n      >>> apnumber(5)\n      'five'\n      >>> apnumber(10)\n      '10'\n      >>> apnumber(\"7\")\n      'seven'\n      >>> apnumber(\"foo\")\n      'foo'\n      >>> apnumber(None)\n      'None'\n\n      ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n\n    Returns:\n        str: For numbers 0-9, the number spelled out. Otherwise, the number. This always\n            returns a string unless the value was not `int`-able, then `str(value)`\n            is returned.\n    \"\"\"\n    try:\n        if not math.isfinite(float(value)):\n            return _format_not_finite(float(value))\n        value = int(value)\n    except (TypeError, ValueError):\n        return str(value)\n    if not 0 <= value < 10:\n        return str(value)\n    return (\n        _(\"zero\"),\n        _(\"one\"),\n        _(\"two\"),\n        _(\"three\"),\n        _(\"four\"),\n        _(\"five\"),\n        _(\"six\"),\n        _(\"seven\"),\n        _(\"eight\"),\n        _(\"nine\"),\n    )[value]\n\n\ndef fractional(value: NumberOrString) -> str:\n    \"\"\"Convert to fractional number.\n\n    There will be some cases where one might not want to show ugly decimal places for\n    floats and decimals.\n\n    This function returns a human-readable fractional number in form of fractions and\n    mixed fractions.\n\n    Pass in a string, or a number or a float, and this function returns:\n\n    * a string representation of a fraction\n    * or a whole number\n    * or a mixed fraction\n    * or the str output of the value, if it could not be converted\n\n    Examples:\n        ```pycon\n        >>> fractional(0.3)\n        '3/10'\n        >>> fractional(1.3)\n        '1 3/10'\n        >>> fractional(float(1/3))\n        '1/3'\n        >>> fractional(1)\n        '1'\n        >>> fractional(\"ten\")\n        'ten'\n        >>> fractional(None)\n        'None'\n\n        ```\n\n    Args:\n        value (int, float, str): Integer to convert.\n\n    Returns:\n        str: Fractional number as a string.\n    \"\"\"\n    try:\n        number = float(value)\n        if not math.isfinite(number):\n            return _format_not_finite(number)\n    except (TypeError, ValueError):\n        return str(value)\n    whole_number = int(number)\n    frac = Fraction(number - whole_number).limit_denominator(1000)\n    numerator = frac.numerator\n    denominator = frac.denominator\n    if whole_number and not numerator and denominator == 1:\n        # this means that an integer was passed in\n        # (or variants of that integer like 1.0000)\n        return f\"{whole_number:.0f}\"\n\n    if not whole_number:\n        return f\"{numerator:.0f}/{denominator:.0f}\"\n\n    return f\"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}\"\n\n\ndef scientific(value: NumberOrString, precision: int = 2) -> str:\n    \"\"\"Return number in string scientific notation z.wq x 10ⁿ.\n\n    Examples:\n        ```pycon\n        >>> scientific(float(0.3))\n        '3.00 x 10⁻¹'\n        >>> scientific(int(500))\n        '5.00 x 10²'\n        >>> scientific(-1000)\n        '-1.00 x 10³'\n        >>> scientific(1000, 1)\n        '1.0 x 10³'\n        >>> scientific(1000, 3)\n        '1.000 x 10³'\n        >>> scientific(\"99\")\n        '9.90 x 10¹'\n        >>> scientific(\"foo\")\n        'foo'\n        >>> scientific(None)\n        'None'\n\n        ```\n\n    Args:\n        value (int, float, str): Input number.\n        precision (int): Number of decimal for first part of the number.\n\n    Returns:\n        str: Number in scientific notation z.wq x 10ⁿ.\n    \"\"\"\n    exponents = {\n        \"0\": \"⁰\",\n        \"1\": \"¹\",\n        \"2\": \"²\",\n        \"3\": \"³\",\n        \"4\": \"⁴\",\n        \"5\": \"⁵\",\n        \"6\": \"⁶\",\n        \"7\": \"⁷\",\n        \"8\": \"⁸\",\n        \"9\": \"⁹\",\n        \"-\": \"⁻\",\n    }\n    try:\n        value = float(value)\n        if not math.isfinite(value):\n            return _format_not_finite(value)\n    except (ValueError, TypeError):\n        return str(value)\n    fmt = \"{:.%se}\" % str(int(precision))\n    n = fmt.format(value)\n    part1, part2 = n.split(\"e\")\n    # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).\n    part2 = re.sub(r\"^\\+?(\\-?)0*(.+)$\", r\"\\1\\2\", part2)\n\n    new_part2 = []\n    for char in part2:\n        new_part2.append(exponents[char])\n\n    final_str = part1 + \" x 10\" + \"\".join(new_part2)\n\n    return final_str\n\n\ndef clamp(\n    value: float,\n    format: str = \"{:}\",\n    floor: float | None = None,\n    ceil: float | None = None,\n    floor_token: str = \"<\",\n    ceil_token: str = \">\",\n) -> str:\n    \"\"\"Returns number with the specified format, clamped between floor and ceil.\n\n    If the number is larger than ceil or smaller than floor, then the respective limit\n    will be returned, formatted and prepended with a token specifying as such.\n\n    Examples:\n        ```pycon\n        >>> clamp(123.456)\n        '123.456'\n        >>> clamp(0.0001, floor=0.01)\n        '<0.01'\n        >>> clamp(0.99, format=\"{:.0%}\", ceil=0.99)\n        '99%'\n        >>> clamp(0.999, format=\"{:.0%}\", ceil=0.99)\n        '>99%'\n        >>> clamp(1, format=intword, floor=1e6, floor_token=\"under \")\n        'under 1.0 million'\n        >>> clamp(None) is None\n        True\n\n        ```\n\n    Args:\n        value (int, float): Input number.\n        format (str OR callable): Can either be a formatting string, or a callable\n            function that receives value and returns a string.\n        floor (int, float): Smallest value before clamping.\n        ceil (int, float): Largest value before clamping.\n        floor_token (str): If value is smaller than floor, token will be prepended\n            to output.\n        ceil_token (str): If value is larger than ceil, token will be prepended\n            to output.\n\n    Returns:\n        str: Formatted number. The output is clamped between the indicated floor and\n            ceil. If the number is larger than ceil or smaller than floor, the output\n            will be prepended with a token indicating as such.\n\n    \"\"\"\n    if value is None:\n        return None\n\n    if not math.isfinite(value):\n        return _format_not_finite(value)\n\n    if floor is not None and value < floor:\n        value = floor\n        token = floor_token\n    elif ceil is not None and value > ceil:\n        value = ceil\n        token = ceil_token\n    else:\n        token = \"\"\n\n    if isinstance(format, str):\n        return token + format.format(value)\n\n    if callable(format):\n        return token + format(value)\n\n    msg = (\n        \"Invalid format. Must be either a valid formatting string, or a function \"\n        \"that accepts value and returns a string.\"\n    )\n    raise ValueError(msg)\n\n\ndef metric(value: float, unit: str = \"\", precision: int = 3) -> str:\n    \"\"\"Return a value with a metric SI unit-prefix appended.\n\n    Examples:\n        ```pycon\n        >>> metric(1500, \"V\")\n        '1.50 kV'\n        >>> metric(2e8, \"W\")\n        '200 MW'\n        >>> metric(220e-6, \"F\")\n        '220 μF'\n        >>> metric(1e-14, precision=4)\n        '10.00 f'\n\n        ```\n\n    The unit prefix is always chosen so that non-significant zero digits are required.\n    i.e. `123,000` will become `123k` instead of `0.123M` and `1,230,000` will become\n    `1.23M` instead of `1230K`. For numbers that are either too huge or too tiny to\n    represent without resorting to either leading or trailing zeroes, it falls back to\n    `scientific()`.\n    ```pycon\n    >>> metric(1e40)\n    '1.00 x 10⁴⁰'\n\n    ```\n\n    Args:\n        value (int, float): Input number.\n        unit (str): Optional base unit.\n        precision (int): The number of digits the output should contain.\n\n    Returns:\n        str:\n    \"\"\"\n    if not math.isfinite(value):\n        return _format_not_finite(value)\n    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0\n\n    if exponent >= 33 or exponent < -30:\n        return scientific(value, precision - 1) + unit\n\n    value /= 10 ** (exponent // 3 * 3)\n    if exponent >= 3:\n        ordinal_ = \"kMGTPEZYRQ\"[exponent // 3 - 1]\n    elif exponent < 0:\n        ordinal_ = \"mμnpfazyrq\"[(-exponent - 1) // 3]\n    else:\n        ordinal_ = \"\"\n    value_ = format(value, \".%if\" % max(0, precision - (exponent % 3) - 1))\n    if not (unit or ordinal_) or unit in (\"°\", \"′\", \"″\"):\n        space = \"\"\n    else:\n        space = \" \"\n\n    return f\"{value_}{space}{ordinal_}{unit}\"\n",
+      "src/humanize/time.py": "\"\"\"Time humanizing functions.\n\nThese are largely borrowed from Django's `contrib.humanize`.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport collections.abc\nimport datetime as dt\nimport math\nimport typing\nfrom enum import Enum\nfrom functools import total_ordering\nfrom typing import Any\n\nfrom .i18n import _gettext as _\nfrom .i18n import _ngettext\nfrom .number import intcomma\n\n__all__ = [\n    \"naturaldelta\",\n    \"naturaltime\",\n    \"naturalday\",\n    \"naturaldate\",\n    \"precisedelta\",\n]\n\n\n@total_ordering\nclass Unit(Enum):\n    MICROSECONDS = 0\n    MILLISECONDS = 1\n    SECONDS = 2\n    MINUTES = 3\n    HOURS = 4\n    DAYS = 5\n    MONTHS = 6\n    YEARS = 7\n\n    def __lt__(self, other: typing.Any) -> typing.Any:\n        if self.__class__ is other.__class__:\n            return self.value < other.value\n        return NotImplemented\n\n\ndef _now() -> dt.datetime:\n    return dt.datetime.now()\n\n\ndef _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:\n    \"\"\"Return an \"absolute\" value for a timedelta, always representing a time distance.\n\n    Args:\n        delta (datetime.timedelta): Input timedelta.\n\n    Returns:\n        datetime.timedelta: Absolute timedelta.\n    \"\"\"\n    if delta.days < 0:\n        now = _now()\n        return now - (now + delta)\n    return delta\n\n\ndef _date_and_delta(\n    value: typing.Any, *, now: dt.datetime | None = None\n) -> tuple[typing.Any, typing.Any]:\n    \"\"\"Turn a value into a date and a timedelta which represents how long ago it was.\n\n    If that's not possible, return `(None, value)`.\n    \"\"\"\n    if not now:\n        now = _now()\n    if isinstance(value, dt.datetime):\n        date = value\n        delta = now - value\n    elif isinstance(value, dt.timedelta):\n        date = now - value\n        delta = value\n    else:\n        try:\n            value = int(value)\n            delta = dt.timedelta(seconds=value)\n            date = now - delta\n        except (ValueError, TypeError):\n            return None, value\n    return date, _abs_timedelta(delta)\n\n\ndef naturaldelta(\n    value: dt.timedelta | float,\n    months: bool = True,\n    minimum_unit: str = \"seconds\",\n) -> str:\n    \"\"\"Return a natural representation of a timedelta or number of seconds.\n\n    This is similar to `naturaltime`, but does not add tense to the result.\n\n    Args:\n        value (datetime.timedelta, int or float): A timedelta or a number of seconds.\n        months (bool): If `True`, then a number of months (based on 30.5 days) will be\n            used for fuzziness between years.\n        minimum_unit (str): The lowest unit that can be used.\n\n    Returns:\n        str (str or `value`): A natural representation of the amount of time\n            elapsed unless `value` is not datetime.timedelta or cannot be\n            converted to int (cannot be float due to 'inf' or 'nan').\n            In that case, a `value` is returned unchanged.\n\n    Raises:\n        OverflowError: If `value` is too large to convert to datetime.timedelta.\n\n    Examples:\n        Compare two timestamps in a custom local timezone::\n\n        import datetime as dt\n        from dateutil.tz import gettz\n\n        berlin = gettz(\"Europe/Berlin\")\n        now = dt.datetime.now(tz=berlin)\n        later = now + dt.timedelta(minutes=30)\n\n        assert naturaldelta(later - now) == \"30 minutes\"\n    \"\"\"\n    tmp = Unit[minimum_unit.upper()]\n    if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):\n        msg = f\"Minimum unit '{minimum_unit}' not supported\"\n        raise ValueError(msg)\n    min_unit = tmp\n\n    if isinstance(value, dt.timedelta):\n        delta = value\n    else:\n        try:\n            int(value)  # Explicitly don't support string such as \"NaN\" or \"inf\"\n            value = float(value)\n            delta = dt.timedelta(seconds=value)\n        except (ValueError, TypeError):\n            return str(value)\n\n    use_months = months\n\n    seconds = abs(delta.seconds)\n    days = abs(delta.days)\n    years = days // 365\n    days = days % 365\n    num_months = int(days // 30.5)\n\n    if not years and days < 1:\n        if seconds == 0:\n            if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:\n                return (\n                    _ngettext(\"%d microsecond\", \"%d microseconds\", delta.microseconds)\n                    % delta.microseconds\n                )\n\n            if min_unit == Unit.MILLISECONDS or (\n                min_unit == Unit.MICROSECONDS and 1000 <= delta.microseconds < 1_000_000\n            ):\n                milliseconds = delta.microseconds / 1000\n                return (\n                    _ngettext(\"%d millisecond\", \"%d milliseconds\", int(milliseconds))\n                    % milliseconds\n                )\n            return _(\"a moment\")\n\n        if seconds == 1:\n            return _(\"a second\")\n\n        if seconds < 60:\n            return _ngettext(\"%d second\", \"%d seconds\", seconds) % seconds\n\n        if 60 <= seconds < 120:\n            return _(\"a minute\")\n\n        if 120 <= seconds < 3600:\n            minutes = seconds // 60\n            return _ngettext(\"%d minute\", \"%d minutes\", minutes) % minutes\n\n        if 3600 <= seconds < 3600 * 2:\n            return _(\"an hour\")\n\n        if 3600 < seconds:\n            hours = seconds // 3600\n            return _ngettext(\"%d hour\", \"%d hours\", hours) % hours\n\n    elif years == 0:\n        if days == 1:\n            return _(\"a day\")\n\n        if not use_months:\n            return _ngettext(\"%d day\", \"%d days\", days) % days\n\n        if not num_months:\n            return _ngettext(\"%d day\", \"%d days\", days) % days\n\n        if num_months == 1:\n            return _(\"a month\")\n\n        return _ngettext(\"%d month\", \"%d months\", num_months) % num_months\n\n    elif years == 1:\n        if not num_months and not days:\n            return _(\"a year\")\n\n        if not num_months:\n            return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days\n\n        if use_months:\n            if num_months == 1:\n                return _(\"1 year, 1 month\")\n\n            return (\n                _ngettext(\"1 year, %d month\", \"1 year, %d months\", num_months)\n                % num_months\n            )\n\n        return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days\n\n    return _ngettext(\"%d year\", \"%d years\", years).replace(\"%d\", \"%s\") % intcomma(years)\n\n\ndef naturaltime(\n    value: dt.datetime | dt.timedelta | float,\n    future: bool = False,\n    months: bool = True,\n    minimum_unit: str = \"seconds\",\n    when: dt.datetime | None = None,\n) -> str:\n    \"\"\"Return a natural representation of a time in a resolution that makes sense.\n\n    This is more or less compatible with Django's `naturaltime` filter.\n\n    Args:\n        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a\n            `timedelta`, or a number of seconds.\n        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is\n            always figured out based on the current time. For integers and floats, the\n            return value will be past tense by default, unless future is `True`.\n        months (bool): If `True`, then a number of months (based on 30.5 days) will be\n            used for fuzziness between years.\n        minimum_unit (str): The lowest unit that can be used.\n        when (datetime.datetime): Point in time relative to which _value_ is\n            interpreted.  Defaults to the current time in the local timezone.\n\n    Returns:\n        str: A natural representation of the input in a resolution that makes sense.\n    \"\"\"\n    value = _convert_aware_datetime(value)\n    when = _convert_aware_datetime(when)\n\n    now = when or _now()\n\n    date, delta = _date_and_delta(value, now=now)\n    if date is None:\n        return str(value)\n    # determine tense by value only if datetime/timedelta were passed\n    if isinstance(value, (dt.datetime, dt.timedelta)):\n        future = date > now\n\n    ago = _(\"%s from now\") if future else _(\"%s ago\")\n    delta = naturaldelta(delta, months, minimum_unit)\n\n    if delta == _(\"a moment\"):\n        return _(\"now\")\n\n    return str(ago % delta)\n\n\ndef _convert_aware_datetime(\n    value: dt.datetime | dt.timedelta | float | None,\n) -> Any:\n    \"\"\"Convert aware datetime to naive datetime and pass through any other type.\"\"\"\n    if isinstance(value, dt.datetime) and value.tzinfo is not None:\n        value = dt.datetime.fromtimestamp(value.timestamp())\n    return value\n\n\ndef naturalday(value: dt.date | dt.datetime, format: str = \"%b %d\") -> str:\n    \"\"\"Return a natural day.\n\n    For date values that are tomorrow, today or yesterday compared to\n    present day return representing string. Otherwise, return a string\n    formatted according to `format`.\n\n    \"\"\"\n    try:\n        value = dt.date(value.year, value.month, value.day)\n    except AttributeError:\n        # Passed value wasn't date-ish\n        return str(value)\n    except (OverflowError, ValueError):\n        # Date arguments out of range\n        return str(value)\n    delta = value - dt.date.today()\n\n    if delta.days == 0:\n        return _(\"today\")\n\n    if delta.days == 1:\n        return _(\"tomorrow\")\n\n    if delta.days == -1:\n        return _(\"yesterday\")\n\n    return value.strftime(format)\n\n\ndef naturaldate(value: dt.date | dt.datetime) -> str:\n    \"\"\"Like `naturalday`, but append a year for dates more than ~five months away.\"\"\"\n    try:\n        value = dt.date(value.year, value.month, value.day)\n    except AttributeError:\n        # Passed value wasn't date-ish\n        return str(value)\n    except (OverflowError, ValueError):\n        # Date arguments out of range\n        return str(value)\n    delta = _abs_timedelta(value - dt.date.today())\n    if delta.days >= 5 * 365 / 12:\n        return naturalday(value, \"%b %d %Y\")\n    return naturalday(value)\n\n\ndef _quotient_and_remainder(\n    value: float,\n    divisor: float,\n    unit: Unit,\n    minimum_unit: Unit,\n    suppress: collections.abc.Iterable[Unit],\n) -> tuple[float, float]:\n    \"\"\"Divide `value` by `divisor` returning the quotient and remainder.\n\n    If `unit` is `minimum_unit`, makes the quotient a float number and the remainder\n    will be zero. The rational is that if `unit` is the unit of the quotient, we cannot\n    represent the remainder because it would require a unit smaller than the\n    `minimum_unit`.\n\n    >>> from humanize.time import _quotient_and_remainder, Unit\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [])\n    (1.5, 0)\n\n    If unit is in `suppress`, the quotient will be zero and the remainder will be the\n    initial value. The idea is that if we cannot use `unit`, we are forced to use a\n    lower unit so we cannot do the division.\n\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS])\n    (0, 36)\n\n    In other case return quotient and remainder as `divmod` would do it.\n\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [])\n    (1, 12)\n\n    \"\"\"\n    if unit == minimum_unit:\n        return value / divisor, 0\n\n    if unit in suppress:\n        return 0, value\n\n    return divmod(value, divisor)\n\n\ndef _carry(\n    value1: float,\n    value2: float,\n    ratio: float,\n    unit: Unit,\n    min_unit: Unit,\n    suppress: typing.Iterable[Unit],\n) -> tuple[float, float]:\n    \"\"\"Return a tuple with two values.\n\n    If the unit is in `suppress`, multiply `value1` by `ratio` and add it to `value2`\n    (carry to right). The idea is that if we cannot represent `value1` we need to\n    represent it in a lower unit.\n\n    >>> from humanize.time import _carry, Unit\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [Unit.DAYS])\n    (0, 54)\n\n    If the unit is the minimum unit, `value2` is divided by `ratio` and added to\n    `value1` (carry to left). We assume that `value2` has a lower unit so we need to\n    carry it to `value1`.\n\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.DAYS, [])\n    (2.25, 0)\n\n    Otherwise, just return the same input:\n\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [])\n    (2, 6)\n    \"\"\"\n    if unit == min_unit:\n        return value1 + value2 / ratio, 0\n\n    if unit in suppress:\n        return 0, value2 + value1 * ratio\n\n    return value1, value2\n\n\ndef _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> Unit:\n    \"\"\"Return a minimum unit suitable that is not suppressed.\n\n    If not suppressed, return the same unit:\n\n    >>> from humanize.time import _suitable_minimum_unit, Unit\n    >>> _suitable_minimum_unit(Unit.HOURS, []).name\n    'HOURS'\n\n    But if suppressed, find a unit greater than the original one that is not\n    suppressed:\n\n    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS]).name\n    'DAYS'\n\n    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS, Unit.DAYS]).name\n    'MONTHS'\n    \"\"\"\n    if min_unit in suppress:\n        for unit in Unit:\n            if unit > min_unit and unit not in suppress:\n                return unit\n\n        msg = \"Minimum unit is suppressed and no suitable replacement was found\"\n        raise ValueError(msg)\n\n    return min_unit\n\n\ndef _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> set[Unit]:\n    \"\"\"Extend suppressed units (if any) with all units lower than the minimum unit.\n\n    >>> from humanize.time import _suppress_lower_units, Unit\n    >>> [x.name for x in sorted(_suppress_lower_units(Unit.SECONDS, [Unit.DAYS]))]\n    ['MICROSECONDS', 'MILLISECONDS', 'DAYS']\n    \"\"\"\n    suppress = set(suppress)\n    for unit in Unit:\n        if unit == min_unit:\n            break\n        suppress.add(unit)\n\n    return suppress\n\n\ndef precisedelta(\n    value: dt.timedelta | int | None,\n    minimum_unit: str = \"seconds\",\n    suppress: typing.Iterable[str] = (),\n    format: str = \"%0.2f\",\n) -> str:\n    \"\"\"Return a precise representation of a timedelta.\n\n    ```pycon\n    >>> import datetime as dt\n    >>> from humanize.time import precisedelta\n\n    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)\n    >>> precisedelta(delta)\n    '2 days, 1 hour and 33.12 seconds'\n\n    ```\n\n    A custom `format` can be specified to control how the fractional part\n    is represented:\n\n    ```pycon\n    >>> precisedelta(delta, format=\"%0.4f\")\n    '2 days, 1 hour and 33.1230 seconds'\n\n    ```\n\n    Instead, the `minimum_unit` can be changed to have a better resolution;\n    the function will still readjust the unit to use the greatest of the\n    units that does not lose precision.\n\n    For example setting microseconds but still representing the date with milliseconds:\n\n    ```pycon\n    >>> precisedelta(delta, minimum_unit=\"microseconds\")\n    '2 days, 1 hour, 33 seconds and 123 milliseconds'\n\n    ```\n\n    If desired, some units can be suppressed: you will not see them represented and the\n    time of the other units will be adjusted to keep representing the same timedelta:\n\n    ```pycon\n    >>> precisedelta(delta, suppress=['days'])\n    '49 hours and 33.12 seconds'\n\n    ```\n\n    Note that microseconds precision is lost if the seconds and all\n    the units below are suppressed:\n\n    ```pycon\n    >>> delta = dt.timedelta(seconds=90, microseconds=100)\n    >>> precisedelta(delta, suppress=['seconds', 'milliseconds', 'microseconds'])\n    '1.50 minutes'\n\n    ```\n\n    If the delta is too small to be represented with the minimum unit,\n    a value of zero will be returned:\n\n    ```pycon\n    >>> delta = dt.timedelta(seconds=1)\n    >>> precisedelta(delta, minimum_unit=\"minutes\")\n    '0.02 minutes'\n\n    >>> delta = dt.timedelta(seconds=0.1)\n    >>> precisedelta(delta, minimum_unit=\"minutes\")\n    '0 minutes'\n\n    ```\n    \"\"\"\n    date, delta = _date_and_delta(value)\n    if date is None:\n        return str(value)\n\n    suppress_set = {Unit[s.upper()] for s in suppress}\n\n    # Find a suitable minimum unit (it can be greater the one that the\n    # user gave us if it is suppressed).\n    min_unit = Unit[minimum_unit.upper()]\n    min_unit = _suitable_minimum_unit(min_unit, suppress_set)\n    del minimum_unit\n\n    # Expand the suppressed units list/set to include all the units\n    # that are below the minimum unit\n    suppress_set = _suppress_lower_units(min_unit, suppress_set)\n\n    # handy aliases\n    days = delta.days\n    secs = delta.seconds\n    usecs = delta.microseconds\n\n    MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS = list(\n        Unit\n    )\n\n    # Given DAYS compute YEARS and the remainder of DAYS as follows:\n    #   if YEARS is the minimum unit, we cannot use DAYS so\n    #   we will use a float for YEARS and 0 for DAYS:\n    #       years, days = years/days, 0\n    #\n    #   if YEARS is suppressed, use DAYS:\n    #       years, days = 0, days\n    #\n    #   otherwise:\n    #       years, days = divmod(years, days)\n    #\n    # The same applies for months, hours, minutes and milliseconds below\n    years, days = _quotient_and_remainder(days, 365, YEARS, min_unit, suppress_set)\n    months, days = _quotient_and_remainder(days, 30.5, MONTHS, min_unit, suppress_set)\n\n    # If DAYS is not in suppress, we can represent the days but\n    # if it is a suppressed unit, we need to carry it to a lower unit,\n    # seconds in this case.\n    #\n    # The same applies for secs and usecs below\n    days, secs = _carry(days, secs, 24 * 3600, DAYS, min_unit, suppress_set)\n\n    hours, secs = _quotient_and_remainder(secs, 3600, HOURS, min_unit, suppress_set)\n    minutes, secs = _quotient_and_remainder(secs, 60, MINUTES, min_unit, suppress_set)\n\n    secs, usecs = _carry(secs, usecs, 1e6, SECONDS, min_unit, suppress_set)\n\n    msecs, usecs = _quotient_and_remainder(\n        usecs, 1000, MILLISECONDS, min_unit, suppress_set\n    )\n\n    # if _unused != 0 we had lost some precision\n    usecs, _unused = _carry(usecs, 0, 1, MICROSECONDS, min_unit, suppress_set)\n\n    fmts = [\n        (\"%d year\", \"%d years\", years),\n        (\"%d month\", \"%d months\", months),\n        (\"%d day\", \"%d days\", days),\n        (\"%d hour\", \"%d hours\", hours),\n        (\"%d minute\", \"%d minutes\", minutes),\n        (\"%d second\", \"%d seconds\", secs),\n        (\"%d millisecond\", \"%d milliseconds\", msecs),\n        (\"%d microsecond\", \"%d microseconds\", usecs),\n    ]\n\n    texts: list[str] = []\n    for unit, fmt in zip(reversed(Unit), fmts):\n        singular_txt, plural_txt, fmt_value = fmt\n        if fmt_value > 0 or (not texts and unit == min_unit):\n            _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)\n            fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)\n            if unit == min_unit and math.modf(fmt_value)[0] > 0:\n                fmt_txt = fmt_txt.replace(\"%d\", format)\n            elif unit == YEARS:\n                fmt_txt = fmt_txt.replace(\"%d\", \"%s\")\n                texts.append(fmt_txt % intcomma(fmt_value))\n                continue\n\n            texts.append(fmt_txt % fmt_value)\n\n        if unit == min_unit:\n            break\n\n    if len(texts) == 1:\n        return texts[0]\n\n    head = \", \".join(texts[:-1])\n    tail = texts[-1]\n\n    return _(\"%s and %s\") % (head, tail)\n",
+      "humanize_adapter.py": "\"\"\"Protected JSON-to-timedelta adapter for pinned Humanize, English locale only.\nNo replacement implementation: all five upstream Python modules are byte-exact.\nDistribution metadata below was built from the same pinned checkout.\n\"\"\"\nimport sys\nfrom pathlib import Path\nfrom datetime import timedelta\nfrom importlib.metadata import version\n\n_metadata_root = Path('/tmp/patchproof-humanize-metadata')\n_dist = _metadata_root / 'humanize-4.9.1.dev32.dist-info'\n_dist.mkdir(parents=True, exist_ok=True)\n(_dist / 'METADATA').write_text('Metadata-Version: 2.4\\nName: humanize\\nVersion: 4.9.1.dev32\\nSummary: Python humanize utilities\\nProject-URL: Documentation, https://humanize.readthedocs.io/\\nProject-URL: Funding, https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi\\nProject-URL: Homepage, https://github.com/python-humanize/humanize\\nProject-URL: Issue tracker, https://github.com/python-humanize/humanize/issues\\nProject-URL: Release notes, https://github.com/python-humanize/humanize/releases\\nProject-URL: Source, https://github.com/python-humanize/humanize\\nAuthor-email: Jason Moiron <jmoiron@jmoiron.net>\\nMaintainer: Hugo van Kemenade\\nLicense: MIT\\nLicense-File: LICENCE\\nKeywords: humanize time size\\nClassifier: Development Status :: 5 - Production/Stable\\nClassifier: Intended Audience :: Developers\\nClassifier: License :: OSI Approved :: MIT License\\nClassifier: Operating System :: OS Independent\\nClassifier: Programming Language :: Python\\nClassifier: Programming Language :: Python :: 3 :: Only\\nClassifier: Programming Language :: Python :: 3.8\\nClassifier: Programming Language :: Python :: 3.9\\nClassifier: Programming Language :: Python :: 3.10\\nClassifier: Programming Language :: Python :: 3.11\\nClassifier: Programming Language :: Python :: 3.12\\nClassifier: Programming Language :: Python :: 3.13\\nClassifier: Programming Language :: Python :: Implementation :: CPython\\nClassifier: Programming Language :: Python :: Implementation :: PyPy\\nClassifier: Topic :: Text Processing\\nClassifier: Topic :: Text Processing :: General\\nRequires-Python: >=3.8\\nProvides-Extra: tests\\nRequires-Dist: freezegun; extra == \\'tests\\'\\nRequires-Dist: pytest; extra == \\'tests\\'\\nRequires-Dist: pytest-cov; extra == \\'tests\\'\\nDescription-Content-Type: text/markdown\\n\\n# humanize\\n\\n[![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)\\n[![Supported Python versions](https://img.shields.io/pypi/pyversions/humanize.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/humanize/)\\n[![Documentation Status](https://readthedocs.org/projects/python-humanize/badge/?version=latest)](https://humanize.readthedocs.io/en/latest/?badge=latest)\\n[![PyPI downloads](https://img.shields.io/pypi/dm/humanize.svg)](https://pypistats.org/packages/humanize)\\n[![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)\\n[![codecov](https://codecov.io/gh/python-humanize/humanize/branch/main/graph/badge.svg)](https://codecov.io/gh/python-humanize/humanize)\\n[![MIT License](https://img.shields.io/github/license/python-humanize/humanize.svg)](LICENCE)\\n[![Tidelift](https://tidelift.com/badges/package/pypi/humanize)](https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=badge)\\n\\nThis modest package contains various common humanization utilities, like turning a\\nnumber into a fuzzy human-readable duration (\"3 minutes ago\") or into a human-readable\\nsize or throughput. It is localized to:\\n\\n- Arabic\\n- Basque\\n- Bengali\\n- Brazilian Portuguese\\n- Catalan\\n- Danish\\n- Dutch\\n- Esperanto\\n- European Portuguese\\n- Finnish\\n- French\\n- German\\n- Greek\\n- Hebrew\\n- Indonesian\\n- Italian\\n- Japanese\\n- Klingon\\n- Korean\\n- Norwegian\\n- Persian\\n- Polish\\n- Russian\\n- Simplified Chinese\\n- Slovak\\n- Slovenian\\n- Spanish\\n- Swedish\\n- Turkish\\n- Ukrainian\\n- Vietnamese\\n\\n## API reference\\n\\n[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)\\n\\n<!-- usage-start -->\\n\\n## Installation\\n\\n### From PyPI\\n\\n```bash\\npython3 -m pip install --upgrade humanize\\n```\\n\\n### From source\\n\\n```bash\\ngit clone https://github.com/python-humanize/humanize\\ncd humanize\\npython3 -m pip install -e .\\n```\\n\\n## Usage\\n\\n### Integer humanization\\n\\n```pycon\\n>>> import humanize\\n>>> humanize.intcomma(12345)\\n\\'12,345\\'\\n>>> humanize.intword(123455913)\\n\\'123.5 million\\'\\n>>> humanize.intword(12345591313)\\n\\'12.3 billion\\'\\n>>> humanize.apnumber(4)\\n\\'four\\'\\n>>> humanize.apnumber(41)\\n\\'41\\'\\n```\\n\\n### Date & time humanization\\n\\n```pycon\\n>>> import humanize\\n>>> import datetime as dt\\n>>> humanize.naturalday(dt.datetime.now())\\n\\'today\\'\\n>>> humanize.naturaldelta(dt.timedelta(seconds=1001))\\n\\'16 minutes\\'\\n>>> humanize.naturalday(dt.datetime.now() - dt.timedelta(days=1))\\n\\'yesterday\\'\\n>>> humanize.naturalday(dt.date(2007, 6, 5))\\n\\'Jun 05\\'\\n>>> humanize.naturaldate(dt.date(2007, 6, 5))\\n\\'Jun 05 2007\\'\\n>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=1))\\n\\'a second ago\\'\\n>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=3600))\\n\\'an hour ago\\'\\n```\\n\\n### Precise time delta\\n\\n```pycon\\n>>> import humanize\\n>>> import datetime as dt\\n>>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)\\n>>> humanize.precisedelta(delta)\\n\\'2 days, 1 hour and 33.12 seconds\\'\\n>>> humanize.precisedelta(delta, minimum_unit=\"microseconds\")\\n\\'2 days, 1 hour, 33 seconds and 123 milliseconds\\'\\n>>> humanize.precisedelta(delta, suppress=[\"days\"], format=\"%0.4f\")\\n\\'49 hours and 33.1230 seconds\\'\\n```\\n\\n#### Smaller units\\n\\nIf seconds are too large, set `minimum_unit` to milliseconds or microseconds:\\n\\n```pycon\\n>>> import humanize\\n>>> import datetime as dt\\n>>> humanize.naturaldelta(dt.timedelta(seconds=2))\\n\\'2 seconds\\'\\n```\\n\\n```pycon\\n>>> delta = dt.timedelta(milliseconds=4)\\n>>> humanize.naturaldelta(delta)\\n\\'a moment\\'\\n>>> humanize.naturaldelta(delta, minimum_unit=\"milliseconds\")\\n\\'4 milliseconds\\'\\n>>> humanize.naturaldelta(delta, minimum_unit=\"microseconds\")\\n\\'4 milliseconds\\'\\n```\\n\\n```pycon\\n>>> humanize.naturaltime(delta)\\n\\'now\\'\\n>>> humanize.naturaltime(delta, minimum_unit=\"milliseconds\")\\n\\'4 milliseconds ago\\'\\n>>> humanize.naturaltime(delta, minimum_unit=\"microseconds\")\\n\\'4 milliseconds ago\\'\\n```\\n\\n### File size humanization\\n\\n```pycon\\n>>> import humanize\\n>>> humanize.naturalsize(1_000_000)\\n\\'1.0 MB\\'\\n>>> humanize.naturalsize(1_000_000, binary=True)\\n\\'976.6 KiB\\'\\n>>> humanize.naturalsize(1_000_000, gnu=True)\\n\\'976.6K\\'\\n```\\n\\n### Human-readable floating point numbers\\n\\n```pycon\\n>>> import humanize\\n>>> humanize.fractional(1/3)\\n\\'1/3\\'\\n>>> humanize.fractional(1.5)\\n\\'1 1/2\\'\\n>>> humanize.fractional(0.3)\\n\\'3/10\\'\\n>>> humanize.fractional(0.333)\\n\\'333/1000\\'\\n>>> humanize.fractional(1)\\n\\'1\\'\\n```\\n\\n### Scientific notation\\n\\n```pycon\\n>>> import humanize\\n>>> humanize.scientific(0.3)\\n\\'3.00 x 10⁻¹\\'\\n>>> humanize.scientific(500)\\n\\'5.00 x 10²\\'\\n>>> humanize.scientific(\"20000\")\\n\\'2.00 x 10⁴\\'\\n>>> humanize.scientific(1**10)\\n\\'1.00 x 10⁰\\'\\n>>> humanize.scientific(1**10, precision=1)\\n\\'1.0 x 10⁰\\'\\n>>> humanize.scientific(1**10, precision=0)\\n\\'1 x 10⁰\\'\\n```\\n\\n## Localization\\n\\nHow to change locale at runtime:\\n\\n```pycon\\n>>> import humanize\\n>>> import datetime as dt\\n>>> humanize.naturaltime(dt.timedelta(seconds=3))\\n\\'3 seconds ago\\'\\n>>> _t = humanize.i18n.activate(\"ru_RU\")\\n>>> humanize.naturaltime(dt.timedelta(seconds=3))\\n\\'3 секунды назад\\'\\n>>> humanize.i18n.deactivate()\\n>>> humanize.naturaltime(dt.timedelta(seconds=3))\\n\\'3 seconds ago\\'\\n```\\n\\nYou can pass additional parameter `path` to `activate` to specify a path to search\\nlocales in.\\n\\n```pycon\\n>>> import humanize\\n>>> humanize.i18n.activate(\"xx_XX\")\\n<...>\\nFileNotFoundError: [Errno 2] No translation file found for domain: \\'humanize\\'\\n>>> humanize.i18n.activate(\"pt_BR\", path=\"path/to/my/own/translation/\")\\n<gettext.GNUTranslations instance ...>\\n```\\n\\n<!-- usage-end -->\\n\\nHow to add new phrases to existing locale files:\\n\\n```sh\\nxgettext --from-code=UTF-8 -o humanize.pot -k\\'_\\' -k\\'N_\\' -k\\'P_:1c,2\\' -k\\'NS_:1,2\\' -k\\'_ngettext:1,2\\' -l python src/humanize/*.py  # extract new phrases\\nmsgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files\\n```\\n\\nHow to add a new locale:\\n\\n```sh\\nmsginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>\\n```\\n\\nWhere `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`\\netc.\\n\\nList the language at the top of this README.\\n', encoding='utf-8')\nsys.path.insert(0, str(_metadata_root))\nsys.path.insert(0, str(Path(__file__).parent / 'src'))\nimport humanize\n\ndef duration(microseconds, minimum_unit='seconds', months=True):\n    return humanize.naturaldelta(timedelta(microseconds=microseconds), months=months, minimum_unit=minimum_unit)\n\ndef numeric_seconds(value, minimum_unit='seconds', months=True):\n    return humanize.naturaldelta(value, months=months, minimum_unit=minimum_unit)\n\ndef package_version():\n    return humanize.__version__\n"
+    },
+    "editAllowlist": [
+      "src/humanize/time.py"
+    ],
+    "entrypoint": "humanize_adapter.py",
+    "visibleCases": [
+      {
+        "id": "negative-tiny",
+        "requirementId": "R01",
+        "function": "duration",
+        "args": [
+          -7
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "a moment"
+      },
+      {
+        "id": "negative-microseconds",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          -7
+        ],
+        "kwargs": {
+          "minimum_unit": "microseconds"
+        },
+        "assertArgsUnchanged": false,
+        "expected": "7 microseconds"
+      },
+      {
+        "id": "negative-milliseconds",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          -250000
+        ],
+        "kwargs": {
+          "minimum_unit": "milliseconds"
+        },
+        "assertArgsUnchanged": false,
+        "expected": "250 milliseconds"
+      },
+      {
+        "id": "negative-seconds",
+        "requirementId": "R01",
+        "function": "duration",
+        "args": [
+          -30000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "30 seconds"
+      }
+    ],
+    "acceptanceCases": [
+      {
+        "id": "negative-minutes",
+        "requirementId": "R01",
+        "function": "duration",
+        "args": [
+          -120000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "2 minutes"
+      },
+      {
+        "id": "negative-hours",
+        "requirementId": "R01",
+        "function": "duration",
+        "args": [
+          -18000000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "5 hours"
+      },
+      {
+        "id": "positive-tiny",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "a moment"
+      },
+      {
+        "id": "positive-microseconds",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          7
+        ],
+        "kwargs": {
+          "minimum_unit": "microseconds"
+        },
+        "assertArgsUnchanged": false,
+        "expected": "7 microseconds"
+      },
+      {
+        "id": "positive-milliseconds",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          250000
+        ],
+        "kwargs": {
+          "minimum_unit": "milliseconds"
+        },
+        "assertArgsUnchanged": false,
+        "expected": "250 milliseconds"
+      },
+      {
+        "id": "positive-seconds",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          30000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "30 seconds"
+      },
+      {
+        "id": "positive-minutes",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          120000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "2 minutes"
+      },
+      {
+        "id": "positive-hours",
+        "requirementId": "R02",
+        "function": "duration",
+        "args": [
+          18000000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "5 hours"
+      },
+      {
+        "id": "zero",
+        "requirementId": "R03",
+        "function": "duration",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "a moment"
+      },
+      {
+        "id": "month",
+        "requirementId": "R03",
+        "function": "duration",
+        "args": [
+          2678400000000
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "a month"
+      },
+      {
+        "id": "month-disabled",
+        "requirementId": "R03",
+        "function": "duration",
+        "args": [
+          2678400000000
+        ],
+        "kwargs": {
+          "months": false
+        },
+        "assertArgsUnchanged": false,
+        "expected": "31 days"
+      },
+      {
+        "id": "invalid-known-unit",
+        "requirementId": "R03",
+        "function": "duration",
+        "args": [
+          1
+        ],
+        "kwargs": {
+          "minimum_unit": "hours"
+        },
+        "assertArgsUnchanged": false,
+        "expectedException": "ValueError"
+      },
+      {
+        "id": "invalid-unknown-unit",
+        "requirementId": "R03",
+        "function": "duration",
+        "args": [
+          1
+        ],
+        "kwargs": {
+          "minimum_unit": "bananas"
+        },
+        "assertArgsUnchanged": false,
+        "expectedException": "KeyError"
+      },
+      {
+        "id": "numeric-negative",
+        "requirementId": "R01",
+        "function": "numeric_seconds",
+        "args": [
+          -30
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "30 seconds"
+      },
+      {
+        "id": "numeric-positive",
+        "requirementId": "R03",
+        "function": "numeric_seconds",
+        "args": [
+          30
+        ],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "30 seconds"
+      },
+      {
+        "id": "package-metadata",
+        "requirementId": "R04",
+        "function": "package_version",
+        "args": [],
+        "kwargs": {},
+        "assertArgsUnchanged": false,
+        "expected": "4.9.1.dev32"
+      }
+    ],
+    "license": "MIT",
+    "provenance": "https://github.com/python-humanize/humanize/tree/1399e049734bd7c779b38fa64dd02742b6aadb06 ; https://github.com/python-humanize/humanize/issues/171 ; Copyright (c) 2010-2020 Jason Moiron and Contributors. English-only package regression; no upstream fix provided to model.",
+    "licenseText": "Copyright (c) 2010-2020 Jason Moiron and Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+    "editRegion": {
+      "path": "src/humanize/time.py",
+      "functionName": "naturaldelta",
+      "prefix": "\"\"\"Time humanizing functions.\n\nThese are largely borrowed from Django's `contrib.humanize`.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport collections.abc\nimport datetime as dt\nimport math\nimport typing\nfrom enum import Enum\nfrom functools import total_ordering\nfrom typing import Any\n\nfrom .i18n import _gettext as _\nfrom .i18n import _ngettext\nfrom .number import intcomma\n\n__all__ = [\n    \"naturaldelta\",\n    \"naturaltime\",\n    \"naturalday\",\n    \"naturaldate\",\n    \"precisedelta\",\n]\n\n\n@total_ordering\nclass Unit(Enum):\n    MICROSECONDS = 0\n    MILLISECONDS = 1\n    SECONDS = 2\n    MINUTES = 3\n    HOURS = 4\n    DAYS = 5\n    MONTHS = 6\n    YEARS = 7\n\n    def __lt__(self, other: typing.Any) -> typing.Any:\n        if self.__class__ is other.__class__:\n            return self.value < other.value\n        return NotImplemented\n\n\ndef _now() -> dt.datetime:\n    return dt.datetime.now()\n\n\ndef _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:\n    \"\"\"Return an \"absolute\" value for a timedelta, always representing a time distance.\n\n    Args:\n        delta (datetime.timedelta): Input timedelta.\n\n    Returns:\n        datetime.timedelta: Absolute timedelta.\n    \"\"\"\n    if delta.days < 0:\n        now = _now()\n        return now - (now + delta)\n    return delta\n\n\ndef _date_and_delta(\n    value: typing.Any, *, now: dt.datetime | None = None\n) -> tuple[typing.Any, typing.Any]:\n    \"\"\"Turn a value into a date and a timedelta which represents how long ago it was.\n\n    If that's not possible, return `(None, value)`.\n    \"\"\"\n    if not now:\n        now = _now()\n    if isinstance(value, dt.datetime):\n        date = value\n        delta = now - value\n    elif isinstance(value, dt.timedelta):\n        date = now - value\n        delta = value\n    else:\n        try:\n            value = int(value)\n            delta = dt.timedelta(seconds=value)\n            date = now - delta\n        except (ValueError, TypeError):\n            return None, value\n    return date, _abs_timedelta(delta)\n\n\ndef naturaldelta(\n    value: dt.timedelta | float,\n    months: bool = True,\n    minimum_unit: str = \"seconds\",\n) -> str:\n",
+      "suffix": "\n\ndef naturaltime(\n    value: dt.datetime | dt.timedelta | float,\n    future: bool = False,\n    months: bool = True,\n    minimum_unit: str = \"seconds\",\n    when: dt.datetime | None = None,\n) -> str:\n    \"\"\"Return a natural representation of a time in a resolution that makes sense.\n\n    This is more or less compatible with Django's `naturaltime` filter.\n\n    Args:\n        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a\n            `timedelta`, or a number of seconds.\n        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is\n            always figured out based on the current time. For integers and floats, the\n            return value will be past tense by default, unless future is `True`.\n        months (bool): If `True`, then a number of months (based on 30.5 days) will be\n            used for fuzziness between years.\n        minimum_unit (str): The lowest unit that can be used.\n        when (datetime.datetime): Point in time relative to which _value_ is\n            interpreted.  Defaults to the current time in the local timezone.\n\n    Returns:\n        str: A natural representation of the input in a resolution that makes sense.\n    \"\"\"\n    value = _convert_aware_datetime(value)\n    when = _convert_aware_datetime(when)\n\n    now = when or _now()\n\n    date, delta = _date_and_delta(value, now=now)\n    if date is None:\n        return str(value)\n    # determine tense by value only if datetime/timedelta were passed\n    if isinstance(value, (dt.datetime, dt.timedelta)):\n        future = date > now\n\n    ago = _(\"%s from now\") if future else _(\"%s ago\")\n    delta = naturaldelta(delta, months, minimum_unit)\n\n    if delta == _(\"a moment\"):\n        return _(\"now\")\n\n    return str(ago % delta)\n\n\ndef _convert_aware_datetime(\n    value: dt.datetime | dt.timedelta | float | None,\n) -> Any:\n    \"\"\"Convert aware datetime to naive datetime and pass through any other type.\"\"\"\n    if isinstance(value, dt.datetime) and value.tzinfo is not None:\n        value = dt.datetime.fromtimestamp(value.timestamp())\n    return value\n\n\ndef naturalday(value: dt.date | dt.datetime, format: str = \"%b %d\") -> str:\n    \"\"\"Return a natural day.\n\n    For date values that are tomorrow, today or yesterday compared to\n    present day return representing string. Otherwise, return a string\n    formatted according to `format`.\n\n    \"\"\"\n    try:\n        value = dt.date(value.year, value.month, value.day)\n    except AttributeError:\n        # Passed value wasn't date-ish\n        return str(value)\n    except (OverflowError, ValueError):\n        # Date arguments out of range\n        return str(value)\n    delta = value - dt.date.today()\n\n    if delta.days == 0:\n        return _(\"today\")\n\n    if delta.days == 1:\n        return _(\"tomorrow\")\n\n    if delta.days == -1:\n        return _(\"yesterday\")\n\n    return value.strftime(format)\n\n\ndef naturaldate(value: dt.date | dt.datetime) -> str:\n    \"\"\"Like `naturalday`, but append a year for dates more than ~five months away.\"\"\"\n    try:\n        value = dt.date(value.year, value.month, value.day)\n    except AttributeError:\n        # Passed value wasn't date-ish\n        return str(value)\n    except (OverflowError, ValueError):\n        # Date arguments out of range\n        return str(value)\n    delta = _abs_timedelta(value - dt.date.today())\n    if delta.days >= 5 * 365 / 12:\n        return naturalday(value, \"%b %d %Y\")\n    return naturalday(value)\n\n\ndef _quotient_and_remainder(\n    value: float,\n    divisor: float,\n    unit: Unit,\n    minimum_unit: Unit,\n    suppress: collections.abc.Iterable[Unit],\n) -> tuple[float, float]:\n    \"\"\"Divide `value` by `divisor` returning the quotient and remainder.\n\n    If `unit` is `minimum_unit`, makes the quotient a float number and the remainder\n    will be zero. The rational is that if `unit` is the unit of the quotient, we cannot\n    represent the remainder because it would require a unit smaller than the\n    `minimum_unit`.\n\n    >>> from humanize.time import _quotient_and_remainder, Unit\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [])\n    (1.5, 0)\n\n    If unit is in `suppress`, the quotient will be zero and the remainder will be the\n    initial value. The idea is that if we cannot use `unit`, we are forced to use a\n    lower unit so we cannot do the division.\n\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS])\n    (0, 36)\n\n    In other case return quotient and remainder as `divmod` would do it.\n\n    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [])\n    (1, 12)\n\n    \"\"\"\n    if unit == minimum_unit:\n        return value / divisor, 0\n\n    if unit in suppress:\n        return 0, value\n\n    return divmod(value, divisor)\n\n\ndef _carry(\n    value1: float,\n    value2: float,\n    ratio: float,\n    unit: Unit,\n    min_unit: Unit,\n    suppress: typing.Iterable[Unit],\n) -> tuple[float, float]:\n    \"\"\"Return a tuple with two values.\n\n    If the unit is in `suppress`, multiply `value1` by `ratio` and add it to `value2`\n    (carry to right). The idea is that if we cannot represent `value1` we need to\n    represent it in a lower unit.\n\n    >>> from humanize.time import _carry, Unit\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [Unit.DAYS])\n    (0, 54)\n\n    If the unit is the minimum unit, `value2` is divided by `ratio` and added to\n    `value1` (carry to left). We assume that `value2` has a lower unit so we need to\n    carry it to `value1`.\n\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.DAYS, [])\n    (2.25, 0)\n\n    Otherwise, just return the same input:\n\n    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [])\n    (2, 6)\n    \"\"\"\n    if unit == min_unit:\n        return value1 + value2 / ratio, 0\n\n    if unit in suppress:\n        return 0, value2 + value1 * ratio\n\n    return value1, value2\n\n\ndef _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> Unit:\n    \"\"\"Return a minimum unit suitable that is not suppressed.\n\n    If not suppressed, return the same unit:\n\n    >>> from humanize.time import _suitable_minimum_unit, Unit\n    >>> _suitable_minimum_unit(Unit.HOURS, []).name\n    'HOURS'\n\n    But if suppressed, find a unit greater than the original one that is not\n    suppressed:\n\n    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS]).name\n    'DAYS'\n\n    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS, Unit.DAYS]).name\n    'MONTHS'\n    \"\"\"\n    if min_unit in suppress:\n        for unit in Unit:\n            if unit > min_unit and unit not in suppress:\n                return unit\n\n        msg = \"Minimum unit is suppressed and no suitable replacement was found\"\n        raise ValueError(msg)\n\n    return min_unit\n\n\ndef _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> set[Unit]:\n    \"\"\"Extend suppressed units (if any) with all units lower than the minimum unit.\n\n    >>> from humanize.time import _suppress_lower_units, Unit\n    >>> [x.name for x in sorted(_suppress_lower_units(Unit.SECONDS, [Unit.DAYS]))]\n    ['MICROSECONDS', 'MILLISECONDS', 'DAYS']\n    \"\"\"\n    suppress = set(suppress)\n    for unit in Unit:\n        if unit == min_unit:\n            break\n        suppress.add(unit)\n\n    return suppress\n\n\ndef precisedelta(\n    value: dt.timedelta | int | None,\n    minimum_unit: str = \"seconds\",\n    suppress: typing.Iterable[str] = (),\n    format: str = \"%0.2f\",\n) -> str:\n    \"\"\"Return a precise representation of a timedelta.\n\n    ```pycon\n    >>> import datetime as dt\n    >>> from humanize.time import precisedelta\n\n    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)\n    >>> precisedelta(delta)\n    '2 days, 1 hour and 33.12 seconds'\n\n    ```\n\n    A custom `format` can be specified to control how the fractional part\n    is represented:\n\n    ```pycon\n    >>> precisedelta(delta, format=\"%0.4f\")\n    '2 days, 1 hour and 33.1230 seconds'\n\n    ```\n\n    Instead, the `minimum_unit` can be changed to have a better resolution;\n    the function will still readjust the unit to use the greatest of the\n    units that does not lose precision.\n\n    For example setting microseconds but still representing the date with milliseconds:\n\n    ```pycon\n    >>> precisedelta(delta, minimum_unit=\"microseconds\")\n    '2 days, 1 hour, 33 seconds and 123 milliseconds'\n\n    ```\n\n    If desired, some units can be suppressed: you will not see them represented and the\n    time of the other units will be adjusted to keep representing the same timedelta:\n\n    ```pycon\n    >>> precisedelta(delta, suppress=['days'])\n    '49 hours and 33.12 seconds'\n\n    ```\n\n    Note that microseconds precision is lost if the seconds and all\n    the units below are suppressed:\n\n    ```pycon\n    >>> delta = dt.timedelta(seconds=90, microseconds=100)\n    >>> precisedelta(delta, suppress=['seconds', 'milliseconds', 'microseconds'])\n    '1.50 minutes'\n\n    ```\n\n    If the delta is too small to be represented with the minimum unit,\n    a value of zero will be returned:\n\n    ```pycon\n    >>> delta = dt.timedelta(seconds=1)\n    >>> precisedelta(delta, minimum_unit=\"minutes\")\n    '0.02 minutes'\n\n    >>> delta = dt.timedelta(seconds=0.1)\n    >>> precisedelta(delta, minimum_unit=\"minutes\")\n    '0 minutes'\n\n    ```\n    \"\"\"\n    date, delta = _date_and_delta(value)\n    if date is None:\n        return str(value)\n\n    suppress_set = {Unit[s.upper()] for s in suppress}\n\n    # Find a suitable minimum unit (it can be greater the one that the\n    # user gave us if it is suppressed).\n    min_unit = Unit[minimum_unit.upper()]\n    min_unit = _suitable_minimum_unit(min_unit, suppress_set)\n    del minimum_unit\n\n    # Expand the suppressed units list/set to include all the units\n    # that are below the minimum unit\n    suppress_set = _suppress_lower_units(min_unit, suppress_set)\n\n    # handy aliases\n    days = delta.days\n    secs = delta.seconds\n    usecs = delta.microseconds\n\n    MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS = list(\n        Unit\n    )\n\n    # Given DAYS compute YEARS and the remainder of DAYS as follows:\n    #   if YEARS is the minimum unit, we cannot use DAYS so\n    #   we will use a float for YEARS and 0 for DAYS:\n    #       years, days = years/days, 0\n    #\n    #   if YEARS is suppressed, use DAYS:\n    #       years, days = 0, days\n    #\n    #   otherwise:\n    #       years, days = divmod(years, days)\n    #\n    # The same applies for months, hours, minutes and milliseconds below\n    years, days = _quotient_and_remainder(days, 365, YEARS, min_unit, suppress_set)\n    months, days = _quotient_and_remainder(days, 30.5, MONTHS, min_unit, suppress_set)\n\n    # If DAYS is not in suppress, we can represent the days but\n    # if it is a suppressed unit, we need to carry it to a lower unit,\n    # seconds in this case.\n    #\n    # The same applies for secs and usecs below\n    days, secs = _carry(days, secs, 24 * 3600, DAYS, min_unit, suppress_set)\n\n    hours, secs = _quotient_and_remainder(secs, 3600, HOURS, min_unit, suppress_set)\n    minutes, secs = _quotient_and_remainder(secs, 60, MINUTES, min_unit, suppress_set)\n\n    secs, usecs = _carry(secs, usecs, 1e6, SECONDS, min_unit, suppress_set)\n\n    msecs, usecs = _quotient_and_remainder(\n        usecs, 1000, MILLISECONDS, min_unit, suppress_set\n    )\n\n    # if _unused != 0 we had lost some precision\n    usecs, _unused = _carry(usecs, 0, 1, MICROSECONDS, min_unit, suppress_set)\n\n    fmts = [\n        (\"%d year\", \"%d years\", years),\n        (\"%d month\", \"%d months\", months),\n        (\"%d day\", \"%d days\", days),\n        (\"%d hour\", \"%d hours\", hours),\n        (\"%d minute\", \"%d minutes\", minutes),\n        (\"%d second\", \"%d seconds\", secs),\n        (\"%d millisecond\", \"%d milliseconds\", msecs),\n        (\"%d microsecond\", \"%d microseconds\", usecs),\n    ]\n\n    texts: list[str] = []\n    for unit, fmt in zip(reversed(Unit), fmts):\n        singular_txt, plural_txt, fmt_value = fmt\n        if fmt_value > 0 or (not texts and unit == min_unit):\n            _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)\n            fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)\n            if unit == min_unit and math.modf(fmt_value)[0] > 0:\n                fmt_txt = fmt_txt.replace(\"%d\", format)\n            elif unit == YEARS:\n                fmt_txt = fmt_txt.replace(\"%d\", \"%s\")\n                texts.append(fmt_txt % intcomma(fmt_value))\n                continue\n\n            texts.append(fmt_txt % fmt_value)\n\n        if unit == min_unit:\n            break\n\n    if len(texts) == 1:\n        return texts[0]\n\n    head = \", \".join(texts[:-1])\n    tail = texts[-1]\n\n    return _(\"%s and %s\") % (head, tail)\n"
+    }
+  },
+  "runtimeLock": {
+    "mode": "live",
+    "scope": "public-curated-development-demo",
+    "competitionReady": false,
+    "model": {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "providerQuantization": "fp4",
+      "tokenizerPin": null,
+      "modelCardUrl": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
+      "modelCardRevision": "ff433f5493e25d631c9f12b5d55c674229923d02",
+      "hostedWeightsRevision": null,
+      "licenseUrl": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/",
+      "license": "NVIDIA Nemotron Open Model License",
+      "cardScope": "upstream NVFP4 card; hosted weights revision and tokenizer equivalence unverified"
+    },
+    "inferenceInterface": {
+      "version": "20260923-f93df18ab",
+      "openApiDigest": "sha256:c8b46cf3fdd00280b920f55175c05a8ca1db0d723a975c7600ac7c6cb6a26b7f",
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/chat/completions",
+      "sampling": "provider sampling defaults; chat_template_kwargs.enable_thinking=false requested; hidden reasoning not retained; no determinism claim"
+    },
+    "execution": {
+      "modelProvider": "nebius-token-factory",
+      "checkBackend": "local_container",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "liveLocalCheckTimingPolicy": {
+      "id": "live-local-check-timing-v2",
+      "maximumBatchWallSeconds": 120
+    },
+    "pricing": {
+      "inputUsdPerMillionTokens": 0.3,
+      "outputUsdPerMillionTokens": 0.9,
+      "requestFeeUsd": 0,
+      "contextTokens": 262144,
+      "maximumOutputTokensPerRequest": 4000,
+      "inputAccounting": "full-model-context-conservative-ceiling-per-request",
+      "actualBilling": "unknown-full-reservation-held",
+      "verifiedAt": "2026-10-16T21:01:00Z",
+      "validUntil": "2026-10-17T21:00:00Z"
+    },
+    "renewablePricing": {
+      "policy": {
+        "id": "token-factory-renewable-pricing-v1",
+        "catalogEndpoint": "https://api.tokenfactory.nebius.com/v1/models?verbose=true",
+        "modelId": "nvidia/nemotron-3-super-120b-a12b",
+        "contextTokens": 262144,
+        "quantization": "fp4",
+        "inputUsdPerMillionTokens": 0.3,
+        "outputUsdPerMillionTokens": 0.9,
+        "requestFeeUsd": 0,
+        "maximumCatalogAgeMs": 4200000,
+        "maximumFeeAgeMs": 86400000,
+        "maximumTotalUsd": 25,
+        "perRunReservationUsd": 0.25
+      },
+      "policyDigest": "sha256:321d6cb5ac9ef9b275cb2e1ec05eab3ebb6e2d3a20cd7b45f9866458b41cdfc9",
+      "evidenceLocation": "per-run pricing verification events and immutable accounting receipts",
+      "legacyPricingDatesAreAdmissionAuthority": false
+    },
+    "sourceDigest": "sha256:aed7c93b7dc29d17277a059eb4865c51167ad1af052d20dbdeab8f2ae773f456",
+    "pricingEvidenceDigest": "sha256:9c51dfa981b666f7b2a6548e0545210c9b0813d7e4ced944595e758d946d21b2",
+    "localCheckSchedulingPolicy": {
+      "id": "fresh-container-two-lanes-v1",
+      "maximumConcurrentContainers": 2
+    },
+    "localCheckImage": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "localExecution": {
+      "available": true,
+      "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+      "reason": null
+    },
+    "checkProtocol": {
+      "id": "repeat-observations-v1",
+      "repetitions": 2,
+      "disagreement": "needs_review",
+      "budget": "shared-batch-wall-time"
+    },
+    "repairPolicy": "immutable-branches-visible-baseline-v1",
+    "operationalLock": {
+      "schemaVersion": "1.0",
+      "scope": "local-unscored-development",
+      "liveProtocolFrozen": false,
+      "sources": {
+        "Makefile": "sha256:2355d4e04d4856bc8e819086862239147f41cac0eb12796b096b342b913e8e94",
+        "apps/api/package.json": "sha256:80b332d02e46e04ed765586bbafecff3c272401f46322b05281526fb5e689d2a",
+        "apps/api/src/application.ts": "sha256:c527f7e69207fb401d284e7a8575183695eb77284771d8d8374850ccd631d265",
+        "apps/api/src/evidence-archive.ts": "sha256:156a235c39394cb391748fcda89b9b6d6a626f90739fc13e84b02fdb354845d9",
+        "apps/api/src/live-application.ts": "sha256:51ad8684301e1e3b5fbffb1c7f0dcf219fa2530daf20bc151d1baa7b31d9b211",
+        "apps/api/src/live-main.ts": "sha256:c662d20b2cfe9dea88352d0114c901cc3e61df21066ae4bb0871785857d4c8da",
+        "apps/api/src/main.ts": "sha256:456bf38ef04cbebc0850e2996c8dd44b8386fd3709202f0cf8366d999c6dc7fc",
+        "apps/api/src/product-server.ts": "sha256:206cdbb153b02110ebf9f174bc4b7547ef8cd1ffc65e352628ac179c092ddeb7",
+        "apps/api/src/server.ts": "sha256:c2d772c4747d74f55c2d4b666b736972fc9beeff59c4f76023c842f9b532bcd1",
+        "apps/web/app.js": "sha256:672115e62c45f6a7b636b1679883485e80d5212e5f350658e51651c575961fd5",
+        "apps/web/diff-view.js": "sha256:04f5dc9367f6bf30907afc6e4ed5c9a683f38d0d21e80c9700384ee94ae26b9e",
+        "apps/web/index.html": "sha256:3d39c3ca565dc54d3f16fccfd8a789db85599ad9760b06cf3b21f94754d32142",
+        "apps/web/package.json": "sha256:19cc2e6c80cf33cf26e9fa9547a0066f3b4dab3969400441b86a9ac99892a3d9",
+        "apps/web/style.css": "sha256:b750ba79e032b8b5b64279b409a2e0962f15e4ecae44d3d7cd415cc90ce3c807",
+        "apps/web/verify-browser.ts": "sha256:9d9e8cf76de143d45ad3a89dabd302eec178fbfbd71a517c8cef103841e1528d",
+        "apps/web/walkthrough.js": "sha256:41c12e2e2960311c4dd8d0c7fd8d844f4f3ddcc0e384fc7a7b1802f31821bf57",
+        "budget.json": "sha256:679ec688bcbbbc03ed98d2d363276af51dc8592ae36268f4cf58c4baba9668be",
+        "fixtures/author-provenance.json": "sha256:a0d54021dbbc651cd895c118902ed53360c91cfc9777c803e189ba4a119310b1",
+        "fixtures/calibration/v2-r05-t01.json": "sha256:2e0c7015298a3773254655342ea3b04265cab11af1d56fc025f382b8e72212a7",
+        "fixtures/calibration/v2-r05-t02.json": "sha256:3ce3cfbe1cf55cafea8bf348e950f75abfc8f8bbb484c5251e01010e4c062756",
+        "fixtures/calibration/v2-r05-t03.json": "sha256:c9958b4053a2a2acaa56ce7cb4b5bfaefcc8dc519232380c8f850d459e60c453",
+        "fixtures/calibration/v2-r05-t04.json": "sha256:737433546035021a05f03ee97f41429114412340c2708be68d99c89560202916",
+        "fixtures/calibration/v2-r05-t05.json": "sha256:9db9459b1e448a51d966f6b30ba4be3ff6aa7d0650ddd0da41c4267ec0376fe4",
+        "fixtures/calibration/v2-r06-t01.json": "sha256:c8e7c6698806a376b25c9ac5d54c7655e2b780d87c453a96d12cd85fe0e2ee1b",
+        "fixtures/calibration/v2-r06-t02.json": "sha256:0e40c0e74ce75473bdc4ec421fe40cc0ee42a2fd7d82d9e00321fdf74ebb6daa",
+        "fixtures/calibration/v2-r06-t03.json": "sha256:fea013b62a63759cb71be4294f7410037b9327813b54f21b75cdf25aba2f7271",
+        "fixtures/calibration/v2-r06-t04.json": "sha256:0e843b83801946c0019c1809df454c9bebd41d53232f1c12c334f301b7112c7b",
+        "fixtures/calibration/v2-r06-t05.json": "sha256:8aceb07333e2e38c95268e065847bab2815273ef2dd440ac28d5b421d5ee2a9b",
+        "fixtures/development/humanize-negative-duration.json": "sha256:a6feed37e12e71b6e3882b4f4e0ec1350195c250b32d6f52626fd9a7d44446f0",
+        "fixtures/development/stable-unique-01.json": "sha256:d6d762e6ebfd3edcc44fb230d90d9376dafc515ea9191ded6d48862923a1fb5f",
+        "fixtures/development/v2-r01-t02.json": "sha256:067e17c1a4597688facdcf0dff71d1dd5a6d69b7fd42bb1da8c7ed74918a146d",
+        "fixtures/development/v2-r01-t03.json": "sha256:5f3d613e1928f2fe0fd5791420b1fdb8da33cc002fb982b5f848248edfe04581",
+        "fixtures/development/v2-r01-t04.json": "sha256:b3e477dd13c4e21a04887f39dc7c2ff074b395ff078a6ef31b113fa5a18b95f6",
+        "fixtures/development/v2-r01-t05.json": "sha256:4001e79809cb2297b6a8f2ca2e0513ae86af45dc09c83929f2ef6c786332723d",
+        "fixtures/development/v2-r02-t01.json": "sha256:a34013c1077f7a8233a3b1984433e1ff0f59a61ff7b85c72c00306b1d04fa072",
+        "fixtures/development/v2-r02-t02.json": "sha256:899bf2224fb757498cc1b651b6f1fff46ddb211be52a32f08b12b7cc4cd91723",
+        "fixtures/development/v2-r02-t03.json": "sha256:a9e8a0e87048d8d632366d98b93f4b0051e0c3caff0cdaea7ef4999631650b85",
+        "fixtures/development/v2-r02-t04.json": "sha256:28d1872b85a3a4a5d3e41d1e42a06b1578dc3a5463143d89e9355383eecefbfc",
+        "fixtures/development/v2-r02-t05.json": "sha256:49335fda5ebff5b4e5ab0e14ba153e51b79fbc42f298a7d2547c6a3cfbffa2d4",
+        "fixtures/development/v2-r03-t01.json": "sha256:97c5584728988a18d9800f14e06f243dd949838fdd629c25483db0ea5dccadce",
+        "fixtures/development/v2-r03-t02.json": "sha256:85448af02924e462a9d0c7219fa0da343d8d79917df20a1e673dabccb8c53477",
+        "fixtures/development/v2-r03-t03.json": "sha256:fc94cd8f244beb88aef10fbb54b464195f46d069b45ec9d2bb737737f1579035",
+        "fixtures/development/v2-r03-t04.json": "sha256:e0f2d941647c16d42c3174a2b54db8900391636852b0e5bf8a8c25f3cdabc8d8",
+        "fixtures/development/v2-r03-t05.json": "sha256:54246bd76d64729fe3586f183e269950512c8462f33e55a0b8d99a14490baf1c",
+        "fixtures/development/v2-r04-t01.json": "sha256:088ae0a84314cb7498b002ca778d2b10064c242d2f7deca3bf55dedead6b913c",
+        "fixtures/development/v2-r04-t02.json": "sha256:3b7047d4253b943e0007ee43bc6f7159104f493478a15a599a25e3b4ff19373d",
+        "fixtures/development/v2-r04-t03.json": "sha256:524639cb7de6851f9f516c2022dda21e5a1ec84de4edbdcc20e36e668b4d9e30",
+        "fixtures/development/v2-r04-t04.json": "sha256:caaac44a3ca6242e100e732c9e0a935687f22becdf3971f558cb6cecb347f964",
+        "fixtures/development/v2-r04-t05.json": "sha256:6d7ba949bcd08132de5afe4cf06e17d62e48191e8e5f157ef2cf53c5c7a665a8",
+        "fixtures/development/v3-config-overlay.json": "sha256:a7663ad187e6768787893538a2bb24b4963094967276963935dc6afb9a710664",
+        "fixtures/development/v3-cursor-pagination.json": "sha256:dab3c3151551a5f3a5316af6742eb7612c57e49ab8381e6f65cd7bad06309958",
+        "fixtures/development/v3-event-fold.json": "sha256:14cce06b71c935db2142ada0c40398172425d79d6451b4de335f2dc3644975b9",
+        "fixtures/development/v3-inventory-reservation.json": "sha256:b9500ad1d63559b0ecc9256a54a0fedaed2f7b8614c4e9cd632557ea9ea01c92",
+        "fixtures/development/v3-invoice-allocation.json": "sha256:fdd2192d8de1d2926de4aecbd35d5c9e25a10a7cd639e372c7b7e73044ba92e1",
+        "fixtures/development/v3-manifest-merge.json": "sha256:621d4dfd6198d731432be43a433941b37c78475b52836e9ac5962857447dce56",
+        "fixtures/development/v3-retry-batches.json": "sha256:15b9a8a2003a03eb8460a7b0887f2b4817b006f97dd8d105a2b719c30b701135",
+        "fixtures/development/v3-search-ranking.json": "sha256:7793508dccefaa3e4426ae80f6b1cac7a8403cf941e05256b9ec8d9a0c924f88",
+        "fixtures/development/v3-ttl-cache.json": "sha256:56084a0f4cf26242b3a621afd031d8559825ccd8b3e483cbd9284fc526ee2207",
+        "fixtures/development/v3-weekly-schedule.json": "sha256:4e329aa55987e8e76ad50e10c6ab99361211f6b76a4900e3e71fdfb8f8f1da8e",
+        "fixtures/independent-review-summary.json": "sha256:515d8d7c8176e55e2e44a45105412c12d1f0d9688d2cbee0872bf81ff0044289",
+        "fixtures/split-manifest.json": "sha256:e9843bc84d9cb24f13dbdacbee2a00b5efd3004954c85e3ec8181e08aa8524a4",
+        "fixtures/v3-development-manifest.json": "sha256:ccb13e036ffa828c394720d44d116dd55d49375c46e66c223adadfc3ccbed0a3",
+        "owner-decisions.json": "sha256:c8d660965c5f22eebdc6dc76e13ef7ebec1c4c3278006059fd4bf6424cf50ec1",
+        "package-lock.json": "sha256:9ffda54c5b7be85a299190bb7fdb20b0befe422ab3e0eb9f0e5ba4239a2aa70a",
+        "package.json": "sha256:f8315e76d7ac479677b6ab8136229663a4ecf8d0e2ce8f1601827d5356353746",
+        "packages/contracts/package.json": "sha256:a1cd30fdc3792fdadb6a41d7493406670afe85006151b5152ab6e3edeec4caa6",
+        "packages/contracts/src/catalogue.ts": "sha256:26cf47e9945d4234402336abe65df1a379179999fc00b2a6a76d6c6cbc22728e",
+        "packages/contracts/src/digest.ts": "sha256:e15d2b8369f25cbdd86674e051e51d3f58dbcd140373b93639746a70dbb7db3d",
+        "packages/contracts/src/index.ts": "sha256:4e477571842142bc7fc2992a0f0975918e151f1a9fb2fba0d16bdf74624ab7c9",
+        "packages/contracts/src/json-data.ts": "sha256:ebb37df7d8b93a53fb896f5dbac01c1e777d228ac68f78227b1c6155f23ce711",
+        "packages/contracts/src/legacy-product-v2.ts": "sha256:179b7f4b2651e1d3baae1fa901dae611dad7f5e718039ff9bfad5ae75abc9343",
+        "packages/contracts/src/legacy-product-validation-v2.ts": "sha256:97e726119c43bc0a67ba814a13b8835e0ba6090223fc78fa10ffdb30e57151ff",
+        "packages/contracts/src/product-validation.ts": "sha256:c3528f20e548175f8bce7f5914e16e3f1422e1b8c79cbcf994c855097ea1d890",
+        "packages/contracts/src/product.ts": "sha256:f68e828a88fa0c13950b3a1174fad735d2fad9e4f633a878e407398c15ef5fef",
+        "packages/contracts/src/providers.ts": "sha256:7792fc50d3ecad452ed7b662fd4abeb1b0d797bb510e4956c280a09824d10e34",
+        "packages/mock/package.json": "sha256:d871e3d88e2d16c05256d0d10c4e4da504dd99e7e258c41cbf35eb34da71db16",
+        "packages/mock/src/bundle.ts": "sha256:f4eb9972c80a269c8a90ff8946a9edc958bd5fcea906ccf45c619eda6941896f",
+        "packages/mock/src/coordinator.ts": "sha256:f64dd36c2a3949d3bb6057a728ed27d50aa623688d6e454e36b79e8e1b2cdf60",
+        "packages/mock/src/store.ts": "sha256:4ba29e8d5cbbb83eaee6fd20bb62e604785fb0cce1f423096852de5f9ebf0a0a",
+        "packages/orchestrator/package.json": "sha256:7fa0910b8d75deebf407e173987a06bea723c6125e99a06dd52d283e29c91b07",
+        "packages/orchestrator/src/accounting-receipts.ts": "sha256:d7f2f6453a953cd981ed2b7f7cddce272d25483567910d3a6a2b49ad0265a173",
+        "packages/orchestrator/src/budget-ledger.ts": "sha256:30d1b59418eb4324900bbb80206ee53be17f6d5e0198689812ae3fc1b42fcc00",
+        "packages/orchestrator/src/coordinator.ts": "sha256:0db1d29a27190594656174b048763061c6a68276896db490b28c47edf863f58d",
+        "packages/orchestrator/src/edit-region.ts": "sha256:98e5b27b57671850762716e3a3600f0fee19557bd579765a92f0776dcc49355f",
+        "packages/orchestrator/src/episode-engine.ts": "sha256:81319709675a535feb470cbcbeab25c6a0612351f0a9e1d569e55aae37a44a51",
+        "packages/orchestrator/src/evidence.ts": "sha256:fa06eba1b9a71121a6115e610be3eee0d04512c63e6600c11cc7ca91c47434c4",
+        "packages/orchestrator/src/experiment-executor-core.ts": "sha256:00c0a77ca4c10ebd242b376e51bddec2acbe8b5436d48edec47749de95762568",
+        "packages/orchestrator/src/experiment-executor.ts": "sha256:2dcb9b99d23ac1eda6944c0e5774f9bf7874c20c274cd356fe3842dee9fd4f85",
+        "packages/orchestrator/src/experiment-policy.ts": "sha256:02a74573852fc24085739477df2d0aed10fe5d8b6e3512b7b63a5b4d91257357",
+        "packages/orchestrator/src/experiment-trace-store.ts": "sha256:76296c7f05acb2108c7310e0f76164a629828011aee323deea631ba7405f4874",
+        "packages/orchestrator/src/fixtures.ts": "sha256:88cb31d289be7426326a02a93380f4f26f664d35f0b317b0890e5ae12f24fde2",
+        "packages/orchestrator/src/journal.ts": "sha256:a4002e0245bf786eb3e9c620520fa45994bdb1de1a9643d0c058e027a4f7cb46",
+        "packages/orchestrator/src/lease.ts": "sha256:db2992e7b94580fbf3b5c4e6365baa359a0a6a1463570584f4eff86a470c64bc",
+        "packages/orchestrator/src/live-experiment-policy.ts": "sha256:a568fb990dc71f02a800cc83201b2ea7f57687f75da8769225db2a7bf93b8955",
+        "packages/orchestrator/src/live-experiment.ts": "sha256:0c59a49193adc65d05e0fd82a378d649a1af05dcfca3f284674b8fce203d212f",
+        "packages/orchestrator/src/live-local.ts": "sha256:30d2f779a7c2ce7df78495be059fe8022df42b85d5d7c8b8fddc77248f7189a0",
+        "packages/orchestrator/src/local-check-timing.ts": "sha256:383b3997db3d8beaa08960b60d75bfaa504398db1e4cc321cc8f6b1157e423fd",
+        "packages/orchestrator/src/operational-lock.ts": "sha256:fea937e693dd6e2dd031e46e08bc735db5bde0fa11d505d9a7f3b498b0cbf366",
+        "packages/orchestrator/src/parallel-local-checks.ts": "sha256:9bd18ed9e0668667dba03d72eb0820f69993d86f52b275bf11718786893cc3db",
+        "packages/orchestrator/src/patch.ts": "sha256:86a0fea2276304d52c3764c02c80fbde92d33403430326db69752f7a2f743be6",
+        "packages/orchestrator/src/phase-accounting.ts": "sha256:865b9e6a6e797614ef256846111228a29b88f70d84ba51c279ad088b41396cf1",
+        "packages/orchestrator/src/renewable-pricing.ts": "sha256:588aede43e3321fc99cee00272d19f151a840f6668ee45e2e9ca0fb0e27a36a5",
+        "packages/orchestrator/src/repeated-checks.ts": "sha256:20f98d9a526e2c035378e4f3342f97114da0504db4545414c5a029baa39b76ec",
+        "packages/orchestrator/src/smoke-operator-sessions.ts": "sha256:9cef96cccc0308688749325fdcbd2a5de3f58026c04c48bc2753abd8f9886b3a",
+        "packages/orchestrator/src/smoke-tokenizer-worker.ts": "sha256:2a5c438440f8a5ee3c74ed2b05a672499784c6190a0a590d6a821726bc46b7cb",
+        "packages/orchestrator/src/smoke-tokenizer.ts": "sha256:a34091ead0b328945fcfa32aa0be6c11660c5b131e2759e3e32d99eb63cc0d01",
+        "packages/orchestrator/src/trusted-replay.ts": "sha256:381f4ab64b88057242edaa421f64cd7c31c1817be61e555987f68ee015d9296c",
+        "packages/orchestrator/src/trusted-smoke.ts": "sha256:654c89f95ef4b96aeed5034249bea3f3acdc0809b488cf6699b881ea246e0351",
+        "research/product-v3/model-discovery.json": "sha256:819817f0120c3a5a3e6ac0de9af6782bec068930118607eddd49403928ed58b9",
+        "runtime-lock.json": "sha256:51b2ba48c71ee95eb287a45bee7e278f4be8358e2c7c59c215e52f92588db716",
+        "scripts/accounting-cli.ts": "sha256:72517ed8e9a8de67a6ba987d0acd656118f9831a519d4d69ee5f8845056b2d35",
+        "scripts/check-contract-lock.ts": "sha256:2c18f71892bc89983cd2d5aeb1135c271d84ebda561af79bdc63c97e96e89157",
+        "scripts/cli.ts": "sha256:007023a3f11368c4fa44d715cfa32e58771e787bbd8495938c3826493bc6405f",
+        "scripts/config.ts": "sha256:731f136e39fbc453d6d1f062fe47bf3d6aebe479e2a7df1a6dc134bee565b460",
+        "scripts/contract-locks.ts": "sha256:1e1797eb2c1c1c482340237592d60f4970b396e62a432869b50309bb60dbce9e",
+        "scripts/evidence-archive.ts": "sha256:3bb9e59b1d9f512c993a6eb9695b5272391b072ebaaab497667f1eb859367317",
+        "scripts/evidence-operator.ts": "sha256:bbd39af3e1ce09d4d78e7ca82cb7696396e608649edc5847c01f7c706d7eb058",
+        "scripts/experiment-export-cli.ts": "sha256:a4687e2a494ffaffb6b3fbf6f318ecfc65893f5dcca17e52c641e27c0a74d6a8",
+        "scripts/experiment-session-cli.ts": "sha256:cfbb1e427b4349d3e4b1ca628811ff63f087593d70c8ad4cc3409175111f1f8f",
+        "scripts/live-experiment-operator.ts": "sha256:527d02723e29fe61384e68cef01e6d0306e04f8d46e779536ef82eebfb43a20a",
+        "scripts/model-probe.ts": "sha256:e4e798727d67c8a47a018cebacee6ed1f722dc05c63634a2ad5c8b87676b3382",
+        "scripts/operator-files.ts": "sha256:d67985b2217e7276abe15cfc5a1fb36730a7eb110667da7564903347c1a8f330",
+        "scripts/phase-accounting-cli.ts": "sha256:a9eef7605fdc61514b6425ddd3583238f0f9c432e278748ddb9add2b22e31121",
+        "scripts/product-cli.ts": "sha256:04f51f3a5e9b0bf203d6e1f3ca61a5995ac1c04a5b5e324047e256229c6d9c71",
+        "scripts/record-evidence-archive.ts": "sha256:7ce118110cf60da493721d30866276de5ab27a5db65bd516c855fdf52605131a",
+        "scripts/record-public-demo.ts": "sha256:eacd8b3eb0eecc741270e2539f5885bd1a60c8337d802b3ac7dc6e7c78b7307c",
+        "scripts/release-audit.ts": "sha256:6a3918e9e9e7dad9c844007131d55fd0c6d930d3a9a7988aff7516b58b141092",
+        "scripts/release-files.ts": "sha256:dc6b278a371859c14124b66940cd4a836ee39737f8d61a7ad394041bad4f2762",
+        "scripts/release-input.ts": "sha256:480762b6fb5e5e10de843921c893f1977b19ab9884808d902596f7a8241ca5d5",
+        "scripts/release-packet.ts": "sha256:7cb1401559d34a582f68d4735b5838506cf35cb4e812d0eafd26b8a9b1859461",
+        "scripts/release-protocol.ts": "sha256:bf653eb9428810db6b3e5a8fba51732f5603a25b4a4f30cf5b90652a722bf21b",
+        "scripts/release-receipts.ts": "sha256:be9f9c058cd7ec918a164492cea72298f711b1bfbc1eb6923181a6f172f5af02",
+        "scripts/replay-operator.ts": "sha256:8f68044f1776fbfedb82926a96390c380f3b189a7686379d26f8f92b11ac40b8",
+        "scripts/smoke-operator.ts": "sha256:4cfdea166ef108b4c83b70360be85d709d77a16b16e7b7613dda2f388f516b40",
+        "scripts/validate-preparation.py": "sha256:ad283708138a06b3190217df513ebdc80c3968e03f3ba7cdb410112de33145e0",
+        "scripts/verify-archive-recorder.ts": "sha256:dac91355b9c19c08b0f88578d19cdbace4808813c3388b5391810a72c269f4d6",
+        "scripts/verify-browser.ts": "sha256:29a09cadeafc2749d2e097427d2decfc1725ea50c6417b300357cb62e8c197e9",
+        "scripts/verify-evidence-archive.ts": "sha256:edad3d25bacbac6f442f3757c1c3c222b67765614af74b50c77a9208fbc25df2",
+        "scripts/verify-historical-context.ts": "sha256:3699436067eb373543058c236a404843066a0b591f0ef6e636018f2dc79bb680",
+        "scripts/verify-humanize-baseline.ts": "sha256:89cb9a032adc5afa177f4b6bcec480f08e67b4f799253a64154fb944b41d9875",
+        "scripts/verify-live-baseline.ts": "sha256:4647db934be5a96261ad609f194f88889048fa020c2ce9d042128afabdc91847",
+        "scripts/verify-live-pricing.ts": "sha256:e9200d3293c14638fede7f17311a81a6e4484752541a81d9576f5fa09d5837fd",
+        "scripts/verify-live-supervised.ts": "sha256:3f44b7a48e7c62f640ac327c0d3a7fd2f454ae97f97aa673fe53a0afe2f48f84",
+        "scripts/verify-v3-corpus.ts": "sha256:981b45496063d6886dda0e49202e4a451c97172e08400a7c5040445d9346d8cd",
+        "tsconfig.json": "sha256:4d0be16e40406d37fd915af87a0acd0df96b5885b2d14a226abdd07bb658e674",
+        "workers/evaluator/adjudicate.ts": "sha256:7e729532dba0eb72c4062017c75c0057dee4bdea2c8ac2420171994691403684",
+        "workers/evaluator/adjudication-accounting.ts": "sha256:186e9e8b92074d98514dee1549e5cddd101fb8ea5595e7b2ca857e0d054376f6",
+        "workers/evaluator/analysis.ts": "sha256:04f3f1d24978fef9f761f6b9b0ae219a97dddc1de1c1c30ad7ab9ae8e5d6432b",
+        "workers/evaluator/cli.ts": "sha256:07174a9f6f234d737785c479416b4226d4cbef4a6e7e220f32a93da3c25cbc18",
+        "workers/evaluator/dispatcher.ts": "sha256:c642d3ca36ea1d16a7a2c736c0c06944a46b6d55bf05006c6945e5ea047a0bb8",
+        "workers/evaluator/experiment-export.ts": "sha256:1a743afb51ba2c0147eb0237f3c7f4ef5112fdbbfafd9ff6c11e8eb006c13e12",
+        "workers/evaluator/experiment-session.ts": "sha256:86027726fb3ae2330829204ff0c869ef00891c771ba4a5cb09169fc859dff7cb",
+        "workers/evaluator/fixture-validation.ts": "sha256:95bbb211101a7f47be0c3f08bd43670f5070b6766592c40bcd14720b06bc86ad",
+        "workers/evaluator/model-probe.ts": "sha256:805f5ff6093d96bc28184eb940a4035b409ae4d6e16abb58c76998192c8733ff",
+        "workers/evaluator/nebius-adjudication.ts": "sha256:d88cf54f383f0144d41cb312b1e7dff416b818420a55a2215dd93e839bc8672e",
+        "workers/evaluator/protocol.ts": "sha256:b04650c5a1158489c0babac06521e66162c8f5f6c60bb2e46e93df3c43766112",
+        "workers/evaluator/reviewer-server.ts": "sha256:541204696d1c523790d7445ab6cbdff4599a2bb2d59fd6277f433b6d86c0fcb1",
+        "workers/evaluator/reviewer-study.ts": "sha256:053b58bd797dfe454911a57bf081b5e14c9556b9fb804adcadd32fb6ffe56a94",
+        "workers/evaluator/reviewer-web/app.js": "sha256:61ce00e6861c850cc61b01839c43add01819faa3d8114cf4f81fece1ae9f10cd",
+        "workers/evaluator/reviewer-web/index.html": "sha256:fce8d7e5cde9ce34a409f3081c0207055a8bde9917d2c097b0b1179f7f6dfaeb",
+        "workers/evaluator/reviewer-web/style.css": "sha256:d0f1db92bceedddf97d0a43c9b4f78a98aec10fc2692fb18a2dc07ce1a633a94",
+        "workers/evaluator/validate-fixtures.ts": "sha256:a4b786fd28d8acde1d27cd7032d890e8bd16275193d923aa9b7e63e5fc7884ff",
+        "workers/evaluator/verify-reviewer-browser.ts": "sha256:615d4dca63182583b5b22889f5fe7b853bde18bb4ee9a4a0b0e2d13ca22a9331",
+        "workers/repair/index.ts": "sha256:067a09ad36d63eac4f3ca0cc7a75425e69e66ba416ee5fa9b7800d73572b91c0",
+        "workers/sandbox/driver.ts": "sha256:15c167d014b3333f1691ce737c83102ae2ee620ed743e225e58d144010c2c5e8",
+        "workers/sandbox/index.ts": "sha256:5f25611511d6ef17285d0659fdab2040092d1476abe0f171ebf5a87a384c1203",
+        "workers/sandbox/local-cleanup.ts": "sha256:1e440fd4fc5ff5ed6f4a10476fb2ec73b2efd7236c26715796d2c5b36d6198a5",
+        "workers/sandbox/nebius-runner.ts": "sha256:a8005e880d0053a88a0bd00fa1fa56f2491a73a6626b0cad8e34eb87bcddf8d4",
+        "workers/sandbox/nebius-types.ts": "sha256:95181fcd371702db95c6689748cceb0b8cfb810eb0e80303a72b05513f656a55",
+        "workers/sandbox/nebius.ts": "sha256:d1c6861acca2fb9f07342d0af38d092ba28bf4738de45d29e3f2a7d4de679815",
+        "workers/sandbox/process.ts": "sha256:1653666a878d0dfc2ef0ab67f56babcd5f9a49a96656385666387575c2580e4c",
+        "workers/sandbox/reconcile.ts": "sha256:5d084a0fdb885b71810e3bccdd698e15d10a37e88e32eee3955a090826707dc7"
+      },
+      "behavior": {
+        "modelPromptAndRequest": "workers/repair/index.ts",
+        "modelSampling": "provider-defaults-unverified",
+        "modelSeed": null,
+        "determinismClaimed": false,
+        "baseline": "progressive-source-visible-feedback-latest-candidate",
+        "checksOnly": "progressive-source-acceptance-feedback-latest-candidate",
+        "patchproof": "original-source-acceptance-feedback-best-declared-score",
+        "tieBreak": "earliest-candidate",
+        "maximumCandidates": 3,
+        "inferenceAllowance": "one-shared-episode-budget",
+        "finalOracleFeedback": 0,
+        "checkProtocol": "repeat-observations-v1"
+      }
+    },
+    "limits": {
+      "inferenceCallLimit": 3,
+      "inputTokenLimit": 786432,
+      "outputTokenLimit": 12000,
+      "wallTimeLimitSeconds": 600,
+      "sandboxCpuSecondsLimit": 900,
+      "maxApprovedSpendUsd": 0.25
+    },
+    "sponsorSandboxesVerified": false,
+    "calibration": "unscored-development-only",
+    "transportRetries": 0
+  },
+  "files": {
+    "patch.diff": {
+      "content": "",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commands.json": {
+      "content": "{\n  \"replay\": \"make reproduce RUN=06e10471-44b0-4b5c-80b9-a01f9eabd5f9\",\n  \"isolatedEntrypoint\": \"humanize_adapter.py\"\n}",
+      "digest": "sha256:37a577493bd0415c934ad7486073ef5583c474914fd0ca07072ab6feffdc66bf"
+    },
+    "coverage.json": {
+      "content": "[\n  {\n    \"requirementId\": \"R01\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  },\n  {\n    \"requirementId\": \"R02\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  },\n  {\n    \"requirementId\": \"R03\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  },\n  {\n    \"requirementId\": \"R04\",\n    \"status\": \"unverified\",\n    \"checkIds\": []\n  }\n]",
+      "digest": "sha256:8e39409df90cbd8c63874bc2557fbe8fef2e6e55af3ce65cfd757623178e922d"
+    },
+    "cost-ledger.json": {
+      "content": "{\n  \"mode\": \"live\",\n  \"aggregate\": {\n    \"inferenceCalls\": 1,\n    \"inputTokens\": 3046,\n    \"outputTokens\": 4000,\n    \"sandboxCpuSeconds\": null,\n    \"measuredCostUsd\": null,\n    \"costIsEstimate\": false,\n    \"elapsedMs\": 84452\n  },\n  \"attempts\": []\n}",
+      "digest": "sha256:bb99fbc9307d827f4d0f0de24572e2244680d154b49d12be88c2932dc3595fe5"
+    },
+    "events.json": {
+      "content": "[\n  {\n    \"sequence\": 1,\n    \"timestamp\": \"2026-10-20T04:02:01.433Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Pricing verification: {\\\"digest\\\":\\\"sha256:570cb15173df86bdc89fbeb18bc72a6c9c3080a3d3ca0b139c24841fa3c3e87e\\\",\\\"evidence\\\":{\\\"schemaVersion\\\":\\\"1.0\\\",\\\"policyDigest\\\":\\\"sha256:321d6cb5ac9ef9b275cb2e1ec05eab3ebb6e2d3a20cd7b45f9866458b41cdfc9\\\",\\\"sourceDigest\\\":\\\"sha256:aed7c93b7dc29d17277a059eb4865c51167ad1af052d20dbdeab8f2ae773f456\\\",\\\"budgetDigest\\\":\\\"sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53\\\",\\\"verifiedAt\\\":\\\"2026-10-20T04:01:38.948Z\\\",\\\"validUntil\\\":\\\"2026-10-20T05:11:38.948Z\\\",\\\"catalogDigest\\\":\\\"sha256:79af265adb360784790d5277924aea5c9b5a4eeca6fd340b91a2ab2a76d3c977\\\",\\\"modelId\\\":\\\"nvidia/nemotron-3-super-120b-a12b\\\",\\\"contextTokens\\\":262144,\\\"quantization\\\":\\\"fp4\\\",\\\"inputUsdPerMillionTokens\\\":0.3,\\\"outputUsdPerMillionTokens\\\":0.9,\\\"requestFeeUsd\\\":0,\\\"feeEvidence\\\":{\\\"schemaVersion\\\":\\\"1.0\\\",\\\"verifiedAt\\\":\\\"2026-10-19T21:11:58.134Z\\\",\\\"validUntil\\\":\\\"2026-10-20T21:11:58.134Z\\\",\\\"evidenceDigest\\\":\\\"sha256:1fddb65de6bca39f6a6c681fbcc4ff149b544d054db7c88b5ccdb6b74522fad0\\\",\\\"accountBillingActive\\\":true,\\\"additionalFeeUsdPerRun\\\":0,\\\"basis\\\":\\\"operator-reviewed-account-pricing-and-fees\\\"}}}\"\n  },\n  {\n    \"sequence\": 2,\n    \"timestamp\": \"2026-10-20T04:02:01.542Z\",\n    \"phase\": \"queued\",\n    \"message\": \"Run queued with a fixed shared resource allowance.\"\n  },\n  {\n    \"sequence\": 3,\n    \"timestamp\": \"2026-10-20T04:02:01.592Z\",\n    \"phase\": \"preflight\",\n    \"message\": \"Checking live runtime bindings and the reserved aggregate allowance.\"\n  },\n  {\n    \"sequence\": 4,\n    \"timestamp\": \"2026-10-20T04:02:01.754Z\",\n    \"phase\": \"baseline_capture\",\n    \"message\": \"Running original source against frozen declared checks.\"\n  },\n  {\n    \"sequence\": 5,\n    \"timestamp\": \"2026-10-20T04:03:04.382Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Requesting NVIDIA model candidate 1; all candidates share the reserved envelope.\"\n  },\n  {\n    \"sequence\": 6,\n    \"timestamp\": \"2026-10-20T04:03:04.776Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Nebius model request_intent: b12dafb1-4c0c-475d-ba52-745348443e07.\"\n  },\n  {\n    \"sequence\": 7,\n    \"timestamp\": \"2026-10-20T04:03:25.954Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Nebius model response: chatcmpl-aa7682ce8eecf855.\"\n  },\n  {\n    \"sequence\": 8,\n    \"timestamp\": \"2026-10-20T04:03:26.020Z\",\n    \"phase\": \"repair\",\n    \"message\": \"Failed inference response ID: chatcmpl-aa7682ce8eecf855. Billing remains unreconciled.\"\n  },\n  {\n    \"sequence\": 9,\n    \"timestamp\": \"2026-10-20T04:03:26.044Z\",\n    \"phase\": \"export\",\n    \"message\": \"Preserving source, patch, checks, costs and observed events.\"\n  },\n  {\n    \"sequence\": 10,\n    \"timestamp\": \"2026-10-20T04:03:26.080Z\",\n    \"phase\": \"terminal\",\n    \"message\": \"infrastructure_error: invalid_response. Real inference; provider billing remains unreconciled.\"\n  }\n]",
+      "digest": "sha256:06bcbd0dcb3a10ccbc6ac253e8101137492f2994b04d905b4875a12ee899bc2a"
+    }
+  },
+  "bundleDigest": "sha256:63cf9ffba0f104f1542e0bfa04eb1aa650c590b4b1ea38de5cb852a8d573ac39"
+}

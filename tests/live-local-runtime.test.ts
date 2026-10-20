@@ -430,3 +430,26 @@ test('loss of renewable evidence after baseline prevents credentials and dispatc
   assert.equal(h.observed.credentials, 0); assert.equal(h.observed.requests.length, 0);
   assert.equal(h.reservation(done).actualCostMicros, '0');
 });
+
+test('malformed completion closes a failed non-retryable run with durable receipt coverage end to end', async t => {
+  const h = await setup(t);
+  h.hooks.fetch = () => response('', { prompt_tokens: 3046, completion_tokens: 4000 },
+    { choices: [{ finish_reason: 'length', message: { content: null } }] });
+  const run = await h.run('malformed-accounting-regression');
+  assert.equal(run.terminalStatus, 'infrastructure_error');
+  assert.equal(h.observed.requests.length, 1);
+  assert.equal(h.reservation(run).actualCostMicros, null);
+  assert.equal(h.reservation(run).heldMicros, '250000');
+  assert.equal(h.reservation(run).reconciliationComplete, false);
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1);
+  const records = await Promise.all((await readdir(h.accountingDirectory)).map(async name =>
+    JSON.parse(await readFile(join(h.accountingDirectory, name), 'utf8'))));
+  const closed = records.find(record => record.closed);
+  assert.ok(closed); assert.equal(closed.intents.length, 1); assert.equal(closed.receipts.length, 1);
+  assert.match(closed.receipts[0].responseDigest, /^sha256:[a-f0-9]{64}$/);
+  assert.equal(h.observed.requests[0]!.body.chat_template_kwargs.enable_thinking, false);
+  const repeated = h.coordinator.create(request('malformed-accounting-regression'));
+  await h.coordinator.settled();
+  assert.equal(repeated.run.id, run.id); assert.equal(h.observed.requests.length, 1);
+  assert.equal(h.coordinator.get(run.id).terminalStatus, 'infrastructure_error');
+});

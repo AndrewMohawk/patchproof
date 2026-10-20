@@ -8,12 +8,13 @@ export class RepairError extends Error {
   readonly code: string;
   readonly usage: { inferenceCalls: number; inputTokens: number; outputTokens: number; measuredCostUsd: number | null };
   readonly providerRequestId: string | null;
+  readonly candidateFormatFailure: 'invalid_json' | 'invalid_schema' | null;
   constructor(code: string, message: string,
-    usage = { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, measuredCostUsd: null as number | null }, providerRequestId: string | null = null) {
+    usage = { inferenceCalls: 0, inputTokens: 0, outputTokens: 0, measuredCostUsd: null as number | null }, providerRequestId: string | null = null, candidateFormatFailure: 'invalid_json' | 'invalid_schema' | null = null) {
     super(message);
     this.code = code;
     this.usage = usage;
-    this.providerRequestId = providerRequestId;
+    this.providerRequestId = providerRequestId; this.candidateFormatFailure = candidateFormatFailure;
   }
 }
 
@@ -53,6 +54,7 @@ export interface InferenceReceipt {
 export interface NebiusRepairOptions {
   maximumOutputTokens?: number;
   disableThinking?: boolean;
+  enableThinkingForEditRegions?: boolean;
   onReceipt?: (receipt: InferenceReceipt) => void;
   modelId: string;
   accountVerifiedAt: string;
@@ -110,6 +112,19 @@ export class NebiusRepairProvider implements RepairProvider {
         requirements: input.requirements, files: input.files, editAllowlist: input.editAllowlist,
         visibleCases: input.visibleCases, feedback: input.feedback }) },
     ];
+    if (input.editRegion) {
+      messages[0]!.content = messages[0]!.content.replace('full replacement source', 'replacement indented function body');
+      messages[0]!.content += ' Encode the body as a valid JSON string: escape newlines and double quotes. The outer object must contain exactly files and summary; do not return Markdown fences or additional fields.';
+      messages[0]!.content += ' REGION PROTOCOL: for this task only, files[path] must be the replacement INDENTED BODY of the named function, excluding its def/signature and excluding all other code. Keep every nonblank line indented by at least four spaces and end with a newline. The host restores the immutable prefix and suffix; do not include them in your response.';
+      const region = input.editRegion, source = input.files[region.path];
+      if (typeof source !== 'string' || !source.startsWith(region.prefix) || !source.endsWith(region.suffix)) {
+        throw new RepairError('protected_path', 'Current source does not match the frozen function boundary.');
+      }
+      messages[1]!.content = JSON.stringify({ ...JSON.parse(messages[1]!.content),
+        files: { [region.path]: source.slice(0, -region.suffix.length) },
+        sourceScope: 'Focused excerpt: immutable module prefix and signature followed by the complete current function body. Remaining module code and other package files are omitted and preserved by the host.',
+        editRegion: { path: region.path, functionName: region.functionName, output: 'indented body only' } });
+    }
     const outputLimit = Math.min(input.remaining.outputTokenLimit, o.maximumOutputTokens ?? input.remaining.outputTokenLimit);
     const promptTokens = o.countInputTokens(messages);
     if (!Number.isSafeInteger(promptTokens) || promptTokens < 1 || promptTokens > input.remaining.inputTokenLimit) {
@@ -130,8 +145,17 @@ export class NebiusRepairProvider implements RepairProvider {
     if (combined.aborted) throw new RepairError('cancelled', 'Inference cancelled before dispatch.');
     const intentId = randomUUID();
     const requestBody = { model: o.modelId, messages, max_tokens: outputLimit, max_completion_tokens: outputLimit,
-      response_format: { type: 'json_object' }, stream: false, store: false, n: 1,
-      ...(o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
+      response_format: input.editRegion ? {
+        type: 'json_schema', json_schema: { name: 'function_repair', strict: true, schema: {
+          type: 'object', additionalProperties: false, required: ['files', 'summary'], properties: {
+            files: { type: 'object', additionalProperties: false, required: [input.editRegion.path],
+              properties: { [input.editRegion.path]: { type: 'string' } } },
+            summary: { type: 'string', maxLength: 2000 },
+          },
+        } },
+      } : { type: 'json_object' }, stream: false, store: false, n: 1,
+      ...(o.enableThinkingForEditRegions && input.editRegion ? { chat_template_kwargs: { enable_thinking: true, low_effort: true, force_nonempty_content: true } } :
+        o.disableThinking ? { chat_template_kwargs: { enable_thinking: false } } : {}) };
     try { o.onOperation?.({ kind: 'request_intent', id: intentId }); }
     catch (error) {
       if (error instanceof ContractError) throw error;
@@ -173,33 +197,49 @@ export class NebiusRepairProvider implements RepairProvider {
       if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: responseId }); throw error; }
       throw new RepairError('operation_journal_error', 'Inference response identity could not be journaled; retain this failed call.', usage, responseId);
     }
-    let parsed: z.infer<typeof responseSchema>;
-    try { parsed = responseSchema.parse(decoded); }
+    const accountingResponseSchema = responseSchema.pick({ id: true, model: true, usage: true });
+    let accounted: z.infer<typeof accountingResponseSchema>;
+    try { accounted = accountingResponseSchema.parse(decoded); }
     catch { throw new RepairError('invalid_response', 'Inference response did not match the documented completion contract.', usage, responseId); }
-    if (parsed.model !== o.modelId) throw new RepairError('model_mismatch', 'Provider returned a different model identifier.', usage, parsed.id);
+    if (accounted.model !== o.modelId) throw new RepairError('model_mismatch', 'Provider returned a different model identifier.', usage, accounted.id);
     if (usage.inputTokens > Math.min(promptTokens, input.remaining.inputTokenLimit) || usage.outputTokens > outputLimit) {
-      throw new RepairError('budget_exceeded', 'Provider-reported tokens exceeded the approved allowance; retain this failed call.', usage, parsed.id);
+      throw new RepairError('budget_exceeded', 'Provider-reported tokens exceeded the approved allowance; retain this failed call.', usage, accounted.id);
     }
     const reportedCostEstimate = (usage.inputTokens * o.inputUsdPerMillionTokens + usage.outputTokens * o.outputUsdPerMillionTokens) / 1_000_000;
-    if (reportedCostEstimate > input.remaining.maxApprovedSpendUsd) throw new RepairError('budget_exceeded', 'Reported token usage exceeds the remaining cost allowance; retain this failed call.', usage, parsed.id);
+    if (reportedCostEstimate > input.remaining.maxApprovedSpendUsd) throw new RepairError('budget_exceeded', 'Reported token usage exceeds the remaining cost allowance; retain this failed call.', usage, accounted.id);
     const rawTransportId = response.headers.get('x-request-id');
     const transportRequestId = rawTransportId && /^[A-Za-z0-9_.:/-]{1,200}$/.test(rawTransportId) && !rawTransportId.includes(token) ? rawTransportId : null;
-    try { o.onReceipt?.({ intentId, requestDigest: digestJson(requestBody), responseDigest: digestBytes(raw), usageDigest: digestJson(parsed.usage),
-      providerRequestId: parsed.id, transportRequestId, modelId: parsed.model,
+    try { o.onReceipt?.({ intentId, requestDigest: digestJson(requestBody), responseDigest: digestBytes(raw), usageDigest: digestJson(accounted.usage),
+      providerRequestId: accounted.id, transportRequestId, modelId: accounted.model,
       inputTokenCeiling: promptTokens, outputTokenCeiling: outputLimit, observedInputTokens: usage.inputTokens, observedOutputTokens: usage.outputTokens }); }
     catch (error) {
-      if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: parsed.id }); throw error; }
-      throw new RepairError('operation_journal_error', 'Inference receipt could not be preserved; retain the full reservation.', usage, parsed.id);
+      if (error instanceof ContractError) { Object.assign(error, { usage, providerRequestId: accounted.id }); throw error; }
+      throw new RepairError('operation_journal_error', 'Inference receipt could not be preserved; retain the full reservation.', usage, accounted.id);
     }
+    // Preserve validated identity/usage before rejecting an unusable candidate envelope.
+    // A capped or malformed candidate must not discard the completed request receipt.
+    let parsed: z.infer<typeof responseSchema>;
+    try { parsed = responseSchema.parse(decoded); }
+    catch { throw new RepairError('invalid_response', 'Inference response did not match the documented completion contract.', usage, accounted.id); }
     if (parsed.choices[0]!.finish_reason !== 'stop') throw new RepairError('incomplete_response', 'Provider did not return a complete candidate.', usage, parsed.id);
+    let candidateValue: unknown;
+    try { candidateValue = JSON.parse(parsed.choices[0]!.message.content); }
+    catch { throw new RepairError('invalid_candidate', 'Candidate is not valid JSON.', usage, parsed.id, 'invalid_json'); }
     let proposal: z.infer<typeof proposalSchema>;
-    try { proposal = proposalSchema.parse(JSON.parse(parsed.choices[0]!.message.content)); }
-    catch { throw new RepairError('invalid_candidate', 'Candidate is not the required files-and-summary JSON.', usage, parsed.id); }
+    try { proposal = proposalSchema.parse(candidateValue); }
+    catch { throw new RepairError('invalid_candidate', 'Candidate does not match the files-and-summary schema.', usage, parsed.id, 'invalid_schema'); }
     if ([proposal.summary, ...Object.keys(proposal.files), ...Object.values(proposal.files)].some(value => value.includes(token))) {
       throw new RepairError('invalid_candidate', 'Candidate contained credential material and was withheld.', usage, parsed.id);
     }
     if (!Object.keys(proposal.files).length || Object.keys(proposal.files).some(path => !input.editAllowlist.includes(path))) {
       throw new RepairError('protected_path', 'Candidate edits outside the frozen allowlist were rejected.', usage, parsed.id);
+    }
+    if (input.editRegion) {
+      const region = input.editRegion, body = proposal.files[region.path];
+      if (Object.keys(proposal.files).length !== 1 || typeof body !== 'string' || !body.trim() || !body.endsWith('\n') || /[\r\f\v]/.test(body) || body.split('\n').some(line => line.trim() && !line.startsWith('    '))) {
+        throw new RepairError('protected_path', 'Invalid function-only replacement body.', usage, parsed.id);
+      }
+      proposal.files[region.path] = region.prefix + body + region.suffix;
     }
     return { ...proposal, usage, modelId: parsed.model, providerRequestId: parsed.id };
   }

@@ -6,6 +6,9 @@ import { dirname, isAbsolute, parse, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { z } from 'zod';
 import { BudgetSchema } from '../../../scripts/config.ts';
+import { ClosedDispatchCoverageSchema, CLOSED_DISPATCH_COVERAGE_EVENT, CLOSED_DISPATCH_POLICY_ID,
+  closedDispatchCase, closedDispatchMaximumCostMicros } from './closed-dispatch-recovery.ts';
+import type { ClosedDispatchCoverage } from './closed-dispatch-recovery.ts';
 
 const STAGES = ['smoke', 'pilot', 'evaluate', 'hosting'] as const;
 export type BudgetStage = typeof STAGES[number];
@@ -195,9 +198,11 @@ export class BudgetLedger {
   #revision = 0;
   #approvalDigest: string;
   readonly #pendingBillingPolicy: z.infer<typeof PendingBillingPolicy>;
+  readonly #closedDispatchRecoveryPolicy: typeof CLOSED_DISPATCH_POLICY_ID | null;
 
   constructor(options: { filename: string; budget: unknown; now?: () => Date; existingOnly?: boolean;
-    pendingBillingPolicy?: z.infer<typeof PendingBillingPolicy> }) {
+    pendingBillingPolicy?: z.infer<typeof PendingBillingPolicy>; closedDispatchRecoveryPolicy?: typeof CLOSED_DISPATCH_POLICY_ID }) {
+    this.#closedDispatchRecoveryPolicy = z.literal(CLOSED_DISPATCH_POLICY_ID).optional().parse(options.closedDispatchRecoveryPolicy) ?? null;
     this.#pendingBillingPolicy = PendingBillingPolicy.parse(options.pendingBillingPolicy ?? 'block-all');
     const configured = policy(options.budget);
     const identity = options.existingOnly ? existingFile(options.filename) : null;
@@ -288,11 +293,36 @@ export class BudgetLedger {
       proof.requests.length <= meta.policy.budget.episodeLimits.inferenceCallLimit && inferenceMaximumCostMicros(proof) <= (row.amount_micros as bigint);
   }
   #covered(row: Row, latest: Row | undefined, meta: Meta): boolean {
+    if (latest?.kind === CLOSED_DISPATCH_COVERAGE_EVENT) return this.#closedDispatchCovered(row, latest, meta);
     if (latest?.kind !== COVERAGE_EVENT) return false;
     try {
       const stored = z.strictObject({ proof: PendingInferenceCoverageSchema, proofDigest: digest, maximumCostMicros: integerString }).parse(JSON.parse(String(latest.payload)));
       return stored.proofDigest === fingerprint(stored.proof) && stored.maximumCostMicros === String(inferenceMaximumCostMicros(stored.proof)) &&
         this.#coverageMatches(stored.proof, row, meta);
+    } catch { return false; }
+  }
+  #closedDispatchMatches(proof: ClosedDispatchCoverage, row: Row, meta: Meta): boolean {
+    const c = closedDispatchCase();
+    return row.state === 'attempted' && row.attempted_at !== null && row.actual_micros === null && row.reconciliation_complete === 0n &&
+      row.id === c.reservationId && row.episode_id === c.episodeId && row.fingerprint === c.reservationFingerprint &&
+      row.stage === c.stage && row.amount_micros === BigInt(c.reservedMicros) && row.evidence_digest === c.evidenceDigest &&
+      Date.parse(String(row.attempted_at)) <= Date.parse(c.dispatchedAt) && Date.parse(c.closedAt) <= Date.parse(proof.preparedAt) &&
+      proof.checkpoint.approvalRevision === meta.revision && proof.checkpoint.approvalDigest === meta.digest &&
+      BigInt(proof.checkpoint.approvedTotalMicros) === meta.policy.total &&
+      c.conservativeCallAllowance <= meta.policy.budget.episodeLimits.inferenceCallLimit &&
+      closedDispatchMaximumCostMicros() <= (row.amount_micros as bigint);
+  }
+  #closedDispatchCovered(row: Row, latest: Row, meta: Meta): boolean {
+    if (this.#closedDispatchRecoveryPolicy !== CLOSED_DISPATCH_POLICY_ID) return false;
+    try {
+      const stored = z.strictObject({ proof: ClosedDispatchCoverageSchema, proofDigest: digest, maximumCostMicros: integerString })
+        .parse(JSON.parse(String(latest.payload)));
+      const at = Date.parse(String(latest.timestamp));
+      return stored.proofDigest === fingerprint(stored.proof) && stored.maximumCostMicros === String(closedDispatchMaximumCostMicros()) &&
+        Number(latest.sequence) === stored.proof.checkpoint.eventSequence + 1 &&
+        Number(latest.approval_revision) === stored.proof.checkpoint.approvalRevision &&
+        at >= Date.parse(stored.proof.preparedAt) && at < Date.parse(stored.proof.expiresAt) &&
+        this.#closedDispatchMatches(stored.proof, row, meta);
     } catch { return false; }
   }
   #accounting(): Accounting {
@@ -459,13 +489,56 @@ export class BudgetLedger {
       const row = this.#reservation(proof.reservationId);
       if (!this.#coverageMatches(proof, row, meta)) fail('inference_coverage_mismatch', 'Coverage requires the exact attempted unknown-cost reservation, current evidence and a fully held sufficient bound.');
       const latest = this.#row('SELECT * FROM budget_events WHERE reservation_id=? ORDER BY sequence DESC LIMIT 1', proof.reservationId);
-      const previous = this.#row('SELECT * FROM budget_events WHERE kind=? AND reservation_id=? ORDER BY sequence DESC LIMIT 1', COVERAGE_EVENT, proof.reservationId);
+      const previous = this.#row('SELECT * FROM budget_events WHERE kind IN (?,?) AND reservation_id=? ORDER BY sequence DESC LIMIT 1', COVERAGE_EVENT, CLOSED_DISPATCH_COVERAGE_EVENT, proof.reservationId);
       if (previous) {
         if (!this.#covered(row, latest, meta) || JSON.parse(String(previous.payload)).proofDigest !== proofDigest) fail('inference_coverage_conflict', 'Existing coverage is immutable or stale; retain the hold and use authoritative reconciliation.');
         return { created: false, proofDigest, maximumCostMicros, reservation: this.#view(row) };
       }
       if (latest?.kind !== 'billing_incomplete') fail('inference_coverage_mismatch', 'Coverage cannot bypass a newer prepared accounting receipt or other reservation event.');
       this.#event(COVERAGE_EVENT, proof.reservationId, { proof, proofDigest, maximumCostMicros });
+      return { created: true, proofDigest, maximumCostMicros, reservation: this.#view(row) };
+    });
+  }
+
+  /** One independently reviewed historical case, separate from receipt-based coverage.
+   * No reservation/run/receipt is rewritten. BEGIN IMMEDIATE serializes the checkpoint CAS
+   * and single immutable event. Recovery requires both explicit connection policies.
+   * The proof is prepared offline from authentic artifacts, then reviewed before append. */
+  coverClosedDispatch(value: unknown): { created: boolean; proofDigest: string; maximumCostMicros: string; reservation: ReservationView } {
+    if (this.#pendingBillingPolicy !== 'allow-covered-inference' || this.#closedDispatchRecoveryPolicy !== CLOSED_DISPATCH_POLICY_ID) {
+      fail('closed_dispatch_recovery_disabled', 'Historical recovery requires explicitly reviewed connection policy.');
+    }
+    const proof = ClosedDispatchCoverageSchema.parse(value), proofDigest = fingerprint(proof);
+    const maximumCostMicros = String(closedDispatchMaximumCostMicros()), c = closedDispatchCase();
+    return this.#transaction(() => {
+      const meta = this.#meta(), accounting = this.#accounting();
+      const reasons = this.#reasons(meta, accounting).filter(reason => reason !== 'billing_pending');
+      if (reasons.length) fail(reasons[0]!, 'Historical recovery blocked: ' + reasons.join(', '));
+      const row = this.#reservation(c.reservationId);
+      if (!this.#closedDispatchMatches(proof, row, meta)) fail('closed_dispatch_mismatch', 'Historical reservation, approval, evidence or bound differs; retain all holds.');
+      const latest = this.#row('SELECT * FROM budget_events WHERE reservation_id=? ORDER BY sequence DESC LIMIT 1', c.reservationId);
+      const previous = this.#row('SELECT * FROM budget_events WHERE kind IN (?,?) AND reservation_id=? ORDER BY sequence DESC LIMIT 1',
+        COVERAGE_EVENT, CLOSED_DISPATCH_COVERAGE_EVENT, c.reservationId);
+      if (previous) {
+        if (latest?.kind !== CLOSED_DISPATCH_COVERAGE_EVENT || !this.#closedDispatchCovered(row, latest, meta) ||
+            JSON.parse(String(previous.payload)).proofDigest !== proofDigest) {
+          fail('closed_dispatch_conflict', 'Coverage is immutable or invalidated; obtain authoritative accounting evidence.');
+        }
+        return { created: false, proofDigest, maximumCostMicros, reservation: this.#view(row) };
+      }
+      const checkpoint = this.operatorResumeCheckpoint(), now = Date.parse(this.#timestamp());
+      if (checkpoint.eventSequence !== proof.checkpoint.eventSequence || checkpoint.approvalRevision !== proof.checkpoint.approvalRevision ||
+          now < Date.parse(proof.preparedAt) || now >= Date.parse(proof.expiresAt)) {
+        fail('closed_dispatch_checkpoint_changed', 'Ledger changed or review expired; reload and review a fresh checkpoint.');
+      }
+      if (latest?.kind !== 'billing_incomplete') fail('closed_dispatch_mismatch', 'Newer accounting evidence must not be bypassed.');
+      const incomplete = JSON.parse(String(latest!.payload));
+      if (incomplete.overrun !== false || incomplete.unrecordedDispatch !== false ||
+          accounting.pending - accounting.coveredPending !== 1 ||
+          this.#row("SELECT id FROM budget_reservations WHERE state='reserved' LIMIT 1")) {
+        fail('closed_dispatch_not_quiescent', 'Active, uncertain or additional uncovered work must be reviewed first.');
+      }
+      this.#event(CLOSED_DISPATCH_COVERAGE_EVENT, c.reservationId, { proof, proofDigest, maximumCostMicros });
       return { created: true, proofDigest, maximumCostMicros, reservation: this.#view(row) };
     });
   }

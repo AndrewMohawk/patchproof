@@ -1,0 +1,118 @@
+{
+  "checkedAt": "2026-10-20T03:14:20.049477+00:00",
+  "status": "blocked_no_verified_humanize_repair",
+  "results": [
+    {
+      "runId": "a7b1b65b-0af3-4bf9-ac42-372d2c590cda",
+      "variant": "patchproof",
+      "terminalStatus": "failed",
+      "reason": "declared_checks_not_satisfied",
+      "usage": {
+        "inferenceCalls": 3,
+        "inputTokens": 56839,
+        "outputTokens": 3006,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.019757100000000003,
+        "costIsEstimate": true,
+        "elapsedMs": 302612
+      },
+      "evidenceDigest": "sha256:cdc9945ed9858db4a8ffeadbcaa0bf3f50c7819656f644dcf01fb14c9a6d48cc",
+      "candidateScores": [
+        {
+          "id": 1,
+          "parentId": null,
+          "accepted": false,
+          "passed": 13,
+          "failed": 7
+        },
+        {
+          "id": 2,
+          "parentId": null,
+          "accepted": false,
+          "passed": 13,
+          "failed": 7
+        },
+        {
+          "id": 3,
+          "parentId": null,
+          "accepted": false,
+          "passed": 13,
+          "failed": 7
+        }
+      ]
+    },
+    {
+      "runId": "f775b3bf-763c-440a-a029-7d698da9dc70",
+      "variant": "baseline",
+      "terminalStatus": "infrastructure_error",
+      "reason": "invalid_candidate",
+      "usage": {
+        "inferenceCalls": 1,
+        "inputTokens": 18249,
+        "outputTokens": 1008,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.006381899999999999,
+        "costIsEstimate": true,
+        "elapsedMs": 70008
+      },
+      "evidenceDigest": "sha256:46f16b548deaeab9c267f640d4e06bfff4e0a355e7d41b4edf864119ae279e5d",
+      "candidateScores": []
+    },
+    {
+      "runId": "51fb0a59-511b-4e71-833d-d5e050317484",
+      "variant": "baseline",
+      "terminalStatus": "infrastructure_error",
+      "reason": "invalid_candidate",
+      "usage": {
+        "inferenceCalls": 2,
+        "inputTokens": 36267,
+        "outputTokens": 1996,
+        "sandboxCpuSeconds": null,
+        "measuredCostUsd": 0.0126765,
+        "costIsEstimate": true,
+        "elapsedMs": 136447
+      },
+      "evidenceDigest": "sha256:7a4426c8b9e4d0c2004fa256113ac7b9dc1f13b67f23324ddf441d737f537468",
+      "candidateScores": [
+        {
+          "id": 1,
+          "parentId": null,
+          "accepted": false,
+          "passed": 13,
+          "failed": 7
+        }
+      ]
+    }
+  ],
+  "runsAttempted": 3,
+  "runLimit": 3,
+  "modelCalls": 6,
+  "newReservationsUsd": 0.75,
+  "estimatedTokenCostUsd": 0.0388155,
+  "invoiceReconciled": false,
+  "ledgerRowsByState": [
+    [
+      "attempted",
+      19,
+      3100000,
+      null
+    ],
+    [
+      "reconciled",
+      3,
+      750000,
+      0
+    ]
+  ],
+  "totalHeldUsd": 3.1,
+  "remainingProjectCapacityUsd": 21.9,
+  "priorReservationsUnchanged": true,
+  "newReleaseDeployed": false,
+  "previousRelease": "b2eb1732a7da5ef14105b7cf127348c200265a8e",
+  "submissionChanged": false,
+  "videoReplaced": false,
+  "browserOnlyControlsAvailable": true,
+  "nativeRecordingBlockedByLockedMac": true,
+  "nextPaidRunRequiresFurtherAuthorization": true,
+  "blocker": "Three-run authorization exhausted without a passing repair; failed response content was not retained, so historical JSON syntax versus schema failure cannot be distinguished."
+}

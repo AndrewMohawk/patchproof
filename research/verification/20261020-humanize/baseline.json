@@ -1,0 +1,484 @@
+{
+  "checkedAt": "2026-10-20T02:44:28.404Z",
+  "fixtureDigest": "sha256:beaf25cb0645f46e35d2539d7bec71e7abf3f9aae4ade69c85f7611a73dc1dac",
+  "paidCalls": 0,
+  "scope": "Two repeated baseline observations on actual pinned upstream modules; English duration cases only; not full upstream suite.",
+  "rounds": [
+    {
+      "checks": [
+        {
+          "id": "negative-tiny",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "a moment",
+          "durationMs": 3297,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-7],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-26d1fb10-ab37-4d7e-99bc-abd46d5a4c08\",\"createAcknowledged\":true,\"containerId\":\"c02c6f164f9c62e0edb981249e10566cf2b971d84ad8ba2390f3261d8e4aacd8\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-microseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "7 microseconds",
+          "durationMs": 3007,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-7],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"microseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-a3271949-58c9-4419-b13f-51934e815b29\",\"createAcknowledged\":true,\"containerId\":\"2b231f6bec6b56da2eed0bf3d3a8253178a7f07cc66983221c55dc5d07d9bfc1\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-milliseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "250 milliseconds",
+          "durationMs": 2813,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-250000],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"milliseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-9b44eebf-6263-4975-9653-4949b95e0486\",\"createAcknowledged\":true,\"containerId\":\"4c20cc3bcf89a0feed8f6d522e3548d08dfd7ec69c6b8266e707972125ba308a\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-seconds",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 2737,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-30000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-5b52eab9-ffb3-47cc-8504-5e286460865b\",\"createAcknowledged\":true,\"containerId\":\"05bce569f1aad70a2f2be641765ff04a18aec7253191cab8f0cf86e2e719d64f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-minutes",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "2 minutes",
+          "durationMs": 2889,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-120000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-55ae21a7-c739-451d-ba18-38eaf859ff6e\",\"createAcknowledged\":true,\"containerId\":\"2026be6a0e35195424c551343b5c9f38012191485d4bfdb656df71c7d352165c\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-hours",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "5 hours",
+          "durationMs": 2773,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-18000000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-c43707bb-535e-4b73-b454-63f1dab4e63a\",\"createAcknowledged\":true,\"containerId\":\"22f274e7454e4b8f28799e46bf1d2d4bd0728f0235829f83e1f0887b869570ab\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-tiny",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 2862,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a moment\\\",\\\"argsAfter\\\":[7],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-3550ac58-eac4-46ac-8e07-ffee01f1662b\",\"createAcknowledged\":true,\"containerId\":\"e7bd27cb39ec9aeec1b04e66b9e2c39d950b0dd1336726313b260b192781c3d0\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-microseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "7 microseconds",
+          "expected": "7 microseconds",
+          "durationMs": 2877,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"7 microseconds\\\",\\\"argsAfter\\\":[7],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"microseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-947fbec0-7267-4e59-869b-80f30acd4bff\",\"createAcknowledged\":true,\"containerId\":\"bde43393d3217d329ff298051c6b72706f5f286dd11c2217121284900c3e035a\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-milliseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "250 milliseconds",
+          "expected": "250 milliseconds",
+          "durationMs": 3149,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"250 milliseconds\\\",\\\"argsAfter\\\":[250000],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"milliseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-640c7f2a-1329-4ad6-9064-9ef712772f50\",\"createAcknowledged\":true,\"containerId\":\"003c391392a94efa2c8b9a4bd1b0705876da1cc2cdd5bdba8a75e3258a9f92b9\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-seconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 2928,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"30 seconds\\\",\\\"argsAfter\\\":[30000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-78176685-0ce1-40c9-b2ac-df3abd614830\",\"createAcknowledged\":true,\"containerId\":\"a05dfc09cb680921eaaa7060a469306e311a1640a0f2ccc2382d8d3535db63c8\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-minutes",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "2 minutes",
+          "expected": "2 minutes",
+          "durationMs": 3089,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"2 minutes\\\",\\\"argsAfter\\\":[120000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-8d4880af-e26e-49cb-b804-a5068ff67773\",\"createAcknowledged\":true,\"containerId\":\"9e8a28badb14715f05730e38747d53eaffe1037d9af00624a59de53877291528\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-hours",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "5 hours",
+          "expected": "5 hours",
+          "durationMs": 2913,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"5 hours\\\",\\\"argsAfter\\\":[18000000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-abaa96c6-b805-4c48-a2c2-e1174056edf6\",\"createAcknowledged\":true,\"containerId\":\"9814e1a6de488eacc9ae57b0828a2025b4d45286dbcae679c0fda632cf61ddab\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "zero",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 2922,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a moment\\\",\\\"argsAfter\\\":[0],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-33123dbc-c855-4890-b438-a2da36ca0000\",\"createAcknowledged\":true,\"containerId\":\"de05a07bd927d6f348094e9790a21df1bf5087ca24c29ebcde3b980b839cabdf\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "month",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a month",
+          "expected": "a month",
+          "durationMs": 2772,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a month\\\",\\\"argsAfter\\\":[2678400000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-530ccfe9-d3dd-46c8-b4c8-1dcc1f408b89\",\"createAcknowledged\":true,\"containerId\":\"40097b6e9ce63b71b0904dee71c69e623428bc849950cf72015a2e07c940085f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "month-disabled",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "31 days",
+          "expected": "31 days",
+          "durationMs": 2846,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"31 days\\\",\\\"argsAfter\\\":[2678400000000],\\\"kwargsAfter\\\":{\\\"months\\\":false}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-0882608a-36a6-4372-a983-56efe43a3ef2\",\"createAcknowledged\":true,\"containerId\":\"80aaa593aef6d91fc58d93126cfec14fc8470ed4ba560496c74a49610d72a62f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "invalid-known-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "ValueError"
+          },
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 2775,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"ValueError\\\",\\\"argsAfter\\\":[1],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"hours\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-25d47878-4c74-4cad-a353-35fa6f718b53\",\"createAcknowledged\":true,\"containerId\":\"d124c96f89b8142e66a6b8bf4bc7f7427275eb8610b0cf5a307c5d802f87e414\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "invalid-unknown-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "KeyError"
+          },
+          "expected": {
+            "exception": "KeyError"
+          },
+          "durationMs": 3028,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"KeyError\\\",\\\"argsAfter\\\":[1],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"bananas\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-d431e355-c56e-4dd9-aacf-c92c015f07a0\",\"createAcknowledged\":true,\"containerId\":\"cb6b29b2ebf73355a346caab981458895086f679c101e675c3d5724cd5c05a1f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "numeric-negative",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 3058,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-30],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-94ddfb88-28a9-4ed6-8fa9-b7b082d59ea4\",\"createAcknowledged\":true,\"containerId\":\"5e04943cf0f2f6c3b4a389072ed5bf1c9720869005e2f258a5b2d8ddc1cda259\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "numeric-positive",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 3067,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"30 seconds\\\",\\\"argsAfter\\\":[30],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-69756b68-504d-4b6a-8ae9-d249c2b0c040\",\"createAcknowledged\":true,\"containerId\":\"1d8f04eb31772e5cab59c95ed91783a2b0393ede5c90319233f706f15093c09b\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "package-metadata",
+          "requirementId": "R04",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "4.9.1.dev32",
+          "expected": "4.9.1.dev32",
+          "durationMs": 3470,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"4.9.1.dev32\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-febb4314-5386-4d58-92f0-f95fe9b745a1\",\"createAcknowledged\":true,\"containerId\":\"cf450b55042611302cc3720cbd15dec0adb00d3982b102e73e748ea6eeb16b52\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        }
+      ],
+      "isolation": "local_container",
+      "operationIds": [
+        "docker:patchproof-check-26d1fb10-ab37-4d7e-99bc-abd46d5a4c08",
+        "docker:patchproof-check-a3271949-58c9-4419-b13f-51934e815b29",
+        "docker:patchproof-check-9b44eebf-6263-4975-9653-4949b95e0486",
+        "docker:patchproof-check-5b52eab9-ffb3-47cc-8504-5e286460865b",
+        "docker:patchproof-check-55ae21a7-c739-451d-ba18-38eaf859ff6e",
+        "docker:patchproof-check-c43707bb-535e-4b73-b454-63f1dab4e63a",
+        "docker:patchproof-check-3550ac58-eac4-46ac-8e07-ffee01f1662b",
+        "docker:patchproof-check-947fbec0-7267-4e59-869b-80f30acd4bff",
+        "docker:patchproof-check-640c7f2a-1329-4ad6-9064-9ef712772f50",
+        "docker:patchproof-check-78176685-0ce1-40c9-b2ac-df3abd614830",
+        "docker:patchproof-check-8d4880af-e26e-49cb-b804-a5068ff67773",
+        "docker:patchproof-check-abaa96c6-b805-4c48-a2c2-e1174056edf6",
+        "docker:patchproof-check-33123dbc-c855-4890-b438-a2da36ca0000",
+        "docker:patchproof-check-530ccfe9-d3dd-46c8-b4c8-1dcc1f408b89",
+        "docker:patchproof-check-0882608a-36a6-4372-a983-56efe43a3ef2",
+        "docker:patchproof-check-25d47878-4c74-4cad-a353-35fa6f718b53",
+        "docker:patchproof-check-d431e355-c56e-4dd9-aacf-c92c015f07a0",
+        "docker:patchproof-check-94ddfb88-28a9-4ed6-8fa9-b7b082d59ea4",
+        "docker:patchproof-check-69756b68-504d-4b6a-8ae9-d249c2b0c040",
+        "docker:patchproof-check-febb4314-5386-4d58-92f0-f95fe9b745a1"
+      ],
+      "cpuSeconds": null,
+      "measuredCostUsd": 0,
+      "infrastructureError": null
+    },
+    {
+      "checks": [
+        {
+          "id": "negative-tiny",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "a moment",
+          "durationMs": 2929,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-7],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-e3870881-865b-46ac-8d99-2fddb58a5694\",\"createAcknowledged\":true,\"containerId\":\"1479b66db87226edcbe072e014dd744c5887c52ae363f95c093f935feb64de64\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-microseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "7 microseconds",
+          "durationMs": 2891,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-7],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"microseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-99d7a96e-b04f-4a1b-9abb-6a3765c31879\",\"createAcknowledged\":true,\"containerId\":\"a9086b50706f4204ff00cc09a31326fd4ccad9664d2834e36275bb0c87d9234e\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-milliseconds",
+          "requirementId": "R02",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "250 milliseconds",
+          "durationMs": 2859,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-250000],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"milliseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-778f95d5-e60a-4fc8-a7b2-20964d4dca65\",\"createAcknowledged\":true,\"containerId\":\"df29a30f0dde85db704a1efde00c3f85dea1b2ded962d8f9dca1421655036448\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-seconds",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 2893,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-30000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-15112acb-49c6-46c1-b179-e286e03bba23\",\"createAcknowledged\":true,\"containerId\":\"4409c2f53dcdc6e6c949c1ccc8257c6b4a79781ccfa6ea45814d4b9da71c0daa\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-minutes",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "2 minutes",
+          "durationMs": 2888,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-120000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-5af069de-2c02-4db2-b41d-abed680e1f69\",\"createAcknowledged\":true,\"containerId\":\"fc209bd9460d414fde16a6ede5c3b47121b840fff064f4a4ece97ed784e65be2\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "negative-hours",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "5 hours",
+          "durationMs": 3023,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-18000000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-161661bf-887b-4bc7-815e-3800f309c65b\",\"createAcknowledged\":true,\"containerId\":\"e87f720e650a5ec87d43d8ed2bc35e772f80bab71b777479c9b7b3417c2e1302\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-tiny",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 3112,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a moment\\\",\\\"argsAfter\\\":[7],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-0198aa16-7daf-43c7-80e7-61d670221cc3\",\"createAcknowledged\":true,\"containerId\":\"b6e92104d39dcf3fe3cbdae54f0a3d597f4e0b8ed428a81d55f88f21d705aa26\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-microseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "7 microseconds",
+          "expected": "7 microseconds",
+          "durationMs": 2932,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"7 microseconds\\\",\\\"argsAfter\\\":[7],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"microseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-22ede29c-355c-43ac-8db1-ce39902af6c9\",\"createAcknowledged\":true,\"containerId\":\"9679c9e1e1090bf900366a2e3f2201c9a07b15645b117e68843a84f030a11ec2\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-milliseconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "250 milliseconds",
+          "expected": "250 milliseconds",
+          "durationMs": 2799,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"250 milliseconds\\\",\\\"argsAfter\\\":[250000],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"milliseconds\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-e696eaf7-4415-4d43-904e-c5560d523803\",\"createAcknowledged\":true,\"containerId\":\"94a2df8c9dc334a0e7f3d034b386c738329fbf1a32a925948f068671be5bcbcf\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-seconds",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 2825,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"30 seconds\\\",\\\"argsAfter\\\":[30000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-802dc796-513c-441b-bb68-6aff52e53952\",\"createAcknowledged\":true,\"containerId\":\"6e18c6ac26ada6d8ffb54a988097f4026f378e21a2ab95de3db29ec01f30a14f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-minutes",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "2 minutes",
+          "expected": "2 minutes",
+          "durationMs": 2746,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"2 minutes\\\",\\\"argsAfter\\\":[120000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-44dede5f-7227-4e65-9f73-7e990e24dafa\",\"createAcknowledged\":true,\"containerId\":\"2133850a510c5a5f3b32438005fcca2f0003a2a92eef4ef4aef79d6face882df\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "positive-hours",
+          "requirementId": "R02",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "5 hours",
+          "expected": "5 hours",
+          "durationMs": 2776,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"5 hours\\\",\\\"argsAfter\\\":[18000000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-e9e2802e-6cbd-45a6-b13d-6aab78b0ee39\",\"createAcknowledged\":true,\"containerId\":\"ab9d6772d9419789e5169ac6c79e54d8041d8ffdbcbca94e8b842637099739fa\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "zero",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a moment",
+          "expected": "a moment",
+          "durationMs": 2795,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a moment\\\",\\\"argsAfter\\\":[0],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-aa6989f4-864f-441e-a264-2c50e66a2e08\",\"createAcknowledged\":true,\"containerId\":\"18eee9461c61bed056bf0844d2b913689a7728589472226c1101f4bb9889c8ab\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "month",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "a month",
+          "expected": "a month",
+          "durationMs": 2689,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a month\\\",\\\"argsAfter\\\":[2678400000000],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-dd293ea6-5a6b-4899-b525-b7c031584adf\",\"createAcknowledged\":true,\"containerId\":\"459fc3e3c32ad83fa7be70fb33779246f8281fa98ab2f3cec68efc709832f43a\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "month-disabled",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "31 days",
+          "expected": "31 days",
+          "durationMs": 2790,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"31 days\\\",\\\"argsAfter\\\":[2678400000000],\\\"kwargsAfter\\\":{\\\"months\\\":false}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-8e8bfdf3-9195-482b-bac4-bf14f52cbc21\",\"createAcknowledged\":true,\"containerId\":\"7d3ea3f8f83c83bc72688375dacfc2df2ae6fb451d9db530746b9f43acfc2162\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "invalid-known-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "ValueError"
+          },
+          "expected": {
+            "exception": "ValueError"
+          },
+          "durationMs": 2758,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"ValueError\\\",\\\"argsAfter\\\":[1],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"hours\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-3e64d56e-a58b-4e30-bedd-8458d4f26333\",\"createAcknowledged\":true,\"containerId\":\"b348d127dc896ce1747f05825339d544e39174d3fe52e624f5a94287510c5297\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "invalid-unknown-unit",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": {
+            "exception": "KeyError"
+          },
+          "expected": {
+            "exception": "KeyError"
+          },
+          "durationMs": 2830,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"exception\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"exception\\\",\\\"exception\\\":\\\"KeyError\\\",\\\"argsAfter\\\":[1],\\\"kwargsAfter\\\":{\\\"minimum_unit\\\":\\\"bananas\\\"}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-7677fca8-9e80-46d9-a8b6-6e98e4256b7a\",\"createAcknowledged\":true,\"containerId\":\"7bc35ddaee10b71c21c51955811d45b71eb3e3271241629bca06e03c1ca35835\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "numeric-negative",
+          "requirementId": "R01",
+          "status": "fail",
+          "message": "Observed outcome differs from the declared check.",
+          "actual": "a day",
+          "expected": "30 seconds",
+          "durationMs": 2863,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":false,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"a day\\\",\\\"argsAfter\\\":[-30],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-41d8abde-9c23-4a4b-b5c6-097fdc1191ea\",\"createAcknowledged\":true,\"containerId\":\"36974214f6c98bbec8e52177114f27ed2fa8758dcc9fafeb4bfd7f4decdf4861\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "numeric-positive",
+          "requirementId": "R03",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "30 seconds",
+          "expected": "30 seconds",
+          "durationMs": 2915,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"30 seconds\\\",\\\"argsAfter\\\":[30],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-69159b0a-c5e8-4416-979e-8a52c5fc26f0\",\"createAcknowledged\":true,\"containerId\":\"4e29c656a84e929259f583826f1977727d6c4da16d2f9f2c754b90371e02dd41\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        },
+        {
+          "id": "package-metadata",
+          "requirementId": "R04",
+          "status": "pass",
+          "message": "Observed outcome matches the declared check.",
+          "actual": "4.9.1.dev32",
+          "expected": "4.9.1.dev32",
+          "durationMs": 3022,
+          "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"4.9.1.dev32\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-d4c69807-0496-41ee-a3a2-fa5a3af6f195\",\"createAcknowledged\":true,\"containerId\":\"ab9e9dfd4fb1eeb9d664393acf19f624b9abdb593899336391087a5f7760c8ea\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+        }
+      ],
+      "isolation": "local_container",
+      "operationIds": [
+        "docker:patchproof-check-e3870881-865b-46ac-8d99-2fddb58a5694",
+        "docker:patchproof-check-99d7a96e-b04f-4a1b-9abb-6a3765c31879",
+        "docker:patchproof-check-778f95d5-e60a-4fc8-a7b2-20964d4dca65",
+        "docker:patchproof-check-15112acb-49c6-46c1-b179-e286e03bba23",
+        "docker:patchproof-check-5af069de-2c02-4db2-b41d-abed680e1f69",
+        "docker:patchproof-check-161661bf-887b-4bc7-815e-3800f309c65b",
+        "docker:patchproof-check-0198aa16-7daf-43c7-80e7-61d670221cc3",
+        "docker:patchproof-check-22ede29c-355c-43ac-8db1-ce39902af6c9",
+        "docker:patchproof-check-e696eaf7-4415-4d43-904e-c5560d523803",
+        "docker:patchproof-check-802dc796-513c-441b-bb68-6aff52e53952",
+        "docker:patchproof-check-44dede5f-7227-4e65-9f73-7e990e24dafa",
+        "docker:patchproof-check-e9e2802e-6cbd-45a6-b13d-6aab78b0ee39",
+        "docker:patchproof-check-aa6989f4-864f-441e-a264-2c50e66a2e08",
+        "docker:patchproof-check-dd293ea6-5a6b-4899-b525-b7c031584adf",
+        "docker:patchproof-check-8e8bfdf3-9195-482b-bac4-bf14f52cbc21",
+        "docker:patchproof-check-3e64d56e-a58b-4e30-bedd-8458d4f26333",
+        "docker:patchproof-check-7677fca8-9e80-46d9-a8b6-6e98e4256b7a",
+        "docker:patchproof-check-41d8abde-9c23-4a4b-b5c6-097fdc1191ea",
+        "docker:patchproof-check-69159b0a-c5e8-4416-979e-8a52c5fc26f0",
+        "docker:patchproof-check-d4c69807-0496-41ee-a3a2-fa5a3af6f195"
+      ],
+      "cpuSeconds": null,
+      "measuredCostUsd": 0,
+      "infrastructureError": null
+    }
+  ]
+}

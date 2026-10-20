@@ -1,3 +1,4 @@
+import { validateEditRegion } from './edit-region.ts';
 import { ContractError } from '../../contracts/src/index.ts';
 import type { CandidateProposal, CandidateRecord, CheckResult, Fixture, RepairInput, SandboxCheckResult } from '../../contracts/src/product.ts';
 import { cloneJsonData } from '../../contracts/src/json-data.ts';
@@ -70,6 +71,7 @@ export function repairInput(fixture: Fixture, context: RevisionContext, remainin
     files: structuredClone(context.files), editAllowlist: [...fixture.editAllowlist], visibleCases: structuredClone(fixture.visibleCases),
     feedback: context.feedback.map(check => ({ requirementId: check.requirementId, status: check.status,
       message: feedbackMessage(fixture, context, check) })),
+    ...(fixture.editRegion ? { editRegion: structuredClone(fixture.editRegion) } : {}),
     attempt: context.attempt, remaining: { ...remaining } };
 }
 
@@ -107,6 +109,7 @@ export async function runRevisionLoop(options: {
     const candidate: CandidateRecord = { id: attempt + 1, parentId: context.parentId, summary: proposal.summary.slice(0, 2000),
       files: { ...base, ...proposal.files }, diff: '', visibleChecks: [], acceptanceChecks: [], accepted: false, rejectionReason: null,
       modelId: proposal.modelId, providerRequestId: proposal.providerRequestId, sandboxOperationIds: [], elapsedMs: 0, usage: proposal.usage };
+    validateEditRegion(fixture, candidate.files);
     candidate.diff = createPatch(fixture.files, candidate.files);
     options.revisions.push(candidate); options.onProposed(candidate, context);
     const checked = await options.check(candidate);

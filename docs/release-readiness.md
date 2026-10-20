@@ -1,13 +1,30 @@
 # Release readiness
 
-**Checked:** October 16, 2026 (UTC)
-**Disposition:** Bounded live repairs reopened on Andromeda at 23:17 UTC.
-Hourly catalog verification is installed; genuine account-fee renewal is due
-before October 17 at 20:50 UTC. Finite capacity and fail-closed gates remain.
-See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
-for current timing, pricing, supervised repairs, accounting and rollout gates.
-The historical October 13 sections below are retained as dated context; they
-do not describe the October 16 test environment or current pricing receipt.
+**Checked:** October 20, 2026 (UTC)
+**Disposition:** Existing public app is healthy; new runs are paused for accounting review.
+Production remains `b2eb173` with two synthetic tasks. Five supervised historical
+Humanize runs have not yielded an accepted repair. The latest capped response
+has one blocking pending-billing reservation; all $3.60 of project holds remain.
+The final authorized follow-up was blocked before admission and made no call.
+The proposed adapter correction preserves validated response accounting before
+candidate-envelope validation, but cannot reconstruct the missing historical receipt.
+Do not clear the pause without adequate accounting evidence.
+A separately labeled, exact-case [closed-dispatch recovery policy](closed-dispatch-recovery.md)
+is implemented for offline review. It retains the full hold and unknown settlement;
+no production recovery or deployment is included. Fresh offline validation also
+found the pinned Docker Python image absent; the same pin is used by production.
+Restore and verify that exact execution image before reopening; HTTP health alone
+does not establish usable checks.
+
+Humanize rollout, fresh candidate replay, new footage and a corresponding
+submission update are unfinished. Native recording is blocked by a locked Mac;
+Chrome also reported `ERR_BLOCKED_BY_CLIENT` on the public demo. No terms were
+accepted or submission changed in this follow-up. Hourly catalog monitoring
+continues; separate fee evidence expires October 20 at 21:11 UTC. Free judge
+access through December 15 remains an operations obligation, not an established
+guarantee from one receipt. See the [latest outcome](../research/verification/20261020-humanize/followup-outcome.json).
+
+The historical October 13 sections below remain dated context.
 
 ## Prior release review evidence (October 13)
 

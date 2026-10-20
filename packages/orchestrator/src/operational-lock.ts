@@ -5,7 +5,7 @@ import { digestBytes, digestJson } from '../../contracts/src/digest.ts';
 import { ContractError } from '../../contracts/src/index.ts';
 import { REPEATED_CHECK_PROTOCOL } from './repeated-checks.ts';
 
-const roots = ['packages', 'workers', 'apps', 'scripts'];
+const roots = ['packages', 'workers', 'apps', 'scripts', 'fixtures'];
 const topFiles = ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json',
   'research/product-v3/model-discovery.json'];
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);

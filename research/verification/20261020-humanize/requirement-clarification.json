@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-20T03:20:31.524686+00:00",
+  "oldRequirement": "Treat timedelta durations as absolute distances, including negative microseconds, milliseconds, seconds, minutes and hours. Do not use the current clock.",
+  "newRequirement": "Treat both timedelta durations and numeric-second inputs as absolute distances, including negative microseconds, milliseconds, seconds, minutes and hours. Do not use the current clock.",
+  "checkDefinitionsChanged": false,
+  "expectedResultsChanged": false,
+  "sourceFilesChanged": false,
+  "historicalEvidenceRewritten": false,
+  "reason": "Make the existing numeric-negative acceptance requirement explicit; does not explain or excuse any visible timedelta failure."
+}

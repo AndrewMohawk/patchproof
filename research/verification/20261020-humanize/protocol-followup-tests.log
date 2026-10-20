@@ -1,0 +1,31 @@
+✔ Humanize source and MIT notice retain pinned provenance (3.164742ms)
+✔ function guard accepts an indented body and rejects surrounding, signature, and top-level changes (1.108442ms)
+✔ region transport expands only body, retains usage, and rejects whole-file or extra-file responses (41.694608ms)
+(node:3574886) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (28.96988ms)
+(node:3575007) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ visible feedback includes case identity and observed exception with expected value from the public definition (5.90641ms)
+✔ mutation and expected-exception diagnostics retain the visible outcome shape (1.818698ms)
+✔ nonvisible observations retain only requirement/status and generated provenance (0.864294ms)
+✔ mismatched and ambiguous visible identities cannot unlock structured observations (1.238423ms)
+✔ diagnostic serialization rejects getters, proxies, toJSON, cycles and non-JSON values without invoking behavior (4.144632ms)
+✔ ordinary JSON keys survive safely and every diagnostic and message has an explicit UTF-8 bound (3.177963ms)
+✔ all three revision policies use identical visible diagnostics with unchanged resource limits (5.217143ms)
+✔ scripted mock is task bounded and uses the same attempt/feedback rule for every caller (2.35476ms)
+✔ Nebius adapter refuses authorization/budget failure before credential access or fetch (0.92096ms)
+✔ fake completion transport verifies endpoint, limits and retains provider usage without inventing measured cost (26.771123ms)
+✔ fake transport protected edits and provider failures are typed and retain attempted calls (2.042312ms)
+✔ cancelled proposal sends nothing (0.286592ms)
+✔ operation journal failures prevent initial dispatch and retain completed response identity and usage (1.413968ms)
+✔ cancelled stalled completion body stops promptly and retains attempted-call accounting (8.900011ms)
+✔ malformed completion choices still retain independently valid response identity and token usage (1.719051ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1137.608173

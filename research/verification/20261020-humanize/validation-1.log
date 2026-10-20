@@ -1,0 +1,107 @@
+(node:3324844) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (1009.577007ms)
+✔ covered reservations still consume every global and stage microdollar (694.779065ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (526.375568ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (817.861619ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (996.159805ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (674.542164ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (935.550521ms)
+✔ audited resume preserves covered holds and strict connections still block them (703.020634ms)
+(node:3326966) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ independent unusual-key metadata corpus retains every key and detects a key-only observation change (247.084218ms)
+✔ strict case envelopes reject an extra reserved name rather than silently omitting it (1.245205ms)
+(node:3327153) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ 2.2 faithfully clones every own JSON key into detached ordinary objects (2.370027ms)
+✔ function arguments, outer and nested kwargs, and expected values preserve special keys (2.412731ms)
+✔ historical parser defect is reproduced on inert metadata while the current parser retains keys (1.955215ms)
+✔ non-JSON values and lossy object/array shapes are refused without invoking accessors or proxy traps (3.079373ms)
+✔ JSON depth, node count and encoded bytes are explicitly bounded (449.040274ms)
+✔ 2.2 run, evidence, runtime lock and check observations retain keys and original property order (16.399248ms)
+✔ valid 2.0 and 2.1 evidence keeps exact projection, bytes-derived digest and original formula (9.262547ms)
+✔ legacy lossy keys reject explicitly instead of being silently migrated or normalized (8.033812ms)
+✔ evidence versions and normalization-sensitive omissions cannot be relabeled under a different projection (3.837004ms)
+✔ host observation parser preserves returned keys, compares complete mappings, and refuses legacy loss (2.013345ms)
+✔ historical unsupported input is rejected before any local process invocation (1.260888ms)
+✔ replay passes the bound version through repeated checks to an inert metadata-only runner (145.537327ms)
+✔ private export and read-only archive admit the same 2.2 projection and preserve exact selected bytes (450.300693ms)
+✔ observation exception and argument envelopes retain mapping keys and malformed JSON stays an error (1.402398ms)
+(node:3327810) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.449003ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (2821.174517ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (3466.997039ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1895.360892ms)
+✔ all variants request non-thinking mode with exact limits, repeated-check cap and at most three bounded requests (7871.317164ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.157537ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (2040.481332ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (2354.006554ms)
+  ✔ output (1772.840567ms)
+✔ reported per-request input and output overruns cannot become covered exposure (4128.968992ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (750.945538ms)
+✔ live hard allowances are frozen against mutation after factory construction (2801.726086ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1501.653621ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1746.197945ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1677.928557ms)
+  ✔ header (2390.295844ms)
+  ✔ candidate (1662.806723ms)
+  ✔ escaped_candidate (2021.559171ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (7754.824337ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (2372.669905ms)
+  ✔ 0 (2165.260276ms)
+  ✔ 1 (776.615917ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (5316.196696ms)
+✔ persisted operator pause rejects creation before credentials or spending (793.99355ms)
+✔ approval expiry must cover the entire run even when pricing remains current (958.48152ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (2049.54999ms)
+  ✔ approval (2147.260112ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (4198.226459ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (1661.401091ms)
+  ✔ pricing1 (1696.229084ms)
+  ✔ approval0 (1320.658147ms)
+  ✔ approval1 (1563.089493ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (6243.618107ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (2321.445973ms)
+  ✔ 0 (2264.059939ms)
+  ✔ 1 (869.3915ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (5456.546999ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (2154.748682ms)
+✔ late baseline preserves observations and cleanup logs without inference (1421.496522ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1229.467013ms)
+✔ renewable evidence admits after legacy expiry and is retained in exported events and accounting (2089.571253ms)
+✔ loss of renewable evidence after baseline prevents credentials and dispatch (1571.490959ms)
+(node:3348753) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ default product server remains mock with loopback guard and existing cancellation behavior (38.28688ms)
+✔ live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards (12.961441ms)
+✔ opaque browser ownership protects live cancellation without changing public run or evidence access (22.936864ms)
+✔ a process restart never grants an old or replayed cookie ownership of retained public history (7.473003ms)
+✔ invalid live host/runtime metadata is refused before serving or coordinator work (3.413755ms)
+✔ budget availability pauses only new runs, preserves owned cancellation and public history, and fails closed on callback errors (11.121062ms)
+(node:3348940) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ renewable rates preserve the unchanged worst-case reservation and resource limits (1.034988ms)
+✔ fresh evidence works after the historical receipt expired, with exact full-run boundaries (8.546593ms)
+✔ missing, blocked, stale, future, oversized-age and mismatched evidence fail closed (14.411048ms)
+✔ approval expiry bounds renewal and admission, and fees can never be renewed by catalog success (9.764568ms)
+✔ catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected (7.070739ms)
+✔ atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks (210.649989ms)
+✔ catalog fetch is read-only, bounded, refuses redirects and never retries failures (14.802058ms)
+✔ full verifier serializes writers, publishes failure immediately, and expired fees prevent network access (524.95799ms)
+✔ the approved shared purpose reallocates the same total without releasing holds or clearing pause (687.808126ms)
+ℹ tests 81
+ℹ suites 0
+ℹ pass 81
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 79427.693438
