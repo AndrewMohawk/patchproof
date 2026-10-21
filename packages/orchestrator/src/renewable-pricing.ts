@@ -4,10 +4,12 @@ import { ContractError } from '../../contracts/src/index.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const RENEWABLE_PRICING_POLICY = Object.freeze({
-  id: 'token-factory-renewable-pricing-v1',
+  id: 'token-factory-renewable-pricing-v2',
   catalogEndpoint: 'https://api.tokenfactory.nebius.com/v1/models?verbose=true',
   modelId: 'nvidia/nemotron-3-super-120b-a12b', contextTokens: 262144, quantization: 'fp4',
   inputUsdPerMillionTokens: 0.3, outputUsdPerMillionTokens: 0.9, requestFeeUsd: 0,
+  // Catalog compatibility only: reservations still charge every input token at the ordinary rate.
+  acceptedCacheReadUsdPerToken: 0.00000006,
   maximumCatalogAgeMs: 70 * 60 * 1000, maximumFeeAgeMs: 24 * 60 * 60 * 1000,
   maximumTotalUsd: 25, perRunReservationUsd: 0.25,
 });
@@ -56,9 +58,9 @@ export function verifyCatalogRecord(value: unknown): { catalogDigest: string } {
   const model = z.object({ id: z.literal(RENEWABLE_PRICING_POLICY.modelId), context_length: z.literal(262144), quantization: z.literal('fp4'),
     pricing: z.record(z.string(), z.union([z.string().regex(/^\d+(?:\.\d+)?$/), z.number().finite().nonnegative(), z.null()])) }).parse(matches[0]);
   const expected: Record<string, number | null> = { prompt: 0.0000003, completion: 0.0000009, request: 0,
-    image: 0, price_per_video_second: 0, price_per_minute: 0, input_cache_read: null };
+    image: 0, price_per_video_second: 0, price_per_minute: 0, input_cache_read: RENEWABLE_PRICING_POLICY.acceptedCacheReadUsdPerToken };
   if (Object.keys(model.pricing).some(key => !(key in expected)) || Object.keys(expected).some(key =>
-      expected[key] === null ? model.pricing[key] !== null : model.pricing[key] === null || model.pricing[key] === undefined ||
+      key === 'input_cache_read' && model.pricing[key] === null ? false : model.pricing[key] === null || model.pricing[key] === undefined ||
         Number(model.pricing[key]) !== expected[key])) throw Error('catalog_mismatch');
   return { catalogDigest: digestJson(matches[0]) };
 }

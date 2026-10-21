@@ -69,6 +69,43 @@ test('catalog price, context, quantization, duplicates, additional fees and malf
     (c: any) => { c.data.push(c.data[0]); },
   ]) { const c = catalog(); mutate(c); assert.throws(() => verifyCatalogRecord(c)); }
 });
+test('only null or the reviewed cache price is accepted without discounting the reservation', () => {
+  for (const cachePrice of [null, '0.00000006', 0.00000006]) {
+    const c: any = catalog(); c.data[0].pricing.input_cache_read = cachePrice;
+    const receipt = makePricingReceipt(c, fees(), bindings, now);
+    assert.equal(receipt.catalogDigest, digestJson(c.data[0]));
+    assert.equal(receipt.inputUsdPerMillionTokens, 0.3);
+    assert.equal(receipt.outputUsdPerMillionTokens, 0.9);
+    assert.equal(receipt.requestFeeUsd, 0);
+    assert.equal(3 * 262144 * receipt.inputUsdPerMillionTokens / 1e6 + 12000 * receipt.outputUsdPerMillionTokens / 1e6, 0.2467296);
+    assert.equal(RENEWABLE_PRICING_POLICY.perRunReservationUsd, 0.25);
+  }
+});
+test('cache compatibility rejects malformed, absent and unreviewed cache values', () => {
+  for (const value of [undefined, '', ' ', '6e-8', 'NaN', NaN, Infinity, -1, false, {}, [], 0, '0', '0.00000005', '0.00000007', '0.0000003']) {
+    const c: any = catalog(); c.data[0].pricing.input_cache_read = value;
+    assert.throws(() => verifyCatalogRecord(c), String(value));
+  }
+  const c: any = catalog(); delete c.data[0].pricing.input_cache_read;
+  assert.throws(() => verifyCatalogRecord(c));
+});
+test('accepted cache pricing does not relax other model, price or fee checks', () => {
+  for (const mutate of [
+    (c: any) => { c.data[0].pricing.prompt = '0.00000031'; },
+    (c: any) => { c.data[0].pricing.completion = '0.00000091'; },
+    (c: any) => { c.data[0].pricing.request = '0.000001'; },
+    (c: any) => { c.data[0].pricing.image = '0.01'; },
+    (c: any) => { c.data[0].pricing.new_fee = '0'; },
+    (c: any) => { delete c.data[0].pricing.prompt; },
+    (c: any) => { c.data[0].context_length = 131072; },
+    (c: any) => { c.data[0].quantization = 'fp8'; },
+    (c: any) => { c.data[0].id = 'unreviewed-model'; },
+    (c: any) => { c.data.push(c.data[0]); },
+  ]) {
+    const c: any = catalog(); c.data[0].pricing.input_cache_read = '0.00000006'; mutate(c);
+    assert.throws(() => verifyCatalogRecord(c));
+  }
+});
 test('atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks', t => {
   const dir = mkdtempSync(join(tmpdir(), 'patchproof-renewal-')); chmodSync(dir, 0o700);
   t.after(() => rmSync(dir, { recursive: true, force: true }));

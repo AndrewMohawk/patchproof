@@ -1,8 +1,10 @@
 # Judge operations through December 15, 2026, 20:00 UTC
 
 Renewable evidence controls and the shared budget allocation are implemented.
-See the dated renewable deployment receipt for the actual installed state. New
-generation remains operator-paused while the read-only application stays available.
+See the dated deployment receipt and live `/tasks` response for the actual installed
+state. October 20 recovery restored admission with all holds retained; October 21
+catalog drift then blocked admission. Cache-price compatibility restoration is
+recorded separately under `research/verification/20261021-cache-pricing/`.
 A successful configuration repair and a correctly rejected pagination repair are
 accepted demonstrations of checked maintenance; a perfect pagination repair is
 not a reopening requirement. Failed attempts remain visible.
@@ -19,9 +21,9 @@ existing stage name `smoke` now contains the shared $25 pool; all other stages
 are zero. Synchronize the existing ledger by explicit compare-and-swap. Never
 create a second budget, reset accounting or release unresolved reservations.
 
-At the reviewed snapshot, $2.35 remains held and $22.65 remains available: at most
-90 additional $0.25 reservations. This is finite current capacity, not a guarantee
-of 90 successful repairs or uninterrupted access. Failed and ambiguous requests
+At the October 21 pre-deployment snapshot, $3.60 remains held and $21.40 remains
+available: at most 85 additional $0.25 reservations. This is finite capacity,
+not a guarantee of 85 successful repairs or uninterrupted access. Failed and ambiguous requests
 retain their holds; verification and judge requests draw from the same total.
 No further permission is needed merely to use the already approved judge purpose.
 No automatic increase, hosting purchase or inferred trial-credit allowance exists.
@@ -31,6 +33,9 @@ No automatic increase, hosting purchase or inferred trial-credit allowance exist
 `packages/orchestrator/src/renewable-pricing.ts` validates source, budget and
 policy bindings, exact model/context/FP4/rates/request fee, a maximum 70-minute
 catalog window, and separate account-fee evidence no older than 24 hours.
+Cache-read pricing accepts only the historical null or the reviewed $0.06/M
+value; every input token still uses the ordinary $0.30/M conservative bound.
+Other price fields and model identity/context/quantization checks remain strict.
 Every admission and paid dispatch revalidates current evidence against the
 original run deadline. Missing, malformed, future, stale, blocked or mismatched
 evidence closes admissions. Valid catalog observations cannot extend fee evidence
@@ -63,11 +68,11 @@ and a supported authoritative per-operation/account-fee API has not been verifie
 Do not guess endpoints, mint credentials, reuse browser session secrets, or
 pretend hourly model-catalog reads renew tax/fee verification.
 
-The current fee attestation retains its original October 17, 21:00 UTC expiry.
-The full 600-second allowance therefore stops admission by 20:50 UTC unless an
-operator performs a real renewal. Suggested operating cadence: primary review
-at 18:00 UTC daily, backup review before 20:00 UTC if needed. The actual next
-expiry in the private receipt governs; these suggested times never extend it.
+The October 21 actual account review produced fee evidence expiring October 22
+at 16:17:45.204 UTC. Its full-run cutoff is 16:07:45.204 UTC. Review again
+before that cutoff, with a primary and backup scheduled early enough to respond.
+The actual next expiry in the private receipt governs; a suggested cadence never
+extends it. Hourly catalog checks do not perform this account review.
 
 1. Using existing authorized access, inspect account billing status, account
    model prices, applicable fees/taxes and the authoritative published policy.
