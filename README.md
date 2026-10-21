@@ -13,20 +13,32 @@ still uses explicitly labeled scripted responses.
 
 **Recording:** https://patchproof.andrewmohawk.xyz/demo/
 
-**October 13 release status:** The source repository is still private. New repairs
-were paused at the read-only availability check because model pricing verification
-needs refresh; the recorded pricing window expired October 1. The saved examples
-and recording document earlier runs. See [release readiness](docs/release-readiness.md)
-for current blockers and the [submission draft](docs/submission-draft.md) for the
-supported claims. No new runtime execution was performed for this documentation update.
+**Status checked October 21, 2026, at 17:50 UTC:** The repository is public and
+[PatchProof is submitted on Devpost](https://devpost.com/software/patchproof-dpjagh).
+Unauthenticated HTTP checks returned 200 for the landing page, recording, health,
+tasks and saved evidence downloads. The API reported generation admission enabled for the two hosted
+tasks below. This verifies server responses and admission, not a new completed
+repair. Browser rendering was not verified in this check: Chrome returned
+`ERR_BLOCKED_BY_CLIENT`, which was not bypassed.
 
-Start with a saved walkthrough, then open **Try a repair** to inspect one of ten
-public v3 Python maintenance tasks. Each task shows the starting source, the
-behavior to repair, five requirements, and five selectable input/expected-output
-examples. The tasks cover configuration overlays, cursor pagination, inventory,
-invoices, caches, schedules, manifests, event processing, retry batches, and search.
-They are original synthetic examples with interacting rules, not a benchmark of
-production repositories.
+At that check, the hosted executable was [91040d5](https://github.com/AndrewMohawk/patchproof/commit/91040d5804a349b4e9a9a5213678fccf1ee802ed),
+with [deployment evidence](https://github.com/AndrewMohawk/patchproof/blob/2c016510c515ab912d4dbfee6aec0a5ead75923b/research/verification/20261021-bounded-pricing/production-restoration-receipt.json).
+It includes reviewed fixes not yet integrated into this default branch; this
+README update does not deploy them. No fresh real-provider generation on that
+release was performed during the October 21 readiness check.
+
+Start with a saved walkthrough, then open **Try a repair** to inspect either
+**configuration overlays** or **revision pagination**. Each task shows its starting
+source, five requirements and five input/expected-output examples. The repository
+also contains a broader ten-task v3 corpus. These are original synthetic
+maintenance examples, not a benchmark of production repositories.
+
+The public app requires no sign-in. Viewing saved results and downloading evidence
+does not start inference; **Generate patch** starts a bounded real-provider run.
+Public replay execution is disabled. To replay downloaded evidence, a maintainer
+needs the exact source checkout, image and instructions recorded in that run.
+The documented successful replay was on the same host; independent-machine replay
+remains unverified.
 
 **How it works** explains the model, protected checks, evidence, and the reviewer’s
 role. Successful and failed walkthroughs both use four stages: **The bug → AI
@@ -35,7 +47,7 @@ headers, original/proposed line numbers, and expandable unchanged context. Faile
 attempts remain inspectable. Nothing is merged automatically.
 
 The [product v3 record](research/product-v3/README.md) is the index for this upgrade.
-The ten-task interface has been [reviewed on the public app](research/product-v3/public-review/review.md).
+The historical ten-task interface was [reviewed on the public app](research/product-v3/public-review/review.md).
 The successful walkthrough follows a real Super pagination repair: the original
 passed 16 of 22 checks, the proposed repair passed all 22, and a fresh same-host
 replay reproduced the result. The complete configuration failure shows why
@@ -52,14 +64,24 @@ New evidence uses product contract **2.2**, preserving ordinary JSON mapping key
 throughout checking and export. Historical 2.0/2.1 bundles retain their original
 bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
-The owner approved **$25 total**: $5 allocated to smoke and $20 to a pilot. The
-September 28 recorded v3 configuration uses `nvidia/nemotron-3-super-120b-a12b` on Token
-Factory, with a **$0.25 hold per run**, at most **three model calls**, **12,000 total
-output tokens**, and **600 seconds**. The [public runtime check](research/product-v3/public-review/mobile-fixes.json)
-records those historical limits; older saved runs retain their own recorded allowances. Actual invoice costs remain unknown and reservations stay
-held; displayed token-based costs are estimates. See the [model discovery
-receipt](research/product-v3/model-discovery.json), [decisions](decisions.md),
-[budget](budget.json), and [account access receipt](research/verification/20260927-account-access/README.md).
+The current approved Token Factory allowance is **$25 total through December 15,
+2026**, including existing usage and applicable fees, with no automatic increase.
+At the October 21 check, **$3.60 remained held**, leaving **$21.40** and at most
+**85 additional $0.25 reservations**. Unknown historical costs remain unknown and
+reserved; token-based estimates are not settled provider charges. Hosting costs
+are not authorized by this allowance.
+
+The hosted model is `nvidia/nemotron-3-super-120b-a12b`, with up to **three model
+calls**, **12,000 total output tokens** and **600 seconds** per run. Current
+admission also requires valid pricing, account-fee evidence, available capacity
+and the protected checker. These controls can refuse new work.
+
+The [official rules](https://nebiusglobalaihackathon.devpost.com/rules) require free
+judge access through the judging period ending **December 15, 2026, at 20:00 UTC**.
+Continued operation needs scheduled catalog checks, genuine account-fee reviews,
+host availability and capacity monitoring within the existing cap. Today's
+admission and remaining reservations do not guarantee uninterrupted access through
+that date. Hourly catalog checks do not renew account-fee evidence.
 
 ## Local development (scripted model)
 
@@ -80,7 +102,7 @@ Open **http://127.0.0.1:43171/#tasks**. Select **Retain first occurrences throug
 policies, inspect a rejected candidate's actual check output, and download its
 evidence. The scripted provider supports this one task. Other fixtures may be inspected,
 but generating their patches requires a connected model. The public live
-service has its own allowlist of ten v3 tasks.
+service currently allows only the two v3 tasks listed above.
 
 `make doctor` makes no paid calls. If the pinned local checker image is absent,
 it reports the blocker; there is no automatic image pull or provider fallback.
@@ -116,8 +138,9 @@ another loopback port. Use the separately configured live Unix-socket applicatio
 | `make verify-packet PACKET=<path> DIGEST=<sha256>` | Verifies a local packet's exact file set, checksums and embedded evidence. |
 
 Install the pinned browser if needed with `npx playwright install chromium`.
-For a browser download, save the bundle as `artifacts/<run-id>.json` before using
-`make reproduce`. Self-consistent hashes establish integrity, not authenticated
+For a downloaded bundle, follow the source-checkout and bundle-path instructions
+in that run’s **Run details** before using `make reproduce`. Self-consistent hashes
+establish integrity, not authenticated
 provenance. A replayed mock-model run remains mock and cannot become competition
 ready. The original v1 contract-only scaffold is retained for historical tests;
 `npm run mock-run` produces that older non-executable format, not product evidence.
@@ -129,9 +152,9 @@ Python code in isolated local Docker containers. Every run records its exact
 model, source, allowance, observations, and evidence digest. Earlier runs retain
 their original runtime locks when the interface or model configuration changes.
 
-Use the [product v3 record](research/product-v3/README.md) for the final deployment,
-run, replay, and recording receipts. Public UI inspection
-has verified the ten-task catalogue, source and example controls, How it works,
+Use the [product v3 record](research/product-v3/README.md) for historical September 28
+deployment, run, replay and recording receipts. That dated public UI inspection
+verified the then ten-task catalogue, source and example controls, How it works,
 both four-stage walkthroughs, and the context diff at desktop and mobile sizes.
 That inspection starts no model calls; the separate actual-run and replay
 receipts establish the recorded pagination outcome.
@@ -255,7 +278,20 @@ and documentation and approved source and existing-demo publication preparation.
 The [CC0 fixture dedication](fixtures/LICENSE-CC0.txt) and [third-party notices](THIRD_PARTY_NOTICES.md)
 remain separate; MIT does not relicense third-party components or media.
 
-The GitHub repository remains private pending a full-history secret and rights
-review. The existing recording is hosted at the app's demo URL; no verified
-YouTube publication is recorded here. Competition entry and acceptance of its
-terms are separate steps. No competition entry or automatic merge has occurred.
+The repository is public. The [submitted entry](https://devpost.com/software/patchproof-dpjagh)
+links to this repository, the hosted app and the
+[YouTube demonstration](https://youtu.be/brNW1NrkAmc). On October 21 the authenticated
+Devpost page showed **Submitted, 5/5 steps complete**. The YouTube player showed
+**2:29** and played in the signed-in owner session; that check did not independently
+verify logged-out playback. The video depicts saved September 28 runs, not a fresh
+October 21 generation.
+
+`make release-check` remains blocked for the separate research/release harness.
+Its default mock configuration and required receipts cover a calibrated pilot,
+sealed evaluation, human study, independent replay and sponsor-Sandbox evidence,
+as well as access and publication checks. Those research goals are not all
+Devpost entry requirements, and the audit is not a Devpost submission-status check.
+It must not be reported as passed. Actual judge access and the official rules
+still apply. The [October 13 readiness review](docs/release-readiness.md) and
+[submission draft](docs/submission-draft.md) retain historical preparation status;
+the dated current observations above supersede their private/unsubmitted claims.
