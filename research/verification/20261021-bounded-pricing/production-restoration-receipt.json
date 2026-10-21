@@ -1,0 +1,118 @@
+{
+  "checkedAt": "2026-10-21T16:34:40.777098+00:00",
+  "deployedCommit": "91040d5804a349b4e9a9a5213678fccf1ee802ed",
+  "sourceDigest": "sha256:3f1ce63d407662b19e05e2417e3be98cfb61ccfa5bc98c1a789f0f7b5dfdda48",
+  "sourceMapDigest": "sha256:f586285e257e15167763d9af1c6386d8fe8984fbef25878aafde51770c10caa0",
+  "review": "Incremental bounded-price policy self-reviewed; 140 affected tests passed, typecheck exit 0.",
+  "pricingState": {
+    "status": "verified",
+    "receipt": {
+      "schemaVersion": "1.0",
+      "policyDigest": "sha256:0f9e487636c699796b6001efb09bf09277c0e736adcf2f0f6c794ff9437368ae",
+      "sourceDigest": "sha256:3f1ce63d407662b19e05e2417e3be98cfb61ccfa5bc98c1a789f0f7b5dfdda48",
+      "budgetDigest": "sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53",
+      "verifiedAt": "2026-10-21T16:34:06.147Z",
+      "validUntil": "2026-10-21T17:44:06.147Z",
+      "catalogDigest": "sha256:8824f586eb672cd27a72ef4bbb92ca89d80643945908e3e4b9f12670dca98e34",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b",
+      "contextTokens": 262144,
+      "quantization": "fp4",
+      "inputUsdPerMillionTokens": 0.3,
+      "outputUsdPerMillionTokens": 0.9,
+      "requestFeeUsd": 0,
+      "feeEvidence": {
+        "schemaVersion": "1.0",
+        "verifiedAt": "2026-10-21T16:17:45.204Z",
+        "validUntil": "2026-10-22T16:17:45.204Z",
+        "evidenceDigest": "sha256:386713b7752d7dc9299a8d12763d5d4515a07479a7a8536cc4cdcebad98bcaba",
+        "accountBillingActive": true,
+        "additionalFeeUsdPerRun": 0,
+        "basis": "operator-reviewed-account-pricing-and-fees"
+      }
+    }
+  },
+  "feeEvidenceUnchangedFromActualReview": true,
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "admission": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 85
+  },
+  "tasks": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "localRuntime": {
+    "available": true,
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "reason": null
+  },
+  "ledgerBefore": {
+    "sequence": 101,
+    "meta": {
+      "approval_revision": 3,
+      "frozen_reason": null
+    },
+    "reservationDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19"
+  },
+  "ledgerAfter": {
+    "sequence": 101,
+    "meta": {
+      "approval_revision": 3,
+      "frozen_reason": null
+    },
+    "reservationDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19"
+  },
+  "heldUsd": 3.6,
+  "availableUsd": 21.4,
+  "approvedTotalUsd": 25,
+  "unknownActualCostCount": 21,
+  "unknownActualCostsRemainUnknown": true,
+  "historicalRedispatchPolicy": "historical-20261020-closed-dispatch-v1",
+  "startupReceipt": {
+    "checkedAt": "2026-10-21T16:33:44.130Z",
+    "sourceDigest": "sha256:3f1ce63d407662b19e05e2417e3be98cfb61ccfa5bc98c1a789f0f7b5dfdda48",
+    "providerCalls": 0,
+    "checks": [
+      {
+        "id": "runtime-readiness",
+        "requirementId": "R01",
+        "status": "pass",
+        "message": "Observed outcome matches the declared check.",
+        "actual": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "expected": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "durationMs": 1654,
+        "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"patchproof-ready\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-d8d0b800-626c-428e-8763-8881980096d7\",\"createAcknowledged\":true,\"containerId\":\"c354f8d20745aa08cfe1b260616fcaf024c7eb5034fb7ae28fba03a927f003ef\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+      }
+    ],
+    "isolation": "local_container",
+    "operationIds": [
+      "docker:patchproof-check-d8d0b800-626c-428e-8763-8881980096d7"
+    ],
+    "cpuSeconds": null,
+    "measuredCostUsd": 0,
+    "infrastructureError": null
+  },
+  "units": {
+    "patchproof-runtime@91040d5804a349b4e9a9a5213678fccf1ee802ed.service": "Result=success\nExecMainStatus=0\nActiveState=active\nSubState=running\nUnitFileState=enabled\n",
+    "patchproof-pricing@91040d5804a349b4e9a9a5213678fccf1ee802ed.service": "Result=success\nExecMainStatus=0\nActiveState=inactive\nSubState=dead\nUnitFileState=static\n",
+    "patchproof-pricing@91040d5804a349b4e9a9a5213678fccf1ee802ed.timer": "NextElapseUSecMonotonic=1w 2h 48min 37.234219s\nLastTriggerUSec=Wed 2026-10-21 16:34:00 UTC\nResult=success\nActiveState=active\nSubState=waiting\nUnitFileState=enabled\n"
+  },
+  "timerScheduleUtc": "NEXT                         LEFT LAST                         PASSED UNIT                                                              ACTIVATES\nWed 2026-10-21 17:34:00 UTC 59min Wed 2026-10-21 16:34:00 UTC 39s ago patchproof-pricing@91040d5804a349b4e9a9a5213678fccf1ee802ed.timer patchproof-pricing@91040d5804a349b4e9a9a5213678fccf1ee802ed.service\n\n1 timers listed.\n",
+  "paidInferenceCalls": 0,
+  "newGenerations": 0,
+  "competitionAudit": "blocked; separate from local Docker operational acceptance"
+}

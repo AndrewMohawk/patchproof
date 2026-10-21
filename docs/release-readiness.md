@@ -1,9 +1,9 @@
 # Release readiness
 
 **Checked:** October 21, 2026 (UTC)
-**Disposition:** Cache-price compatibility fix deployed at `e55b85ee375edbd6811ba30b1aebd541734a5e50`; curated generation admission verified ready at 16:22 UTC.
-The provider added a $0.06/M cached-input price. The narrow verifier accepts that exact value or historical null while preserving full ordinary-input budgeting and all existing safeguards. Genuine account review and source-bound catalog verification passed. All $3.60 in holds and 21 unknown costs remain unchanged. The exact approved container image was restored and protected startup passed with confirmed cleanup and zero provider calls. See the [October 21 receipt](../research/verification/20261021-cache-pricing/production-restoration-receipt.json).
-Account-fee evidence expires October 22 at 16:17:45.204 UTC; full-run admission cuts off ten minutes earlier without another actual account review. Hourly catalog checks do not renew fees. Admission was verified without new inference; the generic competition audit remains blocked.
+**Disposition:** Explicitly approved bounded current-price policy deployed at `91040d5804a349b4e9a9a5213678fccf1ee802ed`; curated generation admission verified ready at 16:34 UTC.
+Valid current token prices and harmless metadata may change only while the conservative full-run cost fits the unchanged $0.25 hold and existing $25 total cap. Per-run maximum verified rates bind request checks, durable coverage and estimates; unsupported fees and unknown costs fail closed. All $3.60 in historical holds and 21 unknown actual costs remain unchanged. Protected startup and 140 affected regression tests passed. See the [bounded-pricing receipt](../research/verification/20261021-bounded-pricing/production-restoration-receipt.json).
+Current rates remain $0.30/$0.90 per million input/output tokens. The genuine account-fee review from 16:17 UTC remains unchanged, expiring October 22 at 16:17:45.204 UTC (full-run cutoff ten minutes earlier). Hourly catalog checks do not renew fees. Admission was verified without new inference; the generic competition audit remains blocked. PR10 remains a draft.
 
 See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
 for current timing, pricing, supervised repairs, accounting and rollout gates.
