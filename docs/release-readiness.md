@@ -1,8 +1,10 @@
 # Release readiness
 
-**Checked:** October 20, 2026 (UTC)
-**Disposition:** Reviewed isolated recovery deployed; curated generation admission is ready as of October 20, 19:55 UTC.
-The reviewed exact-case [closed-dispatch recovery](closed-dispatch-recovery.md) retains all holds and unknown settlement. The exact approved container image and protected startup check passed. This integration excludes the Humanize feature. One exact-case coverage event was applied with all $3.60 held and unknown settlement preserved. See the [restoration receipt](../research/verification/20261020-isolated-recovery/production-restoration-receipt.json). Hourly catalog verification does not replace the account-fee review due before October 21 at 18:34 UTC; future access remains bounded and fail-closed.
+**Checked:** October 21, 2026 (UTC)
+**Disposition:** Cache-price compatibility fix deployed at `e55b85ee375edbd6811ba30b1aebd541734a5e50`; curated generation admission verified ready at 16:22 UTC.
+The provider added a $0.06/M cached-input price. The narrow verifier accepts that exact value or historical null while preserving full ordinary-input budgeting and all existing safeguards. Genuine account review and source-bound catalog verification passed. All $3.60 in holds and 21 unknown costs remain unchanged. The exact approved container image was restored and protected startup passed with confirmed cleanup and zero provider calls. See the [October 21 receipt](../research/verification/20261021-cache-pricing/production-restoration-receipt.json).
+Account-fee evidence expires October 22 at 16:17:45.204 UTC; full-run admission cuts off ten minutes earlier without another actual account review. Hourly catalog checks do not renew fees. Admission was verified without new inference; the generic competition audit remains blocked.
+
 See the [current repair receipt](../research/verification/20261016-demo-repair/README.md)
 for current timing, pricing, supervised repairs, accounting and rollout gates.
 The historical October 13 sections below are retained as dated context; they

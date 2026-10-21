@@ -1,0 +1,124 @@
+{
+  "checkedAt": "2026-10-21T16:22:44.559956+00:00",
+  "deployedCommit": "e55b85ee375edbd6811ba30b1aebd541734a5e50",
+  "sourceDigest": "sha256:0bb2cb04b3250ec4ddbdef8c6411ce404db184361d22adcbfaf9a209adf0ad45",
+  "sourceMapDigest": "sha256:05ce275da8bd0165ec44eb1a4bb2b9010c67cda90dbaf192028a207b7eb273f3",
+  "review": "Narrow diff self-reviewed and regression-tested before deployment; existing reviewed recovery unchanged.",
+  "pricingState": {
+    "status": "verified",
+    "receipt": {
+      "schemaVersion": "1.0",
+      "policyDigest": "sha256:4d6bffc2e38bb446530505c21369be29e0d73add0e1e261ab4aeb5404ac69a49",
+      "sourceDigest": "sha256:0bb2cb04b3250ec4ddbdef8c6411ce404db184361d22adcbfaf9a209adf0ad45",
+      "budgetDigest": "sha256:1f7426650ddc6c78159e3b9f47bccc2e4044588fab94fe0d279421e65f191f53",
+      "verifiedAt": "2026-10-21T16:22:05.671Z",
+      "validUntil": "2026-10-21T17:32:05.671Z",
+      "catalogDigest": "sha256:8824f586eb672cd27a72ef4bbb92ca89d80643945908e3e4b9f12670dca98e34",
+      "modelId": "nvidia/nemotron-3-super-120b-a12b",
+      "contextTokens": 262144,
+      "quantization": "fp4",
+      "inputUsdPerMillionTokens": 0.3,
+      "outputUsdPerMillionTokens": 0.9,
+      "requestFeeUsd": 0,
+      "feeEvidence": {
+        "schemaVersion": "1.0",
+        "verifiedAt": "2026-10-21T16:17:45.204Z",
+        "validUntil": "2026-10-22T16:17:45.204Z",
+        "evidenceDigest": "sha256:386713b7752d7dc9299a8d12763d5d4515a07479a7a8536cc4cdcebad98bcaba",
+        "accountBillingActive": true,
+        "additionalFeeUsdPerRun": 0,
+        "basis": "operator-reviewed-account-pricing-and-fees"
+      }
+    }
+  },
+  "health": {
+    "status": "ok",
+    "mode": "live",
+    "modelProvider": "nebius-token-factory",
+    "checkBackend": "local_container"
+  },
+  "admission": {
+    "enabled": true,
+    "reason": null,
+    "remainingRuns": 85
+  },
+  "capabilities": {
+    "createRuns": true,
+    "cancelRuns": true,
+    "replay": false,
+    "streamEvents": true
+  },
+  "tasks": [
+    "v3-config-overlay",
+    "v3-cursor-pagination"
+  ],
+  "localRuntime": {
+    "available": true,
+    "image": "sha256:3dc0132ee978305990b529498077dbe8ab756c7e655221cad18d807feb878a51",
+    "reason": null
+  },
+  "ledgerBefore": {
+    "sequence": 101,
+    "meta": {
+      "approval_revision": 3,
+      "frozen_reason": null
+    },
+    "reservationDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19"
+  },
+  "ledgerAfter": {
+    "sequence": 101,
+    "meta": {
+      "approval_revision": 3,
+      "frozen_reason": null
+    },
+    "reservationDigest": "sha256:f2cc4b40f76b683112391468b1b42d0f7cdad10720b5fe9668406439e18c1b19"
+  },
+  "heldUsd": 3.6,
+  "availableUsd": 21.4,
+  "approvedTotalUsd": 25,
+  "unknownActualCostsRemainUnknown": true,
+  "historicalRedispatchPolicy": "historical-20261020-closed-dispatch-v1",
+  "startupReceipt": {
+    "checkedAt": "2026-10-21T16:21:30.025Z",
+    "sourceDigest": "sha256:0bb2cb04b3250ec4ddbdef8c6411ce404db184361d22adcbfaf9a209adf0ad45",
+    "providerCalls": 0,
+    "checks": [
+      {
+        "id": "runtime-readiness",
+        "requirementId": "R01",
+        "status": "pass",
+        "message": "Observed outcome matches the declared check.",
+        "actual": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "expected": {
+          "outcome": "patchproof-ready",
+          "argsAfter": [],
+          "kwargsAfter": {}
+        },
+        "durationMs": 1670,
+        "log": "{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":\\\"patchproof-ready\\\",\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-8208ed86-4a9d-4dc3-adb2-60f004068bfd\",\"createAcknowledged\":true,\"containerId\":\"4b29036839a526b817a9ac4685dbef2c01dd2f11f85a13032f42e3da02f3961a\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"
+      }
+    ],
+    "isolation": "local_container",
+    "operationIds": [
+      "docker:patchproof-check-8208ed86-4a9d-4dc3-adb2-60f004068bfd"
+    ],
+    "cpuSeconds": null,
+    "measuredCostUsd": 0,
+    "infrastructureError": null
+  },
+  "units": {
+    "patchproof-runtime@e55b85ee375edbd6811ba30b1aebd541734a5e50.service": "Result=success\nExecMainStatus=0\nActiveState=active\nSubState=running\nUnitFileState=enabled\n",
+    "patchproof-pricing@e55b85ee375edbd6811ba30b1aebd541734a5e50.service": "Result=success\nExecMainStatus=0\nActiveState=inactive\nSubState=dead\nUnitFileState=static\n",
+    "patchproof-pricing@e55b85ee375edbd6811ba30b1aebd541734a5e50.timer": "NextElapseUSecMonotonic=1w 2h 36min 36.935411s\nLastTriggerUSec=Wed 2026-10-21 12:22:00 EDT\nResult=success\nActiveState=active\nSubState=waiting\nUnitFileState=enabled\n"
+  },
+  "paidInferenceCalls": 0,
+  "newGenerations": 0,
+  "competitionAudit": "blocked; separate from local Docker operational acceptance",
+  "limitation": "Image was absent again; identical official pin restored. Cause not established from retained daemon events. Fee review remains manual; hourly catalog renewal cannot extend it.",
+  "timerLastUtc": "2026-10-21T16:22:00Z",
+  "timerNextUtc": "2026-10-21T17:22:00Z"
+}
