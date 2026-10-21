@@ -1,0 +1,159 @@
+COMMAND ['npm', 'run', 'typecheck']
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+tests/live-local-runtime.test.ts(424,38): error TS2352: Conversion of type '{ inputUsdPerMillionTokens: 0.3; outputUsdPerMillionTokens: 0.9; requestFeeUsd: 0; contextTokens: 262144; maximumOutputTokensPerRequest: 4000; inputAccounting: "full-model-context-conservative-ceiling-per-request"; actualBilling: "unknown-full-reservation-held"; verifiedAt: "2026-10-16T21:01:00Z"; validUntil: "2026-...' to type '{ feeEvidence: { schemaVersion: "1.0"; verifiedAt: string; validUntil: string; evidenceDigest: string; accountBillingActive: true; additionalFeeUsdPerRun: 0; basis: "operator-reviewed-account-pricing-and-fees"; }; ... 12 more ...; quantization: "fp4"; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ inputUsdPerMillionTokens: 0.3; outputUsdPerMillionTokens: 0.9; requestFeeUsd: 0; contextTokens: 262144; maximumOutputTokensPerRequest: 4000; inputAccounting: "full-model-context-conservative-ceiling-per-request"; actualBilling: "unknown-full-reservation-held"; verifiedAt: "2026-10-16T21:01:00Z"; validUntil: "2026-...' is missing the following properties from type '{ feeEvidence: { schemaVersion: "1.0"; verifiedAt: string; validUntil: string; evidenceDigest: string; accountBillingActive: true; additionalFeeUsdPerRun: 0; basis: "operator-reviewed-account-pricing-and-fees"; }; ... 12 more ...; quantization: "fp4"; }': feeEvidence, schemaVersion, policyDigest, sourceDigest, and 4 more.
+COMMAND ['node', '--test', '--test-concurrency=1', 'tests/renewable-pricing.test.ts', 'tests/live-local-runtime.test.ts', 'tests/live-pricing-evidence.test.ts', 'tests/budget-covered-inference.test.ts', 'tests/closed-dispatch-recovery.test.ts', 'tests/operational-lock.test.ts']
+(node:1775773) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (923.466091ms)
+✔ covered reservations still consume every global and stage microdollar (645.98123ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (635.477122ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (710.037265ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (763.038636ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (1099.690992ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (785.79063ms)
+✔ audited resume preserves covered holds and strict connections still block them (779.395527ms)
+(node:1777489) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reviewed historical policy pins authentic bundle, source, requested thinking, missing receipt and conservative bound (9.236063ms)
+✔ separate opt-in append keeps all money and unknown settlement, persists, is idempotent, and cannot retry the historical run (563.673468ms)
+✔ all changed facts, unknown fees, hidden retries, model claims and invented receipt digests are rejected without mutation (585.943424ms)
+✔ five-minute checkpoint boundaries, future clocks, approval changes and unrelated writes fail closed (742.908388ms)
+▶ prepared receipts and later evidence invalidate coverage permanently without changing holds
+  ✔ prepared (761.185767ms)
+  ✔ reconcile (1057.752516ms)
+  ✔ cancel (635.358917ms)
+✔ prepared receipts and later evidence invalidate coverage permanently without changing holds (2456.437124ms)
+▶ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced
+  ✔ all dollars committed (810.108566ms)
+  ✔ cap below commitment (709.498119ms)
+  ✔ operator pause (567.606763ms)
+  ✔ sticky overrun (710.597942ms)
+✔ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced (2800.071756ms)
+✔ committed recovery survives abrupt process death and an acknowledgment retry never duplicates it (1068.139421ms)
+✔ storage failure rolls back the coverage event and leaves the original checkpoint usable (929.622486ms)
+✔ two processes racing the same checkpoint append exactly once and retain the full hold (850.549494ms)
+✔ an outstanding reservation blocks first recovery even with a fresh review checkpoint (718.936699ms)
+▶ underfunded or differently sized historical reservations cannot be covered
+  ✔ 246000 (641.934356ms)
+  ✔ 249999 (743.742854ms)
+  ✔ 250001 (667.902755ms)
+✔ underfunded or differently sized historical reservations cannot be covered (2055.04257ms)
+✔ first recovery cannot bypass an already prepared accounting receipt (843.970453ms)
+(node:1780748) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.484036ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (3277.412963ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (3335.197046ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1871.023392ms)
+✔ all variants request non-thinking mode with exact limits, repeated-check cap and at most three bounded requests (7257.500635ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (3.362292ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1485.073262ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1586.953528ms)
+  ✔ output (1679.459507ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3268.673359ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (779.023535ms)
+✔ live hard allowances are frozen against mutation after factory construction (1887.091418ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1792.436406ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1750.691105ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1505.081473ms)
+  ✔ header (1580.367638ms)
+  ✔ candidate (1755.942682ms)
+  ✔ escaped_candidate (1613.048349ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (6456.304264ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (2240.04511ms)
+  ✔ 0 (2282.179413ms)
+  ✔ 1 (886.113937ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (5409.801748ms)
+✔ persisted operator pause rejects creation before credentials or spending (812.065337ms)
+✔ approval expiry must cover the entire run even when pricing remains current (909.071247ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (1839.370064ms)
+  ✔ approval (1932.101419ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (3772.713623ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (1286.858355ms)
+  ✔ pricing1 (1463.39488ms)
+  ✔ approval0 (1462.327767ms)
+  ✔ approval1 (1645.456292ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (5859.919321ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (1831.196662ms)
+  ✔ 0 (1918.677431ms)
+  ✔ 1 (678.636664ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (4430.319282ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (2339.4082ms)
+✔ late baseline preserves observations and cleanup logs without inference (1345.623339ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1595.342318ms)
+✔ renewable evidence admits after legacy expiry and is retained in exported events and accounting (2534.575349ms)
+✔ loss of renewable evidence after baseline prevents credentials and dispatch (1534.264313ms)
+✔ malformed completion closes a failed non-retryable run with durable receipt coverage end to end (1831.08453ms)
+✔ higher bounded prices flow through all three requests, durable coverage and estimates while holds remain unchanged (2830.808701ms)
+✔ individually bounded price changes cannot combine into an unbounded per-run ceiling (1924.53184ms)
+(node:1801053) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ current live pricing evidence matches the runtime constants and its digest (2.680454ms)
+✔ live pricing evidence rejects digest and rate changes (0.933861ms)
+✔ deployment and startup bind the same pricing evidence artifact (0.327415ms)
+✔ offline deployment recovery remains explicit and requires the previous unit to be down (0.248547ms)
+✔ the operational source lock binds model and license metadata (11.481491ms)
+✔ historical recovery recognition is an exact explicit config choice, absent by default (1.965912ms)
+(node:1801144) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (21.054689ms)
+(node:1801376) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ renewable rates preserve the unchanged worst-case reservation and resource limits (4.927326ms)
+✔ fresh evidence works after the historical receipt expired, with exact full-run boundaries (7.214183ms)
+✔ missing, blocked, stale, future, oversized-age and mismatched evidence fail closed (20.7239ms)
+✔ approval expiry bounds renewal and admission, and fees can never be renewed by catalog success (5.774519ms)
+✔ catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected (8.211189ms)
+✔ valid cache prices are accepted without discounting ordinary-input reservation (8.064169ms)
+✔ cache compatibility rejects malformed, absent and unbounded cache values (17.111895ms)
+✔ accepted cache pricing does not relax other model, price or fee checks (11.459446ms)
+✔ atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks (248.76826ms)
+✔ catalog fetch is read-only, bounded, refuses redirects and never retries failures (8.656177ms)
+✔ full verifier serializes writers, publishes failure immediately, and expired fees prevent network access (425.937865ms)
+✔ the approved shared purpose reallocates the same total without releasing holds or clearing pause (800.745765ms)
+✖ valid current price changes and harmless metadata are accepted only within the rounded full-run bound (5.657863ms)
+✔ cache rates above ordinary input are conservatively covered and tiny decimals round upward (7.44114ms)
+✔ rounding each request rejects a raw total that fits but whose conservative rounded total does not (2.792306ms)
+ℹ tests 97
+ℹ suites 0
+ℹ pass 96
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93628.683817
+
+✖ failing tests:
+
+test at tests/renewable-pricing.test.ts:178:1
+✖ valid current price changes and harmless metadata are accepted only within the rounded full-run bound (5.657863ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.9
+  - 0.8999999999999999
+  
+      at TestContext.<anonymous> (file:///home/andrewmohawk/patchproof-recovery-release-20261020/tests/renewable-pricing.test.ts:185:12)
+      at Test.runInAsyncScope (node:async_hooks:212:14)
+      at Test.run (node:internal/test_runner/test:1109:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:786:18)
+      at Test.postRun (node:internal/test_runner/test:1238:19)
+      at Test.run (node:internal/test_runner/test:1166:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:786:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.9,
+    expected: 0.8999999999999999,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

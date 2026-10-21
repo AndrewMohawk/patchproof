@@ -6,7 +6,8 @@ import type { CheckRunner, Fixture, ProductRun } from '../../contracts/src/produ
 import { NebiusRepairProvider } from '../../../workers/repair/index.ts';
 import type { InferenceReceipt } from '../../../workers/repair/index.ts';
 import { BudgetLedger, usdToMicros } from './budget-ledger.ts';
-import type { VerifiedPricing } from './renewable-pricing.ts';
+import { assertPricingFitsReservation } from './renewable-pricing.ts';
+import type { VerifiedPricing, PricingRates } from './renewable-pricing.ts';
 import { Coordinator } from './coordinator.ts';
 import { RepeatedCheckRunner, runnerForLocalScheduling } from './repeated-checks.ts';
 import type { RunJournal } from './journal.ts';
@@ -52,14 +53,14 @@ export function createLiveLocalCoordinator(input: {
   if (!input.fixtures.length || input.fixtures.some(f => f.split !== 'development')) throw new ContractError('unknown_task', 'Only curated development tasks may run publicly.');
   mkdirSync(input.accountingDirectory, { recursive: true, mode: 0o700 });
   type Active = { id: string; deadlineMs: number; reservationId: string; fingerprint: string; intents: string[]; receipts: InferenceReceipt[];
-    sink: ((message: string) => void) | null; attempted: boolean; closed: boolean; pricingVerifications: VerifiedPricing[] };
+    sink: ((message: string) => void) | null; attempted: boolean; closed: boolean; pricingCeiling: PricingRates; pricingVerifications: VerifiedPricing[] };
   let active: Active | null = null;
   let admissionPricing: VerifiedPricing | undefined;
   const persist = () => {
     if (!active) return;
     // Every revision is immutable; there is never a stored key or full response reasoning.
     const record = { ...active, sink: undefined, sourceDigest: input.sourceDigest,
-      pricingEvidenceDigest: active.pricingVerifications[0]?.digest ?? input.pricingEvidenceDigest };
+      pricingEvidenceDigest: active.pricingVerifications.length ? digestJson({ pricingCeiling: active.pricingCeiling, verifications: active.pricingVerifications }) : input.pricingEvidenceDigest };
     const digest = digestJson(JSON.parse(JSON.stringify(record)));
     const filename = join(input.accountingDirectory, `${active.id}-${digest.slice(7)}.json`);
     const fd = openSync(filename, constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW, 0o600);
@@ -77,10 +78,14 @@ export function createLiveLocalCoordinator(input: {
     if (!input.verifyPricing && (deadlineMs > Date.parse(LIVE_PRICING.validUntil) || Date.now() >= Date.parse(LIVE_PRICING.validUntil))) throw new ContractError('authorization_required', 'Model pricing verification needs refresh.', 403);
     if (input.verifyPricing) {
       const verified = input.verifyPricing(deadlineMs);
+      const rates = assertPricingFitsReservation(verified.evidence);
       if (active && !active.closed) {
+        const ceiling = assertPricingFitsReservation({
+          inputUsdPerMillionTokens: Math.max(active.pricingCeiling.inputUsdPerMillionTokens, rates.inputUsdPerMillionTokens),
+          outputUsdPerMillionTokens: Math.max(active.pricingCeiling.outputUsdPerMillionTokens, rates.outputUsdPerMillionTokens), requestFeeUsd: 0 });
         if (!active.pricingVerifications.some(value => value.digest === verified.digest)) {
           if (active.pricingVerifications.length >= 16) throw new ContractError('authorization_required', 'Too many pricing evidence changes during one run.', 403);
-          active.pricingVerifications.push(structuredClone(verified)); persist();
+          active.pricingCeiling = ceiling; active.pricingVerifications.push(structuredClone(verified)); persist();
           active.sink?.(`Pricing verification: ${JSON.stringify(verified)}`);
         }
       } else admissionPricing = structuredClone(verified);
@@ -97,8 +102,10 @@ export function createLiveLocalCoordinator(input: {
       throw new ContractError('budget_not_approved', 'Paid work is paused pending accounting review.', 403);
     }
   };
-  const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true, accountVerifiedAt: LIVE_PRICING.verifiedAt,
-    inputUsdPerMillionTokens: LIVE_PRICING.inputUsdPerMillionTokens, outputUsdPerMillionTokens: LIVE_PRICING.outputUsdPerMillionTokens,
+  const provider = new NebiusRepairProvider({ modelId: LIVE_MODEL, authorized: true,
+    get accountVerifiedAt() { return active?.pricingVerifications.at(-1)?.evidence.verifiedAt ?? LIVE_PRICING.verifiedAt; },
+    get inputUsdPerMillionTokens() { return active?.pricingCeiling.inputUsdPerMillionTokens ?? LIVE_PRICING.inputUsdPerMillionTokens; },
+    get outputUsdPerMillionTokens() { return active?.pricingCeiling.outputUsdPerMillionTokens ?? LIVE_PRICING.outputUsdPerMillionTokens; },
     // Explicit upstream non-thinking mode keeps the bounded output available for a patch.
     // The evidence records this request setting; it does not claim hidden provider behavior.
     maximumOutputTokens: LIVE_PRICING.maximumOutputTokensPerRequest, ...LIVE_THINKING_SETTINGS,
@@ -136,7 +143,7 @@ export function createLiveLocalCoordinator(input: {
       const reservationId = `live-local:${id}`;
       try { input.ledger.reserve({ id: reservationId, episodeId: id, stage: 'smoke', amountMicros: LIVE_RESERVATION_MICROS, fingerprint }); }
       catch { throw new ContractError('budget_not_approved', 'The shared live-demo allowance is exhausted or paused.', 403); }
-      active = { id, deadlineMs, reservationId, fingerprint, intents: [], receipts: [], sink: null, attempted: false, closed: false, pricingVerifications: admissionPricing ? [admissionPricing] : [] }; persist();
+      active = { id, deadlineMs, reservationId, fingerprint, intents: [], receipts: [], sink: null, attempted: false, closed: false, pricingCeiling: assertPricingFitsReservation(admissionPricing?.evidence ?? LIVE_PRICING), pricingVerifications: admissionPricing ? [admissionPricing] : [] }; persist();
     },
     bindEventSink: sink => { if (active) {
       active.sink = sink;
@@ -157,19 +164,19 @@ export function createLiveLocalCoordinator(input: {
           input.ledger.coverPendingInference({ schemaVersion: '1.0', kind: 'closed-token-factory-inference-v1',
             reservationId: active.reservationId, episodeId: active.id, reservationFingerprint: active.fingerprint, stage: 'smoke',
             reservedMicros: reservation.reservedMicros, evidenceDigest, sourceDigest: input.sourceDigest,
-            pricingEvidenceDigest: active.pricingVerifications[0]?.digest ?? input.pricingEvidenceDigest, closureEvidenceDigest: digestJson(active.receipts), closedAt: new Date().toISOString(),
+            pricingEvidenceDigest: active.pricingVerifications.length ? digestJson({ pricingCeiling: active.pricingCeiling, verifications: active.pricingVerifications }) : input.pricingEvidenceDigest, closureEvidenceDigest: digestJson(active.receipts), closedAt: new Date().toISOString(),
             endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', modelId: LIVE_MODEL,
-            inputMicrosPerMillionTokens: usdToMicros(LIVE_PRICING.inputUsdPerMillionTokens).toString(),
-            outputMicrosPerMillionTokens: usdToMicros(LIVE_PRICING.outputUsdPerMillionTokens).toString(),
-            requestFeeMicros: usdToMicros(LIVE_PRICING.requestFeeUsd).toString(),
+            inputMicrosPerMillionTokens: usdToMicros(active.pricingCeiling.inputUsdPerMillionTokens, 'ceil').toString(),
+            outputMicrosPerMillionTokens: usdToMicros(active.pricingCeiling.outputUsdPerMillionTokens, 'ceil').toString(),
+            requestFeeMicros: usdToMicros(active.pricingCeiling.requestFeeUsd, 'ceil').toString(),
             dispatchClosed: true, inventoryComplete: true, otherBillableOperations: 0, requests });
         }
       }
       // This number is explicitly an estimate. The ledger keeps actualCostMicros null.
       if (active.attempted && active.intents.length === active.receipts.length) {
-        run.usage.measuredCostUsd = (run.usage.inputTokens * LIVE_PRICING.inputUsdPerMillionTokens +
-          run.usage.outputTokens * LIVE_PRICING.outputUsdPerMillionTokens) / 1_000_000 +
-          run.usage.inferenceCalls * LIVE_PRICING.requestFeeUsd;
+        run.usage.measuredCostUsd = (run.usage.inputTokens * active.pricingCeiling.inputUsdPerMillionTokens +
+          run.usage.outputTokens * active.pricingCeiling.outputUsdPerMillionTokens) / 1_000_000 +
+          run.usage.inferenceCalls * active.pricingCeiling.requestFeeUsd;
         run.usage.costIsEstimate = true;
       }
     },

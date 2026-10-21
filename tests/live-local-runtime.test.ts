@@ -421,7 +421,7 @@ test('loss of renewable evidence after baseline prevents credentials and dispatc
   let ready = true;
   const h = await setup(t, () => {
     if (!ready) throw new ContractError('authorization_required', 'Synthetic renewal failed.', 403);
-    return { digest: HASH, evidence: {} as VerifiedPricing['evidence'] };
+    return { digest: HASH, evidence: dynamicPricingState('0.0000003', '0.0000009').state.receipt };
   });
   h.hooks.check = () => { ready = false; };
   const done = await h.run('renewal-lost-during-baseline');
@@ -452,4 +452,60 @@ test('malformed completion closes a failed non-retryable run with durable receip
   await h.coordinator.settled();
   assert.equal(repeated.run.id, run.id); assert.equal(h.observed.requests.length, 1);
   assert.equal(h.coordinator.get(run.id).terminalStatus, 'infrastructure_error');
+});
+
+function dynamicPricingState(inputRate: string, outputRate: string) {
+  const now = Date.parse(LIVE_PRICING.verifiedAt);
+  const bindings = { sourceDigest: HASH, budgetDigest: HASH, approvalExpiresAt: '2026-12-15T20:00:00Z' };
+  const catalog = { data: [{ id: LIVE_MODEL, context_length: 262144, quantization: 'fp4', pricing: { prompt: inputRate, completion: outputRate, request: '0', image: '0', price_per_video_second: '0', price_per_minute: '0', input_cache_read: null } }] };
+  const fee = { schemaVersion: '1.0', verifiedAt: new Date(now).toISOString(), validUntil: new Date(now + 3600000).toISOString(), evidenceDigest: HASH,
+    accountBillingActive: true, additionalFeeUsdPerRun: 0, basis: 'operator-reviewed-account-pricing-and-fees' };
+  return { bindings, state: { status: 'verified', receipt: makePricingReceipt(catalog, fee, bindings, now) } };
+}
+test('higher bounded prices flow through all three requests, durable coverage and estimates while holds remain unchanged', async t => {
+  let current = dynamicPricingState('0.000000301', '0.0000009');
+  const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
+  h.hooks.alwaysFail = true;
+  h.hooks.fetch = () => { current = dynamicPricingState('0.0000003', '0.000001'); return response(undefined, { prompt_tokens: 262144, completion_tokens: 4000 }); };
+  const done = await h.run('bounded-price-change');
+  assert.equal(h.observed.requests.length, 3); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.reservation(done).actualCostMicros, null);
+  assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 0);
+  const event = h.ledger.events().find(x => x.kind === 'closed_inference_exposure_covered')!;
+  const proof = event.details.proof as PendingInferenceCoverage;
+  assert.equal(proof.inputMicrosPerMillionTokens, '301000'); assert.equal(proof.outputMicrosPerMillionTokens, '1000000');
+  assert.equal(event.details.maximumCostMicros, '248718');
+  assert.ok(Math.abs(done.usage.measuredCostUsd! - (786432 * .301 + 12000) / 1e6) < 1e-12);
+  const records = await Promise.all((await readdir(h.accountingDirectory)).map(async name => JSON.parse(await readFile(join(h.accountingDirectory, name), 'utf8'))));
+  const closed = records.find(x => x.closed);
+  assert.equal(closed.pricingVerifications.length, 2);
+  assert.equal(proof.pricingEvidenceDigest, closed.pricingEvidenceDigest);
+  assert.equal(proof.pricingEvidenceDigest, (await import('../packages/contracts/src/digest.ts')).digestJson({ pricingCeiling: closed.pricingCeiling, verifications: closed.pricingVerifications }));
+});
+test('individually bounded price changes cannot combine into an unbounded per-run ceiling', async t => {
+  let current = dynamicPricingState('0.00000031', '0');
+  const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
+  h.hooks.alwaysFail = true;
+  h.hooks.fetch = () => { current = dynamicPricingState('0', '0.00002'); return response(); };
+  const done = await h.run('incompatible-price-ceilings');
+  assert.equal(h.observed.requests.length, 1); assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
+  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
+  const event = h.ledger.events().find(x => x.kind === 'closed_inference_exposure_covered')!;
+  const proof = event.details.proof as PendingInferenceCoverage;
+  assert.equal(proof.inputMicrosPerMillionTokens, '310000'); assert.equal(proof.outputMicrosPerMillionTokens, '0');
+});
+
+test('a price change during credential resolution is checked again before transport', async t => {
+  let current = dynamicPricingState('0.0000003', '0.0000009');
+  const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
+  h.options.credential = async () => {
+    h.observed.credentials++;
+    current = dynamicPricingState('0', '0.00002');
+    return SECRET;
+  };
+  const done = await h.run('price-race-before-transport');
+  assert.equal(h.observed.credentials, 1); assert.equal(h.observed.requests.length, 0);
+  assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
+  assert.equal(h.reservation(done).actualCostMicros, '0');
+  assert.equal(h.reservation(done).heldMicros, '0');
 });

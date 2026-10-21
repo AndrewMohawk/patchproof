@@ -1,0 +1,187 @@
+COMMAND ['npm', 'run', 'typecheck']
+
+> patchproof@0.0.1 typecheck
+> tsc --noEmit
+
+COMMAND ['node', '--test', '--test-concurrency=1', 'tests/renewable-pricing.test.ts', 'tests/live-local-runtime.test.ts', 'tests/live-pricing-evidence.test.ts', 'tests/live-product-server.test.ts', 'tests/budget-covered-inference.test.ts', 'tests/closed-dispatch-recovery.test.ts', 'tests/operational-lock.test.ts', 'tests/docker-strict-umask.test.ts', 'tests/docker-lifecycle-independent.test.ts', 'tests/runtime-docker-cleanup.test.ts', 'tests/runtime-sandbox.test.ts']
+(node:1812280) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ covered unknown inference retains the full existing hold and permits only explicit opted-in continuation (1079.072842ms)
+✔ covered reservations still consume every global and stage microdollar (596.630773ms)
+✔ coverage rejects unknown, incomplete, mismatched and underfunded inference exposure (734.529585ms)
+✔ billing and receipt updates invalidate coverage without erasing holds or overrun freezes (801.92857ms)
+✔ coverage cannot resurrect undispatched, reconciled, cancelled or stale-approval work (920.893709ms)
+✔ preparing an accounting receipt invalidates coverage even before reconciliation (657.666557ms)
+✔ first coverage cannot mask a prepared accounting receipt or override reduced approval (835.676349ms)
+✔ audited resume preserves covered holds and strict connections still block them (894.80882ms)
+(node:1814034) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reviewed historical policy pins authentic bundle, source, requested thinking, missing receipt and conservative bound (32.647938ms)
+✔ separate opt-in append keeps all money and unknown settlement, persists, is idempotent, and cannot retry the historical run (755.071486ms)
+✔ all changed facts, unknown fees, hidden retries, model claims and invented receipt digests are rejected without mutation (743.278326ms)
+✔ five-minute checkpoint boundaries, future clocks, approval changes and unrelated writes fail closed (741.66347ms)
+▶ prepared receipts and later evidence invalidate coverage permanently without changing holds
+  ✔ prepared (819.428908ms)
+  ✔ reconcile (1258.164598ms)
+  ✔ cancel (809.836554ms)
+✔ prepared receipts and later evidence invalidate coverage permanently without changing holds (2889.57709ms)
+▶ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced
+  ✔ all dollars committed (817.330054ms)
+  ✔ cap below commitment (793.093457ms)
+  ✔ operator pause (818.108721ms)
+  ✔ sticky overrun (684.315574ms)
+✔ exhausted cap, reduced approval, and sticky operator/overrun freezes remain enforced (3114.643706ms)
+✔ committed recovery survives abrupt process death and an acknowledgment retry never duplicates it (1285.117646ms)
+✔ storage failure rolls back the coverage event and leaves the original checkpoint usable (738.520001ms)
+✔ two processes racing the same checkpoint append exactly once and retain the full hold (966.498773ms)
+✔ an outstanding reservation blocks first recovery even with a fresh review checkpoint (667.500309ms)
+▶ underfunded or differently sized historical reservations cannot be covered
+  ✔ 246000 (584.032852ms)
+  ✔ 249999 (725.791501ms)
+  ✔ 250001 (709.660874ms)
+✔ underfunded or differently sized historical reservations cannot be covered (2020.892446ms)
+✔ first recovery cannot bypass an already prepared accounting receipt (668.613533ms)
+(node:1818519) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cancellation returned with ownership inspection cannot start the acknowledged container (119.532284ms)
+✔ monotonic deadline consumed by ownership inspection forbids start but permits bounded independent cleanup (107.53813ms)
+▶ cleanup identity substitution never removes a foreign object or starts a second case
+  ✔ immutableId (7.476778ms)
+  ✔ name (4.578735ms)
+  ✔ image (3.773163ms)
+  ✔ ownedLabel (2.562914ms)
+  ✔ operationLabel (2.609776ms)
+  ✔ ownerLabel (2.677574ms)
+✔ cleanup identity substitution never removes a foreign object or starts a second case (26.220074ms)
+✔ name reuse between cleanup inspection and removal never changes the immutable removal target (103.398868ms)
+(node:1818646) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real Docker reads nested owned sources under service umask 0077 and removes its workspace and container (1897.791678ms)
+ℹ {"ownerRunId":"260c2f01-0dbe-420c-b93e-c8e6eac8aa2a","result":{"checks":[{"id":"constant","requirementId":"R01","status":"pass","message":"Observed outcome matches the declared check.","actual":17,"expected":17,"durationMs":1657,"log":"{\"observationLog\":\"{\\\"comparisonPerformedBy\\\":\\\"host_controller\\\",\\\"kind\\\":\\\"return\\\",\\\"outcomeMatches\\\":true,\\\"argsUnchanged\\\":true,\\\"observed\\\":{\\\"kind\\\":\\\"return\\\",\\\"value\\\":17,\\\"argsAfter\\\":[],\\\"kwargsAfter\\\":{}}}\",\"dockerLifecycle\":{\"operationId\":\"docker:patchproof-check-cbc37fa5-b557-487c-a146-82b748658e5d\",\"createAcknowledged\":true,\"containerId\":\"d8a071a912764fa32dc3f25435a431a849b9d7b45857dc85fe2b0d45e264941f\",\"cleanupConfirmed\":true,\"cleanupReason\":null,\"cleanupInspectionFailure\":null}}"}],"isolation":"local_container","operationIds":["docker:patchproof-check-cbc37fa5-b557-487c-a146-82b748658e5d"],"cpuSeconds":null,"measuredCostUsd":0,"infrastructureError":null},"modes":{".":493,"nested":493,"nested/deep":493,"nested/deep/solution.py":292,"nested/sibling.py":292,"support.py":292}}
+✔ invalid paths stop before any Docker or workspace activity (3.097214ms)
+(node:1819314) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Super shares a quarter-dollar reservation that covers its entire matched token allowance (1.670072ms)
+✔ full Super token receipts retain their hold, preserve prior allocations and exhaust the shared smoke stage (3067.593194ms)
+✔ real adapter success keeps unknown billed cost and full hold, then permits covered continuation (2539.117037ms)
+✔ ambiguous transport leaves full hold blocking and never retries automatically (1515.472771ms)
+✔ all variants request non-thinking mode with exact limits, repeated-check cap and at most three bounded requests (7101.85362ms)
+✔ worker omission of the thinking override preserves the existing explicit disable option (4.765075ms)
+✔ completion exhaustion at the unchanged 4000-token cap retains the failed call and full hold (1956.085194ms)
+▶ reported per-request input and output overruns cannot become covered exposure
+  ✔ input (1570.278994ms)
+  ✔ output (1562.55631ms)
+✔ reported per-request input and output overruns cannot become covered exposure (3134.815666ms)
+✔ forged capability, unknown tasks, nondevelopment fixtures and changed source refuse dispatch (583.669988ms)
+✔ live hard allowances are frozen against mutation after factory construction (2156.169064ms)
+✔ source drift after baseline prevents credential resolution and dispatch (1120.104057ms)
+✔ cancellation after dispatch retains ambiguous hold and single-flight admission (1537.329761ms)
+▶ actual credential echoes are withheld from candidate, events and accounting receipts
+  ✔ id (1511.324175ms)
+  ✔ header (2913.928203ms)
+  ✔ candidate (1787.487908ms)
+  ✔ escaped_candidate (1675.258823ms)
+✔ actual credential echoes are withheld from candidate, events and accounting receipts (7890.266773ms)
+▶ pricing admission includes the entire 600-second allowance at its exact boundary
+  ✔ -1 (1866.38457ms)
+  ✔ 0 (1955.047944ms)
+  ✔ 1 (559.632073ms)
+✔ pricing admission includes the entire 600-second allowance at its exact boundary (4382.747973ms)
+✔ persisted operator pause rejects creation before credentials or spending (894.599542ms)
+✔ approval expiry must cover the entire run even when pricing remains current (942.302855ms)
+▶ admitted runs retain their original pricing and approval deadline as time advances
+  ✔ pricing (2455.093391ms)
+  ✔ approval (2549.870858ms)
+✔ admitted runs retain their original pricing and approval deadline as time advances (5006.563994ms)
+▶ no credentials or dispatch at or beyond the admitted deadline
+  ✔ pricing0 (2269.198431ms)
+  ✔ pricing1 (1636.476554ms)
+  ✔ approval0 (1663.956522ms)
+  ✔ approval1 (1727.614033ms)
+✔ no credentials or dispatch at or beyond the admitted deadline (7299.589823ms)
+▶ approval admission accepts before and exactly at its full-window boundary only
+  ✔ -1 (1730.589065ms)
+  ✔ 0 (1822.269884ms)
+  ✔ 1 (709.856719ms)
+✔ approval admission accepts before and exactly at its full-window boundary only (4264.174998ms)
+✔ a late final check cannot publish a verified result after the admitted deadline (1797.868632ms)
+✔ late baseline preserves observations and cleanup logs without inference (1386.049464ms)
+✔ queue delay consumes the admitted allowance before any check or credential access (1128.494028ms)
+✔ renewable evidence admits after legacy expiry and is retained in exported events and accounting (1871.245662ms)
+✔ loss of renewable evidence after baseline prevents credentials and dispatch (1515.051338ms)
+✔ malformed completion closes a failed non-retryable run with durable receipt coverage end to end (1793.785019ms)
+✔ higher bounded prices flow through all three requests, durable coverage and estimates while holds remain unchanged (2734.338127ms)
+✔ individually bounded price changes cannot combine into an unbounded per-run ceiling (1855.014969ms)
+✔ a price change during credential resolution is checked again before transport (1412.744472ms)
+(node:1838227) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ current live pricing evidence matches the runtime constants and its digest (2.537039ms)
+✔ live pricing evidence rejects digest and rate changes (0.949488ms)
+✔ deployment and startup bind the same pricing evidence artifact (0.326078ms)
+✔ offline deployment recovery remains explicit and requires the previous unit to be down (0.201328ms)
+✔ the operational source lock binds model and license metadata (15.022205ms)
+✔ historical recovery recognition is an exact explicit config choice, absent by default (1.907927ms)
+(node:1838322) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ default product server remains mock with loopback guard and existing cancellation behavior (37.592252ms)
+✔ live metadata and HTTPS hosts are explicit snapshots, while mismatched origins and forwarded hosts cannot override guards (16.337033ms)
+✔ opaque browser ownership protects live cancellation without changing public run or evidence access (21.580098ms)
+✔ a process restart never grants an old or replayed cookie ownership of retained public history (7.506987ms)
+✔ invalid live host/runtime metadata is refused before serving or coordinator work (3.360579ms)
+✔ budget availability pauses only new runs, preserves owned cancellation and public history, and fails closed on callback errors (14.826502ms)
+(node:1838431) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ operational lock detects changed prompts, newly loaded code, config and unsupported sampling claims (22.026676ms)
+(node:1838472) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ renewable rates preserve the unchanged worst-case reservation and resource limits (1.094521ms)
+✔ fresh evidence works after the historical receipt expired, with exact full-run boundaries (6.500664ms)
+✔ missing, blocked, stale, future, oversized-age and mismatched evidence fail closed (17.71194ms)
+✔ approval expiry bounds renewal and admission, and fees can never be renewed by catalog success (5.161161ms)
+✔ catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected (7.211351ms)
+✔ valid cache prices are accepted without discounting ordinary-input reservation (8.052087ms)
+✔ cache compatibility rejects malformed, absent and unbounded cache values (18.032444ms)
+✔ accepted cache pricing does not relax other model, price or fee checks (6.9564ms)
+✔ atomic state replacement preserves immutable receipts, blocks after failure and rejects symlinks (200.039735ms)
+✔ catalog fetch is read-only, bounded, refuses redirects and never retries failures (17.398448ms)
+✔ full verifier serializes writers, publishes failure immediately, and expired fees prevent network access (419.409782ms)
+✔ the approved shared purpose reallocates the same total without releasing holds or clearing pause (597.103435ms)
+✔ valid current price changes and harmless metadata are accepted only within the rounded full-run bound (10.273056ms)
+✔ cache rates above ordinary input are conservatively covered and tiny decimals round upward (6.375091ms)
+✔ rounding each request rejects a raw total that fits but whose conservative rounded total does not (2.673816ms)
+(node:1838984) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unacknowledged absent creation remains uncertain after its bounded cleanup deadline (50.485953ms)
+✔ cleanup catches delayed appearance after missing inspections and removes only the observed immutable ID (18.102384ms)
+✔ failed removal remains uncertain and preserves the observed identity under the cleanup bound (40.559894ms)
+✔ journal-triggered cancellation and exhausted image inspection allowance never create a container (56.693047ms)
+✔ unobservable interrupted create is never retried or started and blocks the next case (5005.138087ms)
+✔ real delayed create after initial missing cleanup remains inert and is removed without starting (891.832839ms)
+✔ real container with an already expired absolute guest deadline never invokes candidate source (1271.74229ms)
+✔ transient inspection timeout is re-observed within the existing cleanup budget before success (3.498027ms)
+✔ persistent inspection errors remain uncertain at the unchanged overall cleanup deadline (40.982318ms)
+✔ invalid ownership inspection is terminal and never retried or removed (2.841447ms)
+(node:1841349) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ trusted launcher kills an execed harmless child when its parent dies and reaps test processes (106.232862ms)
+✔ trusted launcher refuses exec when the original parent has changed (22.890031ms)
+✔ host comparison rejects wrong returns and mutated arguments even with correct return (7.395641ms)
+✔ Docker invocation exposes inputs only and enforces declared local containment flags (116.792792ms)
+✔ invalid owner IDs and failed operation journaling cannot start containers (7.051978ms)
+✔ recovery validates exact run ownership and fails closed on mismatched or unavailable state (5.021941ms)
+✔ recovery preserves remaining handles when removal or verification fails (1.771013ms)
+✔ real restart recovery removes only the specified sleeping run and confirms absence (2449.563362ms)
+✔ unavailable Docker and pre-cancellation produce check errors with no execution (1.817992ms)
+✔ unconfirmed cleanup stops the batch before another container can overlap it (5007.111573ms)
+✔ real local pinned Python container independently observes return, exception and input mutation (5290.32798ms)
+✔ local cancellation removes its running container and records non-passing checks (1775.579487ms)
+✔ in-container wall limit kills sleeping candidate before the longer host process timeout (2308.428856ms)
+✔ Nebius fake transport maps verified methods and never includes oracle fields (40.784867ms)
+ℹ tests 140
+ℹ suites 0
+ℹ pass 140
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 123399.836784

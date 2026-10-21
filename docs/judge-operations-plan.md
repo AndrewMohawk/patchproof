@@ -31,11 +31,20 @@ No automatic increase, hosting purchase or inferred trial-credit allowance exist
 ## Implemented evidence controls
 
 `packages/orchestrator/src/renewable-pricing.ts` validates source, budget and
-policy bindings, exact model/context/FP4/rates/request fee, a maximum 70-minute
+policy bindings, exact model/context/FP4, bounded verified rates and zero supported
+fees, a maximum 70-minute
 catalog window, and separate account-fee evidence no older than 24 hours.
-Cache-read pricing accepts only the historical null or the reviewed $0.06/M
-value; every input token still uses the ordinary $0.30/M conservative bound.
-Other price fields and model identity/context/quantization checks remain strict.
+Following explicit October 21 approval, current input/output/cache token rates
+may change if the conservative cost of all three calls still fits the unchanged
+$0.25 reservation. Every input token uses the greater of ordinary and cached-input
+rates. Decimal rates and each request cost round upward. Nonzero request or other
+unsupported fees, missing/malformed/unbounded prices, model/context/FP4 changes,
+and unknown pricing dimensions still fail closed. Harmless descriptive metadata
+does not block verification. During a run, the component-wise maximum of all
+verified rates must also fit the hold; this prevents mixing two individually
+affordable schedules into an unaffordable combined bound. Durable accounting
+records bind that ceiling and every accepted pricing receipt. Historical holds
+and actual costs are unchanged; no settlement is inferred from a lower rate.
 Every admission and paid dispatch revalidates current evidence against the
 original run deadline. Missing, malformed, future, stale, blocked or mismatched
 evidence closes admissions. Valid catalog observations cannot extend fee evidence

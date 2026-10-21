@@ -107,7 +107,7 @@ export async function createLiveApplication(root: URL, configFile: string) {
         endpoint: 'https://api.tokenfactory.nebius.com/v1/chat/completions', sampling: LIVE_SAMPLING_DESCRIPTION },
       ...(config.closedDispatchRecoveryPolicy ? { closedDispatchRecoveryPolicy: config.closedDispatchRecoveryPolicy } : {}),
       execution: LIVE_EXECUTION, liveLocalCheckTimingPolicy: LIVE_LOCAL_CHECK_TIMING_POLICY, pricing: LIVE_PRICING,
-      ...(verifyPricing ? { renewablePricing: { policy: RENEWABLE_PRICING_POLICY, policyDigest: RENEWABLE_PRICING_POLICY_DIGEST, evidenceLocation: 'per-run pricing verification events and immutable accounting receipts', legacyPricingDatesAreAdmissionAuthority: false } } : {}), sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
+      ...(verifyPricing ? { renewablePricing: { policy: RENEWABLE_PRICING_POLICY, policyDigest: RENEWABLE_PRICING_POLICY_DIGEST, evidenceLocation: 'per-run pricing verification events and immutable accounting receipts', legacyPricingDatesAreAdmissionAuthority: false, legacyPricingRatesAreAccountingAuthority: false, accountingRates: 'per-run maximum verified input/output rates, all input charged at least ordinary price'  } } : {}), sourceDigest: config.sourceDigest, pricingEvidenceDigest: config.pricingEvidenceDigest,
       localCheckSchedulingPolicy: LOCAL_CHECK_SCHEDULING_POLICY, localCheckImage: status.image, localExecution: status, checkProtocol: REPEATED_CHECK_PROTOCOL,
       repairPolicy: 'immutable-branches-visible-baseline-v1', operationalLock, limits: LIVE_LIMITS,
       sponsorSandboxesVerified: false, calibration: 'unscored-development-only', transportRetries: 0 };

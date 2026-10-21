@@ -1,0 +1,19 @@
+# October 21 bounded current-price policy
+
+Incremental change after the deployed narrow cache-price fix. The owner explicitly approved harmless catalog changes and higher current prices when conservative reservations fit the existing per-run limits and $25 total cap. The existing PR remains draft; no merge is required for the immutable operational release.
+
+Policy v3 accepts verified finite nonnegative token rates instead of fixed $0.30/$0.90 values. Exact decimal parsing rounds upward to microdollars per million tokens, then rounds each request cost upward. All three permitted calls at 262,144 input and 4,000 output tokens each must fit the unchanged $0.25 reservation. Input uses the larger ordinary/cache rate; a cache discount never lowers the ordinary-input bound. Historical null cache price retains ordinary-input accounting. Known zero token prices are allowed; missing, malformed, negative, nonfinite, unsupported or unbounded costs fail closed.
+
+Allowed model ID, context and FP4 quantization remain pinned. Descriptive metadata and unrelated model entries may change. Unknown pricing dimensions and nonzero request/image/time fees remain unsupported. Authentication, no-redirect bounded GET, account-fee freshness, source/policy/budget bindings, expiry, token/call/time limits, isolation, single flight and ledger policies remain enforced.
+
+Every active run keeps the component-wise maximum of accepted verified rates. This ceiling must cover all three calls within the hold before any further dispatch. Two schedules that individually fit but whose combined maxima exceed the hold stop the run. Request budgeting, durable receipt coverage and displayed cost estimates use the ceiling. Accounting binds all accepted pricing receipts and the ceiling together; costs remain estimates and actual billed cost stays unknown. The earlier exact historical recovery is unchanged.
+
+Account-fee evidence is the actual authenticated review completed October 21 at 16:17:45.204 UTC, expiring October 22 at 16:17:45.204 UTC. This incremental change does not renew that timestamp or invent a review. No paid inference, account changes, credentials, outreach or historical hold releases are performed.
+
+## Review and validation
+
+Self-review traced catalog rates through admission, every credential/dispatch gate, adapter request bounds, durable accounting, estimates and source-bound exported evidence. Test coverage includes valid increases/decreases/zero, harmless metadata, malformed/unsupported costs, exact upward rounding, over-cap prices, combined mid-run rate ceilings and a change during credential resolution. Existing expiry, pause, budget exhaustion, concurrency, malformed completion and historical recovery tests are retained.
+
+The initial offline pass had 96/97 tests pass. The sole test failure compared exact decimal 0.9 with binary multiplication 0.8999999999999999; the expectation now uses explicit decimal values. Initial typechecking also found an incomplete synthetic receipt fixture; it now supplies a complete receipt. Both initial results are retained in `initial-tests.log`. No runtime guard or deadline was weakened to address these test errors.
+
+Final affected-suite result: **140/140 passed**, zero failures/skips/cancellations, serial file concurrency. `npm run typecheck` exited 0. The exact commands and raw results are in `final-tests.log`. The tested operational source digest is `sha256:3f1ce63d407662b19e05e2417e3be98cfb61ccfa5bc98c1a789f0f7b5dfdda48`; source-map digest `sha256:f586285e257e15167763d9af1c6386d8fe8984fbef25878aafde51770c10caa0`. Production results will be recorded separately after deployment. The generic competition/research audit remains blocked and separate from local Docker operational acceptance. Admission readiness does not establish a newly completed generation.
