@@ -73,11 +73,11 @@ async function setup(t: TestContext, verifyPricing?: (deadline: number) => Verif
   return { budget, directory, accountingDirectory, ledger, journal, store, options, coordinator, observed, hooks, run, reservation };
 }
 
-test('Super shares a quarter-dollar reservation that covers its entire matched token allowance', () => {
+test('Super shares the approved dollar reservation that covers its entire matched token allowance', () => {
   assert.equal(LIVE_MODEL, 'nvidia/nemotron-3-super-120b-a12b');
   assert.equal(LIVE_PRICING.verifiedAt, '2026-10-16T21:01:00Z');
   assert.equal(LIVE_PRICING.validUntil, '2026-10-17T21:00:00Z');
-  assert.equal(LIVE_RESERVATION_MICROS, 250_000n);
+  assert.equal(LIVE_RESERVATION_MICROS, 1_000_000n);
   assert.equal(LIVE_RESERVATION_MICROS, usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd));
   assert.equal(LIVE_LIMITS.inferenceCallLimit, 3);
   assert.equal(LIVE_LIMITS.inputTokenLimit, 786432);
@@ -103,8 +103,8 @@ test('full Super token receipts retain their hold, preserve prior allocations an
   assert.equal(done.usage.inputTokens, 786432); assert.equal(done.usage.outputTokens, 12000);
   assert.ok(Math.abs(done.usage.measuredCostUsd! - 0.2467296) < 1e-12);
   assert.equal(done.usage.costIsEstimate, true);
-  assert.equal(h.reservation(done).reservedMicros, '250000');
-  assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.reservation(done).actualCostMicros, null);
+  assert.equal(h.reservation(done).reservedMicros, '1000000');
+  assert.equal(h.reservation(done).heldMicros, '1000000'); assert.equal(h.reservation(done).actualCostMicros, null);
   const coverage = h.ledger.events().find(event => event.kind === 'closed_inference_exposure_covered')!;
   const proof = coverage.details.proof as PendingInferenceCoverage;
   assert.equal(proof.modelId, LIVE_MODEL);
@@ -114,9 +114,9 @@ test('full Super token receipts retain their hold, preserve prior allocations an
   assert.equal(coverage.details.maximumCostMicros, '246732');
   assert.equal(proof.requests.length, 3);
   assert.equal(h.ledger.get('prior-allocation').heldMicros, '100000');
-  assert.equal(h.ledger.snapshot().heldMicros, '350000');
+  assert.equal(h.ledger.snapshot().heldMicros, '1100000');
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1); assert.equal(h.ledger.snapshot().frozen, false);
-  h.ledger.reserve({ id: 'remaining-smoke', episodeId: 'remaining-smoke', stage: 'smoke', amountMicros: 4_650_000n, fingerprint: HASH });
+  h.ledger.reserve({ id: 'remaining-smoke', episodeId: 'remaining-smoke', stage: 'smoke', amountMicros: 3_900_000n, fingerprint: HASH });
   assert.equal(h.ledger.snapshot().stages.smoke.availableMicros, '0');
   assert.throws(() => h.coordinator.create(request('smoke-exhausted')), /allowance is exhausted/);
   assert.equal(h.observed.requests.length, 3); assert.equal(h.observed.credentials, 3);
@@ -128,18 +128,18 @@ test('real adapter success keeps unknown billed cost and full hold, then permits
   assert.equal(first.reason, 'declared_local_checks_passed'); assert.equal(first.usage.inferenceCalls, 1);
   assert.equal(first.usage.sandboxCpuSeconds, null); assert.equal(first.usage.costIsEstimate, true);
   assert.equal(first.usage.measuredCostUsd, (24 * .3 + 32 * .9) / 1_000_000);
-  assert.equal(h.reservation(first).actualCostMicros, null); assert.equal(h.reservation(first).heldMicros, '250000');
+  assert.equal(h.reservation(first).actualCostMicros, null); assert.equal(h.reservation(first).heldMicros, '1000000');
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1); assert.equal(h.ledger.snapshot().frozen, false);
   const bundle = verifyEvidence(await h.coordinator.evidence(first.id)); assert.equal(bundle.run.id, first.id); assert.deepEqual(bundle.runtimeLock, lock);
   const second = await h.run('success-2'); assert.equal(second.terminalStatus, 'verified_for_declared_checks');
-  assert.equal(h.ledger.snapshot().heldMicros, '500000'); assert.equal(h.ledger.snapshot().pendingBillingCount, 2);
+  assert.equal(h.ledger.snapshot().heldMicros, '2000000'); assert.equal(h.ledger.snapshot().pendingBillingCount, 2);
   assert.equal(h.coordinator.create(request('success-1')).reused, true); assert.equal(h.observed.requests.length, 2);
 });
 
 test('ambiguous transport leaves full hold blocking and never retries automatically', async t => {
   const h = await setup(t); h.hooks.fetch = () => { throw new Error('invented transport uncertainty'); };
   const done = await h.run('ambiguous'); assert.equal(done.reason, 'transport_error'); assert.equal(done.usage.inferenceCalls, 1);
-  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '1000000');
   assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
   assert.throws(() => h.coordinator.create(request('must-block')), /paused|accounting/); assert.equal(h.observed.requests.length, 1);
 });
@@ -163,7 +163,7 @@ test('all variants request non-thinking mode with exact limits, repeated-check c
     assert.ok(b.timeoutSeconds <= a.timeoutSeconds);
     assert.deepEqual(a.files, b.files); assert.deepEqual(a.cases, b.cases);
   }
-  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '750000');
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 3); assert.equal(h.ledger.snapshot().heldMicros, '3000000');
 });
 
 test('worker omission of the thinking override preserves the existing explicit disable option', async t => {
@@ -198,7 +198,7 @@ test('completion exhaustion at the unchanged 4000-token cap retains the failed c
   assert.equal(done.reason, 'incomplete_response'); assert.equal(done.candidates.length, 0);
   assert.equal(done.usage.inferenceCalls, 1); assert.equal(done.usage.outputTokens, 4000);
   assert.equal(h.observed.requests.length, 1); assert.equal(h.observed.checks.length, 2);
-  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '1000000');
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1);
 });
 
@@ -208,7 +208,7 @@ test('reported per-request input and output overruns cannot become covered expos
       const h = await setup(sub); h.hooks.fetch = () => response('def f(): return 2\n', usage);
       const done = await h.run('overrun-' + name); assert.equal(done.reason, 'budget_exceeded');
       assert.equal(h.observed.requests.length, 1); assert.equal(done.candidates.length, 0);
-      assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
+      assert.equal(h.reservation(done).heldMicros, '1000000'); assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 0);
       assert.equal(h.ledger.snapshot().frozen, true);
     });
   }
@@ -246,7 +246,7 @@ test('cancellation after dispatch retains ambiguous hold and single-flight admis
   const { run } = h.coordinator.create(request('cancelled')); assert.throws(() => h.coordinator.create(request('concurrent')), /already active/);
   await entered; h.coordinator.cancel(run.id); await h.coordinator.settled();
   const done = h.coordinator.get(run.id); assert.equal(done.reason, 'cancelled'); assert.equal(done.terminalStatus, 'needs_review');
-  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).heldMicros, '250000'); assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1);
+  assert.equal(h.observed.requests.length, 1); assert.equal(h.reservation(done).heldMicros, '1000000'); assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1);
 });
 
 test('actual credential echoes are withheld from candidate, events and accounting receipts', async t => {
@@ -351,7 +351,7 @@ test('a late final check cannot publish a verified result after the admitted dea
   assert.equal(done.reason, 'timeout');
   assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
   assert.equal(h.observed.requests.length, 1);
-  assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.reservation(done).heldMicros, '1000000');
   const exported = verifyEvidence(await h.coordinator.evidence(done.id)).run;
   const candidate = exported.candidates[0]!;
   assert.equal(candidate.accepted, false); assert.equal(candidate.rejectionReason, 'timeout');
@@ -409,7 +409,7 @@ test('renewable evidence admits after legacy expiry and is retained in exported 
   const files = await readdir(h.accountingDirectory);
   const records = await Promise.all(files.map(file => readFile(join(h.accountingDirectory, file), 'utf8').then(JSON.parse)));
   assert.ok(records.some(record => record.pricingVerifications?.length === 1));
-  assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.reservation(done).heldMicros, '1000000');
   state = { status: 'blocked', checkedAt: new Date(now).toISOString(), reason: 'catalog_unavailable' };
   const before = h.ledger.snapshot();
   assert.throws(() => h.coordinator.create(request('renewable-blocked-next-admission')), /verification/);
@@ -439,7 +439,7 @@ test('malformed completion closes a failed non-retryable run with durable receip
   assert.equal(run.terminalStatus, 'infrastructure_error');
   assert.equal(h.observed.requests.length, 1);
   assert.equal(h.reservation(run).actualCostMicros, null);
-  assert.equal(h.reservation(run).heldMicros, '250000');
+  assert.equal(h.reservation(run).heldMicros, '1000000');
   assert.equal(h.reservation(run).reconciliationComplete, false);
   assert.equal(h.ledger.snapshot().coveredPendingBillingCount, 1);
   const records = await Promise.all((await readdir(h.accountingDirectory)).map(async name =>
@@ -468,7 +468,7 @@ test('higher bounded prices flow through all three requests, durable coverage an
   h.hooks.alwaysFail = true;
   h.hooks.fetch = () => { current = dynamicPricingState('0.0000003', '0.000001'); return response(undefined, { prompt_tokens: 262144, completion_tokens: 4000 }); };
   const done = await h.run('bounded-price-change');
-  assert.equal(h.observed.requests.length, 3); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.observed.requests.length, 3); assert.equal(h.reservation(done).heldMicros, '1000000');
   assert.equal(h.reservation(done).actualCostMicros, null);
   assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 0);
   const event = h.ledger.events().find(x => x.kind === 'closed_inference_exposure_covered')!;
@@ -483,16 +483,16 @@ test('higher bounded prices flow through all three requests, durable coverage an
   assert.equal(proof.pricingEvidenceDigest, (await import('../packages/contracts/src/digest.ts')).digestJson({ pricingCeiling: closed.pricingCeiling, verifications: closed.pricingVerifications }));
 });
 test('individually bounded price changes cannot combine into an unbounded per-run ceiling', async t => {
-  let current = dynamicPricingState('0.00000031', '0');
+  let current = dynamicPricingState('0.0000012', '0');
   const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
   h.hooks.alwaysFail = true;
-  h.hooks.fetch = () => { current = dynamicPricingState('0', '0.00002'); return response(); };
+  h.hooks.fetch = () => { current = dynamicPricingState('0', '0.00008'); return response(); };
   const done = await h.run('incompatible-price-ceilings');
   assert.equal(h.observed.requests.length, 1); assert.notEqual(done.terminalStatus, 'verified_for_declared_checks');
-  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '250000');
+  assert.equal(h.reservation(done).actualCostMicros, null); assert.equal(h.reservation(done).heldMicros, '1000000');
   const event = h.ledger.events().find(x => x.kind === 'closed_inference_exposure_covered')!;
   const proof = event.details.proof as PendingInferenceCoverage;
-  assert.equal(proof.inputMicrosPerMillionTokens, '310000'); assert.equal(proof.outputMicrosPerMillionTokens, '0');
+  assert.equal(proof.inputMicrosPerMillionTokens, '1200000'); assert.equal(proof.outputMicrosPerMillionTokens, '0');
 });
 
 test('a price change during credential resolution is checked again before transport', async t => {
@@ -500,7 +500,7 @@ test('a price change during credential resolution is checked again before transp
   const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
   h.options.credential = async () => {
     h.observed.credentials++;
-    current = dynamicPricingState('0', '0.00002');
+    current = dynamicPricingState('0', '0.00008');
     return SECRET;
   };
   const done = await h.run('price-race-before-transport');

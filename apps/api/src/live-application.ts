@@ -40,7 +40,7 @@ export function verifyLivePricingEvidence(value: unknown, expectedDigest: string
       evidence.catalog.quantization !== 'fp4' || evidence.catalog.inputUsdPerMillionTokens !== LIVE_PRICING.inputUsdPerMillionTokens ||
       evidence.catalog.outputUsdPerMillionTokens !== LIVE_PRICING.outputUsdPerMillionTokens ||
       evidence.catalog.requestFeeUsd !== LIVE_PRICING.requestFeeUsd ||
-      evidence.spendBoundary.perRunReservationUsd !== LIVE_LIMITS.maxApprovedSpendUsd ||
+      evidence.spendBoundary.perRunReservationUsd !== LIVE_PRICING.historicalPerRunReservationUsd ||
       evidence.spendBoundary.inferenceCallsPerRun !== LIVE_LIMITS.inferenceCallLimit) throw new Error('live_demo_pricing_mismatch');
   return evidence;
 }

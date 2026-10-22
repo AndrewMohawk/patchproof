@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.0",
   "currency": "USD",
-  "maxApprovedSpendUsd": 25,
+  "maxApprovedSpendUsd": 50,
   "ownerApproval": {
     "approvedBy": "project_owner",
-    "approvedAt": "2026-10-16T20:57:00Z",
+    "approvedAt": "2026-10-22T16:00:36Z",
     "expiresAt": "2026-12-15T20:00:00Z",
-    "reference": "Owner approved $25 USD total for PatchProof Token Factory verification and judge demo usage through December 15, including existing usage and applicable fees; existing billing only; no automatic increase; hosting excluded."
+    "reference": "Owner approved $50 USD total and $1 per run for PatchProof Token Factory verification and judge demo usage through December 15, including existing usage and applicable fees. Existing billing only; no automatic increase; hosting excluded; historical holds retained."
   },
   "verifiedCredits": [],
   "stages": {
-    "smoke": 25,
+    "smoke": 50,
     "pilot": 0,
     "evaluate": 0,
     "hosting": 0
@@ -23,5 +23,5 @@
     "sandboxCpuSecondsLimit": null,
     "candidateBranchLimit": 3
   },
-  "note": "The October 16 approval covers verification AND judge demo usage within one $25 TOTAL ceiling, including historical usage and fees. The existing live-controller stage name smoke now holds the shared $25 allocation; it is not a separate $5 permission limit. No additional pilot/evaluation/hosting allowance exists. Preserve all historical reservations and synchronize the existing ledger approval by compare-and-swap; never reset or automatically unpause."
+  "note": "The October 22 approval raises the existing shared Token Factory pool to $50 total and the live per-run reservation to $1. Preserve ledger continuity and every historical hold. Other request, token, time and pricing validity limits remain unchanged. No inference is authorized by this operational cap update."
 }

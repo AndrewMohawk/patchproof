@@ -19,10 +19,10 @@ export const LIVE_SAMPLING_DESCRIPTION = `provider sampling defaults; chat_templ
 export const LIVE_MODEL = 'nvidia/nemotron-3-super-120b-a12b';
 export const LIVE_EXECUTION = Object.freeze({ modelProvider: 'nebius-token-factory', checkBackend: 'local_container', modelId: LIVE_MODEL });
 export const LIVE_LIMITS = Object.freeze(LimitsSchema.parse({ inferenceCallLimit: 3, inputTokenLimit: 786432,
-  outputTokenLimit: 12000, wallTimeLimitSeconds: 600, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 0.25 }));
+  outputTokenLimit: 12000, wallTimeLimitSeconds: 600, sandboxCpuSecondsLimit: 900, maxApprovedSpendUsd: 1 }));
 export const LIVE_RESERVATION_MICROS = usdToMicros(LIVE_LIMITS.maxApprovedSpendUsd);
 export const LIVE_PRICING = Object.freeze({ inputUsdPerMillionTokens: 0.3, outputUsdPerMillionTokens: 0.9,
-  requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
+  historicalPerRunReservationUsd: 0.25, requestFeeUsd: 0, contextTokens: 262144, maximumOutputTokensPerRequest: 4000,
   inputAccounting: 'full-model-context-conservative-ceiling-per-request', actualBilling: 'unknown-full-reservation-held',
   verifiedAt: '2026-10-16T21:01:00Z', validUntil: '2026-10-17T21:00:00Z' });
 export interface LiveLocalSettings {

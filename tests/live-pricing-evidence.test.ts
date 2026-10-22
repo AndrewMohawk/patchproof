@@ -45,3 +45,10 @@ test('historical recovery recognition is an exact explicit config choice, absent
   assert.throws(() => LiveDemoConfigSchema.parse({ ...config, closedDispatchRecoveryPolicy: true }));
   assert.throws(() => LiveDemoConfigSchema.parse({ ...config, closedDispatchRecoveryPolicy: 'allow-all' }));
 });
+
+// The immutable historical anchor does not grant today's larger allowance.
+test('historical pricing anchor retains its original reservation after the approved cap change', () => {
+  assert.equal(evidence.spendBoundary.perRunReservationUsd, 0.25);
+  const changed = structuredClone(evidence); changed.spendBoundary.perRunReservationUsd = 1;
+  assert.throws(() => verifyLivePricingEvidence(changed, digestJson(changed)), /live_demo_pricing_mismatch/);
+});
