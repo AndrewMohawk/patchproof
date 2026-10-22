@@ -17,7 +17,7 @@ const fees = () => ({ schemaVersion: '1.0', verifiedAt: new Date(now - 1000).toI
   evidenceDigest: hash, accountBillingActive: true, additionalFeeUsdPerRun: 0, basis: 'operator-reviewed-account-pricing-and-fees' });
 const state = () => ({ status: 'verified', receipt: makePricingReceipt(catalog(), fees(), bindings, now) });
 
-test('renewable rates preserve the unchanged worst-case reservation and resource limits', () => {
+test('renewable rates preserve the approved reservation and unchanged resource limits', () => {
   assert.equal(RENEWABLE_PRICING_POLICY.modelId, LIVE_MODEL);
   assert.equal(RENEWABLE_PRICING_POLICY.contextTokens, LIVE_PRICING.contextTokens);
   assert.equal(RENEWABLE_PRICING_POLICY.maximumCalls, LIVE_LIMITS.inferenceCallLimit);
@@ -44,7 +44,7 @@ test('missing, blocked, stale, future, oversized-age and mismatched evidence fai
     (s: any) => { s.receipt.feeEvidence.validUntil = new Date(now + 599_999).toISOString(); },
     (s: any) => { s.receipt.feeEvidence.additionalFeeUsdPerRun = 0.01; },
     (s: any) => { s.receipt.feeEvidence.accountBillingActive = false; },
-    (s: any) => { s.receipt.outputUsdPerMillionTokens = 1.2; },
+    (s: any) => { s.receipt.outputUsdPerMillionTokens = 100; },
   ]) { const s = state(); mutate(s); assert.throws(() => verifyRenewablePricing(s, bindings, now + 600_000, now)); }
 });
 test('approval expiry bounds renewal and admission, and fees can never be renewed by catalog success', () => {
@@ -59,7 +59,7 @@ test('approval expiry bounds renewal and admission, and fees can never be renewe
 test('catalog price, context, quantization, duplicates, additional fees and malformed prices are rejected', () => {
   verifyCatalogRecord(catalog());
   for (const mutate of [
-    (c: any) => { c.data[0].pricing.prompt = '0.00000031'; },
+    (c: any) => { c.data[0].pricing.prompt = '0.000002'; },
     (c: any) => { c.data[0].pricing.request = '0.01'; },
     (c: any) => { c.data[0].pricing.new_fee = '0'; },
     (c: any) => { c.data[0].pricing.request = ''; },
@@ -78,11 +78,11 @@ test('valid cache prices are accepted without discounting ordinary-input reserva
     assert.equal(receipt.outputUsdPerMillionTokens, 0.9);
     assert.equal(receipt.requestFeeUsd, 0);
     assert.equal(3 * 262144 * receipt.inputUsdPerMillionTokens / 1e6 + 12000 * receipt.outputUsdPerMillionTokens / 1e6, 0.2467296);
-    assert.equal(RENEWABLE_PRICING_POLICY.perRunReservationUsd, 0.25);
+    assert.equal(RENEWABLE_PRICING_POLICY.perRunReservationUsd, 1);
   }
 });
 test('cache compatibility rejects malformed, absent and unbounded cache values', () => {
-  for (const value of [undefined, '', ' ', '6e-8', 'NaN', NaN, Infinity, -1, false, {}, [], '0.000001', '9'.repeat(65), Number.MAX_VALUE]) {
+  for (const value of [undefined, '', ' ', '6e-8', 'NaN', NaN, Infinity, -1, false, {}, [], '0.000002', '9'.repeat(65), Number.MAX_VALUE]) {
     const c: any = catalog(); c.data[0].pricing.input_cache_read = value;
     assert.throws(() => verifyCatalogRecord(c), String(value));
   }
@@ -91,8 +91,8 @@ test('cache compatibility rejects malformed, absent and unbounded cache values',
 });
 test('accepted cache pricing does not relax other model, price or fee checks', () => {
   for (const mutate of [
-    (c: any) => { c.data[0].pricing.prompt = '0.00000031'; },
-    (c: any) => { c.data[0].pricing.completion = '0.0000012'; },
+    (c: any) => { c.data[0].pricing.prompt = '0.000002'; },
+    (c: any) => { c.data[0].pricing.completion = '0.0001'; },
     (c: any) => { c.data[0].pricing.request = '0.000001'; },
     (c: any) => { c.data[0].pricing.image = '0.01'; },
     (c: any) => { c.data[0].pricing.new_fee = '0'; },
@@ -161,14 +161,14 @@ test('the approved shared purpose reallocates the same total without releasing h
   const dir = mkdtempSync(join(tmpdir(), 'patchproof-shared-budget-'));
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   const approved = JSON.parse(readFileSync(new URL('../budget.json', import.meta.url), 'utf8'));
-  const previous = { ...approved, stages: { smoke: 5, pilot: 20, evaluate: 0, hosting: 0 } };
+  const previous = { ...approved, maxApprovedSpendUsd: 25, stages: { smoke: 5, pilot: 20, evaluate: 0, hosting: 0 } };
   const ledger = new BudgetLedger({ filename: join(dir, 'budget.sqlite'), budget: previous });
   try {
     ledger.reserve({ id: 'historical-synthetic', episodeId: 'historical-synthetic', stage: 'smoke', amountMicros: 1_600_000n, fingerprint: hash });
     ledger.pauseOperator(hash); const reservation = ledger.get('historical-synthetic'), before = ledger.snapshot();
     const after = ledger.syncApproval(approved, { expectedRevision: before.approvalRevision });
-    assert.equal(after.approvedMicros, '25000000'); assert.equal(after.heldMicros, '1600000');
-    assert.equal(after.stages.smoke.availableMicros, '23400000'); assert.equal(after.stages.pilot.approvedMicros, '0');
+    assert.equal(after.approvedMicros, '50000000'); assert.equal(after.heldMicros, '1600000');
+    assert.equal(after.stages.smoke.availableMicros, '48400000'); assert.equal(after.stages.pilot.approvedMicros, '0');
     assert.deepEqual(ledger.get('historical-synthetic'), reservation);
     assert.ok(after.freezeReasons.includes('operator_paused_supervised_only'));
     assert.equal(after.approvalExpiresAt, before.approvalExpiresAt);
@@ -180,7 +180,7 @@ test('valid current price changes and harmless metadata are accepted only within
     const c: any = catalog(); Object.assign(c.data[0].pricing, { prompt, completion });
     c.data[0].description = 'Updated explanatory text'; c.data[0].created = 42; c.data.push({ id: 'unrelated-new-model', metadata: 'irrelevant' });
     const receipt = makePricingReceipt(c, fees(), bindings, now);
-    assert.ok(conservativePricingBoundMicros(receipt) <= 250000n);
+    assert.ok(conservativePricingBoundMicros(receipt) <= 1000000n);
     assert.equal(receipt.inputUsdPerMillionTokens, expectedInput);
     assert.equal(receipt.outputUsdPerMillionTokens, expectedOutput);
     assert.equal(verifyRenewablePricing({ status: 'verified', receipt }, bindings, now + 600000, now).digest, digestJson(receipt));
@@ -198,10 +198,10 @@ test('cache rates above ordinary input are conservatively covered and tiny decim
   assert.throws(() => verifyCatalogRecord(c));
 });
 test('rounding each request rejects a raw total that fits but whose conservative rounded total does not', () => {
-  const c: any = catalog(); c.data[0].pricing.prompt = '0'; c.data[0].pricing.completion = '0.000020833333';
-  assert.ok(12000 * Number(c.data[0].pricing.completion) < 0.25);
+  const c: any = catalog(); c.data[0].pricing.prompt = '0'; c.data[0].pricing.completion = '0.000083333333';
+  assert.ok(12000 * Number(c.data[0].pricing.completion) < 1);
   assert.throws(() => makePricingReceipt(c, fees(), bindings, now), /pricing_exceeds_reservation/);
-  c.data[0].pricing.completion = '0.00002083325';
+  c.data[0].pricing.completion = '0.00008333325';
   const receipt = makePricingReceipt(c, fees(), bindings, now);
-  assert.equal(conservativePricingBoundMicros(receipt), 249999n);
+  assert.equal(conservativePricingBoundMicros(receipt), 999999n);
 });

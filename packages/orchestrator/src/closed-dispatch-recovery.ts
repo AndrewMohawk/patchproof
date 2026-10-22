@@ -58,7 +58,7 @@ export const ClosedDispatchCoverageSchema = z.strictObject({
     try { return digestJson(value) === CLOSED_DISPATCH_CASE_DIGEST; } catch { return false; }
   }, 'Historical facts differ from the independently reviewed inventory.'),
   checkpoint: z.strictObject({ eventSequence: integer, approvalRevision: integer.positive(), approvalDigest: hash,
-    approvedTotalMicros: micros.refine(value => BigInt(value) > 0n && BigInt(value) <= 25_000_000n) }),
+    approvedTotalMicros: micros.refine(value => BigInt(value) > 0n && BigInt(value) <= 50_000_000n) }),
   preparedAt: z.iso.datetime(), expiresAt: z.iso.datetime(),
 }).refine(value => {
   const start = Date.parse(value.preparedAt), end = Date.parse(value.expiresAt);

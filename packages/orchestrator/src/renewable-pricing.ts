@@ -5,14 +5,14 @@ import { ContractError } from '../../contracts/src/index.ts';
 
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 export const RENEWABLE_PRICING_POLICY = Object.freeze({
-  id: 'token-factory-renewable-pricing-v3',
+  id: 'token-factory-renewable-pricing-v4',
   catalogEndpoint: 'https://api.tokenfactory.nebius.com/v1/models?verbose=true',
   modelId: 'nvidia/nemotron-3-super-120b-a12b', contextTokens: 262144, quantization: 'fp4',
   maximumCalls: 3, maximumOutputTokensPerCall: 4000, requestFeeUsd: 0,
   inputAccounting: 'maximum-ordinary-and-cache-rate-full-context',
   rateRounding: 'ceil-microdollars-per-million-then-ceil-each-request',
   maximumCatalogAgeMs: 70 * 60 * 1000, maximumFeeAgeMs: 24 * 60 * 60 * 1000,
-  maximumTotalUsd: 25, perRunReservationUsd: 0.25,
+  maximumTotalUsd: 50, perRunReservationUsd: 1,
 });
 export const RENEWABLE_PRICING_POLICY_DIGEST = digestJson(RENEWABLE_PRICING_POLICY);
 export const PricingRatesSchema = z.object({

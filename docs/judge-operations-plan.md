@@ -14,16 +14,17 @@ not a reopening requirement. Failed attempts remain visible.
 
 ## Approved shared capacity
 
-The October 16 approval covers verification AND judge demo use within the same
-$25 TOTAL, including historical usage and fees. The old $5 smoke/$20 pilot split
+The October 22 approval raises verification AND judge demo use to the same
+$50 TOTAL and $1 per-run reservation, including historical usage and fees.
+These are authorized target settings; the dated rollout receipt and live response establish deployment. The old $5 smoke/$20 pilot split
 was an internal allocation, not a permission boundary. The live controller's
-existing stage name `smoke` now contains the shared $25 pool; all other stages
+existing stage name `smoke` now contains the shared $50 pool; all other stages
 are zero. Synchronize the existing ledger by explicit compare-and-swap. Never
 create a second budget, reset accounting or release unresolved reservations.
 
-At the October 21 pre-deployment snapshot, $3.60 remains held and $21.40 remains
-available: at most 85 additional $0.25 reservations. This is finite capacity,
-not a guarantee of 85 successful repairs or uninterrupted access. Failed and ambiguous requests
+With the October 22 caps installed and $3.60 of historical holds unchanged,
+$46.40 remains available: at most 46 additional $1 reservations. This is finite
+capacity, not a guarantee of successful repairs or uninterrupted access. Failed and ambiguous requests
 retain their holds; verification and judge requests draw from the same total.
 No further permission is needed merely to use the already approved judge purpose.
 No automatic increase, hosting purchase or inferred trial-credit allowance exists.
@@ -35,8 +36,8 @@ policy bindings, exact model/context/FP4, bounded verified rates and zero suppor
 fees, a maximum 70-minute
 catalog window, and separate account-fee evidence no older than 24 hours.
 Following explicit October 21 approval, current input/output/cache token rates
-may change if the conservative cost of all three calls still fits the unchanged
-$0.25 reservation. Every input token uses the greater of ordinary and cached-input
+may change if the conservative cost of all three calls still fits the approved
+$1 reservation. Every input token uses the greater of ordinary and cached-input
 rates. Decimal rates and each request cost round upward. Nonzero request or other
 unsupported fees, missing/malformed/unbounded prices, model/context/FP4 changes,
 and unknown pricing dimensions still fail closed. Harmless descriptive metadata
@@ -48,8 +49,8 @@ and actual costs are unchanged; no settlement is inferred from a lower rate.
 Every admission and paid dispatch revalidates current evidence against the
 original run deadline. Missing, malformed, future, stale, blocked or mismatched
 evidence closes admissions. Valid catalog observations cannot extend fee evidence
-or the December 15 approval. The $0.25 hold, three calls, 12,000 aggregate output
-tokens, 600 seconds, repeated checks, isolation and single flight are unchanged.
+or the December 15 approval. The new $1 hold does not increase three calls, 12,000 aggregate output
+tokens, 600 seconds, repeated checks, isolation or single flight.
 
 `scripts/verify-live-pricing.ts` performs one authenticated GET to the existing
 model catalog. It writes private immutable receipts and atomically replaces the
@@ -77,8 +78,9 @@ and a supported authoritative per-operation/account-fee API has not been verifie
 Do not guess endpoints, mint credentials, reuse browser session secrets, or
 pretend hourly model-catalog reads renew tax/fee verification.
 
-The October 21 actual account review produced fee evidence expiring October 22
-at 16:17:45.204 UTC. Its full-run cutoff is 16:07:45.204 UTC. Review again
+The October 22 actual account review at 16:03:04.307 UTC produced fee evidence
+expiring October 23 at 16:03:04.307 UTC. Its full-run cutoff is 15:53:04.307 UTC
+(11:53:04.307 EDT); a noon EDT check is too late. Review again
 before that cutoff, with a primary and backup scheduled early enough to respond.
 The actual next expiry in the private receipt governs; a suggested cadence never
 extends it. Hourly catalog checks do not perform this account review.
@@ -145,3 +147,19 @@ UTC when all other evidence remains valid. The verifier refuses catalog access
 once the full run no longer fits the approval window. Stop the timer at handoff,
 preserve accounting/receipts, and retain read-only access only within existing
 hosting authorization. No automatic purchase, renewal or extension follows.
+
+## Explicit approval migration
+
+Ordinary approval changes continue to invalidate historical closed-dispatch
+coverage. A trusted coordinator may explicitly carry already valid coverage
+across an approved increase of the smoke and total caps only, using
+`syncApproval` with `carryClosedDispatchCoverage` and the exact prior proof digest,
+ledger event sequence and approval revision. The ledger must be operator-paused
+and quiescent. Scope, credits, expiry and resource limits must match; any newer
+accounting evidence, sticky financial freeze or uncovered liability rejects the
+transaction. Approval and the new approval-bound coverage event commit atomically.
+The prior proof remains in history; this is an approval checkpoint update, not
+new provider evidence, a fabricated response receipt or settled cost. Every
+reservation remains byte-for-byte unchanged, with historical actual costs null.
+The service remains paused until fresh source-bound pricing, protected startup
+and a separately checked resume checkpoint pass.

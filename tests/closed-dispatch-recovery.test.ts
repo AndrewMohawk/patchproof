@@ -205,3 +205,74 @@ test('first recovery cannot bypass an already prepared accounting receipt', asyn
   assert.throws(() => h.ledger.coverClosedDispatch(proof(h.ledger)), code('closed_dispatch_mismatch'));
   assert.equal(h.ledger.snapshot().blockingPendingBillingCount, 1);
 });
+
+const increasedBudget = () => ({...budget(), maxApprovedSpendUsd:50, stages:{...budget().stages,smoke:50},
+  ownerApproval:{...budget().ownerApproval,approvedAt:'2026-10-20T17:29:00.000Z',reference:'synthetic explicit increase'}});
+function carryOptions(l: BudgetLedger) {
+  const previous = l.events().filter(e => e.kind === CLOSED_DISPATCH_COVERAGE_EVENT).at(-1)!;
+  return {expectedRevision:l.snapshot().approvalRevision,carryClosedDispatchCoverage:{
+    expectedEventSequence:l.operatorResumeCheckpoint().eventSequence,proofDigest:String(previous.details.proofDigest)}};
+}
+test('explicit paused approval carry preserves historical coverage, full hold, unknown cost and redispatch denial after reopen', async t => {
+  const h = await setup(t); h.ledger.coverClosedDispatch(proof(h.ledger)); h.ledger.pauseOperator(H);
+  const before = h.ledger.get(c.reservationId), options=carryOptions(h.ledger), stale=h.open();
+  const result=h.ledger.syncApproval(increasedBudget(),options);
+  assert.equal(result.approvedMicros,'50000000'); assert.equal(result.heldMicros,'250000');
+  assert.equal(result.coveredPendingBillingCount,1); assert.deepEqual(result.freezeReasons,['operator_paused_supervised_only']);
+  assert.throws(()=>stale.syncApproval(increasedBudget(),options),code('approval_revision_conflict'));
+  assert.equal(stale.snapshot().connectionApprovalCurrent,false);
+  assert.deepEqual(h.ledger.get(c.reservationId),before);
+  assert.throws(()=>h.ledger.syncApproval(increasedBudget(),options),code('approval_revision_conflict'));
+  h.close(h.ledger); const l=h.open(true,true,increasedBudget());
+  assert.equal(l.snapshot().coveredPendingBillingCount,1);
+  l.resumeOperatorPause({...l.operatorResumeCheckpoint(),evidenceDigest:H});
+  assert.equal(l.snapshot().frozen,false); assert.equal(l.markAttempted(c.reservationId).dispatchGranted,false);
+  assert.equal(l.get(c.reservationId).actualCostMicros,null); assert.equal(l.get(c.reservationId).reconciliationComplete,false);
+  l.reconcile({id:c.reservationId,actualCostMicros:null,complete:false,evidenceDigest:J});
+  assert.equal(l.snapshot().coveredPendingBillingCount,0); assert.equal(l.snapshot().heldMicros,'250000');
+  l.pauseOperator(H); assert.throws(()=>l.syncApproval({...increasedBudget(),maxApprovedSpendUsd:60,stages:{...budget().stages,smoke:60}},carryOptions(l)),code('closed_dispatch_carry_rejected'));
+});
+test('approval carry rejects stale checkpoints, altered scope, invalid evidence, active work and sticky freezes atomically',async t=>{
+  for(const kind of ['not-paused','stale','digest','expiry','tokens','hosting','credits','decrease','evidence','active','overrun'] as const) await t.test(kind,async t=>{
+    const h=await setup(t); h.ledger.coverClosedDispatch(proof(h.ledger));
+    if(kind!=='not-paused')h.ledger.pauseOperator(H);
+    const options=carryOptions(h.ledger), next:any=increasedBudget();
+    if(kind==='stale')h.ledger.bindAccountingJournal(H);
+    if(kind==='digest')options.carryClosedDispatchCoverage.proofDigest=J;
+    if(kind==='expiry')next.ownerApproval.expiresAt='2026-12-16T20:00:00.000Z';
+    if(kind==='tokens')next.episodeLimits={...next.episodeLimits,inferenceCallLimit:4};
+    if(kind==='hosting')next.stages={...next.stages,smoke:49,hosting:1};
+    if(kind==='credits')next.verifiedCredits=[{arbitrary:'invalid'}];
+    if(kind==='decrease'){next.maxApprovedSpendUsd=24;next.stages.smoke=24;}
+    if(kind==='evidence')h.ledger.reconcile({id:c.reservationId,actualCostMicros:null,complete:false,evidenceDigest:J});
+    if(kind==='overrun')h.ledger.reconcile({id:c.reservationId,actualCostMicros:250001,complete:true,evidenceDigest:J});
+    if(kind==='active'){
+      h.ledger.resumeOperatorPause({...h.ledger.operatorResumeCheckpoint(),evidenceDigest:H});
+      h.ledger.reserve(another('active'));h.ledger.pauseOperator(H);
+      options.carryClosedDispatchCoverage.expectedEventSequence=h.ledger.operatorResumeCheckpoint().eventSequence;
+    }
+    const before=h.ledger.events(),row=h.ledger.get(c.reservationId);
+    assert.throws(()=>h.ledger.syncApproval(next,options));
+    assert.deepEqual(h.ledger.events(),before);assert.deepEqual(h.ledger.get(c.reservationId),row);
+    assert.equal(h.ledger.snapshot().approvalRevision,1);
+  });
+});
+test('approval carry event persistence failure rolls back approval and coverage together',async t=>{
+  const h=await setup(t);h.ledger.coverClosedDispatch(proof(h.ledger));h.ledger.pauseOperator(H);
+  const options=carryOptions(h.ledger),before=h.ledger.events(),db=new DatabaseSync(h.filename);
+  db.exec(`CREATE TRIGGER fail_carry BEFORE INSERT ON budget_events WHEN NEW.kind='${CLOSED_DISPATCH_COVERAGE_EVENT}' BEGIN SELECT RAISE(ABORT,'carry disk failure'); END;`);
+  assert.throws(()=>h.ledger.syncApproval(increasedBudget(),options),/carry disk failure/);
+  assert.deepEqual(h.ledger.events(),before);assert.equal(h.ledger.snapshot().approvalRevision,1);
+  assert.equal(h.ledger.snapshot().coveredPendingBillingCount,1);
+  db.exec('DROP TRIGGER fail_carry');db.close();
+  assert.equal(h.ledger.syncApproval(increasedBudget(),options).approvalRevision,2);
+});
+
+test('approval carry cannot hide another reservation overrun behind an operator pause',async t=>{
+  const h=await setup(t);h.ledger.coverClosedDispatch(proof(h.ledger));
+  h.ledger.reserve(another('other'));h.ledger.markAttempted('other');h.ledger.pauseOperator(H);
+  h.ledger.reconcile({id:'other',actualCostMicros:250001,complete:true,evidenceDigest:J});
+  const before=h.ledger.events();
+  assert.throws(()=>h.ledger.syncApproval(increasedBudget(),carryOptions(h.ledger)),code('closed_dispatch_carry_rejected'));
+  assert.deepEqual(h.ledger.events(),before);assert.equal(h.ledger.snapshot().approvalRevision,1);
+});

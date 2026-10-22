@@ -545,18 +545,54 @@ export class BudgetLedger {
 
   /** Invoke only from the serialized trusted coordinator after reloading owner-authorized config.
    * Equal timestamps do not prove newer authority. Workers must never auto-sync cached config. */
-  syncApproval(value: unknown, options: { expectedRevision: number }): BudgetSnapshot {
-    const next = policy(value), expected = z.strictObject({ expectedRevision:z.number().int().positive().safe() }).parse(options).expectedRevision;
+  syncApproval(value: unknown, options: { expectedRevision: number; carryClosedDispatchCoverage?: { expectedEventSequence: number; proofDigest: string } }): BudgetSnapshot {
+    const next = policy(value), request = z.strictObject({ expectedRevision:z.number().int().positive().safe(),
+      carryClosedDispatchCoverage: z.strictObject({ expectedEventSequence:z.number().int().nonnegative().safe(), proofDigest:digest }).optional() }).parse(options);
+    const expected = request.expectedRevision;
     const revision = this.#transaction(() => {
       const current = this.#meta();
       if (current.revision!==expected) fail('approval_revision_conflict','Durable approval changed; reload before explicit trusted synchronization.');
-      if (current.digest===next.digest) return current.revision;
+      if (current.digest===next.digest) {
+        if (request.carryClosedDispatchCoverage) fail('approval_revision_conflict','Coverage carry requires a new approval; inspect an uncertain outcome before retrying.');
+        return current.revision;
+      }
+      let carriedProof: ClosedDispatchCoverage | undefined;
+      if (request.carryClosedDispatchCoverage) {
+        const carry = request.carryClosedDispatchCoverage, c = closedDispatchCase();
+        const latest = this.#row('SELECT * FROM budget_events WHERE reservation_id=? ORDER BY sequence DESC LIMIT 1', c.reservationId);
+        const row = this.#reservation(c.reservationId), accounting = this.#accounting();
+        const stablePolicy = (b: typeof next.budget) => ({ ...b, maxApprovedSpendUsd:0, stages:{...b.stages,smoke:0}, note:'',
+          ownerApproval:b.ownerApproval ? {...b.ownerApproval,approvedAt:'',reference:''} : b.ownerApproval });
+        if (current.frozenReason !== 'operator_paused_supervised_only' ||
+            this.#pendingBillingPolicy !== 'allow-covered-inference' || !latest || !this.#closedDispatchCovered(row, latest, current) ||
+            JSON.parse(String(latest.payload)).proofDigest !== carry.proofDigest ||
+            this.operatorResumeCheckpoint().eventSequence !== carry.expectedEventSequence ||
+            this.#reasons({...current,frozenReason:null}, accounting).length ||
+            this.#rows('SELECT * FROM budget_reservations').some(r =>
+              (r.actual_micros !== null && (r.actual_micros as bigint) > (r.amount_micros as bigint)) ||
+              (r.attempted_at === null && ((r.actual_micros as bigint | null ?? 0n) > 0n || r.reconciliation_complete === 0n))) ||
+            next.total <= current.policy.total || next.stages.smoke-current.policy.stages.smoke !== next.total-current.policy.total ||
+            fingerprint(stablePolicy(next.budget)) !== fingerprint(stablePolicy(current.policy.budget))) {
+          fail('closed_dispatch_carry_rejected','Carry requires paused, quiescent, valid existing coverage and only an explicitly approved smoke/total increase with unchanged scope, expiry and resource limits.');
+        }
+        carriedProof = ClosedDispatchCoverageSchema.parse(JSON.parse(String(latest!.payload)).proof);
+      }
       if (next.budget.ownerApproval && current.policy.budget.ownerApproval && Date.parse(next.budget.ownerApproval.approvedAt)<Date.parse(current.policy.budget.ownerApproval.approvedAt)) fail('older_approval','An older owner approval cannot replace the durable approval.');
       const revision = current.revision+1;
       if (!Number.isSafeInteger(revision)) fail('ledger_corrupt','Approval revision limit reached.');
       this.#db.prepare('UPDATE budget_meta SET approval_revision=?,approval_digest=?,approval_json=?,updated_at=? WHERE id=1')
         .run(revision,next.digest,JSON.stringify(next.budget),this.#timestamp());
       this.#event('approval_synchronized',null,{ previousRevision:current.revision,approvalDigest:next.digest,approvedMicros:String(next.total),authority:'explicit_trusted_coordinator_cas' });
+      if (carriedProof) {
+        this.#event('closed_dispatch_approval_carry_authorized',null,{ previousProofDigest:request.carryClosedDispatchCoverage!.proofDigest,
+          previousApprovalRevision:current.revision, approvalRevision:revision, reservationsPreserved:true });
+        const preparedAt = this.#timestamp();
+        const proof = ClosedDispatchCoverageSchema.parse({...carriedProof,
+          checkpoint:{...this.operatorResumeCheckpoint(),approvalDigest:next.digest,approvedTotalMicros:String(next.total)},
+          preparedAt,expiresAt:new Date(Date.parse(preparedAt)+300000).toISOString()});
+        this.#event(CLOSED_DISPATCH_COVERAGE_EVENT,closedDispatchCase().reservationId,
+          {proof,proofDigest:fingerprint(proof),maximumCostMicros:String(closedDispatchMaximumCostMicros())});
+      }
       return revision;
     });
     this.#revision=revision;this.#approvalDigest=next.digest;

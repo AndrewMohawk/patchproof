@@ -54,7 +54,7 @@ export async function verifyLivePricingOnce(root: URL, configFile: string, fetch
     let reason: 'configuration_invalid' | 'fee_evidence_invalid' | 'catalog_unavailable' | 'catalog_mismatch' | 'verification_failed' = 'configuration_invalid';
     try {
       const { budget } = await readConfiguration(root);
-      if (budget.maxApprovedSpendUsd !== 25 || budget.stages.smoke !== 25 || budget.stages.pilot !== 0 || budget.stages.evaluate !== 0 || budget.stages.hosting !== 0 ||
+      if (budget.maxApprovedSpendUsd !== RENEWABLE_PRICING_POLICY.maximumTotalUsd || budget.stages.smoke !== RENEWABLE_PRICING_POLICY.maximumTotalUsd || budget.stages.pilot !== 0 || budget.stages.evaluate !== 0 || budget.stages.hosting !== 0 ||
           !budget.ownerApproval?.expiresAt || Date.now() + 600_000 > Date.parse(budget.ownerApproval.expiresAt) ||
           digestJson(buildOperationalLock(projectRoot)) !== config.sourceDigest) throw Error('configuration_invalid');
       const bindings = { sourceDigest: config.sourceDigest, budgetDigest: digestJson(budget), approvalExpiresAt: budget.ownerApproval.expiresAt };
