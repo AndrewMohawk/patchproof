@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
   "currency": "USD",
-  "maxApprovedSpendUsd": 25,
+  "maxApprovedSpendUsd": 50,
   "ownerApproval": {
     "approvedBy": "project_owner",
-    "approvedAt": "2026-09-27T07:42:19.279Z",
-    "expiresAt": null,
-    "reference": "User instruction: you can make the spending cap $25"
+    "approvedAt": "2026-10-22T16:00:36Z",
+    "expiresAt": "2026-12-15T20:00:00Z",
+    "reference": "Owner approved $50 USD total and $1 per run for PatchProof Token Factory verification and judge demo usage through December 15, including existing usage and applicable fees. Existing billing only; no automatic increase; hosting excluded; historical holds retained."
   },
   "verifiedCredits": [],
   "stages": {
-    "smoke": 5,
-    "pilot": 20,
+    "smoke": 50,
+    "pilot": 0,
     "evaluate": 0,
     "hosting": 0
   },
@@ -23,5 +23,5 @@
     "sandboxCpuSecondsLimit": null,
     "candidateBranchLimit": 3
   },
-  "note": "Owner authorized $25 total on 2026-09-27. Coordinator allocated up to $5 smoke and $20 pilot within that total. No expiry supplied. No credits verified. Account access, prices and runtime limits remain blockers; stage caps do not bypass dependency gates."
+  "note": "The October 22 approval raises the existing shared Token Factory pool to $50 total and the live per-run reservation to $1. Preserve ledger continuity and every historical hold. Other request, token, time and pricing validity limits remain unchanged. No inference is authorized by this operational cap update."
 }

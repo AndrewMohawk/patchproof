@@ -111,3 +111,16 @@ test('malformed completion choices still retain independently valid response ide
     error.usage.outputTokens === 20 && error.providerRequestId === 'synthetic-malformed-choices');
   assert.deepEqual(observed, ['synthetic-malformed-choices']);
 });
+
+// Regression from the reviewed receipt-order fix, using the production fixture shape.
+test('unusable capped completion preserves receipt before candidate validation', async () => {
+  const receipts: unknown[] = [];
+  const options = fakeOptions(async () => Response.json({ id: 'capped-test', model: 'nvidia/test-only-fixture',
+    usage: { prompt_tokens: 100, completion_tokens: 4000 }, choices: [{ finish_reason: 'length', message: { content: null } }] }));
+  options.onReceipt = receipt => receipts.push(receipt);
+  const proposed = { ...input(), remaining: { ...input().remaining, maxApprovedSpendUsd: 1 } };
+  await assert.rejects(new NebiusRepairProvider(options).propose(proposed, signal()),
+    e => e instanceof RepairError && e.code === 'invalid_response' && e.providerRequestId === 'capped-test' && e.usage.outputTokens === 4000);
+  assert.equal(receipts.length, 1);
+  assert.equal((receipts[0] as { observedOutputTokens: number }).observedOutputTokens, 4000);
+});

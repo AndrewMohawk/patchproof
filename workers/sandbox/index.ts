@@ -198,7 +198,7 @@ export class DockerCheckRunner implements CheckRunner {
         const recorded = checks.at(-1)!;
         recorded.log = JSON.stringify({ observationLog: recorded.log, dockerLifecycle: {
           operationId, createAcknowledged: acknowledged, containerId: cleanup.id ?? containerId,
-          cleanupConfirmed: cleanup.confirmed, cleanupReason: cleanup.reason,
+          cleanupConfirmed: cleanup.confirmed, cleanupReason: cleanup.reason, cleanupInspectionFailure: cleanup.inspectionFailure ?? null,
         } });
         // Never overlap a new case with an operation whose termination is uncertain.
         if (infrastructureError) {

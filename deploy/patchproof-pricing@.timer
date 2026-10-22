@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly PatchProof read-only pricing verification (%i)
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1h
+Unit=patchproof-pricing@%i.service
+
+[Install]
+WantedBy=timers.target

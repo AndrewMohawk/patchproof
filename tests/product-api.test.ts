@@ -19,7 +19,7 @@ test('product HTTP refuses arbitrary/live requests and durably exports an actual
   const request = { taskId: 'stable-unique-01', variant: 'patchproof', mode: 'mock', idempotencyKey: 'product-http-cancel' };
   const tasks = await (await fetch(base + '/tasks')).json();
   assert.equal(tasks.realExecutionEnabled, false); assert.equal(tasks.competitionReady, false);
-  assert.equal(tasks.maxApprovedSpendUsd, 25);
+  assert.equal(tasks.maxApprovedSpendUsd, 50);
   assert.equal(tasks.tasks.length, (await loadFixtures(new URL('../', import.meta.url))).length);
   assert.ok(tasks.tasks.every((item: Record<string, unknown>) => !('acceptanceCases' in item) && 'files' in item && 'examples' in item));
   for (const [body, expectedStatus, expectedCode] of [

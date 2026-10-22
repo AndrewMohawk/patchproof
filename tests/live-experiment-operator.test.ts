@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { TestContext } from 'node:test';
 import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { readdirSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { BudgetLedger } from '../packages/orchestrator/src/budget-ledger.ts';
 import { digestBytes, digestJson } from '../packages/contracts/src/digest.ts';
@@ -146,7 +146,27 @@ test('one composed fake-provider episode requires distinct reviewed runtime and 
   }, 10); t.after(() => clearInterval(timer));
   const result = await s.run('run-one', s.first.id); clearInterval(timer);
   assert.deepEqual(errors, []); assert.equal(result.exitCode, 0, JSON.stringify(result.output)); assert.equal(result.output.syntheticTransportTest, true);
-  assert.equal(accepted.size, 2); assert.equal(s.counts.model, 1); assert.ok(s.counts.sandbox > 0);
+  let failureEvidence: string | undefined;
+  if (accepted.size !== 2) {
+    const snapshot = captureExperimentSnapshot({ dispatcherDatabase: s.session.dispatcherDatabase, sourceBinding: 'expected-historical-lock',
+      expected: { sourceDigest: s.sourceDigest, planDigest: s.session.planDigest, transportDigest: s.session.transportDigest } });
+    const phases = new PhaseAccountingStore({ filename: s.runtime.phaseJournalPath, readOnly: true });
+    let requests;
+    try { requests = phases.requests().map(entry => ({ phase: entry.request.binding.phase, requestDigest: entry.requestDigest })); }
+    finally { phases.close(); }
+    const held = new BudgetLedger({ filename: s.runtime.ledgerPath, budget: s.budget });
+    let ledger;
+    try { ledger = held.snapshot(); } finally { held.close(); }
+    const traces = readdirSync(s.runtime.traceDirectory, { recursive: true }).filter(path => String(path).includes('/objects/') && String(path).endsWith('.json'))
+      .map(path => {
+        const trace = JSON.parse(readFileSync(join(s.runtime.traceDirectory, String(path)), 'utf8'));
+        return { path, result: trace.result, observations: trace.records.map((record: { value: { kind?: string } }) => record.value)
+          .filter((value: { kind?: string }) => ['failure', 'checks', 'raw-check-observation', 'runtime-accounting-request'].includes(value.kind ?? '')) };
+      });
+    failureEvidence = JSON.stringify({ episode: snapshot.episodes.find(row => row.episodeId === s.first.id),
+      counts: s.counts, accepted: accepted.size, phaseRequestCount: requests.length, requests, ledger, traces });
+  }
+  assert.equal(accepted.size, 2, failureEvidence); assert.equal(s.counts.model, 1); assert.ok(s.counts.sandbox > 0);
   const ledger = new BudgetLedger({ filename: s.runtime.ledgerPath, budget: s.budget });
   assert.equal(ledger.snapshot().chargedMicros, '30000'); assert.equal(ledger.snapshot().heldMicros, '0'); assert.equal(ledger.snapshot().pendingBillingCount, 0); ledger.close();
   const capture = captureExperimentSnapshot({ dispatcherDatabase: s.session.dispatcherDatabase, sourceBinding: 'expected-historical-lock',

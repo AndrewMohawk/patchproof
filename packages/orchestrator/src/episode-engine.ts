@@ -81,6 +81,7 @@ export async function runRevisionLoop(options: {
   onProposed: (candidate: CandidateRecord, context: RevisionContext) => void;
   check: (candidate: CandidateRecord) => Promise<CheckedRevision>;
   onChecked: (candidate: CandidateRecord, context: RevisionContext) => void;
+  validateChecked?: () => void;
   onSelection: (candidateId: number) => void;
 }) {
   const fixture = structuredClone(options.fixture), heads = new Map<number, CandidateRecord>();
@@ -112,6 +113,14 @@ export async function runRevisionLoop(options: {
     candidate.visibleChecks = checked.visible; candidate.acceptanceChecks = checked.acceptance;
     candidate.sandboxOperationIds = checked.result.operationIds;
     candidate.elapsedMs = Date.now() - started;
+    // Preserve completed observations and lifecycle logs before an authorization
+    // gate can stop the run. A failed gate never reaches acceptance or selection.
+    try { options.validateChecked?.(); }
+    catch (error) {
+      candidate.rejectionReason = error instanceof ContractError ? error.code : 'check_authorization_failed';
+      options.onChecked(candidate, context);
+      throw error;
+    }
     if (checked.result.infrastructureError) {
       candidate.rejectionReason = checked.result.infrastructureError; options.onChecked(candidate, context);
       throw new RevisionCheckError(checked.result.infrastructureError);
