@@ -7,13 +7,13 @@ import { BudgetSchema, readiness, readConfiguration } from '../scripts/config.ts
 const root = new URL('../', import.meta.url);
 const exec = promisify(execFile);
 
-test('checked-in $25 total budget requires approval and rejects excess stage allocations', async () => {
+test('checked-in $50 total budget requires approval and rejects excess stage allocations', async () => {
   const config = await readConfiguration(root);
-  assert.equal(config.budget.maxApprovedSpendUsd, 25);
+  assert.equal(config.budget.maxApprovedSpendUsd, 50);
   assert.ok(config.budget.ownerApproval);
   assert.ok(readiness(config).length > 0);
   assert.equal(BudgetSchema.safeParse({ ...config.budget, ownerApproval: null }).success, false);
-  assert.equal(BudgetSchema.safeParse({ ...config.budget, stages: { ...config.budget.stages, pilot: 26 } }).success, false);
+  assert.equal(BudgetSchema.safeParse({ ...config.budget, stages: { ...config.budget.stages, pilot: 51 } }).success, false);
   assert.equal(BudgetSchema.safeParse({ ...config.budget, maxApprovedSpendUsd: -1 }).success, false);
 });
 

@@ -11,6 +11,8 @@ test('operational lock detects changed prompts, newly loaded code, config and un
   for (const path of ['packages/contracts/src','packages/orchestrator/src','workers/repair','apps/api/src','apps/web','scripts']) await mkdir(join(directory,path), { recursive: true });
   for (const path of ['Makefile','tsconfig.json','package.json','package-lock.json','runtime-lock.json','budget.json','owner-decisions.json']) await writeFile(join(directory,path),'{}\n');
   const prompt = join(directory,'workers/repair/index.ts'); await writeFile(prompt,'export const prompt = "original";\n');
+  await mkdir(join(directory, 'research/product-v3'), { recursive: true });
+  await writeFile(join(directory, 'research/product-v3/model-discovery.json'), '{"scope":"synthetic-test-only"}\n');
   const lock = buildOperationalLock(directory); const digest = digestJson(lock);
   assert.deepEqual(verifyOperationalLock(directory, lock, digest), lock);
   assert.equal(lock.liveProtocolFrozen, false); assert.equal(lock.behavior.modelSeed, null);

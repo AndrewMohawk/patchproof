@@ -64,10 +64,10 @@ New evidence uses product contract **2.2**, preserving ordinary JSON mapping key
 throughout checking and export. Historical 2.0/2.1 bundles retain their original
 bytes and interpretation; see [JSON compatibility](docs/json-contract-compatibility.md).
 
-The current approved Token Factory allowance is **$25 total through December 15,
+The current approved Token Factory allowance is **$50 total through December 15,
 2026**, including existing usage and applicable fees, with no automatic increase.
-At the October 21 check, **$3.60 remained held**, leaving **$21.40** and at most
-**85 additional $0.25 reservations**. Unknown historical costs remain unknown and
+Under that approval, **$3.60 remains held**, leaving **$46.40** and at most
+**46 additional $1 reservations**. Unknown historical costs remain unknown and
 reserved; token-based estimates are not settled provider charges. Hosting costs
 are not authorized by this allowance.
 

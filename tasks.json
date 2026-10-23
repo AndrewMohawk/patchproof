@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project": "PatchProof",
   "prd_version": "0.1",
-  "as_of": "2026-09-28",
+  "as_of": "2026-10-22",
   "default_new_spend_authorized_usd": 0,
   "tasks": [
     {
@@ -28,7 +28,7 @@
       ],
       "requires_owner_action": true,
       "gate": "G0",
-      "blocked_reason": "Owner eligibility/rights/AI confirmations and the $25 total ceiling are recorded. Token Factory access and real curated repairs are observed, and the authorized public real-model/local-Docker app is deployed at c6b2b421. The current complex pagination example passes 22/22 checks and fresh same-host replay reproduces it; all unsuccessful trials remain visible. The shared ledger retains $1.60 across 13 unresolved reservations, including the earlier marker; actual provider invoices remain unknown and token-rate estimates are not billing reconciliation. Nebius Sandboxes entitlement, sponsor account controls and final entry gates remain unverified. See research/product-v3/README.md and verification/final-runtime.json for the current snapshot.",
+      "blocked_reason": "Owner eligibility/rights/AI confirmations and the $50 total ceiling are recorded. Token Factory access and real curated repairs are observed, and the authorized public real-model/local-Docker app is deployed at b8362ba0. The current complex pagination example passes 22/22 checks and fresh same-host replay reproduces it; all unsuccessful trials remain visible. The shared ledger retains $3.60 across 24 reservations, with 21 actual costs still unknown; token-rate estimates are not billing reconciliation. Nebius Sandboxes entitlement, sponsor account controls and final entry gates remain unverified. See research/product-v3/README.md and verification/final-runtime.json for the historical snapshot.",
       "evidence": [
         "research/task-evidence.md",
         "docs/local-release-review.md",
@@ -42,7 +42,7 @@
         "research/verification/20260928-live-deployment/final-replays/receipt.json",
         "research/product-v3/README.md"
       ],
-      "implementation_note": "Owner eligibility/rights/AI confirmations and the $25 total ceiling are recorded. Token Factory access and real curated repairs are observed, and the authorized public real-model/local-Docker app is deployed at c6b2b421. The current complex pagination example passes 22/22 checks and fresh same-host replay reproduces it; all unsuccessful trials remain visible. The shared ledger retains $1.60 across 13 unresolved reservations, including the earlier marker; actual provider invoices remain unknown and token-rate estimates are not billing reconciliation. Nebius Sandboxes entitlement, sponsor account controls and final entry gates remain unverified. See research/product-v3/README.md and verification/final-runtime.json for the current snapshot."
+      "implementation_note": "Owner eligibility/rights/AI confirmations and the $50 total ceiling are recorded. Token Factory access and real curated repairs are observed, and the authorized public real-model/local-Docker app is deployed at b8362ba0. The current complex pagination example passes 22/22 checks and fresh same-host replay reproduces it; all unsuccessful trials remain visible. The shared ledger retains $3.60 across 24 reservations, with 21 actual costs still unknown; token-rate estimates are not billing reconciliation. Nebius Sandboxes entitlement, sponsor account controls and final entry gates remain unverified. See research/product-v3/README.md and verification/final-runtime.json for the historical snapshot."
     },
     {
       "id": "T02",
@@ -497,7 +497,7 @@
       ],
       "requires_owner_action": false,
       "gate": null,
-      "implementation_note": "Public release c6b2b421 passed 700 tests, typecheck, contract checks and public desktop/mobile review across 93 layout checks. Real Super pagination run 4b031998-ae91-4316-aacd-607cfff91f72 passes 22/22 declared checks; fresh same-host replay from its immutable ffc56425 source reproduces 22/22. Current runs retain curated-only execution, session-owned cancellation, a $0.25 reservation, three calls, 12000 completion tokens and 600 seconds within the existing $25 ceiling; historical runs preserve their own limits and failures. Final video/runtime evidence is indexed in research/product-v3/README.md. Judging-period operation, independent-machine verification and broader release gates remain open.",
+      "implementation_note": "Public release b8362ba0 retains curated-only execution, session-owned cancellation, a $1 reservation, three calls, 12000 completion tokens and 600 seconds within the approved $50 ceiling; historical runs preserve their own limits and failures. Real Super pagination run 4b031998-ae91-4316-aacd-607cfff91f72 passes 22/22 declared checks; fresh same-host replay from its immutable ffc56425 source reproduces 22/22. Final video/runtime evidence is indexed in research/product-v3/README.md. Judging-period operation, independent-machine verification and broader release gates remain open.",
       "blocked_reason": "Judging-period operating commitments, independent-machine verification and broader release gates remain open. The requested public interface redesign and its verification are complete.",
       "evidence": [
         "research/task-evidence.md",
@@ -617,7 +617,7 @@
     }
   ],
   "execution_as_of": "2026-09-28T01:53:02.327Z",
-  "current_approved_spend_usd": 25,
+  "current_approved_spend_usd": 50,
   "approval_source": "budget.json",
   "local_build_sequence_override": {
     "reference": "owner-decisions.json#localBuildBeforeProviderAccess",
