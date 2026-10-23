@@ -3,7 +3,7 @@ import test from 'node:test';
 import { once } from 'node:events';
 import { request as httpRequest } from 'node:http';
 import { randomUUID } from 'node:crypto';
-import { createProductServer, type ProductLiveMetadata, type ProductLiveAvailability } from '../apps/api/src/product-server.ts';
+import { createProductServer, type ProductLiveMetadata, type ProductLiveAvailability, type ProductLiveReadiness } from '../apps/api/src/product-server.ts';
 import type { Coordinator } from '../packages/orchestrator/src/coordinator.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
 import { ProductRunRequestSchema, type ProductRun } from '../packages/contracts/src/product.ts';
@@ -32,7 +32,7 @@ function fakeCoordinator(mode: 'live' | 'mock' = 'live') {
   };
   return { api: api as unknown as Coordinator, seed, counts: () => ({ creates, cancellations }) };
 }
-async function serve(metadata: ProductLiveMetadata | null = live, fake = fakeCoordinator(metadata ? 'live' : 'mock'), availabilitySource?: () => ProductLiveAvailability) {
+async function serve(metadata: ProductLiveMetadata | null = live, fake = fakeCoordinator(metadata ? 'live' : 'mock'), availabilitySource?: () => ProductLiveReadiness | Promise<ProductLiveReadiness>) {
   const options = { approvedSpendUsd: 25, localRuntime: { available: true, image: 'synthetic-image', reason: null }, ...(metadata ? { live: structuredClone(metadata) } : {}), ...(availabilitySource ? { liveAvailability: availabilitySource } : {}) };
   const server = createProductServer(fake.api, options); server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const address = server.address(); assert.ok(address && typeof address !== 'string'); const base = `http://127.0.0.1:${address.port}`;
@@ -144,4 +144,25 @@ test('budget availability pauses only new runs, preserves owned cancellation and
   const failedReader = await (await f.get('/tasks')).json(); assert.equal(failedReader.capabilities.createRuns, false); assert.doesNotMatch(JSON.stringify(failedReader), /private operator details/);
   assert.equal((await f.post('/runs', input(f.seed.fixture.id, 'availability-reader-error'))).status, 403); assert.equal(f.counts().creates, 1);
   assert.equal((await f.get(`/runs/${run.id}`)).status, 200);
+});
+
+test('live checker readiness refreshes advertised status and admission without changing remaining budget', async t => {
+  const budget: ProductLiveAvailability = { enabled: true, reason: null, remainingRuns: 2 };
+  let localRuntime: ProductLiveReadiness['localRuntime'] = { available: true, image: 'synthetic-exact-image', reason: null };
+  const fake = fakeCoordinator();
+  const f = await serve(live, fake, async () => ({ ...budget, localRuntime })); t.after(f.close);
+
+  const initial = await (await f.get('/tasks')).json();
+  assert.equal(initial.realExecutionEnabled, true); assert.deepEqual(initial.localRuntime, localRuntime);
+  localRuntime = { available: false, image: null, reason: 'local_python_image_unavailable' };
+  const missing = await (await f.get('/tasks')).json();
+  assert.equal(missing.realExecutionEnabled, false); assert.equal(missing.capabilities.createRuns, false);
+  assert.equal(missing.availability.remainingRuns, 2, 'readiness does not alter budget/accounting projection');
+  assert.deepEqual(missing.localRuntime, localRuntime);
+  assert.equal((await f.post('/runs', input(f.seed.fixture.id, 'missing-live-image'))).status, 403);
+  assert.deepEqual(fake.counts(), { creates: 0, cancellations: 0 });
+
+  localRuntime = { available: true, image: 'synthetic-exact-image', reason: null };
+  const restored = await f.post('/runs', input(f.seed.fixture.id, 'restored-live-image'));
+  assert.equal(restored.status, 201); assert.equal(fake.counts().creates, 1);
 });

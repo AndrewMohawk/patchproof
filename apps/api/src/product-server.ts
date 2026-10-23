@@ -20,6 +20,14 @@ const LiveMetadataSchema = z.strictObject({
 export type ProductLiveMetadata = z.infer<typeof LiveMetadataSchema>;
 const LiveAvailabilitySchema = z.strictObject({ enabled: z.boolean(), reason: z.string().max(1024).nullable(), remainingRuns: z.number().int().nonnegative() });
 export type ProductLiveAvailability = z.infer<typeof LiveAvailabilitySchema>;
+const LocalRuntimeStatusSchema = z.strictObject({ available: z.boolean(), image: z.string().min(1).max(1024).nullable(), reason: z.string().min(1).max(1024).nullable() })
+  .superRefine((value, context) => {
+    if (value.available ? value.image === null || value.reason !== null : value.image !== null || value.reason === null) {
+      context.addIssue({ code: 'custom', message: 'Inconsistent local runtime status.' });
+    }
+  });
+const LiveReadinessSchema = LiveAvailabilitySchema.extend({ localRuntime: LocalRuntimeStatusSchema.optional() });
+export type ProductLiveReadiness = z.infer<typeof LiveReadinessSchema>;
 const sessionCookie = '__Host-patchproof-session';
 function guardLiveHost(req: IncomingMessage, allowedHosts: readonly string[] | undefined) {
   if (!allowedHosts) { guardRequest(req); return; }
@@ -34,17 +42,25 @@ function requestSession(req: IncomingMessage, sessions: ReadonlySet<string>): st
   return sessions.has(token) ? token : undefined;
 }
 export function createProductServer(coordinator: Coordinator, options: {
-  approvedSpendUsd: number; localRuntime: { available: boolean; image: string | null; reason: string | null }; live?: ProductLiveMetadata; liveAvailability?: () => ProductLiveAvailability;
+  approvedSpendUsd: number; localRuntime: { available: boolean; image: string | null; reason: string | null }; live?: ProductLiveMetadata;
+  liveAvailability?: () => ProductLiveReadiness | Promise<ProductLiveReadiness>;
 }) {
   // Snapshot configured identity before serving. Request fields cannot select providers, limits or hosts.
   const { liveAvailability: availabilitySource, ...configuration } = options;
   const settings = structuredClone(configuration);
   const live = settings.live === undefined ? undefined : LiveMetadataSchema.parse(settings.live);
   const mode = live ? 'live' : 'mock';
-  const availability = () => {
+  const readiness = async () => {
     if (!live || !availabilitySource) return undefined;
-    try { return LiveAvailabilitySchema.parse(availabilitySource()); }
-    catch { return { enabled: false, reason: 'New runs are temporarily unavailable. Recorded evidence remains accessible.', remainingRuns: 0 }; }
+    try {
+      const { localRuntime, ...available } = LiveReadinessSchema.parse(await availabilitySource());
+      if (localRuntime?.available === false) return { availability: { ...available, enabled: false,
+        reason: 'The protected local checker is unavailable. Recorded evidence remains accessible.' }, localRuntime };
+      return { availability: available, localRuntime: localRuntime ?? settings.localRuntime };
+    } catch {
+      return { availability: { enabled: false, reason: 'New runs are temporarily unavailable. Recorded evidence remains accessible.', remainingRuns: 0 },
+        localRuntime: { available: false, image: null, reason: 'local_runtime_status_unavailable' } };
+    }
   };
   const sessions = new Set<string>(), owners = new Map<string, string>();
   const ownedRunIds = (req: IncomingMessage) => {
@@ -68,19 +84,19 @@ export function createProductServer(coordinator: Coordinator, options: {
         res.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` }); res.end(bytes); return;
       }
       if (req.method === 'GET' && path === '/tasks') {
-        const available = availability();
+        const current = await readiness(), available = current?.availability;
         sendJson(res, 200, { schemaVersion: PRODUCT_CONTRACT_VERSION, mode, competitionReady: false, tasks: coordinator.tasks().map(task => live ? { ...task, executionSupported: true } : task),
           capabilities: { createRuns: available?.enabled ?? true, cancelRuns: true, replay: false, streamEvents: true },
           limits: live?.limits ?? LOCAL_LIMITS, maxApprovedSpendUsd: settings.approvedSpendUsd,
-          realExecutionEnabled: Boolean(live) && (available?.enabled ?? true), ...(available ? { availability: available } : {}), localRuntime: settings.localRuntime,
+          realExecutionEnabled: Boolean(live) && (available?.enabled ?? true), ...(available ? { availability: available } : {}), localRuntime: current?.localRuntime ?? settings.localRuntime,
           ...(live ? { execution: live.execution, runtimeLockDigest: live.runtimeLockDigest } : {}) }); return;
       }
       if (req.method === 'GET' && path === '/runs') {
-        sendJson(res, 200, { mode, competitionReady: false, runs: coordinator.list(), ...(live ? { ownedRunIds: ownedRunIds(req), availability: availability() } : {}) }); return;
+        sendJson(res, 200, { mode, competitionReady: false, runs: coordinator.list(), ...(live ? { ownedRunIds: ownedRunIds(req), availability: (await readiness())?.availability } : {}) }); return;
       }
       if (req.method === 'POST' && path === '/runs') {
         const value = await jsonBody(req);
-        const available = availability();
+        const available = (await readiness())?.availability;
         if (available?.enabled === false) throw new ContractError('budget_not_approved', available.reason ?? 'New runs are paused.', 403);
         const existingSession = live ? requestSession(req, sessions) : undefined;
         if (live && ((!existingSession && sessions.size >= 1024) || owners.size >= 4096)) throw new ContractError('rate_limit', 'New run capacity is currently unavailable.', 429);

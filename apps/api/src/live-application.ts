@@ -10,7 +10,7 @@ import { digestJson } from '../../../packages/contracts/src/digest.ts';
 import { loadFixtures } from '../../../packages/orchestrator/src/fixtures.ts';
 import { RunJournal } from '../../../packages/orchestrator/src/journal.ts';
 import { EvidenceStore } from '../../../packages/orchestrator/src/evidence.ts';
-import { DockerCheckRunner } from '../../../workers/sandbox/index.ts';
+import { DockerCheckRunner, LOCAL_IMAGE_ID, type LocalRuntimeStatus } from '../../../workers/sandbox/index.ts';
 import { createProductServer } from './product-server.ts';
 import { acquireCoordinatorLease } from '../../../packages/orchestrator/src/lease.ts';
 import { LOCAL_CHECK_SCHEDULING_POLICY } from '../../../packages/orchestrator/src/parallel-local-checks.ts';
@@ -49,6 +49,23 @@ export function verifyLivePricingEvidence(value: unknown, expectedDigest: string
       evidence.spendBoundary.inferenceCallsPerRun !== LIVE_LIMITS.inferenceCallLimit) throw new Error('live_demo_pricing_mismatch');
   return evidence;
 }
+export function createLiveRuntimeStatusReader(checks: Pick<DockerCheckRunner, 'status'>) {
+  let active: Promise<LocalRuntimeStatus> | undefined;
+  return () => {
+    if (active) return active;
+    const inspection = (async (): Promise<LocalRuntimeStatus> => {
+      try {
+        const status = await checks.status({ timeoutMs: 2_000 });
+        if (!status.available) return { available: false, image: null, reason: status.reason ?? 'local_python_image_unavailable' };
+        if (status.image !== LOCAL_IMAGE_ID) return { available: false, image: null, reason: 'local_image_identity_mismatch' };
+        return { available: true, image: LOCAL_IMAGE_ID, reason: null };
+      } catch { return { available: false, image: null, reason: 'local_runtime_inspection_failed' }; }
+    })();
+    const settled = inspection.finally(() => { if (active === settled) active = undefined; });
+    active = settled;
+    return settled;
+  };
+}
 export const LiveDemoConfigSchema = z.strictObject({ schemaVersion: z.literal('1.0'), executionAuthorized: z.literal(true),
   publicHostingAuthorized: z.literal(true), stateDirectory: z.string().min(1), ledgerFile: z.string().min(1),
   modelCredentialFile: z.string().min(1), socketFile: z.string().min(1), sourceDigest: hash,
@@ -86,7 +103,8 @@ export async function createLiveApplication(root: URL, configFile: string) {
     const pricingEvidence = JSON.parse(await readFile(new URL(LIVE_PRICING_EVIDENCE_PATH, root), 'utf8'));
     verifyLivePricingEvidence(pricingEvidence, config.pricingEvidenceDigest);
     const discovery = JSON.parse(await readFile(new URL('research/product-v3/model-discovery.json', root), 'utf8'));
-    const checks = new DockerCheckRunner(), status = await checks.status();
+    const checks = new DockerCheckRunner(), readLocalRuntimeStatus = createLiveRuntimeStatusReader(checks);
+    const status = await readLocalRuntimeStatus();
     if (!status.available) throw new Error('live_demo_local_runtime_unavailable');
     // Execute a fixed benign control under the service's real UID and umask before
     // accepting paid work. Image metadata alone does not establish usable isolation.
@@ -137,7 +155,10 @@ export async function createLiveApplication(root: URL, configFile: string) {
     await coordinator.recover();
     const server = createProductServer(coordinator, { approvedSpendUsd: budget.maxApprovedSpendUsd, localRuntime: status,
       live: { execution: LIVE_EXECUTION, runtimeLockDigest: digestJson(runtimeLock), limits: LIVE_LIMITS, allowedHosts: config.allowedHosts },
-      liveAvailability: () => {
+      liveAvailability: async () => {
+        // This is an exact, read-only image inspection. Concurrent HTTP requests
+        // share an in-flight inspection, but completed results are never cached.
+        const localRuntime = await readLocalRuntimeStatus();
         const snapshot = ledger!.snapshot();
         const remainingRuns = Math.floor(Math.min(Number(snapshot.availableMicros), Number(snapshot.stages.smoke.availableMicros)) / Number(LIVE_RESERVATION_MICROS));
         const admissionEnd = Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000;
@@ -145,9 +166,10 @@ export async function createLiveApplication(root: URL, configFile: string) {
         if (verifyPricing) { try { verifyPricing(admissionEnd); expired = false; } catch { expired = true; } }
         const approvalExpired = snapshot.approvalExpiresAt !== null && admissionEnd > Date.parse(snapshot.approvalExpiresAt);
         const running = coordinator.list().some(run => run.phase !== 'terminal');
-        return { enabled: !snapshot.frozen && !expired && !approvalExpired && !running && remainingRuns > 0, remainingRuns,
-          reason: expired ? 'Model pricing or account-fee verification needs refresh.' : approvalExpired ? 'The full run must fit within the approved spending window.' : running ? 'A live run is in progress. You can follow its evidence.' :
-            snapshot.frozen ? 'Live execution is paused pending accounting review.' : remainingRuns < 1 ? 'The live-demo allowance is exhausted.' : null };
+        return { enabled: localRuntime.available && !snapshot.frozen && !expired && !approvalExpired && !running && remainingRuns > 0, remainingRuns, localRuntime,
+          reason: !localRuntime.available ? 'The protected local checker is unavailable. Recorded evidence remains accessible.' :
+            expired ? 'Model pricing or account-fee verification needs refresh.' : approvalExpired ? 'The full run must fit within the approved spending window.' : running ? 'A live run is in progress. You can follow its evidence.' :
+              snapshot.frozen ? 'Live execution is paused pending accounting review.' : remainingRuns < 1 ? 'The live-demo allowance is exhausted.' : null };
       } });
     return { server, coordinator, config, runtimeLock, close: async () => { try { await coordinator.close(); } finally { ledger!.close(); await release(); } } };
   } catch (error) { journal?.close(); ledger?.close(); await release(); throw error; }
