@@ -68,6 +68,10 @@ export function createLiveLocalCoordinator(input: {
     const directory = openSync(input.accountingDirectory, constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW);
     try { fsyncSync(directory); } finally { closeSync(directory); }
   };
+  const boundedPricing = (value: unknown) => {
+    try { return assertPricingFitsReservation(value); }
+    catch { throw new ContractError('authorization_required', 'Current model pricing cannot fit the approved per-run reservation.', 403); }
+  };
   const validate = (deadlineMs = active?.deadlineMs ?? Date.now() + LIVE_LIMITS.wallTimeLimitSeconds * 1000) => {
     input.verifyRuntime();
     // Admission reserves the full window once. Later gates retain that exact
@@ -78,9 +82,9 @@ export function createLiveLocalCoordinator(input: {
     if (!input.verifyPricing && (deadlineMs > Date.parse(LIVE_PRICING.validUntil) || Date.now() >= Date.parse(LIVE_PRICING.validUntil))) throw new ContractError('authorization_required', 'Model pricing verification needs refresh.', 403);
     if (input.verifyPricing) {
       const verified = input.verifyPricing(deadlineMs);
-      const rates = assertPricingFitsReservation(verified.evidence);
+      const rates = boundedPricing(verified.evidence);
       if (active && !active.closed) {
-        const ceiling = assertPricingFitsReservation({
+        const ceiling = boundedPricing({
           inputUsdPerMillionTokens: Math.max(active.pricingCeiling.inputUsdPerMillionTokens, rates.inputUsdPerMillionTokens),
           outputUsdPerMillionTokens: Math.max(active.pricingCeiling.outputUsdPerMillionTokens, rates.outputUsdPerMillionTokens), requestFeeUsd: 0 });
         if (!active.pricingVerifications.some(value => value.digest === verified.digest)) {

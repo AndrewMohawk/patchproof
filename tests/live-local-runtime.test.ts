@@ -495,6 +495,24 @@ test('individually bounded price changes cannot combine into an unbounded per-ru
   assert.equal(proof.inputMicrosPerMillionTokens, '1200000'); assert.equal(proof.outputMicrosPerMillionTokens, '0');
 });
 
+test('post-check combined pricing rejection retains passing observations and publishes evidence', async t => {
+  let current = dynamicPricingState('0.0000012', '0');
+  const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
+  h.hooks.check = n => { if (n === 4) current = dynamicPricingState('0', '0.00008'); };
+  const done = await h.run('post-check-pricing-ceiling');
+  assert.equal(h.observed.requests.length, 1);
+  assert.equal(done.terminalStatus, 'infrastructure_error');
+  assert.equal(done.reason, 'authorization_required');
+  assert.equal(done.candidates.length, 1);
+  assert.equal(done.candidates[0]!.rejectionReason, 'authorization_required');
+  assert.ok([...done.candidates[0]!.visibleChecks, ...done.candidates[0]!.acceptanceChecks].every(check => check.status === 'pass'));
+  const evidence = verifyEvidence(await h.coordinator.evidence(done.id));
+  assert.equal(evidence.run.reason, 'authorization_required');
+  assert.equal(evidence.run.candidates[0]!.rejectionReason, 'authorization_required');
+  assert.equal(h.reservation(done).actualCostMicros, null);
+  assert.equal(h.reservation(done).heldMicros, '1000000');
+});
+
 test('a price change during credential resolution is checked again before transport', async t => {
   let current = dynamicPricingState('0.0000003', '0.0000009');
   const h = await setup(t, deadline => verifyRenewablePricing(current.state, current.bindings, deadline));
