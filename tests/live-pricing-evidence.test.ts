@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { digestJson } from '../packages/contracts/src/digest.ts';
 import { buildOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
-import { LIVE_PRICING_EVIDENCE_PATH, LiveDemoConfigSchema, verifyLivePricingEvidence } from '../apps/api/src/live-application.ts';
+import { LIVE_PRICING_EVIDENCE_PATH, LiveDemoConfigSchema, createLiveRuntimeStatusReader, verifyLivePricingEvidence } from '../apps/api/src/live-application.ts';
+import { LOCAL_IMAGE_ID, type LocalRuntimeStatus } from '../workers/sandbox/index.ts';
 
 const evidence = JSON.parse(readFileSync(new URL(`../${LIVE_PRICING_EVIDENCE_PATH}`, import.meta.url), 'utf8'));
 
@@ -51,4 +52,36 @@ test('historical pricing anchor retains its original reservation after the appro
   assert.equal(evidence.spendBoundary.perRunReservationUsd, 0.25);
   const changed = structuredClone(evidence); changed.spendBoundary.perRunReservationUsd = 1;
   assert.throws(() => verifyLivePricingEvidence(changed, digestJson(changed)), /live_demo_pricing_mismatch/);
+});
+
+test('live runtime status refresh observes image disappearance and restoration', async () => {
+  const available: LocalRuntimeStatus = { available: true, image: LOCAL_IMAGE_ID, reason: null };
+  const missing: LocalRuntimeStatus = { available: false, image: null, reason: 'local_python_image_unavailable' };
+  const states = [available, missing, available]; let calls = 0;
+  const read = createLiveRuntimeStatusReader({ status: async () => structuredClone(states[calls++]!) });
+  assert.deepEqual(await read(), available);
+  assert.deepEqual(await read(), missing);
+  assert.deepEqual(await read(), available);
+  assert.equal(calls, 3, 'completed inspections are never cached');
+});
+
+test('live runtime status coalesces concurrent inspection and recovers after inspection errors', async () => {
+  const available: LocalRuntimeStatus = { available: true, image: LOCAL_IMAGE_ID, reason: null };
+  let finish!: (value: LocalRuntimeStatus) => void;
+  const pending = new Promise<LocalRuntimeStatus>(done => { finish = done; });
+  let calls = 0;
+  const read = createLiveRuntimeStatusReader({ status: async () => {
+    calls++;
+    if (calls === 1) return pending;
+    if (calls === 2) throw new Error('synthetic private inspection detail');
+    return available;
+  } });
+  const first = read(), second = read(), third = read();
+  assert.strictEqual(first, second); assert.strictEqual(second, third);
+  finish(available);
+  assert.deepEqual(await Promise.all([first, second, third]), [available, available, available]);
+  assert.equal(calls, 1);
+  assert.deepEqual(await read(), { available: false, image: null, reason: 'local_runtime_inspection_failed' });
+  assert.deepEqual(await read(), available);
+  assert.equal(calls, 3);
 });
