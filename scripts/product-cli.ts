@@ -12,7 +12,7 @@ import { EvidenceStore, verifyEvidence, reproduceEvidence } from '../packages/or
 import { loadFixtures } from '../packages/orchestrator/src/fixtures.ts';
 import { ContractError } from '../packages/contracts/src/index.ts';
 import { auditRelease } from './release-audit.ts';
-import { verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
+import { OPERATIONAL_LOCK_FILES, OPERATIONAL_LOCK_ROOTS, verifyOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
 import { ReleaseDigestSchema } from './release-receipts.ts';
 import { buildReleasePacket, verifyReleasePacket } from './release-packet.ts';
 import { readReleaseInput } from './release-input.ts';
@@ -29,7 +29,7 @@ async function sourceReference() {
     const run = promisify(execFile);
     const { stdout: commit } = await run('git', ['rev-parse', 'HEAD'], { cwd: fileURLToPath(root) });
     const { stdout: changes } = await run('git', ['status', '--porcelain', '--untracked-files=normal', '--',
-      'packages', 'workers', 'apps', 'scripts', 'Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json'], { cwd: fileURLToPath(root) });
+      ...OPERATIONAL_LOCK_ROOTS, ...OPERATIONAL_LOCK_FILES], { cwd: fileURLToPath(root) });
     return { sourceCommit: /^[a-f0-9]{40}$/.test(commit.trim()) ? commit.trim() : null, workingTreeDirty: changes.length > 0 };
   } catch { return { sourceCommit: null, workingTreeDirty: true }; }
 }
