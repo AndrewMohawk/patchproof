@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { TestContext } from 'node:test';
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { DatabaseSync } from 'node:sqlite';
@@ -10,7 +10,7 @@ import { ExperimentDispatcher } from '../workers/evaluator/dispatcher.ts';
 import { hashJson, planExperiment } from '../workers/evaluator/protocol.ts';
 import { ExperimentExportOperatorConfigSchema, runExperimentExportOperator } from '../scripts/experiment-export-cli.ts';
 import { operatorJsonDigest } from '../scripts/operator-files.ts';
-import { buildOperationalLock } from '../packages/orchestrator/src/operational-lock.ts';
+import { buildOperationalLock, OPERATIONAL_LOCK_FILES, OPERATIONAL_LOCK_ROOTS } from '../packages/orchestrator/src/operational-lock.ts';
 import { digestJson } from '../packages/contracts/src/digest.ts';
 
 const H = 'sha256:' + 'a'.repeat(64), J = 'sha256:' + 'b'.repeat(64);
@@ -90,12 +90,11 @@ test('operator refuses overwrite and unapproved live readiness on synthetic capt
 
 test('current-source binding uses the source-map digest, and rejects a whole-lock digest', t => {
   const s = setup(t);
-  for (const directory of ['packages', 'workers', 'apps', 'scripts']) mkdirSync(join(s.projectRoot, directory));
-  for (const file of ['Makefile', 'tsconfig.json', 'package.json', 'package-lock.json', 'runtime-lock.json', 'budget.json', 'owner-decisions.json']) {
+  for (const directory of OPERATIONAL_LOCK_ROOTS) mkdirSync(join(s.projectRoot, directory));
+  for (const file of OPERATIONAL_LOCK_FILES) {
+    mkdirSync(dirname(join(s.projectRoot, file)), { recursive: true });
     writeFileSync(join(s.projectRoot, file), '{}\n');
   }
-  mkdirSync(join(s.projectRoot, 'research/product-v3'), { recursive: true });
-  writeFileSync(join(s.projectRoot, 'research/product-v3/model-discovery.json'), '{"scope":"synthetic-test-only"}\n');
   const lock = buildOperationalLock(s.projectRoot);
   s.config.sourceBinding = 'current-operational-lock'; s.config.bindings.sourceDigest = digestJson(lock); s.save();
   assert.equal(runExperimentExportOperator(s.args(), s.projectRoot).exitCode, 2);
